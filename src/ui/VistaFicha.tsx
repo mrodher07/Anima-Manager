@@ -142,6 +142,45 @@ export function VistaFicha({ personaje, datos, reglamento }: Props) {
         </section>
       </div>
 
+      {(personaje.ventajas.length > 0 || personaje.desventajas.length > 0) && (
+        <section className="panel" style={{ marginTop: 16 }}>
+          <h2>Ventajas y desventajas</h2>
+          <div className="rejilla">
+            {personaje.ventajas.length > 0 && (
+              <div>
+                <h3 style={{ fontSize: '0.82rem', color: 'var(--texto-tenue)', marginBottom: 6 }}>Ventajas</h3>
+                <ul className="lista-simple">
+                  {personaje.ventajas.map((v) => <li key={v}>{v}</li>)}
+                </ul>
+              </div>
+            )}
+            {personaje.desventajas.length > 0 && (
+              <div>
+                <h3 style={{ fontSize: '0.82rem', color: 'var(--texto-tenue)', marginBottom: 6 }}>Desventajas</h3>
+                <ul className="lista-simple">
+                  {personaje.desventajas.map((v) => <li key={v}>{v}</li>)}
+                </ul>
+              </div>
+            )}
+          </div>
+
+          {ficha.efectos.notas.length > 0 && (
+            <>
+              <h3 style={{ fontSize: '0.82rem', color: 'var(--oro)', margin: '14px 0 6px' }}>
+                Recordatorios para la mesa
+              </h3>
+              <ul className="lista-simple">
+                {ficha.efectos.notas.map((n, i) => (
+                  <li key={i}>
+                    <strong>{n.origen}:</strong> {n.texto}
+                  </li>
+                ))}
+              </ul>
+            </>
+          )}
+        </section>
+      )}
+
       <section className="panel" style={{ marginTop: 16 }}>
         <h2>Combate</h2>
         <div className="rejilla">

@@ -15,6 +15,7 @@ import type { EscalaArma } from '../motor/combate';
 import { Selector } from './Selector';
 import { Imagen } from './Imagen';
 import { ErrorImagen, borrarImagen, guardarImagen } from '../almacen/imagenes';
+import { EFECTOS } from '../motor/efectos';
 
 interface Props {
   personaje: Personaje;
@@ -420,6 +421,10 @@ export function EditorPersonaje({ personaje, datos, catalogo, reglamento, onCamb
         <>
           <section className="panel" style={{ marginBottom: 16 }}>
             <h2>Puntos de Creación</h2>
+            <p style={{ color: 'var(--texto-tenue)', fontSize: '0.86rem', marginTop: 0 }}>
+              Las marcadas «automática» modifican la ficha solas. El resto se eligen igual,
+              pero su efecto lo aplicáis vosotros (o lo anotas en la columna «Esp.»).
+            </p>
             <p style={{ margin: 0, fontSize: '0.95rem' }}>
               Gastados <strong className={ficha.puntosCreacion.gastados > ficha.puntosCreacion.disponibles ? 'peligro-texto' : 'destacado'}>
                 {ficha.puntosCreacion.gastados}
@@ -434,7 +439,7 @@ export function EditorPersonaje({ personaje, datos, catalogo, reglamento, onCamb
             <Selector
               opciones={ventajas.filter((v) => !v.esDesventaja)}
               claveDe={(v) => v.nombre}
-              detalleDe={(v) => `${v.coste} PC`}
+              detalleDe={(v) => `${v.coste} PC${EFECTOS[v.nombre] ? ' · automática' : ''}`}
               grupoDe={(v) => v.tipo}
               seleccionadas={personaje.ventajas}
               onCambiar={(v) => set({ ventajas: v })}
@@ -450,7 +455,7 @@ export function EditorPersonaje({ personaje, datos, catalogo, reglamento, onCamb
             <Selector
               opciones={ventajas.filter((v) => v.esDesventaja)}
               claveDe={(v) => v.nombre}
-              detalleDe={(v) => `+${Math.abs(v.coste)} PC`}
+              detalleDe={(v) => `+${Math.abs(v.coste)} PC${EFECTOS[v.nombre] ? ' · automática' : ''}`}
               grupoDe={(v) => v.tipo}
               seleccionadas={personaje.desventajas}
               onCambiar={(v) => set({ desventajas: v })}

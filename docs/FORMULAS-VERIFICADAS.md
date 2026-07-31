@@ -494,11 +494,30 @@ de lo que ocurre se interpreta, no se calcula.
 - **Todo valor derivado** admite sobrescritura manual conservando el calculado.
 - **Los límites avisan**, nunca impiden.
 
-## Pendiente de modelar
+## Efectos de ventajas y desventajas ✔
 
-- **Ventajas y desventajas con efecto mecánico.** El catálogo tiene las 292, pero sólo
-  como lista: adquirirlas no modifica todavía los valores. Hasta entonces se compensan con
-  los bonos especiales.
+Los valores **no están inventados**. La ficha codifica cada ventaja como un coeficiente
+multiplicado por su casilla de «adquirido», así que se han extraído barriendo las fórmulas
+del libro en busca de referencias a `Tablas!G###` dentro del rango de la tabla de ventajas:
+
+| Fórmula de la ficha | Se traduce en |
+|---|---|
+| `Principal!D24` contiene `25*G315` | Reflejos rápidos (1) = **+25 al turno** |
+| `Principal!J58` contiene `G267*25` | Res. física excepcional (1) = **+25 a RF/RE/RV** |
+| `PDs!V188` contiene `10*G356` | Difícil de matar (1) = **+10 PV por nivel** |
+| `PDs!W28` contiene `5*G368` | Uso de armadura (1) = **+5 a Llevar Armadura por nivel** |
+| `PDs!X25` contiene `5*Nivel*G364`, con `MIN(50,…)` | Sentido del combate: Ataque, **tope 50** |
+| `Principal!J58` acaba en `*IF(G514>0,0.5,1)` | Debilidad física = **RF a la mitad** |
+
+**109 ventajas** tienen efecto mecánico detectable en la hoja. Están implementadas en
+`src/motor/efectos.ts` las que se pueden automatizar sin ambigüedad; el resto llevan una
+**nota** que aparece en la ficha como recordatorio (por ejemplo, Endeble: «recibe crítico
+con sólo un tercio de sus PV»).
+
+Las que no tienen efecto registrado siguen pudiendo elegirse, y la ficha **avisa** de que
+esas hay que aplicarlas a mano.
+
+## Pendiente de modelar
 - **Ki**: puntos, acumulación, técnicas y Límites.
 - **Conjuros y poderes psíquicos seleccionados** como listas del personaje.
 - **Multiclase** y coste de cambio de categoría.

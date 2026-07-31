@@ -15,6 +15,7 @@ import {
   type PiezaEquipada,
   type ProteccionTotal,
 } from './combate';
+import { acumularEfectos, type EfectosAplicados } from './efectos';
 import type { Catalogo } from '../datos/paquetes';
 import type { Arma, Armadura, Categoria, Raza, TablasBase, Ventaja } from '../datos/tipos';
 
@@ -232,6 +233,8 @@ export interface FichaCalculada {
   zeon: ValorDerivado;
   act: ValorDerivado;
   secundarias: Record<string, ValorDerivado>;
+  /** Lo que aportan las ventajas y desventajas elegidas. */
+  efectos: EfectosAplicados;
   puntosCreacion: { disponibles: number; gastados: number; ganados: number };
   combate: {
     HAtaque: ValorDerivado;
@@ -333,6 +336,9 @@ export function calcular(
   if (!categoria)
     avisos.push({ gravedad: 'error', mensaje: `Categoría desconocida: "${personaje.categoria}".` });
 
+  // Efectos de ventajas y desventajas, antes de nada: modifican características.
+  const efectos = acumularEfectos([...personaje.ventajas, ...personaje.desventajas]);
+
   const ajusteNivel = raza?.ajusteNivel ?? 0;
   const nivel = personaje.nivel;
   const nivelParaExperiencia = nivel + ajusteNivel;
@@ -343,7 +349,8 @@ export function calcular(
   for (const c of CARACTERISTICAS) {
     const base = personaje.caracteristicas[c] ?? 0;
     const modRaza = (raza?.[c] as number | undefined) ?? 0;
-    const total = Math.min(20, Math.max(0, base + modRaza));
+    const modVentajas = efectos.caracteristicas[c] ?? 0;
+    const total = Math.min(20, Math.max(0, base + modRaza + modVentajas));
     caracteristicas[c] = { base, raza: modRaza, total, bono: bonoDe(total, tablas) };
   }
 
@@ -370,7 +377,7 @@ export function calcular(
     'puntosVida',
     aplicar('puntosVida', {
       pvBasePorCON: pvBase(caracteristicas.CON.total, tablas),
-      pvCategoria: categoria?.PV ?? 0,
+      pvCategoria: (categoria?.PV ?? 0) + efectos.pvPorNivel,
       nivelTotal: nivel,
       CON: caracteristicas.CON.total,
       bonoCON: caracteristicas.CON.bono,
@@ -381,7 +388,7 @@ export function calcular(
     'cansancio',
     aplicar('cansancio', {
       CON: caracteristicas.CON.total,
-      cansancioRaza: raza?.cansancio ?? 0,
+      cansancioRaza: (raza?.cansancio ?? 0) + efectos.cansancio,
     }),
   );
 
@@ -396,8 +403,8 @@ export function calcular(
         presencia: presencia.valor,
         bonoCaracteristica: caracteristicas[car].bono,
         modRaza: (raza?.[r] as number | undefined) ?? 0,
-        especial: 0,
-        factor: 1,
+        especial: efectos.resistencias[r] ?? 0,
+        factor: efectos.factorResistencia[r] ?? 1,
       }),
     );
   }
@@ -411,7 +418,7 @@ export function calcular(
     aplicar('zeon', {
       zeonBasePorPOD: pvBase(caracteristicas.POD.total, tablas),
       zeonComprado,
-      zeonCategoria: Number(categoria?.bonoZeon ?? 0),
+      zeonCategoria: Number(categoria?.bonoZeon ?? 0) + efectos.zeonPorNivel,
       nivelTotal: nivel,
     }),
   );
@@ -427,14 +434,23 @@ export function calcular(
 
   // ── Combate: armadura primero, porque su penalizador afecta a casi todo ──
   const especial = (clave: string) => personaje.bonosEspeciales[clave] ?? 0;
+  // «Sentido del combate» suma por nivel al bono de categoría, con tope conjunto de 50.
+  const bonoCategoriaCombate = (clave: 'HAtaque' | 'HParada' | 'HEsquiva', base: number) =>
+    Math.min(50, base + (efectos.bonoCategoria[clave] ?? 0) * nivel);
   const llevarArmaduraBase =
     truncarPD(personaje.pdInvertidos['LlevarArmadura'] ?? 0, Number(categoria?.costeLlevarArmadura ?? 2)) +
     caracteristicas.FUE.bono +
     Number(categoria?.bonoLlevarArmadura ?? 0) +
+    efectos.llevarArmaduraPorNivel * nivel +
     especial('LlevarArmadura');
   const llevarArmadura = derivar('LlevarArmadura', llevarArmaduraBase);
 
   const proteccion = combinarArmadura(personaje.equipo.armadura, datos.armaduras, llevarArmadura.valor);
+  // Armadura natural y mística se suman al TA de las piezas llevadas.
+  for (const [dano, valor] of Object.entries(efectos.TA)) {
+    const t = dano as keyof typeof proteccion.TA;
+    proteccion.TA[t] = (proteccion.TA[t] ?? 0) + (valor ?? 0);
+  }
   const penalizadorArmadura = proteccion.penalizadorNatural;
 
   // Habilidades secundarias.
@@ -457,7 +473,8 @@ export function calcular(
         coste: coste || 2,
         bonoCaracteristica: caracteristicas[def.caracteristica].bono,
         bonoCategoria,
-        mejoraNatural: mejoraNatural + (personaje.bonosEspeciales[def.nombre] ?? 0),
+        mejoraNatural:
+        mejoraNatural * efectos.factorMejoraNatural + (personaje.bonosEspeciales[def.nombre] ?? 0),
         penalizadorNoDesarrollada: -30,
         // Sólo las habilidades físicas sufren el penalizador de la armadura.
         penalizadorNatural: SECUNDARIAS_FISICAS.has(def.nombre) ? penalizadorArmadura : 0,
@@ -470,21 +487,21 @@ export function calcular(
     'HAtaque',
     truncarPD(personaje.pdInvertidos['HAtaque'] ?? 0, Number(categoria?.costeHA ?? 2)) +
       caracteristicas.DES.bono +
-      Number(categoria?.bonoHA ?? 0) +
+      bonoCategoriaCombate('HAtaque', Number(categoria?.bonoHA ?? 0)) +
       especial('HAtaque'),
   );
   const HParada = derivar(
     'HParada',
     truncarPD(personaje.pdInvertidos['HParada'] ?? 0, Number(categoria?.costeHP ?? 2)) +
       caracteristicas.DES.bono +
-      Number(categoria?.bonoHP ?? 0) +
+      bonoCategoriaCombate('HParada', Number(categoria?.bonoHP ?? 0)) +
       especial('HParada'),
   );
   const HEsquiva = derivar(
     'HEsquiva',
     truncarPD(personaje.pdInvertidos['HEsquiva'] ?? 0, Number(categoria?.costeHE ?? 2)) +
       caracteristicas.AGI.bono +
-      Number(categoria?.bonoHE ?? 0) +
+      bonoCategoriaCombate('HEsquiva', Number(categoria?.bonoHE ?? 0)) +
       especial('HEsquiva'),
   );
 
@@ -505,6 +522,7 @@ export function calcular(
       turnoBase:
         20 +
         (tamano >= 20 && (raza?.raza === 'Jayán' || raza?.raza === 'Turak') ? -10 : 0) +
+        efectos.turno +
         especial('turnoNatural'),
       bonoAGI: caracteristicas.AGI.bono,
       bonoDES: caracteristicas.DES.bono,
@@ -600,6 +618,15 @@ export function calcular(
     });
   }
 
+  if (efectos.sinEfecto.length > 0) {
+    avisos.push({
+      gravedad: 'aviso',
+      mensaje:
+        `Estas ventajas todavía no se aplican solas, apúntalas en «Esp.» si te dan bonos: ` +
+        efectos.sinEfecto.join(', ') + '.',
+    });
+  }
+
   return {
     nivel,
     ajusteNivel,
@@ -613,6 +640,7 @@ export function calcular(
     zeon,
     act,
     secundarias,
+    efectos,
     puntosCreacion,
     combate: {
       HAtaque,

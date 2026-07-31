@@ -222,3 +222,103 @@ describe('Puntos de Creación', () => {
     expect(ficha.avisos.some((a) => a.gravedad === 'error' && a.mensaje.includes('Puntos de Creación'))).toBe(true);
   });
 });
+
+describe('efectos de ventajas y desventajas', () => {
+  const conVentajas = (ventajas: string[], desventajas: string[] = []) => {
+    const p = meirmeister();
+    p.ventajas = ventajas;
+    p.desventajas = desventajas;
+    return calcular(p, datos('Jayán', 'Paladín Oscuro (RD)'));
+  };
+
+  it('«+1 a característica» sube la característica y su bono', () => {
+    const base = calcular(meirmeister(), datos('Jayán', 'Paladín Oscuro (RD)'));
+    const ficha = conVentajas(['+1 a característica: AGI']);
+    expect(base.caracteristicas.AGI.total).toBe(10);
+    expect(ficha.caracteristicas.AGI.total).toBe(11);
+    expect(ficha.caracteristicas.AGI.bono).toBe(20); // 10 → +15, 11 → +20
+  });
+
+  it('«-2 a característica» la baja', () => {
+    const ficha = conVentajas([], ['-2 a característica: FUE']);
+    expect(ficha.caracteristicas.FUE.total).toBe(10); // 12 − 2
+  });
+
+  it('«Res. física excepcional» sube RF, RE y RV', () => {
+    const ficha = conVentajas(['Res. física excepcional (2)']);
+    expect(ficha.resistencias.RF.valor).toBe(110); // 60 + 50
+    expect(ficha.resistencias.RE.valor).toBe(90); // 40 + 50
+    expect(ficha.resistencias.RM.valor).toBe(0); // sin tocar
+  });
+
+  it('«Vulnerable a la magia» deja la RM a la mitad', () => {
+    const conDon = conVentajas(['Don']); // Don da +10 RM
+    expect(conDon.resistencias.RM.valor).toBe(10);
+    const vulnerable = conVentajas(['Don'], ['Vulnerable a la magia']);
+    expect(vulnerable.resistencias.RM.valor).toBe(5);
+  });
+
+  it('«Reflejos rápidos (2)» da +45 al turno, como en la ficha original', () => {
+    const base = calcular(meirmeister(), datos('Jayán', 'Paladín Oscuro (RD)'));
+    const ficha = conVentajas(['Reflejos rápidos (2)']);
+    expect(ficha.combate.turnoNatural.valor - base.combate.turnoNatural.valor).toBe(45);
+  });
+
+  it('«Reacción lenta» resta al turno', () => {
+    const base = calcular(meirmeister(), datos('Jayán', 'Paladín Oscuro (RD)'));
+    const ficha = conVentajas([], ['Reacción lenta (1)']);
+    expect(ficha.combate.turnoNatural.valor - base.combate.turnoNatural.valor).toBe(-30);
+  });
+
+  it('«Difícil de matar» suma PV por nivel', () => {
+    expect(conVentajas(['Difícil de matar (2)']).puntosVida.valor).toBe(155); // 135 + 20×1
+  });
+
+  it('«Infatigable» sube el cansancio', () => {
+    expect(conVentajas(['Infatigable (1)']).cansancio.valor).toBe(15); // 12 + 3
+  });
+
+  it('«Uso de armadura» sube Llevar Armadura por nivel', () => {
+    const p = meirmeister();
+    delete p.bonosEspeciales.LlevarArmadura; // el bono manual que compensaba la ventaja
+    p.ventajas = ['Uso de armadura (1)'];
+    const ficha = calcular(p, datos('Jayán', 'Paladín Oscuro (RD)'));
+    expect(ficha.combate.llevarArmadura.valor).toBe(50); // 45 + 5×1
+  });
+
+  it('«Armadura natural» suma al TA de la armadura llevada', () => {
+    const ficha = conVentajas(['Armadura natural']);
+    expect(ficha.combate.proteccion.TA.FIL).toBe(6); // 4 de la armadura + 2
+    expect(ficha.combate.proteccion.TA.ENE).toBe(0); // no la cubre
+  });
+
+  it('«Sentido del combate» sube el bono de categoría con tope de 50', () => {
+    const base = calcular(meirmeister(), datos('Jayán', 'Paladín Oscuro (RD)'));
+    const ficha = conVentajas(['Sentido del combate: Ataque']);
+    expect(ficha.combate.HAtaque.valor - base.combate.HAtaque.valor).toBe(5);
+
+    const p = meirmeister();
+    p.ventajas = ['Sentido del combate: Ataque'];
+    p.nivel = 20; // 5×20 = 100, pero el tope conjunto es 50
+    const alto = calcular(p, datos('Jayán', 'Paladín Oscuro (RD)'));
+    const sinVentaja = { ...p, ventajas: [] };
+    const altoBase = calcular(sinVentaja, datos('Jayán', 'Paladín Oscuro (RD)'));
+    expect(alto.combate.HAtaque.valor - altoBase.combate.HAtaque.valor).toBe(45); // 5 → 50
+  });
+
+  it('«Sin bonificador natural» anula las Habilidades Naturales', () => {
+    const ficha = conVentajas([], ['Sin bonificador natural']);
+    expect(ficha.secundarias['Acrobacias'].valor).toBe(10); // 20 − los 10 de la natural
+  });
+
+  it('recoge notas de lo que no se automatiza', () => {
+    const ficha = conVentajas([], ['Endeble']);
+    expect(ficha.efectos.notas.some((n) => n.texto.includes('tercio'))).toBe(true);
+  });
+
+  it('avisa de las ventajas elegidas que todavía no se aplican solas', () => {
+    const ficha = conVentajas(['Aliado poderoso (1)']);
+    expect(ficha.efectos.sinEfecto).toContain('Aliado poderoso (1)');
+    expect(ficha.avisos.some((a) => a.mensaje.includes('no se aplican solas'))).toBe(true);
+  });
+});
