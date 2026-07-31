@@ -6,6 +6,9 @@ numéricamente contra el personaje de ejemplo, *Meirmeister*.
 
 Notación: `Bono_X` = bono de la característica X según `tablasBase.bonoCaracteristica`.
 
+**Contrastado además con el Core Exxet** (primera parte, caps. 1–4). Lo marcado con
+📖 procede del manual; lo marcado con ✔ se verificó numéricamente contra Meirmeister.
+
 ---
 
 ## Características
@@ -25,6 +28,12 @@ Celda `Principal!G11`, `Principal!AS11`, `Principal!AO11`.
 (3.ª columna) es en realidad el **coste en PCs**, no un multiplicador de PV
 (`Principal!AJ27`).
 
+## Puntos de Creación 📖
+
+**PC = 3** al crear el personaje, y se gastan en **ventajas**. Se obtienen más adquiriendo
+desventajas. No se usan para comprar características: los "60 pts" de la hoja son un
+método alternativo de reparto de características.
+
 ## Puntos de Vida
 
 ```
@@ -34,6 +43,9 @@ PV = 20 + (CON × 10) + Bono_CON + (PV_categoría × nivelTotal)
 `PDs!Z188 = U188 + V188 + W188 + X188`, donde `U188 = 20 + CON*10 + Bono_Con`.
 
 Verificación Meirmeister: `20 + 9×10 + 10 + 15×1 = 135` ✔ (la ficha muestra 135).
+
+📖 La *Tabla 4: Puntos de Vida Base* del manual coincide con `tablasBase.valoresBase`.
+**Salvo en CON 1**: la tabla dice 5 y la fórmula daría 0. Usar **la tabla**, no la fórmula.
 
 ## Cansancio
 
@@ -69,13 +81,22 @@ Verificación: `9 + 12 − 0 + 5 (Jayán) = 26`, limitado a 24… la ficha muest
 modificador racial efectivo del Jayán ya está aplicado sobre las características base.
 **Pendiente de afinar** al implementar.
 
+## Presencia 📖
+
+```
+Presencia = PD totales ÷ 20
+```
+
+600 PD en nivel 1 → 30. **No** es un valor fijo por nivel: depende de los PD, lo que
+importa para criaturas y para PD adicionales.
+
 ## Resistencias
 
 ```
 Resistencia = TRUNC( (Presencia + Bono_CaracterísticaAsociada + modRaza + especiales) × factor )
 ```
 
-- Presencia base = 30 en nivel 1.
+- Presencia = PD ÷ 20 (30 en nivel 1).
 - Característica asociada: RF→CON, RE→CON, RV→CON, RM→POD, RP→VOL.
 - `factor` = 0.5 si el personaje tiene la desventaja correspondiente.
 
@@ -85,8 +106,12 @@ Verificación RF: `30 + 10 (Bono_CON) + 20 (Jayán) = 60` ✔.
 
 ## Turno / Iniciativa
 
+📖 Turno base **20** para cualquier persona normal. Ejemplo del manual (Celia, guerrero
+acróbata): `20 + 10 (Bono_DES) + 15 (Bono_AGI) + 20 (desarmada) + 10 (categoría) = 75`.
+
 ```
 turnoBase   = 20 + ajustes raciales (Jayán o Turak de tamaño Grande: −10)
+                 + ventajas (Reflejos rápidos: +25 / +45 / +60)
 turnoNatural = turnoBase + Bono_AGI + Bono_DES + bonoTurnoCategoría + penalizadorNatural
 ```
 
@@ -94,6 +119,42 @@ turnoNatural = turnoBase + Bono_AGI + Bono_DES + bonoTurnoCategoría + penalizad
 (`Combate!E16`) más penalizadores por exceso de peso.
 
 **Acciones por turno**: `VLOOKUP(Bono_DES + Bono_AGI, Tabla_NumAcciones)` (`Principal!J32`).
+
+## Habilidades secundarias 📖
+
+```
+total = (PD ÷ coste) + Bono_Característica + bonoCategoría
+      + habilidadesNaturales + bonificadorNatural
+      − 30 si no se ha invertido ningún PD
+      + penalizadorNatural (armadura)
+```
+
+- **−30 por habilidad sin desarrollar.** Explica los valores negativos de la ficha.
+- **Habilidades Naturales**: elegir 5 secundarias distintas y sumar **+10** a cada una.
+  Se repite en cada subida de nivel.
+- **Bonificador Natural**: repetir el bono de **una característica física** y el de **una
+  anímica** sobre dos secundarias ligadas a esos atributos. Sólo si el bono es positivo.
+
+Verificación Trepar (Meirmeister): `0 (sin PD) + 15 (Bono_AGI) − 30 (sin desarrollar)
+− 20 (pen. armadura) = −35` ✔ (la ficha muestra −35).
+
+Verificación Acrobacias: `15 (30 PD ÷ coste 2) + 15 (Bono_AGI) + 10 (habilidad natural)
+= 40` ✔.
+
+## Límites en el reparto de PD 📖
+
+- Cada categoría limita el gasto en **cada** campo primario (combate / mística / psíquica)
+  al **50 % o 60 %** de los PD → **300 o 360 PD** en nivel 1.
+- **Las secundarias y las especiales no tienen límite.**
+- **Límite adicional que faltaba:** la **Proyección Mágica** y la **Psíquica** no pueden
+  llevarse más de **la mitad** del límite del campo correspondiente. Un hechicero (límite
+  300) puede gastar como máximo **180 PD** en nivel 1 y **30 PD** por nivel adicional.
+
+## Índices de subida especiales 📖
+
+- **Zeón** sube en **grupos de 5**: con coste 2, cada 2 PD dan **+5 Zeón**.
+- **ACT** (Acumulación mágica) y las de **Ki** no son lineales: otorgan capacidades que se
+  desarrollan aparte.
 
 ---
 
@@ -177,9 +238,10 @@ Se ha añadido `tablasBase.armasEnormes` con los multiplicadores de daño por ta
 
 - Cálculo exacto del **Tamaño** cuando la raza modifica características *y* tamaño
   (posible doble conteo — ver arriba).
-- **Zeón, ACT y Nivel de Magia** (el personaje de ejemplo no es místico, así que no hay
-  valores contra los que contrastar).
-- **CVs y Potencial Psíquico**.
+- **Zeón, ACT y Nivel de Magia**: se conocen ya el índice de subida y el límite de
+  Proyección, pero falta el detalle de ACT y del Nivel de Magia (capítulos de magia, en la
+  segunda parte del Core).
+- **CVs y Potencial Psíquico** (capítulos de psíquica, segunda parte del Core).
 - Coste de **cambio de categoría** en multiclase.
 - Cálculo de **técnicas de Ki** (la hoja `Creación de Técnicas`).
 

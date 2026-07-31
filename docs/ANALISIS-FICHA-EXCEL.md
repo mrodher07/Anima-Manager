@@ -79,7 +79,11 @@ de facto en la comunidad hispana para llevar personajes de Anima.
 ### 3.1 Características
 
 Ocho características: **AGI, CON, DES, FUE, INT, PER, POD, VOL**. Valor 1–20.
-Se compran con **Puntos de Creación (PCs)**, por defecto 60 puntos.
+
+> **Corrección:** los **Puntos de Creación (PC) son 3**, y sirven para comprar
+> **ventajas**, no características. Se consiguen más cogiendo desventajas. Los "60 pts"
+> que aparecen junto a Características en la hoja son un método alternativo de reparto
+> por compra, distinto de los PC. Confirmado en el Core Exxet, cap. 1.
 
 Cada valor da un **bono** y un **multiplicador de PV**
 (`data/reglas/tablasBase.json` → `bonoCaracteristica`):
@@ -146,8 +150,9 @@ Cada categoría define **83 campos**, agrupados en:
 
 ### 3.6 Resistencias
 
-`RF, RE, RV, RM, RP`. Base = Presencia (30 en nivel 1) + bono de característica asociada
-+ modificador racial + especiales.
+`RF, RE, RV, RM, RP`. Base = **Presencia** + bono de característica asociada + modificador
+racial + especiales. Y **Presencia = PD totales ÷ 20** (600/20 = 30 en nivel 1), no un
+valor fijo por nivel.
 
 ### 3.7 Combate
 
