@@ -88,8 +88,9 @@ Cada valor da un **bono** y un **multiplicador de PV**
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
 | Bono | -30 | -20 | -10 | -5 | 0 | 5 | 5 | 10 | 10 | 15 | 20 | 20 | 30 | 45 |
 
-`valoresBase` da los **PV base** y el **Cansancio** por valor de CON
-(CON 10 → 135 PV, 10 de cansancio).
+`valoresBase` tabula los **PV base** por valor de CON, pero la fórmula real es
+`20 + CON×10 + Bono_CON` (equivalente). El **Cansancio** es simplemente `CON + modificador
+racial`, no la 3.ª columna de esa tabla. Ver `docs/FORMULAS-VERIFICADAS.md`.
 
 ### 3.2 Raza
 
