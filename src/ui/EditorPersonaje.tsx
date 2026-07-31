@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import type { Catalogo } from '../datos/paquetes';
 import { useColeccion } from './estado';
 import {
@@ -13,6 +13,8 @@ import {
 import type { Reglamento } from '../motor/reglamento';
 import type { EscalaArma } from '../motor/combate';
 import { Selector } from './Selector';
+import { Imagen } from './Imagen';
+import { ErrorImagen, borrarImagen, guardarImagen } from '../almacen/imagenes';
 
 interface Props {
   personaje: Personaje;
@@ -22,10 +24,13 @@ interface Props {
   onCambiar: (p: Personaje) => void;
 }
 
-type Pestana = 'identidad' | 'caracteristicas' | 'habilidades' | 'ventajas' | 'equipo' | 'poderes';
+type Pestana =
+  | 'identidad' | 'trasfondo' | 'caracteristicas'
+  | 'habilidades' | 'ventajas' | 'equipo' | 'poderes';
 
 const PESTANAS: { id: Pestana; texto: string }[] = [
   { id: 'identidad', texto: 'Identidad' },
+  { id: 'trasfondo', texto: 'Trasfondo' },
   { id: 'caracteristicas', texto: 'Características' },
   { id: 'ventajas', texto: 'Ventajas' },
   { id: 'habilidades', texto: 'Habilidades' },
@@ -52,8 +57,22 @@ const PRIMARIAS_PSIQUICAS = [
   { clave: 'ProyeccionPsiquica', nombre: 'Proyección Psíquica', coste: 'costeProyeccionPsiquica' },
 ];
 
+/** Campos de trasfondo: texto libre, nada de esto lo decide la aplicación. */
+const CAMPOS_TRASFONDO: { clave: keyof Personaje['trasfondo']; etiqueta: string; ayuda: string }[] = [
+  { clave: 'apariencia', etiqueta: 'Apariencia', ayuda: 'Cómo se le ve: rasgos, ropa, cicatrices…' },
+  { clave: 'personalidad', etiqueta: 'Personalidad', ayuda: 'Carácter, manías, cómo trata a los demás.' },
+  { clave: 'motivacion', etiqueta: 'Sueños y motivación', ayuda: 'Qué persigue y por qué se levanta cada mañana.' },
+  { clave: 'particularidades', etiqueta: 'Aprecia y detesta', ayuda: 'Lo que le mueve y lo que no soporta.' },
+  { clave: 'historia', etiqueta: 'Historia', ayuda: 'De dónde viene y qué le trajo hasta aquí.' },
+  { clave: 'contactos', etiqueta: 'Contactos y allegados', ayuda: 'Aliados, familia, deudas, enemigos.' },
+  { clave: 'equipoLibre', etiqueta: 'Equipo y posesiones', ayuda: 'Lo que lleva encima y no afecta a las reglas.' },
+  { clave: 'dinero', etiqueta: 'Dinero', ayuda: 'Monedas, joyas, propiedades…' },
+];
+
 export function EditorPersonaje({ personaje, datos, catalogo, reglamento, onCambiar }: Props) {
   const [pestana, setPestana] = useState<Pestana>('identidad');
+  const [falloRetrato, setFalloRetrato] = useState<string | null>(null);
+  const retrato = useRef<HTMLInputElement>(null);
   const razas = useColeccion(catalogo, 'razas');
   const categorias = useColeccion(catalogo, 'categorias');
   const armas = useColeccion(catalogo, 'armas');
@@ -68,6 +87,25 @@ export function EditorPersonaje({ personaje, datos, catalogo, reglamento, onCamb
     set({ pdInvertidos: { ...personaje.pdInvertidos, [clave]: Math.max(0, pd || 0) } });
   const setEspecial = (clave: string, valor: number) =>
     set({ bonosEspeciales: { ...personaje.bonosEspeciales, [clave]: valor || 0 } });
+  const setTrasfondo = (clave: keyof Personaje['trasfondo'], texto: string) =>
+    set({ trasfondo: { ...personaje.trasfondo, [clave]: texto } });
+
+  const subirRetrato = async (f: File) => {
+    try {
+      const anterior = personaje.retratoId;
+      const img = await guardarImagen(f, {
+        tipo: 'retrato',
+        nombre: personaje.nombre || 'Retrato',
+        campanaId: personaje.campanaId,
+        personajeId: personaje.id,
+      });
+      set({ retratoId: img.id });
+      if (anterior) await borrarImagen(anterior);
+      setFalloRetrato(null);
+    } catch (e) {
+      setFalloRetrato(e instanceof ErrorImagen ? e.message : 'No se ha podido subir la imagen.');
+    }
+  };
 
   return (
     <div>
@@ -138,6 +176,42 @@ export function EditorPersonaje({ personaje, datos, catalogo, reglamento, onCamb
             </div>
           </div>
 
+          <div className="campo">
+            <label>Retrato</label>
+            {personaje.retratoId ? (
+              <div>
+                <Imagen id={personaje.retratoId} alt={`Retrato de ${personaje.nombre}`} className="retrato" />
+                <div className="acciones-regla">
+                  <button className="accion" onClick={() => retrato.current?.click()}>Cambiar</button>
+                  <button
+                    className="accion peligro"
+                    onClick={async () => {
+                      const id = personaje.retratoId;
+                      set({ retratoId: null });
+                      if (id) await borrarImagen(id);
+                    }}
+                  >
+                    Quitar
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <button className="accion" onClick={() => retrato.current?.click()}>Subir retrato</button>
+            )}
+            <input
+              ref={retrato}
+              type="file"
+              accept="image/*"
+              style={{ display: 'none' }}
+              onChange={(e) => {
+                const f = e.target.files?.[0];
+                if (f) void subirRetrato(f);
+                e.target.value = '';
+              }}
+            />
+            {falloRetrato && <p className="error-formula">{falloRetrato}</p>}
+          </div>
+
           {datos.raza?.descripciones && (
             <p style={{ color: 'var(--texto-tenue)', fontSize: '0.86rem', marginBottom: 0 }}>
               <strong style={{ color: 'var(--oro)' }}>Capacidades raciales:</strong>{' '}
@@ -154,6 +228,28 @@ export function EditorPersonaje({ personaje, datos, catalogo, reglamento, onCamb
               onChange={(e) => set({ notas: e.target.value })}
             />
           </div>
+        </section>
+      )}
+
+      {pestana === 'trasfondo' && (
+        <section className="panel">
+          <h2>Trasfondo</h2>
+          <p style={{ color: 'var(--texto-tenue)', fontSize: '0.88rem', marginTop: 0 }}>
+            Nada de esto lo calcula la aplicación, y así debe ser: el rol lo lleváis vosotros.
+            Esto es sólo un sitio donde tenerlo escrito y a mano durante la partida.
+          </p>
+          {CAMPOS_TRASFONDO.map((c) => (
+            <div className="campo" key={c.clave}>
+              <label htmlFor={`tras-${c.clave}`}>{c.etiqueta}</label>
+              <textarea
+                id={`tras-${c.clave}`}
+                rows={c.clave === 'historia' ? 6 : 3}
+                placeholder={c.ayuda}
+                value={personaje.trasfondo[c.clave] ?? ''}
+                onChange={(e) => setTrasfondo(c.clave, e.target.value)}
+              />
+            </div>
+          ))}
         </section>
       )}
 

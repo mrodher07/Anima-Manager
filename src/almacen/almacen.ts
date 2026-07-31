@@ -9,6 +9,14 @@
 
 import type { Personaje } from '../motor/personaje';
 import type { AjustesMesa } from '../motor/reglamento';
+import { obtenerImagen, type Imagen, type ImagenInfo } from './imagenes';
+
+export interface NotaSesion {
+  id: string;
+  fecha: string;
+  titulo: string;
+  texto: string;
+}
 
 export interface Campana {
   id: string;
@@ -20,7 +28,8 @@ export interface Campana {
   paquetes: string[];
   /** Reglas caseras de la mesa. */
   ajustes: AjustesMesa;
-  notasSesion: { fecha: string; texto: string }[];
+  /** Diario de la campaña: lo que pasó en cada sesión. Lo escribe la mesa. */
+  notasSesion: NotaSesion[];
 }
 
 const BD = 'anima-manager';
@@ -100,12 +109,45 @@ export const almacen = {
 
 // ─────────────────── Exportar / importar (compartir sin nube) ───────────────────
 
+/** Imagen dentro de una exportación: el Blob va como data URI para que quepa en el JSON. */
+export interface ImagenExportada extends Omit<ImagenInfo, never> {
+  dataUri: string;
+}
+
 export interface Exportacion {
   formato: 'anima-manager';
   version: 1;
   exportadoEn: string;
   personajes: Personaje[];
   campanas: Campana[];
+  /** Retratos de las fichas exportadas. Sin esto, al compartir se perderían. */
+  imagenes?: ImagenExportada[];
+}
+
+function aDataUri(blob: Blob): Promise<string> {
+  return new Promise((resolver, rechazar) => {
+    const lector = new FileReader();
+    lector.onload = () => resolver(String(lector.result));
+    lector.onerror = () => rechazar(lector.error);
+    lector.readAsDataURL(blob);
+  });
+}
+
+async function deDataUri(uri: string): Promise<Blob> {
+  return (await fetch(uri)).blob();
+}
+
+/** Recoge los retratos de unas fichas para incluirlos en la exportación. */
+async function recogerRetratos(personajes: Personaje[]): Promise<ImagenExportada[]> {
+  const salida: ImagenExportada[] = [];
+  for (const p of personajes) {
+    if (!p.retratoId) continue;
+    const img = await obtenerImagen(p.retratoId);
+    if (!img) continue;
+    const { datos, ...info } = img;
+    salida.push({ ...info, dataUri: await aDataUri(datos) });
+  }
+  return salida;
 }
 
 export async function exportarTodo(): Promise<Exportacion> {
@@ -119,16 +161,18 @@ export async function exportarTodo(): Promise<Exportacion> {
     exportadoEn: new Date().toISOString(),
     personajes,
     campanas,
+    imagenes: await recogerRetratos(personajes),
   };
 }
 
-export function exportarPersonaje(p: Personaje): Exportacion {
+export async function exportarPersonaje(p: Personaje): Promise<Exportacion> {
   return {
     formato: 'anima-manager',
     version: 1,
     exportadoEn: new Date().toISOString(),
     personajes: [p],
     campanas: [],
+    imagenes: await recogerRetratos([p]),
   };
 }
 
@@ -164,14 +208,32 @@ export async function analizarImportacion(
 
 export async function importar(exportacion: Exportacion, sobrescribir: boolean): Promise<number> {
   const existentes = new Set((await almacen.listarPersonajes()).map((p) => p.id));
+  const importadas = new Set<string>();
   let importados = 0;
+
   for (const p of exportacion.personajes) {
     if (existentes.has(p.id) && !sobrescribir) continue;
     await almacen.guardarPersonaje(p);
+    if (p.retratoId) importadas.add(p.retratoId);
     importados++;
   }
   for (const c of exportacion.campanas) {
     await almacen.guardarCampana(c);
   }
+
+  // Sólo se restauran los retratos de las fichas que de verdad han entrado.
+  for (const img of exportacion.imagenes ?? []) {
+    if (!importadas.has(img.id)) continue;
+    const { dataUri, ...info } = img;
+    const completa: Imagen = { ...info, datos: await deDataUri(dataUri) };
+    await guardarImagenImportada(completa);
+  }
+
   return importados;
+}
+
+/** Escribe una imagen recibida en una importación, respetando su id original. */
+async function guardarImagenImportada(imagen: Imagen): Promise<void> {
+  const { guardarImagenCruda } = await import('./imagenes');
+  await guardarImagenCruda(imagen);
 }

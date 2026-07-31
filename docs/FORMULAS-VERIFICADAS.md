@@ -482,6 +482,18 @@ Se modelan como `bonosEspeciales` del personaje, un campo editable por habilidad
 tanto a las secundarias como a las primarias de combate (por ejemplo, la ventaja «Uso de
 armadura (1)» da +5 por nivel a Llevar Armadura: así se llega a los 50 de la ficha).
 
+## Lo que la aplicación NO debe decidir
+
+Requisito explícito del usuario, y coherente con el manual: en un juego de rol buena parte
+de lo que ocurre se interpreta, no se calcula.
+
+- **Experiencia**: el cap. 15 deja el reparto a criterio del Director. Se asigna a mano.
+- **Trasfondo y personalidad**: texto libre, sin validación.
+- **Notas de sesión**: diario de campaña, escrito por la mesa.
+- **Mapas, PNJs y enemigos**: se guardan como imágenes en la galería, sin ficha obligatoria.
+- **Todo valor derivado** admite sobrescritura manual conservando el calculado.
+- **Los límites avisan**, nunca impiden.
+
 ## Pendiente de modelar
 
 - **Ventajas y desventajas con efecto mecánico.** El catálogo tiene las 292, pero sólo

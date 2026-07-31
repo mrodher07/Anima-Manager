@@ -102,6 +102,8 @@ export interface Personaje {
   nombre: string;
   jugador?: string;
   sexo?: 'Hombre' | 'Mujer';
+  /** Imagen de la galería que hace de retrato. */
+  retratoId?: string | null;
   raza: string;
   categoria: string;
   nivel: number;
@@ -151,6 +153,21 @@ export interface Personaje {
   /** Sobrescrituras manuales de valores derivados: el usuario manda sobre el cálculo. */
   manuales: Partial<Record<string, number>>;
 
+  /**
+   * Todo lo que no se calcula. Un juego de rol se juega interpretando, y esa parte no la
+   * decide la aplicación: aquí sólo se guarda lo que la mesa escriba.
+   */
+  trasfondo: {
+    apariencia?: string;
+    personalidad?: string;
+    motivacion?: string;
+    historia?: string;
+    particularidades?: string;
+    contactos?: string;
+    equipoLibre?: string;
+    dinero?: string;
+  };
+
   notas?: string;
 }
 
@@ -176,6 +193,7 @@ export function personajeVacio(id: string): Personaje {
     equipo: { armadura: [], armas: [] },
     estado: {},
     manuales: {},
+    trasfondo: {},
   };
 }
 

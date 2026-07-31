@@ -22,7 +22,8 @@ npm run build    # compilar para producción
 | **Ficha** | Vista de consulta con recursos, características, resistencias, combate y secundarias |
 | **Editar** | Identidad, características, ventajas, habilidades, equipo y poderes |
 | **Mesa** | Jugar: gastar recursos, tirar iniciativa, resolver ataques, tiradas rápidas |
-| **Campañas** | Reglas caseras de la mesa y manuales activos |
+| **Galería** | Mapas, PNJs, enemigos y objetos en imágenes |
+| **Campañas** | Reglas caseras, manuales activos y diario de sesiones |
 | **Reglas** | Reescribir o desactivar cualquier fórmula, y restablecerla |
 
 ## Cómo está montado
@@ -65,6 +66,29 @@ básico y pueden corregirlas, y cada entrada recuerda de qué manual viene.
 **Los límites avisan, no bloquean.** Igual que la ficha de Excel: si te pasas de PD o de
 Puntos de Creación sale un aviso, pero el cálculo sigue. Cualquier valor derivado se puede
 sobrescribir a mano sin perder el calculado.
+
+**La aplicación no juega la partida.** Esto es un juego de rol: la mitad de lo que pasa en
+la mesa no es calculable, y la herramienta no debe fingir que sí. Por eso:
+
+- La **experiencia se asigna a mano**: el manual dice explícitamente que el reparto es
+  discrecional del Director (1–5 puntos según lo difícil que fuera *para ese personaje*).
+- El **trasfondo** —apariencia, personalidad, motivación, historia, contactos— es texto
+  libre. No se valida ni se puntúa.
+- El **diario de campaña** guarda lo que pasó en cada sesión, con vuestras palabras.
+- La **galería** guarda mapas, PNJs y enemigos como imágenes, sin obligar a fichar nada.
+- Las tiradas se pueden hacer con la app o con dados de verdad y anotar el resultado: los
+  recursos se ajustan a mano con los botones de ±1/±5/±10.
+
+## Imágenes
+
+Se guardan en su propio almacén de IndexedDB, no dentro de la ficha, así que un personaje
+sigue pesando unos kilobytes. Al subirlas se **reescalan y se convierten a WebP** (1600 px
+de lado para mapas, 640 para retratos): una foto de móvil de 5 MB llenaría la cuota del
+navegador en pocas subidas.
+
+Al exportar una ficha, **su retrato viaja con ella** como data URI, para que llegue
+completa a quien la reciba. Si el navegador se queda sin espacio, la aplicación lo dice en
+lugar de fallar en silencio.
 
 ## Qué falta
 

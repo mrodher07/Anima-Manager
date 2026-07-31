@@ -4,17 +4,22 @@ import { EditorPersonaje } from './EditorPersonaje';
 import { VistaFicha } from './VistaFicha';
 import { VistaMesa } from './VistaMesa';
 import { VistaPersonajes } from './VistaPersonajes';
+import { VistaGaleria } from './VistaGaleria';
 import { VistaReglas } from './VistaReglas';
+import { Imagen } from './Imagen';
+import { nuevoId } from './estado';
 import { useCampanas, useDatosCalculo, usePersonajes, useReglamento } from './estado';
 import './estilos.css';
 
-type Seccion = 'personajes' | 'ficha' | 'editor' | 'mesa' | 'reglas' | 'campanas';
+type Seccion = 'personajes' | 'ficha' | 'editor' | 'mesa' | 'galeria' | 'reglas' | 'campanas';
 
 export function App() {
   const [seccion, setSeccion] = useState<Seccion>('personajes');
   const [abiertoId, setAbiertoId] = useState<string | null>(null);
   const [tema, setTema] = useState<'oscuro' | 'claro'>('oscuro');
   const [campanaId, setCampanaId] = useState<string | null>(null);
+  const [tituloNota, setTituloNota] = useState('');
+  const [textoNota, setTextoNota] = useState('');
 
   const { personajes, cargando, guardar, crear, borrar, recargar } = usePersonajes();
   const { campanas, guardar: guardarCampana, crear: crearCampana, borrar: borrarCampana } = useCampanas();
@@ -39,6 +44,7 @@ export function App() {
     { id: 'ficha', texto: 'Ficha', requierePersonaje: true },
     { id: 'editor', texto: 'Editar', requierePersonaje: true },
     { id: 'mesa', texto: 'Mesa', requierePersonaje: true },
+    { id: 'galeria', texto: 'Galería' },
     { id: 'campanas', texto: 'Campañas' },
     { id: 'reglas', texto: 'Reglas' },
   ];
@@ -103,10 +109,21 @@ export function App() {
 
         {necesitaFicha && personaje && datos && (
           <>
-            <h1 style={{ marginBottom: 2 }}>{personaje.nombre || 'Sin nombre'}</h1>
-            <p style={{ color: 'var(--texto-tenue)', marginTop: 0, marginBottom: 18 }}>
-              {personaje.raza} · {personaje.categoria} · Nivel {personaje.nivel}
-            </p>
+            <div className="cabecera-ficha">
+              {personaje.retratoId && (
+                <Imagen
+                  id={personaje.retratoId}
+                  alt={`Retrato de ${personaje.nombre}`}
+                  className="retrato-mini"
+                />
+              )}
+              <div>
+                <h1 style={{ marginBottom: 2 }}>{personaje.nombre || 'Sin nombre'}</h1>
+                <p style={{ color: 'var(--texto-tenue)', margin: 0 }}>
+                  {personaje.raza} · {personaje.categoria} · Nivel {personaje.nivel}
+                </p>
+              </div>
+            </div>
             {seccion === 'ficha' && (
               <VistaFicha personaje={personaje} datos={datos} reglamento={reglamento} />
             )}
@@ -129,6 +146,8 @@ export function App() {
             )}
           </>
         )}
+
+        {seccion === 'galeria' && <VistaGaleria campanaId={campanaId} />}
 
         {seccion === 'reglas' && (
           <>
@@ -195,6 +214,71 @@ export function App() {
                   ))}
                 </tbody>
               </table>
+            )}
+
+            {campana && (
+              <>
+                <h2 style={{ marginTop: 22 }}>Diario de «{campana.nombre}»</h2>
+                <p style={{ color: 'var(--texto-tenue)', fontSize: '0.88rem', marginTop: 0 }}>
+                  Lo que pasó en cada sesión. Aquí no hay reglas: lo escribís vosotros.
+                </p>
+                <div className="campo">
+                  <label htmlFor="nota-titulo">Título de la sesión</label>
+                  <input id="nota-titulo" value={tituloNota} onChange={(e) => setTituloNota(e.target.value)} />
+                </div>
+                <div className="campo">
+                  <label htmlFor="nota-texto">Qué pasó</label>
+                  <textarea id="nota-texto" rows={4} value={textoNota} onChange={(e) => setTextoNota(e.target.value)} />
+                </div>
+                <button
+                  className="accion primaria"
+                  disabled={!textoNota.trim()}
+                  onClick={() => {
+                    void guardarCampana({
+                      ...campana,
+                      notasSesion: [
+                        {
+                          id: nuevoId(),
+                          fecha: new Date().toISOString(),
+                          titulo: tituloNota.trim() || `Sesión ${campana.notasSesion.length + 1}`,
+                          texto: textoNota.trim(),
+                        },
+                        ...campana.notasSesion,
+                      ],
+                    });
+                    setTituloNota('');
+                    setTextoNota('');
+                  }}
+                >
+                  Guardar sesión
+                </button>
+
+                {campana.notasSesion.length > 0 && (
+                  <div className="diario" style={{ marginTop: 18 }}>
+                    {campana.notasSesion.map((n) => (
+                      <article key={n.id}>
+                        <h3>{n.titulo}</h3>
+                        <time>{new Date(n.fecha).toLocaleDateString('es-ES', {
+                          day: 'numeric', month: 'long', year: 'numeric',
+                        })}</time>
+                        <p>{n.texto}</p>
+                        <button
+                          className="accion"
+                          style={{ marginTop: 6 }}
+                          onClick={() =>
+                            void guardarCampana({
+                              ...campana,
+                              notasSesion: campana.notasSesion.filter((x) => x.id !== n.id),
+                            })
+                          }
+                        >
+                          Borrar
+                        </button>
+                      </article>
+                    ))}
+                  </div>
+                )}
+              </>
             )}
 
             <h2 style={{ marginTop: 22 }}>Manuales activos</h2>

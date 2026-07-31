@@ -61,6 +61,7 @@ export function VistaPersonajes({ personajes, cargando, onAbrir, onCrear, onBorr
           <button
             className="accion"
             onClick={async () => descargar('anima-manager.json', await exportarTodo())}
+            title="Incluye las fichas, las campañas y los retratos"
             disabled={personajes.length === 0}
           >
             Exportar todo
@@ -90,7 +91,8 @@ export function VistaPersonajes({ personajes, cargando, onAbrir, onCrear, onBorr
           <h2>Aún no hay fichas</h2>
           <p>
             Crea tu primer personaje o importa un archivo que hayas exportado antes.
-            Todo se guarda en este dispositivo.
+            Todo se guarda en este dispositivo. Al exportar se incluye el retrato, para que la
+            ficha llegue completa a quien la reciba.
           </p>
         </div>
       ) : (
@@ -104,7 +106,10 @@ export function VistaPersonajes({ personajes, cargando, onAbrir, onCrear, onBorr
               </p>
               <div className="acciones-regla">
                 <button className="accion primaria" onClick={() => onAbrir(p.id)}>Abrir</button>
-                <button className="accion" onClick={() => descargar(`${p.nombre || 'ficha'}.json`, exportarPersonaje(p))}>
+                <button
+                  className="accion"
+                  onClick={async () => descargar(`${p.nombre || 'ficha'}.json`, await exportarPersonaje(p))}
+                >
                   Exportar
                 </button>
                 {confirmar === p.id ? (
