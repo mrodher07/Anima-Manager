@@ -12,6 +12,7 @@ import {
 } from '../motor/personaje';
 import type { Reglamento } from '../motor/reglamento';
 import type { EscalaArma } from '../motor/combate';
+import { Selector } from './Selector';
 
 interface Props {
   personaje: Personaje;
@@ -21,13 +22,15 @@ interface Props {
   onCambiar: (p: Personaje) => void;
 }
 
-type Pestana = 'identidad' | 'caracteristicas' | 'habilidades' | 'equipo';
+type Pestana = 'identidad' | 'caracteristicas' | 'habilidades' | 'ventajas' | 'equipo' | 'poderes';
 
 const PESTANAS: { id: Pestana; texto: string }[] = [
   { id: 'identidad', texto: 'Identidad' },
   { id: 'caracteristicas', texto: 'Características' },
+  { id: 'ventajas', texto: 'Ventajas' },
   { id: 'habilidades', texto: 'Habilidades' },
   { id: 'equipo', texto: 'Equipo' },
+  { id: 'poderes', texto: 'Poderes' },
 ];
 
 const PRIMARIAS_COMBATE = [
@@ -55,6 +58,9 @@ export function EditorPersonaje({ personaje, datos, catalogo, reglamento, onCamb
   const categorias = useColeccion(catalogo, 'categorias');
   const armas = useColeccion(catalogo, 'armas');
   const armaduras = useColeccion(catalogo, 'armaduras');
+  const ventajas = useColeccion(catalogo, 'ventajas');
+  const conjuros = useColeccion(catalogo, 'conjuros');
+  const poderes = useColeccion(catalogo, 'poderesPsiquicos');
   const ficha = calcular(personaje, datos, reglamento);
 
   const set = (cambios: Partial<Personaje>) => onCambiar({ ...personaje, ...cambios });
@@ -310,6 +316,84 @@ export function EditorPersonaje({ personaje, datos, catalogo, reglamento, onCamb
                 </div>
               </details>
             ))}
+          </section>
+        </>
+      )}
+
+      {pestana === 'ventajas' && (
+        <>
+          <section className="panel" style={{ marginBottom: 16 }}>
+            <h2>Puntos de Creación</h2>
+            <p style={{ margin: 0, fontSize: '0.95rem' }}>
+              Gastados <strong className={ficha.puntosCreacion.gastados > ficha.puntosCreacion.disponibles ? 'peligro-texto' : 'destacado'}>
+                {ficha.puntosCreacion.gastados}
+              </strong>{' '}
+              de <strong className="destacado">{ficha.puntosCreacion.disponibles}</strong>
+              {ficha.puntosCreacion.ganados > 0 && ` (3 de partida + ${ficha.puntosCreacion.ganados} por desventajas)`}
+            </p>
+          </section>
+
+          <section className="panel" style={{ marginBottom: 16 }}>
+            <h2>Ventajas</h2>
+            <Selector
+              opciones={ventajas.filter((v) => !v.esDesventaja)}
+              claveDe={(v) => v.nombre}
+              detalleDe={(v) => `${v.coste} PC`}
+              grupoDe={(v) => v.tipo}
+              seleccionadas={personaje.ventajas}
+              onCambiar={(v) => set({ ventajas: v })}
+              etiquetaBusqueda="Buscar ventaja"
+            />
+          </section>
+
+          <section className="panel">
+            <h2>Desventajas</h2>
+            <p style={{ color: 'var(--texto-tenue)', fontSize: '0.86rem', marginTop: 0 }}>
+              Dan Puntos de Creación, con un tope de 3.
+            </p>
+            <Selector
+              opciones={ventajas.filter((v) => v.esDesventaja)}
+              claveDe={(v) => v.nombre}
+              detalleDe={(v) => `+${Math.abs(v.coste)} PC`}
+              grupoDe={(v) => v.tipo}
+              seleccionadas={personaje.desventajas}
+              onCambiar={(v) => set({ desventajas: v })}
+              etiquetaBusqueda="Buscar desventaja"
+            />
+          </section>
+        </>
+      )}
+
+      {pestana === 'poderes' && (
+        <>
+          <section className="panel" style={{ marginBottom: 16 }}>
+            <h2>Conjuros</h2>
+            <p style={{ color: 'var(--texto-tenue)', fontSize: '0.86rem', marginTop: 0 }}>
+              Zeón {ficha.zeon.valor} · ACT {ficha.act.valor}. Sin el Don y sin Nivel de Magia
+              no podrás lanzarlos, pero puedes anotarlos igualmente.
+            </p>
+            <Selector
+              opciones={conjuros}
+              claveDe={(c) => c.conjuro}
+              detalleDe={(c) => `Nv ${c.nivel} · ${c.zeonBase ?? '—'} Zeón`}
+              grupoDe={(c) => c.via}
+              seleccionadas={personaje.conjuros}
+              onCambiar={(v) => set({ conjuros: v })}
+              etiquetaBusqueda="Buscar conjuro"
+            />
+          </section>
+
+          <section className="panel">
+            <h2>Poderes psíquicos</h2>
+            <Selector
+              opciones={poderes}
+              claveDe={(p) => p.poder}
+              detalleDe={(p) => `Nivel ${p.nivel}`}
+              grupoDe={(p) => p.disciplina}
+              seleccionadas={personaje.poderesPsiquicos}
+              onCambiar={(v) => set({ poderesPsiquicos: v })}
+              etiquetaBusqueda="Buscar poder"
+            />
           </section>
         </>
       )}

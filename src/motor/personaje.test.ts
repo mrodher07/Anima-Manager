@@ -6,7 +6,8 @@ import categorias from '../../data/reglas/categorias.json';
 import tablasBase from '../../data/reglas/tablasBase.json';
 import armasJson from '../../data/reglas/armas.json';
 import armadurasJson from '../../data/reglas/armaduras.json';
-import type { Arma, Armadura, Categoria, Raza, TablasBase } from '../datos/tipos';
+import ventajasJson from '../../data/reglas/ventajas.json';
+import type { Arma, Armadura, Categoria, Raza, TablasBase, Ventaja } from '../datos/tipos';
 
 const datos = (nombreRaza: string, nombreCategoria: string): DatosCalculo => ({
   raza: (razas as Raza[]).find((r) => r.raza === nombreRaza),
@@ -14,6 +15,7 @@ const datos = (nombreRaza: string, nombreCategoria: string): DatosCalculo => ({
   tablas: tablasBase as unknown as TablasBase,
   armas: armasJson as Arma[],
   armaduras: armadurasJson as Armadura[],
+  ventajas: ventajasJson as Ventaja[],
 });
 
 /**
@@ -190,5 +192,33 @@ describe('reglas caseras aplicadas a la ficha completa', () => {
     const ficha = calcular(meirmeister(), datos('Jayán', 'Paladín Oscuro (RD)'), rota);
     expect(ficha.avisos.some((a) => a.mensaje.includes('ha fallado'))).toBe(true);
     expect(ficha.puntosVida.valor).toBe(135); // el resto sigue calculándose
+  });
+});
+
+
+describe('Puntos de Creación', () => {
+  it('empieza con 3 y las desventajas dan más', () => {
+    const p = meirmeister();
+    p.desventajas = ['Arma exclusiva', 'Adicción o vicio grave'];
+    const ficha = calcular(p, datos('Jayán', 'Paladín Oscuro (RD)'));
+    expect(ficha.puntosCreacion.ganados).toBe(2);
+    expect(ficha.puntosCreacion.disponibles).toBe(5);
+  });
+
+  it('las desventajas no dan más de 3 PC', () => {
+    const p = meirmeister();
+    p.desventajas = ['Arma exclusiva', 'Adicción o vicio grave', 'Miopía', 'Salud enfermiza'];
+    const ficha = calcular(p, datos('Jayán', 'Paladín Oscuro (RD)'));
+    expect(ficha.puntosCreacion.ganados).toBe(3);
+    expect(ficha.avisos.some((a) => a.mensaje.includes('como mucho 3'))).toBe(true);
+  });
+
+  it('avisa si se gastan más PC de los disponibles', () => {
+    const p = meirmeister();
+    p.ventajas = ['+1 a característica: AGI', '+1 a característica: CON',
+                  '+1 a característica: DES', '+1 a característica: FUE'];
+    const ficha = calcular(p, datos('Jayán', 'Paladín Oscuro (RD)'));
+    expect(ficha.puntosCreacion.gastados).toBe(4);
+    expect(ficha.avisos.some((a) => a.gravedad === 'error' && a.mensaje.includes('Puntos de Creación'))).toBe(true);
   });
 });

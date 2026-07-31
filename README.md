@@ -3,17 +3,27 @@
 Aplicación para llevar el control de partidas del juego de rol
 **Anima: Beyond Fantasy**: creación de personajes, fichas y gestión de campañas.
 
-> Estado: **esqueleto funcional**. El motor de reglas está completo y verificado; la
-> interfaz tiene la ficha de personaje y el editor de reglas caseras.
+Funciona igual en ordenador y en móvil, con tema oscuro y claro.
 
 ## Empezar
 
 ```bash
 npm install
 npm run dev      # servidor de desarrollo
-npm test         # 42 pruebas del motor de reglas
+npm test         # 65 pruebas del motor de reglas
 npm run build    # compilar para producción
 ```
+
+## Qué hace
+
+| Sección | Para qué |
+|---|---|
+| **Personajes** | Lista de fichas, crear, exportar e importar JSON |
+| **Ficha** | Vista de consulta con recursos, características, resistencias, combate y secundarias |
+| **Editar** | Identidad, características, ventajas, habilidades, equipo y poderes |
+| **Mesa** | Jugar: gastar recursos, tirar iniciativa, resolver ataques, tiradas rápidas |
+| **Campañas** | Reglas caseras de la mesa y manuales activos |
+| **Reglas** | Reescribir o desactivar cualquier fórmula, y restablecerla |
 
 ## Cómo está montado
 
@@ -24,21 +34,24 @@ src/motor/       Motor de reglas. Funciones puras, sin interfaz
   expresiones.ts   Evaluador acotado para las fórmulas (sin eval)
   reglamento.ts    Catálogo de reglas configurable por mesa
   personaje.ts     Modelo de ficha y derivación de valores
+  combate.ts       Armadura, armas y resolución de asaltos
+  dados.ts         d100 con tiradas abiertas y pifias
 src/datos/       Paquetes de contenido combinables (un manual = un paquete)
 src/almacen/     Persistencia en IndexedDB, exportar e importar
-src/ui/          Interfaz React, responsive, tema claro y oscuro
+src/ui/          Interfaz React
 tools/           Script que regenera data/reglas desde el .xlsm original
 ```
 
-### Tres decisiones que conviene conocer
+### Cuatro decisiones que conviene conocer
 
 **El motor no sabe nada de la interfaz.** Todo el cálculo son funciones puras: mismos
-datos, mismo resultado. Eso es lo que permite verificarlo contra la ficha original.
+datos, mismo resultado. Eso permite verificarlo contra la ficha original — las pruebas
+reconstruyen a *Meirmeister* desde cero y comprueban que salen sus valores reales.
 
-**Las reglas son datos, no código.** Cada regla vive en `reglamento.ts` con su fórmula,
-su referencia al manual y sus variables documentadas. Una mesa puede reescribir cualquier
-fórmula o desactivar las opcionales, y volver a los valores por defecto cuando quiera.
-Se guarda **sólo lo que cambia**, así que las correcciones futuras del reglamento oficial
+**Las reglas son datos, no código.** Cada regla vive en `reglamento.ts` con su fórmula, su
+referencia al manual y sus variables documentadas. Una mesa puede reescribir cualquier
+fórmula o desactivar las opcionales, y volver a los valores por defecto cuando quiera. Se
+guarda **sólo lo que cambia**, así que las correcciones futuras del reglamento oficial
 llegan solas a quien no lo haya tocado.
 
 Las fórmulas se evalúan con un intérprete propio y acotado — **nunca con `eval`**. Cuando
@@ -48,6 +61,16 @@ del máster al abrir su ficha.
 **Un manual es un paquete de contenido.** El Core Exxet es sólo el primero. Al añadir un
 suplemento basta con registrar su paquete y sus JSON: sus entradas se combinan con las del
 básico y pueden corregirlas, y cada entrada recuerda de qué manual viene.
+
+**Los límites avisan, no bloquean.** Igual que la ficha de Excel: si te pasas de PD o de
+Puntos de Creación sale un aviso, pero el cálculo sigue. Cualquier valor derivado se puede
+sobrescribir a mano sin perder el calculado.
+
+## Qué falta
+
+Está anotado al final de `docs/FORMULAS-VERIFICADAS.md`. En resumen: las ventajas se
+eligen y cuentan Puntos de Creación, pero todavía no aplican solas su efecto mecánico
+(mientras tanto se compensan con el campo «Esp.»); faltan Ki, multiclase y bestiario.
 
 ## Regenerar el catálogo
 

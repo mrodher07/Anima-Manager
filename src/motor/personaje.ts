@@ -16,7 +16,7 @@ import {
   type ProteccionTotal,
 } from './combate';
 import type { Catalogo } from '../datos/paquetes';
-import type { Arma, Armadura, Categoria, Raza, TablasBase } from '../datos/tipos';
+import type { Arma, Armadura, Categoria, Raza, TablasBase, Ventaja } from '../datos/tipos';
 
 export const CARACTERISTICAS = ['AGI', 'CON', 'DES', 'FUE', 'INT', 'PER', 'POD', 'VOL'] as const;
 export type Caracteristica = (typeof CARACTERISTICAS)[number];
@@ -120,6 +120,11 @@ export interface Personaje {
   ventajas: string[];
   desventajas: string[];
 
+  /** Conjuros aprendidos, por nombre. */
+  conjuros: string[];
+  /** Poderes psíquicos dominados, por nombre. */
+  poderesPsiquicos: string[];
+
   /**
    * Bonos especiales por habilidad, escritos a mano. En la ficha original es la columna
    * «Esp.»: no hay regla que los derive, el jugador anota ahí lo que le den sus
@@ -165,6 +170,8 @@ export function personajeVacio(id: string): Personaje {
     bonificadorNatural: {},
     ventajas: [],
     desventajas: [],
+    conjuros: [],
+    poderesPsiquicos: [],
     bonosEspeciales: {},
     equipo: { armadura: [], armas: [] },
     estado: {},
@@ -207,6 +214,7 @@ export interface FichaCalculada {
   zeon: ValorDerivado;
   act: ValorDerivado;
   secundarias: Record<string, ValorDerivado>;
+  puntosCreacion: { disponibles: number; gastados: number; ganados: number };
   combate: {
     HAtaque: ValorDerivado;
     HParada: ValorDerivado;
@@ -255,20 +263,27 @@ export interface DatosCalculo {
   tablas: TablasBase;
   armas: Arma[];
   armaduras: Armadura[];
+  ventajas: Ventaja[];
 }
+
+/** Puntos de Creación: 3 de partida, más los que den las desventajas. */
+export const PC_INICIALES = 3;
+/** Tope de PC que se pueden ganar con desventajas. Core Exxet, cap. 1. */
+export const PC_MAXIMO_POR_DESVENTAJAS = 3;
 
 export async function cargarDatosCalculo(
   personaje: Personaje,
   catalogo: Catalogo,
 ): Promise<DatosCalculo> {
-  const [raza, categoria, tablas, armas, armaduras] = await Promise.all([
+  const [raza, categoria, tablas, armas, armaduras, ventajas] = await Promise.all([
     catalogo.buscar('razas', personaje.raza),
     catalogo.buscar('categorias', personaje.categoria),
     catalogo.tablasBase(),
     catalogo.obtener('armas'),
     catalogo.obtener('armaduras'),
+    catalogo.obtener('ventajas'),
   ]);
-  return { raza, categoria, tablas, armas, armaduras };
+  return { raza, categoria, tablas, armas, armaduras, ventajas };
 }
 
 function bonoDe(valor: number, tablas: TablasBase): number {
@@ -498,6 +513,27 @@ export function calcular(
     for (const texto of arma.avisos) avisos.push({ gravedad: 'aviso', mensaje: `${arma.arma}: ${texto}` });
   }
 
+  // ── Puntos de Creación: ventajas contra desventajas ──
+  const costeDe = (nombre: string) =>
+    Math.abs(datos.ventajas.find((v) => v.nombre === nombre)?.coste ?? 0);
+  const gastados = personaje.ventajas.reduce((t, n) => t + costeDe(n), 0);
+  const ganadosBruto = personaje.desventajas.reduce((t, n) => t + costeDe(n), 0);
+  const ganados = Math.min(ganadosBruto, PC_MAXIMO_POR_DESVENTAJAS);
+  const puntosCreacion = { disponibles: PC_INICIALES + ganados, gastados, ganados };
+
+  if (gastados > puntosCreacion.disponibles) {
+    avisos.push({
+      gravedad: 'error',
+      mensaje: `Has gastado ${gastados} Puntos de Creación y sólo tienes ${puntosCreacion.disponibles}.`,
+    });
+  }
+  if (ganadosBruto > PC_MAXIMO_POR_DESVENTAJAS) {
+    avisos.push({
+      gravedad: 'aviso',
+      mensaje: `Las desventajas dan como mucho ${PC_MAXIMO_POR_DESVENTAJAS} PC; las tuyas sumarían ${ganadosBruto}.`,
+    });
+  }
+
   // Reparto de PD y límites.
   const sumar = (claves: string[]) =>
     claves.reduce((t, k) => t + (personaje.pdInvertidos[k] ?? 0), 0);
@@ -559,6 +595,7 @@ export function calcular(
     zeon,
     act,
     secundarias,
+    puntosCreacion,
     combate: {
       HAtaque,
       HParada,
