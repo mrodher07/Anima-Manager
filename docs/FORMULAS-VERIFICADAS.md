@@ -454,3 +454,20 @@ Ya no hay nada bloqueado por falta de manual. Queda trabajo de volcado:
 - **Mejoras de Sheele** (`Tablas Sheele`, 242 filas) y **raíces culturales** (52).
 - **Creación de Seres** (cap. 26) y el **compendio de bestiario** (cap. 27).
 - Coste de **cambio de categoría** en multiclase.
+
+
+---
+
+## Pendiente de modelar en el motor
+
+Detectado al reproducir la ficha de Meirmeister con el motor (`personaje.test.ts`):
+
+- **Bonos especiales a las secundarias.** La ficha da Intimidar 90; el motor calcula 75.
+  Los 15 que faltan salen de la columna «Esp.» de la hoja: bonos de raza, ventajas, Elan
+  o poderes. Hace falta una capa que recoja esos modificadores y los inyecte en el cálculo.
+- **Equipo y armadura.** El penalizador natural de la armadura (−20 en Meirmeister) afecta
+  al turno y a varias secundarias. Hoy el motor lo recibe como 0.
+- **Habilidades primarias de combate** (ataque, parada, esquiva por arma) y la
+  **resolución de combate**: las fórmulas están documentadas y probadas, falta la capa que
+  las encadena con el equipo del personaje.
+- **Ki, conjuros seleccionados y poderes psíquicos** como listas del personaje.
