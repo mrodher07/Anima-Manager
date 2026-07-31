@@ -23,7 +23,7 @@ npm run build    # compilar para producción
 | **Editar** | Identidad, características, ventajas, habilidades, equipo y poderes |
 | **Mesa** | Jugar: gastar recursos, tirar iniciativa, resolver ataques, tiradas rápidas |
 | **Bestiario** | Fichas de enemigo con imagen, usables desde el modo mesa |
-| **Contenido propio** | Razas, armas y armaduras que se inventa tu mesa |
+| **Contenido propio** | Las 14 colecciones del catálogo, personalizables por tu mesa |
 | **Galería** | Mapas, PNJs, enemigos y objetos en imágenes |
 | **Campañas** | Reglas caseras, manuales activos y diario de sesiones |
 | **Reglas** | Reescribir o desactivar cualquier fórmula, y restablecerla |
@@ -64,6 +64,11 @@ del máster al abrir su ficha.
 **Un manual es un paquete de contenido.** El Core Exxet es sólo el primero. Al añadir un
 suplemento basta con registrar su paquete y sus JSON: sus entradas se combinan con las del
 básico y pueden corregirlas, y cada entrada recuerda de qué manual viene.
+
+**El contenido propio de una mesa es otro paquete más**, con prioridad por encima de los
+manuales. Se pueden crear entradas de cualquiera de las 14 colecciones, y el editor está
+dirigido por esquema (`src/datos/esquemas.ts`): describir una colección basta para poder
+editarla.
 
 **Los límites avisan, no bloquean.** Igual que la ficha de Excel: si te pasas de PD o de
 Puntos de Creación sale un aviso, pero el cálculo sigue. Cualquier valor derivado se puede

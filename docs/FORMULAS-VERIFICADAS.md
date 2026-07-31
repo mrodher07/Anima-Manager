@@ -76,6 +76,15 @@ En la aplicación, el contenido propio es **un paquete de contenido más**, con 
 encima de los manuales para que pueda además corregirlos. Vive dentro de la campaña y se
 exporta con ella.
 
+**Se puede personalizar todo el catálogo**: las 14 colecciones (razas, categorías, ventajas
+y desventajas, habilidades esenciales, poderes de criatura, armas, armaduras, yelmos, artes
+marciales, Ars Magnus, conjuros, poderes psíquicos, disciplinas psíquicas y Elan).
+
+El editor está **dirigido por esquema**: `src/datos/esquemas.ts` describe los campos de cada
+colección y un único componente los pinta todos. Añadir una colección nueva es describirla,
+no escribir otro formulario. Una prueba comprueba que **ninguna colección se queda sin
+esquema** y que las claves coinciden con las del catálogo.
+
 ## Valores por defecto: los de la ficha
 
 Regla del proyecto: **no inventar valores iniciales**. Una ficha nueva arranca como una

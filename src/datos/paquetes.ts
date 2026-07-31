@@ -20,17 +20,14 @@ import { CLAVE_DE, type Colecciones, type NombreColeccion, type TablasBase } fro
  * manual. En el Excel esto se hace editando a mano la hoja oculta de tablas — así es como
  * ese grupo metió la raza «Moguri» y compañía.
  */
-export interface Personalizados {
-  razas: Colecciones['razas'][];
-  categorias: Colecciones['categorias'][];
-  armas: Colecciones['armas'][];
-  armaduras: Colecciones['armaduras'][];
-  ventajas: Colecciones['ventajas'][];
-}
+export type Personalizados = { [K in NombreColeccion]?: Colecciones[K][] };
 
-export const PERSONALIZADOS_VACIOS: Personalizados = {
-  razas: [], categorias: [], armas: [], armaduras: [], ventajas: [],
-};
+export const PERSONALIZADOS_VACIOS: Personalizados = {};
+
+/** Cuántas entradas propias hay en total. */
+export function cuentaPersonalizados(propio: Personalizados): number {
+  return Object.values(propio).reduce((t, lista) => t + (lista?.length ?? 0), 0);
+}
 
 /**
  * Convierte el contenido propio de una campaña en un paquete.
@@ -43,7 +40,7 @@ export function paquetePersonalizado(propio: Personalizados): PaqueteContenido {
     sigla: 'Tuyo',
     descripcion: 'Lo que ha creado tu mesa: razas, armas, armaduras y ventajas.',
     prioridad: 1000,
-    cargar: async (coleccion) => (propio[coleccion as keyof Personalizados] as never) ?? null,
+    cargar: async (coleccion) => (propio[coleccion] as never) ?? null,
   };
 }
 

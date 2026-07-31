@@ -1,261 +1,207 @@
 import { useState } from 'react';
-import { PERSONALIZADOS_VACIOS, type Personalizados } from '../datos/paquetes';
-import { CARACTERISTICAS, RESISTENCIAS } from '../motor/personaje';
-import { TIPOS_DANO } from '../motor/combate';
-import type { Arma, Armadura, Raza } from '../datos/tipos';
+import { PERSONALIZADOS_VACIOS, cuentaPersonalizados, type Personalizados } from '../datos/paquetes';
+import { ESQUEMAS, type Campo, type EsquemaColeccion } from '../datos/esquemas';
+import type { NombreColeccion } from '../datos/tipos';
 
 interface Props {
   personalizados: Personalizados;
   onCambiar: (p: Personalizados) => void;
 }
 
-type Seccion = 'razas' | 'armas' | 'armaduras';
+type Entrada = Record<string, unknown>;
 
-const SECCIONES: { id: Seccion; texto: string; ayuda: string }[] = [
-  {
-    id: 'razas',
-    texto: 'Razas',
-    ayuda:
-      'Razas que no vienen en ningún manual. Los modificadores funcionan igual que los de ' +
-      'las oficiales, y si repites el nombre de una oficial la sustituyes.',
-  },
-  {
-    id: 'armas',
-    texto: 'Armas',
-    ayuda: 'Los huecos «Arma #1, #2, #3» de la ficha original, sin límite de número.',
-  },
-  { id: 'armaduras', texto: 'Armaduras', ayuda: 'Protecciones propias, con su TA por tipo de daño.' },
-];
-
-function CampoNum({
-  etiqueta, valor, onCambiar, ancho = 66,
-}: { etiqueta: string; valor: number | undefined; onCambiar: (v: number) => void; ancho?: number }) {
-  return (
-    <label style={{ display: 'inline-block', marginRight: 8, marginBottom: 6 }}>
-      <span style={{ display: 'block', fontSize: '0.62rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--texto-debil)' }}>
-        {etiqueta}
-      </span>
-      <input
-        type="number"
-        style={{ width: ancho }}
-        value={valor ?? 0}
-        aria-label={etiqueta}
-        onChange={(e) => onCambiar(Number(e.target.value) || 0)}
-      />
+function EditorCampo({
+  campo, valor, onCambiar, id,
+}: { campo: Campo; valor: unknown; onCambiar: (v: unknown) => void; id: string }) {
+  const etiqueta = (
+    <label htmlFor={id} style={{ display: 'block', fontSize: '0.62rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--texto-debil)' }}>
+      {campo.etiqueta}
     </label>
+  );
+
+  if (campo.tipo === 'numero') {
+    return (
+      <div style={{ display: 'inline-block', marginRight: 8, marginBottom: 6 }}>
+        {etiqueta}
+        <input
+          id={id}
+          type="number"
+          style={{ width: campo.ancho ?? 70 }}
+          value={typeof valor === 'number' ? valor : 0}
+          onChange={(e) => onCambiar(Number(e.target.value) || 0)}
+        />
+      </div>
+    );
+  }
+
+  if (campo.tipo === 'opcion') {
+    return (
+      <div className="campo">
+        {etiqueta}
+        <select id={id} value={String(valor ?? '')} onChange={(e) => onCambiar(e.target.value)}>
+          <option value="">—</option>
+          {campo.opciones?.map((o) => <option key={o} value={o}>{o}</option>)}
+        </select>
+      </div>
+    );
+  }
+
+  if (campo.tipo === 'parrafo') {
+    return (
+      <div className="campo">
+        {etiqueta}
+        <textarea
+          id={id}
+          rows={2}
+          value={String(valor ?? '')}
+          placeholder={campo.pista}
+          onChange={(e) => onCambiar(e.target.value)}
+        />
+      </div>
+    );
+  }
+
+  return (
+    <div className="campo">
+      {etiqueta}
+      <input
+        id={id}
+        value={String(valor ?? '')}
+        placeholder={campo.pista}
+        onChange={(e) => onCambiar(e.target.value)}
+      />
+    </div>
+  );
+}
+
+function EditorEntrada({
+  esquema, entrada, indice, onCambiar, onBorrar,
+}: {
+  esquema: EsquemaColeccion;
+  entrada: Entrada;
+  indice: number;
+  onCambiar: (e: Entrada) => void;
+  onBorrar: () => void;
+}) {
+  const [confirmar, setConfirmar] = useState(false);
+  const sueltos = esquema.campos.filter((c) => !c.grupo);
+  const grupos = [...new Set(esquema.campos.filter((c) => c.grupo).map((c) => c.grupo!))];
+  const id = (clave: string) => `${esquema.coleccion}-${indice}-${clave}`;
+  const set = (clave: string, valor: unknown) => onCambiar({ ...entrada, [clave]: valor });
+
+  const nombre = String(entrada[esquema.clave] ?? '');
+
+  return (
+    <article className="panel" style={{ marginBottom: 12 }}>
+      <h3 style={{ fontSize: '1rem', marginBottom: 10 }}>
+        {nombre || <span style={{ color: 'var(--texto-debil)' }}>Sin nombre</span>}
+      </h3>
+
+      <div className="rejilla">
+        {sueltos
+          .filter((c) => c.tipo !== 'parrafo')
+          .map((c) => (
+            <EditorCampo key={c.clave} campo={c} id={id(c.clave)} valor={entrada[c.clave]} onCambiar={(v) => set(c.clave, v)} />
+          ))}
+      </div>
+
+      {grupos.map((g) => (
+        <div key={g} style={{ marginBottom: 8 }}>
+          <p style={{ fontSize: '0.66rem', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--oro)', margin: '8px 0 4px' }}>
+            {g}
+          </p>
+          {esquema.campos
+            .filter((c) => c.grupo === g)
+            .map((c) => (
+              <EditorCampo key={c.clave} campo={c} id={id(c.clave)} valor={entrada[c.clave]} onCambiar={(v) => set(c.clave, v)} />
+            ))}
+        </div>
+      ))}
+
+      {sueltos
+        .filter((c) => c.tipo === 'parrafo')
+        .map((c) => (
+          <EditorCampo key={c.clave} campo={c} id={id(c.clave)} valor={entrada[c.clave]} onCambiar={(v) => set(c.clave, v)} />
+        ))}
+
+      <div className="acciones-regla">
+        {confirmar ? (
+          <>
+            <button className="accion peligro" onClick={onBorrar}>Confirmar borrado</button>
+            <button className="accion" onClick={() => setConfirmar(false)}>Cancelar</button>
+          </>
+        ) : (
+          <button className="accion" onClick={() => setConfirmar(true)}>Borrar</button>
+        )}
+      </div>
+    </article>
   );
 }
 
 export function VistaPersonalizado({ personalizados, onCambiar }: Props) {
-  const [seccion, setSeccion] = useState<Seccion>('razas');
-  const propio = { ...PERSONALIZADOS_VACIOS, ...personalizados };
+  const [coleccion, setColeccion] = useState<NombreColeccion>('razas');
+  const propio: Personalizados = { ...PERSONALIZADOS_VACIOS, ...personalizados };
+  const esquema = ESQUEMAS.find((e) => e.coleccion === coleccion)!;
+  const entradas = (propio[coleccion] ?? []) as unknown as Entrada[];
 
-  const set = <K extends keyof Personalizados>(clave: K, valor: Personalizados[K]) =>
-    onCambiar({ ...propio, [clave]: valor });
-
-  const actual = SECCIONES.find((s) => s.id === seccion)!;
+  const guardar = (nuevas: Entrada[]) =>
+    onCambiar({ ...propio, [coleccion]: nuevas as never });
 
   return (
     <div>
       <section className="panel" style={{ marginBottom: 16 }}>
         <h2>Contenido propio</h2>
         <p style={{ color: 'var(--texto-tenue)', fontSize: '0.9rem', marginTop: 0 }}>
-          Lo que tu mesa se inventa. En el Excel esto se hace editando a mano la hoja oculta
-          de tablas; aquí lo tienes como parte de la campaña, y se exporta con ella.
+          Todo lo que tu mesa se invente. En el Excel esto ocupa una hoja entera de
+          personalización, y las razas se añaden editando la tabla oculta. Aquí vive dentro
+          de la campaña y se exporta con ella. Si repites el nombre de una entrada oficial,
+          la tuya la sustituye.
         </p>
-        <nav className="pestanas" style={{ marginBottom: 0 }}>
-          {SECCIONES.map((s) => (
-            <button
-              key={s.id}
-              onClick={() => setSeccion(s.id)}
-              aria-current={seccion === s.id ? 'page' : undefined}
-            >
-              {s.texto} ({propio[s.id].length})
-            </button>
-          ))}
-        </nav>
+
+        <div className="campo" style={{ marginBottom: 0 }}>
+          <label htmlFor="coleccion">Qué quieres crear</label>
+          <select
+            id="coleccion"
+            value={coleccion}
+            onChange={(e) => setColeccion(e.target.value as NombreColeccion)}
+          >
+            {ESQUEMAS.map((e) => {
+              const n = (propio[e.coleccion] ?? []).length;
+              return (
+                <option key={e.coleccion} value={e.coleccion}>
+                  {e.plural}{n > 0 ? ` (${n})` : ''}
+                </option>
+              );
+            })}
+          </select>
+        </div>
+
+        {cuentaPersonalizados(propio) > 0 && (
+          <p style={{ color: 'var(--texto-debil)', fontSize: '0.82rem', margin: '10px 0 0' }}>
+            {cuentaPersonalizados(propio)} entradas propias en esta campaña.
+          </p>
+        )}
       </section>
 
-      <p style={{ color: 'var(--texto-tenue)', fontSize: '0.86rem' }}>{actual.ayuda}</p>
+      <p style={{ color: 'var(--texto-tenue)', fontSize: '0.86rem' }}>{esquema.ayuda}</p>
 
-      {seccion === 'razas' && (
-        <>
-          {propio.razas.map((r, i) => {
-            const cambiar = (cambios: Partial<Raza>) =>
-              set('razas', propio.razas.map((x, j) => (j === i ? { ...x, ...cambios } : x)));
-            return (
-              <article className="panel" key={i} style={{ marginBottom: 12 }}>
-                <div className="campo">
-                  <label htmlFor={`raza-${i}`}>Nombre</label>
-                  <input
-                    id={`raza-${i}`}
-                    value={r.raza}
-                    placeholder="Moguri, Bangaa, Viera…"
-                    onChange={(e) => cambiar({ raza: e.target.value })}
-                  />
-                </div>
-                <div>
-                  {CARACTERISTICAS.map((c) => (
-                    <CampoNum key={c} etiqueta={c} valor={r[c]} onCambiar={(v) => cambiar({ [c]: v })} />
-                  ))}
-                </div>
-                <div>
-                  {RESISTENCIAS.map((res) => (
-                    <CampoNum key={res} etiqueta={res} valor={r[res]} onCambiar={(v) => cambiar({ [res]: v })} />
-                  ))}
-                </div>
-                <div>
-                  <CampoNum etiqueta="Tamaño" valor={r.tamano} onCambiar={(v) => cambiar({ tamano: v })} />
-                  <CampoNum etiqueta="Regen." valor={r.regeneracion} onCambiar={(v) => cambiar({ regeneracion: v })} />
-                  <CampoNum etiqueta="Cansancio" valor={r.cansancio} onCambiar={(v) => cambiar({ cansancio: v })} />
-                  <CampoNum etiqueta="Ajuste nivel" valor={r.ajusteNivel} onCambiar={(v) => cambiar({ ajusteNivel: v })} ancho={78} />
-                </div>
-                <div className="campo">
-                  <label htmlFor={`razadesc-${i}`}>Capacidades raciales</label>
-                  <textarea
-                    id={`razadesc-${i}`}
-                    rows={2}
-                    value={r.descripciones ?? ''}
-                    placeholder="Se muestran como recordatorio; no modifican números."
-                    onChange={(e) => cambiar({ descripciones: e.target.value })}
-                  />
-                </div>
-                <button
-                  className="accion peligro"
-                  onClick={() => set('razas', propio.razas.filter((_, j) => j !== i))}
-                >
-                  Borrar raza
-                </button>
-              </article>
-            );
-          })}
-          <button
-            className="accion primaria"
-            onClick={() => set('razas', [...propio.razas, { raza: '' }])}
-          >
-            Añadir raza
-          </button>
-        </>
-      )}
+      {entradas.map((entrada, i) => (
+        <EditorEntrada
+          key={i}
+          esquema={esquema}
+          entrada={entrada}
+          indice={i}
+          onCambiar={(e) => guardar(entradas.map((x, j) => (j === i ? e : x)))}
+          onBorrar={() => guardar(entradas.filter((_, j) => j !== i))}
+        />
+      ))}
 
-      {seccion === 'armas' && (
-        <>
-          {propio.armas.map((a, i) => {
-            const cambiar = (cambios: Partial<Arma>) =>
-              set('armas', propio.armas.map((x, j) => (j === i ? { ...x, ...cambios } : x)));
-            return (
-              <article className="panel" key={i} style={{ marginBottom: 12 }}>
-                <div className="campo">
-                  <label htmlFor={`arma-${i}`}>Nombre</label>
-                  <input id={`arma-${i}`} value={a.arma} onChange={(e) => cambiar({ arma: e.target.value })} />
-                </div>
-                <div>
-                  <CampoNum etiqueta="Daño" valor={a.dano} onCambiar={(v) => cambiar({ dano: v })} />
-                  <CampoNum etiqueta="Turno" valor={a.turno} onCambiar={(v) => cambiar({ turno: v })} />
-                  <CampoNum etiqueta="FUE 1M" valor={a.fueRequerida} onCambiar={(v) => cambiar({ fueRequerida: v })} />
-                  <CampoNum etiqueta="FUE 2M" valor={a.fueReq2M} onCambiar={(v) => cambiar({ fueReq2M: v })} />
-                  <CampoNum etiqueta="Entereza" valor={a.entereza} onCambiar={(v) => cambiar({ entereza: v })} />
-                  <CampoNum etiqueta="Rotura" valor={a.rotura} onCambiar={(v) => cambiar({ rotura: v })} />
-                  <CampoNum etiqueta="Presencia" valor={a.presencia} onCambiar={(v) => cambiar({ presencia: v })} />
-                  <CampoNum etiqueta="Bon. Parada" valor={a.bonusParada} onCambiar={(v) => cambiar({ bonusParada: v })} ancho={78} />
-                </div>
-                <div className="rejilla">
-                  <div className="campo">
-                    <label htmlFor={`crit1-${i}`}>Crítico 1</label>
-                    <select id={`crit1-${i}`} value={a.critico1 ?? '-'} onChange={(e) => cambiar({ critico1: e.target.value })}>
-                      <option value="-">—</option>
-                      {TIPOS_DANO.map((t) => <option key={t} value={t}>{t}</option>)}
-                    </select>
-                  </div>
-                  <div className="campo">
-                    <label htmlFor={`crit2-${i}`}>Crítico 2</label>
-                    <select id={`crit2-${i}`} value={a.critico2 ?? '-'} onChange={(e) => cambiar({ critico2: e.target.value })}>
-                      <option value="-">—</option>
-                      {TIPOS_DANO.map((t) => <option key={t} value={t}>{t}</option>)}
-                    </select>
-                  </div>
-                  <div className="campo">
-                    <label htmlFor={`tipoarma-${i}`}>Tipo de arma</label>
-                    <input id={`tipoarma-${i}`} value={a.tipoArma ?? ''} placeholder="Espada/Corta" onChange={(e) => cambiar({ tipoArma: e.target.value })} />
-                  </div>
-                  <div className="campo">
-                    <label htmlFor={`especialarma-${i}`}>Especial</label>
-                    <input id={`especialarma-${i}`} value={a.especial ?? ''} onChange={(e) => cambiar({ especial: e.target.value })} />
-                  </div>
-                </div>
-                <button
-                  className="accion peligro"
-                  onClick={() => set('armas', propio.armas.filter((_, j) => j !== i))}
-                >
-                  Borrar arma
-                </button>
-              </article>
-            );
-          })}
-          <button
-            className="accion primaria"
-            onClick={() => set('armas', [...propio.armas, { arma: '' }])}
-          >
-            Añadir arma
-          </button>
-        </>
-      )}
-
-      {seccion === 'armaduras' && (
-        <>
-          {propio.armaduras.map((a, i) => {
-            const cambiar = (cambios: Partial<Armadura>) =>
-              set('armaduras', propio.armaduras.map((x, j) => (j === i ? { ...x, ...cambios } : x)));
-            return (
-              <article className="panel" key={i} style={{ marginBottom: 12 }}>
-                <div className="campo">
-                  <label htmlFor={`armadura-${i}`}>Nombre</label>
-                  <input id={`armadura-${i}`} value={a.armadura} onChange={(e) => cambiar({ armadura: e.target.value })} />
-                </div>
-                <div>
-                  <CampoNum etiqueta="Requerim." valor={a.requerimiento} onCambiar={(v) => cambiar({ requerimiento: v })} ancho={78} />
-                  <CampoNum etiqueta="Pen. Nat." valor={a.penNatural} onCambiar={(v) => cambiar({ penNatural: v })} />
-                  <CampoNum etiqueta="Rest. Mov." valor={a.restMovimiento} onCambiar={(v) => cambiar({ restMovimiento: v })} />
-                  <CampoNum etiqueta="Entereza" valor={a.entereza} onCambiar={(v) => cambiar({ entereza: v })} />
-                  <CampoNum etiqueta="Presencia" valor={a.presencia} onCambiar={(v) => cambiar({ presencia: v })} />
-                </div>
-                <div>
-                  {TIPOS_DANO.map((t) => (
-                    <CampoNum key={t} etiqueta={t} valor={a[t]} onCambiar={(v) => cambiar({ [t]: v })} ancho={56} />
-                  ))}
-                </div>
-                <div className="rejilla">
-                  <div className="campo">
-                    <label htmlFor={`loc-${i}`}>Localización</label>
-                    <input id={`loc-${i}`} value={a.localizacion ?? ''} placeholder="Completa, Camisola, Cabeza…" onChange={(e) => cambiar({ localizacion: e.target.value })} />
-                  </div>
-                  <div className="campo">
-                    <label htmlFor={`clase-${i}`}>Clase</label>
-                    <select id={`clase-${i}`} value={a.clase ?? ''} onChange={(e) => cambiar({ clase: e.target.value })}>
-                      <option value="">—</option>
-                      <option>Blanda</option>
-                      <option>Dura</option>
-                      <option>Natural</option>
-                    </select>
-                  </div>
-                </div>
-                <button
-                  className="accion peligro"
-                  onClick={() => set('armaduras', propio.armaduras.filter((_, j) => j !== i))}
-                >
-                  Borrar armadura
-                </button>
-              </article>
-            );
-          })}
-          <button
-            className="accion primaria"
-            onClick={() => set('armaduras', [...propio.armaduras, { armadura: '' }])}
-          >
-            Añadir armadura
-          </button>
-        </>
-      )}
+      <button
+        className="accion primaria"
+        onClick={() => guardar([...entradas, { [esquema.clave]: '' }])}
+      >
+        Añadir {esquema.singular}
+      </button>
     </div>
   );
 }
