@@ -102,10 +102,13 @@ for h in data['habilidadesEsenciales']:
 ARMA_H = ['arma', 'dano', 'turno', 'fueRequerida', 'fueReq2M', 'critico1',
           'critico2', 'tipoArma', 'conocida', 'entereza', 'rotura',
           'presencia', 'bonusParada', 'bonusEsquiva', 'cadencia', 'recarga',
-          'alcance', 'fuerza', 'especial', '_x', 'tamano', 'atrDano']
+          'alcance', 'fuerza', 'especial', '_x', 'tamano', '_atrDano']
 armas = table('Tablas', '$D$638:$Y$840', ARMA_H)
 for a in armas:
     a.pop('_x', None)
+    # 'Atr. Daño' (col Y) no es dato del arma: en la hoja es la fórmula
+    # =Bono_Fue, es decir el bono de FUE del personaje. Se descarta.
+    a.pop('_atrDano', None)
 data['armas'] = [a for a in armas if not str(a['arma']).startswith('Arma #')]
 
 # --- Armaduras ---------------------------------------------------------
@@ -196,6 +199,11 @@ base['nivelMagia'] = [[clean(c.value) for c in r] for r in cells('Tablas', '$P$1
 base['experienciaNecesaria'] = {
     'nota': 'fila = nivel actual; columnas = ajuste de nivel 0..10',
     'filas': [[clean(c.value) for c in r] for r in cells('Tablas', '$P$69:$AA$99')]}
+base['armasEnormes'] = [
+    {'tamano': clean(r[0].value), 'fueMin': clean(r[1].value),
+     'tamanoMin': clean(r[2].value), 'penFUE': clean(r[3].value),
+     'multDano': clean(r[4].value), 'c5': clean(r[5].value), 'c6': clean(r[6].value)}
+    for r in cells('Tablas', '$AE$598:$AK$600') if clean(r[0].value)]
 base['tipologias'] = [[clean(c.value) for c in r] for r in cells('Tablas', '$X$603:$AA$614')]
 data['tablasBase'] = base
 

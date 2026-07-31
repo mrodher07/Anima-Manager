@@ -3,8 +3,7 @@
   "arma": "Desarmado",
   "tipoArma": "Natural/-",
   "conocida": "Distinta",
-  "tamano": "Pequeña",
-  "atrDano": 20
+  "tamano": "Pequeña"
  },
  {
   "arma": "Armas naturales",
@@ -22,8 +21,7 @@
   "recarga": "-",
   "alcance": 0,
   "fuerza": 12,
-  "tamano": "Mediana",
-  "atrDano": 20
+  "tamano": "Mediana"
  },
  {
   "arma": "Alabarda",
@@ -43,7 +41,6 @@
   "alcance": "-",
   "especial": "A 1 o 2 manos",
   "tamano": "Grande",
-  "atrDano": 20,
   "_seccion": "ARMAS COMUNES"
  },
  {
@@ -64,7 +61,6 @@
   "alcance": 20,
   "especial": "A 1 o 2 manos, Lanzable (100/XXXm)",
   "tamano": "Grande",
-  "atrDano": 20,
   "_seccion": "ARMAS COMUNES"
  },
  {
@@ -85,7 +81,6 @@
   "alcance": "-",
   "especial": "-",
   "tamano": "Grande",
-  "atrDano": 20,
   "_seccion": "ARMAS COMUNES"
  },
  {
@@ -106,7 +101,6 @@
   "alcance": "-",
   "especial": "A 2 manos",
   "tamano": "Grande",
-  "atrDano": 20,
   "_seccion": "ARMAS COMUNES"
  },
  {
@@ -127,7 +121,6 @@
   "alcance": "-",
   "especial": "A 2 manos",
   "tamano": "Grande",
-  "atrDano": 20,
   "_seccion": "ARMAS COMUNES"
  },
  {
@@ -148,7 +141,6 @@
   "alcance": 20,
   "especial": "Lanzable (50/20m)",
   "tamano": "Mediana",
-  "atrDano": 20,
   "_seccion": "ARMAS COMUNES"
  },
  {
@@ -169,7 +161,6 @@
   "alcance": 20,
   "especial": "Presa (FUE 10), Compleja, Ver, Lanzable (80/XXXm)",
   "tamano": "Mediana",
-  "atrDano": 20,
   "_seccion": "ARMAS COMUNES"
  },
  {
@@ -190,7 +181,6 @@
   "alcance": "-",
   "especial": "-",
   "tamano": "Mediana",
-  "atrDano": 20,
   "_seccion": "ARMAS COMUNES"
  },
  {
@@ -211,7 +201,6 @@
   "alcance": "-",
   "especial": "A 2 manos, Ver",
   "tamano": "Grande",
-  "atrDano": 20,
   "_seccion": "ARMAS COMUNES"
  },
  {
@@ -232,7 +221,6 @@
   "alcance": "-",
   "especial": "Presa (FUE 8), Compleja",
   "tamano": "Mediana",
-  "atrDano": 20,
   "_seccion": "ARMAS COMUNES"
  },
  {
@@ -253,7 +241,6 @@
   "alcance": "-",
   "especial": "-",
   "tamano": "Pequeña",
-  "atrDano": 20,
   "_seccion": "ARMAS COMUNES"
  },
  {
@@ -274,7 +261,6 @@
   "alcance": "-",
   "especial": "-",
   "tamano": "Mediana",
-  "atrDano": 20,
   "_seccion": "ARMAS COMUNES"
  },
  {
@@ -295,7 +281,6 @@
   "alcance": "-",
   "especial": "-",
   "tamano": "Mediana",
-  "atrDano": 20,
   "_seccion": "ARMAS COMUNES"
  },
  {
@@ -316,7 +301,6 @@
   "alcance": "-",
   "especial": "Precisa",
   "tamano": "Pequeña",
-  "atrDano": 20,
   "_seccion": "ARMAS COMUNES"
  },
  {
@@ -337,7 +321,6 @@
   "alcance": "-",
   "especial": "A 2 manos",
   "tamano": "Grande",
-  "atrDano": 20,
   "_seccion": "ARMAS COMUNES"
  },
  {
@@ -358,7 +341,6 @@
   "alcance": 20,
   "especial": "Lanzable (50/XXXm), Precisa",
   "tamano": "Pequeña",
-  "atrDano": 20,
   "_seccion": "ARMAS COMUNES"
  },
  {
@@ -379,7 +361,6 @@
   "alcance": 15,
   "especial": "Lanzable (50/XXXm), Precisa, Traba",
   "tamano": "Pequeña",
-  "atrDano": 20,
   "_seccion": "ARMAS COMUNES"
  },
  {
@@ -400,7 +381,6 @@
   "alcance": 20,
   "especial": "Lanzable (40/XXXm)",
   "tamano": "Mediana",
-  "atrDano": 20,
   "_seccion": "ARMAS COMUNES"
  },
  {
@@ -421,7 +401,6 @@
   "alcance": "-",
   "especial": "Precisa",
   "tamano": "Pequeña",
-  "atrDano": 20,
   "_seccion": "ARMAS COMUNES"
  },
  {
@@ -442,7 +421,6 @@
   "alcance": "-",
   "especial": "-",
   "tamano": "Pequeña",
-  "atrDano": 20,
   "_seccion": "ARMAS COMUNES"
  },
  {
@@ -463,7 +441,6 @@
   "alcance": "-",
   "especial": "A 1 o 2 manos",
   "tamano": "Grande",
-  "atrDano": 20,
   "_seccion": "ARMAS COMUNES"
  },
  {
@@ -484,7 +461,6 @@
   "alcance": "-",
   "especial": "-",
   "tamano": "Mediana",
-  "atrDano": 20,
   "_seccion": "ARMAS COMUNES"
  },
  {
@@ -505,7 +481,6 @@
   "alcance": "-",
   "especial": "A 1 o 2 manos",
   "tamano": "Grande",
-  "atrDano": 20,
   "_seccion": "ARMAS COMUNES"
  },
  {
@@ -526,7 +501,6 @@
   "alcance": "-",
   "especial": "Precisa",
   "tamano": "Pequeña",
-  "atrDano": 20,
   "_seccion": "ARMAS COMUNES"
  },
  {
@@ -547,7 +521,6 @@
   "alcance": "-",
   "especial": "-",
   "tamano": "Mediana",
-  "atrDano": 20,
   "_seccion": "ARMAS COMUNES"
  },
  {
@@ -568,7 +541,6 @@
   "alcance": 30,
   "especial": "Lanzable (30/XXXm), Precisa",
   "tamano": "Pequeña",
-  "atrDano": 20,
   "_seccion": "ARMAS COMUNES"
  },
  {
@@ -589,7 +561,6 @@
   "alcance": "-",
   "especial": "Precisa",
   "tamano": "Mediana",
-  "atrDano": 20,
   "_seccion": "ARMAS COMUNES"
  },
  {
@@ -610,7 +581,6 @@
   "alcance": "-",
   "especial": "-",
   "tamano": "Mediana",
-  "atrDano": 20,
   "_seccion": "ARMAS COMUNES"
  },
  {
@@ -631,7 +601,6 @@
   "alcance": "-",
   "especial": "Precisa",
   "tamano": "Pequeña",
-  "atrDano": 20,
   "_seccion": "ARMAS COMUNES"
  },
  {
@@ -652,7 +621,6 @@
   "alcance": "-",
   "especial": "-",
   "tamano": "Pequeña",
-  "atrDano": 20,
   "_seccion": "ARMAS COMUNES"
  },
  {
@@ -673,7 +641,6 @@
   "alcance": "-",
   "especial": "-",
   "tamano": "Mediana",
-  "atrDano": 20,
   "_seccion": "ARMAS COMUNES"
  },
  {
@@ -694,7 +661,6 @@
   "alcance": "-",
   "especial": "A 1 o 2 manos",
   "tamano": "Grande",
-  "atrDano": 20,
   "_seccion": "ARMAS COMUNES"
  },
  {
@@ -715,7 +681,6 @@
   "alcance": "-",
   "especial": "A 1 o 2 manos, Ver",
   "tamano": "Grande",
-  "atrDano": 20,
   "_seccion": "ARMAS COMUNES"
  },
  {
@@ -736,7 +701,6 @@
   "alcance": "-",
   "especial": "A 2 manos",
   "tamano": "Grande",
-  "atrDano": 20,
   "_seccion": "ARMAS COMUNES"
  },
  {
@@ -757,7 +721,6 @@
   "alcance": "-",
   "especial": "A 1 o 2 manos",
   "tamano": "Mediana",
-  "atrDano": 20,
   "_seccion": "ARMAS COMUNES"
  },
  {
@@ -778,7 +741,6 @@
   "alcance": "-",
   "especial": "A 1 o 2 manos",
   "tamano": "Grande",
-  "atrDano": 20,
   "_seccion": "ARMAS COMUNES"
  },
  {
@@ -799,7 +761,6 @@
   "alcance": "-",
   "especial": "A 2 manos",
   "tamano": "Grande",
-  "atrDano": 20,
   "_seccion": "ARMAS COMUNES"
  },
  {
@@ -820,7 +781,6 @@
   "alcance": "-",
   "especial": "A 1 o 2 manos",
   "tamano": "Grande",
-  "atrDano": 20,
   "_seccion": "ARMAS COMUNES"
  },
  {
@@ -841,7 +801,6 @@
   "alcance": 5,
   "especial": "Lanzable (100/XXXm)",
   "tamano": "Mediana",
-  "atrDano": 20,
   "_seccion": "ARMAS COMUNES"
  },
  {
@@ -862,7 +821,6 @@
   "alcance": 10,
   "especial": "Lanzable (80/XXXm)",
   "tamano": "Mediana",
-  "atrDano": 20,
   "_seccion": "ARMAS COMUNES"
  },
  {
@@ -883,7 +841,6 @@
   "alcance": "-",
   "especial": "Precisa, Ver",
   "tamano": "Pequeña",
-  "atrDano": 20,
   "_seccion": "ARMAS COMUNES"
  },
  {
@@ -904,7 +861,6 @@
   "alcance": 30,
   "especial": "Lanzable (100/XXXm)",
   "tamano": "Grande",
-  "atrDano": 20,
   "_seccion": "ARMAS COMUNES"
  },
  {
@@ -925,7 +881,6 @@
   "alcance": "-",
   "especial": "Ver",
   "tamano": "Pequeña",
-  "atrDano": 20,
   "_seccion": "ARMAS COMUNES"
  },
  {
@@ -946,7 +901,6 @@
   "alcance": "-",
   "especial": "Precisa, Ver",
   "tamano": "Pequeña",
-  "atrDano": 20,
   "_seccion": "ARMAS COMUNES"
  },
  {
@@ -967,7 +921,6 @@
   "alcance": "-",
   "especial": "Ver",
   "tamano": "Mediana",
-  "atrDano": 20,
   "_seccion": "ARMAS COMUNES"
  },
  {
@@ -988,7 +941,6 @@
   "alcance": "-",
   "especial": "-",
   "tamano": "Pequeña",
-  "atrDano": 20,
   "_seccion": "ARMAS COMUNES"
  },
  {
@@ -1009,7 +961,6 @@
   "alcance": 30,
   "especial": "Lanzable (80/XXXm), A 1 o 2 manos",
   "tamano": "Grande",
-  "atrDano": 20,
   "_seccion": "ARMAS COMUNES"
  },
  {
@@ -1030,7 +981,6 @@
   "alcance": "-",
   "especial": "Ver",
   "tamano": "Grande",
-  "atrDano": 20,
   "_seccion": "ARMAS COMUNES"
  },
  {
@@ -1051,7 +1001,6 @@
   "alcance": "-",
   "especial": "Compleja, Presa (FUE 8)",
   "tamano": "Mediana",
-  "atrDano": 20,
   "_seccion": "ARMAS COMUNES"
  },
  {
@@ -1072,7 +1021,6 @@
   "alcance": "-",
   "especial": "Compleja, Presa (FUE 9), Ver",
   "tamano": "Mediana",
-  "atrDano": 20,
   "_seccion": "ARMAS COMUNES"
  },
  {
@@ -1093,7 +1041,6 @@
   "alcance": "-",
   "especial": "A 2 manos,Presa (FUE 8),Compleja",
   "tamano": "Mediana",
-  "atrDano": 20,
   "_seccion": "ARMAS COMUNES"
  },
  {
@@ -1114,7 +1061,6 @@
   "alcance": "-",
   "especial": "Traba el Arma",
   "tamano": "Pequeña",
-  "atrDano": 20,
   "_seccion": "ARMAS COMUNES"
  },
  {
@@ -1135,7 +1081,6 @@
   "alcance": "-",
   "especial": "Compleja",
   "tamano": "Grande",
-  "atrDano": 20,
   "_seccion": "ARMAS COMUNES"
  },
  {
@@ -1156,7 +1101,6 @@
   "alcance": "-",
   "especial": "-",
   "tamano": "Mediana",
-  "atrDano": 20,
   "_seccion": "ARMAS COMUNES"
  },
  {
@@ -1177,7 +1121,6 @@
   "alcance": "-",
   "especial": "Compleja",
   "tamano": "Mediana",
-  "atrDano": 20,
   "_seccion": "ARMAS COMUNES"
  },
  {
@@ -1198,7 +1141,6 @@
   "alcance": "-",
   "especial": "A 1 o 2 manos",
   "tamano": "Mediana",
-  "atrDano": 20,
   "_seccion": "ARMAS COMUNES"
  },
  {
@@ -1219,7 +1161,6 @@
   "alcance": "-",
   "especial": "-",
   "tamano": "Mediana",
-  "atrDano": 20,
   "_seccion": "ARMAS COMUNES"
  },
  {
@@ -1240,7 +1181,6 @@
   "alcance": "-",
   "especial": "A 1 o 2 manos",
   "tamano": "Grande",
-  "atrDano": 20,
   "_seccion": "ARMAS COMUNES"
  },
  {
@@ -1261,7 +1201,6 @@
   "alcance": "-",
   "especial": "A 2 manos",
   "tamano": "Grande",
-  "atrDano": 20,
   "_seccion": "ARMAS COMUNES"
  },
  {
@@ -1282,7 +1221,6 @@
   "alcance": "-",
   "especial": "Precisa",
   "tamano": "Pequeña",
-  "atrDano": 20,
   "_seccion": "ARMAS COMUNES"
  },
  {
@@ -1303,7 +1241,6 @@
   "alcance": "-",
   "especial": "A 2  manos, Ver",
   "tamano": "Grande",
-  "atrDano": 20,
   "_seccion": "ARMAS COMUNES"
  },
  {
@@ -1324,7 +1261,6 @@
   "alcance": "-",
   "especial": "A 1 o 2 manos",
   "tamano": "Grande",
-  "atrDano": 20,
   "_seccion": "ARMAS COMUNES"
  },
  {
@@ -1345,7 +1281,6 @@
   "alcance": 5,
   "especial": "Lanzable (100/XXXm), Presa (FUE 10), Ver",
   "tamano": "Mediana",
-  "atrDano": 20,
   "_seccion": "ARMAS COMUNES"
  },
  {
@@ -1366,7 +1301,6 @@
   "alcance": "-",
   "especial": "-",
   "tamano": "Mediana",
-  "atrDano": 20,
   "_seccion": "ARMAS COMUNES"
  },
  {
@@ -1387,7 +1321,6 @@
   "alcance": "-",
   "especial": "Compleja, Traba el arma, Ver",
   "tamano": "Mediana",
-  "atrDano": 20,
   "_seccion": "ARMAS COMUNES"
  },
  {
@@ -1408,7 +1341,6 @@
   "alcance": "-",
   "especial": "-",
   "tamano": "Mediana",
-  "atrDano": 20,
   "_seccion": "ARMAS COMUNES"
  },
  {
@@ -1429,7 +1361,6 @@
   "alcance": 15,
   "especial": "Lanzable (100/XXXm), A 1 o 2 manos",
   "tamano": "Grande",
-  "atrDano": 20,
   "_seccion": "ARMAS COMUNES"
  },
  {
@@ -1450,7 +1381,6 @@
   "alcance": 30,
   "especial": "Lanzable (80/XXXm), Ver",
   "tamano": "Mediana",
-  "atrDano": 20,
   "_seccion": "ARMAS COMUNES"
  },
  {
@@ -1471,7 +1401,6 @@
   "alcance": "-",
   "especial": "Compleja, Ver",
   "tamano": "Mediana",
-  "atrDano": 20,
   "_seccion": "ARMAS COMUNES"
  },
  {
@@ -1492,7 +1421,6 @@
   "alcance": "-",
   "especial": "A 1 o 2 manos",
   "tamano": "Grande",
-  "atrDano": 20,
   "_seccion": "ARMAS COMUNES"
  },
  {
@@ -1513,7 +1441,6 @@
   "alcance": "-",
   "especial": "A 2 manos",
   "tamano": "Grande",
-  "atrDano": 20,
   "_seccion": "ARMAS COMUNES"
  },
  {
@@ -1535,7 +1462,6 @@
   "recarga": "-",
   "alcance": "-",
   "especial": "Escudo. -30 HP/-15 HE si se usa para atacar.",
-  "atrDano": 20,
   "_seccion": "ESCUDOS"
  },
  {
@@ -1557,7 +1483,6 @@
   "recarga": "-",
   "alcance": "-",
   "especial": "Escudo. -20 HP/-10 HE si se usa para atacar.",
-  "atrDano": 20,
   "_seccion": "ESCUDOS"
  },
  {
@@ -1579,7 +1504,6 @@
   "recarga": "-",
   "alcance": "-",
   "especial": "Escudo. -10 HP/-5 HE si se usa para atacar.",
-  "atrDano": 20,
   "_seccion": "ESCUDOS"
  },
  {
@@ -1600,7 +1524,6 @@
   "alcance": 20,
   "especial": "Precisa, Lanzable (40/XXXm)",
   "tamano": "Pequeña",
-  "atrDano": 20,
   "_seccion": "ARMAS EXÓTICAS"
  },
  {
@@ -1621,7 +1544,6 @@
   "alcance": "-",
   "especial": "Compleja, A 2 manos, Ver",
   "tamano": "Grande",
-  "atrDano": 20,
   "_seccion": "ARMAS EXÓTICAS"
  },
  {
@@ -1642,7 +1564,6 @@
   "alcance": 20,
   "especial": "Lanzable (60/XXXm), Ver",
   "tamano": "Pequeña",
-  "atrDano": 20,
   "_seccion": "ARMAS EXÓTICAS"
  },
  {
@@ -1663,7 +1584,6 @@
   "alcance": "-",
   "especial": "Compleja, Precisa, Ver",
   "tamano": "Pequeña",
-  "atrDano": 20,
   "_seccion": "ARMAS EXÓTICAS"
  },
  {
@@ -1684,7 +1604,6 @@
   "alcance": "-",
   "especial": "-",
   "tamano": "Pequeña",
-  "atrDano": 20,
   "_seccion": "ARMAS EXÓTICAS"
  },
  {
@@ -1705,7 +1624,6 @@
   "alcance": "-",
   "especial": "A 1 o 2 manos",
   "tamano": "Mediana",
-  "atrDano": 20,
   "_seccion": "ARMAS EXÓTICAS"
  },
  {
@@ -1726,7 +1644,6 @@
   "alcance": "-",
   "especial": "A 2 manos. Permite ataque extra con -10",
   "tamano": "Mediana",
-  "atrDano": 20,
   "_seccion": "ARMAS EXÓTICAS"
  },
  {
@@ -1747,7 +1664,6 @@
   "alcance": "-",
   "especial": "Compleja, Ver",
   "tamano": "Pequeña",
-  "atrDano": 20,
   "_seccion": "ARMAS EXÓTICAS"
  },
  {
@@ -1768,7 +1684,6 @@
   "alcance": "-",
   "especial": "A 2 manos, Presa (FUE 8), Ver",
   "tamano": "Pequeña",
-  "atrDano": 20,
   "_seccion": "ARMAS EXÓTICAS"
  },
  {
@@ -1789,7 +1704,6 @@
   "alcance": "-",
   "especial": "A 1 o 2 manos",
   "tamano": "Grande",
-  "atrDano": 20,
   "_seccion": "ARMAS EXÓTICAS"
  },
  {
@@ -1810,7 +1724,6 @@
   "alcance": "-",
   "especial": "-",
   "tamano": "Mediana",
-  "atrDano": 20,
   "_seccion": "ARMAS EXÓTICAS"
  },
  {
@@ -1831,7 +1744,6 @@
   "alcance": "-",
   "especial": "A 1 o 2 manos",
   "tamano": "Grande",
-  "atrDano": 20,
   "_seccion": "ARMAS EXÓTICAS"
  },
  {
@@ -1852,7 +1764,6 @@
   "alcance": "-",
   "especial": "Precisa, Traba",
   "tamano": "Pequeña",
-  "atrDano": 20,
   "_seccion": "ARMAS EXÓTICAS"
  },
  {
@@ -1873,7 +1784,6 @@
   "alcance": "-",
   "especial": "Ver",
   "tamano": "Pequeña",
-  "atrDano": 20,
   "_seccion": "ARMAS EXÓTICAS"
  },
  {
@@ -1894,7 +1804,6 @@
   "alcance": 20,
   "especial": "Lanzable (30/XXXm)",
   "tamano": "Pequeña",
-  "atrDano": 20,
   "_seccion": "ARMAS EXÓTICAS"
  },
  {
@@ -1915,7 +1824,6 @@
   "alcance": "-",
   "especial": "Precisa",
   "tamano": "Pequeña",
-  "atrDano": 20,
   "_seccion": "ARMAS EXÓTICAS"
  },
  {
@@ -1936,7 +1844,6 @@
   "alcance": "-",
   "especial": "Precisa",
   "tamano": "Pequeña",
-  "atrDano": 20,
   "_seccion": "ARMAS EXÓTICAS"
  },
  {
@@ -1957,7 +1864,6 @@
   "alcance": "-",
   "especial": "1 o 2 manos, Ver",
   "tamano": "Mediana",
-  "atrDano": 20,
   "_seccion": "ARMAS EXÓTICAS"
  },
  {
@@ -1978,7 +1884,6 @@
   "alcance": "-",
   "especial": "Traba el arma",
   "tamano": "Pequeña",
-  "atrDano": 20,
   "_seccion": "ARMAS EXÓTICAS"
  },
  {
@@ -1999,7 +1904,6 @@
   "alcance": "-",
   "especial": "-",
   "tamano": "Pequeña",
-  "atrDano": 20,
   "_seccion": "ARMAS EXÓTICAS"
  },
  {
@@ -2020,7 +1924,6 @@
   "alcance": "-",
   "especial": "Compleja,Presa (FUE 8)",
   "tamano": "Mediana",
-  "atrDano": 20,
   "_seccion": "ARMAS EXÓTICAS"
  },
  {
@@ -2041,7 +1944,6 @@
   "alcance": "-",
   "especial": "-",
   "tamano": "Mediana",
-  "atrDano": 20,
   "_seccion": "ARMAS EXÓTICAS"
  },
  {
@@ -2062,7 +1964,6 @@
   "alcance": "-",
   "especial": "Precisa",
   "tamano": "Pequeña",
-  "atrDano": 20,
   "_seccion": "ARMAS EXÓTICAS"
  },
  {
@@ -2083,7 +1984,6 @@
   "alcance": "-",
   "especial": "Ver",
   "tamano": "Grande",
-  "atrDano": 20,
   "_seccion": "ARMAS EXÓTICAS"
  },
  {
@@ -2104,7 +2004,6 @@
   "alcance": 20,
   "especial": "Lanzable (40/XXXm)",
   "tamano": "Pequeña",
-  "atrDano": 20,
   "_seccion": "ARMAS EXÓTICAS"
  },
  {
@@ -2125,7 +2024,6 @@
   "alcance": "-",
   "especial": "Presa (Fuerza 7),Ver",
   "tamano": "Pequeña",
-  "atrDano": 20,
   "_seccion": "ARMAS EXÓTICAS"
  },
  {
@@ -2146,7 +2044,6 @@
   "alcance": "-",
   "especial": "Compleja, 2 manos, Ver",
   "tamano": "Grande",
-  "atrDano": 20,
   "_seccion": "ARMAS EXÓTICAS"
  },
  {
@@ -2167,7 +2064,6 @@
   "alcance": "-",
   "especial": "A 2  manos",
   "tamano": "Grande",
-  "atrDano": 20,
   "_seccion": "ARMAS EXÓTICAS"
  },
  {
@@ -2188,7 +2084,6 @@
   "alcance": "-",
   "especial": "A 1 o 2 manos",
   "tamano": "Grande",
-  "atrDano": 20,
   "_seccion": "ARMAS EXÓTICAS"
  },
  {
@@ -2209,7 +2104,6 @@
   "alcance": "-",
   "especial": "-",
   "tamano": "Mediana",
-  "atrDano": 20,
   "_seccion": "ARMAS EXÓTICAS"
  },
  {
@@ -2230,7 +2124,6 @@
   "alcance": "-",
   "especial": "A 1 o 2 manos",
   "tamano": "Grande",
-  "atrDano": 20,
   "_seccion": "ARMAS EXÓTICAS"
  },
  {
@@ -2251,7 +2144,6 @@
   "alcance": "-",
   "especial": "Ver",
   "tamano": "Grande",
-  "atrDano": 20,
   "_seccion": "ARMAS EXÓTICAS"
  },
  {
@@ -2272,7 +2164,6 @@
   "alcance": "-",
   "especial": "A 2 manos, Presa (FUE 7), Ver",
   "tamano": "Grande",
-  "atrDano": 20,
   "_seccion": "ARMAS EXÓTICAS"
  },
  {
@@ -2293,7 +2184,6 @@
   "alcance": "-",
   "especial": "A 1 o 2 manos",
   "tamano": "Mediana",
-  "atrDano": 20,
   "_seccion": "ARMAS EXÓTICAS"
  },
  {
@@ -2314,7 +2204,6 @@
   "alcance": 30,
   "especial": "Lanzable (100/XXXm)",
   "tamano": "Grande",
-  "atrDano": 20,
   "_seccion": "ARMAS EXÓTICAS"
  },
  {
@@ -2335,7 +2224,6 @@
   "alcance": "-",
   "especial": "-",
   "tamano": "Mediana",
-  "atrDano": 20,
   "_seccion": "ARMAS EXÓTICAS"
  },
  {
@@ -2357,7 +2245,6 @@
   "fuerza": 11,
   "especial": "Compleja, Ver",
   "tamano": "Mediana",
-  "atrDano": 20,
   "_seccion": "A. DE PROYECTILES"
  },
  {
@@ -2378,7 +2265,6 @@
   "alcance": 90,
   "especial": "A 2 manos",
   "tamano": "Grande",
-  "atrDano": 20,
   "_seccion": "A. DE PROYECTILES"
  },
  {
@@ -2399,7 +2285,6 @@
   "alcance": 40,
   "especial": "A 2 manos",
   "tamano": "Grande",
-  "atrDano": 20,
   "_seccion": "A. DE PROYECTILES"
  },
  {
@@ -2420,7 +2305,6 @@
   "alcance": 40,
   "especial": "A 2 manos, Ver",
   "tamano": "Grande",
-  "atrDano": 20,
   "_seccion": "A. DE PROYECTILES"
  },
  {
@@ -2441,7 +2325,6 @@
   "alcance": 60,
   "especial": "A 2 manos",
   "tamano": "Grande",
-  "atrDano": 20,
   "_seccion": "A. DE PROYECTILES"
  },
  {
@@ -2463,7 +2346,6 @@
   "fuerza": 14,
   "especial": "Ver",
   "tamano": "Mediana",
-  "atrDano": 25,
   "_seccion": "A. DE PROYECTILES"
  },
  {
@@ -2485,7 +2367,6 @@
   "fuerza": 8,
   "especial": "1 o 2 manos, Ver",
   "tamano": "Mediana",
-  "atrDano": 10,
   "_seccion": "A. DE PROYECTILES"
  },
  {
@@ -2507,7 +2388,6 @@
   "fuerza": 5,
   "especial": "Ver",
   "tamano": "Mediana",
-  "atrDano": 0,
   "_seccion": "A. DE PROYECTILES"
  },
  {
@@ -2529,7 +2409,6 @@
   "fuerza": 8,
   "especial": "1 o 2 manos, Ver",
   "tamano": "Mediana",
-  "atrDano": 10,
   "_seccion": "A. DE PROYECTILES"
  },
  {
@@ -2551,7 +2430,6 @@
   "fuerza": 10,
   "especial": "1 o 2 manos, Ver",
   "tamano": "Mediana",
-  "atrDano": 15,
   "_seccion": "A. DE PROYECTILES"
  },
  {
@@ -2572,7 +2450,6 @@
   "alcance": 50,
   "especial": "-",
   "tamano": "Pequeña",
-  "atrDano": 0,
   "_seccion": "A. DE PROYECTILES"
  },
  {
@@ -2593,7 +2470,6 @@
   "alcance": 90,
   "especial": "A 2 manos",
   "tamano": "Grande",
-  "atrDano": 20,
   "_seccion": "A. DE PROYECTILES"
  },
  {
@@ -2614,7 +2490,6 @@
   "alcance": 50,
   "especial": "-",
   "tamano": "Pequeña",
-  "atrDano": 20,
   "_seccion": "A. DE PROYECTILES"
  },
  {
@@ -2636,7 +2511,6 @@
   "fuerza": 9,
   "especial": "Compleja, Ver",
   "tamano": "Mediana",
-  "atrDano": 10,
   "_seccion": "A. DE PROYECTILES"
  },
  {
@@ -2657,7 +2531,6 @@
   "fuerza": 10,
   "especial": "Ver",
   "tamano": "Grande",
-  "atrDano": 15,
   "_seccion": "ARMAS DE ASEDIO"
  },
  {
@@ -2678,7 +2551,6 @@
   "fuerza": 13,
   "especial": "Ver",
   "tamano": "Grande",
-  "atrDano": 25,
   "_seccion": "ARMAS DE ASEDIO"
  },
  {
@@ -2700,7 +2572,6 @@
   "fuerza": 14,
   "especial": "Ver",
   "tamano": "Grande",
-  "atrDano": 25,
   "_seccion": "ARMAS DE ASEDIO"
  },
  {
@@ -2719,7 +2590,6 @@
   "recarga": "-",
   "alcance": "-",
   "especial": "Munición para armas de fuego",
-  "atrDano": 0,
   "_seccion": "MUNICIÓN"
  },
  {
@@ -2738,7 +2608,6 @@
   "recarga": "-",
   "alcance": "-",
   "especial": "Munición para arcos de balas",
-  "atrDano": 0,
   "_seccion": "MUNICIÓN"
  },
  {
@@ -2757,7 +2626,6 @@
   "recarga": "-",
   "alcance": "-",
   "especial": "Munición para cañón",
-  "atrDano": 0,
   "_seccion": "MUNICIÓN"
  },
  {
@@ -2776,7 +2644,6 @@
   "recarga": "-",
   "alcance": "-",
   "especial": "Munición para cañón Leo",
-  "atrDano": 0,
   "_seccion": "MUNICIÓN"
  },
  {
@@ -2795,7 +2662,6 @@
   "recarga": "-",
   "alcance": "-",
   "especial": "Munición para Leo",
-  "atrDano": 0,
   "_seccion": "MUNICIÓN"
  },
  {
@@ -2814,7 +2680,6 @@
   "recarga": "-",
   "alcance": "-",
   "especial": "Munición para cerbatana",
-  "atrDano": 0,
   "_seccion": "MUNICIÓN"
  },
  {
@@ -2833,7 +2698,6 @@
   "recarga": "-",
   "alcance": "-",
   "especial": "Munición para arcos",
-  "atrDano": 0,
   "_seccion": "MUNICIÓN"
  },
  {
@@ -2852,7 +2716,6 @@
   "recarga": "-",
   "alcance": "-",
   "especial": "+20 al Alcance. Munición arcos",
-  "atrDano": 0,
   "_seccion": "MUNICIÓN"
  },
  {
@@ -2871,7 +2734,6 @@
   "recarga": "-",
   "alcance": "-",
   "especial": "-1 TA del Defensor. Munición arcos",
-  "atrDano": 0,
   "_seccion": "MUNICIÓN"
  },
  {
@@ -2890,7 +2752,6 @@
   "recarga": "-",
   "alcance": "-",
   "especial": "Munición para Atlatl",
-  "atrDano": 0,
   "_seccion": "MUNICIÓN"
  },
  {
@@ -2909,7 +2770,6 @@
   "recarga": "-",
   "alcance": "-",
   "especial": "Munición para arcos de balas",
-  "atrDano": 0,
   "_seccion": "MUNICIÓN"
  },
  {
@@ -2928,7 +2788,6 @@
   "recarga": "-",
   "alcance": "-",
   "especial": "Munición para honda",
-  "atrDano": 0,
   "_seccion": "MUNICIÓN"
  },
  {
@@ -2947,7 +2806,6 @@
   "recarga": "-",
   "alcance": "-",
   "especial": "Munición para ballestas",
-  "atrDano": 0,
   "_seccion": "MUNICIÓN"
  },
  {
@@ -2966,7 +2824,6 @@
   "recarga": "-",
   "alcance": "-",
   "especial": "Munición para ballestas de mano",
-  "atrDano": 0,
   "_seccion": "MUNICIÓN"
  },
  {
@@ -2985,7 +2842,6 @@
   "recarga": "-",
   "alcance": "-",
   "especial": "Munición para ballestas pesadas",
-  "atrDano": 0,
   "_seccion": "MUNICIÓN"
  },
  {
@@ -3004,7 +2860,6 @@
   "recarga": "-",
   "alcance": "-",
   "especial": "Munición para balistas ligeras",
-  "atrDano": 0,
   "_seccion": "MUNICIÓN"
  },
  {
@@ -3023,7 +2878,6 @@
   "recarga": "-",
   "alcance": "-",
   "especial": "Munición para balistas pesadas",
-  "atrDano": 0,
   "_seccion": "MUNICIÓN"
  },
  {
@@ -3041,7 +2895,6 @@
   "recarga": "-",
   "alcance": "-",
   "especial": "Munición para armas naturales",
-  "atrDano": 0,
   "_seccion": "MUNICIÓN"
  },
  {
@@ -3058,7 +2911,6 @@
   "rotura": 0,
   "presencia": 30,
   "especial": "Sorpresa, Pantalla, At. área, Presa (DES), Uso indirecto, Ofuscación",
-  "atrDano": -10,
   "_seccion": "ARS MAGNUS"
  },
  {
@@ -3079,7 +2931,6 @@
   "alcance": "-",
   "especial": "Compleja, Presa (FUE 10), Alcance (8m), Arma Grande, A 2 manos",
   "tamano": "Grande",
-  "atrDano": 20,
   "_seccion": "ARMAS IMPOSIBLES"
  },
  {
@@ -3100,7 +2951,6 @@
   "alcance": "-",
   "especial": "Lanzable (-/20m), Compleja, A 1 o 2 manos",
   "tamano": "Grande",
-  "atrDano": 20,
   "_seccion": "ARMAS IMPOSIBLES"
  },
  {
@@ -3121,7 +2971,6 @@
   "alcance": "-",
   "especial": "Alcance (5m), Presa (FUE 11), Invisible (MDF), -2 TA, Ver",
   "tamano": "Pequeña",
-  "atrDano": 0,
   "_seccion": "ARMAS IMPOSIBLES"
  },
  {
@@ -3142,7 +2991,6 @@
   "alcance": "-",
   "especial": "Cargador, A 1 o 2 manos",
   "tamano": "Mediana",
-  "atrDano": 20,
   "_seccion": "ARMAS IMPOSIBLES"
  },
  {
@@ -3164,7 +3012,6 @@
   "fuerza": 10,
   "especial": "Cargador, A 1 o 2 manos",
   "tamano": "Mediana",
-  "atrDano": 0,
   "_seccion": "ARMAS IMPOSIBLES"
  },
  {
@@ -3185,7 +3032,6 @@
   "alcance": "-",
   "especial": "Cargador, A 1 o 2 manos",
   "tamano": "Mediana",
-  "atrDano": 20,
   "_seccion": "ARMAS IMPOSIBLES"
  },
  {
@@ -3207,7 +3053,6 @@
   "fuerza": 11,
   "especial": "Cargador, A 1 o 2 manos",
   "tamano": "Mediana",
-  "atrDano": 0,
   "_seccion": "ARMAS IMPOSIBLES"
  },
  {
@@ -3229,7 +3074,6 @@
   "fuerza": 12,
   "especial": "At. área automático (2m), A 2 manos",
   "tamano": "Grande",
-  "atrDano": 0,
   "_seccion": "ARMAS IMPOSIBLES"
  },
  {
@@ -3250,7 +3094,6 @@
   "alcance": "-",
   "especial": "At. área automático (2m), A 2 manos",
   "tamano": "Grande",
-  "atrDano": 20,
   "_seccion": "ARMAS IMPOSIBLES"
  },
  {
@@ -3270,7 +3113,6 @@
   "recarga": "-",
   "alcance": "-",
   "especial": "Ver",
-  "atrDano": -10,
   "_seccion": "ARMAS IMPOSIBLES"
  },
  {
@@ -3291,7 +3133,6 @@
   "alcance": 0,
   "especial": "Alcance 60m, Fascinación, Ver",
   "tamano": "Mediana",
-  "atrDano": 0,
   "_seccion": "ARMAS IMPOSIBLES"
  },
  {
@@ -3312,7 +3153,6 @@
   "alcance": 0,
   "especial": "Alcance 60m, Ver",
   "tamano": "Mediana",
-  "atrDano": 0,
   "_seccion": "ARMAS IMPOSIBLES"
  },
  {
@@ -3333,7 +3173,6 @@
   "alcance": 0,
   "especial": "Alcance 60m, Resonancia mejorada, Ver",
   "tamano": "Mediana",
-  "atrDano": 0,
   "_seccion": "ARMAS IMPOSIBLES"
  },
  {
@@ -3354,7 +3193,6 @@
   "alcance": 0,
   "especial": "Alcance 60m, Impacto FUE 12, Ver",
   "tamano": "Mediana",
-  "atrDano": 0,
   "_seccion": "ARMAS IMPOSIBLES"
  },
  {
@@ -3375,7 +3213,6 @@
   "alcance": "-",
   "especial": "Capacidades variables",
   "tamano": "Mediana",
-  "atrDano": 20,
   "_seccion": "ARMAS IMPOSIBLES"
  },
  {
@@ -3396,7 +3233,6 @@
   "alcance": "-",
   "especial": "-",
   "tamano": "Mediana",
-  "atrDano": 20,
   "_seccion": "ARMAS IMPOSIBLES"
  },
  {
@@ -3417,7 +3253,6 @@
   "alcance": "-",
   "especial": "Presa (FUE 10), Alcance (10m), Arma Grande, Torbellino envolvente",
   "tamano": "Mediana",
-  "atrDano": 20,
   "_seccion": "ARMAS IMPOSIBLES"
  },
  {
@@ -3438,7 +3273,6 @@
   "alcance": 10,
   "especial": "Lanzable (100/XXXm)",
   "tamano": "Pequeña",
-  "atrDano": 0,
   "_seccion": "ARMAS IMPOSIBLES"
  },
  {
@@ -3459,7 +3293,6 @@
   "alcance": 10,
   "especial": "1/10 Daño, Lanzable (30/XXXm), Precisa",
   "tamano": "Pequeña",
-  "atrDano": 15,
   "_seccion": "ARMAS IMPOSIBLES"
  },
  {
@@ -3480,7 +3313,6 @@
   "alcance": "-",
   "especial": "Escudo contra proyectiles, Presa (FUE 8)",
   "tamano": "Mediana",
-  "atrDano": 0,
   "_seccion": "ARMAS IMPOSIBLES"
  },
  {
@@ -3501,7 +3333,6 @@
   "alcance": "-",
   "especial": "Presa (FUE 8), Alcance (8m)",
   "tamano": "Pequeña",
-  "atrDano": 15,
   "_seccion": "ARMAS IMPOSIBLES"
  },
  {
@@ -3522,7 +3353,6 @@
   "alcance": "-",
   "especial": "Liberación absoluta, Liberación en área, Uso sellado, Comb. con Ki",
   "tamano": "Mediana",
-  "atrDano": 0,
   "_seccion": "ARMAS IMPOSIBLES"
  }
 ]

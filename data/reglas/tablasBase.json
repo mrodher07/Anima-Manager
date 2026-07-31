@@ -1056,6 +1056,35 @@
    ]
   ]
  },
+ "armasEnormes": [
+  {
+   "tamano": "Normal",
+   "fueMin": 1,
+   "tamanoMin": 1,
+   "penFUE": 0,
+   "multDano": 1,
+   "c5": 0,
+   "c6": 0
+  },
+  {
+   "tamano": "Enorme",
+   "fueMin": 9,
+   "tamanoMin": 23,
+   "penFUE": 2,
+   "multDano": 1.5,
+   "c5": 6,
+   "c6": 3
+  },
+  {
+   "tamano": "Gigante",
+   "fueMin": 23,
+   "tamanoMin": 29,
+   "penFUE": 5,
+   "multDano": 2,
+   "c5": 16,
+   "c6": 8
+  }
+ ],
  "tipologias": [
   [
    "-",

@@ -209,7 +209,8 @@ prueba del modelo de datos** de personaje.
 - **Raíces culturales** (52 entradas, matriz ancha en `Tablas`).
 - **Metamagia** (árbol por niveles, está en la hoja `Metamagia`).
 - **Legados de sangre**, **Tipologías**, **Municiones**.
-- La **lógica VBA**: los cálculos se han deducido de rótulos y valores, no del código.
+- La **lógica VBA**: el código de las macros sigue sin leerse. **Pero las fórmulas de las
+  celdas sí se han extraído y verificado** — ver `docs/FORMULAS-VERIFICADAS.md`.
 
 ---
 
@@ -224,11 +225,14 @@ Observaciones que conviene recordar al construir:
 2. **Los límites son validaciones, no bloqueos.** La ficha avisa pero deja seguir. La app
    debería hacer lo mismo: marcar en rojo, no impedir (muchas mesas usan reglas caseras —
    de ahí la hoja `Personalización`).
-3. **Volumen de datos**: ~2.400 registros de reglas, 1,1 MB de JSON. Hay que cargarlos de
+3. **Las fórmulas se leen del propio Excel.** Abriendo el libro con `data_only=False`
+   se obtienen las fórmulas en vez de los valores. Es la forma más fiable de verificar el
+   motor de reglas, y no necesita el manual. Ver `docs/FORMULAS-VERIFICADAS.md`.
+4. **Volumen de datos**: ~2.400 registros de reglas, 1,1 MB de JSON. Hay que cargarlos de
    forma diferida (por ejemplo, los 640 conjuros sólo si el personaje es místico).
-4. **Móvil**: la ficha tiene 13 pestañas. En móvil eso debe ser navegación por secciones
+5. **Móvil**: la ficha tiene 13 pestañas. En móvil eso debe ser navegación por secciones
    con un resumen siempre visible (PV, Cansancio, Zeón/Ki/CVs, iniciativa).
-5. **Uso en mesa**: durante la partida lo que importa es tirar dados, restar PV/Zeón/Ki y
+6. **Uso en mesa**: durante la partida lo que importa es tirar dados, restar PV/Zeón/Ki y
    consultar. La creación de personaje y el juego en mesa son dos modos muy distintos.
 
 ---
