@@ -23,6 +23,21 @@ Requisitos declarados hasta ahora:
 El usuario avisará cuándo empezar a construir la app. El trabajo hecho hasta ahora es de
 análisis y extracción de datos.
 
+### Decisiones tomadas (sesión de análisis)
+
+| Decisión | Elección |
+|---|---|
+| **Alcance v1** | Todo a la vez: fichas + modo mesa de juego + gestión de campaña |
+| **Persistencia** | Local primero (IndexedDB + export/import JSON), con el modelo de datos preparado para sincronizar en la nube después |
+| **Automatización de reglas** | Automática pero editable: se calcula todo y se avisa en rojo al pasarse de PDs o de límites, pero cualquier valor se puede sobrescribir a mano (igual que el Excel) |
+| **Usuarios** | Máster y jugadores, cada jugador con su ficha y el máster viendo el grupo |
+
+> **Tensión conocida:** "máster y jugadores" exige compartir datos entre dispositivos, y
+> eso sólo se resuelve de verdad con el backend de la fase 2. Hasta entonces, compartir
+> será por exportar/importar JSON. El modelo de datos debe llevar desde el principio
+> `id`, `propietario` y `actualizadoEn` para que la sincronización posterior no obligue a
+> migrar fichas.
+
 ---
 
 ## 2. Qué es la ficha aportada
