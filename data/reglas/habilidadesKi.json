@@ -1,0 +1,453 @@
+[
+ {
+  "habilidad": "Uso del Ki",
+  "dominio": "Ki",
+  "requisito": null,
+  "CM": 40
+ },
+ {
+  "habilidad": "Control del Ki",
+  "dominio": "Ki",
+  "requisito": "Uso del Ki",
+  "CM": 30
+ },
+ {
+  "habilidad": "Detección del Ki",
+  "dominio": "Ki",
+  "requisito": "Control del Ki",
+  "CM": 20
+ },
+ {
+  "habilidad": "Erudición",
+  "dominio": "Ki",
+  "requisito": "Detección del Ki",
+  "CM": 10
+ },
+ {
+  "habilidad": "Aura de combate",
+  "dominio": "Ki",
+  "requisito": "Control del Ki",
+  "CM": 40
+ },
+ {
+  "habilidad": "Dominio físico",
+  "dominio": "Ki",
+  "requisito": "Control del Ki",
+  "CM": 10
+ },
+ {
+  "habilidad": "Cambio físico",
+  "dominio": "Ki",
+  "requisito": "Dominio físico",
+  "CM": 30
+ },
+ {
+  "habilidad": "Cambio superior",
+  "dominio": "Ki",
+  "requisito": "Cambio físico",
+  "CM": 20
+ },
+ {
+  "habilidad": "Multiplicación de cuerpos",
+  "dominio": "Ki",
+  "requisito": "Dominio físico",
+  "CM": 30
+ },
+ {
+  "habilidad": "Multiplicación de cuerpos mayor",
+  "dominio": "Ki",
+  "requisito": "Multiplicación de cuerpos",
+  "CM": 30
+ },
+ {
+  "habilidad": "Multiplicación de cuerpos arcana",
+  "dominio": "Ki",
+  "requisito": "Multiplicación de cuerpos mayor",
+  "CM": 40
+ },
+ {
+  "habilidad": "Magnitud",
+  "dominio": "Ki",
+  "requisito": "Multiplicación de cuerpos",
+  "CM": 30
+ },
+ {
+  "habilidad": "Magnitud arcana",
+  "dominio": "Ki",
+  "requisito": "Magnitud",
+  "CM": 40
+ },
+ {
+  "habilidad": "Control de la edad",
+  "dominio": "Ki",
+  "requisito": "Dominio físico",
+  "CM": 20
+ },
+ {
+  "habilidad": "Imitación de técnicas",
+  "dominio": "Ki",
+  "requisito": "Control del Ki",
+  "CM": 50
+ },
+ {
+  "habilidad": "Forzar técnicas",
+  "dominio": "Ki",
+  "requisito": "Control del Ki",
+  "CM": 20
+ },
+ {
+  "habilidad": "Eliminación de peso",
+  "dominio": "Ki",
+  "requisito": "Uso del Ki",
+  "CM": 10
+ },
+ {
+  "habilidad": "Levitación",
+  "dominio": "Ki",
+  "requisito": "Eliminación de peso",
+  "CM": 20
+ },
+ {
+  "habilidad": "Movimiento de objetos",
+  "dominio": "Ki",
+  "requisito": "Levitación",
+  "CM": 10
+ },
+ {
+  "habilidad": "Movimiento de masas",
+  "dominio": "Ki",
+  "requisito": "Movimiento de objetos",
+  "CM": 20
+ },
+ {
+  "habilidad": "Vuelo",
+  "dominio": "Ki",
+  "requisito": "Levitación",
+  "CM": 20
+ },
+ {
+  "habilidad": "Extrusión de presencia",
+  "dominio": "Ki",
+  "requisito": "Uso del Ki",
+  "CM": 10
+ },
+ {
+  "habilidad": "Armadura de energía",
+  "dominio": "Ki",
+  "requisito": "Extrusión de presencia",
+  "CM": 10
+ },
+ {
+  "habilidad": "Armadura de energía mayor",
+  "dominio": "Ki",
+  "requisito": "Armadura de energía",
+  "CM": 10
+ },
+ {
+  "habilidad": "Armadura de energía arcana",
+  "dominio": "Ki",
+  "requisito": "Armadura de energía mayor",
+  "CM": 10
+ },
+ {
+  "habilidad": "Extensión del aura al arma",
+  "dominio": "Ki",
+  "requisito": "Extrusión de presencia",
+  "CM": 10
+ },
+ {
+  "habilidad": "Ataque elemental",
+  "dominio": "Ki",
+  "requisito": "Extensión del aura al arma",
+  "CM": 10
+ },
+ {
+  "habilidad": "Daño incrementado",
+  "dominio": "Ki",
+  "requisito": "Extensión del aura al arma",
+  "CM": 10
+ },
+ {
+  "habilidad": "Alcance incrementado",
+  "dominio": "Ki",
+  "requisito": "Extensión del aura al arma",
+  "CM": 10
+ },
+ {
+  "habilidad": "Velocidad incrementada",
+  "dominio": "Ki",
+  "requisito": "Extensión del aura al arma",
+  "CM": 10
+ },
+ {
+  "habilidad": "Destrucción por Ki",
+  "dominio": "Ki",
+  "requisito": "Extrusión de presencia",
+  "CM": 20
+ },
+ {
+  "habilidad": "Absorción de energía",
+  "dominio": "Ki",
+  "requisito": "Extrusión de presencia",
+  "CM": 30
+ },
+ {
+  "habilidad": "Escudo físico",
+  "dominio": "Ki",
+  "requisito": "Extrusión de presencia",
+  "CM": 10
+ },
+ {
+  "habilidad": "Transmisión del Ki",
+  "dominio": "Ki",
+  "requisito": "Uso del Ki",
+  "CM": 10
+ },
+ {
+  "habilidad": "Curación por Ki",
+  "dominio": "Ki",
+  "requisito": "Transmisión del Ki",
+  "CM": 10
+ },
+ {
+  "habilidad": "Curación superior",
+  "dominio": "Ki",
+  "requisito": "Curación por Ki",
+  "CM": 10
+ },
+ {
+  "habilidad": "Estabilizar",
+  "dominio": "Ki",
+  "requisito": "Curación por Ki",
+  "CM": 10
+ },
+ {
+  "habilidad": "Sacrificio vital",
+  "dominio": "Ki",
+  "requisito": "Transmisión del Ki",
+  "CM": 10
+ },
+ {
+  "habilidad": "Uso de la energía necesaria",
+  "dominio": "Ki",
+  "requisito": "Uso del Ki",
+  "CM": 10
+ },
+ {
+  "habilidad": "Ocultación del Ki",
+  "dominio": "Ki",
+  "requisito": "Uso de la energía necesaria",
+  "CM": 10
+ },
+ {
+  "habilidad": "Aura de ocultación",
+  "dominio": "Ki",
+  "requisito": "Ocultación del Ki",
+  "CM": 10
+ },
+ {
+  "habilidad": "Falsa muerte",
+  "dominio": "Ki",
+  "requisito": "Ocultación del Ki",
+  "CM": 10
+ },
+ {
+  "habilidad": "Eliminación de necesidades",
+  "dominio": "Ki",
+  "requisito": "Uso de la energía necesaria",
+  "CM": 10
+ },
+ {
+  "habilidad": "Inmunidad elemental: Fuego",
+  "dominio": "Ki",
+  "requisito": "Eliminación de necesidades",
+  "CM": 20
+ },
+ {
+  "habilidad": "Inmunidad elemental: Frío",
+  "dominio": "Ki",
+  "requisito": "Eliminación de necesidades",
+  "CM": 20
+ },
+ {
+  "habilidad": "Inmunidad elemental: Electricidad",
+  "dominio": "Ki",
+  "requisito": "Eliminación de necesidades",
+  "CM": 20
+ },
+ {
+  "habilidad": "Eliminación de penalizadores",
+  "dominio": "Ki",
+  "requisito": "Uso de la energía necesaria",
+  "CM": 20
+ },
+ {
+  "habilidad": "Recuperación",
+  "dominio": "Ki",
+  "requisito": "Eliminación de penalizadores",
+  "CM": 20
+ },
+ {
+  "habilidad": "Restituir a otros",
+  "dominio": "Ki",
+  "requisito": "Recuperación",
+  "CM": 10
+ },
+ {
+  "habilidad": "Aumento de características",
+  "dominio": "Ki",
+  "requisito": "Uso de la energía necesaria",
+  "CM": 20
+ },
+ {
+  "habilidad": "Incremento superior",
+  "dominio": "Ki",
+  "requisito": "Aumento de características",
+  "CM": 20
+ },
+ {
+  "habilidad": "Técnicas de combate improvisadas",
+  "dominio": "Ki",
+  "requisito": "Uso del Ki",
+  "CM": 50
+ },
+ {
+  "habilidad": "Inhumanidad",
+  "dominio": "Ki",
+  "requisito": "Uso del Ki",
+  "CM": 30
+ },
+ {
+  "habilidad": "Zen",
+  "dominio": "Ki",
+  "requisito": "Inhumanidad",
+  "CM": 50
+ },
+ {
+  "habilidad": "Uso del Némesis",
+  "dominio": "Némesis",
+  "requisito": null,
+  "CM": 70
+ },
+ {
+  "habilidad": "Armadura de vacío",
+  "dominio": "Némesis",
+  "requisito": "Uso del Némesis",
+  "CM": 20
+ },
+ {
+  "habilidad": "Noht",
+  "dominio": "Némesis",
+  "requisito": "Armadura de vacío",
+  "CM": 30
+ },
+ {
+  "habilidad": "Anulación de Ki",
+  "dominio": "Némesis",
+  "requisito": "Uso del Némesis",
+  "CM": 30
+ },
+ {
+  "habilidad": "Anulación de Ki mayor",
+  "dominio": "Némesis",
+  "requisito": "Anulación de Ki",
+  "CM": 20
+ },
+ {
+  "habilidad": "Anulación de Magia",
+  "dominio": "Némesis",
+  "requisito": "Uso del Némesis",
+  "CM": 30
+ },
+ {
+  "habilidad": "Anulación de Magia mayor",
+  "dominio": "Némesis",
+  "requisito": "Anulación de Magia",
+  "CM": 20
+ },
+ {
+  "habilidad": "Anulación de Matrices",
+  "dominio": "Némesis",
+  "requisito": "Uso del Némesis",
+  "CM": 30
+ },
+ {
+  "habilidad": "Anulación de Matrices mayor",
+  "dominio": "Némesis",
+  "requisito": "Anulación de Matrices",
+  "CM": 20
+ },
+ {
+  "habilidad": "Anulación de Lazos",
+  "dominio": "Némesis",
+  "requisito": "Uso del Némesis",
+  "CM": 30
+ },
+ {
+  "habilidad": "Extrusión de Vacío",
+  "dominio": "Némesis",
+  "requisito": "Uso del Némesis",
+  "CM": 30
+ },
+ {
+  "habilidad": "Forma de Vacío",
+  "dominio": "Némesis",
+  "requisito": "Extrusión de Vacío",
+  "CM": 30,
+  "requisitoExtra": "Cuerpo de Vacío"
+ },
+ {
+  "habilidad": "Cuerpo de Vacío",
+  "dominio": "Némesis",
+  "requisito": "Uso del Némesis",
+  "CM": 10
+ },
+ {
+  "habilidad": "Sin necesidades",
+  "dominio": "Némesis",
+  "requisito": "Cuerpo de Vacío",
+  "CM": 10
+ },
+ {
+  "habilidad": "Movimiento de Vacío",
+  "dominio": "Némesis",
+  "requisito": "Cuerpo de Vacío",
+  "CM": 20
+ },
+ {
+  "habilidad": "Esencia de Vacío",
+  "dominio": "Némesis",
+  "requisito": "Cuerpo de Vacío",
+  "CM": 20
+ },
+ {
+  "habilidad": "Uno con la nada",
+  "dominio": "Némesis",
+  "requisito": "Esencia de Vacío",
+  "CM": 40
+ },
+ {
+  "habilidad": "Aura de Vacío",
+  "dominio": "Némesis",
+  "requisito": "Uso del Némesis",
+  "CM": 30
+ },
+ {
+  "habilidad": "Indetección",
+  "dominio": "Némesis",
+  "requisito": "Uso del Némesis",
+  "CM": 10
+ },
+ {
+  "habilidad": "Inhumanidad (Némesis)",
+  "dominio": "Némesis",
+  "requisito": "Uso del Némesis",
+  "CM": 20
+ },
+ {
+  "habilidad": "Zen (Némesis)",
+  "dominio": "Némesis",
+  "requisito": "Inhumanidad (Némesis)",
+  "CM": 40
+ }
+]

@@ -325,86 +325,86 @@
    "pesoMaxKg": 10000000000000000159028911097599180468360808563945281389781327557747838772170381060813469985856815104
   }
  ],
- "acumulacionPorPOD": [
+ "acumulacionKi": [
   {
-   "POD": 1,
-   "multiplicador": 1
+   "valor": 1,
+   "acumulacion": 1
   },
   {
-   "POD": 2,
-   "multiplicador": 1
+   "valor": 2,
+   "acumulacion": 1
   },
   {
-   "POD": 3,
-   "multiplicador": 1
+   "valor": 3,
+   "acumulacion": 1
   },
   {
-   "POD": 4,
-   "multiplicador": 1
+   "valor": 4,
+   "acumulacion": 1
   },
   {
-   "POD": 5,
-   "multiplicador": 1
+   "valor": 5,
+   "acumulacion": 1
   },
   {
-   "POD": 6,
-   "multiplicador": 1
+   "valor": 6,
+   "acumulacion": 1
   },
   {
-   "POD": 7,
-   "multiplicador": 1
+   "valor": 7,
+   "acumulacion": 1
   },
   {
-   "POD": 8,
-   "multiplicador": 1
+   "valor": 8,
+   "acumulacion": 1
   },
   {
-   "POD": 9,
-   "multiplicador": 1
+   "valor": 9,
+   "acumulacion": 1
   },
   {
-   "POD": 10,
-   "multiplicador": 2
+   "valor": 10,
+   "acumulacion": 2
   },
   {
-   "POD": 11,
-   "multiplicador": 2
+   "valor": 11,
+   "acumulacion": 2
   },
   {
-   "POD": 12,
-   "multiplicador": 2
+   "valor": 12,
+   "acumulacion": 2
   },
   {
-   "POD": 13,
-   "multiplicador": 3
+   "valor": 13,
+   "acumulacion": 3
   },
   {
-   "POD": 14,
-   "multiplicador": 3
+   "valor": 14,
+   "acumulacion": 3
   },
   {
-   "POD": 15,
-   "multiplicador": 3
+   "valor": 15,
+   "acumulacion": 3
   },
   {
-   "POD": 16,
-   "multiplicador": 4
+   "valor": 16,
+   "acumulacion": 4
   },
   {
-   "POD": 17,
-   "multiplicador": 4
+   "valor": 17,
+   "acumulacion": 4
   },
   {
-   "POD": 18,
-   "multiplicador": 4
+   "valor": 18,
+   "acumulacion": 4
   },
   {
-   "POD": 19,
-   "multiplicador": 4
+   "valor": 19,
+   "acumulacion": 4
   },
   {
-   "POD": 20,
-   "multiplicador": 4
+   "valor": 20,
+   "acumulacion": 4
   }
  ],
  "potencialPsiquico": [

@@ -30,6 +30,9 @@ export type Efecto =
   /** Bono de categoría a una primaria de combate, +valor por nivel, tope 50. */
   | { tipo: 'bonoCategoriaPorNivel'; clave: 'HAtaque' | 'HParada' | 'HEsquiva'; valor: number }
   | { tipo: 'conocimientoMarcial'; valor: number }
+  /** Ventajas del Dominus Exxet que suman a las dos habilidades derivadas del Ki. */
+  | { tipo: 'deteccionKiPorNivel'; valor: number }
+  | { tipo: 'ocultacionKiPorNivel'; valor: number }
   | { tipo: 'TA'; dano: TipoDano; valor: number }
   /** Multiplica la mejora natural (Habilidades Naturales y Bonificador Natural). */
   | { tipo: 'factorMejoraNatural'; factor: number }
@@ -106,6 +109,62 @@ export const EFECTOS: Record<string, Efecto[]> = {
   'Maestro marcial (1)': [{ tipo: 'conocimientoMarcial', valor: 40 }],
   'Maestro marcial (2)': [{ tipo: 'conocimientoMarcial', valor: 80 }],
   'Maestro marcial (3)': [{ tipo: 'conocimientoMarcial', valor: 120 }],
+
+  // ── Dominios del Ki ──  Dominus Exxet, cap. 3. Ficha, Ki!F35 y F36.
+  'Percepción del Ki': [
+    { tipo: 'deteccionKiPorNivel', valor: 10 },
+    { tipo: 'nota', texto: 'No sirve de nada si no desarrollas la habilidad Detección del Ki.' },
+  ],
+  'Ki imperceptible': [
+    { tipo: 'ocultacionKiPorNivel', valor: 10 },
+    { tipo: 'nota', texto: 'No sirve de nada si no desarrollas la habilidad Ocultación del Ki.' },
+  ],
+  'Límite dual': [{ tipo: 'nota', texto: 'Puedes escoger dos Límites en lugar de uno.' }],
+  'Acumulación plena': [
+    {
+      tipo: 'nota',
+      texto:
+        'No reduces tus Acumulaciones por hacer otra cosa durante el asalto: siempre ' +
+        'dispones de la Acumulación plena.',
+    },
+  ],
+  'Ac. de Ki incrementada (1)': [
+    {
+      tipo: 'nota',
+      texto:
+        '+1 a todas las Acumulaciones el asalto en que no hagas nada más que acumular. ' +
+        'No se combina con Acumulación plena.',
+    },
+  ],
+  'Ac. de Ki incrementada (2)': [
+    {
+      tipo: 'nota',
+      texto:
+        '+2 a todas las Acumulaciones el asalto en que no hagas nada más que acumular. ' +
+        'No se combina con Acumulación plena.',
+    },
+  ],
+  'Técnicas desvinculadas': [
+    {
+      tipo: 'nota',
+      texto: 'Aprendes Técnicas de Dominio sin seguir las reglas de árbol: no necesitas las de nivel inferior.',
+    },
+  ],
+  'Sellos magistrales': [
+    {
+      tipo: 'nota',
+      texto: 'Para el Control de Dificultad de una invocación cuentas como si tuvieras dos niveles más.',
+    },
+  ],
+  'Recuperación de Ki (1)': [
+    { tipo: 'nota', texto: 'Recuperas 1 punto de Ki por minuto (veinte asaltos).' },
+  ],
+  'Recuperación de Ki (2)': [
+    { tipo: 'nota', texto: 'Recuperas 1 punto de Ki cada treinta segundos (diez asaltos).' },
+  ],
+  'Recuperación de Ki (3)': [
+    { tipo: 'nota', texto: 'Recuperas 1 punto de Ki cada seis segundos (dos asaltos).' },
+  ],
   'Armadura natural': [
     { tipo: 'TA', dano: 'FIL', valor: 2 },
     { tipo: 'TA', dano: 'CON', valor: 2 },
@@ -145,15 +204,11 @@ export const EFECTOS: Record<string, Efecto[]> = {
     { tipo: 'nota', texto: '−30 al Ataque y −30 a la Parada con cualquier arma que no sea la desarrollada.' },
   ],
   Miopía: [{ tipo: 'nota', texto: 'Penalizador al combate a distancia.' }],
-  'Acumulación plena': [{ tipo: 'nota', texto: 'La acumulación de Ki no se reduce a la mitad.' }],
   'Lenta recuperación de magia': [{ tipo: 'nota', texto: 'Regenera la mitad de Zeón al día.' }],
   'Magia estanca': [{ tipo: 'nota', texto: 'No regenera Zeón de forma natural.' }],
   'Sin concentración': [{ tipo: 'nota', texto: 'No puede acumular bonos por concentrarse.' }],
   'Concentración extrema': [{ tipo: 'nota', texto: 'Mejora los bonos por concentración psíquica.' }],
   'Inmunidad psíquica': [{ tipo: 'nota', texto: 'Inmune a los poderes psíquicos ajenos.' }],
-  'Ki imperceptible': [{ tipo: 'nota', texto: 'Su Ki no puede detectarse.' }],
-  'Percepción del Ki': [{ tipo: 'nota', texto: 'Puede percibir el Ki ajeno sin desarrollarlo.' }],
-  'Límite dual': [{ tipo: 'nota', texto: 'Un Límite de Ki adicional.' }],
   Versátil: [{ tipo: 'nota', texto: 'Abarata los cambios de categoría.' }],
   Habilidoso: [{ tipo: 'nota', texto: 'PD adicionales para habilidades secundarias.' }],
   'Sentidos agudos': [{ tipo: 'nota', texto: 'Bono a las habilidades perceptivas.' }],
@@ -172,6 +227,8 @@ export interface EfectosAplicados {
   llevarArmaduraPorNivel: number;
   bonoCategoria: Partial<Record<'HAtaque' | 'HParada' | 'HEsquiva', number>>;
   conocimientoMarcial: number;
+  deteccionKiPorNivel: number;
+  ocultacionKiPorNivel: number;
   TA: Partial<Record<TipoDano, number>>;
   factorMejoraNatural: number;
   /** Recordatorios de lo que la aplicación no automatiza. */
@@ -195,6 +252,8 @@ export function acumularEfectos(nombres: string[]): EfectosAplicados {
     llevarArmaduraPorNivel: 0,
     bonoCategoria: {},
     conocimientoMarcial: 0,
+    deteccionKiPorNivel: 0,
+    ocultacionKiPorNivel: 0,
     TA: {},
     factorMejoraNatural: 1,
     notas: [],
@@ -229,6 +288,8 @@ export function acumularEfectos(nombres: string[]): EfectosAplicados {
           out.bonoCategoria[e.clave] = (out.bonoCategoria[e.clave] ?? 0) + e.valor;
           break;
         case 'conocimientoMarcial': out.conocimientoMarcial += e.valor; break;
+        case 'deteccionKiPorNivel': out.deteccionKiPorNivel += e.valor; break;
+        case 'ocultacionKiPorNivel': out.ocultacionKiPorNivel += e.valor; break;
         case 'TA': out.TA[e.dano] = (out.TA[e.dano] ?? 0) + e.valor; break;
         case 'factorMejoraNatural': out.factorMejoraNatural *= e.factor; break;
         case 'nota': out.notas.push({ origen: nombre, texto: e.texto }); break;

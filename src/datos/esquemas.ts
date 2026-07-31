@@ -251,6 +251,89 @@ export const ESQUEMAS: EsquemaColeccion[] = [
     ],
   },
   {
+    coleccion: 'habilidadesKi',
+    singular: 'habilidad del Ki',
+    plural: 'Habilidades del Ki',
+    clave: 'habilidad',
+    ayuda:
+      'Habilidades del Ki o del Némesis que se inventa tu mesa. El requisito es el nombre ' +
+      'de otra habilidad: así entra en el árbol y la aplicación puede avisarte si te falta.',
+    campos: [
+      txt('habilidad', 'Nombre'),
+      {
+        clave: 'dominio',
+        etiqueta: 'Dominio',
+        tipo: 'opcion',
+        opciones: ['Ki', 'Némesis'],
+      },
+      num('CM', 'Coste en CM', 'Valores', 90),
+      txt('requisito', 'Requisito', 'Nombre de la habilidad de la que cuelga'),
+      txt('requisitoExtra', 'Segundo requisito', 'Sólo si necesita dos'),
+      { clave: 'descripcion', etiqueta: 'Qué hace', tipo: 'parrafo' },
+    ],
+  },
+  {
+    coleccion: 'efectosTecnica',
+    singular: 'efecto de Técnica',
+    plural: 'Efectos de Técnica',
+    clave: 'referencia',
+    ayuda:
+      'Cada fila es una **opción** de un efecto: «Habilidad de Ataque» con «+25». La ' +
+      'referencia debe ser única; lo normal es escribir el efecto y la opción juntos.',
+    campos: [
+      txt('referencia', 'Referencia', 'Habilidad de Ataque +25'),
+      txt('efecto', 'Efecto', 'Habilidad de Ataque'),
+      txt('opcion', 'Opción', '+25'),
+      num('kiPrincipal', 'Ki principal', 'Coste', 90),
+      num('kiSecundaria', 'Ki secundaria', 'Coste', 90),
+      num('CM', 'CM', 'Coste', 70),
+      num('nivel', 'Nivel', 'Coste', 70),
+      num('mantenimiento', 'Mantenimiento', 'Sostener', 100),
+      num('sostenidaMenor', 'Sostenida menor', 'Sostener', 110),
+      num('sostenidaMayor', 'Sostenida mayor', 'Sostener', 110),
+    ],
+  },
+  {
+    coleccion: 'tiposEfectoTecnica',
+    singular: 'ficha de efecto',
+    plural: 'Fichas de efecto de Técnica',
+    clave: 'efecto',
+    ayuda:
+      'La ficha de un efecto: de qué característica sale, si gasta Acción o Asalto y con ' +
+      'qué elementos casa. Las características se escriben «DES (AGI+2, FUE+2)»: la ' +
+      'primera es la principal y entre paréntesis van las alternativas con su recargo.',
+    campos: [
+      txt('efecto', 'Efecto'),
+      { clave: 'tipo', etiqueta: 'Tipo', tipo: 'opcion', opciones: ['Acción', 'Asalto'] },
+      {
+        clave: 'clase',
+        etiqueta: 'Clase',
+        tipo: 'opcion',
+        opciones: ['Ataque', 'Defensa', 'Contra', 'Variable'],
+      },
+      txt('caracteristicas', 'Características', 'DES (AGI+2, FUE+2, POD+2, VOL+3)'),
+      txt('elementos', 'Elementos afines', 'Aire, Fuego, Oscuridad'),
+    ],
+  },
+  {
+    coleccion: 'tecnicasCompendio',
+    singular: 'Técnica',
+    plural: 'Técnicas de Dominio',
+    clave: 'tecnica',
+    ayuda:
+      'Técnicas ya montadas, como las del compendio del Dominus Exxet. Si prefieres ' +
+      'construir la tuya efecto a efecto, usa el creador de Técnicas de la ficha.',
+    campos: [
+      txt('tecnica', 'Nombre'),
+      txt('arbol', 'Árbol', 'Celéritas, Ignis, El Dragón…'),
+      num('nivel', 'Nivel', 'Valores', 70),
+      num('CM', 'Coste en CM', 'Valores', 90),
+      txt('coste', 'Coste en Ki', 'AGI 4 DES 4 POD 2'),
+      { clave: 'efectos', etiqueta: 'Efectos', tipo: 'parrafo' },
+      { clave: 'desventajas', etiqueta: 'Desventajas y combinaciones', tipo: 'parrafo' },
+    ],
+  },
+  {
     coleccion: 'conjuros',
     singular: 'conjuro',
     plural: 'Conjuros',

@@ -7,7 +7,18 @@ import tablasBase from '../../data/reglas/tablasBase.json';
 import armasJson from '../../data/reglas/armas.json';
 import armadurasJson from '../../data/reglas/armaduras.json';
 import ventajasJson from '../../data/reglas/ventajas.json';
-import type { Arma, Armadura, Categoria, Raza, TablasBase, Ventaja } from '../datos/tipos';
+import habilidadesKiJson from '../../data/reglas/habilidadesKi.json';
+import artesMarcialesJson from '../../data/reglas/artesMarciales.json';
+import type {
+  Arma,
+  Armadura,
+  Categoria,
+  EntradaTabla,
+  HabilidadKiCatalogo,
+  Raza,
+  TablasBase,
+  Ventaja,
+} from '../datos/tipos';
 
 const datos = (nombreRaza: string, nombreCategoria: string): DatosCalculo => ({
   raza: (razas as Raza[]).find((r) => r.raza === nombreRaza),
@@ -17,6 +28,8 @@ const datos = (nombreRaza: string, nombreCategoria: string): DatosCalculo => ({
   armas: armasJson as Arma[],
   armaduras: armadurasJson as Armadura[],
   ventajas: ventajasJson as Ventaja[],
+  habilidadesKi: habilidadesKiJson as HabilidadKiCatalogo[],
+  artesMarciales: artesMarcialesJson as EntradaTabla[],
 });
 
 /**

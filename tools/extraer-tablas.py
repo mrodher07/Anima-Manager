@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Extrae las tablas de reglas de la ficha Meirmeister.xlsm a JSON."""
-import json, os, warnings
+import json, os, re, warnings
 import openpyxl
 
 warnings.filterwarnings('ignore')
@@ -8,6 +8,10 @@ warnings.filterwarnings('ignore')
 SRC = os.path.join(os.path.dirname(__file__), 'ficha.xlsm')
 OUT = os.environ.get('OUT_DIR', '/home/user/Anima-Manager/data/reglas')
 wb = openpyxl.load_workbook(SRC, data_only=True)
+# Segunda copia sin resolver: hace falta para el árbol del Ki, donde el coste vive
+# dentro de la fórmula (`=IF(Q10=0,40,"-")`) y el valor resuelto es "-" en cuanto el
+# personaje de la ficha ya tiene esa habilidad.
+wbf = openpyxl.load_workbook(SRC, data_only=False)
 
 
 def cells(sheet, ref):
@@ -138,6 +142,121 @@ data['arsMagnus'] = table('Tablas', '$E$985:$J$1046', [
 for a in data['arsMagnus']:
     a.pop('_adq', None)
 
+# --- Habilidades del Ki y del Némesis ----------------------------------
+# La hoja «Ki» dibuja los dos árboles con caracteres de línea (├ └ │). El nombre de
+# cada habilidad está en la columna que corresponde a su profundidad, así que la
+# columna basta para saber de quién cuelga: el padre es el último nombre que hay por
+# encima una columna a la izquierda.
+GLIFOS = '├└│  '
+
+# La hoja abrevia para que quepa; aquí se devuelven los nombres del manual.
+NOMBRE_LARGO = {
+    'Mult. de cuerpos': 'Multiplicación de cuerpos',
+    'Mult. mayor': 'Multiplicación de cuerpos mayor',
+    'Mult. arcana': 'Multiplicación de cuerpos arcana',
+    'Mag. arcana': 'Magnitud arcana',
+    'Mov. de masas': 'Movimiento de masas',
+    'Armadura mayor': 'Armadura de energía mayor',
+    'Arm. arcana': 'Armadura de energía arcana',
+    'Inmunidad elem. FUE': 'Inmunidad elemental: Fuego',
+    'Inmunidad elem. FRI': 'Inmunidad elemental: Frío',
+    'Inmunidad elem. ELE': 'Inmunidad elemental: Electricidad',
+}
+
+
+def arbol_habilidades(hoja, filas, columnas, col_coste, dominio):
+    """Recorre un árbol dibujado en columnas y devuelve nombre, requisito y coste."""
+    hf, hv = wbf[hoja], wb[hoja]
+    salida, ultimo_en = [], {}
+    for fila in filas:
+        for profundidad, col in enumerate(columnas):
+            crudo = hv.cell(fila, col).value
+            if not isinstance(crudo, str):
+                continue
+            nombre = crudo.strip(GLIFOS).strip()
+            if not nombre:
+                continue
+            nombre = NOMBRE_LARGO.get(nombre, nombre)
+            # El coste está dentro de la fórmula, no en el valor resuelto.
+            formula = str(hf.cell(fila, col_coste).value or '')
+            m = re.search(r',\s*(\d+)\s*,\s*"-"', formula)
+            if not m:
+                continue
+            salida.append({
+                'habilidad': nombre,
+                'dominio': dominio,
+                'requisito': ultimo_en.get(profundidad - 1),
+                'CM': int(m.group(1)),
+            })
+            ultimo_en[profundidad] = nombre
+            # Un nombre nuevo a esta profundidad invalida lo que colgaba más adentro.
+            for mas_hondo in [d for d in ultimo_en if d > profundidad]:
+                ultimo_en.pop(mas_hondo, None)
+            break
+    return salida
+
+
+habilidades_ki = arbol_habilidades('Ki', range(10, 65), (11, 12, 13, 14), 16, 'Ki')
+# El árbol del Némesis arranca en «Uso del Némesis», que no depende de nada.
+habilidades_ki += arbol_habilidades('Ki', range(43, 65), (3, 4, 5), 8, 'Némesis')
+
+# La hoja dibuja algunas ramas con `└` a la misma profundidad que sus hermanas, de
+# modo que el requisito sale mal. Aquí manda el manual (Dominus Exxet, cap. 3).
+REQUISITO_CORREGIDO = {
+    'Multiplicación de cuerpos arcana': 'Multiplicación de cuerpos mayor',
+    'Magnitud arcana': 'Magnitud',
+}
+# Némesis: Inhumanidad y Zen repiten el nombre de las del Ki, pero son otra cosa
+# (Dominus Exxet las llama «Inhumanidad (Némesis)» y «Zen (Némesis)»).
+SUFIJO_NEMESIS = {'Inhumanidad': 'Inhumanidad (Némesis)', 'Zen': 'Zen (Némesis)'}
+# Raíz de cada dominio: todo lo que la hoja deja al ras cuelga de ella.
+RAIZ = {'Ki': 'Uso del Ki', 'Némesis': 'Uso del Némesis'}
+
+for h in habilidades_ki:
+    if h['dominio'] == 'Némesis':
+        h['habilidad'] = SUFIJO_NEMESIS.get(h['habilidad'], h['habilidad'])
+        h['requisito'] = SUFIJO_NEMESIS.get(h['requisito'], h['requisito'])
+    raiz = RAIZ[h['dominio']]
+    if h['requisito'] is None and h['habilidad'] != raiz:
+        h['requisito'] = raiz
+    h['requisito'] = REQUISITO_CORREGIDO.get(h['habilidad'], h['requisito'])
+
+# Forma de Vacío pide dos: el árbol sólo puede dibujar una.
+for h in habilidades_ki:
+    if h['habilidad'] == 'Forma de Vacío':
+        h['requisitoExtra'] = 'Cuerpo de Vacío'
+data['habilidadesKi'] = habilidades_ki
+
+# --- Creación de Técnicas: efectos, opciones y coste -------------------
+# Cada fila es una **opción** de un efecto: «Habilidad de Ataque» + «+25» cuesta 3
+# puntos de Ki de la característica principal, 5 de la secundaria y 5 de CM.
+data['efectosTecnica'] = table('Tablas Técnicas', '$C$10:$K$643', [
+    'efecto', 'opcion', 'kiPrincipal', 'kiSecundaria', 'CM',
+    'mantenimiento', 'sostenidaMenor', 'sostenidaMayor', 'nivel'])
+for e in data['efectosTecnica']:
+    # Un efecto tiene varias opciones; lo que identifica una fila es la pareja.
+    e['referencia'] = f"{e['efecto']} {e.get('opcion', '')}".strip()
+
+# Ficha de cada efecto: a qué característica va, de qué tipo y clase es, y con qué
+# elementos casa. `caracteristicas` viene como «DES (AGI+2, FUE+2, POD+2, VOL+3)»:
+# la primera es la principal y entre paréntesis van las alternativas con su recargo.
+data['tiposEfectoTecnica'] = table('Tablas Técnicas', '$O$9:$W$98', [
+    'efecto', '_ref', 'tipo', 'clase', 'caracteristicas',
+    'elemento1', 'elemento2', 'elemento3', 'elementos'])
+for t in data['tiposEfectoTecnica']:
+    t.pop('_ref', None)
+
+# --- Compendio de Técnicas del Dominus Exxet --------------------------
+# Las filas 655-665 son huecos para las Técnicas propias del jugador; el compendio
+# publicado empieza en la 666.
+data['tecnicasCompendio'] = table('Tablas Técnicas', '$C$666:$J$854', [
+    'tecnica', '_arbol', 'nivel', 'CM', '_cmReducido', 'coste', 'efectos',
+    'desventajas'])
+for t in data['tecnicasCompendio']:
+    t.pop('_arbol', None)
+    t.pop('_cmReducido', None)
+    t['arbol'] = t.pop('_seccion', None)
+
 # --- Conjuros ----------------------------------------------------------
 data['conjuros'] = table('Tablas Magia', '$D$6:$Z$680', [
     'conjuro', 'via', 'nivel', 'diario', 'tipo', 'accion',
@@ -192,8 +311,10 @@ base['fuerza'] = [
     {'valor': clean(r[0].value), 'bonoTamano': clean(r[1].value),
      'pesoKg': clean(r[2].value), 'pesoMaxKg': clean(r[3].value)}
     for r in cells('Tablas', '$G$14:$J$33')]
-base['acumulacionPorPOD'] = [
-    {'POD': clean(r[0].value), 'multiplicador': clean(r[1].value)}
+# Tabla 53: Acumulación de Ki base. Vale para **cualquiera** de las seis
+# características acumulables, no sólo para POD: 1-9 → 1, 10-12 → 2, 13-15 → 3, 16+ → 4.
+base['acumulacionKi'] = [
+    {'valor': clean(r[0].value), 'acumulacion': clean(r[1].value)}
     for r in cells('Tablas', '$P$14:$Q$33') if clean(r[0].value)]
 # Tabla 68 del manual: Potencial Psíquico base según VOL.
 base['potencialPsiquico'] = [

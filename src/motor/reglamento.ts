@@ -25,13 +25,22 @@ export type ClaveRegla =
   | 'limitePrimarias'
   | 'limiteProyeccion'
   | 'zeonPorPD'
-  | 'umbralCritico';
+  | 'umbralCritico'
+  | 'kiPorCaracteristica'
+  | 'kiPorPD'
+  | 'acumulacionKi'
+  | 'reservaKi'
+  | 'conocimientoMarcial'
+  | 'cmPorPD'
+  | 'limiteCM'
+  | 'deteccionKi'
+  | 'ocultacionKi';
 
 export interface DefinicionRegla {
   clave: ClaveRegla;
   nombre: string;
   /** Grupo para agrupar en la interfaz. */
-  grupo: 'Derivados' | 'Sobrenatural' | 'Combate' | 'Desarrollo';
+  grupo: 'Derivados' | 'Sobrenatural' | 'Combate' | 'Desarrollo' | 'Ki';
   /** Fórmula por defecto, según el Core Exxet. */
   formula: string;
   /** Variables que recibe, con una descripción para la interfaz de edición. */
@@ -227,6 +236,130 @@ export const REGLAS: readonly DefinicionRegla[] = [
       'Core Exxet, cap. 9. Un único impacto que quite la mitad de los PV actuales. ' +
       'Algunas mesas lo calculan sobre los PV máximos: cambia pvActuales por pvMaximos.',
     desactivable: true,
+  },
+  // ─────────────────────────── Dominios del Ki ───────────────────────────
+  {
+    clave: 'kiPorCaracteristica',
+    nombre: 'Puntos de Ki por característica',
+    grupo: 'Ki',
+    formula: 'valor + max(0, valor - 10)',
+    variables: { valor: 'Valor total de la característica (FUE, DES, AGI, CON, POD o VOL)' },
+    referencia:
+      'Core Exxet, cap. 10: cada punto hasta 10 da 1 de Ki y cada punto por encima da 2. ' +
+      'Ficha, PDs!W30: =AGI+IF(AGI-10>0,AGI-10,0). Ejemplo Celia: DES 13 → 16.',
+    desactivable: false,
+  },
+  {
+    clave: 'kiPorPD',
+    nombre: 'Ki adquirido por PD',
+    grupo: 'Ki',
+    formula: 'truncar(pd / coste)',
+    variables: { pd: 'PD invertidos en Ki', coste: 'Coste de Ki de la categoría' },
+    referencia: 'Ficha, PDs!V30. Un punto de Ki por cada «coste» PD.',
+    desactivable: false,
+  },
+  {
+    clave: 'acumulacionKi',
+    nombre: 'Acumulación de Ki',
+    grupo: 'Ki',
+    formula: 'max(0, acumulacionBase + acumulacionComprada + especial + penalizadorArmadura)',
+    variables: {
+      acumulacionBase: 'Acumulación de la Tabla 53 según la característica (0 si vale 0)',
+      acumulacionComprada: 'Acumulación adquirida con PD',
+      especial: 'Bonos especiales (raza, ventajas, personalización)',
+      penalizadorArmadura: 'La armadura resta 1 de Acumulación por cada 20 de penalizador',
+    },
+    referencia:
+      'Ficha, PDs!AA36: =MAX(0, base + comprada + especial + IF(Mod_ATA<0, MIN(0, ' +
+      'TRUNC(Mod_ATA/20,0)), 0)). Tabla 53: 1-9 → 1, 10-12 → 2, 13-15 → 3, 16+ → 4.',
+    desactivable: false,
+  },
+  {
+    clave: 'reservaKi',
+    nombre: 'Reserva de Ki',
+    grupo: 'Ki',
+    formula: 'poderInnato ? kiPOD * 6 + kiComprado : sumaKi',
+    variables: {
+      sumaKi: 'Suma del Ki de las seis características acumulables',
+      kiPOD: 'Ki que aporta el Poder',
+      kiComprado: 'Ki adquirido con PD, en todas las características',
+      poderInnato: '1 con la ventaja Poder Innato del Dominus Exxet',
+    },
+    referencia:
+      'Core Exxet, cap. 10 (Celia: 5+9+10+5+6+4 = 39). Ficha, Ki!F24, que además ' +
+      'implementa Poder Innato: seis veces el Ki de POD. Esa ventaja exige Unificación.',
+    desactivable: false,
+  },
+  {
+    clave: 'conocimientoMarcial',
+    nombre: 'Conocimiento Marcial',
+    grupo: 'Ki',
+    formula: 'cmCategoria + cmArtesMarciales + cmVentajas + cmComprado',
+    variables: {
+      cmCategoria: 'CM que da la categoría, ya multiplicado por sus niveles',
+      cmArtesMarciales: 'CM que dan los grados de arte marcial dominados',
+      cmVentajas: 'CM de la ventaja Maestro Marcial (40 / 80 / 120)',
+      cmComprado: 'CM adquirido con PD',
+    },
+    referencia:
+      'Ficha, PDs!AA42. Verificado: Christopher (Mentalista, nivel 11) 10×11 = 110; ' +
+      'Ryo (Tecnicista, nivel 1) 50 + 10 de artes marciales = 60.',
+    desactivable: false,
+  },
+  {
+    clave: 'cmPorPD',
+    nombre: 'CM adquirido por PD',
+    grupo: 'Ki',
+    formula: 'truncar(pd / 5) * 5',
+    variables: { pd: 'PD invertidos en Conocimiento Marcial' },
+    referencia:
+      'Dominus Exxet, cap. 2: cada 5 PD dan 5 CM sea cual sea la categoría. ' +
+      'Ficha, PDs!V42, que multiplica por 5 el número de compras.',
+    desactivable: false,
+  },
+  {
+    clave: 'limiteCM',
+    nombre: 'Límite de PD invertibles en CM',
+    grupo: 'Ki',
+    formula: 'truncar(pdTotales / 10)',
+    variables: { pdTotales: 'PD totales del personaje' },
+    referencia:
+      'Dominus Exxet, cap. 2: no más de una décima parte de los PD totales. ' +
+      'Nivel 1 → 60 PD; nivel 5 → 100 PD. Entra además en el límite de combate.',
+    desactivable: true,
+  },
+  {
+    clave: 'deteccionKi',
+    nombre: 'Detección del Ki',
+    grupo: 'Ki',
+    formula: 'truncar((cmTotal + advertir) / 2) + especial + bonoPorNivel * nivel',
+    variables: {
+      cmTotal: 'Conocimiento Marcial total',
+      advertir: 'Habilidad de Advertir ya calculada',
+      especial: 'Bonos especiales anotados a mano',
+      bonoPorNivel: '+10 por nivel con la ventaja Percepción del Ki',
+      nivel: 'Nivel del personaje',
+    },
+    referencia:
+      'Core Exxet, cap. 10: media entre el CM total y Advertir. Ejemplo Celia: ' +
+      '(120 + 60) / 2 = 90. Ficha, Ki!F35.',
+    desactivable: false,
+  },
+  {
+    clave: 'ocultacionKi',
+    nombre: 'Ocultación del Ki',
+    grupo: 'Ki',
+    formula: 'truncar((cmTotal + ocultarse) / 2) + especial + bonoPorNivel * nivel + bonoRaza',
+    variables: {
+      cmTotal: 'Conocimiento Marcial total',
+      ocultarse: 'Habilidad de Ocultarse ya calculada',
+      especial: 'Bonos especiales anotados a mano',
+      bonoPorNivel: '+10 por nivel con la ventaja Ki Imperceptible',
+      nivel: 'Nivel del personaje',
+      bonoRaza: '+50 los D’Anjayni, +30 los Nephilim D’Anjayni',
+    },
+    referencia: 'Core Exxet, cap. 10: media entre el CM total y Ocultarse. Ficha, Ki!F36.',
+    desactivable: false,
   },
   {
     clave: 'limitePrimarias',

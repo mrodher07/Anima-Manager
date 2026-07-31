@@ -107,6 +107,55 @@ export interface EntradaTabla {
   [columna: string]: string | number | null | undefined;
 }
 
+/** Habilidad del Ki o del Némesis. Dominus Exxet, cap. 3. */
+export interface HabilidadKiCatalogo {
+  habilidad: string;
+  dominio: 'Ki' | 'Némesis';
+  requisito?: string | null;
+  requisitoExtra?: string | null;
+  CM: number;
+}
+
+/**
+ * Una opción concreta de un efecto de Técnica: «Habilidad de Ataque» con «+25».
+ * Los dos costes en Ki son el de la característica principal y el de una secundaria.
+ */
+export interface EfectoTecnica {
+  efecto: string;
+  opcion: string;
+  kiPrincipal?: number;
+  kiSecundaria?: number;
+  CM?: number;
+  mantenimiento?: number;
+  sostenidaMenor?: number;
+  sostenidaMayor?: number;
+  nivel?: number;
+  _seccion?: string;
+}
+
+/** Ficha de un efecto: tipo, clase, característica de referencia y elementos afines. */
+export interface TipoEfectoTecnica {
+  efecto: string;
+  tipo?: string;
+  clase?: string;
+  /** «DES (AGI+2, FUE+2, POD+2, VOL+3)»: la primera es la principal. */
+  caracteristicas?: string;
+  elementos?: string;
+  _seccion?: string;
+}
+
+/** Técnica ya construida del compendio del Dominus Exxet. */
+export interface TecnicaCompendio {
+  tecnica: string;
+  arbol?: string | null;
+  nivel?: number;
+  CM?: number;
+  /** Coste en Ki tal como lo escribe el manual: «AGI 4 DES 4 POD 2». */
+  coste?: string;
+  efectos?: string;
+  desventajas?: string;
+}
+
 export interface TablasBase {
   bonoCaracteristica: { valor: number; bono: number; multiplicadorPV: number }[];
   valoresBase: { valor: number; PV: number; ACT: number }[];
@@ -116,7 +165,8 @@ export interface TablasBase {
   armasEnormes: { tamano: string; fueMin: number; tamanoMin: number; penFUE: number; multDano: number }[];
   potencialPsiquico: { VOL: number; potencial: number }[];
   potencialPorCV: { CVacumulados: number; bono: number }[];
-  acumulacionPorPOD: { POD: number; multiplicador: number }[];
+  /** Tabla 53: valor de característica → Acumulación de Ki base. */
+  acumulacionKi: { valor: number; acumulacion: number }[];
   experienciaNecesaria: { nota: string; filas: (number | null)[][] };
   [tabla: string]: unknown;
 }
@@ -133,6 +183,10 @@ export interface Colecciones {
   yelmos: EntradaTabla;
   artesMarciales: EntradaTabla;
   arsMagnus: EntradaTabla;
+  habilidadesKi: HabilidadKiCatalogo;
+  efectosTecnica: EfectoTecnica;
+  tiposEfectoTecnica: TipoEfectoTecnica;
+  tecnicasCompendio: TecnicaCompendio;
   conjuros: Conjuro;
   poderesPsiquicos: PoderPsiquico;
   disciplinasPsiquicas: EntradaTabla;
@@ -153,6 +207,11 @@ export const CLAVE_DE: Record<NombreColeccion, string> = {
   yelmos: 'yelmo',
   artesMarciales: 'arte',
   arsMagnus: 'nombre',
+  habilidadesKi: 'habilidad',
+  // Un efecto tiene varias opciones, así que la clave es la pareja efecto + opción.
+  efectosTecnica: 'referencia',
+  tiposEfectoTecnica: 'efecto',
+  tecnicasCompendio: 'tecnica',
   conjuros: 'conjuro',
   poderesPsiquicos: 'poder',
   disciplinasPsiquicas: 'disciplina',

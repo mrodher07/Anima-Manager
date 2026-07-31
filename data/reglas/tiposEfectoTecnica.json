@@ -1,0 +1,726 @@
+[
+ {
+  "efecto": "Habilidad de Ataque",
+  "tipo": "Acción",
+  "clase": "Ataque",
+  "caracteristicas": "DES (AGI+2, FUE+2, POD+2, VOL+3)",
+  "elemento1": "Aire",
+  "elemento2": "Fuego",
+  "elemento3": "Oscuridad",
+  "elementos": "Aire, Fuego, Oscuridad",
+  "_seccion": "EFECTOS OFENSIVOS"
+ },
+ {
+  "efecto": "Habilidad de Ataque Completa",
+  "tipo": "Asalto",
+  "clase": "Ataque",
+  "caracteristicas": "DES (AGI+2, FUE+2, POD+2, VOL+3)",
+  "elemento1": "Aire",
+  "elemento2": "Fuego",
+  "elemento3": "Oscuridad",
+  "elementos": "Aire, Fuego, Oscuridad",
+  "_seccion": "EFECTOS OFENSIVOS"
+ },
+ {
+  "efecto": "Ataque Predeterminado",
+  "tipo": "Acción",
+  "clase": "Ataque",
+  "caracteristicas": "POD (AGI+2, DES+2, FUE+3, VOL+1)",
+  "elemento1": "Luz",
+  "elemento2": "Oscuridad",
+  "elemento3": "Tierra",
+  "elementos": "Luz, Oscuridad, Tierra",
+  "_seccion": "EFECTOS OFENSIVOS"
+ },
+ {
+  "efecto": "Habilidad de Contraataque",
+  "tipo": "Acción",
+  "clase": "Contra",
+  "caracteristicas": "DES (AGI+2, FUE+2, POD+2, VOL+3)",
+  "elemento1": "Agua",
+  "elemento2": "Aire",
+  "elemento3": "Tierra",
+  "elementos": "Agua, Aire, Tierra",
+  "_seccion": "EFECTOS OFENSIVOS"
+ },
+ {
+  "efecto": "Maniobras de Combate y Apuntar",
+  "tipo": "Acción",
+  "clase": "Ataque",
+  "caracteristicas": "DES (AGI+1, CON+2, POD+2, VOL+2)",
+  "elemento1": "Aire",
+  "elementos": "Aire",
+  "_seccion": "EFECTOS OFENSIVOS"
+ },
+ {
+  "efecto": "Maniobras de Combate y Apuntar Reales",
+  "tipo": "Asalto",
+  "clase": "Ataque",
+  "caracteristicas": "DES (AGI+1, CON+2, POD+2, VOL+2)",
+  "elemento1": "Aire",
+  "elementos": "Aire",
+  "_seccion": "EFECTOS OFENSIVOS"
+ },
+ {
+  "efecto": "Ataque Indirecto",
+  "tipo": "Acción",
+  "clase": "Ataque",
+  "caracteristicas": "POD (AGI+2, CON+2, DES+2, VOL+2)",
+  "elemento1": "Agua",
+  "elemento2": "Aire",
+  "elemento3": "Oscuridad",
+  "elementos": "Agua, Aire, Oscuridad",
+  "_seccion": "EFECTOS OFENSIVOS"
+ },
+ {
+  "efecto": "Camuflar Ataque",
+  "tipo": "Acción",
+  "clase": "Ataque",
+  "caracteristicas": "POD (AGI+2, CON+3, DES+1, VOL+2)",
+  "elemento1": "Agua",
+  "elemento2": "Aire",
+  "elemento3": "Oscuridad",
+  "elementos": "Agua, Aire, Oscuridad",
+  "_seccion": "EFECTOS OFENSIVOS"
+ },
+ {
+  "efecto": "Habilidad de Parada",
+  "tipo": "Acción",
+  "clase": "Defensa",
+  "caracteristicas": "DES (AGI+2, FUE+2, POD+2, VOL+3)",
+  "elemento1": "Agua",
+  "elemento2": "Luz",
+  "elemento3": "Tierra",
+  "elementos": "Agua, Luz, Tierra",
+  "_seccion": "EFECTOS DEFENSIVOS"
+ },
+ {
+  "efecto": "Habilidad de Parada Completa",
+  "tipo": "Asalto",
+  "clase": "Defensa",
+  "caracteristicas": "DES (AGI+2, FUE+2, POD+2, VOL+3)",
+  "elemento1": "Agua",
+  "elemento2": "Luz",
+  "elemento3": "Tierra",
+  "elementos": "Agua, Luz, Tierra",
+  "_seccion": "EFECTOS DEFENSIVOS"
+ },
+ {
+  "efecto": "Habilidad de Parada Limitada",
+  "tipo": "Acción",
+  "clase": "Defensa",
+  "caracteristicas": "DES (AGI+2, FUE+2, POD+2, VOL+3)",
+  "elemento1": "Agua",
+  "elemento2": "Luz",
+  "elemento3": "Tierra",
+  "elementos": "Agua, Luz, Tierra",
+  "_seccion": "EFECTOS DEFENSIVOS"
+ },
+ {
+  "efecto": "Habilidad de Esquiva",
+  "tipo": "Acción",
+  "clase": "Defensa",
+  "caracteristicas": "AGI (CON+2, DES+2, POD+2, VOL+3)",
+  "elemento1": "Agua",
+  "elemento2": "Aire",
+  "elemento3": "Luz",
+  "elementos": "Agua, Aire, Luz",
+  "_seccion": "EFECTOS DEFENSIVOS"
+ },
+ {
+  "efecto": "Habilidad de Esquiva Completa",
+  "tipo": "Asalto",
+  "clase": "Defensa",
+  "caracteristicas": "AGI (CON+2, DES+2, POD+2, VOL+3)",
+  "elemento1": "Agua",
+  "elemento2": "Aire",
+  "elemento3": "Luz",
+  "elementos": "Agua, Aire, Luz",
+  "_seccion": "EFECTOS DEFENSIVOS"
+ },
+ {
+  "efecto": "Habilidad de Esquiva Limitada",
+  "tipo": "Acción",
+  "clase": "Defensa",
+  "caracteristicas": "AGI (CON+2, DES+2, POD+2, VOL+3)",
+  "elemento1": "Aire",
+  "elemento2": "Luz",
+  "elemento3": "Oscuridad",
+  "elementos": "Aire, Luz, Oscuridad",
+  "_seccion": "EFECTOS DEFENSIVOS"
+ },
+ {
+  "efecto": "Defensa Predeterminada",
+  "tipo": "Acción",
+  "clase": "Defensa",
+  "caracteristicas": "DES (AGI+1, CON+3, POD+2, VOL+2)",
+  "elemento1": "Agua",
+  "elemento2": "Luz",
+  "elemento3": "Tierra",
+  "elementos": "Agua, Luz, Tierra",
+  "_seccion": "EFECTOS DEFENSIVOS"
+ },
+ {
+  "efecto": "Aumento de Daño",
+  "tipo": "Acción",
+  "clase": "Ataque",
+  "caracteristicas": "FUE (CON+1, DES+3, POD+2, VOL+1)",
+  "elemento1": "Fuego",
+  "elemento2": "Tierra",
+  "elementos": "Fuego, Tierra",
+  "_seccion": "EFECTOS DESTRUCTIVOS"
+ },
+ {
+  "efecto": "Aumento de Daño Real",
+  "tipo": "Asalto",
+  "clase": "Ataque",
+  "caracteristicas": "FUE (CON+1, DES+3, POD+2, VOL+2)",
+  "elemento1": "Fuego",
+  "elemento2": "Tierra",
+  "elementos": "Fuego, Tierra",
+  "_seccion": "EFECTOS DESTRUCTIVOS"
+ },
+ {
+  "efecto": "Multiplicador al Daño",
+  "tipo": "Acción",
+  "clase": "Ataque",
+  "caracteristicas": "FUE (CON+2, DES+3, POD+1, VOL+1)",
+  "elemento1": "Fuego",
+  "elemento2": "Tierra",
+  "elementos": "Fuego, Tierra",
+  "_seccion": "EFECTOS DESTRUCTIVOS"
+ },
+ {
+  "efecto": "Multiplicador al Daño Real",
+  "tipo": "Asalto",
+  "clase": "Ataque",
+  "caracteristicas": "FUE (CON+2, DES+3, POD+1, VOL+1)",
+  "elemento1": "Fuego",
+  "elemento2": "Tierra",
+  "elementos": "Fuego, Tierra",
+  "_seccion": "EFECTOS DESTRUCTIVOS"
+ },
+ {
+  "efecto": "Sustitución de Daño",
+  "tipo": "Acción",
+  "clase": "Ataque",
+  "caracteristicas": "FUE (CON+1, DES+3, POD+2, VOL+2)",
+  "elemento1": "Fuego",
+  "elemento2": "Tierra",
+  "elementos": "Fuego, Tierra",
+  "_seccion": "EFECTOS DESTRUCTIVOS"
+ },
+ {
+  "efecto": "Sustitución de Daño Real",
+  "tipo": "Asalto",
+  "clase": "Ataque",
+  "caracteristicas": "FUE (CON+1, DES+3, POD+2, VOL+2)",
+  "elemento1": "Fuego",
+  "elemento2": "Tierra",
+  "elementos": "Fuego, Tierra",
+  "_seccion": "EFECTOS DESTRUCTIVOS"
+ },
+ {
+  "efecto": "Ataque Adicional",
+  "tipo": "Acción",
+  "clase": "Ataque",
+  "caracteristicas": "DES (AGI+2, CON+1, POD+3, VOL+3)",
+  "elemento1": "Agua",
+  "elemento2": "Aire",
+  "elementos": "Agua, Aire",
+  "_seccion": "EFECTOS DE ACCION"
+ },
+ {
+  "efecto": "Ataque Adicional Limitado",
+  "tipo": "Acción",
+  "clase": "Ataque",
+  "caracteristicas": "DES (AGI+2, CON+1, POD+3, VOL+3)",
+  "elemento1": "Agua",
+  "elemento2": "Aire",
+  "elemento3": "Oscuridad",
+  "elementos": "Agua, Aire, Oscuridad",
+  "_seccion": "EFECTOS DE ACCION"
+ },
+ {
+  "efecto": "Defensas Adicionales",
+  "tipo": "Acción",
+  "clase": "Defensa",
+  "caracteristicas": "AGI (CON+2, DES+1, POD+3, VOL+3)",
+  "elemento1": "Luz",
+  "elementos": "Luz",
+  "_seccion": "EFECTOS DE ACCION"
+ },
+ {
+  "efecto": "Acciones Adicionales",
+  "tipo": "Asalto",
+  "clase": "Variable",
+  "caracteristicas": "DES (AGI+1, CON+1, POD+3, VOL+2)",
+  "elemento1": "Aire",
+  "elementos": "Aire",
+  "_seccion": "EFECTOS DE ACCION"
+ },
+ {
+  "efecto": "Incrementar Turno",
+  "tipo": "Asalto",
+  "clase": "Variable",
+  "caracteristicas": "AGI (CON+2, DES+1, POD+3, VOL+3)",
+  "elemento1": "Aire",
+  "elementos": "Aire",
+  "_seccion": "EFECTOS DE REACCIÓN"
+ },
+ {
+  "efecto": "Recuperar Acción",
+  "tipo": "Acción",
+  "clase": "Variable",
+  "caracteristicas": "VOL (AGI+2, CON+2, DES+3, POD+2)",
+  "elemento1": "Aire",
+  "elemento2": "Luz",
+  "elemento3": "Agua",
+  "elementos": "Aire, Luz, Agua",
+  "_seccion": "EFECTOS DE REACCIÓN"
+ },
+ {
+  "efecto": "Previsión",
+  "tipo": "Asalto",
+  "clase": "Variable",
+  "caracteristicas": "POD (CON+2, DES+3, FUE+1, VOL+1)",
+  "elemento1": "Aire",
+  "elemento2": "Fuego",
+  "elemento3": "Luz",
+  "elementos": "Aire, Fuego, Luz",
+  "_seccion": "EFECTOS DE REACCIÓN"
+ },
+ {
+  "efecto": "Ataque a Distancia",
+  "tipo": "Acción",
+  "clase": "Ataque",
+  "caracteristicas": "POD (AGI+3, CON+4, DES+2, VOL+1)",
+  "elemento1": "Agua",
+  "elemento2": "Aire",
+  "elemento3": "Fuego",
+  "elementos": "Agua, Aire, Fuego",
+  "_seccion": "EFECTOS ESPACIALES"
+ },
+ {
+  "efecto": "Ataque a Distancia Real",
+  "tipo": "Asalto",
+  "clase": "Ataque",
+  "caracteristicas": "POD (AGI+3, CON+4, DES+2, VOL+1)",
+  "elemento1": "Agua",
+  "elemento2": "Aire",
+  "elemento3": "Fuego",
+  "elementos": "Agua, Aire, Fuego",
+  "_seccion": "EFECTOS ESPACIALES"
+ },
+ {
+  "efecto": "Ataque con Área",
+  "tipo": "Acción",
+  "clase": "Ataque",
+  "caracteristicas": "POD (AGI+2, CON+3, DES+2, VOL+1)",
+  "elemento1": "Fuego",
+  "elemento2": "Luz",
+  "elemento3": "Oscuridad",
+  "elementos": "Fuego, Luz, Oscuridad",
+  "_seccion": "EFECTOS ESPACIALES"
+ },
+ {
+  "efecto": "Ataque con Área Real",
+  "tipo": "Asalto",
+  "clase": "Ataque",
+  "caracteristicas": "POD (AGI+2, CON+3, DES+2, VOL+1)",
+  "elemento1": "Fuego",
+  "elemento2": "Luz",
+  "elemento3": "Oscuridad",
+  "elementos": "Fuego, Luz, Oscuridad",
+  "_seccion": "EFECTOS ESPACIALES"
+ },
+ {
+  "efecto": "Parada en Área",
+  "tipo": "Acción",
+  "clase": "Defensa",
+  "caracteristicas": "POD (CON+2, DES+2, FUE+2, VOL+3)",
+  "elemento1": "Luz",
+  "elemento2": "Tierra",
+  "elemento3": "Agua",
+  "elementos": "Luz, Tierra, Agua",
+  "_seccion": "EFECTOS ESPACIALES"
+ },
+ {
+  "efecto": "Transporte Automático",
+  "tipo": "Acción",
+  "clase": "Variable",
+  "caracteristicas": "AGI (CON+2, DES+2, FUE+2, POD+3)",
+  "elemento1": "Aire",
+  "elemento2": "Luz",
+  "elemento3": "Oscuridad",
+  "elementos": "Aire, Luz, Oscuridad",
+  "_seccion": "EFECTOS ESPACIALES"
+ },
+ {
+  "efecto": "Aumentar Rotura",
+  "tipo": "Asalto",
+  "clase": "Ataque",
+  "caracteristicas": "FUE (CON+2, DES+4, POD+2, VOL+1)",
+  "elemento1": "Fuego",
+  "elementos": "Fuego",
+  "_seccion": "EFECTOS DE ENTEREZA"
+ },
+ {
+  "efecto": "Aumentar Entereza",
+  "tipo": "Asalto",
+  "clase": "Defensa",
+  "caracteristicas": "CON (FUE+2, DES+4, POD+2, VOL+1)",
+  "elemento1": "Fuego",
+  "elemento2": "Luz",
+  "elemento3": "Tierra",
+  "elementos": "Fuego, Luz, Tierra",
+  "_seccion": "EFECTOS DE ENTEREZA"
+ },
+ {
+  "efecto": "Destruir Armadura",
+  "tipo": "Acción",
+  "clase": "Ataque",
+  "caracteristicas": "FUE (CON+2, DES+2, POD+1, VOL+2)",
+  "elemento1": "Fuego",
+  "elemento2": "Oscuridad",
+  "elementos": "Fuego, Oscuridad",
+  "_seccion": "EFECTOS DE ENTEREZA"
+ },
+ {
+  "efecto": "Armadura",
+  "tipo": "Asalto",
+  "clase": "Defensa",
+  "caracteristicas": "CON (AGI+3, FUE+2, POD+1, VOL+2)",
+  "elemento1": "Agua",
+  "elemento2": "Luz",
+  "elemento3": "Tierra",
+  "elementos": "Agua, Luz, Tierra",
+  "_seccion": "EFECTOS DE ENTEREZA"
+ },
+ {
+  "efecto": "Incremento de Movimiento",
+  "tipo": "Asalto",
+  "clase": "Variable",
+  "caracteristicas": "AGI (CON+1, DES+2, POD+3, VOL+3)",
+  "elemento1": "Aire",
+  "elemento2": "Fuego",
+  "elemento3": "Luz",
+  "elementos": "Aire, Fuego, Luz",
+  "_seccion": "EFECTOS DE INCREMENTO"
+ },
+ {
+  "efecto": "Incremento de Habilidad",
+  "tipo": "Asalto",
+  "clase": "Variable",
+  "caracteristicas": "CON (AGI+2, DES+3, POD+2, VOL+1)",
+  "elemento1": "Agua",
+  "elemento2": "Tierra",
+  "elemento3": "Luz",
+  "elementos": "Agua, Tierra, Luz",
+  "_seccion": "EFECTOS DE INCREMENTO"
+ },
+ {
+  "efecto": "Capacidad Incrementada AGI",
+  "tipo": "Acción",
+  "clase": "Variable",
+  "caracteristicas": "AGI (CON+1, POD+1, VOL+1)",
+  "elemento1": "Agua",
+  "elemento2": "Fuego",
+  "elemento3": "Oscuridad",
+  "elementos": "Agua, Fuego, Oscuridad",
+  "_seccion": "EFECTOS DE INCREMENTO"
+ },
+ {
+  "efecto": "Capacidad Incrementada FUE",
+  "tipo": "Acción",
+  "clase": "Variable",
+  "caracteristicas": "FUE (CON+1, POD+1, VOL+1)",
+  "elemento1": "Agua",
+  "elemento2": "Fuego",
+  "elemento3": "Oscuridad",
+  "elementos": "Agua, Fuego, Oscuridad",
+  "_seccion": "EFECTOS DE INCREMENTO"
+ },
+ {
+  "efecto": "Capacidad Incrementada DES",
+  "tipo": "Acción",
+  "clase": "Variable",
+  "caracteristicas": "DES (CON+1, POD+1, VOL+1)",
+  "elemento1": "Agua",
+  "elemento2": "Fuego",
+  "elemento3": "Oscuridad",
+  "elementos": "Agua, Fuego, Oscuridad",
+  "_seccion": "EFECTOS DE INCREMENTO"
+ },
+ {
+  "efecto": "Incremento de Resistencia Física",
+  "tipo": "Asalto",
+  "clase": "Variable",
+  "caracteristicas": "CON (DES+3, FUE+2, POD+1, VOL+1)",
+  "elemento1": "Agua",
+  "elemento2": "Luz",
+  "elemento3": "Tierra",
+  "elementos": "Agua, Luz, Tierra",
+  "_seccion": "EFECTOS DE INCREMENTO"
+ },
+ {
+  "efecto": "Incremento de Resistencia Mágica",
+  "tipo": "Asalto",
+  "clase": "Variable",
+  "caracteristicas": "POD (CON+2, DES+3, FUE+2, VOL+1)",
+  "elemento1": "Aire",
+  "elemento2": "Fuego",
+  "elemento3": "Luz",
+  "elementos": "Aire, Fuego, Luz",
+  "_seccion": "EFECTOS DE INCREMENTO"
+ },
+ {
+  "efecto": "Incremento de Resistencia Psíquica",
+  "tipo": "Asalto",
+  "clase": "Variable",
+  "caracteristicas": "VOL (CON+2, DES+3, FUE+2, POD+1)",
+  "elemento1": "Aire",
+  "elemento2": "Agua",
+  "elemento3": "Luz",
+  "elementos": "Aire, Agua, Luz",
+  "_seccion": "EFECTOS DE INCREMENTO"
+ },
+ {
+  "efecto": "Habilidades Perceptivas",
+  "tipo": "Asalto",
+  "clase": "Variable",
+  "caracteristicas": "POD (AGI+4, CON+4, DES+4, VOL+1)",
+  "elemento1": "Agua",
+  "elemento2": "Aire",
+  "elemento3": "Luz",
+  "elementos": "Agua, Aire, Luz",
+  "_seccion": "EFECTOS DE INCREMENTO"
+ },
+ {
+  "efecto": "Ataque capaz de Dañar Energía",
+  "tipo": "Acción",
+  "clase": "Ataque",
+  "caracteristicas": "POD (CON+2, DES+3, FUE+3, VOL+1)",
+  "elemento1": "Fuego",
+  "elemento2": "Luz",
+  "elemento3": "Oscuridad",
+  "elementos": "Fuego, Luz, Oscuridad",
+  "_seccion": "EFECTOS VARIADOS"
+ },
+ {
+  "efecto": "Ataque Elemental",
+  "tipo": "Asalto",
+  "clase": "Ataque",
+  "caracteristicas": "POD (CON+2, DES+3, FUE+3, VOL+1)",
+  "_seccion": "EFECTOS VARIADOS"
+ },
+ {
+  "efecto": "Armas Físicas de Ki",
+  "tipo": "Asalto",
+  "clase": "Variable",
+  "caracteristicas": "POD (CON+1, DES+3, FUE+2, VOL+1)",
+  "elemento1": "Luz",
+  "elemento2": "Oscuridad",
+  "elemento3": "Tierra",
+  "elementos": "Luz, Oscuridad, Tierra",
+  "_seccion": "EFECTOS VARIADOS"
+ },
+ {
+  "efecto": "Ataque Sobrenatural",
+  "tipo": "Acción",
+  "clase": "Ataque",
+  "caracteristicas": "POD (CON+2, DES+3, FUE+3, VOL+1)",
+  "elemento1": "Luz",
+  "elemento2": "Oscuridad",
+  "elementos": "Luz, Oscuridad",
+  "_seccion": "EFECTOS VARIADOS"
+ },
+ {
+  "efecto": "Absorción de Ki",
+  "tipo": "Acción",
+  "clase": "Defensa",
+  "caracteristicas": "POD (CON+3, DES+4, FUE+3, VOL+1)",
+  "elemento1": "Agua",
+  "elemento2": "Aire",
+  "elemento3": "Tierra",
+  "elementos": "Agua, Aire, Tierra",
+  "_seccion": "EFECTOS VARIADOS"
+ },
+ {
+  "efecto": "Apresamiento",
+  "tipo": "Acción",
+  "clase": "Ataque",
+  "caracteristicas": "FUE (CON+2, DES+1, POD+2, VOL+2)",
+  "elemento1": "Tierra",
+  "elementos": "Tierra",
+  "_seccion": "EFECTOS VARIADOS"
+ },
+ {
+  "efecto": "Choque Físico",
+  "tipo": "Acción",
+  "clase": "Ataque",
+  "caracteristicas": "POD (CON+1, DES+3, FUE+1, VOL+1)",
+  "elemento1": "Agua",
+  "elemento2": "Luz",
+  "elemento3": "Tierra",
+  "elementos": "Agua, Luz, Tierra",
+  "_seccion": "EFECTOS VARIADOS"
+ },
+ {
+  "efecto": "Acumulación",
+  "tipo": "Asalto",
+  "clase": "Defensa",
+  "caracteristicas": "CON (DES+3, FUE+3, POD+3, VOL+1)",
+  "elemento1": "Tierra",
+  "elementos": "Tierra",
+  "_seccion": "EFECTOS VARIADOS"
+ },
+ {
+  "efecto": "Espejismo",
+  "tipo": "Asalto",
+  "clase": "Variable",
+  "caracteristicas": "VOL (AGI+2, DES+3, CON+3, POD+1)",
+  "elemento1": "Agua",
+  "elemento2": "Oscuridad",
+  "elementos": "Agua, Oscuridad",
+  "_seccion": "EFECTOS VARIADOS"
+ },
+ {
+  "efecto": "Escudo de Energía",
+  "tipo": "Asalto",
+  "clase": "Defensa",
+  "caracteristicas": "POD (AGI+3, CON+2, DES+3, FUE+2)",
+  "elemento1": "Agua",
+  "elemento2": "Luz",
+  "elementos": "Agua, Luz",
+  "_seccion": "EFECTOS VARIADOS"
+ },
+ {
+  "efecto": "Estados Sobrenaturales",
+  "tipo": "Acción",
+  "clase": "Ataque",
+  "caracteristicas": "POD (CON+4, DES+4, FUE+4, VOL+1)",
+  "elemento1": "Luz",
+  "elemento2": "Oscuridad",
+  "elementos": "Luz, Oscuridad",
+  "_seccion": "EFECTOS VARIADOS"
+ },
+ {
+  "efecto": "Impacto",
+  "tipo": "Acción",
+  "clase": "Ataque",
+  "caracteristicas": "FUE (CON+2, DES+3, POD+1, VOL+1)",
+  "elemento1": "Fuego",
+  "elemento2": "Tierra",
+  "elementos": "Fuego, Tierra",
+  "_seccion": "EFECTOS VARIADOS"
+ },
+ {
+  "efecto": "Interrupción",
+  "tipo": "Acción",
+  "clase": "Ataque",
+  "caracteristicas": "VOL (CON+3, DES+3, FUE+2, POD+1)",
+  "elemento1": "Agua",
+  "elemento2": "Aire",
+  "elemento3": "Luz",
+  "elementos": "Agua, Aire, Luz",
+  "_seccion": "EFECTOS VARIADOS"
+ },
+ {
+  "efecto": "Intangibilidad",
+  "tipo": "Asalto",
+  "clase": "Variable",
+  "caracteristicas": "POD (CON+3, DES+3, FUE+3, VOL+1)",
+  "elemento1": "Agua",
+  "elemento2": "Luz",
+  "elemento3": "Oscuridad",
+  "elementos": "Agua, Luz, Oscuridad",
+  "_seccion": "EFECTOS VARIADOS"
+ },
+ {
+  "efecto": "Marca",
+  "tipo": "Acción",
+  "clase": "Ataque",
+  "caracteristicas": "POD (CON+2, DES+3, FUE+3, VOL+1)",
+  "elemento1": "Aire",
+  "elemento2": "Luz",
+  "elemento3": "Oscuridad",
+  "elementos": "Aire, Luz, Oscuridad",
+  "_seccion": "EFECTOS VARIADOS"
+ },
+ {
+  "efecto": "Potenciar Crítico",
+  "tipo": "Acción",
+  "clase": "Ataque",
+  "caracteristicas": "POD (CON+2, DES+2, FUE+1, VOL+1)",
+  "elemento1": "Fuego",
+  "elemento2": "Tierra",
+  "elementos": "Fuego, Tierra",
+  "_seccion": "EFECTOS VARIADOS"
+ },
+ {
+  "efecto": "Potenciar Crítico Real",
+  "tipo": "Asalto",
+  "clase": "Ataque",
+  "caracteristicas": "POD (CON+2, DES+2, FUE+1, VOL+1)",
+  "elemento1": "Fuego",
+  "elemento2": "Tierra",
+  "elementos": "Fuego, Tierra",
+  "_seccion": "EFECTOS VARIADOS"
+ },
+ {
+  "efecto": "Reflectar el Ataque",
+  "tipo": "Acción",
+  "clase": "Defensa",
+  "caracteristicas": "POD (AGI+3, DES+3, FUE+3, VOL+1)",
+  "elemento1": "Agua",
+  "elemento2": "Luz",
+  "elemento3": "Oscuridad",
+  "elementos": "Agua, Luz, Oscuridad",
+  "_seccion": "EFECTOS VARIADOS"
+ },
+ {
+  "efecto": "Efecto Personalizado #1",
+  "_seccion": "EFECTOS PERSONALIZADOS"
+ },
+ {
+  "efecto": "Efecto Personalizado #2",
+  "_seccion": "EFECTOS PERSONALIZADOS"
+ },
+ {
+  "efecto": "Efecto Personalizado #3",
+  "_seccion": "EFECTOS PERSONALIZADOS"
+ },
+ {
+  "efecto": "Efecto Personalizado #4",
+  "_seccion": "EFECTOS PERSONALIZADOS"
+ },
+ {
+  "efecto": "Efecto Personalizado #5",
+  "_seccion": "EFECTOS PERSONALIZADOS"
+ },
+ {
+  "efecto": "Reducción de CM",
+  "_seccion": "EFECTOS PERSONALIZADOS"
+ },
+ {
+  "efecto": 0,
+  "_seccion": "EFECTOS PERSONALIZADOS"
+ },
+ {
+  "efecto": -5,
+  "_seccion": "EFECTOS PERSONALIZADOS"
+ },
+ {
+  "efecto": -10,
+  "_seccion": "EFECTOS PERSONALIZADOS"
+ },
+ {
+  "efecto": -15,
+  "_seccion": "EFECTOS PERSONALIZADOS"
+ },
+ {
+  "efecto": -20,
+  "_seccion": "EFECTOS PERSONALIZADOS"
+ }
+]

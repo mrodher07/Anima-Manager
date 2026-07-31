@@ -17,13 +17,30 @@ import {
 } from './combate';
 import { acumularEfectos, type EfectosAplicados } from './efectos';
 import {
+  CARACTERISTICAS_KI,
+  ELECCIONES_KI_VACIAS,
+  calcularKi,
+  type CaracteristicaKi,
+  type EleccionesKi,
+  type FichaKi,
+} from './ki';
+import {
   acumularPorNivel,
   resumirMulticlase,
   type EntradaCategoria,
   type ResumenMulticlase,
 } from './multiclase';
 import type { Catalogo } from '../datos/paquetes';
-import type { Arma, Armadura, Categoria, Raza, TablasBase, Ventaja } from '../datos/tipos';
+import type {
+  Arma,
+  Armadura,
+  Categoria,
+  EntradaTabla,
+  HabilidadKiCatalogo,
+  Raza,
+  TablasBase,
+  Ventaja,
+} from '../datos/tipos';
 
 export const CARACTERISTICAS = ['AGI', 'CON', 'DES', 'FUE', 'INT', 'PER', 'POD', 'VOL'] as const;
 export type Caracteristica = (typeof CARACTERISTICAS)[number];
@@ -137,6 +154,9 @@ export interface Personaje {
   /** Poderes psíquicos dominados, por nombre. */
   poderesPsiquicos: string[];
 
+  /** Dominios del Ki: habilidades, Límites, Técnicas y artes marciales. */
+  ki: EleccionesKi;
+
   /**
    * Bonos especiales por habilidad, escritos a mano. En la ficha original es la columna
    * «Esp.»: no hay regla que los derive, el jugador anota ahí lo que le den sus
@@ -186,8 +206,10 @@ export interface Personaje {
  * sueltos) al modelo multiclase. Así no se pierde nada de lo ya creado.
  */
 export function migrarPersonaje(p: Personaje & { categoria?: string; nivel?: number }): Personaje {
-  if (Array.isArray(p.categorias) && p.categorias.length > 0) return p;
-  const { categoria, nivel, ...resto } = p;
+  // El bloque de Ki llegó con el Dominus Exxet: las fichas anteriores no lo traen.
+  const conKi: Personaje = p.ki ? p : { ...p, ki: { ...ELECCIONES_KI_VACIAS } };
+  if (Array.isArray(conKi.categorias) && conKi.categorias.length > 0) return conKi;
+  const { categoria, nivel, ...resto } = conKi as Personaje & { categoria?: string; nivel?: number };
   return {
     ...(resto as Personaje),
     categorias: [{ categoria: categoria ?? 'Novel', nivel: nivel ?? 1 }],
@@ -224,6 +246,7 @@ export function personajeVacio(id: string): Personaje {
     desventajas: [],
     conjuros: [],
     poderesPsiquicos: [],
+    ki: { ...ELECCIONES_KI_VACIAS },
     bonosEspeciales: {},
     equipo: { armadura: [], armas: [] },
     estado: {},
@@ -267,6 +290,7 @@ export interface FichaCalculada {
   resistencias: Record<Resistencia, ValorDerivado>;
   zeon: ValorDerivado;
   act: ValorDerivado;
+  ki: FichaKi;
   secundarias: Record<string, ValorDerivado>;
   /** Lo que aportan las ventajas y desventajas elegidas. */
   efectos: EfectosAplicados;
@@ -323,6 +347,8 @@ export interface DatosCalculo {
   armas: Arma[];
   armaduras: Armadura[];
   ventajas: Ventaja[];
+  habilidadesKi: HabilidadKiCatalogo[];
+  artesMarciales: EntradaTabla[];
 }
 
 /** Puntos de Creación: 3 de partida, más los que den las desventajas. */
@@ -334,14 +360,17 @@ export async function cargarDatosCalculo(
   personaje: Personaje,
   catalogo: Catalogo,
 ): Promise<DatosCalculo> {
-  const [raza, categorias, tablas, armas, armaduras, ventajas] = await Promise.all([
-    catalogo.buscar('razas', personaje.raza),
-    catalogo.obtener('categorias'),
-    catalogo.tablasBase(),
-    catalogo.obtener('armas'),
-    catalogo.obtener('armaduras'),
-    catalogo.obtener('ventajas'),
-  ]);
+  const [raza, categorias, tablas, armas, armaduras, ventajas, habilidadesKi, artesMarciales] =
+    await Promise.all([
+      catalogo.buscar('razas', personaje.raza),
+      catalogo.obtener('categorias'),
+      catalogo.tablasBase(),
+      catalogo.obtener('armas'),
+      catalogo.obtener('armaduras'),
+      catalogo.obtener('ventajas'),
+      catalogo.obtener('habilidadesKi'),
+      catalogo.obtener('artesMarciales'),
+    ]);
   const actual = categoriaActual(personaje);
   return {
     raza,
@@ -351,6 +380,8 @@ export async function cargarDatosCalculo(
     armas,
     armaduras,
     ventajas,
+    habilidadesKi,
+    artesMarciales,
   };
 }
 
@@ -612,6 +643,65 @@ export function calcular(
     for (const texto of arma.avisos) avisos.push({ gravedad: 'aviso', mensaje: `${arma.arma}: ${texto}` });
   }
 
+  // ── Dominios del Ki ──
+  // Va después de las secundarias porque Detección y Ocultación se calculan sobre
+  // Advertir y Ocultarse ya resueltas.
+  const cmPorArteMarcial: Record<string, number> = {};
+  for (const arte of datos.artesMarciales) {
+    const nombre = String(arte.arte ?? '');
+    if (nombre) cmPorArteMarcial[nombre] = Number(arte.CM ?? 0);
+  }
+  const caracteristicasKi = Object.fromEntries(
+    CARACTERISTICAS_KI.map((c) => [c, caracteristicas[c].total]),
+  ) as Record<CaracteristicaKi, number>;
+  const porCaracteristica = (prefijo: string) =>
+    Object.fromEntries(
+      CARACTERISTICAS_KI.map((c) => [c, personaje.pdInvertidos[`${prefijo}${c}`] ?? 0]),
+    ) as Record<CaracteristicaKi, number>;
+  const especialPor = (prefijo: string) =>
+    Object.fromEntries(
+      CARACTERISTICAS_KI.map((c) => [c, personaje.bonosEspeciales[`${prefijo}${c}`] ?? 0]),
+    ) as Record<CaracteristicaKi, number>;
+
+  const ki = calcularKi(
+    personaje.ki ?? { habilidades: [], limites: [], tecnicas: [], artesMarciales: [] },
+    {
+      tablaAcumulacion: tablas.acumulacionKi ?? [],
+      habilidades: datos.habilidadesKi,
+      limites: tablas.limitesKi ?? [],
+      cmPorArteMarcial,
+    },
+    {
+      caracteristicas: caracteristicasKi,
+      pdKi: porCaracteristica('Ki'),
+      pdAcumulacion: porCaracteristica('AcumKi'),
+      pdCM: personaje.pdInvertidos['CM'] ?? 0,
+      especialKi: especialPor('Ki'),
+      especialAcumulacion: especialPor('AcumKi'),
+      costeKi: Number(categoria?.costeKi ?? 0),
+      costeAcumulacion: Number(categoria?.costeAcumKi ?? 0),
+      // Cada categoría aporta su CM por los niveles hechos en ella.
+      cmCategoria: acumularPorNivel(personaje.categorias, datos.categorias, 'conocimientoMarcial'),
+      cmVentajas: efectos.conocimientoMarcial,
+      nivel,
+      pdTotales,
+      penalizadorArmadura,
+      advertir: secundarias['Advertir']?.valor ?? 0,
+      ocultarse: secundarias['Ocultarse']?.valor ?? 0,
+      especialDeteccion: especial('DeteccionKi'),
+      especialOcultacion: especial('OcultacionKi'),
+      bonoDeteccionPorNivel: efectos.deteccionKiPorNivel,
+      bonoOcultacionPorNivel: efectos.ocultacionKiPorNivel,
+      // Los D'Anjayni nacen sabiendo esconderse. Ficha, Ki!F36.
+      bonoOcultacionRaza: raza?.raza === "D'Anjayni" ? 50 : 0,
+      natura: raza?.natura ?? 0,
+      poderInnato: personaje.ventajas.includes('Poder innato'),
+      limiteDual: personaje.ventajas.includes('Límite dual'),
+    },
+    reglamento,
+  );
+  for (const texto of ki.avisos) avisos.push({ gravedad: 'aviso', mensaje: texto });
+
   // ── Puntos de Creación: ventajas contra desventajas ──
   const costeDe = (nombre: string) =>
     Math.abs(datos.ventajas.find((v) => v.nombre === nombre)?.coste ?? 0);
@@ -703,6 +793,7 @@ export function calcular(
     resistencias,
     zeon,
     act,
+    ki,
     secundarias,
     efectos,
     puntosCreacion,

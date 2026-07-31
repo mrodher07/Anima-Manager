@@ -1,0 +1,1360 @@
+[
+ {
+  "tecnica": "Excisum Aeris",
+  "nivel": 1,
+  "CM": 25,
+  "coste": "AGI 4 DES 4 POD 2",
+  "efectos": "Ataque a Distancia (50 metros), Incrementar Turno (+50)",
+  "arbol": "CELÉRITAS"
+ },
+ {
+  "tecnica": "Velocitas Ventus",
+  "nivel": 1,
+  "CM": 25,
+  "coste": "AGI 7 DES 7 POD 4",
+  "efectos": "Ataque Adicional Limitado (+3), Incrementar Turno (+50)",
+  "arbol": "CELÉRITAS"
+ },
+ {
+  "tecnica": "Excisum Magister",
+  "nivel": 2,
+  "CM": 45,
+  "coste": "AGI 8 DES 8 POD 5",
+  "efectos": "Habilidad de Ataque (+75), Incrementar Turno (+125)",
+  "arbol": "CELÉRITAS"
+ },
+ {
+  "tecnica": "Magnus Exactor",
+  "nivel": 2,
+  "CM": 45,
+  "coste": "AGI 7 DES 7 POD 3",
+  "efectos": "Ataque con Área (10 metros de radio), Incrementar Turno (+150)",
+  "arbol": "CELÉRITAS"
+ },
+ {
+  "tecnica": "Summun",
+  "nivel": 3,
+  "CM": 85,
+  "coste": "AGI 15 DES 17 POD 8",
+  "efectos": "Ataque Adicional Limitado (+8), Incrementar Turno (+175)",
+  "arbol": "CELÉRITAS"
+ },
+ {
+  "tecnica": "Feuer",
+  "nivel": 1,
+  "CM": 20,
+  "coste": "VOL 5 (1) POD 1 FUE 3 (1)",
+  "efectos": "Aumento de Daño (+25, Mantenido), Ataque Elemental (Fuego)",
+  "arbol": "IGNIS"
+ },
+ {
+  "tecnica": "Le Feu",
+  "nivel": 1,
+  "CM": 20,
+  "coste": "VOL 5 DES 3 POD 3 FUE 1",
+  "efectos": "Habilidad de Ataque (+40), Ataque a Distancia (20 metros)",
+  "arbol": "IGNIS"
+ },
+ {
+  "tecnica": "Horecka",
+  "nivel": 2,
+  "CM": 40,
+  "coste": "VOL 10 DES 6 POD 6 FUE 2",
+  "efectos": "Multiplicador al Daño (x2), Ataque con Área (50 metros de radio)",
+  "desventajas": "Técnica Mantenida (Feuer)",
+  "arbol": "IGNIS"
+ },
+ {
+  "tecnica": "Vatra",
+  "nivel": 2,
+  "CM": 40,
+  "coste": "VOL 11 DES 6 POD 6 FUE 1 CON 3",
+  "efectos": "Habilidad de Ataque (+75), Aumento de Daño (+75), Potenciar Crítico (+40)",
+  "desventajas": "Técnica Mantenida (Feuer)",
+  "arbol": "IGNIS"
+ },
+ {
+  "tecnica": "Eld",
+  "nivel": 3,
+  "CM": 60,
+  "coste": "VOL 19 DES 10 FUE 10",
+  "efectos": "Habilidad de Ataque (+150), Aumento de Daño (Sacrificio Vital Doble)",
+  "desventajas": "Técnica Mantenida (Feuer)",
+  "arbol": "IGNIS"
+ },
+ {
+  "tecnica": "Las escamas",
+  "nivel": 1,
+  "CM": 20,
+  "coste": "DES 3 CON 3 AGI 1",
+  "efectos": "Defensas Adicionales (+6)",
+  "arbol": "EL DRAGÓN"
+ },
+ {
+  "tecnica": "Las garras",
+  "nivel": 1,
+  "CM": 30,
+  "coste": "DES 4 CON 4 AGI 4 FUE 2",
+  "efectos": "Ataque Adicional (+1), Aumento de Daño (+40)",
+  "arbol": "EL DRAGÓN"
+ },
+ {
+  "tecnica": "El colmillo",
+  "nivel": 2,
+  "CM": 45,
+  "coste": "DES 5 CON 8 AGI 6 FUE 3",
+  "efectos": "Destruir Armadura (-6 ta), Maniobras de Combate y Apuntar (-50), Habilidad de Ataque (+50)",
+  "arbol": "EL DRAGÓN"
+ },
+ {
+  "tecnica": "La cola",
+  "nivel": 2,
+  "CM": 55,
+  "coste": "DES 6 CON 8 AGI 6 FUE 2",
+  "efectos": "Habilidad de Ataque (+40), Ataque con Área (25 metros de radio), Impacto (FUE 16)",
+  "arbol": "EL DRAGÓN"
+ },
+ {
+  "tecnica": "El aliento del Dragón",
+  "nivel": 3,
+  "CM": 80,
+  "coste": "DES 10 CON 10 AGI 10 POD 6 FUE 15",
+  "efectos": "Ataque a Distancia (1 kilómetro), Ataque con Área (100 metros de radio), Ataque capaz de Dañar Energía, Multiplicador al Daño (x2)",
+  "desventajas": "Predeterminación",
+  "arbol": "EL DRAGÓN"
+ },
+ {
+  "tecnica": "Primera Cadena: Volgarath",
+  "nivel": 1,
+  "CM": 35,
+  "coste": "FUE 5 DES 5 POD 5",
+  "efectos": "Habilidad de Ataque (+25), Aumento de Daño (+40), Ataque a Distancia (100 metros)",
+  "arbol": "LAS CADENAS"
+ },
+ {
+  "tecnica": "Segunda Cadena: Exelion",
+  "nivel": 1,
+  "CM": 50,
+  "coste": "FUE 5 DES 6 POD 6",
+  "efectos": "Aumento de Daño (+50), Ataque con Área (10 metros de radio), Ataque a Distancia (100 metros)",
+  "arbol": "LAS CADENAS"
+ },
+ {
+  "tecnica": "Tercera Cadena: Dedalus",
+  "nivel": 2,
+  "CM": 60,
+  "coste": "FUE 8 DES 8 POD 8",
+  "efectos": "Habilidad de Ataque (+50), Apresamiento (FUE 14), Ataque a Distancia (100 metros)",
+  "arbol": "LAS CADENAS"
+ },
+ {
+  "tecnica": "Cuarta Cadena: Oberon",
+  "nivel": 2,
+  "CM": 70,
+  "coste": "FUE 10 DES 11 POD 10",
+  "efectos": "Habilidad de Parada (+40), Escudo de Energía (1.000 PV), Reflectar el Ataque",
+  "arbol": "LAS CADENAS"
+ },
+ {
+  "tecnica": "Quinta Cadena: Garuda",
+  "nivel": 3,
+  "CM": 90,
+  "coste": "FUE 9 DES 12 POD 12 VOL 6 CON 4",
+  "efectos": "Ataque Adicional (+4), Destruir Armadura (-6 ta), Ataque a Distancia (100 metros)",
+  "arbol": "LAS CADENAS"
+ },
+ {
+  "tecnica": "Itami",
+  "nivel": 1,
+  "CM": 30,
+  "coste": "DES 4 POD 4 VOL 4",
+  "efectos": "Habilidad de Ataque (+40), Estados Sobrenaturales (RF 100, Estado añadido: Pen. a la Acción Menor)",
+  "desventajas": "Daño reducido (Ningún Daño)",
+  "arbol": "SIRIUS"
+ },
+ {
+  "tecnica": "Hakai",
+  "nivel": 1,
+  "CM": 30,
+  "coste": "DES 6 POD 6 VOL 6",
+  "efectos": "Habilidad de Ataque (+40), Estados Sobrenaturales (RF 120, Estado añadido: Daño)",
+  "arbol": "SIRIUS"
+ },
+ {
+  "tecnica": "Tomeru",
+  "nivel": 2,
+  "CM": 40,
+  "coste": "DES 8 POD 8 VOL 9",
+  "efectos": "Habilidad de Ataque (+50), Estados Sobrenaturales (RF 140, Estado añadido: Paralización Total)",
+  "desventajas": "Daño reducido (Ningún Daño)",
+  "arbol": "SIRIUS"
+ },
+ {
+  "tecnica": "Yowai",
+  "nivel": 2,
+  "CM": 40,
+  "coste": "DES 8 POD 7 VOL 8",
+  "efectos": "Habilidad de Ataque (+50), Estados Sobrenaturales (RF 180, Estado añadido: Reducción de RF)",
+  "desventajas": "Daño reducido (Ningún Daño)",
+  "arbol": "SIRIUS"
+ },
+ {
+  "tecnica": "Korosu",
+  "nivel": 3,
+  "CM": 70,
+  "coste": "DES 11 POD 11 VOL 10",
+  "efectos": "Habilidad de Ataque (+75), Estados Sobrenaturales (RF 140, Estado añadido: Muerte)",
+  "desventajas": "Daño reducido (Ningún Daño)",
+  "arbol": "SIRIUS"
+ },
+ {
+  "tecnica": "Escudo del alba",
+  "nivel": 1,
+  "CM": 25,
+  "coste": "DES 4 FUE 5 CON 6",
+  "efectos": "Habilidad de Parada (+40), Armadura (TA 4)",
+  "arbol": "BASIS"
+ },
+ {
+  "tecnica": "Tajo carmesí",
+  "nivel": 1,
+  "CM": 20,
+  "coste": "DES 4 FUE 4 CON 4",
+  "efectos": "Habilidad de Ataque (+40), Destruir Armadura (-4 ta)",
+  "arbol": "BASIS"
+ },
+ {
+  "tecnica": "Destello Final",
+  "nivel": 2,
+  "CM": 50,
+  "coste": "DES 5 FUE 6 CON 6 POD 3",
+  "efectos": "Habilidad de Ataque (+50), Aumento de Daño (+50), Ataque con Área (25 metros de radio)",
+  "arbol": "BASIS"
+ },
+ {
+  "tecnica": "Implosión",
+  "nivel": 2,
+  "CM": 50,
+  "coste": "DES 6 FUE 6 CON 6",
+  "efectos": "Multiplicador al Daño (x3)",
+  "arbol": "BASIS"
+ },
+ {
+  "tecnica": "El latido del trueno",
+  "nivel": 3,
+  "CM": 60,
+  "coste": "DES 12 FUE 11 CON 10",
+  "efectos": "Habilidad de Parada (+90), Habilidad de Contraataque (+75), Aumento de Daño (+75)",
+  "arbol": "BASIS"
+ },
+ {
+  "tecnica": "Libera Me",
+  "nivel": 1,
+  "CM": 45,
+  "coste": "AGI 4 DES 5 FUE 5 POD 5",
+  "efectos": "Ataque Indirecto (Nv 1), Camuflar Ataque (Muy Difícil (140)), Aumento de Daño (+25, Sacrificio Vital)",
+  "arbol": "ORMUS"
+ },
+ {
+  "tecnica": "Sanctus",
+  "nivel": 1,
+  "CM": 30,
+  "coste": "AGI 4 DES 5 FUE 5 POD 5",
+  "efectos": "Escudo de Energía (400 PV), Defensa Predeterminada (Absurdo (180))",
+  "arbol": "ORMUS"
+ },
+ {
+  "tecnica": "Kyrie eleison",
+  "nivel": 2,
+  "CM": 75,
+  "coste": "AGI 9 DES 9 FUE 9 POD 9",
+  "efectos": "Maniobras de Combate y Apuntar (-75), Potenciar Crítico (+125, Crítico Automático)",
+  "arbol": "ORMUS"
+ },
+ {
+  "tecnica": "Dies Irae",
+  "nivel": 2,
+  "CM": 55,
+  "coste": "DES 8 POD 8 VOL 5 AGI 8",
+  "efectos": "Ataque Elemental (Luz), Ataque Sobrenatural, Ataque con Área (50 metros de radio), Habilidad de Ataque (+50)",
+  "arbol": "ORMUS"
+ },
+ {
+  "tecnica": "Réquiem",
+  "nivel": 3,
+  "CM": 110,
+  "coste": "AGI 10 CON 5 DES 10 FUE 10 POD 10 VOL 5",
+  "efectos": "Ataque Adicional Limitado (+5, Ataque Continuo), Multiplicador al Daño (x2), Ataque Elemental (Luz)",
+  "arbol": "ORMUS"
+ },
+ {
+  "tecnica": "Yuki",
+  "nivel": 1,
+  "CM": 30,
+  "coste": "AGI 5 (1) DES 5 (1) POD 6 (2)",
+  "efectos": "Habilidad de Esquiva (+75, Mantenido)",
+  "arbol": "HYOUSETSU JIGOKU"
+ },
+ {
+  "tecnica": "Samui",
+  "nivel": 1,
+  "CM": 20,
+  "coste": "AGI 3 (1) DES 3 (1) POD 4 (1)",
+  "efectos": "Habilidad de Contraataque (+40, Mantenido)",
+  "arbol": "HYOUSETSU JIGOKU"
+ },
+ {
+  "tecnica": "Kagami",
+  "nivel": 2,
+  "CM": 65,
+  "coste": "AGI 11 DES 11 POD 13",
+  "efectos": "Reflectar el Ataque (Reflectar Habilidades Esotéricas), Defensa Predeterminada (Casi Imposible (240))",
+  "arbol": "HYOUSETSU JIGOKU"
+ },
+ {
+  "tecnica": "Kagami No Kakera",
+  "nivel": 2,
+  "CM": 70,
+  "coste": "AGI 10 DES 10 POD 12",
+  "efectos": "Ataque Adicional Limitado (+5, Sostenimiento Menor)",
+  "arbol": "HYOUSETSU JIGOKU"
+ },
+ {
+  "tecnica": "Shitsunen No Sekai",
+  "nivel": 3,
+  "CM": 115,
+  "coste": "AGI 24 DES 24 POD 24",
+  "efectos": "Estados Sobrenaturales (RF 180, Estado añadido: Paralización Total, Distancia: 50 metros, Condición: Por el Aire)",
+  "desventajas": "Predeterminación",
+  "arbol": "HYOUSETSU JIGOKU"
+ },
+ {
+  "tecnica": "Ether",
+  "nivel": 1,
+  "CM": 25,
+  "coste": "POD 4 (1) VOL 4 (1)",
+  "efectos": "Intangibilidad",
+  "desventajas": "Combinable,Atadura Elemental (Oscuridad)",
+  "arbol": "HYPNOS REQUIEM"
+ },
+ {
+  "tecnica": "El Paso De La Vigilia",
+  "nivel": 1,
+  "CM": 25,
+  "coste": "DES 5 (1) POD 5 (1)",
+  "efectos": "Transporte Automático (20 metros, Mantenido)",
+  "desventajas": "Combinable,Atadura Elemental (Oscuridad)",
+  "arbol": "HYPNOS REQUIEM"
+ },
+ {
+  "tecnica": "Marca Espectral",
+  "nivel": 1,
+  "CM": 30,
+  "coste": "POD 6 VOL 6 DES 6",
+  "efectos": "Marca (Menor), Ataque Sobrenatural, Ataque con Área (10 metros de radio)",
+  "desventajas": "Atadura Elemental (Oscuridad)",
+  "arbol": "HYPNOS REQUIEM"
+ },
+ {
+  "tecnica": "La Sombra De La Muerte",
+  "nivel": 2,
+  "CM": 60,
+  "coste": "POD 12 VOL 12 DES 10",
+  "efectos": "Estados Sobrenaturales (RF 160, Estado añadido: Drenaje de Ki), Ataque Indirecto (Nv 2)",
+  "desventajas": "Atadura Elemental (Oscuridad)",
+  "arbol": "HYPNOS REQUIEM"
+ },
+ {
+  "tecnica": "Horda Espectral",
+  "nivel": 2,
+  "CM": 45,
+  "coste": "DES 10 (4) POD 10 (4) VOL 10 (5)",
+  "efectos": "Espejismo (10 Imágenes, RP 180, Indetección Inhumano (320), Mantenido)",
+  "desventajas": "Atadura Elemental (Oscuridad), Sacrificio de Características (CON)",
+  "arbol": "HYPNOS REQUIEM"
+ },
+ {
+  "tecnica": "La Última Pesadilla",
+  "nivel": 2,
+  "CM": 80,
+  "coste": "POD 17 VOL 17 DES 17",
+  "efectos": "Estados Sobrenaturales (RF 160, Estado añadido: Terror, Estado añadido: Dolor extremo, Condición: Contacto Visual (Un Blanco), Distancia: 25 metros)",
+  "desventajas": "Atadura Elemental (Oscuridad), Condición (Nocturno)",
+  "arbol": "HYPNOS REQUIEM"
+ },
+ {
+  "tecnica": "Le Tige, El Tallo",
+  "nivel": 1,
+  "CM": 20,
+  "coste": "AGI 3 (1) DES 3 (1) CON 3 (1)",
+  "efectos": "Defensas Adicionales (+3, Mantenido)",
+  "arbol": "LE ROSE DU SANG"
+ },
+ {
+  "tecnica": "Les Feuilles, Las Hojas",
+  "nivel": 1,
+  "CM": 30,
+  "coste": "AGI 3 (1) CON 3 (1) POD 3",
+  "efectos": "Armadura (TA 3, Mantenido)",
+  "arbol": "LE ROSE DU SANG"
+ },
+ {
+  "tecnica": "Le Pétale, El Pétalo",
+  "nivel": 2,
+  "CM": 40,
+  "coste": "AGI 10 (2) DES 10 (2) POD 10 (2) CON 10 (2)",
+  "efectos": "Escudo de Energía (1.000 PV, Mantenido)",
+  "desventajas": "Circunstancia Límite (Recibir Daño)",
+  "arbol": "LE ROSE DU SANG"
+ },
+ {
+  "tecnica": "Les Epines, Las Espinas",
+  "nivel": 2,
+  "CM": 55,
+  "coste": "AGI 4 (1) CON 4 (1) DES 4 (1)",
+  "efectos": "Ataque Adicional Limitado (+3)",
+  "desventajas": "Daño reducido (Mitad de Daño)",
+  "arbol": "LE ROSE DU SANG"
+ },
+ {
+  "tecnica": "Mille Pétales De Rose, Mil Pétalos De Rosa",
+  "nivel": 3,
+  "CM": 90,
+  "coste": "AGI 12 CON 12 DES 8 POD 12",
+  "efectos": "Ataque con Área (100 metros de radio, Elección de Blanco), Ataque Adicional (+2), Ataque Indirecto (Nv 3)",
+  "desventajas": "Técnica Mantenida (Le Pétale)",
+  "arbol": "LE ROSE DU SANG"
+ },
+ {
+  "tecnica": "Shuryudo, El Camino De Las Corrientes",
+  "nivel": 1,
+  "CM": 25,
+  "coste": "AGI 6 (2)",
+  "efectos": "Incrementar Turno (+75, Mantenido)",
+  "arbol": "ARASHIDO, EL CAMINO DE LAS TORMENTAS"
+ },
+ {
+  "tecnica": "Kazedo, El Camino Del Viento",
+  "nivel": 1,
+  "CM": 40,
+  "coste": "DES 5 (1) CON 4 (1) FUE 5 (1) POD 5 (1) VOL 4 (1)",
+  "efectos": "Ataque a Distancia (5 metros, Mantenido), Multiplicador al Daño (x2, Mantenido)",
+  "arbol": "ARASHIDO, EL CAMINO DE LAS TORMENTAS"
+ },
+ {
+  "tecnica": "Denkido, El Camino De La Electricidad",
+  "nivel": 2,
+  "CM": 75,
+  "coste": "DES 7 CON 7 FUE 7 POD 7 VOL 6",
+  "efectos": "Ataque con Área (50 metros de radio, Elección de Blanco), Ataque Elemental (Aire), Multiplicador al Daño (x3)",
+  "desventajas": "Penalizador A Toda Acción (-75)",
+  "arbol": "ARASHIDO, EL CAMINO DE LAS TORMENTAS"
+ },
+ {
+  "tecnica": "Tatsumakido, El Camino Del Tornado",
+  "nivel": 2,
+  "CM": 75,
+  "coste": "AGI 9 CON 8 DES 9 FUE 9 POD 9",
+  "efectos": "Escudo de Energía (500 PV, Regeneración 100, Sostenimiento Menor), Habilidad de esquiva (+75)",
+  "desventajas": "Circunstancia Límite (Recibir Daño)",
+  "arbol": "ARASHIDO, EL CAMINO DE LAS TORMENTAS"
+ },
+ {
+  "tecnica": "Raikoudo, El Camino Del Rayo",
+  "nivel": 3,
+  "CM": 95,
+  "coste": "POD 8 VOL 8 CON 8 DES 9 FUE 9",
+  "efectos": "Habilidad de Ataque (+50), Ataque a Distancia (Proyección, Estela de destrucción), Ataque Elemental (Aire), Interrupción (RF = Daño, Interrumpe Ki, Interrumpe Magia, Interrumpe Psíquica)",
+  "desventajas": "Sobrecarga (Espera de 20 asaltos), Sin Defensa",
+  "arbol": "ARASHIDO, EL CAMINO DE LAS TORMENTAS"
+ },
+ {
+  "tecnica": "Yue",
+  "nivel": 1,
+  "CM": 35,
+  "coste": "POD 2 VOL 2 FUE 2",
+  "efectos": "Previsión (Completo)",
+  "desventajas": "Condición (Terreno determinado: Contacto con la tierra)",
+  "arbol": "DI QUIU"
+ },
+ {
+  "tecnica": "Shi Tou",
+  "nivel": 1,
+  "CM": 50,
+  "coste": "POD 4 (1) FUE 4 (1) VOL 4 (1) CON 5 (1)",
+  "efectos": "Armadura (TA 4, Inmodificable, Lentitud)",
+  "arbol": "DI QUIU"
+ },
+ {
+  "tecnica": "Yan",
+  "nivel": 2,
+  "CM": 40,
+  "coste": "CON 6 (2) VOL 6 (2) POD 6 (2)",
+  "efectos": "Acumulación (600 PV, Regeneración 250)",
+  "desventajas": "Predeterminación",
+  "arbol": "DI QUIU"
+ },
+ {
+  "tecnica": "Jin Shu",
+  "nivel": 2,
+  "CM": 65,
+  "coste": "POD 8 VOL 9 (3) FUE 9 (4)",
+  "efectos": "Ataque con área (25 metros de radio, Elección de Blanco), Apresamiento (FUE 16)",
+  "desventajas": "Daño reducido (Ningún Daño), Agotamiento (-2 Cansancio)",
+  "arbol": "DI QUIU"
+ },
+ {
+  "tecnica": "Guan Shi",
+  "nivel": 2,
+  "CM": 60,
+  "coste": "POD 8 VOL 8 FUE 8",
+  "efectos": "Ataque con área (25 metros de radio, Elección de Blanco), Potenciar Crítico (+50, Crítico Automático)",
+  "desventajas": "Técnica Mantenida (Jin Shu), Circunstancia de Combate (Apresado)",
+  "arbol": "DI QUIU"
+ },
+ {
+  "tecnica": "Ren Zhi Shu, El Pilar Del Mundo",
+  "nivel": 3,
+  "CM": 90,
+  "coste": "POD 16 VOL 17 FUE 16",
+  "efectos": "Ataque con Área (50 metros de radio), Aumento de Daño (+100), Ataque indirecto, Destruir Armadura (-8 TA)",
+  "desventajas": "Sobrecarga (Espera de 20 asaltos), Agotamiento (-4 Cansancio)",
+  "arbol": "DI QUIU"
+ },
+ {
+  "tecnica": "Oculus",
+  "nivel": 1,
+  "CM": 20,
+  "coste": "AGI 3 DES 3 CON 3",
+  "efectos": "Maniobras de Combate y Apuntar (-50)",
+  "desventajas": "Combinable",
+  "arbol": "OBSCURITAS"
+ },
+ {
+  "tecnica": "Sensus",
+  "nivel": 1,
+  "CM": 20,
+  "coste": "AGI 3 (1)",
+  "efectos": "Incrementar Turno (+50, Mantenido)",
+  "arbol": "OBSCURITAS"
+ },
+ {
+  "tecnica": "Luctus",
+  "nivel": 1,
+  "CM": 40,
+  "coste": "POD 4 VOL 4 FUE 4 DES 4 CON 4",
+  "efectos": "Potenciar Crítico (+75)",
+  "desventajas": "Combinable",
+  "arbol": "OBSCURITAS"
+ },
+ {
+  "tecnica": "Ego",
+  "nivel": 2,
+  "CM": 40,
+  "coste": "VOL 5 POD 5 AGI 5",
+  "efectos": "Espejismo (Indetección Inhumano (320), Ilusión fantasmal rp 180)",
+  "arbol": "OBSCURITAS"
+ },
+ {
+  "tecnica": "Obitus",
+  "nivel": 2,
+  "CM": 45,
+  "coste": "AGI 5 DES 5 VOL 6 POD 6",
+  "efectos": "Camuflar Ataque (Zen (440))",
+  "desventajas": "Combinable,Sin defensa, Exceso de energía",
+  "arbol": "OBSCURITAS"
+ },
+ {
+  "tecnica": "Apertura Espacial",
+  "nivel": 1,
+  "CM": 35,
+  "coste": "AGI 7 (2) DES 6 (1) POD 7 (2)",
+  "efectos": "Ataque adicional (+1), Ataque a Distancia (20 metros), Ataque indirecto",
+  "desventajas": "Condición (Terreno Determinado: Terreno abierto)",
+  "arbol": "COSMOS"
+ },
+ {
+  "tecnica": "Viento Estelar",
+  "nivel": 1,
+  "CM": 45,
+  "coste": "AGI 7 (3) DES 6 (1) POD 7 (2)",
+  "efectos": "Habilidad de Esquiva limitada (+75), Transporte Automático (50 metros)",
+  "arbol": "COSMOS"
+ },
+ {
+  "tecnica": "El Portal Oscuro",
+  "nivel": 2,
+  "CM": 75,
+  "coste": "DES 13 POD 14 VOL 7 CON 7 FUE 7",
+  "efectos": "Estados Sobrenaturales (Estado añadido: Drenaje de vida, Condición: Por superficie, Distancia: 10 metros, RF 140)",
+  "arbol": "COSMOS"
+ },
+ {
+  "tecnica": "Armageddon",
+  "nivel": 2,
+  "CM": 70,
+  "coste": "AGI 11 DES 11 POD 11",
+  "efectos": "Ataque con área (100 metros de radio), Aumento de Daño (+50), Habilidad de Ataque (+90)",
+  "desventajas": "Técnica Mantenida (Apertura Espacial)",
+  "arbol": "COSMOS"
+ },
+ {
+  "tecnica": "Supernova",
+  "nivel": 3,
+  "CM": 105,
+  "coste": "DES 15 AGI 15 POD 15 FUE 7 VOL 7",
+  "efectos": "Habilidad de Ataque (+100), Estados Sobrenaturales (RF 200, Estado añadido: Doble daño)",
+  "desventajas": "Sobrecarga (Espera de 20 asaltos), Sacrificio (-25 PV)",
+  "arbol": "COSMOS"
+ },
+ {
+  "tecnica": "Onibi, Fuego Fantasmal",
+  "nivel": 1,
+  "CM": 30,
+  "coste": "DES 6 VOL 5 POD 4",
+  "efectos": "Habilidad de Ataque (+40), Ataque a Distancia (50 metros), Ataque elemental (Fuego)",
+  "arbol": "KAGAMI"
+ },
+ {
+  "tecnica": "Kawarimi, Intercambio",
+  "nivel": 1,
+  "CM": 30,
+  "coste": "DES 6 VOL 5 POD 6",
+  "efectos": "Habilidad de esquiva (+75), Transporte Automático (20 metros)",
+  "arbol": "KAGAMI"
+ },
+ {
+  "tecnica": "Genmai, Danza De Las Ilusiones",
+  "nivel": 2,
+  "CM": 70,
+  "coste": "DES 8 VOL 8 POD 7",
+  "efectos": "Espejismo (4 imágenes, Indetección Inhumano (320), Ilusión Fantasmal RP 180), Ataque adicional limitado (+2)",
+  "arbol": "KAGAMI"
+ },
+ {
+  "tecnica": "Maboroshi, El Sueño",
+  "nivel": 2,
+  "CM": 60,
+  "coste": "DES 12 VOL 13 POD 13",
+  "efectos": "Habilidad de Ataque (+75), Estados Sobrenaturales (RF 160, Estado añadido: Ilusión mayor)",
+  "desventajas": "Daño reducido (Ningún daño)",
+  "arbol": "KAGAMI"
+ },
+ {
+  "tecnica": "Genzou No Sekai, Mundo De Las Ilusiones",
+  "nivel": 3,
+  "CM": 115,
+  "coste": "DES 19 VOL 20 POD 19",
+  "efectos": "Estados Sobrenaturales (RF 160, Estado añadido: Ilusión Fantasmal, Condición: por el Aire, Distancia: 25 metros)",
+  "arbol": "KAGAMI"
+ },
+ {
+  "tecnica": "Spiritum",
+  "nivel": 1,
+  "CM": 30,
+  "coste": "POD 4 (2) VOL 4 (2) CON 4",
+  "efectos": "Incremento de Resistencia Mágica (+40 RM)",
+  "arbol": "MAGUS ABSTERGO"
+ },
+ {
+  "tecnica": "Necis",
+  "nivel": 1,
+  "CM": 25,
+  "coste": "POD 7 VOL 7 CON 7",
+  "efectos": "Habilidad de ataque (+75), Aumento de daño (+50)",
+  "desventajas": "Ataque especializado (Parada)",
+  "arbol": "MAGUS ABSTERGO"
+ },
+ {
+  "tecnica": "Patrocinium",
+  "nivel": 2,
+  "CM": 70,
+  "coste": "POD 7 VOL 7 CON 6",
+  "efectos": "Armadura (TA 6)",
+  "desventajas": "Defensa especializada (Conjuros)",
+  "arbol": "MAGUS ABSTERGO"
+ },
+ {
+  "tecnica": "Aeternum",
+  "nivel": 2,
+  "CM": 65,
+  "coste": "POD 8 (2) VOL 8 (2) CON 8 (2)",
+  "efectos": "Habilidad de Parada (+75), Defensas Adicionales (+2)",
+  "desventajas": "Defensa especializada (Conjuros)",
+  "arbol": "MAGUS ABSTERGO"
+ },
+ {
+  "tecnica": "Expello",
+  "nivel": 2,
+  "CM": 100,
+  "coste": "POD 16 VOL 16 CON 14 DES 5 AGI 5",
+  "efectos": "Habilidad de Ataque (+90), Interrupción (RF = Daño +120, Interrumpe magia), Aumento de Daño (+100)",
+  "arbol": "MAGUS ABSTERGO"
+ },
+ {
+  "tecnica": "Gunslinger",
+  "nivel": 1,
+  "CM": 35,
+  "coste": "POD 8 (2) DES 8 (2)",
+  "efectos": "Armas físicas de ki (+10, Arma de proyectil, 1 arma adicional)",
+  "arbol": "GUNHELL"
+ },
+ {
+  "tecnica": "Barrel Shot",
+  "nivel": 1,
+  "CM": 45,
+  "coste": "POD 6 DES 6 AGI 6",
+  "efectos": "Ataque adicional limitado (+5)",
+  "desventajas": "Técnica mantenida (Gunslinger)",
+  "arbol": "GUNHELL"
+ },
+ {
+  "tecnica": "Bounce Shot",
+  "nivel": 1,
+  "CM": 25,
+  "coste": "POD 4 DES 4 AGI 4",
+  "efectos": "Ataque indirecto, Camuflar Ataque (Casi Imposible (240))",
+  "desventajas": "Técnica mantenida (Gunslinger)",
+  "arbol": "GUNHELL"
+ },
+ {
+  "tecnica": "Bullet Time",
+  "nivel": 1,
+  "CM": 30,
+  "coste": "POD 4 DES 4 AGI 4",
+  "efectos": "Habilidad de esquiva completa (+40)",
+  "desventajas": "Defensa especializada (Proyectiles)",
+  "arbol": "GUNHELL"
+ },
+ {
+  "tecnica": "Perfect Shot",
+  "nivel": 2,
+  "CM": 85,
+  "coste": "POD 6 DES 6 AGI 5",
+  "efectos": "Habilidad de Ataque (+75), Marca (Mayor)",
+  "desventajas": "Técnica mantenida (Gunslinger)",
+  "arbol": "GUNHELL"
+ },
+ {
+  "tecnica": "Sniper Shot",
+  "nivel": 2,
+  "CM": 65,
+  "coste": "POD 10 DES 10 AGI 10 FUE 5",
+  "efectos": "Maniobras de Combate y Apuntar (-50), Ataque a Distancia (1 kilómetro), Multiplicador al Daño (x2)",
+  "desventajas": "Técnica mantenida (Gunslinger), Predeterminación",
+  "arbol": "GUNHELL"
+ },
+ {
+  "tecnica": "Storm Waltz",
+  "nivel": 3,
+  "CM": 90,
+  "coste": "POD 14 DES 14 AGI 14 CON 4 VOL 4",
+  "efectos": "Habilidad de ataque (+150), Ataque con área (100 metros de radio, Elección de Blanco), Ataque sobrenatural",
+  "desventajas": "Técnica mantenida (Gunslinger), Sin defensa, Requerimiento (Piezas metálicas)",
+  "arbol": "GUNHELL"
+ },
+ {
+  "tecnica": "Bhakti",
+  "nivel": 1,
+  "CM": 20,
+  "coste": "DES 5 AGI 5 POD 5",
+  "efectos": "Habilidad de Parada limitada (+75), Defensas Adicionales (+2)",
+  "arbol": "SATTYAGRAHA"
+ },
+ {
+  "tecnica": "Ajna",
+  "nivel": 1,
+  "CM": 35,
+  "coste": "DES 7 (2) AGI 7 (1) POD 7 (1)",
+  "efectos": "Habilidades perceptivas (Visión radial, Ver lo sobrenatural)",
+  "arbol": "SATTYAGRAHA"
+ },
+ {
+  "tecnica": "Anahata",
+  "nivel": 1,
+  "CM": 45,
+  "coste": "DES 5 AGI 5 POD 5",
+  "efectos": "Parada en área (25 metros de radio), Habilidad de parada limitada (+90)",
+  "arbol": "SATTYAGRAHA"
+ },
+ {
+  "tecnica": "Manipura",
+  "nivel": 2,
+  "CM": 55,
+  "coste": "DES 15 AGI 14 POD 15",
+  "efectos": "Habilidad de ataque (+75), Estados Sobrenaturales (RF 160, Estado añadido: Paralización Total)",
+  "desventajas": "Daño reducido (Ningún daño)",
+  "arbol": "SATTYAGRAHA"
+ },
+ {
+  "tecnica": "Muladhara",
+  "nivel": 2,
+  "CM": 90,
+  "coste": "DES 9 AGI 9 POD 9",
+  "efectos": "Habilidad de Contraataque (+90), Maniobras de Combate y Apuntar (-50), Capacidad incrementada DES (+6)",
+  "arbol": "SATTYAGRAHA"
+ },
+ {
+  "tecnica": "Nirvana",
+  "nivel": 3,
+  "CM": 95,
+  "coste": "DES 11 AGI 11 POD 11 VOL 11 CON 6 FUE 6",
+  "efectos": "Habilidad de parada (+175), Escudo de Energía (800 PV), Reflectar el Ataque",
+  "arbol": "SATTYAGRAHA"
+ },
+ {
+  "tecnica": "Martirio Eterno",
+  "nivel": 1,
+  "CM": 30,
+  "coste": "FUE 5 CON 5 POD 5",
+  "efectos": "Recuperar acción, Habilidad de Contraataque (+25)",
+  "desventajas": "Circunstancia límite (Mitad de PV)",
+  "arbol": "A’ARAB ZARAQ"
+ },
+ {
+  "tecnica": "Festín De Sangre",
+  "nivel": 1,
+  "CM": 25,
+  "coste": "FUE 8 (2) CON 8 (3) POD 8 (3)",
+  "efectos": "Potenciar Crítico (+50, Crítico Automático)",
+  "arbol": "A’ARAB ZARAQ"
+ },
+ {
+  "tecnica": "La Mano Del Purgatorio",
+  "nivel": 1,
+  "CM": 35,
+  "coste": "FUE 8 (4) CON 7 (4) POD 5",
+  "efectos": "Ataque a Distancia (20 metros), Apresamiento (FUE 12, Presa existencial)",
+  "desventajas": "Daño reducido (Mitad de daño)",
+  "arbol": "A’ARAB ZARAQ"
+ },
+ {
+  "tecnica": "Llamada Infernal",
+  "nivel": 2,
+  "CM": 45,
+  "coste": "FUE 7 CON 7 POD 7",
+  "efectos": "Ataque con área (25 metros de radio), Sustitución de daño (150), Potenciar Crítico (+40)",
+  "desventajas": "Sacrificio (-25 PV)",
+  "arbol": "A’ARAB ZARAQ"
+ },
+ {
+  "tecnica": "Corrupción Primaria",
+  "nivel": 2,
+  "CM": 75,
+  "coste": "FUE 12 (4) CON 14 (5) POD 13 (5)",
+  "efectos": "Acumulación (1.000 PV, Regeneración 250), Intangibilidad",
+  "arbol": "A’ARAB ZARAQ"
+ },
+ {
+  "tecnica": "La Semilla Del Mal",
+  "nivel": 3,
+  "CM": 95,
+  "coste": "FUE 18 CON 18 POD 18 VOL 6",
+  "efectos": "Habilidad de Ataque (+100), Ataque a Distancia (50 metros, Proyección), Estados Sobrenaturales (RF 160, Estado añadido: Terror)",
+  "desventajas": "Daño reducido (Mitad de Daño)",
+  "arbol": "A’ARAB ZARAQ"
+ },
+ {
+  "tecnica": "La Grulla Blanca",
+  "nivel": 1,
+  "CM": 20,
+  "coste": "FUE 4 DES 4 AGI 4",
+  "efectos": "Habilidad de esquiva (+40), Habilidad de Contraataque (+50)",
+  "arbol": "WUSHU"
+ },
+ {
+  "tecnica": "Las Fauces Del Lobo",
+  "nivel": 1,
+  "CM": 20,
+  "coste": "FUE 5 DES 5 AGI 5",
+  "efectos": "Habilidad de parada (+50), Ataque adicional limitado (+1)",
+  "arbol": "WUSHU"
+ },
+ {
+  "tecnica": "La Garra Del Tigre",
+  "nivel": 1,
+  "CM": 25,
+  "coste": "FUE 5 DES 5 CON 2",
+  "efectos": "Aumento de Daño (+50), Destruir Armadura (-3 TA)",
+  "arbol": "WUSHU"
+ },
+ {
+  "tecnica": "El Puño Del Gato",
+  "nivel": 1,
+  "CM": 30,
+  "coste": "DES 5 AGI 5 CON 3",
+  "efectos": "Ataque adicional limitado (+4)",
+  "desventajas": "Daño reducido (Mitad de Daño)",
+  "arbol": "WUSHU"
+ },
+ {
+  "tecnica": "El Abrazo Del Mono",
+  "nivel": 1,
+  "CM": 30,
+  "coste": "FUE 5 DES 5 AGI 5",
+  "efectos": "Habilidad de ataque (+40), Apresamiento (FUE 12)",
+  "desventajas": "Daño reducido (Ningún daño)",
+  "arbol": "WUSHU"
+ },
+ {
+  "tecnica": "La Mordedura De La Serpiente",
+  "nivel": 1,
+  "CM": 30,
+  "coste": "FUE 5 DES 5 AGI 4",
+  "efectos": "Incrementar Turno (+50), Potenciar Crítico (+40), Maniobras de Combate y Apuntar (-50)",
+  "arbol": "WUSHU"
+ },
+ {
+  "tecnica": "La Ilusión De La Mantis",
+  "nivel": 2,
+  "CM": 50,
+  "coste": "DES 9 AGI 9 CON 4",
+  "efectos": "Camuflar Ataque (Inhumano (320)), Espejismo (1 imagen, Indetección Casi Imposible (240)), Incrementar Turno (+50)",
+  "arbol": "WUSHU"
+ },
+ {
+  "tecnica": "La Garra Del Águila",
+  "nivel": 2,
+  "CM": 70,
+  "coste": "DES 11 AGI 10 FUE 11",
+  "efectos": "Apresamiento (FUE 16), Aumento de Daño (+90), Habilidad de ataque (+50)",
+  "arbol": "WUSHU"
+ },
+ {
+  "tecnica": "El Último Dragón",
+  "nivel": 2,
+  "CM": 85,
+  "coste": "DES 11 AGI 11 CON 10",
+  "efectos": "Habilidad de ataque (+90), Ataque adicional (+2, Combo: Hasta 2, Bono de cansancio añadido)",
+  "arbol": "WUSHU"
+ },
+ {
+  "tecnica": "Ryukanzan",
+  "nivel": 1,
+  "CM": 30,
+  "coste": "DES 4 POD 4",
+  "efectos": "Aumentar rotura (+20), Maniobras de Combate y Apuntar (-25)",
+  "desventajas": "Condición (Desenvainar)",
+  "arbol": "LA VÍA DE MEIZO"
+ },
+ {
+  "tecnica": "Shoryuzan",
+  "nivel": 1,
+  "CM": 20,
+  "coste": "DES 4 AGI 4",
+  "efectos": "Incrementar Turno (+75), Maniobras de Combate y Apuntar (-25)",
+  "arbol": "LA VÍA DE MEIZO"
+ },
+ {
+  "tecnica": "Fukuryuzan",
+  "nivel": 1,
+  "CM": 20,
+  "coste": "DES 4 AGI 4 POD 4",
+  "efectos": "Ataque a Distancia (20 metros), Destruir Armadura (-3 TA)",
+  "arbol": "LA VÍA DE MEIZO"
+ },
+ {
+  "tecnica": "Gozuryuzan",
+  "nivel": 2,
+  "CM": 50,
+  "coste": "DES 9 AGI 9 POD 9",
+  "efectos": "Ataque adicional limitado (+4, Ataque contínuo)",
+  "arbol": "LA VÍA DE MEIZO"
+ },
+ {
+  "tecnica": "Douryuzan",
+  "nivel": 2,
+  "CM": 70,
+  "coste": "DES 7 AGI 7 POD 7",
+  "efectos": "Ataque con área (25 metros de radio), Impacto (FUE 14), Habilidad de Ataque (+50)",
+  "desventajas": "Agotamiento (-2 cansancio)",
+  "arbol": "LA VÍA DE MEIZO"
+ },
+ {
+  "tecnica": "Kouryuu",
+  "nivel": 3,
+  "CM": 75,
+  "coste": "DES 14 AGI 14 POD 14",
+  "efectos": "Habilidad de Ataque (+100), Incrementar Turno (+150), Maniobras de Combate y Apuntar (-25), Transporte Automático (50 metros)",
+  "desventajas": "Sin defensa, Condición (Desenvainar)",
+  "arbol": "LA VÍA DE MEIZO"
+ },
+ {
+  "tecnica": "Tornado",
+  "nivel": 1,
+  "CM": 25,
+  "coste": "FUE 4 POD 4 VOL 4",
+  "efectos": "Ataque con área (25 metros de radio), Impacto (fue 12)",
+  "desventajas": "Daño reducido (Mitad de daño)",
+  "arbol": "MAESTRO DE CATÁSTROFES"
+ },
+ {
+  "tecnica": "Seísmo",
+  "nivel": 1,
+  "CM": 45,
+  "coste": "FUE 4 POD 4 VOL 3",
+  "efectos": "Ataque con área (25 metros de radio), Aumento de Daño (+50)",
+  "desventajas": "Condición (Terreno Determinado: Tierra)",
+  "arbol": "MAESTRO DE CATÁSTROFES"
+ },
+ {
+  "tecnica": "Tsunami",
+  "nivel": 2,
+  "CM": 65,
+  "coste": "FUE 8 POD 8 VOL 8",
+  "efectos": "Ataque con área (50 metros de radio), Habilidad de ataque (+90)",
+  "desventajas": "Requerimientos elementales (Intensidad menor Agua)",
+  "arbol": "MAESTRO DE CATÁSTROFES"
+ },
+ {
+  "tecnica": "Maelstrom",
+  "nivel": 2,
+  "CM": 75,
+  "coste": "FUE 14 POD 15 VOL 14",
+  "efectos": "Estados Sobrenaturales (RF 140, Estado añadido: Paralización parcial, Condición: por superficie, Distancia: 50 metros)",
+  "desventajas": "Requerimientos elementales (Intensidad Mayor Agua)",
+  "arbol": "MAESTRO DE CATÁSTROFES"
+ },
+ {
+  "tecnica": "Erupción Volcánica",
+  "nivel": 3,
+  "CM": 110,
+  "coste": "FUE 20 (6) POD 19 (5) VOL 17 (5)",
+  "efectos": "Ataque con área (50 metros de radio), Potenciar Crítico (+50), Aumento de Daño (+50), Ataque elemental (Fuego), Ataque indirecto (Nv 3)",
+  "desventajas": "Condición (Terreno Determinado: Tierra)",
+  "arbol": "MAESTRO DE CATÁSTROFES"
+ },
+ {
+  "tecnica": "Impacto Astronómico",
+  "nivel": 3,
+  "CM": 110,
+  "coste": "FUE 26 POD 26 VOL 26 DES 6 AGI 5",
+  "efectos": "Ataque con área (5 kilómetros de radio), Impacto (fue 18), Multiplicador al Daño (x2), Ataque predeterminado (Zen (440))",
+  "desventajas": "Predeterminación, Penalizador A Toda Acción (-150)",
+  "arbol": "MAESTRO DE CATÁSTROFES"
+ },
+ {
+  "tecnica": "Sirius, Luz Negra",
+  "nivel": 1,
+  "CM": 20,
+  "coste": "DES 4 FUE 4 VOL 5",
+  "efectos": "Ataque a Distancia (50 metros), Habilidad de ataque (+40)",
+  "desventajas": "Requerimientos elementales (Intensidad menor Fuego)",
+  "arbol": "THANATHOS"
+ },
+ {
+  "tecnica": "Jocasta, Filo De Sombras",
+  "nivel": 1,
+  "CM": 25,
+  "coste": "DES 4 FUE 5 VOL 5",
+  "efectos": "Habilidad de ataque (+40), Aumento de Daño (+75)",
+  "desventajas": "Requerimientos elementales (Intensidad menor Fuego)",
+  "arbol": "THANATHOS"
+ },
+ {
+  "tecnica": "Selune, Sombra De La Luna",
+  "nivel": 2,
+  "CM": 65,
+  "coste": "DES 5 POD 3 VOL 5",
+  "efectos": "Ataque a Distancia (50 metros), Ataque con área (50 metros de radio)",
+  "desventajas": "Requerimientos elementales (Intensidad menor Fuego)",
+  "arbol": "THANATHOS"
+ },
+ {
+  "tecnica": "Lycorys, Sumir En La Oscuridad",
+  "nivel": 2,
+  "CM": 50,
+  "coste": "DES 7 FUE 7 VOL 7",
+  "efectos": "Habilidad de parada (+75), Habilidad de Contraataque (+75)",
+  "desventajas": "Requerimientos elementales (Intensidad menor Fuego)",
+  "arbol": "THANATHOS"
+ },
+ {
+  "tecnica": "Lycorys Korene, Sumir En La Oscuridad",
+  "nivel": 2,
+  "CM": 60,
+  "coste": "DES 7 FUE 7 VOL 7",
+  "efectos": "Habilidad de esquiva (+75), Habilidad de Contraataque (+75)",
+  "desventajas": "Requerimientos elementales (Intensidad menor Fuego)",
+  "arbol": "THANATHOS"
+ },
+ {
+  "tecnica": "Fénix Oscuro",
+  "nivel": 3,
+  "CM": 90,
+  "coste": "DES 15 FUE 15 VOL 15",
+  "efectos": "Habilidad de Ataque (+150), Ataque a distancia (250 metros, Proyección, Estela de destrucción)",
+  "desventajas": "Requerimientos elementales (Intensidad mayor Fuego), Sacrificio -50 PV, Penalizador a toda acción -75",
+  "arbol": "THANATHOS"
+ },
+ {
+  "tecnica": "Protocolo Defensivo Dt-01: Pantalla",
+  "nivel": 1,
+  "CM": 50,
+  "coste": "DES 8 (2) AGI 8 (2) POD 11 (3)",
+  "efectos": "Defensa Predeterminada (Absurdo (180)), Escudo de Energía (400 PV, Regeneración 100)",
+  "desventajas": "Requerimiento (Sangre antigua)",
+  "arbol": "LEGADO DE SÓLOMON"
+ },
+ {
+  "tecnica": "Protocolo Reactivo Ac-01: Exaltación",
+  "nivel": 1,
+  "CM": 25,
+  "coste": "DES 4 AGI 4 POD 4",
+  "efectos": "Recuperar acción",
+  "desventajas": "Requerimiento (Sangre antigua)",
+  "arbol": "LEGADO DE SÓLOMON"
+ },
+ {
+  "tecnica": "Protocolo Ofensivo At-01: Filo De Sólomon",
+  "nivel": 1,
+  "CM": 35,
+  "coste": "DES 7 AGI 7 POD 7",
+  "efectos": "Ataque adicional limitado (+1), Ataque predeterminado (Casi Imposible (240)), Ataque a Distancia (5 metros)",
+  "desventajas": "Requerimiento (Sangre antigua)",
+  "arbol": "LEGADO DE SÓLOMON"
+ },
+ {
+  "tecnica": "Protocolo Defensivo Dt-02: Pantalla Existencial Mayor",
+  "nivel": 2,
+  "CM": 65,
+  "coste": "DES 12 (4) AGI 12 (4) POD 12 (4)",
+  "efectos": "Defensa Predeterminada (Casi Imposible (240)), Escudo de Energía (500 pv, regeneración 250)",
+  "desventajas": "Requerimiento (Sangre antigua)",
+  "arbol": "LEGADO DE SÓLOMON"
+ },
+ {
+  "tecnica": "Protocolo De Búsqueda Sc-02: Ojos De Sólomon",
+  "nivel": 2,
+  "CM": 60,
+  "coste": "DES 9 AGI 10 POD 10",
+  "efectos": "Habilidades perceptivas (Visión radial, Visión nocturna, ver lo sobrenatural)",
+  "desventajas": "Requerimiento (Sangre antigua)",
+  "arbol": "LEGADO DE SÓLOMON"
+ },
+ {
+  "tecnica": "Protocolo Ofensivo At-02: Mecanus",
+  "nivel": 2,
+  "CM": 100,
+  "coste": "DES 18 AGI 18 POD 18",
+  "efectos": "Ataque adicional limitado (+1), Ataque predeterminado (Casi Imposible (240)), Ataque a Distancia (100 metros)",
+  "desventajas": "Requerimiento (Sangre antigua)",
+  "arbol": "LEGADO DE SÓLOMON"
+ },
+ {
+  "tecnica": "Protocolo Ofensivo Rx-02: Pandora",
+  "nivel": 2,
+  "CM": 65,
+  "coste": "DES 4 AGI 4 POD 4",
+  "efectos": "Ataque con área (50 metros de radio)",
+  "desventajas": "Requerimiento (Sangre antigua), Sacrificio (-25 PV)",
+  "arbol": "LEGADO DE SÓLOMON"
+ },
+ {
+  "tecnica": "Protocolo Defensivo Final Dt-03: Guardián",
+  "nivel": 3,
+  "CM": 95,
+  "coste": "DES 22 (7) AGI 22 (7) POD 23 (7)",
+  "efectos": "Defensa Predeterminada (Inhumano (320)), Escudo de Energía (1.000 pv, Regeneración 500)",
+  "desventajas": "Requerimiento (Sangre antigua)",
+  "arbol": "LEGADO DE SÓLOMON"
+ },
+ {
+  "tecnica": "Protocolo Ofensivo Final At-03: Apocalipsis",
+  "nivel": 3,
+  "CM": 80,
+  "coste": "DES 20 AGI 20 POD 20",
+  "efectos": "Ataque predeterminado (Zen (440)), Multiplicador al Daño (x3)",
+  "desventajas": "Requerimiento (Sangre antigua), Técnica mantenida (Mecanus), Circunstancia límite (Mitad de PV)",
+  "arbol": "LEGADO DE SÓLOMON"
+ },
+ {
+  "tecnica": "Frostlinder",
+  "nivel": 1,
+  "CM": 35,
+  "coste": "DES 9 CON 9 POD 9",
+  "efectos": "Ataque a Distancia (20 metros), Ataque adicional (+3)",
+  "desventajas": "Atadura Elemental (Agua)",
+  "arbol": "FROSTKOLIER"
+ },
+ {
+  "tecnica": "Frostvalar",
+  "nivel": 1,
+  "CM": 25,
+  "coste": "DES 3 CON 3 (1) POD 3 (1)",
+  "efectos": "Choque físico, Ataque elemental (Agua)",
+  "desventajas": "Atadura Elemental (Agua)",
+  "arbol": "FROSTKOLIER"
+ },
+ {
+  "tecnica": "Kolinger",
+  "nivel": 2,
+  "CM": 45,
+  "coste": "CON 7 (2) POD 7 (1)",
+  "efectos": "Armadura (TA 6)",
+  "desventajas": "Atadura Elemental (Agua)",
+  "arbol": "FROSTKOLIER"
+ },
+ {
+  "tecnica": "Arnbjorg",
+  "nivel": 2,
+  "CM": 45,
+  "coste": "DES 11 CON 11 POD 11",
+  "efectos": "Habilidad de parada (+50), Habilidad de Contraataque (+50), Ataque indirecto (Nv 2), Ataque adicional limitado (+1)",
+  "desventajas": "Atadura Elemental (Agua)",
+  "arbol": "FROSTKOLIER"
+ },
+ {
+  "tecnica": "Gunnhildur",
+  "nivel": 3,
+  "CM": 75,
+  "coste": "DES 13 CON 13 POD 13",
+  "efectos": "Ataque adicional limitado (+10, Ataque contínuo)",
+  "desventajas": "Atadura Elemental (Agua)",
+  "arbol": "FROSTKOLIER"
+ },
+ {
+  "tecnica": "Dedisco Deus Crux, La Cruz Del Dios Olvidado",
+  "nivel": 1,
+  "CM": 50,
+  "coste": "AGI 7 DES 8 POD 8 VOL 7",
+  "efectos": "Habilidad de ataque (+100), Ataque adicional (+1)",
+  "arbol": "ANIMA, LA CANCIÓN DE LOS ÁNGELES CAÍDOS"
+ },
+ {
+  "tecnica": "Sheraphim Ianua, La Puerta Del Serafín",
+  "nivel": 1,
+  "CM": 40,
+  "coste": "AGI 8 (3) DES 9 (3) POD 7 (2) VOL 7 (1)",
+  "efectos": "Habilidad de esquiva completa (+40), Defensas Adicionales (+3)",
+  "arbol": "ANIMA, LA CANCIÓN DE LOS ÁNGELES CAÍDOS"
+ },
+ {
+  "tecnica": "Angelus Ultima, El Último Ángel",
+  "nivel": 2,
+  "CM": 100,
+  "coste": "AGI 14 DES 14 POD 15 VOL 15",
+  "efectos": "Habilidad de ataque (+150), Ataque a Distancia (1 kilómetro, Estela de destrucción), Ataque con área (50 metros de radio)",
+  "desventajas": "Predeterminación",
+  "arbol": "ANIMA, LA CANCIÓN DE LOS ÁNGELES CAÍDOS"
+ },
+ {
+  "tecnica": "Questus Resedi Mundus, El Lamento Del Mundo Que Quedó Atrás",
+  "nivel": 2,
+  "CM": 100,
+  "coste": "AGI 14 DES 14 POD 13 VOL 13",
+  "efectos": "Habilidad de ataque (+75), Ataque adicional limitado (+8, Ataque contínuo)",
+  "arbol": "ANIMA, LA CANCIÓN DE LOS ÁNGELES CAÍDOS"
+ },
+ {
+  "tecnica": "Delevi Deus Anima, Exterminador De Las Almas De Los Dioses",
+  "nivel": 3,
+  "CM": 200,
+  "coste": "AGI 26 DES 28 POD 30 VOL 29",
+  "efectos": "Habilidad de ataque (+200), Ataque con área (5 kilómetros de radio), Multiplicador al Daño (x3), Ataque sobrenatural, Ataque indirecto (Nv 3), Destruir Armadura (Sin armadura)",
+  "desventajas": "Predeterminación, Sobrecarga (Espera de 20 asaltos)",
+  "arbol": "ANIMA, LA CANCIÓN DE LOS ÁNGELES CAÍDOS"
+ },
+ {
+  "tecnica": "Primo Poenam",
+  "nivel": 1,
+  "CM": 35,
+  "coste": "DES 6 AGI 3 FUE 3",
+  "efectos": "Aumento de Daño (+40), Habilidad de ataque (+50)",
+  "arbol": "COELO RUINAM"
+ },
+ {
+  "tecnica": "Custodius Caelum",
+  "nivel": 1,
+  "CM": 30,
+  "coste": "DES 6 AGI 3 FUE 3",
+  "efectos": "Habilidad de parada (+40), Habilidad de Contraataque (+40)",
+  "arbol": "COELO RUINAM"
+ },
+ {
+  "tecnica": "Carnificare Magnus",
+  "nivel": 2,
+  "CM": 45,
+  "coste": "DES 7 AGI 5 FUE 5 POD 1",
+  "efectos": "Habilidad de ataque (+50), Potenciar crítico (+40), Maniobras de Combate y Apuntar (-75)",
+  "arbol": "COELO RUINAM"
+ },
+ {
+  "tecnica": "Infinitus Telum",
+  "nivel": 2,
+  "CM": 65,
+  "coste": "DES 9 AGI 5 CON 3",
+  "efectos": "Ataque adicional limitado (+4), Acción adicional (+4, Desenfundar, Especial)",
+  "arbol": "COELO RUINAM"
+ },
+ {
+  "tecnica": "Pandemonium Rex Novae",
+  "nivel": 3,
+  "CM": 70,
+  "coste": "DES 12 AGI 7 FUE 7 POD 4 VOL 4 CON 4",
+  "efectos": "Habilidad de ataque (+125), Marca (Marca Mayor)",
+  "arbol": "COELO RUINAM"
+ },
+ {
+  "tecnica": "Protocolo Ofensivo 01: Pilum",
+  "nivel": 1,
+  "CM": 30,
+  "coste": "DES 3 AGI 2 POD 3",
+  "efectos": "Habilidad de ataque (+40), Incrementar Turno (+50)",
+  "desventajas": "Requerimiento (Sangre Antigua)",
+  "arbol": "SOLOMON IMPERUS"
+ },
+ {
+  "tecnica": "Shesha",
+  "nivel": 1,
+  "CM": 45,
+  "coste": "DES 5 AGI 5 FUE 5",
+  "efectos": "Habilidad de ataque (+50), Incrementar Turno (+75), Destruir Armadura (-2 TA)",
+  "arbol": "ESTILO DE LA FAMILIA VILFAIN"
+ },
+ {
+  "tecnica": "La Primera Arte",
+  "nivel": 1,
+  "CM": 20,
+  "coste": "DES 7 AGI 7",
+  "efectos": "Habilidad de ataque (+90)",
+  "desventajas": "Atadura Elemental a dos elementos (Luz, Aire)",
+  "arbol": "EL ARTE"
+ },
+ {
+  "tecnica": "La Segunda Arte",
+  "nivel": 1,
+  "CM": 25,
+  "coste": "DES 6 AGI 6 POD 5",
+  "efectos": "Habilidad de parada (+75), Defensa adicional (+4)",
+  "desventajas": "Atadura Elemental a dos elementos (Luz, Aire)",
+  "arbol": "EL ARTE"
+ },
+ {
+  "tecnica": "La Tercera Arte",
+  "nivel": 2,
+  "CM": 50,
+  "coste": "DES 14 AGI 7 POD 6",
+  "efectos": "Habilidad de ataque (+100), Ataque con área (100 metros de radio)",
+  "desventajas": "Atadura Elemental a dos elementos (Luz, Aire)",
+  "arbol": "EL ARTE"
+ },
+ {
+  "tecnica": "La Cuarta Arte",
+  "nivel": 2,
+  "CM": 65,
+  "coste": "DES 15 AGI 16 POD 12",
+  "efectos": "Ataque a Distancia (100 metros, Proyección), Habilidad de ataque (+50), Ataque adicional limitado (+5)",
+  "desventajas": "Atadura Elemental a dos elementos (Luz, Aire)",
+  "arbol": "EL ARTE"
+ },
+ {
+  "tecnica": "Niabat Ean Lucia",
+  "nivel": 3,
+  "CM": 100,
+  "coste": "DES 18 AGI 18 POD 14",
+  "efectos": "Habilidad de ataque (+150), Ataque adicional limitado (+2, Ataque continuo)",
+  "desventajas": "Atadura Elemental a dos elementos (Luz, Aire)",
+  "arbol": "EL ARTE"
+ }
+]
