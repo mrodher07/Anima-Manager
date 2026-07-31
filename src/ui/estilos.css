@@ -30,9 +30,12 @@
   --serif: 'Iowan Old Style', 'Palatino Linotype', Palatino, 'Book Antiqua', Georgia, serif;
   --sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   --mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+
+  /* Capa decorativa del fondo; cada tema la suya. */
+  --velo: radial-gradient(1200px 600px at 50% -10%, rgba(109, 91, 168, 0.13), transparent 60%);
 }
 
-/* Tema claro para quien juegue a plena luz. */
+/* ── Claro: pergamino, para jugar a plena luz ── */
 :root[data-tema='claro'] {
   --fondo: #efeae0;
   --fondo-2: #e5dfd2;
@@ -45,8 +48,71 @@
   --texto-debil: #857d6e;
   --oro: #8a6d10;
   --oro-claro: #a8861c;
+  --sangre: #9b2233;
+  --sangre-claro: #b4293c;
   --arcano: #55458c;
+  --arcano-claro: #6a56ab;
   --sombra: 0 6px 18px rgba(60, 50, 30, 0.15);
+  --velo: radial-gradient(1200px 600px at 50% -10%, rgba(85, 69, 140, 0.08), transparent 60%);
+}
+
+/* ── Steampunk: latón, cobre y cardenillo sobre cuero ── */
+:root[data-tema='steampunk'] {
+  --fondo: #17120d;
+  --fondo-2: #221a12;
+  --panel: #2a2018;
+  --panel-alto: #34271c;
+  --borde: #4a3826;
+  --borde-suave: #3b2c1e;
+  --texto: #f0e2cc;
+  --texto-tenue: #b39d7e;
+  --texto-debil: #8a7358;
+  /* El «oro» del tema es latón pulido. */
+  --oro: #c68b3c;
+  --oro-claro: #e8b264;
+  --sangre: #8f3a1c;
+  --sangre-claro: #cc5a2e;
+  /* Y el «arcano», el cardenillo del cobre oxidado. */
+  --arcano: #2f7d72;
+  --arcano-claro: #52b3a3;
+  --verde: #5a7a4a;
+  --sombra: 0 8px 22px rgba(0, 0, 0, 0.55);
+  --radio: 4px;
+  --radio-s: 3px;
+  --serif: 'Rockwell', 'Roboto Slab', 'Bookman Old Style', Georgia, serif;
+  --velo:
+    radial-gradient(900px 500px at 50% -10%, rgba(198, 139, 60, 0.12), transparent 60%),
+    repeating-linear-gradient(135deg, rgba(198, 139, 60, 0.035) 0 2px, transparent 2px 9px);
+}
+
+/* ── Medieval: pergamino, tinta ferrogálica y bermellón ── */
+:root[data-tema='medieval'] {
+  --fondo: #e6d9ba;
+  --fondo-2: #dccbA6;
+  --fondo-2: #dccba6;
+  --panel: #f3e9d2;
+  --panel-alto: #faf2df;
+  --borde: #b9a377;
+  --borde-suave: #cdb992;
+  --texto: #2b2113;
+  --texto-tenue: #5f4d33;
+  --texto-debil: #8a7452;
+  --oro: #96702a;
+  --oro-claro: #b08a38;
+  /* El bermellón de las capitulares. */
+  --sangre: #9c2b1d;
+  --sangre-claro: #b83525;
+  --arcano: #3f5c86;
+  --arcano-claro: #4f70a0;
+  --verde: #4a6b3a;
+  --sombra: 0 5px 16px rgba(90, 70, 35, 0.22);
+  --radio: 3px;
+  --radio-s: 2px;
+  --serif: 'Palatino Linotype', Palatino, 'Book Antiqua', 'Iowan Old Style', Georgia, serif;
+  --sans: 'Palatino Linotype', Palatino, 'Book Antiqua', Georgia, serif;
+  --velo:
+    radial-gradient(700px 420px at 15% 0%, rgba(156, 43, 29, 0.07), transparent 60%),
+    radial-gradient(700px 420px at 85% 100%, rgba(150, 112, 42, 0.09), transparent 60%);
 }
 
 * { box-sizing: border-box; }
@@ -60,7 +126,7 @@ html {
 body {
   margin: 0;
   background:
-    radial-gradient(1200px 600px at 50% -10%, rgba(109, 91, 168, 0.13), transparent 60%),
+    var(--velo),
     linear-gradient(180deg, var(--fondo-2), var(--fondo) 40%);
   background-attachment: fixed;
   color: var(--texto);
@@ -204,8 +270,8 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
   border-left: 3px solid;
   font-size: 0.88rem;
 }
-.aviso.error { background: color-mix(in srgb, var(--sangre) 16%, transparent); border-color: var(--sangre-claro); }
-.aviso.aviso { background: color-mix(in srgb, var(--oro) 12%, transparent); border-color: var(--oro); }
+.aviso.error { background: color-mix(in srgb, var(--sangre) 15%, var(--panel)); border-color: var(--sangre-claro); }
+.aviso.aviso { background: color-mix(in srgb, var(--oro) 15%, var(--panel)); border-color: var(--oro); }
 
 /* Controles */
 button.accion {
@@ -316,7 +382,7 @@ button.accion.peligro:hover { background: var(--sangre); color: #fff; }
   margin: 0 0 16px;
   padding: 8px 13px;
   border-radius: var(--radio-s);
-  background: color-mix(in srgb, var(--arcano) 16%, transparent);
+  background: color-mix(in srgb, var(--arcano) 15%, var(--panel));
   border-left: 3px solid var(--arcano-claro);
   font-size: 0.86rem;
 }
@@ -340,7 +406,7 @@ details > summary:hover { color: var(--oro-claro); }
   background: var(--fondo-2);
   border-left: 3px solid var(--borde);
 }
-.registro li.critico { border-left-color: var(--sangre-claro); background: color-mix(in srgb, var(--sangre) 14%, transparent); }
+.registro li.critico { border-left-color: var(--sangre-claro); background: color-mix(in srgb, var(--sangre) 14%, var(--panel)); }
 .registro li strong { display: block; font-size: 0.92rem; }
 .registro li span { display: block; color: var(--texto-debil); font-size: 0.78rem; font-family: var(--mono); margin-top: 3px; }
 
@@ -364,7 +430,7 @@ input[type='checkbox'] { accent-color: var(--oro); }
 }
 .lista-seleccion label:last-child { border-bottom: none; }
 .lista-seleccion label:hover { background: var(--panel); }
-.lista-seleccion label.elegida { background: color-mix(in srgb, var(--oro) 10%, transparent); }
+.lista-seleccion label.elegida { background: color-mix(in srgb, var(--oro) 14%, var(--panel)); }
 .lista-seleccion input { width: auto; flex: none; }
 .lista-seleccion span { flex: 1; }
 .lista-seleccion em { color: var(--texto-debil); font-size: 0.78rem; font-style: normal; white-space: nowrap; }
@@ -445,3 +511,50 @@ input[type='checkbox'] { accent-color: var(--oro); }
 .lista-simple { margin: 0; padding-left: 18px; font-size: 0.88rem; }
 .lista-simple li { margin-bottom: 4px; }
 .lista-simple strong { color: var(--oro-claro); }
+
+
+/* ─────────────────────── Selector de tema ─────────────────────── */
+
+.selector-tema { position: relative; }
+.selector-tema > button .nombre-tema { margin-left: 5px; }
+@media (max-width: 900px) {
+  .selector-tema > button .nombre-tema { display: none; }
+}
+
+.selector-tema > menu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 6px);
+  z-index: 40;
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+  min-width: 232px;
+  background: var(--panel-alto);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+}
+
+.selector-tema > menu button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: 1px solid transparent;
+  border-radius: var(--radio-s);
+  color: var(--texto);
+  padding: 7px 10px;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.88rem;
+}
+.selector-tema > menu button:hover { background: var(--panel); border-color: var(--borde); }
+.selector-tema > menu button[aria-current='true'] { border-color: var(--oro); color: var(--oro-claro); }
+.selector-tema > menu button span {
+  display: block;
+  font-size: 0.74rem;
+  color: var(--texto-debil);
+  margin-top: 2px;
+}
+.selector-tema > menu button[aria-current='true'] span { color: var(--texto-tenue); }

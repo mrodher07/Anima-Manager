@@ -10,6 +10,8 @@ import { VistaGaleria } from './VistaGaleria';
 import { VistaReglas } from './VistaReglas';
 import { Imagen } from './Imagen';
 import { nuevoId } from './estado';
+import { SelectorTema } from './SelectorTema';
+import { aplicarTema, guardarTema, temaGuardado } from './temas';
 import { useCampanas, useDatosCalculo, usePersonajes, useReglamento } from './estado';
 import { nivelTotalDe } from '../motor/personaje';
 import './estilos.css';
@@ -21,7 +23,7 @@ type Seccion =
 export function App() {
   const [seccion, setSeccion] = useState<Seccion>('personajes');
   const [abiertoId, setAbiertoId] = useState<string | null>(null);
-  const [tema, setTema] = useState<'oscuro' | 'claro'>('oscuro');
+  const [tema, setTema] = useState<string>(temaGuardado);
   const [campanaId, setCampanaId] = useState<string | null>(null);
   const [tituloNota, setTituloNota] = useState('');
   const [textoNota, setTextoNota] = useState('');
@@ -45,7 +47,10 @@ export function App() {
   const personaje = personajes.find((p) => p.id === abiertoId) ?? null;
   const datos = useDatosCalculo(catalogo, personaje);
 
-  useEffect(() => { document.documentElement.dataset.tema = tema; }, [tema]);
+  useEffect(() => {
+    aplicarTema(tema);
+    guardarTema(tema);
+  }, [tema]);
 
   const abrir = (id: string) => { setAbiertoId(id); setSeccion('ficha'); };
 
@@ -82,13 +87,7 @@ export function App() {
                 {s.texto}
               </button>
             ))}
-          <button
-            onClick={() => setTema(tema === 'oscuro' ? 'claro' : 'oscuro')}
-            title="Cambiar entre tema claro y oscuro"
-            aria-label="Cambiar tema"
-          >
-            {tema === 'oscuro' ? '☾' : '☀'}
-          </button>
+          <SelectorTema tema={tema} onCambiar={setTema} />
         </nav>
       </header>
 

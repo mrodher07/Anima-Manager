@@ -3,7 +3,8 @@
 Aplicación para llevar el control de partidas del juego de rol
 **Anima: Beyond Fantasy**: creación de personajes, fichas y gestión de campañas.
 
-Funciona igual en ordenador y en móvil, con tema oscuro y claro.
+Funciona igual en ordenador y en móvil, con cuatro temas visuales: **oscuro** (por
+defecto), **claro**, **steampunk** y **medieval**.
 
 ## Empezar
 
@@ -69,6 +70,11 @@ básico y pueden corregirlas, y cada entrada recuerda de qué manual viene.
 manuales. Se pueden crear entradas de cualquiera de las 14 colecciones, y el editor está
 dirigido por esquema (`src/datos/esquemas.ts`): describir una colección basta para poder
 editarla.
+
+**Los temas son datos.** Cada uno es un bloque de variables CSS más una entrada en
+`src/ui/temas.ts`; no hay condicionales por tema repartidos por el código. Añadir uno es
+escribir sus colores. Una prueba comprueba que ningún tema se deje variables sin definir, y
+el contraste está verificado en los cuatro (texto por encima de 11:1).
 
 **Los límites avisan, no bloquean.** Igual que la ficha de Excel: si te pasas de PD o de
 Puntos de Creación sale un aviso, pero el cálculo sigue. Cualquier valor derivado se puede
