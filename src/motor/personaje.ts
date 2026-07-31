@@ -212,9 +212,11 @@ export function personajeVacio(id: string): Personaje {
     campanaId: null,
     actualizadoEn: new Date().toISOString(),
     nombre: '',
-    raza: 'Humano',
-    categorias: [{ categoria: 'Novel', nivel: 1 }],
-    caracteristicas: { AGI: 5, CON: 5, DES: 5, FUE: 5, INT: 5, PER: 5, POD: 5, VOL: 5 },
+    // Una ficha en blanco no trae nada elegido ni ninguna característica puesta: en el
+    // Excel las casillas están vacías y todo lo derivado sale a 0.
+    raza: '',
+    categorias: [{ categoria: '', nivel: 1 }],
+    caracteristicas: { AGI: 0, CON: 0, DES: 0, FUE: 0, INT: 0, PER: 0, POD: 0, VOL: 0 },
     pdInvertidos: {},
     habilidadesNaturales: [],
     bonificadorNatural: {},
@@ -358,15 +360,18 @@ function bonoDe(valor: number, tablas: TablasBase): number {
   return fila?.bono ?? 0;
 }
 
-function pvBase(valor: number, tablas: TablasBase): number {
-  const fila = tablas.valoresBase.find((f) => f.valor === Math.min(Math.max(valor, 1), 20));
-  return fila?.PV ?? 0;
+/**
+ * Valor de la tabla 55 para una característica. Como en la hoja, un 0 da 0:
+ * `IF(POD=0, 0, VLOOKUP(POD, Tabla_ValoresBase, 2))`.
+ */
+function deTabla55(valor: number, tablas: TablasBase, columna: 'PV' | 'ACT'): number {
+  if (valor < 1) return 0;
+  const fila = tablas.valoresBase.find((f) => f.valor === Math.min(valor, 20));
+  return fila?.[columna] ?? 0;
 }
 
-function actBase(valor: number, tablas: TablasBase): number {
-  const fila = tablas.valoresBase.find((f) => f.valor === Math.min(Math.max(valor, 1), 20));
-  return fila?.ACT ?? 0;
-}
+const pvBase = (valor: number, tablas: TablasBase) => deTabla55(valor, tablas, 'PV');
+const actBase = (valor: number, tablas: TablasBase) => deTabla55(valor, tablas, 'ACT');
 
 /** Calcula la ficha completa. Función pura: mismos datos, mismo resultado. */
 export function calcular(
@@ -432,6 +437,7 @@ export function calcular(
     'puntosVida',
     aplicar('puntosVida', {
       pvBasePorCON: pvBase(caracteristicas.CON.total, tablas),
+      CONx10: caracteristicas.CON.total * 10,
       // Cada categoría aporta sus PV por los niveles hechos en ella.
       pvCategoria: acumularPorNivel(personaje.categorias, datos.categorias, 'PV') + efectos.pvPorNivel * nivel,
       nivelTotal: 1,

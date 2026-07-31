@@ -83,9 +83,6 @@ export function EditorPersonaje({ personaje, datos, catalogo, reglamento, onCamb
   const conjuros = useColeccion(catalogo, 'conjuros');
   const poderes = useColeccion(catalogo, 'poderesPsiquicos');
   const ficha = calcular(personaje, datos, reglamento);
-  // La primera entrada del catálogo es «Desarmado», que hace 0 de daño: como valor por
-  // defecto al añadir un arma confunde más que ayuda.
-  const armaPorDefecto = armas.find((a) => (a.dano ?? 0) > 0)?.arma ?? armas[0]?.arma ?? '';
 
   const set = (cambios: Partial<Personaje>) => onCambiar({ ...personaje, ...cambios });
   const setPD = (clave: string, pd: number) =>
@@ -155,6 +152,7 @@ export function EditorPersonaje({ personaje, datos, catalogo, reglamento, onCamb
               <div className="campo">
                 <label htmlFor="raza">Raza</label>
                 <select id="raza" value={personaje.raza} onChange={(e) => set({ raza: e.target.value })}>
+                  <option value="">—</option>
                   {razas.map((r) => (
                     <option key={r.raza} value={r.raza}>{r.raza}</option>
                   ))}
@@ -177,6 +175,7 @@ export function EditorPersonaje({ personaje, datos, catalogo, reglamento, onCamb
                         set({ categorias: nuevas });
                       }}
                     >
+                      <option value="">—</option>
                       {categorias.map((x) => (
                         <option key={x.categoria} value={x.categoria}>{x.categoria}</option>
                       ))}
@@ -210,7 +209,7 @@ export function EditorPersonaje({ personaje, datos, catalogo, reglamento, onCamb
                       set({
                         categorias: [
                           ...personaje.categorias,
-                          { categoria: categorias[0]?.categoria ?? 'Novel', nivel: 1 },
+                          { categoria: '', nivel: 1 },
                         ],
                       })
                     }
@@ -333,14 +332,14 @@ export function EditorPersonaje({ personaje, datos, catalogo, reglamento, onCamb
                   <input
                     id={`car-${c}`}
                     type="number"
-                    min={1}
+                    min={0}
                     max={20}
                     value={personaje.caracteristicas[c]}
                     onChange={(e) =>
                       set({
                         caracteristicas: {
                           ...personaje.caracteristicas,
-                          [c]: Math.min(20, Math.max(1, Number(e.target.value) || 1)),
+                          [c]: Math.min(20, Math.max(0, Number(e.target.value) || 0)),
                         },
                       })
                     }
@@ -575,6 +574,7 @@ export function EditorPersonaje({ personaje, datos, catalogo, reglamento, onCamb
                     set({ equipo: { ...personaje.equipo, armadura: nuevas } });
                   }}
                 >
+                  <option value="">—</option>
                   {armaduras.map((a) => (
                     <option key={a.armadura} value={a.armadura}>
                       {a.armadura} · req. {a.requerimiento ?? 0}
@@ -602,10 +602,7 @@ export function EditorPersonaje({ personaje, datos, catalogo, reglamento, onCamb
                 set({
                   equipo: {
                     ...personaje.equipo,
-                    armadura: [
-                      ...personaje.equipo.armadura,
-                      { armadura: armaduras[0]?.armadura ?? '' },
-                    ],
+                    armadura: [...personaje.equipo.armadura, { armadura: '' }],
                   },
                 })
               }
@@ -727,7 +724,7 @@ export function EditorPersonaje({ personaje, datos, catalogo, reglamento, onCamb
                 set({
                   equipo: {
                     ...personaje.equipo,
-                    armas: [...personaje.equipo.armas, { arma: armaPorDefecto }],
+                    armas: [...personaje.equipo.armas, { arma: armas[0]?.arma ?? '' }],
                   },
                 })
               }

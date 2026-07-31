@@ -77,14 +77,18 @@ describe('reglamento oficial contra la ficha de Meirmeister', () => {
   )!;
 
   it('Puntos de Vida = 135', () => {
+    // La ficha usa la fórmula aritmética (PDs!U188), no la tabla.
     const pv = REGLAMENTO_OFICIAL.aplicar('puntosVida', {
-      pvBasePorCON: pvPorValor(9).PV, // 120
+      CONx10: 9 * 10,
+      bonoCON: bonoPorValor(9),
       pvCategoria: 15, // Paladín Oscuro (RD)
       nivelTotal: 1,
+      pvBasePorCON: pvPorValor(9).PV,
       CON: 9,
-      bonoCON: bonoPorValor(9),
     });
     expect(pv).toBe(135);
+    // Coincide con la Tabla 4 del manual: 120 + 15.
+    expect(pvPorValor(9).PV + 15).toBe(135);
   });
 
   it('Cansancio = 12', () => {

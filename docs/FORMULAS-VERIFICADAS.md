@@ -47,19 +47,40 @@ experiencia** necesaria para subir. **No** suma para los bonos de categoría.
 En la ficha, `Nivel_Total` vale **1** en Meirmeister pese a mostrar «1 + 1», y sus PV son
 135 (`120 + 15×1`), no 150. Todo lo que multiplique por nivel usa el nivel **real**.
 
+## Valores por defecto: los de la ficha
+
+Regla del proyecto: **no inventar valores iniciales**. Una ficha nueva arranca como una
+hoja en blanco del Excel.
+
+| | Por defecto |
+|---|---|
+| Raza y categoría | sin elegir |
+| Características | **0** (los bonos son 0 por debajo de 1, `Principal!H11`) |
+| Nivel | 1, y cuenta aunque no haya categoría (`Nivel_Total = SUM(S7:S16)`) |
+| Arma al equipar | **Desarmado**, que es la primera de la tabla del manual |
+| Armadura al añadir | sin elegir |
+| Enemigo nuevo | todo a **0** |
+
+Con todo a 0 la ficha no se rompe: da PV 20 (`20 + 0 + 0`), cansancio 0, Zeón 0 y ACT 0,
+exactamente como la hoja.
+
 ## Puntos de Vida
 
 ```
 PV = 20 + (CON × 10) + Bono_CON + (PV_categoría × nivel)
 ```
 
+Se usa **la fórmula aritmética de la ficha** (`PDs!U188`), no la Tabla 4 del manual.
+Coinciden en todo el rango salvo en **CON 1**, donde la tabla dice 5 y la fórmula 0.
+
 `PDs!Z188 = U188 + V188 + W188 + X188`, donde `U188 = 20 + CON*10 + Bono_Con`.
 
 Verificación Meirmeister: `20 + 9×10 + 10 + 15×1 = 135` ✔ (la ficha muestra 135).
 Nótese el `×1`: el ajuste de nivel +1 del Jayán **no** cuenta aquí.
 
-📖 La *Tabla 4: Puntos de Vida Base* del manual coincide con `tablasBase.valoresBase`.
-**Salvo en CON 1**: la tabla dice 5 y la fórmula daría 0. Usar **la tabla**, no la fórmula.
+📖 La *Tabla 4: Puntos de Vida Base* del manual coincide con `tablasBase.valoresBase` en
+todo el rango salvo en **CON 1**. Se sigue la ficha; la tabla queda disponible como
+variable `pvBasePorCON` por si una mesa prefiere usarla.
 
 ## Cansancio
 

@@ -322,3 +322,26 @@ describe('efectos de ventajas y desventajas', () => {
     expect(ficha.avisos.some((a) => a.mensaje.includes('no se aplican solas'))).toBe(true);
   });
 });
+
+describe('una ficha nueva arranca en blanco, como el Excel', () => {
+  it('no trae raza ni categoría elegidas, ni características puestas', () => {
+    const p = personajeVacio('nueva');
+    expect(p.raza).toBe('');
+    expect(p.categorias).toEqual([{ categoria: '', nivel: 1 }]);
+    expect(Object.values(p.caracteristicas)).toEqual([0, 0, 0, 0, 0, 0, 0, 0]);
+    expect(p.equipo).toEqual({ armadura: [], armas: [] });
+    expect(p.bonosEspeciales).toEqual({});
+  });
+
+  it('con todo a 0 los derivados salen a 0, sin romperse', () => {
+    const p = personajeVacio('nueva');
+    const ficha = calcular(p, datos('', ''));
+    expect(ficha.caracteristicas.CON.total).toBe(0);
+    expect(ficha.caracteristicas.CON.bono).toBe(0); // los bonos son 0 por debajo de 1
+    expect(ficha.puntosVida.valor).toBe(20); // 20 + 0 + 0, como PDs!U188
+    expect(ficha.cansancio.valor).toBe(0);
+    expect(ficha.zeon.valor).toBe(0); // IF(POD=0, 0, ...) de la ficha
+    expect(ficha.act.valor).toBe(0);
+    expect(Number.isFinite(ficha.presencia.valor)).toBe(true);
+  });
+});

@@ -102,3 +102,14 @@ describe('resumen de multiclase', () => {
     expect(r.avisos.some((a) => a.includes('más de una vez'))).toBe(true);
   });
 });
+
+describe('ficha en blanco', () => {
+  it('el nivel cuenta aunque no se haya elegido categoría', () => {
+    // En la ficha, Nivel_Total es SUM(S7:S16): suma los niveles sin mirar la categoría.
+    const r = resumirMulticlase([{ categoria: '', nivel: 1 }], categorias);
+    expect(r.nivelTotal).toBe(1);
+    expect(r.pdTotales).toBe(600);
+    expect(r.pdEnCambios).toBe(0);
+    expect(r.categoriaActual).toBe('');
+  });
+});

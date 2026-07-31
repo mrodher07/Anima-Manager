@@ -81,8 +81,11 @@ export function resumirMulticlase(
   catalogo: Categoria[],
   versatil = false,
 ): ResumenMulticlase {
+  // El nivel cuenta aunque todavía no se haya elegido categoría: en la ficha
+  // `Nivel_Total` es `SUM(S7:S16)`, la suma de los niveles, sin mirar la categoría.
+  const nivelTotal = entradas.reduce((t, e) => t + (e.nivel > 0 ? e.nivel : 0), 0);
+  // Para los cambios de categoría sí hacen falta las dos categorías puestas.
   const activas = entradas.filter((e) => e.categoria && e.nivel > 0);
-  const nivelTotal = activas.reduce((t, e) => t + e.nivel, 0);
   const pdTotales = pdPorNivel(nivelTotal);
   const buscar = (nombre: string) => catalogo.find((c) => c.categoria === nombre);
 

@@ -51,15 +51,16 @@ export function enemigoVacio(id: string, campanaId: string | null): Enemigo {
     id,
     campanaId,
     actualizadoEn: new Date().toISOString(),
-    nombre: 'Enemigo sin nombre',
-    puntosVida: 100,
-    turno: 50,
-    ataque: 80,
-    defensa: 70,
+    nombre: '',
+    // Sin inventar nada: los valores arrancan a 0 y los pone el Director.
+    puntosVida: 0,
+    turno: 0,
+    ataque: 0,
+    defensa: 0,
     tipoDefensa: 'Parada',
-    dano: 60,
+    dano: 0,
     tipoDano: 'FIL',
-    TA: { FIL: 2, CON: 2, PEN: 2, CAL: 2, ELE: 0, FRI: 0, ENE: 0 },
+    TA: { FIL: 0, CON: 0, PEN: 0, CAL: 0, ELE: 0, FRI: 0, ENE: 0 },
   };
 }
 

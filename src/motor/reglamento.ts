@@ -51,15 +51,18 @@ export const REGLAS: readonly DefinicionRegla[] = [
     clave: 'puntosVida',
     nombre: 'Puntos de Vida',
     grupo: 'Derivados',
-    formula: 'pvBasePorCON + pvCategoria * nivelTotal',
+    formula: '20 + CONx10 + bonoCON + pvCategoria * nivelTotal',
     variables: {
-      pvBasePorCON: 'PV base de la tabla, según CON',
-      pvCategoria: 'PV por nivel que da la categoría',
-      nivelTotal: 'Nivel + ajuste de nivel racial',
-      CON: 'Constitución total',
+      CONx10: 'Constitución total × 10',
       bonoCON: 'Bono de Constitución',
+      pvCategoria: 'PV por nivel que dan las categorías',
+      nivelTotal: 'Multiplicador de nivel (ya viene incluido en pvCategoria)',
+      pvBasePorCON: 'PV base de la Tabla 4, por si prefieres usar la tabla',
+      CON: 'Constitución total',
     },
-    referencia: 'Core Exxet, Tabla 4. Equivale a 20 + CON×10 + bono, salvo en CON 1.',
+    referencia:
+      'Ficha, PDs!U188: 20 + CON×10 + Bono_CON. La Tabla 4 del manual da lo mismo salvo ' +
+      'en CON 1, donde la tabla dice 5 y la fórmula 0. Se sigue la ficha.',
     desactivable: false,
   },
   {
