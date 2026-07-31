@@ -1,0 +1,1133 @@
+{
+ "bonoCaracteristica": [
+  {
+   "valor": 1,
+   "bono": -30,
+   "multiplicadorPV": 1
+  },
+  {
+   "valor": 2,
+   "bono": -20,
+   "multiplicadorPV": 2
+  },
+  {
+   "valor": 3,
+   "bono": -10,
+   "multiplicadorPV": 3
+  },
+  {
+   "valor": 4,
+   "bono": -5,
+   "multiplicadorPV": 4
+  },
+  {
+   "valor": 5,
+   "bono": 0,
+   "multiplicadorPV": 5
+  },
+  {
+   "valor": 6,
+   "bono": 5,
+   "multiplicadorPV": 6
+  },
+  {
+   "valor": 7,
+   "bono": 5,
+   "multiplicadorPV": 7
+  },
+  {
+   "valor": 8,
+   "bono": 10,
+   "multiplicadorPV": 8
+  },
+  {
+   "valor": 9,
+   "bono": 10,
+   "multiplicadorPV": 10
+  },
+  {
+   "valor": 10,
+   "bono": 15,
+   "multiplicadorPV": 15
+  },
+  {
+   "valor": 11,
+   "bono": 20,
+   "multiplicadorPV": 20
+  },
+  {
+   "valor": 12,
+   "bono": 20,
+   "multiplicadorPV": 30
+  },
+  {
+   "valor": 13,
+   "bono": 25,
+   "multiplicadorPV": 40
+  },
+  {
+   "valor": 14,
+   "bono": 25,
+   "multiplicadorPV": 50
+  },
+  {
+   "valor": 15,
+   "bono": 30,
+   "multiplicadorPV": 60
+  },
+  {
+   "valor": 16,
+   "bono": 35,
+   "multiplicadorPV": 70
+  },
+  {
+   "valor": 17,
+   "bono": 35,
+   "multiplicadorPV": 80
+  },
+  {
+   "valor": 18,
+   "bono": 40,
+   "multiplicadorPV": 90
+  },
+  {
+   "valor": 19,
+   "bono": 40,
+   "multiplicadorPV": 100
+  },
+  {
+   "valor": 20,
+   "bono": 45,
+   "multiplicadorPV": 150
+  }
+ ],
+ "valoresBase": [
+  {
+   "valor": 1,
+   "PV": 5,
+   "cansancio": 0
+  },
+  {
+   "valor": 2,
+   "PV": 20,
+   "cansancio": 0
+  },
+  {
+   "valor": 3,
+   "PV": 40,
+   "cansancio": 0
+  },
+  {
+   "valor": 4,
+   "PV": 55,
+   "cansancio": 0
+  },
+  {
+   "valor": 5,
+   "PV": 70,
+   "cansancio": 5
+  },
+  {
+   "valor": 6,
+   "PV": 85,
+   "cansancio": 5
+  },
+  {
+   "valor": 7,
+   "PV": 95,
+   "cansancio": 5
+  },
+  {
+   "valor": 8,
+   "PV": 110,
+   "cansancio": 10
+  },
+  {
+   "valor": 9,
+   "PV": 120,
+   "cansancio": 10
+  },
+  {
+   "valor": 10,
+   "PV": 135,
+   "cansancio": 10
+  },
+  {
+   "valor": 11,
+   "PV": 150,
+   "cansancio": 10
+  },
+  {
+   "valor": 12,
+   "PV": 160,
+   "cansancio": 15
+  },
+  {
+   "valor": 13,
+   "PV": 175,
+   "cansancio": 15
+  },
+  {
+   "valor": 14,
+   "PV": 185,
+   "cansancio": 15
+  },
+  {
+   "valor": 15,
+   "PV": 200,
+   "cansancio": 20
+  },
+  {
+   "valor": 16,
+   "PV": 215,
+   "cansancio": 25
+  },
+  {
+   "valor": 17,
+   "PV": 225,
+   "cansancio": 25
+  },
+  {
+   "valor": 18,
+   "PV": 240,
+   "cansancio": 30
+  },
+  {
+   "valor": 19,
+   "PV": 250,
+   "cansancio": 30
+  },
+  {
+   "valor": 20,
+   "PV": 265,
+   "cansancio": 35
+  }
+ ],
+ "fuerza": [
+  {
+   "valor": 1,
+   "bonoTamano": 0,
+   "pesoKg": 0.5,
+   "pesoMaxKg": 1
+  },
+  {
+   "valor": 2,
+   "bonoTamano": 0,
+   "pesoKg": 5,
+   "pesoMaxKg": 10
+  },
+  {
+   "valor": 3,
+   "bonoTamano": 0,
+   "pesoKg": 10,
+   "pesoMaxKg": 20
+  },
+  {
+   "valor": 4,
+   "bonoTamano": 0,
+   "pesoKg": 15,
+   "pesoMaxKg": 40
+  },
+  {
+   "valor": 5,
+   "bonoTamano": 0,
+   "pesoKg": 25,
+   "pesoMaxKg": 60
+  },
+  {
+   "valor": 6,
+   "bonoTamano": 0,
+   "pesoKg": 40,
+   "pesoMaxKg": 120
+  },
+  {
+   "valor": 7,
+   "bonoTamano": 0,
+   "pesoKg": 60,
+   "pesoMaxKg": 180
+  },
+  {
+   "valor": 8,
+   "bonoTamano": 1,
+   "pesoKg": 80,
+   "pesoMaxKg": 260
+  },
+  {
+   "valor": 9,
+   "bonoTamano": 1,
+   "pesoKg": 100,
+   "pesoMaxKg": 350
+  },
+  {
+   "valor": 10,
+   "bonoTamano": 2,
+   "pesoKg": 150,
+   "pesoMaxKg": 420
+  },
+  {
+   "valor": 11,
+   "bonoTamano": 3,
+   "pesoKg": 200,
+   "pesoMaxKg": 600
+  },
+  {
+   "valor": 12,
+   "bonoTamano": 3,
+   "pesoKg": 350,
+   "pesoMaxKg": 1000
+  },
+  {
+   "valor": 13,
+   "bonoTamano": 4,
+   "pesoKg": 1000,
+   "pesoMaxKg": 3000
+  },
+  {
+   "valor": 14,
+   "bonoTamano": 4,
+   "pesoKg": 5000,
+   "pesoMaxKg": 25000
+  },
+  {
+   "valor": 15,
+   "bonoTamano": 5,
+   "pesoKg": 15000,
+   "pesoMaxKg": 100000
+  },
+  {
+   "valor": 16,
+   "bonoTamano": 5,
+   "pesoKg": 100000,
+   "pesoMaxKg": 500000
+  },
+  {
+   "valor": 17,
+   "bonoTamano": 5,
+   "pesoKg": 500000,
+   "pesoMaxKg": 2500000
+  },
+  {
+   "valor": 18,
+   "bonoTamano": 5,
+   "pesoKg": 1000000,
+   "pesoMaxKg": 10000000
+  },
+  {
+   "valor": 19,
+   "bonoTamano": 5,
+   "pesoKg": 10000000,
+   "pesoMaxKg": 150000000
+  },
+  {
+   "valor": 20,
+   "bonoTamano": 5,
+   "pesoKg": 10000000000000000159028911097599180468360808563945281389781327557747838772170381060813469985856815104,
+   "pesoMaxKg": 10000000000000000159028911097599180468360808563945281389781327557747838772170381060813469985856815104
+  }
+ ],
+ "gnosis": [
+  {
+   "gnosis": 0,
+   "PDs": 0,
+   "nivelesSobrenat": null
+  },
+  {
+   "gnosis": 5,
+   "PDs": 0,
+   "nivelesSobrenat": null
+  },
+  {
+   "gnosis": 10,
+   "PDs": 0,
+   "nivelesSobrenat": null
+  },
+  {
+   "gnosis": 15,
+   "PDs": 0,
+   "nivelesSobrenat": null
+  },
+  {
+   "gnosis": 20,
+   "PDs": 0,
+   "nivelesSobrenat": null
+  },
+  {
+   "gnosis": 25,
+   "PDs": 0,
+   "nivelesSobrenat": null
+  },
+  {
+   "gnosis": 30,
+   "PDs": 50,
+   "nivelesSobrenat": 1
+  },
+  {
+   "gnosis": 35,
+   "PDs": 150,
+   "nivelesSobrenat": 3
+  },
+  {
+   "gnosis": 40,
+   "PDs": 300,
+   "nivelesSobrenat": 6
+  },
+  {
+   "gnosis": 45,
+   "PDs": 500,
+   "nivelesSobrenat": 10
+  },
+  {
+   "gnosis": 50,
+   "PDs": 750,
+   "nivelesSobrenat": 15
+  }
+ ],
+ "limitesKi": [
+  {
+   "limite": "Agon: Límite de la Guerra",
+   "coste": 20,
+   "efecto": "Recuperación de 1 punto de Ki por cada asalto de combate. Máximo de 80 puntos de Ki al día."
+  },
+  {
+   "limite": "Caelum: Límite del Peligro",
+   "coste": 15,
+   "efecto": "Recuperación de 30 puntos de Ki cuando los PVs disminuyan debajo de 1/4 del total. Una vez al día."
+  },
+  {
+   "limite": "Cenobus: Límite del Sacrificio",
+   "coste": 20,
+   "efecto": "Recuperación de 1 punto de Ki por cada 5 PVs recibidos. Máximo de 60 puntos de Ki por día."
+  },
+  {
+   "limite": "Cruor: Límite de la Sangre",
+   "coste": 10,
+   "efecto": "Recuperación de 10 puntos de Ki por cada Crítico que reciba el personaje."
+  },
+  {
+   "limite": "Custodium: Límite del Guardián",
+   "coste": 10,
+   "efecto": "Rec. de 30 de Ki (o 40) cuando alguien allegado esté en peligro o sea gravemente herido (o muerto)."
+  },
+  {
+   "limite": "Mors: Límite de la Muerte",
+   "coste": 20,
+   "efecto": "Recuperación de 1 punto de Ki por cada enemigo muerto. Máximo de 10 puntos de Ki por asalto."
+  },
+  {
+   "limite": "Terminus: Límite de Fin",
+   "coste": 10,
+   "efecto": "Recuperación de 30 puntos de Ki cuando sus PVs pasen a ser negativos. Una vez al día."
+  }
+ ],
+ "cordura": [
+  [
+   0,
+   "-",
+   "-"
+  ],
+  [
+   9,
+   20,
+   5
+  ],
+  [
+   13,
+   30,
+   10
+  ],
+  [
+   16,
+   50,
+   15
+  ],
+  [
+   19,
+   80,
+   20
+  ],
+  [
+   22,
+   120,
+   25
+  ],
+  [
+   25,
+   150,
+   30
+  ],
+  [
+   29,
+   200,
+   40
+  ],
+  [
+   32,
+   350,
+   50
+  ],
+  [
+   35,
+   500,
+   60
+  ]
+ ],
+ "fama": [
+  [
+   0,
+   "Desconocido",
+   0
+  ],
+  [
+   10,
+   "Conocido",
+   -1
+  ],
+  [
+   20,
+   "Popular",
+   -3
+  ],
+  [
+   30,
+   "Renombrado",
+   -5
+  ],
+  [
+   40,
+   "Famoso",
+   -10
+  ],
+  [
+   50,
+   "Célebre",
+   -15
+  ],
+  [
+   70,
+   "Legendario",
+   -25
+  ],
+  [
+   100,
+   "Épico",
+   "-"
+  ]
+ ],
+ "idiomas": [
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7,
+  8,
+  9,
+  10,
+  11,
+  12,
+  13,
+  14,
+  15,
+  16,
+  17,
+  18,
+  19,
+  20
+ ],
+ "nivelMagia": [
+  [
+   1,
+   0
+  ],
+  [
+   2,
+   0
+  ],
+  [
+   3,
+   0
+  ],
+  [
+   4,
+   0
+  ],
+  [
+   5,
+   0
+  ],
+  [
+   6,
+   10
+  ],
+  [
+   7,
+   20
+  ],
+  [
+   8,
+   30
+  ],
+  [
+   9,
+   40
+  ],
+  [
+   10,
+   50
+  ],
+  [
+   11,
+   75
+  ],
+  [
+   12,
+   100
+  ],
+  [
+   13,
+   150
+  ],
+  [
+   14,
+   200
+  ],
+  [
+   15,
+   300
+  ],
+  [
+   16,
+   400
+  ],
+  [
+   17,
+   500
+  ],
+  [
+   18,
+   600
+  ],
+  [
+   19,
+   700
+  ],
+  [
+   20,
+   800
+  ]
+ ],
+ "experienciaNecesaria": {
+  "nota": "fila = nivel actual; columnas = ajuste de nivel 0..10",
+  "filas": [
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    1,
+    100,
+    125,
+    150,
+    175,
+    200,
+    225,
+    250,
+    275,
+    300,
+    325,
+    350
+   ],
+   [
+    2,
+    125,
+    150,
+    175,
+    200,
+    225,
+    250,
+    275,
+    300,
+    325,
+    350,
+    375
+   ],
+   [
+    3,
+    150,
+    175,
+    200,
+    225,
+    250,
+    275,
+    300,
+    325,
+    350,
+    375,
+    400
+   ],
+   [
+    4,
+    175,
+    200,
+    225,
+    250,
+    275,
+    300,
+    325,
+    350,
+    375,
+    400,
+    425
+   ],
+   [
+    5,
+    200,
+    225,
+    250,
+    275,
+    300,
+    325,
+    350,
+    375,
+    400,
+    425,
+    450
+   ],
+   [
+    6,
+    225,
+    250,
+    275,
+    300,
+    325,
+    350,
+    375,
+    400,
+    425,
+    450,
+    475
+   ],
+   [
+    7,
+    250,
+    275,
+    300,
+    325,
+    350,
+    375,
+    400,
+    425,
+    450,
+    475,
+    500
+   ],
+   [
+    8,
+    275,
+    300,
+    325,
+    350,
+    375,
+    400,
+    425,
+    450,
+    475,
+    500,
+    525
+   ],
+   [
+    9,
+    300,
+    325,
+    350,
+    375,
+    400,
+    425,
+    450,
+    475,
+    500,
+    525,
+    550
+   ],
+   [
+    10,
+    325,
+    350,
+    375,
+    400,
+    425,
+    450,
+    475,
+    500,
+    525,
+    550,
+    575
+   ],
+   [
+    11,
+    350,
+    375,
+    400,
+    425,
+    450,
+    475,
+    500,
+    525,
+    550,
+    575,
+    600
+   ],
+   [
+    12,
+    375,
+    400,
+    425,
+    450,
+    475,
+    500,
+    525,
+    550,
+    575,
+    600,
+    625
+   ],
+   [
+    13,
+    400,
+    425,
+    450,
+    475,
+    500,
+    525,
+    550,
+    575,
+    600,
+    625,
+    650
+   ],
+   [
+    14,
+    425,
+    450,
+    475,
+    500,
+    525,
+    550,
+    575,
+    600,
+    625,
+    650,
+    675
+   ],
+   [
+    15,
+    450,
+    475,
+    500,
+    525,
+    550,
+    575,
+    600,
+    625,
+    650,
+    675,
+    700
+   ],
+   [
+    16,
+    475,
+    500,
+    525,
+    550,
+    575,
+    600,
+    625,
+    650,
+    675,
+    700,
+    725
+   ],
+   [
+    17,
+    500,
+    525,
+    550,
+    575,
+    600,
+    625,
+    650,
+    675,
+    700,
+    725,
+    750
+   ],
+   [
+    18,
+    525,
+    550,
+    575,
+    600,
+    625,
+    650,
+    675,
+    700,
+    725,
+    750,
+    775
+   ],
+   [
+    19,
+    550,
+    575,
+    600,
+    625,
+    650,
+    675,
+    700,
+    725,
+    750,
+    775,
+    800
+   ],
+   [
+    20,
+    575,
+    600,
+    625,
+    650,
+    675,
+    700,
+    725,
+    750,
+    775,
+    800,
+    825
+   ],
+   [
+    21,
+    600,
+    625,
+    650,
+    675,
+    700,
+    725,
+    750,
+    775,
+    800,
+    825,
+    850
+   ],
+   [
+    22,
+    625,
+    650,
+    675,
+    700,
+    725,
+    750,
+    775,
+    800,
+    825,
+    850,
+    875
+   ],
+   [
+    23,
+    650,
+    675,
+    700,
+    725,
+    750,
+    775,
+    800,
+    825,
+    850,
+    875,
+    900
+   ],
+   [
+    24,
+    675,
+    700,
+    725,
+    750,
+    775,
+    800,
+    825,
+    850,
+    875,
+    900,
+    925
+   ],
+   [
+    25,
+    700,
+    725,
+    750,
+    775,
+    800,
+    825,
+    850,
+    875,
+    900,
+    925,
+    950
+   ],
+   [
+    26,
+    725,
+    750,
+    775,
+    800,
+    825,
+    850,
+    875,
+    900,
+    925,
+    950,
+    975
+   ],
+   [
+    27,
+    750,
+    775,
+    800,
+    825,
+    850,
+    875,
+    900,
+    925,
+    950,
+    975,
+    1000
+   ],
+   [
+    28,
+    775,
+    800,
+    825,
+    850,
+    875,
+    900,
+    925,
+    950,
+    975,
+    1000,
+    1025
+   ],
+   [
+    29,
+    800,
+    825,
+    850,
+    875,
+    900,
+    925,
+    950,
+    975,
+    1000,
+    1025,
+    1050
+   ],
+   [
+    30,
+    825,
+    850,
+    875,
+    900,
+    925,
+    950,
+    975,
+    1000,
+    1025,
+    1050,
+    1075
+   ]
+  ]
+ },
+ "tipologias": [
+  [
+   "-",
+   null,
+   null,
+   null
+  ],
+  [
+   "Asta",
+   null,
+   "Arpón, Bastón de Combate, Berdiche, Brandistock, Glavius, Goedendag, Guandao, Jabalina, Lanza, Lanza de caballería, Pica, Pudao, Tridente, Vara, Anciano de primavera, Kumade, Lajatang, Nagimaki, Naginata, Sang Kauw, Sode Garami, Uchi-ne",
+   0
+  ],
+  [
+   "Corta",
+   null,
+   "Cestus, Cinquedea, Daga, Daga de parada, Dirk, Escramasajón, Espada corta, Estilete, Garfio, Hu Die Dao, Katzbalger, Kerambit, Kukri, Lujiaodao, Pata, Abanico de combate, Bumerán, Cuervo, Garras, Katar, Sai, Shuko, Shuriken, Tanto, Tonfa, Jutte, Kama, Kris, Kunai",
+   0
+  ],
+  [
+   "Cuerda",
+   null,
+   "Cadena, Látigo, Lazo, Liu Xing Chui, Red, Urumi, Nunchaku, Kau Sin Ke",
+   0
+  ],
+  [
+   "Escudo",
+   null,
+   "Escudo corporal, Escudo medio, Rodela",
+   0
+  ],
+  [
+   "Espada",
+   null,
+   "Bracamarte, Cimitarra, Espada ancha, Espada larga, Estoque, Koncerz, Sable, Shang Gou, Spatha, Katana, Katana de doble hoja, Boku-to, Ninja-to, Wakizashi",
+   0
+  ],
+  [
+   "Hacha",
+   null,
+   "Hacha de guerra, Hacha de mano",
+   0
+  ],
+  [
+   "Mandoble",
+   null,
+   "Claymore, Espada a dos manos, Grosse Messer, Montante, Nodachi, Quebradora",
+   0
+  ],
+  [
+   "Maza",
+   null,
+   "Chui, Garrote, Gran martillo guerra, Martillo de guerra, Maza Barra, Maza ligera, Kiseru, Tetsubo",
+   0
+  ],
+  [
+   "Lanzamiento",
+   null,
+   "Bolas, Boleadoras, Dardos de mano, Turcus",
+   0
+  ],
+  [
+   "Proyectiles",
+   null,
+   "Arcabuz, Arco compuesto, Arco corto, Arco de balas, Arco largo, Atlatl, Ballesta, Ballesta de mano, Ballesta de repetición, Ballesta pesada, Cerbatana, Daikyu, Honda, Pistola, Balista ligera, Balista pesada, Cañón",
+   0
+  ],
+  [
+   "Munición",
+   null,
+   "Balas, Balas de cañón, Dardos de cerbatana, Flechas de descarga, Flechas de fajo, Flechas de mella, Piedras, Saetas, Saetas ligeras, Saetas pesadas",
+   0
+  ]
+ ]
+}

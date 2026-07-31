@@ -1,0 +1,1482 @@
+[
+ {
+  "patron": "Mikael",
+  "nombre": "Luz de esperanza",
+  "elan": 10,
+  "requisito": 1,
+  "coste": 5,
+  "descripcion": "El PJ se convierte en un foco de esperanza para los demás."
+ },
+ {
+  "patron": "Mikael",
+  "nombre": "Extirpar enfermedades",
+  "elan": 20,
+  "requisito": 1,
+  "coste": 10,
+  "descripcion": "Permite extripar cualquier enfermedad de nivel igual o inferior a 0."
+ },
+ {
+  "patron": "Mikael",
+  "nombre": "Mantener en el mundo",
+  "elan": 30,
+  "requisito": 1,
+  "coste": 5,
+  "descripcion": "Permite sacar a cualquiera de el estado \"Entre la vida y la muerte\"."
+ },
+ {
+  "patron": "Mikael",
+  "nombre": "Resistencia celestial",
+  "elan": 40,
+  "requisito": 1,
+  "coste": 20,
+  "descripcion": "Otorga un bonificador especial a todas las resistencias de 0."
+ },
+ {
+  "patron": "Mikael",
+  "nombre": "Exorcizar el mal",
+  "elan": 50,
+  "requisito": 1,
+  "coste": 15,
+  "descripcion": "Permite desconvocar a un ser sobrenatural maligno si no supera un control de RM de 0."
+ },
+ {
+  "patron": "Mikael",
+  "nombre": "Aura",
+  "elan": 50,
+  "requisito": 0,
+  "coste": 10,
+  "descripcion": "Extiende el bono a las resistencias de Resistencia Celestial en un radio de 0 metros."
+ },
+ {
+  "patron": "Mikael",
+  "nombre": "Milagro",
+  "elan": 60,
+  "requisito": 1,
+  "coste": 10,
+  "descripcion": "Permite recrear cualquier milagro menor producido por Cristo o sus Santos."
+ },
+ {
+  "patron": "Mikael",
+  "nombre": "Deshacer estados negativos",
+  "elan": 70,
+  "requisito": 1,
+  "coste": 10,
+  "descripcion": "Permite anular cualquier estado perjudicial."
+ },
+ {
+  "patron": "Mikael",
+  "nombre": "Salvador",
+  "elan": 70,
+  "requisito": 1,
+  "coste": 10,
+  "descripcion": "Reduce un nivel de dificultad cualquier acción que tenga como fin salvar una vida, u otorga un +40 a controles enfrentados."
+ },
+ {
+  "patron": "Mikael",
+  "nombre": "Ayuda celestial",
+  "elan": 80,
+  "requisito": 1,
+  "coste": 15,
+  "descripcion": "Puede invocar una vez al mes un ángel de Mikael, habitualmente una Doncella de Luz. Puede invocar antes de un mes si sacrifica un punto de Elan."
+ },
+ {
+  "patron": "Mikael",
+  "nombre": "Levántate y anda",
+  "elan": 90,
+  "requisito": 1,
+  "coste": 20,
+  "descripcion": "Permite devolver la vida a coste de 1 punto de Elan por cada mes que haya pasado desde haber recibido El Llamamiento."
+ },
+ {
+  "patron": "Mikael",
+  "nombre": "Y al tercer día resucitó",
+  "elan": 100,
+  "requisito": 1,
+  "coste": 10,
+  "descripcion": "El PJ puede regresar de entre los muertos, recreandose con todas sus facultades intactas, mientras tenga algo que hacer en el mundo."
+ },
+ {
+  "patron": "Zemial",
+  "nombre": "Asalto espiritual",
+  "elan": 10,
+  "requisito": 1,
+  "coste": 5,
+  "descripcion": "Permite dañar energía como si tuviese la habilidad del Ki Extensión del aura al arma."
+ },
+ {
+  "patron": "Zemial",
+  "nombre": "Ansia demencial",
+  "elan": 20,
+  "requisito": 1,
+  "coste": 5,
+  "descripcion": "El PJ puede entrar en un estado de ira obteniendo un bono de +10 a cualquier acción ofensiva encaminada a matar a alguien."
+ },
+ {
+  "patron": "Zemial",
+  "nombre": "Daño incrementado",
+  "elan": 30,
+  "requisito": 1,
+  "coste": 10,
+  "descripcion": "Incrementa el daño base de sus ataques en 0."
+ },
+ {
+  "patron": "Zemial",
+  "nombre": "Daño anímico",
+  "elan": 40,
+  "requisito": 0,
+  "coste": 10,
+  "descripcion": "Las heridas que cause sólo pueden ser sanadas mediante conjuros o habilidades místicas."
+ },
+ {
+  "patron": "Zemial",
+  "nombre": "Destructor",
+  "elan": 50,
+  "requisito": 1,
+  "coste": 15,
+  "descripcion": "Desintegra cualquier objeto que toque cuya presencia sea inferior a 10."
+ },
+ {
+  "patron": "Zemial",
+  "nombre": "Señor de la destrucción (Tacto)",
+  "elan": 50,
+  "requisito": 1,
+  "coste": 10,
+  "descripcion": "A quien toque debe superar un control de RM o RF contra 80, o sufrir una pérdida de puntos de vida equivalente a su nivel de fracaso."
+ },
+ {
+  "patron": "Zemial",
+  "nombre": "Presencia exterminadora",
+  "elan": 60,
+  "requisito": 1,
+  "coste": 10,
+  "descripcion": "Cualquier cosa que se halle a pocos metros de él muere o se debilita lentamente; las plantas se marchitan a su paso, las personas enferman, etc."
+ },
+ {
+  "patron": "Zemial",
+  "nombre": "Señor de la destrucción (Vista)",
+  "elan": 60,
+  "requisito": 0,
+  "coste": 10,
+  "descripcion": "A quien mire debe superar un control de RM o RF contra 60, o sufrir una pérdida de puntos de vida equivalente a su nivel de fracaso."
+ },
+ {
+  "patron": "Zemial",
+  "nombre": "Señor de la destrucción (Aura)",
+  "elan": 70,
+  "requisito": 0,
+  "coste": 10,
+  "descripcion": "Quien se encuentre a menos de 10 metros debe superar un control de RM o RF contra 40, o sufrir una pérdida de puntos de vida equivalente a su nivel de fracaso."
+ },
+ {
+  "patron": "Zemial",
+  "nombre": "Asalto destructor",
+  "elan": 80,
+  "requisito": 1,
+  "coste": 15,
+  "descripcion": "El PJ obtiene la capacidad de dañar a cualquier clase de criatura, sin importar su poder, presencia sobrenatural o inmunidades especiales."
+ },
+ {
+  "patron": "Zemial",
+  "nombre": "La sangre de la locura",
+  "elan": 90,
+  "requisito": 1,
+  "coste": 20,
+  "descripcion": "Su sangre actúa como un  veneno sobrenatural de nivel 80, con efecto instantáneo y una RV de 140. Quien falle la resistencia obtiene 50 de Elan de Zemial pero pierde la cordura."
+ },
+ {
+  "patron": "Zemial",
+  "nombre": "Portador de catástrofes",
+  "elan": 100,
+  "requisito": 1,
+  "coste": 10,
+  "descripcion": "El PJ trae consigo todo tipo de cataclismos naturales y catástrofes que acarrearán siempre terribles consecuencias."
+ },
+ {
+  "patron": "Uriel",
+  "nombre": "Instinto de libertad",
+  "elan": 10,
+  "requisito": 1,
+  "coste": 5,
+  "descripcion": "El PJ tiene una enorme facilidad para encontrar la salida de cualquier lugar donde se encuentre."
+ },
+ {
+  "patron": "Uriel",
+  "nombre": "Inadvertido",
+  "elan": 20,
+  "requisito": 1,
+  "coste": 5,
+  "descripcion": "El PJ puede pasar desapercibido entre la gente normal si lo desea, llamando muy poco la atención."
+ },
+ {
+  "patron": "Uriel",
+  "nombre": "Espíritu indomable",
+  "elan": 20,
+  "requisito": 1,
+  "coste": 10,
+  "descripcion": "El PJ añade un bono especial a sus controles de Resistencias contra cualquier clase de dominación de +0."
+ },
+ {
+  "patron": "Uriel",
+  "nombre": "Alma libre",
+  "elan": 30,
+  "requisito": 1,
+  "coste": 5,
+  "descripcion": "Las personas con las que se relacione el PJ descubrirán un renovado deseo de ser libres y actuar conforme les dicten sus impulsos."
+ },
+ {
+  "patron": "Uriel",
+  "nombre": "Visionario",
+  "elan": 40,
+  "requisito": 1,
+  "coste": 10,
+  "descripcion": "El PJ empieza a tener visiones sobre posibles acontecimientos del futuro. Cuanto mayor sea su nivel de Elan, las visiones se tornarán más claras y acertadas."
+ },
+ {
+  "patron": "Uriel",
+  "nombre": "Medio de transporte",
+  "elan": 40,
+  "requisito": 1,
+  "coste": 5,
+  "descripcion": "Siempre que lo necesite, el PJ puede recurrir a un transporte para viajar de un lugar a otro, que aparecerá como por arte de magia."
+ },
+ {
+  "patron": "Uriel",
+  "nombre": "Romper las cadenas",
+  "elan": 50,
+  "requisito": 1,
+  "coste": 10,
+  "descripcion": "Permite obligar una vez por individuo a liberar los esclavos que tenga bajo su control si no supera una RM de 0."
+ },
+ {
+  "patron": "Uriel",
+  "nombre": "Ojos del futuro",
+  "elan": 60,
+  "requisito": 0,
+  "coste": 20,
+  "descripcion": "Obtiene un bono de +30 en un control enfrentado que puede usarse 1 vez al día. Se puede utilizar para eliminar una sorpresa pero cuenta como dos usos."
+ },
+ {
+  "patron": "Uriel",
+  "nombre": "Paso libre",
+  "elan": 60,
+  "requisito": 1,
+  "coste": 15,
+  "descripcion": "El PJ puede atravesar cualquier barrera física como si no existiera, aunque no permite ignorar muros o barreras sobrenaturales."
+ },
+ {
+  "patron": "Uriel",
+  "nombre": "Comunión con Uriel",
+  "elan": 70,
+  "requisito": 1,
+  "coste": 10,
+  "descripcion": "El PJ obtiene un punto adicional en las características de Poder, Voluntad y Destreza."
+ },
+ {
+  "patron": "Uriel",
+  "nombre": "Esencia sobrenatural (Uriel)",
+  "elan": 80,
+  "requisito": 1,
+  "coste": 10,
+  "descripcion": "El PJ obtiene Gnosis 30 y todas las ventajas que ello supone."
+ },
+ {
+  "patron": "Uriel",
+  "nombre": "Una segunda oportunidad",
+  "elan": 90,
+  "requisito": 1,
+  "coste": 20,
+  "descripcion": "Siempre que fracase un control de Resistencia que lo someta a un estado negativo, el PJ es capaz de repetir la tirada una segunda vez."
+ },
+ {
+  "patron": "Uriel",
+  "nombre": "El viajero",
+  "elan": 100,
+  "requisito": 1,
+  "coste": 10,
+  "descripcion": "Una vez por asalto, como acción activa el PJ puede transportarse de inmediato hasta el sitio que quiera, ignorando cualquier protección o barrera que haya en medio."
+ },
+ {
+  "patron": "Jedah",
+  "nombre": "Don de la política",
+  "elan": 10,
+  "requisito": 1,
+  "coste": 5,
+  "descripcion": "Otorga un bono especial a Persuasión y Liderazgo de +0."
+ },
+ {
+  "patron": "Jedah",
+  "nombre": "Dominación incrementada",
+  "elan": 20,
+  "requisito": 1,
+  "coste": 10,
+  "descripcion": "Aplica un bono especial a su habilidad de convocatoria Dominación de +0. Este don no funciona contra seres basados en luz."
+ },
+ {
+  "patron": "Jedah",
+  "nombre": "Sombra",
+  "elan": 30,
+  "requisito": 1,
+  "coste": 5,
+  "descripcion": "De un modo sobrenatural, el PJ obtiene la capacidad de alterar la apariencia de su sombra, dándole el aspecto o forma que desee."
+ },
+ {
+  "patron": "Jedah",
+  "nombre": "Afinidad oscura",
+  "elan": 40,
+  "requisito": 1,
+  "coste": 5,
+  "descripcion": "El PJ obtiene afinidad hacia todos los seres sobrenaturales oscuros, quienes lo reconocerán como uno de los suyos."
+ },
+ {
+  "patron": "Jedah",
+  "nombre": "El poder del conocimiento",
+  "elan": 50,
+  "requisito": 1,
+  "coste": 10,
+  "descripcion": "Obtiene un bono especial en todas las habilidades secundarias intelecuales de +0."
+ },
+ {
+  "patron": "Jedah",
+  "nombre": "El dominador (Habla)",
+  "elan": 50,
+  "requisito": 1,
+  "coste": 10,
+  "descripcion": "Todo aquel que le escuche hablar durante más de cinco asaltos debe de realizar un control de RM o RP contra 60, o será controlado."
+ },
+ {
+  "patron": "Jedah",
+  "nombre": "Cadena de mando",
+  "elan": 60,
+  "requisito": 1,
+  "coste": 10,
+  "descripcion": "Permite conferir parte de su poder a un solo subordinado, quien actúa como si tuviese -20 puntos de Elan."
+ },
+ {
+  "patron": "Jedah",
+  "nombre": "Señor de las sombras",
+  "elan": 65,
+  "requisito": 0,
+  "coste": 15,
+  "descripcion": "Permite invocar y mantener el control sobre hasta 0 criaturas oscuras. Si alguna de ellas es destruida debe esperar un día para que aparezca otra."
+ },
+ {
+  "patron": "Jedah",
+  "nombre": "Poder oscuro",
+  "elan": 70,
+  "requisito": 1,
+  "coste": 15,
+  "descripcion": "El PJ obtiene un punto adicional en las características de Poder, Voluntad e Inteligencia."
+ },
+ {
+  "patron": "Jedah",
+  "nombre": "El dominador (Vista)",
+  "elan": 70,
+  "requisito": 0,
+  "coste": 10,
+  "descripcion": "Todo aquel a quien mire a los ojos durante más de dos asaltos debe de realizar un control de RM o RP contra 40, o será controlado."
+ },
+ {
+  "patron": "Jedah",
+  "nombre": "Esencia sobrenatural (Jedah)",
+  "elan": 80,
+  "requisito": 1,
+  "coste": 15,
+  "descripcion": "El PJ obtiene Gnosis 30 y todas las ventajas que ello supone."
+ },
+ {
+  "patron": "Jedah",
+  "nombre": "El dominador (Aura)",
+  "elan": 90,
+  "requisito": 0,
+  "coste": 10,
+  "descripcion": "Todo aquel que se encuentre a menos de 10 metros del PJ debe de realizar un control de RM o RP contra 20, o será controlado."
+ },
+ {
+  "patron": "Jedah",
+  "nombre": "Maestro de marionetas",
+  "elan": 100,
+  "requisito": 1,
+  "coste": 10,
+  "descripcion": "El PJ proyecta su consciencia sobre sus subordinados, siendo consciente de lo que piensan o sienten en todo momento y pudiendo tomar decisiones por ellos cuando lo desee."
+ },
+ {
+  "patron": "Gabriel",
+  "nombre": "Aptitud artística",
+  "elan": 10,
+  "requisito": 1,
+  "coste": 5,
+  "descripcion": "Otorga un bono especial a sus habilidades secundarias Arte y Música de +0."
+ },
+ {
+  "patron": "Gabriel",
+  "nombre": "Gracia",
+  "elan": 20,
+  "requisito": 1,
+  "coste": 5,
+  "descripcion": "El PJ tiene la capacidad de resultar hermoso a los ojos de los demás, sin que por ello altere su apariencia."
+ },
+ {
+  "patron": "Gabriel",
+  "nombre": "Empatía positiva",
+  "elan": 30,
+  "requisito": 1,
+  "coste": 10,
+  "descripcion": "Intensifica todos los sentimientos positivos de aquellos individuos con quienes se relacione abiertamente."
+ },
+ {
+  "patron": "Gabriel",
+  "nombre": "Pacificador",
+  "elan": 40,
+  "requisito": 1,
+  "coste": 10,
+  "descripcion": "El PJ crea un estado de armonía que apacigua pequeñas disputas y rencillas."
+ },
+ {
+  "patron": "Gabriel",
+  "nombre": "Inmunidad psicológica",
+  "elan": 40,
+  "requisito": 1,
+  "coste": 10,
+  "descripcion": "El PJ se vuelve inmune a cualquier estado psicológico negativo, como miedo, rabia o tristeza. Si se le inducen sobrenaturalmente suma +0 a su RM."
+ },
+ {
+  "patron": "Gabriel",
+  "nombre": "Percepción de sentimientos",
+  "elan": 50,
+  "requisito": 1,
+  "coste": 10,
+  "descripcion": "Permite sentir cualquier clase de emoción positiva que se encuentre en los alrededores. Cuanto mayor sea su nivel de Elan, la percepción será más exacta y su radio mayor."
+ },
+ {
+  "patron": "Gabriel",
+  "nombre": "Imbuir sentimientos",
+  "elan": 50,
+  "requisito": 1,
+  "coste": 15,
+  "descripcion": "Permite inducir un sentimiento positivo si el objetivo no supera una RM contra 0."
+ },
+ {
+  "patron": "Gabriel",
+  "nombre": "Lazo",
+  "elan": 60,
+  "requisito": 1,
+  "coste": 15,
+  "descripcion": "El PJ enlaza su vida con otro individuo, con quien puede compartir Resistencias, superar los controles de \"Entre la vida y la muerte\" y comunicarse solamente cruzando la mirada."
+ },
+ {
+  "patron": "Gabriel",
+  "nombre": "Auxilio",
+  "elan": 70,
+  "requisito": 1,
+  "coste": 10,
+  "descripcion": "Por muy mal que se tornen los acontecimientos para el PJ, siempre que lo necesite encontrará a otra persona dispuesta a ayudarle en todo lo que pueda."
+ },
+ {
+  "patron": "Gabriel",
+  "nombre": "Canto de la paz",
+  "elan": 80,
+  "requisito": 1,
+  "coste": 15,
+  "descripcion": "La canción se oye en un radio de 0 metros. Quien la escuche por más de medio minuto deberá superar una RM contra 0 o dejará de luchar. Cada nivel de dificultad por encima de Dificil en Música incrementa en 10 la RM."
+ },
+ {
+  "patron": "Gabriel",
+  "nombre": "Protección",
+  "elan": 90,
+  "requisito": 1,
+  "coste": 20,
+  "descripcion": "Todo ser capaz de albergar sentimientos se ve obligado a realizar una RM contra 0 o, de lo contrario, se sentirá incapaz de perjudicarle."
+ },
+ {
+  "patron": "Gabriel",
+  "nombre": "Paraíso",
+  "elan": 100,
+  "requisito": 1,
+  "coste": 10,
+  "descripcion": "Aquellos en presencia del PJ con presencia inferior a la suya no podrán causar daños a otros, ni tampoco verse afectados por pasiones o emociones oscuras. Los seres negativos deberán marcharse o ser purificados en seres benignos."
+ },
+ {
+  "patron": "Noah",
+  "nombre": "En las manos apropiadas",
+  "elan": 10,
+  "requisito": 1,
+  "coste": 5,
+  "descripcion": "El PJ posee una suerte excepcional para encontrar siempre el equipamiento que necesita en cada circunstancia."
+ },
+ {
+  "patron": "Noah",
+  "nombre": "Espíritu de superación",
+  "elan": 20,
+  "requisito": 1,
+  "coste": 10,
+  "descripcion": "Todo aquel que se relaciona habitualmente con el PJ empezará a sentir ganas de mejorar y de superarse a sí mismo."
+ },
+ {
+  "patron": "Noah",
+  "nombre": "Resistente",
+  "elan": 20,
+  "requisito": 1,
+  "coste": 5,
+  "descripcion": "El PJ obtiene un bono a su RF de +0."
+ },
+ {
+  "patron": "Noah",
+  "nombre": "Inhumano",
+  "elan": 30,
+  "requisito": 1,
+  "coste": 5,
+  "descripcion": "Permite alcanzar la dificultad de Inhumano en aquellos campos en los que el PJ exceda o sean su especialidad."
+ },
+ {
+  "patron": "Noah",
+  "nombre": "Ignorar penalizadores",
+  "elan": 40,
+  "requisito": 1,
+  "coste": 10,
+  "descripcion": "El PJ puede anular, automáticamente, una cantidad de negativos a la acción de -0."
+ },
+ {
+  "patron": "Noah",
+  "nombre": "Potencia oscura",
+  "elan": 50,
+  "requisito": 1,
+  "coste": 15,
+  "descripcion": "El PJ obtiene 0 puntos que puede gastar como bonos a las tiradas siempre y cuando no sean más de 30 en una sola acción. Se recuperan a un índice de 5 por día."
+ },
+ {
+  "patron": "Noah",
+  "nombre": "Dote",
+  "elan": 60,
+  "requisito": 1,
+  "coste": 10,
+  "descripcion": "Cualquier objeto que emplee el PJ se considera automáticamente de calidad +10."
+ },
+ {
+  "patron": "Noah",
+  "nombre": "Mejorar ante los retos",
+  "elan": 70,
+  "requisito": 1,
+  "coste": 15,
+  "descripcion": "Cada vez que el PJ se encuentre ante un reto de dificultad excesiva para él, obtiene un bono de +10 a su ataque y defensa si se trata de un combate, mientras que si lo que emplea es una habilidad secundaria, consigue un +20."
+ },
+ {
+  "patron": "Noah",
+  "nombre": "Aura de guerra",
+  "elan": 70,
+  "requisito": 1,
+  "coste": 10,
+  "descripcion": "En un radio de 0 metros todos los subordinados al PJ reciben un bono de +10 a su ataque y defensa, siempre que no superen al PJ."
+ },
+ {
+  "patron": "Noah",
+  "nombre": "Avatar oscuro",
+  "elan": 80,
+  "requisito": 0,
+  "coste": 20,
+  "descripcion": "El PJ obtiene armas naturales, un bono de +30 a toda acción así como un +3 a sus características y Zen durante 0 asaltos. Una vez se acabe el tiempo recibe un penalizador de -30 durante tantos días como asaltos lo haya usado."
+ },
+ {
+  "patron": "Noah",
+  "nombre": "La sombra de la guerra",
+  "elan": 90,
+  "requisito": 1,
+  "coste": 15,
+  "descripcion": "El PJ enaltece el instinto bélico de todas las personas cercanas por lo que, a su paso, estallan pequeñas rencillas o comienzan batallas a gran escala."
+ },
+ {
+  "patron": "Noah",
+  "nombre": "El vencedor",
+  "elan": 100,
+  "requisito": 1,
+  "coste": 10,
+  "descripcion": "El PJ obtiene automáticamente cualquier habilidad, primaria o secundaria, que posean los individuos a los que venza si es superior a la suya."
+ },
+ {
+  "patron": "Rafael",
+  "nombre": "Conocimiento de la naturaleza",
+  "elan": 10,
+  "requisito": 1,
+  "coste": 5,
+  "descripcion": "Obtiene un bonificador especial a la habilidad secundaria Herbolaria de +0."
+ },
+ {
+  "patron": "Rafael",
+  "nombre": "Conocimiento Animal",
+  "elan": 20,
+  "requisito": 1,
+  "coste": 5,
+  "descripcion": "Obtiene un bonificador especial a la habilidad secundaria Animales de +0."
+ },
+ {
+  "patron": "Rafael",
+  "nombre": "Curación",
+  "elan": 20,
+  "requisito": 1,
+  "coste": 10,
+  "descripcion": "Puede curar una cantidad de 0 PVs, a ritmo de 5 PV por asalto. Contra seres no muertos, estos deben superar una RM contra 0 o recibir un daño equivalente al nivel de fracaso."
+ },
+ {
+  "patron": "Rafael",
+  "nombre": "Manto de fertilidad",
+  "elan": 30,
+  "requisito": 1,
+  "coste": 5,
+  "descripcion": "La mera presencia del PJ intensifica el crecimiento de los animales y la vegetación del área, con efectos menores sobre seres humanos y razas similares."
+ },
+ {
+  "patron": "Rafael",
+  "nombre": "Eliminar venenos naturales",
+  "elan": 40,
+  "requisito": 1,
+  "coste": 10,
+  "descripcion": "Permite extripar cualquier veneno de nivel igual o inferior a 0."
+ },
+ {
+  "patron": "Rafael",
+  "nombre": "Tótem",
+  "elan": 50,
+  "requisito": 1,
+  "coste": 20,
+  "descripcion": "Recibe un \"Totem\", un ser natural con +3 a INT que puede compartir sentidos y comunicarse mentalmente. Sube de nivel junto al PJ usando sus PDs como un Ser Espiritual de Gnosis 25. Puede resucitar sacrificando 10 puntos de Elan."
+ },
+ {
+  "patron": "Rafael",
+  "nombre": "Curación expandida",
+  "elan": 50,
+  "requisito": 0,
+  "coste": 15,
+  "descripcion": "Puede curar una cantidad de 0 PV al día, a ritmo de 5 PV por asalto. Contra seres no muertos, estos deben superar una RM contra 0 o recibir un daño equivalente al nivel de fracaso."
+ },
+ {
+  "patron": "Rafael",
+  "nombre": "Los ojos de la naturaleza",
+  "elan": 60,
+  "requisito": 1,
+  "coste": 10,
+  "descripcion": "El PJ puede unir sus sentidos con un animal, obteniendo la capacidad de ver y oír a través de él. Este poder puede usarse 0 veces al día."
+ },
+ {
+  "patron": "Rafael",
+  "nombre": "Invocar animales",
+  "elan": 60,
+  "requisito": 1,
+  "coste": 10,
+  "descripcion": "El PJ puede invocar una vez al día hasta 0 seres si son pequeños, o 0 si son grandes. Sólo es posible invocar animales de una determinada especie."
+ },
+ {
+  "patron": "Rafael",
+  "nombre": "Transformación animal",
+  "elan": 70,
+  "requisito": 1,
+  "coste": 10,
+  "descripcion": "El PJ puede transformarse en un animal natural, obteniendo todas las características y habilidades físicas de este, si son mayores a las suyas. Puede elegir hasta 0 especies distintas."
+ },
+ {
+  "patron": "Rafael",
+  "nombre": "Invocación incrementada",
+  "elan": 80,
+  "requisito": 0,
+  "coste": 10,
+  "descripcion": "El PJ puede elegir invocar 0 razas adicionales o, en su defecto, multiplicar por diez el número de la especie por la que optó originariamente."
+ },
+ {
+  "patron": "Rafael",
+  "nombre": "Curación ilimitada",
+  "elan": 90,
+  "requisito": 0,
+  "coste": 20,
+  "descripcion": "Puede curar una cantidad de PV ilimitada al día, a ritmo de 5 PV por asalto. Contra seres no muertos, estos deben superar una RM contra 0 o recibir un daño equivalente al nivel de fracaso."
+ },
+ {
+  "patron": "Rafael",
+  "nombre": "Conciencia de la naturaleza",
+  "elan": 100,
+  "requisito": 1,
+  "coste": 10,
+  "descripcion": "El PJ es consciente de todo lo que ocurre en el interior de bosques, selvas y forestas, además de percibir los sentimientos de todos los animales y plantas del mundo, comunicándose con ellos sin importar la distancia."
+ },
+ {
+  "patron": "Erebus",
+  "nombre": "Conocimiento sobrenatural",
+  "elan": 10,
+  "requisito": 1,
+  "coste": 5,
+  "descripcion": "Obtiene un bonificador especial a la habilidad secundaria Ocultismo de +0."
+ },
+ {
+  "patron": "Erebus",
+  "nombre": "Presencia tenebrosa",
+  "elan": 20,
+  "requisito": 1,
+  "coste": 5,
+  "descripcion": "Obtiene un bonificador especial a la habilidad secundaria Intimidar de +0."
+ },
+ {
+  "patron": "Erebus",
+  "nombre": "El camino de las pesadillas",
+  "elan": 30,
+  "requisito": 1,
+  "coste": 5,
+  "descripcion": "Permite controlar si los durmientes que se encuentren en las cercanías tendrán sueños oscuros y terribles o a la inversa, permite evitar que tengan malos sueños."
+ },
+ {
+  "patron": "Erebus",
+  "nombre": "Susurros oníricos",
+  "elan": 40,
+  "requisito": 1,
+  "coste": 10,
+  "descripcion": "Permite al PJ comunicarse con otras personas conocidas mientras duermen, transmitiendo mensajes oníricos directamente al subconsciente de los soñadores."
+ },
+ {
+  "patron": "Erebus",
+  "nombre": "Místico nato",
+  "elan": 50,
+  "requisito": 1,
+  "coste": 15,
+  "descripcion": "Cada día el PJ dispondrá de 0 puntos de Zeon para lanzar cualquier hechizo de libre acceso que desee. El nivel máximo de los sortilegios es 0 aunque el grado que puedan alcanzar seguirá dependiendo de su Inteligencia."
+ },
+ {
+  "patron": "Erebus",
+  "nombre": "Influjo sobrenatural",
+  "elan": 60,
+  "requisito": 1,
+  "coste": 10,
+  "descripcion": "El PJ obtiene dos puntos adicionales en las características de Poder o Voluntad (Seleccionar en Personalización)."
+ },
+ {
+  "patron": "Erebus",
+  "nombre": "Caminante de los sueños",
+  "elan": 60,
+  "requisito": 1,
+  "coste": 10,
+  "descripcion": "El PJ puede introducirse en los sueños de los demás si se pone en contacto con el soñador. En algunas ocasiones podrá introducirse en la Vigilia, dependiendo de lo frágil que sea la membrana."
+ },
+ {
+  "patron": "Erebus",
+  "nombre": "Los miedos cardinales",
+  "elan": 70,
+  "requisito": 1,
+  "coste": 20,
+  "descripcion": "El objetivo realiza 3 controles de RM o RP contra 140. 1: Cegado, Terror y fobia a la oscuridad. 2: Terror, Dolor Intenso y fobia al daño. 3: Muerte. Superados tres veces el 1 y el 2, y dos veces el 3, el objetivo se vuelve inmune."
+ },
+ {
+  "patron": "Erebus",
+  "nombre": "Potenciación sobrenatural",
+  "elan": 80,
+  "requisito": 1,
+  "coste": 15,
+  "descripcion": "Todo conjuro, disciplina psíquica o poder equivalente que obligue a un antagonista a superar un control de Resistencia, incrementa en 20 puntos la dificultad de la tirada."
+ },
+ {
+  "patron": "Erebus",
+  "nombre": "Nux, el miedo absoluto",
+  "elan": 90,
+  "requisito": 0,
+  "coste": 10,
+  "descripcion": "Una vez por persona, el PJ puede obligar a superar una RM o RP contra 140 o ser destruido completamente en cuerpo y alma. Aunque supere la tirada sufrirá el estado de Miedo durante horas."
+ },
+ {
+  "patron": "Erebus",
+  "nombre": "Demiurgo",
+  "elan": 100,
+  "requisito": 1,
+  "coste": 10,
+  "descripcion": "El PJ puede observar y controlar los sueños de cualquier durmiente, obtiene Gnosis 45 cuando se encuentre en la Vigilia y obtiene cinco puntos de características a repartir entre su INT, POD y VOL (Seleccionar en Personalización)."
+ },
+ {
+  "patron": "Azrael",
+  "nombre": "Líder",
+  "elan": 10,
+  "requisito": 1,
+  "coste": 5,
+  "descripcion": "Obtiene un bonificador especial a la habilidad secundaria Liderazgo de +0."
+ },
+ {
+  "patron": "Azrael",
+  "nombre": "El valor de los héroes",
+  "elan": 20,
+  "requisito": 1,
+  "coste": 5,
+  "descripcion": "Obtiene un bonificador especial a la habilidad secundaria Frialdad de +0."
+ },
+ {
+  "patron": "Azrael",
+  "nombre": "Exaltación del espíritu",
+  "elan": 30,
+  "requisito": 1,
+  "coste": 10,
+  "descripcion": "El PJ enaltece el sentido de la justicia de quienes se relacionen habitualmente con él."
+ },
+ {
+  "patron": "Azrael",
+  "nombre": "Sentido de la justicia",
+  "elan": 40,
+  "requisito": 1,
+  "coste": 10,
+  "descripcion": "Permite sentir si a su alrededor se está cometiendo algún acto injusto o malvado, aunque no da una información exacta de qué es o quién lo está perpetrando. Cuanto mayor sea su nivel de Elan, tendrá mayor alcance y precisión."
+ },
+ {
+  "patron": "Azrael",
+  "nombre": "Espíritu sagrado",
+  "elan": 50,
+  "requisito": 1,
+  "coste": 5,
+  "descripcion": "El PJ obtiene un estatus equivalente a un elemental de luz pura. Si se realiza sobre el PJ algún tipo de detección sobrenatural, de él emanará una potente aura benigna."
+ },
+ {
+  "patron": "Azrael",
+  "nombre": "Aura de poder",
+  "elan": 60,
+  "requisito": 0,
+  "coste": 10,
+  "descripcion": "En un radio de 0 metros todo ser de naturaleza negativa está obligado a superar automáticamente, cada cinco asaltos, un control de RM o RF contra 0 o sufrirá un daño equivalente a la mitad de su nivel de fracaso por turno."
+ },
+ {
+  "patron": "Azrael",
+  "nombre": "Inmunidad",
+  "elan": 60,
+  "requisito": 1,
+  "coste": 15,
+  "descripcion": "El PJ ignora cualquier habilidad mística o psíquica que le obligue a realizar un control de Resistencia inferior a 40."
+ },
+ {
+  "patron": "Azrael",
+  "nombre": "Destructor del mal",
+  "elan": 70,
+  "requisito": 1,
+  "coste": 15,
+  "descripcion": "Dobla cualquier daño que produzca el PJ, personalmente, a una criatura oscura o naturalmente maligna."
+ },
+ {
+  "patron": "Azrael",
+  "nombre": "Bendecido",
+  "elan": 70,
+  "requisito": 1,
+  "coste": 20,
+  "descripcion": "El PJ recibe un bono de +10 siempre que realice una accion realmente justa o al intentar acabar con una criatura maligna. Si gasta un punto de Elan de modo permanente, aumenta hasta +30."
+ },
+ {
+  "patron": "Azrael",
+  "nombre": "Guerrero de Azrael",
+  "elan": 80,
+  "requisito": 1,
+  "coste": 10,
+  "descripcion": "El PJ obtiene un punto adicional en las características de Fuerza y Destreza."
+ },
+ {
+  "patron": "Azrael",
+  "nombre": "Consagrar",
+  "elan": 90,
+  "requisito": 0,
+  "coste": 15,
+  "descripcion": "El PJ bendice contra criaturas oscuras o malignas, durante 0 horas o permanente sacrificando 1 punto de Elan, un arma (+50% al daño base, no se apila a Destructor del Mal) o un lugar (impide el paso si se fracasa un control de RM 140)."
+ },
+ {
+  "patron": "Azrael",
+  "nombre": "Yihad",
+  "elan": 100,
+  "requisito": 1,
+  "coste": 10,
+  "descripcion": "El PJ puede declarar la Yihad para destruir o proteger algo. Todo ser que ostente un elevado sentido de la justicia seguirá al PJ y se volverá inmune a Miedo y Terror, pudiendo luchar sin penalizadores incluso entre la vida y la muerte."
+ },
+ {
+  "patron": "Abbadon",
+  "nombre": "Empatía oscura",
+  "elan": 10,
+  "requisito": 1,
+  "coste": 10,
+  "descripcion": "Intensifica los sentimientos oscuros de todos los individuos con quienes se relacione el PJ."
+ },
+ {
+  "patron": "Abbadon",
+  "nombre": "Los ojos de la maldad",
+  "elan": 20,
+  "requisito": 1,
+  "coste": 5,
+  "descripcion": "Otorga la capacidad sobrenatural de percibir la maldad que se oculta en el interior de las personas. Cuanto mayor sea el nivel de Elan, esta habilidad será más precisa."
+ },
+ {
+  "patron": "Abbadon",
+  "nombre": "Señor de los pecados",
+  "elan": 30,
+  "requisito": 1,
+  "coste": 10,
+  "descripcion": "El PJ aviva el pecado capital que más profundamente se halle arraigado en el interior de un individuo, si este no supera un control de RM o RP contra 0."
+ },
+ {
+  "patron": "Abbadon",
+  "nombre": "Ser oscuro",
+  "elan": 40,
+  "requisito": 1,
+  "coste": 5,
+  "descripcion": "El PJ obtiene un estatus equivalente a un elemental oscuro, rebosante de pura maldad. Si es objeto de algún tipo de detección sobrenatural, de él emanará una potente aura maléfica."
+ },
+ {
+  "patron": "Abbadon",
+  "nombre": "Corruptor de almas",
+  "elan": 50,
+  "requisito": 1,
+  "coste": 15,
+  "descripcion": "El PJ puede obligar a alguien a superar un control de RM contra 60 o se converitrá en una criatura maligna y retorcida. Los efectos son pasajeros salvo si fracasa por más de 40 puntos."
+ },
+ {
+  "patron": "Abbadon",
+  "nombre": "Encarnación demoníaca",
+  "elan": 60,
+  "requisito": 0,
+  "coste": 10,
+  "descripcion": "El PJ recibe 0 PDs para gastar en cualquier poder sobrenatural como si tuviera Gnosis 25."
+ },
+ {
+  "patron": "Abbadon",
+  "nombre": "Destructor de lo sagrado",
+  "elan": 70,
+  "requisito": 1,
+  "coste": 15,
+  "descripcion": "Dobla cualquier daño que produzca el PJ, personalmente, a una criatura luminosa o naturalmente benigna."
+ },
+ {
+  "patron": "Abbadon",
+  "nombre": "Don de la malignidad",
+  "elan": 80,
+  "requisito": 0,
+  "coste": 10,
+  "descripcion": "El PJ empieza a atraer a su alrededor a decenas de personas o criaturas de naturaleza negativa, que se sentirán seducidas por su presencia."
+ },
+ {
+  "patron": "Abbadon",
+  "nombre": "Invocación demoníaca",
+  "elan": 80,
+  "requisito": 1,
+  "coste": 15,
+  "descripcion": "Una vez al mes, más una adicional por cada punto de Elan sacrificado, el PJ puede invocar a un demonio de Abbadon que no tiene porqué obedecerle."
+ },
+ {
+  "patron": "Abbadon",
+  "nombre": "Devorador de almas",
+  "elan": 90,
+  "requisito": 1,
+  "coste": 15,
+  "descripcion": "El PJ puede devorar almas malignas con las que tuviese un pacto, al morir. Por cada punto de POD del alma, recupera 20 PVs o de Zeon. Si están al máximo, obtiene un +1 durante un día a una característica por cada 5 de POD, (max 15)."
+ },
+ {
+  "patron": "Abbadon",
+  "nombre": "La semilla del diablo",
+  "elan": 100,
+  "requisito": 1,
+  "coste": 10,
+  "descripcion": "El PJ otorga parte de su poder a otros seres malignos, convirtiéndolos en un Ser Entre Mundos o Espiritual con un Gnosis entre 20 y 30, además de proporcionar hasta 200 PDs adicionales para adquirir poderes y habilidades esenciales."
+ },
+ {
+  "patron": "Barakiel",
+  "nombre": "Estética",
+  "elan": 10,
+  "requisito": 1,
+  "coste": 5,
+  "descripcion": "Obtiene un bonificador especial a la habilidad secundaria Estilo de +0."
+ },
+ {
+  "patron": "Barakiel",
+  "nombre": "Atrayente",
+  "elan": 20,
+  "requisito": 1,
+  "coste": 10,
+  "descripcion": "El PJ obtiene la capacidad excepcional de llamar la atención allí donde vaya, atrayendo el interés de todas las personas con las que se relacione."
+ },
+ {
+  "patron": "Barakiel",
+  "nombre": "Saber de la ciencia",
+  "elan": 30,
+  "requisito": 1,
+  "coste": 10,
+  "descripcion": "Obtiene un bonificador especial a la habilidad secundaria Ciencia de +0."
+ },
+ {
+  "patron": "Barakiel",
+  "nombre": "Percibir imperfecciones",
+  "elan": 40,
+  "requisito": 1,
+  "coste": 10,
+  "descripcion": "Concede la capacidad de percibir de manera acentuada las imperfecciones en la conducta y en el físico de los demás."
+ },
+ {
+  "patron": "Barakiel",
+  "nombre": "Sentir el orden",
+  "elan": 40,
+  "requisito": 1,
+  "coste": 5,
+  "descripcion": "El PJ siente cualquier alteración caótica o sobrenatural que suceda a su alrededor o en las personas que se encuentren cerca. Cuanto mayor sea su nivel de Elan, mayor será el alcance de esta habilidad."
+ },
+ {
+  "patron": "Barakiel",
+  "nombre": "Cuerpo perfecto",
+  "elan": 50,
+  "requisito": 0,
+  "coste": 15,
+  "descripcion": "El PJ puede alcanzar la dificultad de Inhumano en sus controles y deja de sufrir los efectos del cansancio (equivalente a la Habilidad esencial Incansable). Además, no recibe ningún penalizador provocado por el envejecimiento."
+ },
+ {
+  "patron": "Barakiel",
+  "nombre": "Belleza perfecta",
+  "elan": 50,
+  "requisito": 1,
+  "coste": 5,
+  "descripcion": "El PJ suma un punto a su Apariencia cada semana hasta llegar a 10."
+ },
+ {
+  "patron": "Barakiel",
+  "nombre": "Aura de orden",
+  "elan": 60,
+  "requisito": 1,
+  "coste": 10,
+  "descripcion": "Todo comienza a volverse ordenado alrededor del PJ  y los sucesos inusuales son cada vez menos frecuentes. Los individuos con Gnosis inferior a 10 con los que se relacione empiezan a volverse más organizados respetuosos con la ley."
+ },
+ {
+  "patron": "Barakiel",
+  "nombre": "La esencia de Barakiel",
+  "elan": 70,
+  "requisito": 1,
+  "coste": 20,
+  "descripcion": "Todas las debilidades o desventajas del PJ empezarán a desaparecer a un ritmo de una por mes, hasta ignorarlas completamente."
+ },
+ {
+  "patron": "Barakiel",
+  "nombre": "Incapaz de errar",
+  "elan": 70,
+  "requisito": 1,
+  "coste": 10,
+  "descripcion": "El PJ deja de pifiar incluso si obtiene un resultado de 1, 2 o 3 con los dados."
+ },
+ {
+  "patron": "Barakiel",
+  "nombre": "Divinidad en cuerpo y alma",
+  "elan": 80,
+  "requisito": 0,
+  "coste": 20,
+  "descripcion": "Las características del PJ aumentan a un ritmo de un punto al mes hasta alcanzar una base natural de diez, a la que se suman los modificadores o penalizadores naturales de cada raza."
+ },
+ {
+  "patron": "Barakiel",
+  "nombre": "Inmortalidad",
+  "elan": 90,
+  "requisito": 0,
+  "coste": 10,
+  "descripcion": "El PJ deja de envejecer inmediatamente y se vuelve inmune a cualquier enfermedad o veneno natural."
+ },
+ {
+  "patron": "Barakiel",
+  "nombre": "Perfección absoluta",
+  "elan": 100,
+  "requisito": 1,
+  "coste": 10,
+  "descripcion": "El PJ deja de lanzar los dados para realizar sus controles, suma automáticamente 100 a todas sus tiradas de habilidad o Resistencia, y obtiene un 10 en los de características."
+ },
+ {
+  "patron": "Eriol",
+  "nombre": "Otorgar fortuna y desgracia",
+  "elan": 10,
+  "requisito": 1,
+  "coste": 10,
+  "descripcion": "El PJ tiene la capacidad de infliur en la suerte de otras personas y dependiendo del nivel de Elan que posea, su duración e intensidad pueden modularse."
+ },
+ {
+  "patron": "Eriol",
+  "nombre": "Alterar la ley de la casualidad",
+  "elan": 20,
+  "requisito": 1,
+  "coste": 5,
+  "descripcion": "Baja 0 grados el resultado necesario para obtener una Tirada Abierta, a la vez que amplía en 0 el de la Pifia. El PJ decide, antes de tirar los dados, si quiere hacer uso de esta capacidad o no."
+ },
+ {
+  "patron": "Eriol",
+  "nombre": "Sentir el caos",
+  "elan": 30,
+  "requisito": 1,
+  "coste": 5,
+  "descripcion": "El PJ siente sobrenaturalmente las alteraciones de la realidad que ocurran a su alrededor. Cuanto mayor sea el Elan del PJ, más amplio será el alcance de esta habilidad."
+ },
+ {
+  "patron": "Eriol",
+  "nombre": "Robar la suerte",
+  "elan": 40,
+  "requisito": 1,
+  "coste": 10,
+  "descripcion": "El PJ tiene el poder de robar la fortuna de otros individuos, obteniendo temporalmente la buena suerte de los demás si estos no superan un control de RM contra 0."
+ },
+ {
+  "patron": "Eriol",
+  "nombre": "Conjurar la providencia",
+  "elan": 50,
+  "requisito": 1,
+  "coste": 10,
+  "descripcion": "El PJ obtiene la capacidad de repetir una de sus tiradas de dados y quedarse con este nuevo resultado, aunque este sea inferior al primero. Puede usarse 0 veces por sesión de juego."
+ },
+ {
+  "patron": "Eriol",
+  "nombre": "Estigma del caos",
+  "elan": 50,
+  "requisito": 1,
+  "coste": 15,
+  "descripcion": "El PJ obtiene 0 PDs con los que podrá elegir cualquier poder sobrenatural como si tuviera Gnosis 25."
+ },
+ {
+  "patron": "Eriol",
+  "nombre": "Aura de caos",
+  "elan": 60,
+  "requisito": 1,
+  "coste": 10,
+  "descripcion": "Cuando el PJ permanece en un lugar prolongadamente, comienzan a acontecer todo tipo de hechos inusuales y estrambóticos. Esto también se aplica sobre seres que tengan Gnosis inferior a 10."
+ },
+ {
+  "patron": "Eriol",
+  "nombre": "Alterar el destino",
+  "elan": 70,
+  "requisito": 0,
+  "coste": 15,
+  "descripcion": "Como en \"Conjurar la providencia\" pero además el PJ también puede repetir las tiradas realizadas por otros individuos. Obligar a un tercero a lanzar de nuevo los dados consume dos usos en lugar de uno."
+ },
+ {
+  "patron": "Eriol",
+  "nombre": "Forzar la suerte",
+  "elan": 80,
+  "requisito": 1,
+  "coste": 15,
+  "descripcion": "El PJ puede provocar que una de sus tiradas sea automáticamente abierta sin importar el resultado obtenido. Puede usarse 0 veces por sesión de juego."
+ },
+ {
+  "patron": "Eriol",
+  "nombre": "Truncar el sino",
+  "elan": 90,
+  "requisito": 1,
+  "coste": 15,
+  "descripcion": "Una vez al día el PJ puede obligar a un ser a superar un control de RM contra 0 o pifiar en la siguiente tirada de dados sin importar cual sea su valor. El valor de la tirada será su nivel de pifia."
+ },
+ {
+  "patron": "Eriol",
+  "nombre": "Señor del caos",
+  "elan": 100,
+  "requisito": 0,
+  "coste": 10,
+  "descripcion": "El PJ controla todo lo que sucede a su alrededor por causa de la suerte y la casualidad, por raro o inusual que parezca."
+ },
+ {
+  "patron": "Edamiel",
+  "nombre": "Deseable",
+  "elan": 10,
+  "requisito": 1,
+  "coste": 5,
+  "descripcion": "El PJ incita la libido de todas aquellas personas que se encuentren en su presencia, despertando en ellas el deseo."
+ },
+ {
+  "patron": "Edamiel",
+  "nombre": "Amplificador del placer",
+  "elan": 20,
+  "requisito": 1,
+  "coste": 5,
+  "descripcion": "Otorga la capacidad de incrementar el placer de las personas con las que mantenga algún tipo de relación, acrecentando enormemente su sensibilidad."
+ },
+ {
+  "patron": "Edamiel",
+  "nombre": "La voz del placer",
+  "elan": 30,
+  "requisito": 1,
+  "coste": 5,
+  "descripcion": "Obtiene un bonificador especial a la habilidad secundaria Persuasión (Seducción) de +0."
+ },
+ {
+  "patron": "Edamiel",
+  "nombre": "Sentir el deseo",
+  "elan": 40,
+  "requisito": 1,
+  "coste": 10,
+  "descripcion": "Permite al PJ ser extremadamente perceptivo a las pasiones y deseos de las personas."
+ },
+ {
+  "patron": "Edamiel",
+  "nombre": "Inmunidad psicológica",
+  "elan": 50,
+  "requisito": 1,
+  "coste": 10,
+  "descripcion": "El PJ se vuelve inmune a los efectos de cualquier estado psicológico. Si se le inducen sobrenaturalmente aplica un bono de +0 a su RM."
+ },
+ {
+  "patron": "Edamiel",
+  "nombre": "Arrancar los sentimientos",
+  "elan": 60,
+  "requisito": 1,
+  "coste": 10,
+  "descripcion": "El PJ puede despojar de una emoción a un indivíduo que lo desee, quien no volverá a percibir ese sentimiento."
+ },
+ {
+  "patron": "Edamiel",
+  "nombre": "Pasividad",
+  "elan": 60,
+  "requisito": 1,
+  "coste": 15,
+  "descripcion": "Si algún ser mira o habla con el PJ y no supera un control de RM contra 0, será incapaz de ejecutar ninguna acción activa o desplazarse mientras el se encuentre en su presencia. Puede repetir el control si recibe un ataque o sufre daño."
+ },
+ {
+  "patron": "Edamiel",
+  "nombre": "Anulación",
+  "elan": 70,
+  "requisito": 0,
+  "coste": 15,
+  "descripcion": "El PJ puede revocar una acción activa realizada por otro individuo durante ese mismo asalto si este no supera una RM contra 140. Puede usarse 0 veces por semana."
+ },
+ {
+  "patron": "Edamiel",
+  "nombre": "Transición hacia el vacío",
+  "elan": 80,
+  "requisito": 1,
+  "coste": 15,
+  "descripcion": "El PJ se vuelve incapaz de morir excepto contra armas o ataques sobrenaturales con presencia superior a 160."
+ },
+ {
+  "patron": "Edamiel",
+  "nombre": "Vórtice",
+  "elan": 90,
+  "requisito": 1,
+  "coste": 25,
+  "descripcion": "Durante 5 asaltos el PJ lanza innatamente el conjuro \"Vacío\" de nivel 90 de la vía de Destrucción en grado base pero, al contrario de lo que indica el sortilegio, el PJ no será tragado por la apertura. Puede usarse 0 veces al día."
+ },
+ {
+  "patron": "Edamiel",
+  "nombre": "El paso de la nada",
+  "elan": 100,
+  "requisito": 1,
+  "coste": 10,
+  "descripcion": "Allí donde se diriga el PJ, el lugar irá perdiendo poco a poco su creatividad e imaginación, degradándose todo hasta que, en último lugar, todos se convierten solo en carcasas vacías, carentes incluso de alma."
+ },
+ {
+  "patron": "Meseguis",
+  "nombre": "La serenidad de la melancolía",
+  "elan": 10,
+  "requisito": 1,
+  "coste": 5,
+  "descripcion": "Obtiene un bonificador especial a las habilidades secundarias Frialdad y Resistir el dolor de +0."
+ },
+ {
+  "patron": "Meseguis",
+  "nombre": "Camino de la venganza",
+  "elan": 20,
+  "requisito": 1,
+  "coste": 5,
+  "descripcion": "El PJ tiene un don innato que le permite presentir la mejor dirección a tomar para llevar a cabo su venganza."
+ },
+ {
+  "patron": "Meseguis",
+  "nombre": "Ojos de la pesadumbre",
+  "elan": 30,
+  "requisito": 1,
+  "coste": 10,
+  "descripcion": "Permite sentir la tristeza y el odio que reside en las personas. Cuanto mayor sea el nivel de Elan, más precisa será esta habilidad."
+ },
+ {
+  "patron": "Meseguis",
+  "nombre": "Lágrimas por los demás",
+  "elan": 30,
+  "requisito": 1,
+  "coste": 5,
+  "descripcion": "Otorga la capacidad de influir en los demás, permitiendo hacerles más llevadera su pena y su tristeza, aunque sin extirparlas completamente. Cuanto más sufrimiento elimine, mayor pesadumbre sentirá el propio PJ."
+ },
+ {
+  "patron": "Meseguis",
+  "nombre": "Transmitir el dolor",
+  "elan": 40,
+  "requisito": 1,
+  "coste": 10,
+  "descripcion": "Permite al PJ transmitir sus propios sentimientos de dolor y pesadumbre a un tercero si este no supera una RM o RP contra 0."
+ },
+ {
+  "patron": "Meseguis",
+  "nombre": "Espíritu de la venganza",
+  "elan": 40,
+  "requisito": 1,
+  "coste": 10,
+  "descripcion": "La naturaleza del PJ se extiende como un aura, influyendo en las personas con las que conviva durante un tiempo prolongado."
+ },
+ {
+  "patron": "Meseguis",
+  "nombre": "La voz de los muertos",
+  "elan": 50,
+  "requisito": 1,
+  "coste": 10,
+  "descripcion": "Permite comunicarse con almas que hayan fallecido llenas de dolor y sufrimiento si no han recibido el llamamiento o no son espectros de la Vigilia. En función del nivel de Elan, el PJ puede solo escuchar sus súplicas o incluso conversar."
+ },
+ {
+  "patron": "Meseguis",
+  "nombre": "Vengador oscuro",
+  "elan": 60,
+  "requisito": 1,
+  "coste": 10,
+  "descripcion": "El PJ obtiene un bono especial de +10 a toda acción que esté encaminada a realizar su venganza."
+ },
+ {
+  "patron": "Meseguis",
+  "nombre": "La voz del dolor",
+  "elan": 60,
+  "requisito": 0,
+  "coste": 15,
+  "descripcion": "El PJ es capaz de obligar a cualquier oyente a superar un control automático de RM contra 60 o se verá sometido a Dolor. Si fracasa el control por más de 40 puntos, el penalizador aplicable será el de Dolor extremo."
+ },
+ {
+  "patron": "Meseguis",
+  "nombre": "Más allá de la muerte",
+  "elan": 70,
+  "requisito": 1,
+  "coste": 10,
+  "descripcion": "Si el PJ muere, volverá a la vida con 300 PDs extra para adquirir poderes y habilidades esenciales como si tuviera Gnosis 30, aunque perderá un punto de Elan por día. Cuando llegue a 0 o cumpla su venganza, morirá finalmente."
+ },
+ {
+  "patron": "Meseguis",
+  "nombre": "Ejecutor oscuro",
+  "elan": 80,
+  "requisito": 0,
+  "coste": 10,
+  "descripcion": "Aumenta el bono de \"Vengador oscuro\" hasta +20."
+ },
+ {
+  "patron": "Meseguis",
+  "nombre": "Espejo oscuro",
+  "elan": 90,
+  "requisito": 1,
+  "coste": 15,
+  "descripcion": "Una vez por individuo (mientras no pase un largo tiempo) el PJ puede obligar a superar un control de RM o RP contra 140. Si falla por menos de 40 quedará paralizado. Si el fracaso es mayor perderá su alma."
+ },
+ {
+  "patron": "Meseguis",
+  "nombre": "Comunión con los caídos",
+  "elan": 100,
+  "requisito": 0,
+  "coste": 10,
+  "descripcion": "El PJ puede obtener cualquier poder o habilidad que tuviesen los espíritus que odiasen intesamente a su enemigo en vida, o manifestarlos como alma en pena. Este efecto solo se aplica contra ese enemigo y mientras dure el combate."
+ },
+ {
+  "patron": "Elan Personalizado",
+  "nombre": "Poder no definido",
+  "elan": 0,
+  "requisito": "-",
+  "coste": 0,
+  "descripcion": 0
+ },
+ {
+  "patron": "Elan Personalizado",
+  "nombre": "Poder no definido",
+  "elan": 0,
+  "requisito": "-",
+  "coste": 0,
+  "descripcion": 0
+ },
+ {
+  "patron": "Elan Personalizado",
+  "nombre": "Poder no definido",
+  "elan": 0,
+  "requisito": "-",
+  "coste": 0,
+  "descripcion": 0
+ },
+ {
+  "patron": "Elan Personalizado",
+  "nombre": "Poder no definido",
+  "elan": 0,
+  "requisito": "-",
+  "coste": 0,
+  "descripcion": 0
+ },
+ {
+  "patron": "Elan Personalizado",
+  "nombre": "Poder no definido",
+  "elan": 0,
+  "requisito": "-",
+  "coste": 0,
+  "descripcion": 0
+ },
+ {
+  "patron": "Elan Personalizado",
+  "nombre": "Poder no definido",
+  "elan": 0,
+  "requisito": "-",
+  "coste": 0,
+  "descripcion": 0
+ },
+ {
+  "patron": "Elan Personalizado",
+  "nombre": "Poder no definido",
+  "elan": 0,
+  "requisito": "-",
+  "coste": 0,
+  "descripcion": 0
+ },
+ {
+  "patron": "Elan Personalizado",
+  "nombre": "Poder no definido",
+  "elan": 0,
+  "requisito": "-",
+  "coste": 0,
+  "descripcion": 0
+ },
+ {
+  "patron": "Elan Personalizado",
+  "nombre": "Poder no definido",
+  "elan": 0,
+  "requisito": "-",
+  "coste": 0,
+  "descripcion": 0
+ },
+ {
+  "patron": "Elan Personalizado",
+  "nombre": "Poder no definido",
+  "elan": 0,
+  "requisito": "-",
+  "coste": 0,
+  "descripcion": 0
+ },
+ {
+  "patron": "Elan Personalizado",
+  "nombre": "Poder no definido",
+  "elan": 0,
+  "requisito": "-",
+  "coste": 0,
+  "descripcion": 0
+ },
+ {
+  "patron": "Elan Personalizado",
+  "nombre": "Poder no definido",
+  "elan": 0,
+  "requisito": "-",
+  "coste": 0,
+  "descripcion": 0
+ },
+ {
+  "patron": "Elan Personalizado",
+  "nombre": "Poder no definido",
+  "elan": 0,
+  "requisito": "-",
+  "coste": 0,
+  "descripcion": 0
+ },
+ {
+  "patron": "Elan Personalizado",
+  "nombre": "Poder no definido",
+  "elan": 0,
+  "requisito": "-",
+  "coste": 0,
+  "descripcion": 0
+ },
+ {
+  "patron": "Elan Personalizado",
+  "nombre": "Poder no definido",
+  "elan": 0,
+  "requisito": "-",
+  "coste": 0,
+  "descripcion": 0
+ },
+ {
+  "patron": "Elan Personalizado",
+  "nombre": "Poder no definido",
+  "elan": 0,
+  "requisito": "-",
+  "coste": 0,
+  "descripcion": 0
+ }
+]

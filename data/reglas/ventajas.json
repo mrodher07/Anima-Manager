@@ -1,0 +1,2199 @@
+[
+ {
+  "nombre": "Repetir tirada de características",
+  "coste": 1,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "+1 a característica: AGI",
+  "coste": 1,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "+1 a característica: CON",
+  "coste": 1,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "+1 a característica: DES",
+  "coste": 1,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "+1 a característica: FUE",
+  "coste": 1,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "+1 a característica: INT",
+  "coste": 1,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "+1 a característica: PER",
+  "coste": 1,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "+1 a característica: POD",
+  "coste": 1,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "+1 a característica: VOL",
+  "coste": 1,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Sustituir característica por 9",
+  "coste": 2,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Res. física excepcional (1)",
+  "coste": 1,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Res. física excepcional (2)",
+  "coste": 2,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Res. mágica excepcional (1)",
+  "coste": 1,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Res. mágica excepcional (2)",
+  "coste": 2,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Res. psi. excepcional (1)",
+  "coste": 1,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Res. psi. excepcional (2)",
+  "coste": 2,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Acceso a 1 disciplina psiquica",
+  "coste": 1,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Acceso libre a dis. psiquicas",
+  "coste": 2,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Afinidad animal",
+  "coste": 1,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Regeneración (1) básica",
+  "coste": 1,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Regeneración (2) avanzada",
+  "coste": 2,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Regeneración (3) mayor",
+  "coste": 3,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Sentidos agudos",
+  "coste": 1,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Ambidestría",
+  "coste": 1,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Don",
+  "coste": 2,
+  "implementada": 2,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Visión nocturna",
+  "coste": 1,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Inquietante",
+  "coste": 1,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Apto en una materia (1)",
+  "coste": 1,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Apto en una materia (2)",
+  "coste": 2,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Apto en campo: Atléticas",
+  "coste": 2,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Apto en campo: Sociales",
+  "coste": 2,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Apto en campo: Perceptivas",
+  "coste": 2,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Apto en campo: Intelectuales",
+  "coste": 2,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Apto en campo: Vigor",
+  "coste": 2,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Apto en campo: Subterfugio",
+  "coste": 2,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Apto en campo: Creativas",
+  "coste": 2,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Aprendizaje innato (1)",
+  "coste": 1,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Aprendizaje innato (2)",
+  "coste": 2,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Aprendizaje innato (3)",
+  "coste": 3,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Apr. innato (2): Atléticas",
+  "coste": 2,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Apr. innato (2): Sociales",
+  "coste": 2,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Apr. innato (2): Perceptivas",
+  "coste": 2,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Apr. innato (2): Intelectuales",
+  "coste": 2,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Apr. innato (2): Vigor",
+  "coste": 2,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Apr. innato (2): Subterfugio",
+  "coste": 2,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Apr. innato (2): Creativas",
+  "coste": 2,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Apr. innato (3): Atléticas",
+  "coste": 3,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Apr. innato (3): Sociales",
+  "coste": 3,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Apr. innato (3): Perceptivas",
+  "coste": 3,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Apr. innato (3): Intelectuales",
+  "coste": 3,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Apr. innato (3): Vigor",
+  "coste": 3,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Apr. innato (3): Subterfugio",
+  "coste": 3,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Apr. innato (3): Creativas",
+  "coste": 3,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Con. de todas las materias",
+  "coste": 2,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Sueño ligero",
+  "coste": 1,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Encanto",
+  "coste": 1,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Buena suerte",
+  "coste": 1,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Afortunado",
+  "coste": 1,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Reflejos rápidos (1)",
+  "coste": 1,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Reflejos rápidos (2)",
+  "coste": 2,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Reflejos rápidos (3)",
+  "coste": 3,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Tamaño no natural +1",
+  "coste": 1,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Tamaño no natural +2",
+  "coste": 1,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Tamaño no natural +3",
+  "coste": 1,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Tamaño no natural +4",
+  "coste": 1,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Tamaño no natural +5",
+  "coste": 1,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Tamaño no natural -1",
+  "coste": 1,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Tamaño no natural -2",
+  "coste": 1,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Tamaño no natural -3",
+  "coste": 1,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Tamaño no natural -4",
+  "coste": 1,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Tamaño no natural -5",
+  "coste": 1,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Sentido del peligro",
+  "coste": 2,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Armadura natural",
+  "coste": 1,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Armadura mística",
+  "coste": 1,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Acc. psíquico natural (1)",
+  "coste": 1,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Acc. psíquico natural (2)",
+  "coste": 2,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Acc. psíquico natural (3)",
+  "coste": 3,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Inm. al dolor y al cansancio",
+  "coste": 1,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Ver lo sobrenatural",
+  "coste": 1,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Maestro marcial (1)",
+  "coste": 1,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Maestro marcial (2)",
+  "coste": 2,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Maestro marcial (3)",
+  "coste": 3,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Infatigable (1)",
+  "coste": 1,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Infatigable (2)",
+  "coste": 2,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Infatigable (3)",
+  "coste": 3,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Recuperación de Ki (1)",
+  "coste": 1,
+  "tipo": "Comunes",
+  "_seccion": "Desplazamiento rápido",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Recuperación de Ki (2)",
+  "coste": 2,
+  "tipo": "Comunes",
+  "_seccion": "Desplazamiento rápido",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Recuperación de Ki (3)",
+  "coste": 3,
+  "tipo": "Comunes",
+  "_seccion": "Desplazamiento rápido",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Elan (1)",
+  "coste": 1,
+  "tipo": "Comunes",
+  "_seccion": "Desplazamiento rápido",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Elan (2)",
+  "coste": 2,
+  "tipo": "Comunes",
+  "_seccion": "Desplazamiento rápido",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Elan (3)",
+  "coste": 3,
+  "tipo": "Comunes",
+  "_seccion": "Desplazamiento rápido",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Aprendizaje (1)",
+  "coste": 1,
+  "tipo": "Comunes",
+  "_seccion": "Desplazamiento rápido",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Aprendizaje (2)",
+  "coste": 2,
+  "tipo": "Comunes",
+  "_seccion": "Desplazamiento rápido",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Aprendizaje (3)",
+  "coste": 3,
+  "tipo": "Comunes",
+  "_seccion": "Desplazamiento rápido",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Difícil de matar (1)",
+  "coste": 1,
+  "implementada": 2,
+  "tipo": "Comunes",
+  "_seccion": "[PN] VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Difícil de matar (2)",
+  "coste": 2,
+  "implementada": 2,
+  "tipo": "Comunes",
+  "_seccion": "[PN] VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Difícil de matar (3)",
+  "coste": 3,
+  "implementada": 2,
+  "tipo": "Comunes",
+  "_seccion": "[PN] VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Al límite",
+  "coste": 1,
+  "tipo": "Comunes",
+  "_seccion": "[PN] VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Inmunidad sobrenatural (1)",
+  "coste": 1,
+  "tipo": "Comunes",
+  "_seccion": "[PN] VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Inmunidad sobrenatural (2)",
+  "coste": 2,
+  "tipo": "Comunes",
+  "_seccion": "[PN] VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Inmunidad sobrenatural (3)",
+  "coste": 3,
+  "tipo": "Comunes",
+  "_seccion": "[PN] VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Sin límite de familiares",
+  "coste": 2,
+  "tipo": "Comunes",
+  "_seccion": "[PN] VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Sentido del combate: Ataque",
+  "coste": 3,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "[PN] VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Sentido del combate: Parada",
+  "coste": 3,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "[PN] VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Sentido del combate: Esquiva",
+  "coste": 3,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "[PN] VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Bono natural incrementado",
+  "coste": 2,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "[PN] VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Uso de armadura (1)",
+  "coste": 1,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "[PN] VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Uso de armadura (2)",
+  "coste": 2,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "[PN] VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Uso de armadura (3)",
+  "coste": 3,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "[PN] VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Versátil",
+  "coste": 1,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "[PN] VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Superviviente",
+  "coste": 1,
+  "tipo": "Comunes",
+  "_seccion": "[PN] VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Tocado por el Destino",
+  "coste": 1,
+  "tipo": "Comunes",
+  "_seccion": "[PN] VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Inmunidad psíquica",
+  "coste": 1,
+  "tipo": "Comunes",
+  "_seccion": "[PN] VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Habilidoso",
+  "coste": 1,
+  "implementada": 2,
+  "tipo": "Comunes",
+  "_seccion": "[PN] VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Libre albedrío",
+  "coste": 1,
+  "tipo": "Comunes",
+  "_seccion": "[PN] VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Seductor",
+  "coste": 1,
+  "tipo": "Comunes",
+  "_seccion": "[PN] VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Acumulación plena",
+  "coste": 2,
+  "tipo": "Comunes",
+  "_seccion": "[DE] VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Aprendizaje marcial",
+  "coste": 1,
+  "tipo": "Comunes",
+  "_seccion": "[DE] VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Ki imperceptible",
+  "coste": 1,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "[DE] VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Poder innato",
+  "coste": 1,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "[DE] VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Técnicas desvinculadas",
+  "coste": 1,
+  "tipo": "Comunes",
+  "_seccion": "[DE] VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Ac. de Ki incrementada (1)",
+  "coste": 1,
+  "tipo": "Comunes",
+  "_seccion": "[DE] VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Ac. de Ki incrementada (2)",
+  "coste": 2,
+  "tipo": "Comunes",
+  "_seccion": "[DE] VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Percepción del Ki",
+  "coste": 1,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "[DE] VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Límite dual",
+  "coste": 1,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "[DE] VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Inutilidad gestual",
+  "coste": 1,
+  "tipo": "Comunes",
+  "_seccion": "[DE] VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Sellos magistrales",
+  "coste": 1,
+  "tipo": "Comunes",
+  "_seccion": "[DE] VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Don incompleto",
+  "coste": 1,
+  "tipo": "Comunes",
+  "_seccion": "[AE] VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Esencia Sheele",
+  "coste": 1,
+  "tipo": "Comunes",
+  "_seccion": "[AE] VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Familiar (2)",
+  "coste": 2,
+  "tipo": "Comunes",
+  "_seccion": "[AE] VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Familiar (3)",
+  "coste": 3,
+  "tipo": "Comunes",
+  "_seccion": "[AE] VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Convocador de masas (1)",
+  "coste": 1,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "[AE] VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Convocador de masas (2)",
+  "coste": 2,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "[AE] VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Convocador de masas (3)",
+  "coste": 3,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "[AE] VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Afinidad de uso",
+  "coste": 1,
+  "tipo": "Comunes",
+  "_seccion": "[PE] VENTAJAS COMUNES",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Ventaja personalizada #1",
+  "coste": 0,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS PERSONALIZADAS",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Ventaja personalizada #2",
+  "coste": 0,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS PERSONALIZADAS",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Ventaja personalizada #3",
+  "coste": 0,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS PERSONALIZADAS",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Ventaja personalizada #4",
+  "coste": 0,
+  "tipo": "Comunes",
+  "_seccion": "VENTAJAS PERSONALIZADAS",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Rec. superior de magia (1)",
+  "coste": 1,
+  "implementada": 1,
+  "tipo": "Don",
+  "_seccion": "VENTAJAS: DON",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Rec. superior de magia (2)",
+  "coste": 2,
+  "implementada": 1,
+  "tipo": "Don",
+  "_seccion": "VENTAJAS: DON",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Rec. superior de magia (3)",
+  "coste": 3,
+  "implementada": 1,
+  "tipo": "Don",
+  "_seccion": "VENTAJAS: DON",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Apto desarrollo de la magia",
+  "coste": 1,
+  "implementada": 1,
+  "tipo": "Don",
+  "_seccion": "VENTAJAS: DON",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Con. natural de Vía: Luz",
+  "coste": 1,
+  "implementada": 1,
+  "tipo": "Don",
+  "_seccion": "VENTAJAS: DON",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Con. natural de Vía: Osc.",
+  "coste": 1,
+  "implementada": 1,
+  "tipo": "Don",
+  "_seccion": "VENTAJAS: DON",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Con. natural de Vía: Fuego",
+  "coste": 1,
+  "implementada": 1,
+  "tipo": "Don",
+  "_seccion": "VENTAJAS: DON",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Con. natural de Vía: Agua",
+  "coste": 1,
+  "implementada": 1,
+  "tipo": "Don",
+  "_seccion": "VENTAJAS: DON",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Con. natural de Vía: Aire",
+  "coste": 1,
+  "implementada": 1,
+  "tipo": "Don",
+  "_seccion": "VENTAJAS: DON",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Con. natural de Vía: Tierra",
+  "coste": 1,
+  "implementada": 1,
+  "tipo": "Don",
+  "_seccion": "VENTAJAS: DON",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Con. natural de Vía: Creación",
+  "coste": 1,
+  "implementada": 1,
+  "tipo": "Don",
+  "_seccion": "VENTAJAS: DON",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Con. natural de Vía: Destruc.",
+  "coste": 1,
+  "implementada": 1,
+  "tipo": "Don",
+  "_seccion": "VENTAJAS: DON",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Con. natural de Vía: Esencia",
+  "coste": 1,
+  "implementada": 1,
+  "tipo": "Don",
+  "_seccion": "VENTAJAS: DON",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Con. natural de Vía: Ilusión",
+  "coste": 1,
+  "implementada": 1,
+  "tipo": "Don",
+  "_seccion": "VENTAJAS: DON",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Con. natural de Vía: Nigro.",
+  "coste": 1,
+  "implementada": 1,
+  "tipo": "Don",
+  "_seccion": "VENTAJAS: DON",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Magia innata mejorada (1)",
+  "coste": 1,
+  "implementada": 1,
+  "tipo": "Don",
+  "_seccion": "VENTAJAS: DON",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Magia innata mejorada (2)",
+  "coste": 2,
+  "implementada": 1,
+  "tipo": "Don",
+  "_seccion": "VENTAJAS: DON",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Magia innata mejorada (3)",
+  "coste": 3,
+  "implementada": 1,
+  "tipo": "Don",
+  "_seccion": "VENTAJAS: DON",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Potencial enfrentado",
+  "coste": 1,
+  "tipo": "Don",
+  "_seccion": "VENTAJAS: DON",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Inutilidad somática",
+  "coste": 1,
+  "tipo": "Don",
+  "_seccion": "VENTAJAS: DON",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Inutilidad oral",
+  "coste": 1,
+  "tipo": "Don",
+  "_seccion": "VENTAJAS: DON",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Des. elemental: Luz",
+  "coste": 1,
+  "implementada": 1,
+  "tipo": "Don",
+  "_seccion": "VENTAJAS: DON",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Des. elemental: Oscuridad",
+  "coste": 1,
+  "implementada": 1,
+  "tipo": "Don",
+  "_seccion": "VENTAJAS: DON",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Des. elemental: Fuego",
+  "coste": 1,
+  "implementada": 1,
+  "tipo": "Don",
+  "_seccion": "VENTAJAS: DON",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Des. elemental: Agua",
+  "coste": 1,
+  "implementada": 1,
+  "tipo": "Don",
+  "_seccion": "VENTAJAS: DON",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Des. elemental: Aire",
+  "coste": 1,
+  "implementada": 1,
+  "tipo": "Don",
+  "_seccion": "VENTAJAS: DON",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Des. elemental: Tierra",
+  "coste": 1,
+  "implementada": 1,
+  "tipo": "Don",
+  "_seccion": "VENTAJAS: DON",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Des. elemental: Creación",
+  "coste": 1,
+  "implementada": 1,
+  "tipo": "Don",
+  "_seccion": "VENTAJAS: DON",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Des. elemental: Destrucción",
+  "coste": 1,
+  "implementada": 1,
+  "tipo": "Don",
+  "_seccion": "VENTAJAS: DON",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Des. elemental: Esencia",
+  "coste": 1,
+  "implementada": 1,
+  "tipo": "Don",
+  "_seccion": "VENTAJAS: DON",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Des. elemental: Ilusión",
+  "coste": 1,
+  "implementada": 1,
+  "tipo": "Don",
+  "_seccion": "VENTAJAS: DON",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Des. elemental: Nigromancia",
+  "coste": 1,
+  "implementada": 1,
+  "tipo": "Don",
+  "_seccion": "VENTAJAS: DON",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Desequilibrio sephirótico",
+  "coste": 2,
+  "implementada": 1,
+  "tipo": "Don",
+  "_seccion": "VENTAJAS: DON",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Magia opuesta",
+  "coste": 1,
+  "implementada": 1,
+  "tipo": "Don",
+  "_seccion": "[PN] VENTAJAS: DON",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Naturaleza mágica (1)",
+  "coste": 1,
+  "implementada": 1,
+  "tipo": "Don",
+  "_seccion": "[PN] VENTAJAS: DON",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Naturaleza mágica (2)",
+  "coste": 2,
+  "implementada": 1,
+  "tipo": "Don",
+  "_seccion": "[PN] VENTAJAS: DON",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Naturaleza mágica (3)",
+  "coste": 3,
+  "implementada": 1,
+  "tipo": "Don",
+  "_seccion": "[PN] VENTAJAS: DON",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Poder natural",
+  "coste": 1,
+  "tipo": "Don",
+  "_seccion": "[PN] VENTAJAS: DON",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Dicción mágica",
+  "coste": 1,
+  "tipo": "Don",
+  "_seccion": "[PN] VENTAJAS: DON",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Versatilidad metamágica",
+  "coste": 1,
+  "tipo": "Don",
+  "_seccion": "[AE] VENTAJAS: DON",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Hechicero nato",
+  "coste": 1,
+  "tipo": "Don",
+  "_seccion": "[AE] VENTAJAS: DON",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Aprendizaje mágico gradual",
+  "coste": 2,
+  "implementada": 1,
+  "tipo": "Don",
+  "_seccion": "[AE] VENTAJAS: DON",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Concentración extrema",
+  "coste": 2,
+  "implementada": 1,
+  "tipo": "Psiquicos",
+  "_seccion": "VENTAJAS: PSIQUICOS",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Calibre",
+  "coste": 1,
+  "implementada": 1,
+  "tipo": "Psiquicos",
+  "_seccion": "VENTAJAS: PSIQUICOS",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Mantenimiento añadido",
+  "coste": 2,
+  "tipo": "Psiquicos",
+  "_seccion": "VENTAJAS: PSIQUICOS",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Res. a la fatiga psíquica",
+  "coste": 2,
+  "tipo": "Psiquicos",
+  "_seccion": "VENTAJAS: PSIQUICOS",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Recuperación de CVs (1)",
+  "coste": 1,
+  "tipo": "Psiquicos",
+  "_seccion": "VENTAJAS: PSIQUICOS",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Recuperación de CVs (2)",
+  "coste": 2,
+  "tipo": "Psiquicos",
+  "_seccion": "VENTAJAS: PSIQUICOS",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Recuperación de CVs (3)",
+  "coste": 3,
+  "tipo": "Psiquicos",
+  "_seccion": "VENTAJAS: PSIQUICOS",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Des. psíquico: Piroquinesis",
+  "coste": 2,
+  "implementada": 1,
+  "tipo": "Psiquicos",
+  "_seccion": "VENTAJAS: PSIQUICOS",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Des. psíquico: Crioquinesis",
+  "coste": 2,
+  "implementada": 1,
+  "tipo": "Psiquicos",
+  "_seccion": "VENTAJAS: PSIQUICOS",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Des. psíquico: Telequinesis",
+  "coste": 2,
+  "implementada": 1,
+  "tipo": "Psiquicos",
+  "_seccion": "VENTAJAS: PSIQUICOS",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Des. psíquico: Telepatía",
+  "coste": 2,
+  "implementada": 1,
+  "tipo": "Psiquicos",
+  "_seccion": "VENTAJAS: PSIQUICOS",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Des. psíquico: Energía",
+  "coste": 2,
+  "implementada": 1,
+  "tipo": "Psiquicos",
+  "_seccion": "VENTAJAS: PSIQUICOS",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Des. psíquico: Inc. Físico",
+  "coste": 2,
+  "implementada": 1,
+  "tipo": "Psiquicos",
+  "_seccion": "VENTAJAS: PSIQUICOS",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Des. psíquico: Sentiente",
+  "coste": 2,
+  "implementada": 1,
+  "tipo": "Psiquicos",
+  "_seccion": "VENTAJAS: PSIQUICOS",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Des. psíquico: Telemetría",
+  "coste": 2,
+  "implementada": 1,
+  "tipo": "Psiquicos",
+  "_seccion": "VENTAJAS: PSIQUICOS",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Des. psíquico: Causalidad",
+  "coste": 2,
+  "implementada": 1,
+  "tipo": "Psiquicos",
+  "_seccion": "VENTAJAS: PSIQUICOS",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Des. psí: Electromagnetismo",
+  "coste": 2,
+  "implementada": 1,
+  "tipo": "Psiquicos",
+  "_seccion": "VENTAJAS: PSIQUICOS",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Des. psíquico: Teletransporte",
+  "coste": 2,
+  "implementada": 1,
+  "tipo": "Psiquicos",
+  "_seccion": "VENTAJAS: PSIQUICOS",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Des. psíquico: Luz",
+  "coste": 2,
+  "implementada": 1,
+  "tipo": "Psiquicos",
+  "_seccion": "VENTAJAS: PSIQUICOS",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Des. psí: Hipersensibilidad",
+  "coste": 2,
+  "implementada": 1,
+  "tipo": "Psiquicos",
+  "_seccion": "VENTAJAS: PSIQUICOS",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Concentración pasiva",
+  "coste": 2,
+  "tipo": "Psiquicos",
+  "_seccion": "VENTAJAS: PSIQUICOS",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Ambivalencia psíquica",
+  "coste": 1,
+  "tipo": "Psiquicos",
+  "_seccion": "[PN] VENTAJAS: PSIQUICOS",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Mod. psíquico incrementado",
+  "coste": 1,
+  "tipo": "Psiquicos",
+  "_seccion": "[PN] VENTAJAS: PSIQUICOS",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Fondos iniciales (2 000 mo)",
+  "coste": 1,
+  "tipo": "Trasfondo",
+  "_seccion": "VENTAJAS TRASFONDO",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Fondos iniciales (5 000 mo)",
+  "coste": 2,
+  "tipo": "Trasfondo",
+  "_seccion": "VENTAJAS TRASFONDO",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Fondos iniciales (10 000 mo)",
+  "coste": 3,
+  "tipo": "Trasfondo",
+  "_seccion": "VENTAJAS TRASFONDO",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Curtido (1)",
+  "coste": 1,
+  "tipo": "Trasfondo",
+  "_seccion": "VENTAJAS TRASFONDO",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Curtido (2)",
+  "coste": 2,
+  "tipo": "Trasfondo",
+  "_seccion": "VENTAJAS TRASFONDO",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Curtido (3)",
+  "coste": 3,
+  "tipo": "Trasfondo",
+  "_seccion": "VENTAJAS TRASFONDO",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Artefacto (1)",
+  "coste": 1,
+  "tipo": "Trasfondo",
+  "_seccion": "VENTAJAS TRASFONDO",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Artefacto (2)",
+  "coste": 2,
+  "tipo": "Trasfondo",
+  "_seccion": "VENTAJAS TRASFONDO",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Artefacto (3)",
+  "coste": 3,
+  "tipo": "Trasfondo",
+  "_seccion": "VENTAJAS TRASFONDO",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Fama (1)",
+  "coste": 1,
+  "tipo": "Trasfondo",
+  "_seccion": "VENTAJAS TRASFONDO",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Fama (2)",
+  "coste": 2,
+  "tipo": "Trasfondo",
+  "_seccion": "VENTAJAS TRASFONDO",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Raices culturales",
+  "coste": 1,
+  "tipo": "Trasfondo",
+  "_seccion": "VENTAJAS TRASFONDO",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Santo",
+  "coste": 2,
+  "tipo": "Trasfondo",
+  "_seccion": "VENTAJAS TRASFONDO",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Posición social (1)",
+  "coste": 1,
+  "tipo": "Trasfondo",
+  "_seccion": "VENTAJAS TRASFONDO",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Posición social (2)",
+  "coste": 2,
+  "tipo": "Trasfondo",
+  "_seccion": "VENTAJAS TRASFONDO",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Contactos (1)",
+  "coste": 1,
+  "tipo": "Trasfondo",
+  "_seccion": "VENTAJAS TRASFONDO",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Contactos (2)",
+  "coste": 2,
+  "tipo": "Trasfondo",
+  "_seccion": "VENTAJAS TRASFONDO",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Contactos (3)",
+  "coste": 3,
+  "tipo": "Trasfondo",
+  "_seccion": "VENTAJAS TRASFONDO",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Aliado poderoso (1)",
+  "coste": 1,
+  "tipo": "Trasfondo",
+  "_seccion": "VENTAJAS TRASFONDO",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Aliado poderoso (2)",
+  "coste": 2,
+  "tipo": "Trasfondo",
+  "_seccion": "VENTAJAS TRASFONDO",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Aliado poderoso (3)",
+  "coste": 3,
+  "tipo": "Trasfondo",
+  "_seccion": "VENTAJAS TRASFONDO",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Sangre Antigua",
+  "coste": 2,
+  "tipo": "Trasfondo",
+  "_seccion": "VENTAJAS TRASFONDO",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "-2 a característica: AGI",
+  "coste": -1,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "DESVENTAJAS COMUNES",
+  "esDesventaja": true
+ },
+ {
+  "nombre": "-2 a característica: CON",
+  "coste": -1,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "DESVENTAJAS COMUNES",
+  "esDesventaja": true
+ },
+ {
+  "nombre": "-2 a característica: DES",
+  "coste": -1,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "DESVENTAJAS COMUNES",
+  "esDesventaja": true
+ },
+ {
+  "nombre": "-2 a característica: FUE",
+  "coste": -1,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "DESVENTAJAS COMUNES",
+  "esDesventaja": true
+ },
+ {
+  "nombre": "-2 a característica: INT",
+  "coste": -1,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "DESVENTAJAS COMUNES",
+  "esDesventaja": true
+ },
+ {
+  "nombre": "-2 a característica: PER",
+  "coste": -1,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "DESVENTAJAS COMUNES",
+  "esDesventaja": true
+ },
+ {
+  "nombre": "-2 a característica: POD",
+  "coste": -1,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "DESVENTAJAS COMUNES",
+  "esDesventaja": true
+ },
+ {
+  "nombre": "-2 a característica: VOL",
+  "coste": -1,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "DESVENTAJAS COMUNES",
+  "esDesventaja": true
+ },
+ {
+  "nombre": "Miopía",
+  "coste": -1,
+  "implementada": 2,
+  "tipo": "Comunes",
+  "_seccion": "DESVENTAJAS COMUNES",
+  "esDesventaja": true
+ },
+ {
+  "nombre": "Salud enfermiza",
+  "coste": -1,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "DESVENTAJAS COMUNES",
+  "esDesventaja": true
+ },
+ {
+  "nombre": "Vulnerable a los venenos",
+  "coste": -1,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "DESVENTAJAS COMUNES",
+  "esDesventaja": true
+ },
+ {
+  "nombre": "Fácil posesión",
+  "coste": -1,
+  "tipo": "Comunes",
+  "_seccion": "DESVENTAJAS COMUNES",
+  "esDesventaja": true
+ },
+ {
+  "nombre": "Vulnerable a la magia",
+  "coste": -1,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "DESVENTAJAS COMUNES",
+  "esDesventaja": true
+ },
+ {
+  "nombre": "Vulnerable a frío o calor",
+  "coste": -1,
+  "tipo": "Comunes",
+  "_seccion": "DESVENTAJAS COMUNES",
+  "esDesventaja": true
+ },
+ {
+  "nombre": "Extremidad atrofiada",
+  "coste": -1,
+  "tipo": "Comunes",
+  "_seccion": "DESVENTAJAS COMUNES",
+  "esDesventaja": true
+ },
+ {
+  "nombre": "Debilidad física",
+  "coste": -1,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "DESVENTAJAS COMUNES",
+  "esDesventaja": true
+ },
+ {
+  "nombre": "Aspecto desagradable",
+  "coste": -1,
+  "tipo": "Comunes",
+  "_seccion": "DESVENTAJAS COMUNES",
+  "esDesventaja": true
+ },
+ {
+  "nombre": "Lenta curación",
+  "coste": -1,
+  "tipo": "Comunes",
+  "_seccion": "DESVENTAJAS COMUNES",
+  "esDesventaja": true
+ },
+ {
+  "nombre": "Enfermedad grave",
+  "coste": -2,
+  "tipo": "Comunes",
+  "_seccion": "DESVENTAJAS COMUNES",
+  "esDesventaja": true
+ },
+ {
+  "nombre": "Alergia grave",
+  "coste": -1,
+  "tipo": "Comunes",
+  "_seccion": "DESVENTAJAS COMUNES",
+  "esDesventaja": true
+ },
+ {
+  "nombre": "Sueño profundo",
+  "coste": -1,
+  "tipo": "Comunes",
+  "_seccion": "DESVENTAJAS COMUNES",
+  "esDesventaja": true
+ },
+ {
+  "nombre": "Fobia grave",
+  "coste": -1,
+  "tipo": "Comunes",
+  "_seccion": "DESVENTAJAS COMUNES",
+  "esDesventaja": true
+ },
+ {
+  "nombre": "Mala suerte",
+  "coste": -1,
+  "tipo": "Comunes",
+  "_seccion": "DESVENTAJAS COMUNES",
+  "esDesventaja": true
+ },
+ {
+  "nombre": "Desafortunado",
+  "coste": -1,
+  "tipo": "Comunes",
+  "_seccion": "DESVENTAJAS COMUNES",
+  "esDesventaja": true
+ },
+ {
+  "nombre": "Mudo",
+  "coste": -1,
+  "tipo": "Comunes",
+  "_seccion": "DESVENTAJAS COMUNES",
+  "esDesventaja": true
+ },
+ {
+  "nombre": "Ciego",
+  "coste": -2,
+  "tipo": "Comunes",
+  "_seccion": "DESVENTAJAS COMUNES",
+  "esDesventaja": true
+ },
+ {
+  "nombre": "Sordo",
+  "coste": -1,
+  "tipo": "Comunes",
+  "_seccion": "DESVENTAJAS COMUNES",
+  "esDesventaja": true
+ },
+ {
+  "nombre": "Arma exclusiva",
+  "coste": -1,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "DESVENTAJAS COMUNES",
+  "esDesventaja": true
+ },
+ {
+  "nombre": "Reacción lenta (1)",
+  "coste": -1,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "DESVENTAJAS COMUNES",
+  "esDesventaja": true
+ },
+ {
+  "nombre": "Reacción lenta (2)",
+  "coste": -2,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "DESVENTAJAS COMUNES",
+  "esDesventaja": true
+ },
+ {
+  "nombre": "Adicción o vicio grave",
+  "coste": -1,
+  "tipo": "Comunes",
+  "_seccion": "DESVENTAJAS COMUNES",
+  "esDesventaja": true
+ },
+ {
+  "nombre": "Aprendizaje lento (1)",
+  "coste": -1,
+  "tipo": "Comunes",
+  "_seccion": "DESVENTAJAS COMUNES",
+  "esDesventaja": true
+ },
+ {
+  "nombre": "Aprendizaje lento (2)",
+  "coste": -2,
+  "tipo": "Comunes",
+  "_seccion": "DESVENTAJAS COMUNES",
+  "esDesventaja": true
+ },
+ {
+  "nombre": "Vulnerable al dolor",
+  "coste": -1,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "DESVENTAJAS COMUNES",
+  "esDesventaja": true
+ },
+ {
+  "nombre": "Exhausto",
+  "coste": -1,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "DESVENTAJAS COMUNES",
+  "esDesventaja": true
+ },
+ {
+  "nombre": "Endeble",
+  "coste": -1,
+  "tipo": "Comunes",
+  "_seccion": "[PN] DESVENTAJAS COMUNES",
+  "esDesventaja": true
+ },
+ {
+  "nombre": "Cobardía",
+  "coste": -1,
+  "tipo": "Comunes",
+  "_seccion": "[PN] DESVENTAJAS COMUNES",
+  "esDesventaja": true
+ },
+ {
+  "nombre": "Patoso",
+  "coste": -1,
+  "tipo": "Comunes",
+  "_seccion": "[PN] DESVENTAJAS COMUNES",
+  "esDesventaja": true
+ },
+ {
+  "nombre": "Sin bonificador natural",
+  "coste": -1,
+  "implementada": 1,
+  "tipo": "Comunes",
+  "_seccion": "[PN] DESVENTAJAS COMUNES",
+  "esDesventaja": true
+ },
+ {
+  "nombre": "Insufrible",
+  "coste": -1,
+  "tipo": "Comunes",
+  "_seccion": "[PN] DESVENTAJAS COMUNES",
+  "esDesventaja": true
+ },
+ {
+  "nombre": "Maldito (1)",
+  "coste": -1,
+  "tipo": "Comunes",
+  "_seccion": "[PN] DESVENTAJAS COMUNES",
+  "esDesventaja": true
+ },
+ {
+  "nombre": "Maldito (2)",
+  "coste": -2,
+  "tipo": "Comunes",
+  "_seccion": "[PN] DESVENTAJAS COMUNES",
+  "esDesventaja": true
+ },
+ {
+  "nombre": "Destino aciago",
+  "coste": -2,
+  "tipo": "Comunes",
+  "_seccion": "[PN] DESVENTAJAS COMUNES",
+  "esDesventaja": true
+ },
+ {
+  "nombre": "Obligación oral",
+  "coste": -1,
+  "tipo": "Don",
+  "_seccion": "DESVENTAJAS: DON",
+  "esDesventaja": true
+ },
+ {
+  "nombre": "Obligación somática",
+  "coste": -1,
+  "tipo": "Don",
+  "_seccion": "DESVENTAJAS: DON",
+  "esDesventaja": true
+ },
+ {
+  "nombre": "Extenuación mágica",
+  "coste": -1,
+  "tipo": "Don",
+  "_seccion": "DESVENTAJAS: DON",
+  "esDesventaja": true
+ },
+ {
+  "nombre": "Magia atada a acción",
+  "coste": -1,
+  "tipo": "Don",
+  "_seccion": "DESVENTAJAS: DON",
+  "esDesventaja": true
+ },
+ {
+  "nombre": "Lenta recuperación de magia",
+  "coste": -1,
+  "implementada": 1,
+  "tipo": "Don",
+  "_seccion": "DESVENTAJAS: DON",
+  "esDesventaja": true
+ },
+ {
+  "nombre": "Magia estanca",
+  "coste": -2,
+  "implementada": 1,
+  "tipo": "Don",
+  "_seccion": "DESVENTAJAS: DON",
+  "esDesventaja": true
+ },
+ {
+  "nombre": "Lazo existencial",
+  "coste": -1,
+  "implementada": 2,
+  "tipo": "Don",
+  "_seccion": "DESVENTAJAS: DON",
+  "esDesventaja": true
+ },
+ {
+  "nombre": "Brujería",
+  "coste": -2,
+  "tipo": "Don",
+  "_seccion": "DESVENTAJAS: DON",
+  "esDesventaja": true
+ },
+ {
+  "nombre": "Sin concentración",
+  "coste": -1,
+  "implementada": 1,
+  "tipo": "Psiquicos",
+  "_seccion": "DESVENTAJAS: PSIQUICOS",
+  "esDesventaja": true
+ },
+ {
+  "nombre": "Extenuación psíquica",
+  "coste": -1,
+  "tipo": "Psiquicos",
+  "_seccion": "DESVENTAJAS: PSIQUICOS",
+  "esDesventaja": true
+ },
+ {
+  "nombre": "Poder único",
+  "coste": -1,
+  "tipo": "Psiquicos",
+  "_seccion": "DESVENTAJAS: PSIQUICOS",
+  "esDesventaja": true
+ },
+ {
+  "nombre": "Consumición psíquica",
+  "coste": -2,
+  "tipo": "Psiquicos",
+  "_seccion": "DESVENTAJAS: PSIQUICOS",
+  "esDesventaja": true
+ },
+ {
+  "nombre": "Novato",
+  "coste": -1,
+  "tipo": "Trasfondo",
+  "_seccion": "DESVENTAJAS TRASFONDO",
+  "esDesventaja": true
+ },
+ {
+  "nombre": "Paria",
+  "coste": -1,
+  "tipo": "Trasfondo",
+  "_seccion": "DESVENTAJAS TRASFONDO",
+  "esDesventaja": true
+ },
+ {
+  "nombre": "Enemigo poderoso (1)",
+  "coste": -1,
+  "tipo": "Trasfondo",
+  "_seccion": "DESVENTAJAS TRASFONDO",
+  "esDesventaja": true
+ },
+ {
+  "nombre": "Enemigo poderoso (2)",
+  "coste": -2,
+  "tipo": "Trasfondo",
+  "_seccion": "DESVENTAJAS TRASFONDO",
+  "esDesventaja": true
+ },
+ {
+  "nombre": "Deudas",
+  "coste": -1,
+  "tipo": "Trasfondo",
+  "_seccion": "DESVENTAJAS TRASFONDO",
+  "esDesventaja": true
+ },
+ {
+  "nombre": "Código de conducta",
+  "coste": -1,
+  "tipo": "Trasfondo",
+  "_seccion": "DESVENTAJAS TRASFONDO",
+  "esDesventaja": true
+ },
+ {
+  "nombre": "Secreto inconfesable",
+  "coste": -1,
+  "tipo": "Trasfondo",
+  "_seccion": "DESVENTAJAS TRASFONDO",
+  "esDesventaja": true
+ },
+ {
+  "nombre": "Desventaja Personalizada #1",
+  "coste": 0,
+  "tipo": "Comunes",
+  "_seccion": "DESVENTAJAS PERSONALIZADAS",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Desventaja Personalizada #2",
+  "coste": 0,
+  "tipo": "Comunes",
+  "_seccion": "DESVENTAJAS PERSONALIZADAS",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Desventaja Personalizada #3",
+  "coste": 0,
+  "tipo": "Comunes",
+  "_seccion": "DESVENTAJAS PERSONALIZADAS",
+  "esDesventaja": false
+ },
+ {
+  "nombre": "Desventaja Personalizada #4",
+  "coste": 0,
+  "tipo": "Comunes",
+  "_seccion": "DESVENTAJAS PERSONALIZADAS",
+  "esDesventaja": false
+ }
+]
