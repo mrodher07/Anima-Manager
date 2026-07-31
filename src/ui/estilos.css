@@ -47,7 +47,8 @@
   --texto-tenue: #5d564a;
   --texto-debil: #857d6e;
   --oro: #8a6d10;
-  --oro-claro: #a8861c;
+  /* En un tema claro, «claro» significa más énfasis: sobre pergamino eso es más oscuro. */
+  --oro-claro: #6b5409;
   --sangre: #9b2233;
   --sangre-claro: #b4293c;
   --arcano: #55458c;
@@ -98,7 +99,8 @@
   --texto-tenue: #5f4d33;
   --texto-debil: #8a7452;
   --oro: #96702a;
-  --oro-claro: #b08a38;
+  /* Más oscuro que el base: sobre pergamino, oscurecer es destacar. */
+  --oro-claro: #6f5017;
   /* El bermellón de las capitulares. */
   --sangre: #9c2b1d;
   --sangre-claro: #b83525;
@@ -558,3 +560,210 @@ input[type='checkbox'] { accent-color: var(--oro); }
   margin-top: 2px;
 }
 .selector-tema > menu button[aria-current='true'] span { color: var(--texto-tenue); }
+
+/* ═══════════════════════ Motivos del tema Steampunk ═══════════════════════
+   Placas de latón remachadas sobre cuero. Todo con degradados: ni una imagen. */
+
+:root[data-tema='steampunk'] .panel {
+  position: relative;
+  background:
+    linear-gradient(180deg, rgba(198, 139, 60, 0.07), transparent 38%),
+    linear-gradient(180deg, var(--panel-alto), var(--panel));
+  border: 1px solid var(--borde);
+  box-shadow:
+    var(--sombra),
+    inset 0 1px 0 rgba(232, 178, 100, 0.16),
+    inset 0 0 0 3px rgba(0, 0, 0, 0.18);
+}
+
+/* Los cuatro remaches de las esquinas. */
+:root[data-tema='steampunk'] .panel::before {
+  content: '';
+  position: absolute;
+  inset: 7px;
+  pointer-events: none;
+  border-radius: 2px;
+  background:
+    radial-gradient(circle 3px at 0 0, #e8b264 38%, #7a4f1c 62%, transparent 66%),
+    radial-gradient(circle 3px at 100% 0, #e8b264 38%, #7a4f1c 62%, transparent 66%),
+    radial-gradient(circle 3px at 0 100%, #e8b264 38%, #7a4f1c 62%, transparent 66%),
+    radial-gradient(circle 3px at 100% 100%, #e8b264 38%, #7a4f1c 62%, transparent 66%);
+}
+
+/* Los rótulos, como una placa grabada con su fileteado. */
+:root[data-tema='steampunk'] .panel > h2 {
+  border-bottom: 2px solid;
+  border-image: linear-gradient(90deg, var(--oro), rgba(198, 139, 60, 0.15)) 1;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.6);
+}
+:root[data-tema='steampunk'] .panel > h2::after {
+  content: ' ⚙';
+  opacity: 0.5;
+  font-size: 0.9em;
+}
+
+/* Cabecera: cuero con un raíl de latón debajo. */
+:root[data-tema='steampunk'] .cabecera {
+  border-bottom: 3px solid;
+  border-image: linear-gradient(90deg, #5a3d1c, var(--oro), #5a3d1c) 1;
+  background:
+    repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.13) 0 1px, transparent 1px 5px),
+    color-mix(in srgb, var(--fondo) 92%, transparent);
+}
+
+/* Botones biselados, como piezas de metal. */
+:root[data-tema='steampunk'] button.accion {
+  background: linear-gradient(180deg, #3c2c1e, #291e14);
+  box-shadow: inset 0 1px 0 rgba(232, 178, 100, 0.2), 0 1px 2px rgba(0, 0, 0, 0.45);
+}
+:root[data-tema='steampunk'] button.accion.primaria {
+  background: linear-gradient(180deg, #e0a54e, #b8802f);
+  box-shadow: inset 0 1px 0 rgba(255, 226, 170, 0.45), 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Las cifras de recursos, como esferas de manómetro. */
+:root[data-tema='steampunk'] .recurso {
+  border-radius: 3px;
+  background: radial-gradient(circle at 50% 30%, rgba(232, 178, 100, 0.09), transparent 70%);
+}
+:root[data-tema='steampunk'] .caracteristica {
+  background:
+    linear-gradient(180deg, rgba(232, 178, 100, 0.06), transparent 60%),
+    var(--fondo-2);
+  box-shadow: inset 0 1px 0 rgba(232, 178, 100, 0.12);
+}
+
+/* ═══════════════════════ Motivos del tema Medieval ═══════════════════════
+   Pergamino veteado, marco de manuscrito y capitulares en bermellón. */
+
+:root[data-tema='medieval'] body {
+  background:
+    var(--velo),
+    /* Vetas y manchas del pergamino. */
+    radial-gradient(ellipse 300px 120px at 12% 22%, rgba(150, 112, 42, 0.10), transparent 70%),
+    radial-gradient(ellipse 260px 100px at 78% 58%, rgba(122, 88, 40, 0.09), transparent 70%),
+    radial-gradient(ellipse 200px 90px at 40% 88%, rgba(156, 43, 29, 0.05), transparent 70%),
+    repeating-linear-gradient(92deg, rgba(120, 92, 48, 0.035) 0 1px, transparent 1px 4px),
+    linear-gradient(180deg, var(--fondo-2), var(--fondo) 40%);
+}
+
+/* Los paneles, como hojas de pergamino con doble filete. */
+:root[data-tema='medieval'] .panel {
+  position: relative;
+  border: 1px solid var(--borde);
+  box-shadow: var(--sombra), inset 0 0 0 1px rgba(255, 253, 245, 0.55);
+  background:
+    radial-gradient(ellipse 220px 90px at 85% 8%, rgba(150, 112, 42, 0.07), transparent 70%),
+    linear-gradient(180deg, var(--panel-alto), var(--panel));
+}
+:root[data-tema='medieval'] .panel::before {
+  content: '';
+  position: absolute;
+  inset: 5px;
+  pointer-events: none;
+  border: 1px solid color-mix(in srgb, var(--oro) 30%, transparent);
+  border-radius: 2px;
+}
+
+/* Rótulos con fleurón, como los epígrafes de un manuscrito. */
+:root[data-tema='medieval'] .panel > h2 {
+  border-bottom: 1px solid color-mix(in srgb, var(--oro) 45%, transparent);
+  letter-spacing: 0.2em;
+}
+:root[data-tema='medieval'] .panel > h2::before {
+  content: '❦ ';
+  color: var(--sangre);
+  letter-spacing: 0;
+}
+
+/* Capitular: la primera letra del nombre, en bermellón y a mayor cuerpo. */
+:root[data-tema='medieval'] .contenido > h1::first-letter,
+:root[data-tema='medieval'] .cabecera-ficha h1::first-letter {
+  font-size: 1.7em;
+  line-height: 0.8;
+  color: var(--sangre);
+  padding-right: 2px;
+  text-shadow: 1px 1px 0 rgba(150, 112, 42, 0.35);
+}
+
+/* Cabecera con filete doble, como el encabezado de una página iluminada. */
+:root[data-tema='medieval'] .cabecera {
+  border-bottom: 3px double var(--oro);
+  background: color-mix(in srgb, var(--panel-alto) 90%, transparent);
+}
+
+:root[data-tema='medieval'] .caracteristica {
+  background: linear-gradient(180deg, rgba(255, 253, 245, 0.7), transparent 70%), var(--fondo-2);
+  box-shadow: inset 0 0 0 1px rgba(255, 253, 245, 0.6);
+}
+:root[data-tema='medieval'] .caracteristica .valor { color: var(--sangre); }
+
+:root[data-tema='medieval'] button.accion.primaria {
+  background: linear-gradient(180deg, #b08a38, #96702a);
+  color: #fdf6e6;
+}
+
+/* Filete decorativo al final de cada sección de la ficha. */
+:root[data-tema='medieval'] .pie::before {
+  content: '❦ ⬥ ❦';
+  display: block;
+  color: var(--oro);
+  letter-spacing: 0.5em;
+  margin-bottom: 8px;
+}
+:root[data-tema='steampunk'] .pie::before {
+  content: '⚙ ⚙ ⚙';
+  display: block;
+  color: var(--oro);
+  letter-spacing: 0.6em;
+  opacity: 0.55;
+  margin-bottom: 8px;
+}
+
+/* Remaches algo más marcados: a tamaño real casi no se veían. */
+:root[data-tema='steampunk'] .panel::before {
+  background:
+    radial-gradient(circle 4px at 0 0, #f2c179 30%, #8a5a20 58%, rgba(0,0,0,0.5) 74%, transparent 78%),
+    radial-gradient(circle 4px at 100% 0, #f2c179 30%, #8a5a20 58%, rgba(0,0,0,0.5) 74%, transparent 78%),
+    radial-gradient(circle 4px at 0 100%, #f2c179 30%, #8a5a20 58%, rgba(0,0,0,0.5) 74%, transparent 78%),
+    radial-gradient(circle 4px at 100% 100%, #f2c179 30%, #8a5a20 58%, rgba(0,0,0,0.5) 74%, transparent 78%);
+}
+
+/* La barra de recursos, como una consola de manómetros atornillada. */
+:root[data-tema='steampunk'] .recursos {
+  border: 1px solid var(--borde);
+  box-shadow: var(--sombra), inset 0 1px 0 rgba(232, 178, 100, 0.18);
+  background:
+    repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.12) 0 1px, transparent 1px 6px),
+    color-mix(in srgb, var(--panel) 94%, transparent);
+}
+:root[data-tema='steampunk'] .recurso + .recurso {
+  border-left: 1px solid color-mix(in srgb, var(--oro) 22%, transparent);
+}
+
+/* Avisos y cintas en tono pergamino, no gris. */
+:root[data-tema='medieval'] .cinta-campana {
+  background: linear-gradient(180deg, rgba(255, 253, 245, 0.75), rgba(150, 112, 42, 0.10));
+  border-left: 3px solid var(--sangre);
+  box-shadow: inset 0 0 0 1px rgba(255, 253, 245, 0.6);
+}
+:root[data-tema='medieval'] .aviso {
+  box-shadow: inset 0 0 0 1px rgba(255, 253, 245, 0.55);
+}
+
+/* La barra de recursos, como el encabezamiento de un códice. */
+:root[data-tema='medieval'] .recursos {
+  border: 1px solid var(--borde);
+  box-shadow: var(--sombra), inset 0 0 0 1px rgba(255, 253, 245, 0.6);
+  background:
+    radial-gradient(ellipse 240px 70px at 20% 0%, rgba(150, 112, 42, 0.09), transparent 70%),
+    color-mix(in srgb, var(--panel-alto) 94%, transparent);
+}
+:root[data-tema='medieval'] .recurso + .recurso {
+  border-left: 1px solid color-mix(in srgb, var(--oro) 30%, transparent);
+}
+:root[data-tema='medieval'] .recurso .etiqueta { color: var(--texto-tenue); }
+
+/* Las tablas, con renglones de manuscrito. */
+:root[data-tema='medieval'] td { border-bottom: 1px solid color-mix(in srgb, var(--oro) 22%, transparent); }
+:root[data-tema='medieval'] th { border-bottom: 1px solid color-mix(in srgb, var(--oro) 50%, transparent); }

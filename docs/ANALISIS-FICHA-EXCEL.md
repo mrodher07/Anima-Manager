@@ -244,6 +244,18 @@ Observaciones que conviene recordar al construir:
    con un resumen siempre visible (PV, Cansancio, Zeón/Ki/CVs, iniciativa).
 7. **Uso en mesa**: durante la partida lo que importa es tirar dados, restar PV/Zeón/Ki y
    consultar. La creación de personaje y el juego en mesa son dos modos muy distintos.
+8. **Temas**: cada tema es un bloque de variables CSS en `src/ui/estilos.css` bajo
+   `:root[data-tema='<id>']` (el oscuro, que es el de por defecto, es el `:root` pelado),
+   más una entrada en `src/ui/temas.ts`. Los motivos decorativos —remaches y engranajes en
+   el steampunk, pergamino, fleurones y capitulares en el medieval— van en pseudoelementos
+   y degradados, sin imágenes, para no engordar la descarga.
+   - Ojo con los acentos en los temas **claros**: ahí «claro» en el nombre de una variable
+     debe significar *más oscuro*, porque el énfasis se consigue oscureciendo sobre fondo
+     pálido. Al no hacerlo, `--oro-claro` del medieval se quedó en 2,66 de contraste.
+   - `tools/contraste.mjs` mide todos los temas contra los mínimos WCAG. Mide contra las
+     **variables CSS**, no contra `backgroundColor`: los paneles llevan degradado y su
+     color de fondo computado es transparente, que se leería como negro y falsearía la
+     medida. Playwright no es dependencia del proyecto; ver la cabecera del script.
 
 ---
 
