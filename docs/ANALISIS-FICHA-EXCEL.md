@@ -229,16 +229,20 @@ Observaciones que conviene recordar al construir:
    ventajas + equipo). Conviene un motor de reglas puro (funciones sin estado) separado de
    la UI, con la ficha guardando sólo las *entradas* del usuario.
 2. **Los límites son validaciones, no bloqueos.** La ficha avisa pero deja seguir. La app
-   debería hacer lo mismo: marcar en rojo, no impedir (muchas mesas usan reglas caseras —
-   de ahí la hoja `Personalización`).
-3. **Las fórmulas se leen del propio Excel.** Abriendo el libro con `data_only=False`
+   hace lo mismo: marcar en rojo, no impedir.
+3. **Las reglas son configurables por mesa.** Requisito explícito del usuario: cualquier
+   fórmula debe poder reescribirse y volver a su valor por defecto. Implementado en
+   `src/motor/reglamento.ts`; las fórmulas se escriben en el lenguaje acotado de
+   `src/motor/expresiones.ts`, **nunca con `eval`** — una fórmula escrita por un jugador
+   acabará ejecutándose en el navegador del máster cuando abra su ficha.
+4. **Las fórmulas se leen del propio Excel.** Abriendo el libro con `data_only=False`
    se obtienen las fórmulas en vez de los valores. Es la forma más fiable de verificar el
    motor de reglas, y no necesita el manual. Ver `docs/FORMULAS-VERIFICADAS.md`.
-4. **Volumen de datos**: ~2.400 registros de reglas, 1,1 MB de JSON. Hay que cargarlos de
+5. **Volumen de datos**: ~2.400 registros de reglas, 1,1 MB de JSON. Hay que cargarlos de
    forma diferida (por ejemplo, los 640 conjuros sólo si el personaje es místico).
-5. **Móvil**: la ficha tiene 13 pestañas. En móvil eso debe ser navegación por secciones
+6. **Móvil**: la ficha tiene 13 pestañas. En móvil eso debe ser navegación por secciones
    con un resumen siempre visible (PV, Cansancio, Zeón/Ki/CVs, iniciativa).
-6. **Uso en mesa**: durante la partida lo que importa es tirar dados, restar PV/Zeón/Ki y
+7. **Uso en mesa**: durante la partida lo que importa es tirar dados, restar PV/Zeón/Ki y
    consultar. La creación de personaje y el juego en mesa son dos modos muy distintos.
 
 ---
