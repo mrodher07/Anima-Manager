@@ -119,7 +119,8 @@ data['armaduras'] = table('Tablas', '$D$580:$R$632', [
 
 data['yelmos'] = table('Tablas', '$V$619:$AI$628', [
     'yelmo', 'requerimiento', 'penNatural', 'entereza', 'presencia',
-    'FIL', 'CON', 'PEN', 'CAL', 'ELE', 'FRI', 'ENE', 'c13', 'c14'])
+    'localizacion', 'clase',
+    'FIL', 'CON', 'PEN', 'CAL', 'ELE', 'FRI', 'ENE'])
 
 # --- Artes marciales ---------------------------------------------------
 data['artesMarciales'] = table('Tablas', '$D$850:$Z$939', [

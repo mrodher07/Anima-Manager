@@ -7,8 +7,16 @@
  */
 
 import { Reglamento, REGLAMENTO_OFICIAL, type ClaveRegla } from './reglamento';
+import {
+  calcularArma,
+  combinarArmadura,
+  type ArmaEquipada,
+  type HabilidadesArma,
+  type PiezaEquipada,
+  type ProteccionTotal,
+} from './combate';
 import type { Catalogo } from '../datos/paquetes';
-import type { Categoria, Raza, TablasBase } from '../datos/tipos';
+import type { Arma, Armadura, Categoria, Raza, TablasBase } from '../datos/tipos';
 
 export const CARACTERISTICAS = ['AGI', 'CON', 'DES', 'FUE', 'INT', 'PER', 'POD', 'VOL'] as const;
 export type Caracteristica = (typeof CARACTERISTICAS)[number];
@@ -93,6 +101,7 @@ export interface Personaje {
 
   nombre: string;
   jugador?: string;
+  sexo?: 'Hombre' | 'Mujer';
   raza: string;
   categoria: string;
   nivel: number;
@@ -110,6 +119,19 @@ export interface Personaje {
 
   ventajas: string[];
   desventajas: string[];
+
+  /**
+   * Bonos especiales por habilidad, escritos a mano. En la ficha original es la columna
+   * «Esp.»: no hay regla que los derive, el jugador anota ahí lo que le den sus
+   * capacidades raciales, ventajas, Elan o poderes.
+   */
+  bonosEspeciales: Record<string, number>;
+
+  /** Equipo llevado puesto. */
+  equipo: {
+    armadura: PiezaEquipada[];
+    armas: ArmaEquipada[];
+  };
 
   /** Estado de juego, lo que cambia durante la partida. */
   estado: {
@@ -143,6 +165,8 @@ export function personajeVacio(id: string): Personaje {
     bonificadorNatural: {},
     ventajas: [],
     desventajas: [],
+    bonosEspeciales: {},
+    equipo: { armadura: [], armas: [] },
     estado: {},
     manuales: {},
   };
@@ -175,6 +199,16 @@ export interface FichaCalculada {
   zeon: ValorDerivado;
   act: ValorDerivado;
   secundarias: Record<string, ValorDerivado>;
+  combate: {
+    HAtaque: ValorDerivado;
+    HParada: ValorDerivado;
+    HEsquiva: ValorDerivado;
+    llevarArmadura: ValorDerivado;
+    turnoNatural: ValorDerivado;
+    tamano: number;
+    proteccion: ProteccionTotal;
+    armas: HabilidadesArma[];
+  };
   pdGastados: { combate: number; misticas: number; psiquicas: number; secundarias: number; total: number };
   limites: { combate: number; misticas: number; psiquicas: number };
   avisos: Aviso[];
@@ -191,6 +225,17 @@ const CAMPO_COSTE: Record<GrupoSecundarias, string> = {
   'Creativas': 'costeCreativas',
 };
 
+/** Secundarias que sufren el penalizador natural de la armadura. */
+const SECUNDARIAS_FISICAS = new Set([
+  'Acrobacias', 'Atletismo', 'Nadar', 'Trepar', 'Saltar', 'Sigilo', 'Ocultarse', 'Baile',
+  'Proezas de Fuerza',
+]);
+
+/** Puntos comprados con PD: el coste 0 significa que la categoría no permite la habilidad. */
+function truncarPD(pd: number, coste: number): number {
+  return coste > 0 ? Math.trunc(pd / coste) : 0;
+}
+
 const CLAVES_COMBATE = ['HAtaque', 'HParada', 'HEsquiva', 'LlevarArmadura', 'Ki', 'AcumKi', 'CM'];
 const CLAVES_MISTICAS = ['Zeon', 'ACT', 'ProyeccionMagica', 'NivelMagia', 'Convocar', 'Controlar', 'Atar', 'Desconvocar'];
 const CLAVES_PSIQUICAS = ['CV', 'ProyeccionPsiquica'];
@@ -200,18 +245,22 @@ export interface DatosCalculo {
   raza: Raza | undefined;
   categoria: Categoria | undefined;
   tablas: TablasBase;
+  armas: Arma[];
+  armaduras: Armadura[];
 }
 
 export async function cargarDatosCalculo(
   personaje: Personaje,
   catalogo: Catalogo,
 ): Promise<DatosCalculo> {
-  const [raza, categoria, tablas] = await Promise.all([
+  const [raza, categoria, tablas, armas, armaduras] = await Promise.all([
     catalogo.buscar('razas', personaje.raza),
     catalogo.buscar('categorias', personaje.categoria),
     catalogo.tablasBase(),
+    catalogo.obtener('armas'),
+    catalogo.obtener('armaduras'),
   ]);
-  return { raza, categoria, tablas };
+  return { raza, categoria, tablas, armas, armaduras };
 }
 
 function bonoDe(valor: number, tablas: TablasBase): number {
@@ -334,6 +383,16 @@ export function calcular(
       : base,
   );
 
+  // ── Combate: armadura primero, porque su penalizador afecta a casi todo ──
+  const llevarArmaduraBase =
+    truncarPD(personaje.pdInvertidos['LlevarArmadura'] ?? 0, Number(categoria?.costeLlevarArmadura ?? 2)) +
+    caracteristicas.FUE.bono +
+    Number(categoria?.bonoLlevarArmadura ?? 0);
+  const llevarArmadura = derivar('LlevarArmadura', llevarArmaduraBase);
+
+  const proteccion = combinarArmadura(personaje.equipo.armadura, datos.armaduras, llevarArmadura.valor);
+  const penalizadorArmadura = proteccion.penalizadorNatural;
+
   // Habilidades secundarias.
   const secundarias: Record<string, ValorDerivado> = {};
   for (const def of SECUNDARIAS) {
@@ -354,11 +413,71 @@ export function calcular(
         coste: coste || 2,
         bonoCaracteristica: caracteristicas[def.caracteristica].bono,
         bonoCategoria,
-        mejoraNatural,
+        mejoraNatural: mejoraNatural + (personaje.bonosEspeciales[def.nombre] ?? 0),
         penalizadorNoDesarrollada: -30,
-        penalizadorNatural: 0,
+        // Sólo las habilidades físicas sufren el penalizador de la armadura.
+        penalizadorNatural: SECUNDARIAS_FISICAS.has(def.nombre) ? penalizadorArmadura : 0,
       }),
     );
+  }
+
+  // ── Habilidades primarias de combate y armas equipadas ──
+  const HAtaque = derivar(
+    'HAtaque',
+    truncarPD(personaje.pdInvertidos['HAtaque'] ?? 0, Number(categoria?.costeHA ?? 2)) +
+      caracteristicas.DES.bono +
+      Number(categoria?.bonoHA ?? 0),
+  );
+  const HParada = derivar(
+    'HParada',
+    truncarPD(personaje.pdInvertidos['HParada'] ?? 0, Number(categoria?.costeHP ?? 2)) +
+      caracteristicas.DES.bono +
+      Number(categoria?.bonoHP ?? 0),
+  );
+  const HEsquiva = derivar(
+    'HEsquiva',
+    truncarPD(personaje.pdInvertidos['HEsquiva'] ?? 0, Number(categoria?.costeHE ?? 2)) +
+      caracteristicas.AGI.bono +
+      Number(categoria?.bonoHE ?? 0),
+  );
+
+  // Tamaño = CON + FUE **base** (sin modificadores raciales, que ya van aparte)
+  // − 1 si es mujer, + el modificador de tamaño de la raza. Ficha, Principal!AO21.
+  const tamano = Math.min(
+    raza?.raza === 'Jayán' ? 24 : 22,
+    Math.max(
+      1,
+      caracteristicas.CON.base + caracteristicas.FUE.base - (personaje.sexo === 'Mujer' ? 1 : 0),
+    ) + (raza?.tamano ?? 0),
+  );
+
+  const turnoNatural = derivar(
+    'turnoNatural',
+    aplicar('turno', {
+      turnoBase: 20,
+      bonoAGI: caracteristicas.AGI.bono,
+      bonoDES: caracteristicas.DES.bono,
+      turnoCategoria: Number(categoria?.turno ?? 0),
+      penalizadorNatural: penalizadorArmadura,
+      turnoArma: 0,
+    }),
+  );
+
+  const ctxCombate = {
+    bonoFUE: caracteristicas.FUE.bono,
+    FUE: caracteristicas.FUE.total,
+    tamano,
+    turnoNatural: turnoNatural.valor,
+    HAtaque: HAtaque.valor,
+    HParada: HParada.valor,
+    HEsquiva: HEsquiva.valor,
+    tablas,
+  };
+  const armasCalculadas = personaje.equipo.armas.map((a) =>
+    calcularArma(a, datos.armas, ctxCombate, reglamento),
+  );
+  for (const arma of armasCalculadas) {
+    for (const texto of arma.avisos) avisos.push({ gravedad: 'aviso', mensaje: `${arma.arma}: ${texto}` });
   }
 
   // Reparto de PD y límites.
@@ -420,6 +539,16 @@ export function calcular(
     zeon,
     act,
     secundarias,
+    combate: {
+      HAtaque,
+      HParada,
+      HEsquiva,
+      llevarArmadura,
+      turnoNatural,
+      tamano,
+      proteccion,
+      armas: armasCalculadas,
+    },
     pdGastados,
     limites,
     avisos,

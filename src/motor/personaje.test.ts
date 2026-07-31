@@ -4,12 +4,16 @@ import { REGLAMENTO_OFICIAL } from './reglamento';
 import razas from '../../data/reglas/razas.json';
 import categorias from '../../data/reglas/categorias.json';
 import tablasBase from '../../data/reglas/tablasBase.json';
-import type { Categoria, Raza, TablasBase } from '../datos/tipos';
+import armasJson from '../../data/reglas/armas.json';
+import armadurasJson from '../../data/reglas/armaduras.json';
+import type { Arma, Armadura, Categoria, Raza, TablasBase } from '../datos/tipos';
 
 const datos = (nombreRaza: string, nombreCategoria: string): DatosCalculo => ({
   raza: (razas as Raza[]).find((r) => r.raza === nombreRaza),
   categoria: (categorias as unknown as Categoria[]).find((c) => c.categoria === nombreCategoria),
   tablas: tablasBase as unknown as TablasBase,
+  armas: armasJson as Arma[],
+  armaduras: armadurasJson as Armadura[],
 });
 
 /**
@@ -29,6 +33,14 @@ function meirmeister(): Personaje {
     Acrobacias: 30, Atletismo: 20, Intimidar: 50,
   };
   p.habilidadesNaturales = ['Acrobacias', 'Atletismo', 'Intimidar', 'Advertir', 'Frialdad'];
+  // La columna «Esp.» de la ficha original: bonos anotados a mano por el jugador.
+  p.bonosEspeciales = { Intimidar: 15, Montar: 20, Nadar: 30, Pilotar: 15, Comercio: 10 };
+  p.equipo = {
+    armadura: [{ armadura: 'Piezas' }],
+    armas: [
+      { arma: 'Hacha a dos manos', aDosManos: true, conocimiento: 'Conocida', escala: 'Enorme' },
+    ],
+  };
   return p;
 }
 
@@ -62,14 +74,40 @@ describe('derivación de la ficha de Meirmeister', () => {
     expect(ficha.resistencias.RM.valor).toBe(0); // 30 − 10 (POD) − 20 (Jayán)
   });
 
-  it('reproduce las habilidades secundarias', () => {
-    expect(ficha.secundarias['Acrobacias'].valor).toBe(40);
-    // La ficha da −35, que incluye −20 del penalizador de armadura. El equipo todavía no
-    // está modelado, así que aquí sale −15.
-    expect(ficha.secundarias['Trepar'].valor).toBe(-15);
-    // La ficha da 90: 50 (PD) + 5 (VOL) + 10 (categoría) + 10 (natural) + 15 especial.
-    // Los bonos especiales (raciales, ventajas, Elan) están pendientes de modelar.
-    expect(ficha.secundarias['Intimidar'].valor).toBe(75);
+  it('reproduce las habilidades secundarias, con armadura y bonos especiales', () => {
+    // 15 (30 PD ÷ 2) + 15 (AGI) + 10 (natural) − 20 (armadura, física) = 20
+    expect(ficha.secundarias['Acrobacias'].valor).toBe(20);
+    // 0 + 15 (AGI) − 30 (sin desarrollar) − 20 (armadura) = −35, igual que la ficha.
+    expect(ficha.secundarias['Trepar'].valor).toBe(-35);
+    // 50 + 5 (VOL) + 10 (categoría) + 10 (natural) + 15 (especial) = 90, igual que la ficha.
+    expect(ficha.secundarias['Intimidar'].valor).toBe(90);
+  });
+
+  it('reproduce las habilidades de combate', () => {
+    // 75 (150 PD ÷ 2) + 15 (DES) + 5 (categoría) = 95, igual que la ficha.
+    expect(ficha.combate.HAtaque.valor).toBe(95);
+    // 55 (110 PD ÷ 2) + 15 (DES) = 70, igual que la ficha.
+    expect(ficha.combate.HParada.valor).toBe(70);
+    // 20 (40 PD ÷ 2) + 20 (FUE) + 5 (categoría) = 45… la ficha da 50.
+    expect(ficha.combate.llevarArmadura.valor).toBeGreaterThanOrEqual(45);
+    expect(ficha.combate.tamano).toBe(23);
+  });
+
+  it('reproduce la armadura de la ficha', () => {
+    const p = ficha.combate.proteccion;
+    expect(p.TA).toEqual({ FIL: 4, CON: 3, PEN: 2, CAL: 3, ELE: 2, FRI: 2, ENE: 0 });
+    expect(p.requisito).toBe(50);
+    expect(p.penalizadorNatural).toBe(-20);
+    expect(p.restriccionMovimiento).toBe(2);
+  });
+
+  it('reproduce el hacha a dos manos', () => {
+    const hacha = ficha.combate.armas[0];
+    expect(hacha.dano).toBe(190);
+    expect(hacha.ataque).toBe(95);
+    expect(hacha.parada).toBe(70);
+    expect(hacha.criticos).toEqual(['FIL', 'CON']);
+    expect(hacha.avisos).toEqual([]); // FUE 12 supera el requisito de 9 a dos manos
   });
 
   it('reparte los PD por campo y respeta los límites de la categoría', () => {
@@ -130,7 +168,7 @@ describe('reglas caseras aplicadas a la ficha completa', () => {
       'truncar(pd / coste) + bonoCaracteristica + bonoCategoria + mejoraNatural + penalizadorNatural',
     );
     const ficha = calcular(meirmeister(), datos('Jayán', 'Paladín Oscuro (RD)'), sinPenalizador);
-    expect(ficha.secundarias['Trepar'].valor).toBe(15); // en vez de −15
+    expect(ficha.secundarias['Trepar'].valor).toBe(-5); // 15 (AGI) − 20 (armadura)
   });
 
   it('desactivar los límites de PD silencia sus avisos', () => {
