@@ -11,6 +11,7 @@ import { migrarPersonaje, type Personaje } from '../motor/personaje';
 import type { AjustesMesa } from '../motor/reglamento';
 import { obtenerImagen, type Imagen, type ImagenInfo } from './imagenes';
 import type { TipoDano } from '../motor/combate';
+import { PERSONALIZADOS_VACIOS, type Personalizados } from '../datos/paquetes';
 
 export interface NotaSesion {
   id: string;
@@ -76,6 +77,8 @@ export interface Campana {
   ajustes: AjustesMesa;
   /** Diario de la campaña: lo que pasó en cada sesión. Lo escribe la mesa. */
   notasSesion: NotaSesion[];
+  /** Razas, armas, armaduras y ventajas propias de esta mesa. */
+  personalizados?: Personalizados;
 }
 
 const BD = 'anima-manager';
@@ -142,7 +145,9 @@ export const almacen = {
 
   async listarCampanas(): Promise<Campana[]> {
     const todas = await transaccion<Campana[]>('campanas', 'readonly', (s) => s.getAll());
-    return todas.sort((a, b) => a.nombre.localeCompare(b.nombre));
+    return todas
+      .map((c) => ({ ...c, personalizados: { ...PERSONALIZADOS_VACIOS, ...c.personalizados } }))
+      .sort((a, b) => a.nombre.localeCompare(b.nombre));
   },
 
   async guardarCampana(c: Campana): Promise<void> {

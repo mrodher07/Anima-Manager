@@ -23,6 +23,7 @@ npm run build    # compilar para producción
 | **Editar** | Identidad, características, ventajas, habilidades, equipo y poderes |
 | **Mesa** | Jugar: gastar recursos, tirar iniciativa, resolver ataques, tiradas rápidas |
 | **Bestiario** | Fichas de enemigo con imagen, usables desde el modo mesa |
+| **Contenido propio** | Razas, armas y armaduras que se inventa tu mesa |
 | **Galería** | Mapas, PNJs, enemigos y objetos en imágenes |
 | **Campañas** | Reglas caseras, manuales activos y diario de sesiones |
 | **Reglas** | Reescribir o desactivar cualquier fórmula, y restablecerla |

@@ -15,6 +15,38 @@
 
 import { CLAVE_DE, type Colecciones, type NombreColeccion, type TablasBase } from './tipos';
 
+/**
+ * Contenido propio de una mesa: razas, armas, armaduras y ventajas que no están en ningún
+ * manual. En el Excel esto se hace editando a mano la hoja oculta de tablas — así es como
+ * ese grupo metió la raza «Moguri» y compañía.
+ */
+export interface Personalizados {
+  razas: Colecciones['razas'][];
+  categorias: Colecciones['categorias'][];
+  armas: Colecciones['armas'][];
+  armaduras: Colecciones['armaduras'][];
+  ventajas: Colecciones['ventajas'][];
+}
+
+export const PERSONALIZADOS_VACIOS: Personalizados = {
+  razas: [], categorias: [], armas: [], armaduras: [], ventajas: [],
+};
+
+/**
+ * Convierte el contenido propio de una campaña en un paquete.
+ * Va con prioridad alta para que pueda además **corregir** entradas de los manuales.
+ */
+export function paquetePersonalizado(propio: Personalizados): PaqueteContenido {
+  return {
+    id: 'personalizado',
+    nombre: 'Contenido propio',
+    sigla: 'Tuyo',
+    descripcion: 'Lo que ha creado tu mesa: razas, armas, armaduras y ventajas.',
+    prioridad: 1000,
+    cargar: async (coleccion) => (propio[coleccion as keyof Personalizados] as never) ?? null,
+  };
+}
+
 export interface PaqueteContenido {
   id: string;
   nombre: string;
@@ -74,8 +106,8 @@ export class Catalogo {
   private tablas: TablasBase | null = null;
   private readonly paquetes: PaqueteContenido[];
 
-  constructor(idsActivos: string[] = [CORE_EXXET.id]) {
-    this.paquetes = PAQUETES.filter((p) => idsActivos.includes(p.id)).sort(
+  constructor(idsActivos: string[] = [CORE_EXXET.id], extra: PaqueteContenido[] = []) {
+    this.paquetes = [...PAQUETES.filter((p) => idsActivos.includes(p.id)), ...extra].sort(
       (a, b) => a.prioridad - b.prioridad,
     );
     if (this.paquetes.length === 0) {

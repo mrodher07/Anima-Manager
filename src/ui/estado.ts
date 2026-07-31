@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Catalogo } from '../datos/paquetes';
 import type { Colecciones, NombreColeccion } from '../datos/tipos';
 import { almacen, type Campana } from '../almacen/almacen';
+import { PERSONALIZADOS_VACIOS } from '../datos/paquetes';
 import { cargarDatosCalculo, personajeVacio, type DatosCalculo, type Personaje } from '../motor/personaje';
 import { REGLAMENTO_OFICIAL, Reglamento } from '../motor/reglamento';
 
@@ -101,6 +102,7 @@ export function useCampanas() {
       paquetes: ['core-exxet'],
       ajustes: {},
       notasSesion: [],
+      personalizados: PERSONALIZADOS_VACIOS,
     };
     await almacen.guardarCampana(c);
     await recargar();

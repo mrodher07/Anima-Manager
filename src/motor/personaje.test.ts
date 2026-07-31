@@ -345,3 +345,75 @@ describe('una ficha nueva arranca en blanco, como el Excel', () => {
     expect(Number.isFinite(ficha.presencia.valor)).toBe(true);
   });
 });
+
+/**
+ * Contraste con tres fichas reales de arquetipos distintos: Ryo (Ki), Christopher
+ * (psíquico) y Mogunbun (mago, con una raza que no está en ningún manual).
+ */
+describe('otras fichas reales', () => {
+  it('Ryo, Tecnicista nivel 1: PV 115, cansancio 8, presencia 30, resistencias', () => {
+    const p = personajeVacio('ryo');
+    p.raza = 'Humano';
+    p.categorias = [{ categoria: 'Tecnicista', nivel: 1 }];
+    p.caracteristicas = { AGI: 9, CON: 8, DES: 9, FUE: 8, INT: 7, PER: 7, POD: 10, VOL: 7 };
+    const f = calcular(p, datos('Humano', 'Tecnicista'));
+
+    expect(f.puntosVida.valor).toBe(115); // 20 + 80 + 10 + 5 de categoría
+    expect(f.cansancio.valor).toBe(8); // CON 8, humano sin modificador
+    expect(f.presencia.valor).toBe(30);
+    expect(f.resistencias.RF.valor).toBe(40); // 30 + 10 (CON)
+    expect(f.resistencias.RM.valor).toBe(45); // 30 + 15 (POD)
+    expect(f.resistencias.RP.valor).toBe(35); // 30 + 5 (VOL)
+    expect(f.zeon.valor).toBe(135); // base por POD 10; el Tecnicista no da Zeón
+  });
+
+  it('Christopher, Mentalista nivel 11: 1600 PD y presencia 80', () => {
+    const p = personajeVacio('christopher');
+    p.raza = 'Humano';
+    p.categorias = [{ categoria: 'Mentalista', nivel: 11 }];
+    const f = calcular(p, datos('Humano', 'Mentalista'));
+
+    // Confirma la fórmula de PD: 500 + 100 × 11, no 600 × 11.
+    expect(f.pdTotales).toBe(1600);
+    expect(f.presencia.valor).toBe(80); // 1600 / 20
+    expect(f.nivel).toBe(11);
+  });
+
+  it('Mogunbun, Hechicero con la raza propia Moguri', () => {
+    // «Moguri» no está en ningún manual: esa mesa la añadió a mano.
+    const moguri: Raza = { raza: 'Moguri', RM: 20, ajusteNivel: 1, AGI: 1, FUE: -1, tamano: -3 };
+    const conMoguri: DatosCalculo = {
+      ...datos('', 'Hechicero'),
+      raza: moguri,
+    };
+
+    const p = personajeVacio('mogunbun');
+    p.raza = 'Moguri';
+    p.categorias = [{ categoria: 'Hechicero', nivel: 1 }];
+    p.caracteristicas = { AGI: 8, CON: 5, DES: 8, FUE: 5, INT: 10, PER: 8, POD: 10, VOL: 6 };
+    const f = calcular(p, conMoguri);
+
+    // Características con los modificadores de la raza propia, igual que la ficha.
+    expect(f.caracteristicas.AGI.total).toBe(9);
+    expect(f.caracteristicas.FUE.total).toBe(4);
+    expect(f.caracteristicas.POD.total).toBe(10);
+    expect(f.puntosVida.valor).toBe(75);
+    expect(f.cansancio.valor).toBe(5);
+    expect(f.ajusteNivel).toBe(1);
+    // Zeón: 135 de base por POD 10 + 100 por nivel que da el Hechicero.
+    expect(f.zeon.valor).toBe(235);
+  });
+
+  it('el nivel 0 es válido y no rompe nada', () => {
+    const p = personajeVacio('nivel-cero');
+    p.categorias = [{ categoria: 'Hechicero', nivel: 0 }];
+    p.caracteristicas = { AGI: 8, CON: 5, DES: 8, FUE: 5, INT: 10, PER: 8, POD: 10, VOL: 6 };
+    const f = calcular(p, datos('', 'Hechicero'));
+
+    expect(f.nivel).toBe(0);
+    expect(f.pdTotales).toBe(400); // PDs!T7: 400 cuando el nivel es 0
+    expect(f.presencia.valor).toBe(20); // 400 / 20
+    expect(f.puntosVida.valor).toBe(70); // 20 + 50 + 0, sin PV de categoría
+    expect(f.zeon.valor).toBe(135); // sólo la base por POD
+  });
+});

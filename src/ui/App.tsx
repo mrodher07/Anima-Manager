@@ -1,10 +1,11 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Catalogo } from '../datos/paquetes';
+import { Catalogo, PERSONALIZADOS_VACIOS, paquetePersonalizado } from '../datos/paquetes';
 import { EditorPersonaje } from './EditorPersonaje';
 import { VistaFicha } from './VistaFicha';
 import { VistaMesa } from './VistaMesa';
 import { VistaPersonajes } from './VistaPersonajes';
 import { VistaBestiario } from './VistaBestiario';
+import { VistaPersonalizado } from './VistaPersonalizado';
 import { VistaGaleria } from './VistaGaleria';
 import { VistaReglas } from './VistaReglas';
 import { Imagen } from './Imagen';
@@ -15,7 +16,7 @@ import './estilos.css';
 
 type Seccion =
   | 'personajes' | 'ficha' | 'editor' | 'mesa'
-  | 'bestiario' | 'galeria' | 'reglas' | 'campanas';
+  | 'bestiario' | 'galeria' | 'propio' | 'reglas' | 'campanas';
 
 export function App() {
   const [seccion, setSeccion] = useState<Seccion>('personajes');
@@ -32,9 +33,14 @@ export function App() {
   const { reglamento, cambiar: cambiarReglamento } = useReglamento(campana, (c) => void guardarCampana(c));
 
   const paquetes = campana?.paquetes ?? ['core-exxet'];
-  const clavePaquetes = paquetes.join(',');
+  const propio = campana?.personalizados ?? PERSONALIZADOS_VACIOS;
+  // Se recrea el catálogo cuando cambian los manuales activos o el contenido propio.
+  const clavePaquetes = paquetes.join(',') + '|' + JSON.stringify(propio);
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const catalogo = useMemo(() => new Catalogo(paquetes), [clavePaquetes]);
+  const catalogo = useMemo(
+    () => new Catalogo(paquetes, [paquetePersonalizado(propio)]),
+    [clavePaquetes],
+  );
 
   const personaje = personajes.find((p) => p.id === abiertoId) ?? null;
   const datos = useDatosCalculo(catalogo, personaje);
@@ -50,6 +56,7 @@ export function App() {
     { id: 'mesa', texto: 'Mesa', requierePersonaje: true },
     { id: 'bestiario', texto: 'Bestiario' },
     { id: 'galeria', texto: 'Galería' },
+    { id: 'propio', texto: 'Contenido propio' },
     { id: 'campanas', texto: 'Campañas' },
     { id: 'reglas', texto: 'Reglas' },
   ];
@@ -161,6 +168,23 @@ export function App() {
         {seccion === 'bestiario' && <VistaBestiario campanaId={campanaId} />}
 
         {seccion === 'galeria' && <VistaGaleria campanaId={campanaId} />}
+
+        {seccion === 'propio' && (
+          campana ? (
+            <VistaPersonalizado
+              personalizados={propio}
+              onCambiar={(p) => void guardarCampana({ ...campana, personalizados: p })}
+            />
+          ) : (
+            <div className="vacio panel">
+              <h2>Hace falta una campaña</h2>
+              <p>
+                El contenido propio se guarda dentro de una campaña, para que viaje con ella
+                al exportarla. Crea una en la pestaña Campañas.
+              </p>
+            </div>
+          )
+        )}
 
         {seccion === 'reglas' && (
           <>

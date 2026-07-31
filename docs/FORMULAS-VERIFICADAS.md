@@ -6,7 +6,9 @@ numéricamente contra el personaje de ejemplo, *Meirmeister*.
 
 Notación: `Bono_X` = bono de la característica X según `tablasBase.bonoCaracteristica`.
 
-**Contrastado además con el Core Exxet completo** (caps. 1–27, páginas 1–346). Lo marcado con
+**Contrastado además con el Core Exxet completo** (caps. 1–27, páginas 1–346) y con
+**cuatro fichas reales**: Meirmeister (guerrero), Ryo (Ki), Christopher (psíquico, nivel 11)
+y Mogunbun (mago con raza propia). Lo marcado con
 📖 procede del manual; lo marcado con ✔ se verificó numéricamente contra Meirmeister.
 
 ---
@@ -46,6 +48,33 @@ experiencia** necesaria para subir. **No** suma para los bonos de categoría.
 
 En la ficha, `Nivel_Total` vale **1** en Meirmeister pese a mostrar «1 + 1», y sus PV son
 135 (`120 + 15×1`), no 150. Todo lo que multiplique por nivel usa el nivel **real**.
+
+## Confirmaciones de las otras tres fichas
+
+| Ficha | Confirma |
+|---|---|
+| **Ryo**, Tecnicista nivel 1 | PV 115 (`20+80+10+5`), cansancio 8, presencia 30, RF 40, RM 45, RP 35, Zeón base 135 por POD 10 |
+| **Christopher**, Mentalista **nivel 11** | **1600 PD** (`500 + 100×11`) y presencia **80** (1600÷20). Confirma que los PD no son 600 por nivel |
+| **Mogunbun**, Hechicero raza **Moguri** | Características, PV 75 y cansancio 5 con una raza que **no existe en ningún manual** |
+
+Las diferencias que quedan en Mogunbun se explican por ventajas: su RM es 75 y no 65 porque
+tiene el **Don** (+10 RM), y su RF es 15 y no 30 por **Debilidad física** (a la mitad).
+
+## Nivel 0
+
+Es un nivel válido. `PDs!T7` devuelve **400 PD** cuando el nivel es 0, lo que da presencia 20.
+Un personaje de nivel 0 no recibe los bonos por nivel de su categoría.
+
+## Contenido propio de la mesa
+
+La ficha tiene una hoja entera de **Personalización**: armas, armaduras, ventajas,
+habilidades esenciales, poderes de criatura, técnicas de Ki, raíces culturales e idiomas
+propios. Y las razas se añaden editando directamente la tabla oculta — así es como esa mesa
+metió **Moguri, Bangaa, Viera, Nu Mou, Furia y Seeq**, razas de Final Fantasy Tactics.
+
+En la aplicación, el contenido propio es **un paquete de contenido más**, con prioridad por
+encima de los manuales para que pueda además corregirlos. Vive dentro de la campaña y se
+exporta con ella.
 
 ## Valores por defecto: los de la ficha
 
