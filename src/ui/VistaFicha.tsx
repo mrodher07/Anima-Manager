@@ -49,8 +49,15 @@ export function VistaFicha({ personaje, datos, reglamento }: Props) {
         <Recurso etiqueta="Zeón" clase="zeon" valor={estado.zeonActual ?? ficha.zeon.valor} maximo={ficha.zeon.valor} />
         <Recurso etiqueta="ACT" clase="zeon" valor={ficha.act.valor} />
         <Recurso etiqueta="Presencia" valor={ficha.presencia.valor} />
-        <Recurso etiqueta="Nivel" valor={ficha.nivelTotal} />
+        <Recurso etiqueta="Nivel" valor={ficha.nivel} />
       </div>
+
+      {ficha.ajusteNivel > 0 && (
+        <p className="cinta-campana" style={{ marginBottom: 14 }}>
+          Ajuste de nivel <strong>+{ficha.ajusteNivel}</strong> por la raza: no da bonos, sólo
+          encarece la experiencia (subes como si fueras de nivel {ficha.nivelParaExperiencia}).
+        </p>
+      )}
 
       {ficha.avisos.length > 0 && (
         <div className="avisos">
@@ -134,6 +141,69 @@ export function VistaFicha({ personaje, datos, reglamento }: Props) {
           </table>
         </section>
       </div>
+
+      <section className="panel" style={{ marginTop: 16 }}>
+        <h2>Combate</h2>
+        <div className="rejilla">
+          <div>
+            <table>
+              <tbody>
+                <tr><td>Habilidad de Ataque</td><td className="num destacado">{ficha.combate.HAtaque.valor}</td></tr>
+                <tr><td>Habilidad de Parada</td><td className="num destacado">{ficha.combate.HParada.valor}</td></tr>
+                <tr><td>Habilidad de Esquiva</td><td className="num destacado">{ficha.combate.HEsquiva.valor}</td></tr>
+                <tr><td>Llevar Armadura</td><td className="num">{ficha.combate.llevarArmadura.valor}</td></tr>
+                <tr><td>Turno natural</td><td className="num">{ficha.combate.turnoNatural.valor}</td></tr>
+                <tr><td>Tamaño</td><td className="num">{ficha.combate.tamano}</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div>
+            <h3 style={{ fontSize: '0.82rem', color: 'var(--texto-tenue)', marginBottom: 6 }}>
+              Tipo de Armadura
+            </h3>
+            <table>
+              <thead>
+                <tr>{Object.keys(ficha.combate.proteccion.TA).map((t) => <th key={t} className="num">{t}</th>)}</tr>
+              </thead>
+              <tbody>
+                <tr>
+                  {Object.values(ficha.combate.proteccion.TA).map((v, i) => (
+                    <td key={i} className="num destacado">{v}</td>
+                  ))}
+                </tr>
+              </tbody>
+            </table>
+            <p style={{ color: 'var(--texto-debil)', fontSize: '0.78rem', marginBottom: 0 }}>
+              Absorción = 20 + 10 × TA del tipo de daño recibido.
+            </p>
+          </div>
+        </div>
+
+        {ficha.combate.armas.length > 0 && (
+          <div className="desplazable" style={{ marginTop: 14 }}>
+            <table>
+              <thead>
+                <tr>
+                  <th>Arma</th><th className="num">Turno</th><th className="num">Ataque</th>
+                  <th className="num">Parada</th><th className="num">Daño</th><th>Críticos</th>
+                </tr>
+              </thead>
+              <tbody>
+                {ficha.combate.armas.map((a, i) => (
+                  <tr key={i}>
+                    <td className="destacado">{a.arma}</td>
+                    <td className="num">{a.turno}</td>
+                    <td className="num">{a.ataque}</td>
+                    <td className="num">{a.parada}</td>
+                    <td className="num">{a.dano}</td>
+                    <td>{a.criticos.join(' / ') || '—'}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </section>
 
       <section className="panel" style={{ marginTop: 16 }}>
         <h2>Habilidades secundarias</h2>

@@ -1,77 +1,69 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Catalogo } from '../datos/paquetes';
-import {
-  cargarDatosCalculo,
-  personajeVacio,
-  type DatosCalculo,
-  type Personaje,
-} from '../motor/personaje';
-import { REGLAMENTO_OFICIAL, Reglamento } from '../motor/reglamento';
+import { EditorPersonaje } from './EditorPersonaje';
 import { VistaFicha } from './VistaFicha';
+import { VistaMesa } from './VistaMesa';
+import { VistaPersonajes } from './VistaPersonajes';
 import { VistaReglas } from './VistaReglas';
+import { useCampanas, useDatosCalculo, usePersonajes, useReglamento } from './estado';
 import './estilos.css';
 
-type Seccion = 'ficha' | 'reglas' | 'catalogo';
-
-/** Personaje de muestra mientras no haya fichas guardadas. */
-function personajeDeMuestra(): Personaje {
-  const p = personajeVacio('muestra');
-  p.nombre = 'Meirmeister';
-  p.raza = 'Jayán';
-  p.categoria = 'Paladín Oscuro (RD)';
-  p.caracteristicas = { AGI: 10, CON: 8, DES: 10, FUE: 10, INT: 4, PER: 5, POD: 4, VOL: 6 };
-  p.pdInvertidos = {
-    HAtaque: 150, HParada: 110, LlevarArmadura: 40,
-    Acrobacias: 30, Atletismo: 20, Intimidar: 50,
-  };
-  p.habilidadesNaturales = ['Acrobacias', 'Atletismo', 'Intimidar', 'Advertir', 'Frialdad'];
-  return p;
-}
+type Seccion = 'personajes' | 'ficha' | 'editor' | 'mesa' | 'reglas' | 'campanas';
 
 export function App() {
-  const [seccion, setSeccion] = useState<Seccion>('ficha');
+  const [seccion, setSeccion] = useState<Seccion>('personajes');
+  const [abiertoId, setAbiertoId] = useState<string | null>(null);
   const [tema, setTema] = useState<'oscuro' | 'claro'>('oscuro');
-  const [reglamento, setReglamento] = useState<Reglamento>(REGLAMENTO_OFICIAL);
-  const [catalogo] = useState(() => new Catalogo());
-  const [personaje] = useState<Personaje>(personajeDeMuestra);
-  const [datos, setDatos] = useState<DatosCalculo | null>(null);
-  const [fallo, setFallo] = useState<string | null>(null);
+  const [campanaId, setCampanaId] = useState<string | null>(null);
 
-  useEffect(() => {
-    document.documentElement.dataset.tema = tema;
-  }, [tema]);
+  const { personajes, cargando, guardar, crear, borrar, recargar } = usePersonajes();
+  const { campanas, guardar: guardarCampana, crear: crearCampana, borrar: borrarCampana } = useCampanas();
 
-  useEffect(() => {
-    let vigente = true;
-    cargarDatosCalculo(personaje, catalogo)
-      .then((d) => { if (vigente) setDatos(d); })
-      .catch((e) => { if (vigente) setFallo(e instanceof Error ? e.message : String(e)); });
-    return () => { vigente = false; };
-  }, [personaje, catalogo]);
+  const campana = campanas.find((c) => c.id === campanaId) ?? null;
+  const { reglamento, cambiar: cambiarReglamento } = useReglamento(campana, (c) => void guardarCampana(c));
 
-  const secciones: { id: Seccion; texto: string }[] = [
-    { id: 'ficha', texto: 'Ficha' },
+  const paquetes = campana?.paquetes ?? ['core-exxet'];
+  const clavePaquetes = paquetes.join(',');
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const catalogo = useMemo(() => new Catalogo(paquetes), [clavePaquetes]);
+
+  const personaje = personajes.find((p) => p.id === abiertoId) ?? null;
+  const datos = useDatosCalculo(catalogo, personaje);
+
+  useEffect(() => { document.documentElement.dataset.tema = tema; }, [tema]);
+
+  const abrir = (id: string) => { setAbiertoId(id); setSeccion('ficha'); };
+
+  const secciones: { id: Seccion; texto: string; requierePersonaje?: boolean }[] = [
+    { id: 'personajes', texto: 'Personajes' },
+    { id: 'ficha', texto: 'Ficha', requierePersonaje: true },
+    { id: 'editor', texto: 'Editar', requierePersonaje: true },
+    { id: 'mesa', texto: 'Mesa', requierePersonaje: true },
+    { id: 'campanas', texto: 'Campañas' },
     { id: 'reglas', texto: 'Reglas' },
-    { id: 'catalogo', texto: 'Catálogo' },
   ];
+
+  const necesitaFicha = seccion === 'ficha' || seccion === 'editor' || seccion === 'mesa';
 
   return (
     <div className="app">
       <header className="cabecera">
-        <div className="marca">
+        <button className="marca" onClick={() => setSeccion('personajes')} title="Volver a la lista">
           Anima Manager
           <span>Beyond Fantasy</span>
-        </div>
+        </button>
         <nav className="nav">
-          {secciones.map((s) => (
-            <button
-              key={s.id}
-              onClick={() => setSeccion(s.id)}
-              aria-current={seccion === s.id ? 'page' : undefined}
-            >
-              {s.texto}
-            </button>
-          ))}
+          {secciones
+            .filter((s) => !s.requierePersonaje || personaje)
+            .map((s) => (
+              <button
+                key={s.id}
+                onClick={() => setSeccion(s.id)}
+                aria-current={seccion === s.id ? 'page' : undefined}
+              >
+                {s.texto}
+              </button>
+            ))}
           <button
             onClick={() => setTema(tema === 'oscuro' ? 'claro' : 'oscuro')}
             title="Cambiar entre tema claro y oscuro"
@@ -83,34 +75,131 @@ export function App() {
       </header>
 
       <main className="contenido">
-        {fallo && <div className="aviso error">No se ha podido cargar el catálogo: {fallo}</div>}
+        {campana && (
+          <p className="cinta-campana">
+            Campaña activa: <strong>{campana.nombre}</strong>
+            {reglamento.cambios().length > 0 &&
+              ` · ${reglamento.cambios().length} reglas caseras`}
+          </p>
+        )}
 
-        {seccion === 'ficha' &&
-          (datos ? (
-            <>
-              <h1 style={{ marginBottom: 4 }}>{personaje.nombre}</h1>
-              <p style={{ color: 'var(--texto-tenue)', marginTop: 0, marginBottom: 18 }}>
-                {personaje.raza} · {personaje.categoria} · Nivel {personaje.nivel}
-              </p>
-              <VistaFicha personaje={personaje} datos={datos} reglamento={reglamento} />
-            </>
-          ) : (
-            <p style={{ color: 'var(--texto-tenue)' }}>Cargando el catálogo…</p>
-          ))}
+        {seccion === 'personajes' && (
+          <VistaPersonajes
+            personajes={personajes}
+            cargando={cargando}
+            onAbrir={abrir}
+            onCrear={() => abrir(crear().id)}
+            onBorrar={(id) => {
+              void borrar(id);
+              if (abiertoId === id) { setAbiertoId(null); setSeccion('personajes'); }
+            }}
+            onRecargar={() => void recargar()}
+          />
+        )}
 
-        {seccion === 'reglas' && <VistaReglas reglamento={reglamento} onCambiar={setReglamento} />}
+        {necesitaFicha && personaje && !datos && (
+          <p style={{ color: 'var(--texto-tenue)' }}>Cargando el catálogo…</p>
+        )}
 
-        {seccion === 'catalogo' && (
-          <section className="panel">
-            <h2>Paquetes de contenido</h2>
-            <p style={{ color: 'var(--texto-tenue)', fontSize: '0.9rem' }}>
-              El catálogo se compone de manuales. Al añadir un suplemento, sus entradas se suman
-              a las del básico y pueden corregirlas.
+        {necesitaFicha && personaje && datos && (
+          <>
+            <h1 style={{ marginBottom: 2 }}>{personaje.nombre || 'Sin nombre'}</h1>
+            <p style={{ color: 'var(--texto-tenue)', marginTop: 0, marginBottom: 18 }}>
+              {personaje.raza} · {personaje.categoria} · Nivel {personaje.nivel}
             </p>
+            {seccion === 'ficha' && (
+              <VistaFicha personaje={personaje} datos={datos} reglamento={reglamento} />
+            )}
+            {seccion === 'editor' && (
+              <EditorPersonaje
+                personaje={personaje}
+                datos={datos}
+                catalogo={catalogo}
+                reglamento={reglamento}
+                onCambiar={guardar}
+              />
+            )}
+            {seccion === 'mesa' && (
+              <VistaMesa
+                personaje={personaje}
+                datos={datos}
+                reglamento={reglamento}
+                onCambiar={guardar}
+              />
+            )}
+          </>
+        )}
+
+        {seccion === 'reglas' && (
+          <>
+            {!campana && (
+              <div className="aviso aviso" style={{ marginBottom: 16 }}>
+                No hay campaña activa, así que estos cambios no se guardan. Crea una campaña
+                en la pestaña Campañas para conservar las reglas de tu mesa.
+              </div>
+            )}
+            <VistaReglas reglamento={reglamento} onCambiar={cambiarReglamento} />
+          </>
+        )}
+
+        {seccion === 'campanas' && (
+          <section className="panel">
+            <h2>Campañas</h2>
+            <p style={{ color: 'var(--texto-tenue)', fontSize: '0.9rem', marginTop: 0 }}>
+              Una campaña guarda las reglas caseras de tu mesa y qué manuales están activos.
+            </p>
+            <div className="acciones-regla" style={{ marginTop: 0, marginBottom: 14 }}>
+              <button
+                className="accion primaria"
+                onClick={async () => {
+                  const nombre = window.prompt('Nombre de la campaña');
+                  if (nombre) setCampanaId((await crearCampana(nombre)).id);
+                }}
+              >
+                Nueva campaña
+              </button>
+              {campana && (
+                <button className="accion" onClick={() => setCampanaId(null)}>
+                  Salir de la campaña
+                </button>
+              )}
+            </div>
+
+            {campanas.length === 0 ? (
+              <p style={{ color: 'var(--texto-debil)', margin: 0 }}>Todavía no hay campañas.</p>
+            ) : (
+              <table>
+                <thead>
+                  <tr><th>Campaña</th><th className="num">Reglas caseras</th><th></th></tr>
+                </thead>
+                <tbody>
+                  {campanas.map((c) => (
+                    <tr key={c.id}>
+                      <td className={c.id === campanaId ? 'destacado' : undefined}>{c.nombre}</td>
+                      <td className="num">
+                        {Object.keys(c.ajustes.formulas ?? {}).length + (c.ajustes.desactivadas?.length ?? 0)}
+                      </td>
+                      <td style={{ textAlign: 'right', whiteSpace: 'nowrap' }}>
+                        <button className="accion" onClick={() => setCampanaId(c.id)}>Activar</button>{' '}
+                        <button
+                          className="accion"
+                          onClick={() => {
+                            void borrarCampana(c.id);
+                            if (campanaId === c.id) setCampanaId(null);
+                          }}
+                        >
+                          Borrar
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
+
+            <h2 style={{ marginTop: 22 }}>Manuales activos</h2>
             <table>
-              <thead>
-                <tr><th>Manual</th><th>Sigla</th><th>Contenido</th></tr>
-              </thead>
+              <thead><tr><th>Manual</th><th>Sigla</th><th>Contenido</th></tr></thead>
               <tbody>
                 {catalogo.paquetesActivos.map((p) => (
                   <tr key={p.id}>

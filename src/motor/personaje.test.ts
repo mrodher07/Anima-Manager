@@ -34,7 +34,11 @@ function meirmeister(): Personaje {
   };
   p.habilidadesNaturales = ['Acrobacias', 'Atletismo', 'Intimidar', 'Advertir', 'Frialdad'];
   // La columna «Esp.» de la ficha original: bonos anotados a mano por el jugador.
-  p.bonosEspeciales = { Intimidar: 15, Montar: 20, Nadar: 30, Pilotar: 15, Comercio: 10 };
+  p.bonosEspeciales = {
+    Intimidar: 15, Montar: 20, Nadar: 30, Pilotar: 15, Comercio: 10,
+    // «Uso de armadura (1)»: +5 por nivel a Llevar Armadura.
+    LlevarArmadura: 5,
+  };
   p.equipo = {
     armadura: [{ armadura: 'Piezas' }],
     armas: [
@@ -61,13 +65,15 @@ describe('derivación de la ficha de Meirmeister', () => {
     expect(ficha.caracteristicas.POD.bono).toBe(-10);
   });
 
-  it('el ajuste de nivel racial cuenta para el nivel total', () => {
-    expect(ficha.nivelTotal).toBe(2); // nivel 1 + ajuste 1 del Jayán
+  it('el ajuste de nivel sólo encarece la experiencia, no da bonos', () => {
+    expect(ficha.nivel).toBe(1);
+    expect(ficha.ajusteNivel).toBe(1); // Jayán
+    expect(ficha.nivelParaExperiencia).toBe(2);
     expect(ficha.pdTotales).toBe(600);
   });
 
   it('reproduce los derivados de la ficha original', () => {
-    expect(ficha.puntosVida.valor).toBe(150); // 120 + 15×2 (nivel total)
+    expect(ficha.puntosVida.valor).toBe(135); // 120 + 15×1, igual que la ficha
     expect(ficha.cansancio.valor).toBe(12);
     expect(ficha.presencia.valor).toBe(30);
     expect(ficha.resistencias.RF.valor).toBe(60);
@@ -88,8 +94,8 @@ describe('derivación de la ficha de Meirmeister', () => {
     expect(ficha.combate.HAtaque.valor).toBe(95);
     // 55 (110 PD ÷ 2) + 15 (DES) = 70, igual que la ficha.
     expect(ficha.combate.HParada.valor).toBe(70);
-    // 20 (40 PD ÷ 2) + 20 (FUE) + 5 (categoría) = 45… la ficha da 50.
-    expect(ficha.combate.llevarArmadura.valor).toBeGreaterThanOrEqual(45);
+    // 20 (40 PD ÷ 2) + 20 (FUE) + 5 (categoría) + 5 (ventaja) = 50, igual que la ficha.
+    expect(ficha.combate.llevarArmadura.valor).toBe(50);
     expect(ficha.combate.tamano).toBe(23);
   });
 
@@ -157,7 +163,7 @@ describe('sobrescritura manual', () => {
     const ficha = calcular(p, datos('Jayán', 'Paladín Oscuro (RD)'));
     expect(ficha.puntosVida.valor).toBe(999);
     expect(ficha.puntosVida.manual).toBe(true);
-    expect(ficha.puntosVida.calculado).toBe(150); // se conserva para poder restablecer
+    expect(ficha.puntosVida.calculado).toBe(135); // se conserva para poder restablecer
   });
 });
 
@@ -183,6 +189,6 @@ describe('reglas caseras aplicadas a la ficha completa', () => {
     const rota = REGLAMENTO_OFICIAL.conFormula('cansancio', 'CON / 0');
     const ficha = calcular(meirmeister(), datos('Jayán', 'Paladín Oscuro (RD)'), rota);
     expect(ficha.avisos.some((a) => a.mensaje.includes('ha fallado'))).toBe(true);
-    expect(ficha.puntosVida.valor).toBe(150); // el resto sigue calculándose
+    expect(ficha.puntosVida.valor).toBe(135); // el resto sigue calculándose
   });
 });

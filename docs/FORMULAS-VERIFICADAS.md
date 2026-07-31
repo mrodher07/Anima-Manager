@@ -34,15 +34,29 @@ Celda `Principal!G11`, `Principal!AS11`, `Principal!AO11`.
 desventajas. No se usan para comprar características: los "60 pts" de la hoja son un
 método alternativo de reparto de características.
 
+## El ajuste de nivel NO da bonos ⚠️
+
+```
+nivel                = nivel real del personaje (suma de niveles por categoría)
+nivelParaExperiencia = nivel + ajusteNivel racial
+```
+
+El **ajuste de nivel** de una raza (Jayán +1, Duk'zarist +3…) **sólo encarece la
+experiencia** necesaria para subir. **No** suma para los bonos de categoría.
+
+En la ficha, `Nivel_Total` vale **1** en Meirmeister pese a mostrar «1 + 1», y sus PV son
+135 (`120 + 15×1`), no 150. Todo lo que multiplique por nivel usa el nivel **real**.
+
 ## Puntos de Vida
 
 ```
-PV = 20 + (CON × 10) + Bono_CON + (PV_categoría × nivelTotal)
+PV = 20 + (CON × 10) + Bono_CON + (PV_categoría × nivel)
 ```
 
 `PDs!Z188 = U188 + V188 + W188 + X188`, donde `U188 = 20 + CON*10 + Bono_Con`.
 
 Verificación Meirmeister: `20 + 9×10 + 10 + 15×1 = 135` ✔ (la ficha muestra 135).
+Nótese el `×1`: el ajuste de nivel +1 del Jayán **no** cuenta aquí.
 
 📖 La *Tabla 4: Puntos de Vida Base* del manual coincide con `tablasBase.valoresBase`.
 **Salvo en CON 1**: la tabla dice 5 y la fórmula daría 0. Usar **la tabla**, no la fórmula.
@@ -458,16 +472,22 @@ Ya no hay nada bloqueado por falta de manual. Queda trabajo de volcado:
 
 ---
 
-## Pendiente de modelar en el motor
+## Bonos especiales: entrada, no cálculo
 
-Detectado al reproducir la ficha de Meirmeister con el motor (`personaje.test.ts`):
+La columna «Esp.» de la ficha original **no se deriva de ninguna regla**: son valores que
+el jugador escribe a mano con lo que le dan raza, ventajas, Elan o poderes. Intentar
+inferirlos del texto de las capacidades raciales sería adivinar.
 
-- **Bonos especiales a las secundarias.** La ficha da Intimidar 90; el motor calcula 75.
-  Los 15 que faltan salen de la columna «Esp.» de la hoja: bonos de raza, ventajas, Elan
-  o poderes. Hace falta una capa que recoja esos modificadores y los inyecte en el cálculo.
-- **Equipo y armadura.** El penalizador natural de la armadura (−20 en Meirmeister) afecta
-  al turno y a varias secundarias. Hoy el motor lo recibe como 0.
-- **Habilidades primarias de combate** (ataque, parada, esquiva por arma) y la
-  **resolución de combate**: las fórmulas están documentadas y probadas, falta la capa que
-  las encadena con el equipo del personaje.
-- **Ki, conjuros seleccionados y poderes psíquicos** como listas del personaje.
+Se modelan como `bonosEspeciales` del personaje, un campo editable por habilidad. Aplica
+tanto a las secundarias como a las primarias de combate (por ejemplo, la ventaja «Uso de
+armadura (1)» da +5 por nivel a Llevar Armadura: así se llega a los 50 de la ficha).
+
+## Pendiente de modelar
+
+- **Ventajas y desventajas con efecto mecánico.** El catálogo tiene las 292, pero sólo
+  como lista: adquirirlas no modifica todavía los valores. Hasta entonces se compensan con
+  los bonos especiales.
+- **Ki**: puntos, acumulación, técnicas y Límites.
+- **Conjuros y poderes psíquicos seleccionados** como listas del personaje.
+- **Multiclase** y coste de cambio de categoría.
+- Bestiario y creación de seres.

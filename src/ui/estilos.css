@@ -280,3 +280,68 @@ textarea.formula { font-family: var(--mono); font-size: 0.84rem; min-height: 62p
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; }
 }
+
+/* ─────────────────────── Piezas añadidas ─────────────────────── */
+
+button.marca {
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  padding: 0;
+  font-family: var(--serif);
+}
+
+.pestanas { display: flex; gap: 4px; margin-bottom: 16px; flex-wrap: wrap; border-bottom: 1px solid var(--borde); }
+.pestanas button {
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--texto-tenue);
+  padding: 8px 14px;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.9rem;
+}
+.pestanas button:hover { color: var(--texto); }
+.pestanas button[aria-current='page'] { color: var(--oro-claro); border-bottom-color: var(--oro); }
+
+.tarjeta h3 { font-size: 1.1rem; margin-bottom: 2px; }
+.tarjeta .subtitulo { color: var(--texto-tenue); font-size: 0.85rem; margin: 0 0 12px; }
+
+button.accion.peligro { border-color: var(--sangre); color: var(--sangre-claro); }
+button.accion.peligro:hover { background: var(--sangre); color: #fff; }
+
+.cinta-campana {
+  margin: 0 0 16px;
+  padding: 8px 13px;
+  border-radius: var(--radio-s);
+  background: color-mix(in srgb, var(--arcano) 16%, transparent);
+  border-left: 3px solid var(--arcano-claro);
+  font-size: 0.86rem;
+}
+
+details { margin-bottom: 10px; }
+details > summary {
+  cursor: pointer;
+  padding: 7px 0;
+  font-size: 0.75rem;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--oro);
+  border-bottom: 1px solid var(--borde-suave);
+}
+details > summary:hover { color: var(--oro-claro); }
+
+.registro { list-style: none; margin: 0; padding: 0; display: grid; gap: 7px; }
+.registro li {
+  padding: 8px 12px;
+  border-radius: var(--radio-s);
+  background: var(--fondo-2);
+  border-left: 3px solid var(--borde);
+}
+.registro li.critico { border-left-color: var(--sangre-claro); background: color-mix(in srgb, var(--sangre) 14%, transparent); }
+.registro li strong { display: block; font-size: 0.92rem; }
+.registro li span { display: block; color: var(--texto-debil); font-size: 0.78rem; font-family: var(--mono); margin-top: 3px; }
+
+input[type='checkbox'] { accent-color: var(--oro); }

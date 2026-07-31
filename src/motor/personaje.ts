@@ -189,7 +189,15 @@ export interface Aviso {
 }
 
 export interface FichaCalculada {
-  nivelTotal: number;
+  /** Nivel real del personaje. Es el que da los bonos de categoría. */
+  nivel: number;
+  /**
+   * Ajuste de nivel de la raza. **No** suma a los bonos: sólo encarece la experiencia
+   * necesaria para subir. Ficha: `Nivel_Total` vale 1 en Meirmeister pese al «1 + 1».
+   */
+  ajusteNivel: number;
+  /** Nivel que se usa contra la tabla de experiencia. */
+  nivelParaExperiencia: number;
   pdTotales: number;
   caracteristicas: Record<Caracteristica, { total: number; bono: number; base: number; raza: number }>;
   puntosVida: ValorDerivado;
@@ -293,8 +301,9 @@ export function calcular(
     avisos.push({ gravedad: 'error', mensaje: `Categoría desconocida: "${personaje.categoria}".` });
 
   const ajusteNivel = raza?.ajusteNivel ?? 0;
-  const nivelTotal = personaje.nivel + ajusteNivel;
-  const pdTotales = personaje.nivel * 600;
+  const nivel = personaje.nivel;
+  const nivelParaExperiencia = nivel + ajusteNivel;
+  const pdTotales = nivel * 600;
 
   // Características: base + raza, con tope 20 y suelo 0.
   const caracteristicas = {} as FichaCalculada['caracteristicas'];
@@ -329,7 +338,7 @@ export function calcular(
     aplicar('puntosVida', {
       pvBasePorCON: pvBase(caracteristicas.CON.total, tablas),
       pvCategoria: categoria?.PV ?? 0,
-      nivelTotal,
+      nivelTotal: nivel,
       CON: caracteristicas.CON.total,
       bonoCON: caracteristicas.CON.bono,
     }),
@@ -370,7 +379,7 @@ export function calcular(
       zeonBasePorPOD: pvBase(caracteristicas.POD.total, tablas),
       zeonComprado,
       zeonCategoria: Number(categoria?.bonoZeon ?? 0),
-      nivelTotal,
+      nivelTotal: nivel,
     }),
   );
 
@@ -384,10 +393,12 @@ export function calcular(
   );
 
   // ── Combate: armadura primero, porque su penalizador afecta a casi todo ──
+  const especial = (clave: string) => personaje.bonosEspeciales[clave] ?? 0;
   const llevarArmaduraBase =
     truncarPD(personaje.pdInvertidos['LlevarArmadura'] ?? 0, Number(categoria?.costeLlevarArmadura ?? 2)) +
     caracteristicas.FUE.bono +
-    Number(categoria?.bonoLlevarArmadura ?? 0);
+    Number(categoria?.bonoLlevarArmadura ?? 0) +
+    especial('LlevarArmadura');
   const llevarArmadura = derivar('LlevarArmadura', llevarArmaduraBase);
 
   const proteccion = combinarArmadura(personaje.equipo.armadura, datos.armaduras, llevarArmadura.valor);
@@ -426,19 +437,22 @@ export function calcular(
     'HAtaque',
     truncarPD(personaje.pdInvertidos['HAtaque'] ?? 0, Number(categoria?.costeHA ?? 2)) +
       caracteristicas.DES.bono +
-      Number(categoria?.bonoHA ?? 0),
+      Number(categoria?.bonoHA ?? 0) +
+      especial('HAtaque'),
   );
   const HParada = derivar(
     'HParada',
     truncarPD(personaje.pdInvertidos['HParada'] ?? 0, Number(categoria?.costeHP ?? 2)) +
       caracteristicas.DES.bono +
-      Number(categoria?.bonoHP ?? 0),
+      Number(categoria?.bonoHP ?? 0) +
+      especial('HParada'),
   );
   const HEsquiva = derivar(
     'HEsquiva',
     truncarPD(personaje.pdInvertidos['HEsquiva'] ?? 0, Number(categoria?.costeHE ?? 2)) +
       caracteristicas.AGI.bono +
-      Number(categoria?.bonoHE ?? 0),
+      Number(categoria?.bonoHE ?? 0) +
+      especial('HEsquiva'),
   );
 
   // Tamaño = CON + FUE **base** (sin modificadores raciales, que ya van aparte)
@@ -454,7 +468,11 @@ export function calcular(
   const turnoNatural = derivar(
     'turnoNatural',
     aplicar('turno', {
-      turnoBase: 20,
+      // Jayán y Turak de tamaño Grande arrastran −10 al turno base. Ficha, Principal!D24.
+      turnoBase:
+        20 +
+        (tamano >= 20 && (raza?.raza === 'Jayán' || raza?.raza === 'Turak') ? -10 : 0) +
+        especial('turnoNatural'),
       bonoAGI: caracteristicas.AGI.bono,
       bonoDES: caracteristicas.DES.bono,
       turnoCategoria: Number(categoria?.turno ?? 0),
@@ -529,7 +547,9 @@ export function calcular(
   }
 
   return {
-    nivelTotal,
+    nivel,
+    ajusteNivel,
+    nivelParaExperiencia,
     pdTotales,
     caracteristicas,
     puntosVida,
