@@ -6,7 +6,7 @@ numéricamente contra el personaje de ejemplo, *Meirmeister*.
 
 Notación: `Bono_X` = bono de la característica X según `tablasBase.bonoCaracteristica`.
 
-**Contrastado además con el Core Exxet** (primera parte, caps. 1–4). Lo marcado con
+**Contrastado además con el Core Exxet** (caps. 1–9, páginas 1–100). Lo marcado con
 📖 procede del manual; lo marcado con ✔ se verificó numéricamente contra Meirmeister.
 
 ---
@@ -247,3 +247,74 @@ Se ha añadido `tablasBase.armasEnormes` con los multiplicadores de daño por ta
 
 Para todo esto sirve el Core Exxet cuando esté disponible, o cargar en la hoja un
 personaje místico/psíquico de ejemplo y volver a leer las fórmulas.
+
+
+---
+
+## Resolución de combate 📖
+
+Lo que necesita el **modo mesa**. Core Exxet, cap. 9.
+
+### Secuencia
+
+```
+Resultado del Asalto = (HA atacante + d100 abierto) − (defensa + d100 abierto)
+```
+
+**Si el Resultado es positivo → el ataque impacta:**
+
+```
+margen = Resultado − Absorción del defensor
+
+si margen < 10   → sin daño (el golpe no penetra)
+si margen ≥ 10   → daño% = FLOOR(margen ÷ 10) × 10 %
+                   PV perdidos = dañoFinalDelArma × daño%
+```
+
+El porcentaje se aplica **al daño final del arma**, no al margen. La *Tabla 42* del manual
+es sólo la multiplicación ya calculada; no hace falta implementarla como tabla.
+
+Ejemplos del manual: margen 27 → 20 % de daño; margen 185 → 180 %.
+
+**Si el Resultado es negativo → contraataque.** El defensor recupera la iniciativa y puede
+devolver el golpe de inmediato (**Acción Respuesta**), siempre que aún le queden acciones
+activas: no vale si ya fue puesto a la defensiva, si gastó sus acciones o si agotó sus
+ataques.
+
+**Impactar pone al defensor a la defensiva**: pierde su acción activa de ese turno.
+
+### Absorción
+
+```
+Absorción = 20 + (10 × TA correspondiente al tipo de daño)
+```
+
+TA 1 → 30 de absorción; TA 6 → 80. El tipo de TA que se usa depende del tipo de ataque
+(FIL, CON, PEN, CAL, ELE, FRI, ENE), de ahí que la armadura tenga siete valores.
+
+### Críticos
+
+Un **crítico** se produce cuando **un único impacto hace perder la mitad de los PV
+actuales** del objetivo. Es acumulativo: alguien con 180 PV recibe crítico con 90 de daño;
+ya en 90 PV, le basta con 45 para el siguiente. Cuanto más dañado está un personaje, más
+fácil es criticarlo.
+
+### Cansancio
+
+Cada punto de Cansancio gastado **baja un nivel** el resultado de un dado (uso voluntario
+antes de tirar). Con Cansancio 0 el personaje sufre **−120 a la acción**.
+
+---
+
+## Lo que sigue pendiente (tras las 100 primeras páginas)
+
+Los capítulos de **magia** y **psíquica** son el 10 en adelante y **no están** en estas
+100 páginas. Sigue sin verificarse:
+
+- **ACT** (Acumulación mágica) y **Nivel de Magia**.
+- **CVs** y **Potencial Psíquico**.
+- Coste de **cambio de categoría** en multiclase.
+- **Técnicas de Ki** (hoja `Creación de Técnicas`).
+
+De lo sobrenatural sí se conocen ya, de la primera parte: el índice de subida del Zeón
+(grupos de 5) y el límite de Proyección (mitad del límite del campo).
