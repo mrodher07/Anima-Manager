@@ -105,102 +105,102 @@
   {
    "valor": 1,
    "PV": 5,
-   "cansancio": 0
+   "ACT": 0
   },
   {
    "valor": 2,
    "PV": 20,
-   "cansancio": 0
+   "ACT": 0
   },
   {
    "valor": 3,
    "PV": 40,
-   "cansancio": 0
+   "ACT": 0
   },
   {
    "valor": 4,
    "PV": 55,
-   "cansancio": 0
+   "ACT": 0
   },
   {
    "valor": 5,
    "PV": 70,
-   "cansancio": 5
+   "ACT": 5
   },
   {
    "valor": 6,
    "PV": 85,
-   "cansancio": 5
+   "ACT": 5
   },
   {
    "valor": 7,
    "PV": 95,
-   "cansancio": 5
+   "ACT": 5
   },
   {
    "valor": 8,
    "PV": 110,
-   "cansancio": 10
+   "ACT": 10
   },
   {
    "valor": 9,
    "PV": 120,
-   "cansancio": 10
+   "ACT": 10
   },
   {
    "valor": 10,
    "PV": 135,
-   "cansancio": 10
+   "ACT": 10
   },
   {
    "valor": 11,
    "PV": 150,
-   "cansancio": 10
+   "ACT": 10
   },
   {
    "valor": 12,
    "PV": 160,
-   "cansancio": 15
+   "ACT": 15
   },
   {
    "valor": 13,
    "PV": 175,
-   "cansancio": 15
+   "ACT": 15
   },
   {
    "valor": 14,
    "PV": 185,
-   "cansancio": 15
+   "ACT": 15
   },
   {
    "valor": 15,
    "PV": 200,
-   "cansancio": 20
+   "ACT": 20
   },
   {
    "valor": 16,
    "PV": 215,
-   "cansancio": 25
+   "ACT": 25
   },
   {
    "valor": 17,
    "PV": 225,
-   "cansancio": 25
+   "ACT": 25
   },
   {
    "valor": 18,
    "PV": 240,
-   "cansancio": 30
+   "ACT": 30
   },
   {
    "valor": 19,
    "PV": 250,
-   "cansancio": 30
+   "ACT": 30
   },
   {
    "valor": 20,
    "PV": 265,
-   "cansancio": 35
+   "ACT": 35
   }
  ],
  "fuerza": [
@@ -323,6 +323,88 @@
    "bonoTamano": 5,
    "pesoKg": 10000000000000000159028911097599180468360808563945281389781327557747838772170381060813469985856815104,
    "pesoMaxKg": 10000000000000000159028911097599180468360808563945281389781327557747838772170381060813469985856815104
+  }
+ ],
+ "acumulacionPorPOD": [
+  {
+   "POD": 1,
+   "multiplicador": 1
+  },
+  {
+   "POD": 2,
+   "multiplicador": 1
+  },
+  {
+   "POD": 3,
+   "multiplicador": 1
+  },
+  {
+   "POD": 4,
+   "multiplicador": 1
+  },
+  {
+   "POD": 5,
+   "multiplicador": 1
+  },
+  {
+   "POD": 6,
+   "multiplicador": 1
+  },
+  {
+   "POD": 7,
+   "multiplicador": 1
+  },
+  {
+   "POD": 8,
+   "multiplicador": 1
+  },
+  {
+   "POD": 9,
+   "multiplicador": 1
+  },
+  {
+   "POD": 10,
+   "multiplicador": 2
+  },
+  {
+   "POD": 11,
+   "multiplicador": 2
+  },
+  {
+   "POD": 12,
+   "multiplicador": 2
+  },
+  {
+   "POD": 13,
+   "multiplicador": 3
+  },
+  {
+   "POD": 14,
+   "multiplicador": 3
+  },
+  {
+   "POD": 15,
+   "multiplicador": 3
+  },
+  {
+   "POD": 16,
+   "multiplicador": 4
+  },
+  {
+   "POD": 17,
+   "multiplicador": 4
+  },
+  {
+   "POD": 18,
+   "multiplicador": 4
+  },
+  {
+   "POD": 19,
+   "multiplicador": 4
+  },
+  {
+   "POD": 20,
+   "multiplicador": 4
   }
  ],
  "gnosis": [

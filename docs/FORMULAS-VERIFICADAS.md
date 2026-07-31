@@ -6,7 +6,7 @@ numéricamente contra el personaje de ejemplo, *Meirmeister*.
 
 Notación: `Bono_X` = bono de la característica X según `tablasBase.bonoCaracteristica`.
 
-**Contrastado además con el Core Exxet** (caps. 1–9, páginas 1–100). Lo marcado con
+**Contrastado además con el Core Exxet** (caps. 1–12, páginas 1–200). Lo marcado con
 📖 procede del manual; lo marcado con ✔ se verificó numéricamente contra Meirmeister.
 
 ---
@@ -306,15 +306,77 @@ antes de tirar). Con Cansancio 0 el personaje sufre **−120 a la acción**.
 
 ---
 
-## Lo que sigue pendiente (tras las 100 primeras páginas)
+## Magia 📖 ✔
 
-Los capítulos de **magia** y **psíquica** son el 10 en adelante y **no están** en estas
-100 páginas. Sigue sin verificarse:
+### La tabla 55 se usa tres veces
 
-- **ACT** (Acumulación mágica) y **Nivel de Magia**.
-- **CVs** y **Potencial Psíquico**.
+`tablasBase.valoresBase` (Tabla 55 del manual) se consulta con **índices distintos**:
+
+| Columna | Índice | Da |
+|---|---|---|
+| `PV` | CON | Puntos de Vida base |
+| `PV` | **POD** | **Zeón base** |
+| `ACT` | **POD** | **base de Acumulación (ACT)** |
+
+> **Corrección de datos:** la 3.ª columna estaba etiquetada como `cansancio`. **No lo es**
+> — el Cansancio sale de `CON + raza`. Es la base de ACT según POD. Ya renombrada a `ACT`.
+
+### Zeón
+
+```
+Zeón base     = valoresBase[POD].PV          (misma tabla que los PV, pero con POD)
+Zeón comprado = 5 × TRUNC(PD ÷ coste)
+Zeón total    = base + comprado + bonoCategoría×nivel + especiales
+```
+
+`PDs!W93`, `PDs!V93`. Verificación Meirmeister (POD 3): `valoresBase[3].PV = 40` ✔
+(la ficha muestra Zeón 40).
+
+> ⚠️ **Errata del manual.** El cap. 1 dice que el Zeón sube "en grupos de cinco" (coste 2 →
+> 2 PD dan +5). El cap. 11 pone un ejemplo incompatible: "coste 1, gasta 10 PD →
+> incrementará su máximo en **100** puntos", cuando con la regla de los grupos de cinco
+> serían **50**. **La ficha implementa `5 × TRUNC(PD ÷ coste)`**, es decir la regla del
+> cap. 1. Se sigue esa.
+
+### ACT (Acumulación por Turno)
+
+```
+ACT base  = valoresBase[POD].ACT
+ACT total = ACT base + TRUNC(PD ÷ coste) × ACT base + especiales
+```
+
+`PDs!W94`, `PDs!V94`. Cada punto comprado suma otra vez la base según POD, así que el
+ACT escala con el Poder del personaje.
+
+Existe además `tablasBase.acumulacionPorPOD` (multiplicador 1–4 según POD), usada en
+la acumulación de Ki.
+
+### Nivel de Magia
+
+```
+Nivel de Magia = TRUNC(PD ÷ coste) × 5
+```
+
+`PDs!V97`.
+
+### Reglas de mesa 📖
+
+- **Regeneración**: se recupera el **ACT final en puntos de Zeón cada día**.
+- **Acumular**: se acumula el ACT por asalto. Al terminar un asalto en el que se lanzó
+  algún conjuro, **se pierde todo el Zeón acumulado sin gastar, y 10 puntos más**.
+- **Conjuro preparado**: se puede sostener tantos asaltos como el valor de **POD**. Si al
+  final no se lanza, se pierden **10 puntos de Zeón**.
+- **Proyección Mágica** marca también el **alcance máximo** de los conjuros.
+- **+40** a la habilidad si se lanza sobre alguien con quien se está en **contacto físico**.
+- Recomendación del manual: tener **Zeón ≈ 10 × ACT**.
+
+---
+
+## Lo que sigue pendiente (tras las 200 primeras páginas)
+
+- **CVs** y **Potencial Psíquico**: el capítulo de psíquica es el 13, más allá de la
+  página 200.
 - Coste de **cambio de categoría** en multiclase.
-- **Técnicas de Ki** (hoja `Creación de Técnicas`).
-
-De lo sobrenatural sí se conocen ya, de la primera parte: el índice de subida del Zeón
-(grupos de 5) y el límite de Proyección (mitad del límite del campo).
+- **Técnicas de Ki**: el cap. 10 describe el constructor, falta volcar
+  `Tablas Técnicas` (854 filas) a JSON.
+- **Convocatoria** (cap. 12): leído por encima, sin volcar.

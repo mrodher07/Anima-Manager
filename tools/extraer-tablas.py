@@ -179,13 +179,21 @@ base['bonoCaracteristica'] = [
     {'valor': clean(r[0].value), 'bono': clean(r[1].value),
      'multiplicadorPV': clean(r[2].value)}
     for r in cells('Tablas', '$C$14:$E$33')]
+# Tabla 55 del manual. Se usa tres veces con índices distintos:
+#   col PV  indexada por CON -> Puntos de Vida base
+#   col PV  indexada por POD -> Zeón base
+#   col ACT indexada por POD -> base de Acumulación (ACT)
+# La 3.ª columna NO es el Cansancio (ese sale de CON + raza).
 base['valoresBase'] = [
-    {'valor': clean(r[0].value), 'PV': clean(r[1].value), 'cansancio': clean(r[2].value)}
+    {'valor': clean(r[0].value), 'PV': clean(r[1].value), 'ACT': clean(r[2].value)}
     for r in cells('Tablas', '$M$37:$O$56')]
 base['fuerza'] = [
     {'valor': clean(r[0].value), 'bonoTamano': clean(r[1].value),
      'pesoKg': clean(r[2].value), 'pesoMaxKg': clean(r[3].value)}
     for r in cells('Tablas', '$G$14:$J$33')]
+base['acumulacionPorPOD'] = [
+    {'POD': clean(r[0].value), 'multiplicador': clean(r[1].value)}
+    for r in cells('Tablas', '$P$14:$Q$33') if clean(r[0].value)]
 base['gnosis'] = [
     {'gnosis': clean(r[0].value), 'PDs': clean(r[1].value), 'nivelesSobrenat': clean(r[2].value)}
     for r in cells('Tablas', '$W$27:$Y$37')]
