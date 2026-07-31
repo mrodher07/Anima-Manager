@@ -12,6 +12,7 @@ import type { Arma, Armadura, Categoria, Raza, TablasBase, Ventaja } from '../da
 const datos = (nombreRaza: string, nombreCategoria: string): DatosCalculo => ({
   raza: (razas as Raza[]).find((r) => r.raza === nombreRaza),
   categoria: (categorias as unknown as Categoria[]).find((c) => c.categoria === nombreCategoria),
+  categorias: categorias as unknown as Categoria[],
   tablas: tablasBase as unknown as TablasBase,
   armas: armasJson as Arma[],
   armaduras: armadurasJson as Armadura[],
@@ -26,8 +27,7 @@ function meirmeister(): Personaje {
   const p = personajeVacio('meirmeister');
   p.nombre = 'Meirmeister';
   p.raza = 'Jayán';
-  p.categoria = 'Paladín Oscuro (RD)';
-  p.nivel = 1;
+  p.categorias = [{ categoria: 'Paladín Oscuro (RD)', nivel: 1 }];
   // Valores comprados, antes de los modificadores raciales (+1 CON, +2 FUE, −1 POD).
   p.caracteristicas = { AGI: 10, CON: 8, DES: 10, FUE: 10, INT: 4, PER: 5, POD: 4, VOL: 6 };
   p.pdInvertidos = {
@@ -299,7 +299,7 @@ describe('efectos de ventajas y desventajas', () => {
 
     const p = meirmeister();
     p.ventajas = ['Sentido del combate: Ataque'];
-    p.nivel = 20; // 5×20 = 100, pero el tope conjunto es 50
+    p.categorias = [{ categoria: 'Paladín Oscuro (RD)', nivel: 20 }]; // tope conjunto 50
     const alto = calcular(p, datos('Jayán', 'Paladín Oscuro (RD)'));
     const sinVentaja = { ...p, ventajas: [] };
     const altoBase = calcular(sinVentaja, datos('Jayán', 'Paladín Oscuro (RD)'));

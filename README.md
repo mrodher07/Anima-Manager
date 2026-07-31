@@ -22,6 +22,7 @@ npm run build    # compilar para producción
 | **Ficha** | Vista de consulta con recursos, características, resistencias, combate y secundarias |
 | **Editar** | Identidad, características, ventajas, habilidades, equipo y poderes |
 | **Mesa** | Jugar: gastar recursos, tirar iniciativa, resolver ataques, tiradas rápidas |
+| **Bestiario** | Fichas de enemigo con imagen, usables desde el modo mesa |
 | **Galería** | Mapas, PNJs, enemigos y objetos en imágenes |
 | **Campañas** | Reglas caseras, manuales activos y diario de sesiones |
 | **Reglas** | Reescribir o desactivar cualquier fórmula, y restablecerla |
@@ -92,9 +93,10 @@ lugar de fallar en silencio.
 
 ## Qué falta
 
-Está anotado al final de `docs/FORMULAS-VERIFICADAS.md`. En resumen: las ventajas se
-eligen y cuentan Puntos de Creación, pero todavía no aplican solas su efecto mecánico
-(mientras tanto se compensan con el campo «Esp.»); faltan Ki, multiclase y bestiario.
+Está anotado al final de `docs/FORMULAS-VERIFICADAS.md`. En resumen: falta el **Ki**
+(puntos, acumulación, técnicas y Límites), a la espera del manual correspondiente. De las
+292 ventajas, 74 modifican la ficha solas; el resto se eligen igual y las que tienen efecto
+no automatizable lo muestran como recordatorio.
 
 ## Regenerar el catálogo
 

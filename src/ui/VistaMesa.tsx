@@ -8,11 +8,14 @@ import {
 import { tirarD100, type Tirada } from '../motor/dados';
 import { calcular, type DatosCalculo, type Personaje } from '../motor/personaje';
 import type { Reglamento } from '../motor/reglamento';
+import { useEnemigos } from './VistaBestiario';
+import { Imagen } from './Imagen';
 
 interface Props {
   personaje: Personaje;
   datos: DatosCalculo;
   reglamento: Reglamento;
+  campanaId: string | null;
   onCambiar: (p: Personaje) => void;
 }
 
@@ -30,16 +33,20 @@ function describeTirada(t: Tirada): string {
   return `${t.total}`;
 }
 
-export function VistaMesa({ personaje, datos, reglamento, onCambiar }: Props) {
+export function VistaMesa({ personaje, datos, reglamento, campanaId, onCambiar }: Props) {
+  const { enemigos, guardar: guardarEnemigo } = useEnemigos(campanaId);
+  const [enemigoId, setEnemigoId] = useState<string>('');
   const ficha = calcular(personaje, datos, reglamento);
   const [registro, setRegistro] = useState<Registro[]>([]);
   const [siguienteId, setSiguienteId] = useState(1);
 
-  // Estado del enemigo, para resolver asaltos rápido en mesa.
+  // Enemigo suelto, para cuando no está en el bestiario.
   const [defensa, setDefensa] = useState(60);
   const [taEnemigo, setTaEnemigo] = useState(2);
   const [pvEnemigo, setPvEnemigo] = useState(100);
   const [armaElegida, setArmaElegida] = useState(0);
+
+  const enemigo = enemigos.find((e) => e.id === enemigoId) ?? null;
 
   const anotar = (texto: string, detalle: string, critico = false) => {
     setRegistro((antes) => [{ id: siguienteId, texto, detalle, critico }, ...antes].slice(0, 30));
@@ -80,18 +87,38 @@ export function VistaMesa({ personaje, datos, reglamento, onCambiar }: Props) {
 
   const atacar = () => {
     if (!arma) return;
-    const TA = Object.fromEntries(TIPOS_DANO.map((t) => [t, taEnemigo])) as Record<TipoDano, number>;
+    const TA = enemigo
+      ? enemigo.TA
+      : (Object.fromEntries(TIPOS_DANO.map((t) => [t, taEnemigo])) as Record<TipoDano, number>);
     const tipoDano = (arma.criticos[0] as TipoDano) ?? 'CON';
+    const pv = enemigo ? enemigo.pvActuales ?? enemigo.puntosVida : pvEnemigo;
     const r: ResultadoAsalto = resolverAsalto(
       { nombre: personaje.nombre, habilidadAtaque: arma.ataque, dano: arma.dano, tipoDano },
-      { nombre: 'Enemigo', habilidadDefensa: defensa, tipoDefensa: 'Parada', TA, pvActuales: pvEnemigo },
+      {
+        nombre: enemigo?.nombre ?? 'Enemigo',
+        habilidadDefensa: enemigo ? enemigo.defensa : defensa,
+        tipoDefensa: enemigo?.tipoDefensa ?? 'Parada',
+        TA,
+        pvActuales: pv,
+      },
       reglamento,
     );
-    if (r.danoInfligido > 0) setPvEnemigo((n) => Math.max(0, n - r.danoInfligido));
+    if (r.danoInfligido > 0) {
+      if (enemigo) {
+        void guardarEnemigo({ ...enemigo, pvActuales: Math.max(0, pv - r.danoInfligido) });
+      } else {
+        setPvEnemigo((n) => Math.max(0, n - r.danoInfligido));
+      }
+    }
+    const defensaUsada = enemigo ? enemigo.defensa : defensa;
+    const nombreEnemigo = enemigo?.nombre ?? 'Enemigo';
+    const titulo = r.descripcion.startsWith(nombreEnemigo)
+      ? r.descripcion
+      : `${nombreEnemigo}: ${r.descripcion}`;
     anotar(
-      r.descripcion,
+      titulo,
       `Ataque ${arma.ataque} + ${describeTirada(r.tiradaAtaque)} = ${r.totalAtaque} · ` +
-        `Defensa ${defensa} + ${describeTirada(r.tiradaDefensa)} = ${r.totalDefensa} · ` +
+        `Defensa ${defensaUsada} + ${describeTirada(r.tiradaDefensa)} = ${r.totalDefensa} · ` +
         `Resultado ${r.resultado} − absorción ${r.absorcion} = margen ${r.margen}`,
       r.critico,
     );
@@ -157,6 +184,43 @@ export function VistaMesa({ personaje, datos, reglamento, onCambiar }: Props) {
                   ))}
                 </select>
               </div>
+              <div className="campo">
+                <label htmlFor="enemigo">Enemigo</label>
+                <select id="enemigo" value={enemigoId} onChange={(e) => setEnemigoId(e.target.value)}>
+                  <option value="">Enemigo suelto (a mano)</option>
+                  {enemigos.map((e) => (
+                    <option key={e.id} value={e.id}>
+                      {e.nombre} — {e.pvActuales ?? e.puntosVida}/{e.puntosVida} PV
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {enemigo ? (
+                <div style={{ display: 'flex', gap: 12, alignItems: 'center', marginBottom: 12 }}>
+                  {enemigo.imagenId && (
+                    <Imagen id={enemigo.imagenId} alt={enemigo.nombre} className="retrato-mini" />
+                  )}
+                  <div style={{ fontSize: '0.88rem' }}>
+                    <strong className="destacado">{enemigo.nombre}</strong>
+                    <br />
+                    PV{' '}
+                    <strong className={(enemigo.pvActuales ?? enemigo.puntosVida) <= 0 ? 'peligro-texto' : ''}>
+                      {enemigo.pvActuales ?? enemigo.puntosVida}
+                    </strong>{' '}
+                    / {enemigo.puntosVida} · Defensa {enemigo.defensa} ({enemigo.tipoDefensa}) · Ataque{' '}
+                    {enemigo.ataque} · Daño {enemigo.dano} {enemigo.tipoDano}
+                    <br />
+                    <button
+                      className="accion"
+                      style={{ marginTop: 6 }}
+                      onClick={() => void guardarEnemigo({ ...enemigo, pvActuales: enemigo.puntosVida })}
+                    >
+                      Curar del todo
+                    </button>
+                  </div>
+                </div>
+              ) : (
               <div className="rejilla">
                 <div className="campo">
                   <label htmlFor="def">Defensa del enemigo</label>
@@ -171,6 +235,7 @@ export function VistaMesa({ personaje, datos, reglamento, onCambiar }: Props) {
                   <input id="pve" type="number" min={0} value={pvEnemigo} onChange={(e) => setPvEnemigo(Number(e.target.value) || 0)} />
                 </div>
               </div>
+              )}
               <button className="accion primaria" onClick={atacar}>Atacar</button>
             </>
           )}

@@ -16,6 +16,7 @@ import { Selector } from './Selector';
 import { Imagen } from './Imagen';
 import { ErrorImagen, borrarImagen, guardarImagen } from '../almacen/imagenes';
 import { EFECTOS } from '../motor/efectos';
+import { MAX_CATEGORIAS } from '../motor/multiclase';
 
 interface Props {
   personaje: Personaje;
@@ -82,6 +83,9 @@ export function EditorPersonaje({ personaje, datos, catalogo, reglamento, onCamb
   const conjuros = useColeccion(catalogo, 'conjuros');
   const poderes = useColeccion(catalogo, 'poderesPsiquicos');
   const ficha = calcular(personaje, datos, reglamento);
+  // La primera entrada del catálogo es «Desarmado», que hace 0 de daño: como valor por
+  // defecto al añadir un arma confunde más que ayuda.
+  const armaPorDefecto = armas.find((a) => (a.dano ?? 0) > 0)?.arma ?? armas[0]?.arma ?? '';
 
   const set = (cambios: Partial<Personaje>) => onCambiar({ ...personaje, ...cambios });
   const setPD = (clave: string, pd: number) =>
@@ -157,22 +161,79 @@ export function EditorPersonaje({ personaje, datos, catalogo, reglamento, onCamb
                 </select>
               </div>
               <div className="campo">
-                <label htmlFor="categoria">Categoría</label>
-                <select id="categoria" value={personaje.categoria} onChange={(e) => set({ categoria: e.target.value })}>
-                  {categorias.map((c) => (
-                    <option key={c.categoria} value={c.categoria}>{c.categoria}</option>
-                  ))}
-                </select>
-              </div>
-              <div className="campo">
-                <label htmlFor="nivel">Nivel</label>
-                <input
-                  id="nivel"
-                  type="number"
-                  min={1}
-                  value={personaje.nivel}
-                  onChange={(e) => set({ nivel: Math.max(1, Number(e.target.value) || 1) })}
-                />
+                <label>Categorías y niveles</label>
+                <p style={{ color: 'var(--texto-debil)', fontSize: '0.78rem', margin: '0 0 6px' }}>
+                  Añade más de una para llevar un multiclase. Cada cambio de categoría
+                  cuesta PD.
+                </p>
+                {personaje.categorias.map((c, i) => (
+                  <div key={i} style={{ display: 'flex', gap: 6, marginBottom: 6 }}>
+                    <select
+                      value={c.categoria}
+                      aria-label={`Categoría ${i + 1}`}
+                      onChange={(e) => {
+                        const nuevas = [...personaje.categorias];
+                        nuevas[i] = { ...c, categoria: e.target.value };
+                        set({ categorias: nuevas });
+                      }}
+                    >
+                      {categorias.map((x) => (
+                        <option key={x.categoria} value={x.categoria}>{x.categoria}</option>
+                      ))}
+                    </select>
+                    <input
+                      type="number"
+                      min={0}
+                      style={{ width: 80 }}
+                      value={c.nivel}
+                      aria-label={`Niveles en categoría ${i + 1}`}
+                      onChange={(e) => {
+                        const nuevas = [...personaje.categorias];
+                        nuevas[i] = { ...c, nivel: Math.max(0, Number(e.target.value) || 0) };
+                        set({ categorias: nuevas });
+                      }}
+                    />
+                    {personaje.categorias.length > 1 && (
+                      <button
+                        className="accion"
+                        onClick={() => set({ categorias: personaje.categorias.filter((_, j) => j !== i) })}
+                      >
+                        ✕
+                      </button>
+                    )}
+                  </div>
+                ))}
+                {personaje.categorias.length < MAX_CATEGORIAS && (
+                  <button
+                    className="accion"
+                    onClick={() =>
+                      set({
+                        categorias: [
+                          ...personaje.categorias,
+                          { categoria: categorias[0]?.categoria ?? 'Novel', nivel: 1 },
+                        ],
+                      })
+                    }
+                  >
+                    Añadir categoría
+                  </button>
+                )}
+
+                {ficha.multiclase.cambios.length > 0 && (
+                  <p style={{ fontSize: '0.84rem', marginTop: 10, marginBottom: 0 }}>
+                    {ficha.multiclase.cambios.map((c, i) => (
+                      <span key={i} style={{ display: 'block', color: 'var(--texto-tenue)' }}>
+                        {c.desde} → {c.hacia}: <strong className="destacado">{c.coste} PD</strong>
+                      </span>
+                    ))}
+                    <span style={{ display: 'block', marginTop: 4 }}>
+                      Nivel <strong className="destacado">{ficha.multiclase.nivelTotal}</strong> ·{' '}
+                      {ficha.multiclase.pdTotales} PD −{' '}
+                      <span className="peligro-texto">{ficha.multiclase.pdEnCambios}</span> en cambios ={' '}
+                      <strong className="destacado">{ficha.multiclase.pdDisponibles}</strong> disponibles
+                    </span>
+                  </p>
+                )}
               </div>
             </div>
           </div>
@@ -666,7 +727,7 @@ export function EditorPersonaje({ personaje, datos, catalogo, reglamento, onCamb
                 set({
                   equipo: {
                     ...personaje.equipo,
-                    armas: [...personaje.equipo.armas, { arma: armas[0]?.arma ?? '' }],
+                    armas: [...personaje.equipo.armas, { arma: armaPorDefecto }],
                   },
                 })
               }

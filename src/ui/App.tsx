@@ -4,14 +4,18 @@ import { EditorPersonaje } from './EditorPersonaje';
 import { VistaFicha } from './VistaFicha';
 import { VistaMesa } from './VistaMesa';
 import { VistaPersonajes } from './VistaPersonajes';
+import { VistaBestiario } from './VistaBestiario';
 import { VistaGaleria } from './VistaGaleria';
 import { VistaReglas } from './VistaReglas';
 import { Imagen } from './Imagen';
 import { nuevoId } from './estado';
 import { useCampanas, useDatosCalculo, usePersonajes, useReglamento } from './estado';
+import { nivelTotalDe } from '../motor/personaje';
 import './estilos.css';
 
-type Seccion = 'personajes' | 'ficha' | 'editor' | 'mesa' | 'galeria' | 'reglas' | 'campanas';
+type Seccion =
+  | 'personajes' | 'ficha' | 'editor' | 'mesa'
+  | 'bestiario' | 'galeria' | 'reglas' | 'campanas';
 
 export function App() {
   const [seccion, setSeccion] = useState<Seccion>('personajes');
@@ -44,6 +48,7 @@ export function App() {
     { id: 'ficha', texto: 'Ficha', requierePersonaje: true },
     { id: 'editor', texto: 'Editar', requierePersonaje: true },
     { id: 'mesa', texto: 'Mesa', requierePersonaje: true },
+    { id: 'bestiario', texto: 'Bestiario' },
     { id: 'galeria', texto: 'Galería' },
     { id: 'campanas', texto: 'Campañas' },
     { id: 'reglas', texto: 'Reglas' },
@@ -120,7 +125,12 @@ export function App() {
               <div>
                 <h1 style={{ marginBottom: 2 }}>{personaje.nombre || 'Sin nombre'}</h1>
                 <p style={{ color: 'var(--texto-tenue)', margin: 0 }}>
-                  {personaje.raza} · {personaje.categoria} · Nivel {personaje.nivel}
+                  {personaje.raza} ·{' '}
+                  {personaje.categorias
+                    .filter((c) => c.nivel > 0)
+                    .map((c) => `${c.categoria} ${c.nivel}`)
+                    .join(' / ')}{' '}
+                  · Nivel {nivelTotalDe(personaje)}
                 </p>
               </div>
             </div>
@@ -141,11 +151,14 @@ export function App() {
                 personaje={personaje}
                 datos={datos}
                 reglamento={reglamento}
+                campanaId={campanaId}
                 onCambiar={guardar}
               />
             )}
           </>
         )}
+
+        {seccion === 'bestiario' && <VistaBestiario campanaId={campanaId} />}
 
         {seccion === 'galeria' && <VistaGaleria campanaId={campanaId} />}
 

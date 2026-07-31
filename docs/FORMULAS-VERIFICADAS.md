@@ -517,8 +517,40 @@ con sólo un tercio de sus PV»).
 Las que no tienen efecto registrado siguen pudiendo elegirse, y la ficha **avisa** de que
 esas hay que aplicarlas a mano.
 
+## Multiclase ✔ ⚠️
+
+### Los PD no son 600 por nivel
+
+```
+PD disponibles = 500 + 100 × nivel
+```
+
+`PDs!T7` de la ficha: `IF(S7>0, 500 + 100*S7, 400)`. Es decir **600 al crear el personaje
+en nivel 1, y +100 por cada nivel** que suba.
+
+> ⚠️ **Corrección.** El motor calculaba `nivel × 600`, que en nivel 2 daba 1200 en vez de
+> 700. Encaja con el manual: un hechicero puede gastar 180 PD en Proyección en nivel 1
+> (600 × 0,6 ÷ 2) y **30 más por nivel** (700 × 0,6 ÷ 2 = 210).
+
+### Coste de cambiar de categoría
+
+`PDs!Y7`. Se paga en PD y se descuenta de los disponibles:
+
+| Situación | Coste |
+|---|---|
+| Alguna categoría es **Novel**, o comparten **arquetipo combinado** | **20 PD** |
+| Comparten uno de sus **dos arquetipos** (dos «Sin» no cuentan) | **40 PD** |
+| No tienen nada en común | **60 PD** |
+
+La ventaja **Versátil** deja el coste **a la mitad**.
+
+Además, `PDs!AI13` exige **al menos 2 niveles** en una categoría antes de volver a cambiar,
+salvo con Versátil. Hasta cinco categorías por personaje.
+
+Cada categoría aporta sus bonos **por los niveles hechos en ella**, y la categoría actual
+—la última con niveles— es la que manda para costes y límites.
+
 ## Pendiente de modelar
-- **Ki**: puntos, acumulación, técnicas y Límites.
+- **Ki**: puntos, acumulación, técnicas y Límites. A la espera del manual correspondiente.
 - **Conjuros y poderes psíquicos seleccionados** como listas del personaje.
-- **Multiclase** y coste de cambio de categoría.
 - Bestiario y creación de seres.

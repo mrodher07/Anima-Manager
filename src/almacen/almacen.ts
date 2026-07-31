@@ -7,15 +7,60 @@
  * obligue a rehacer las fichas guardadas.
  */
 
-import type { Personaje } from '../motor/personaje';
+import { migrarPersonaje, type Personaje } from '../motor/personaje';
 import type { AjustesMesa } from '../motor/reglamento';
 import { obtenerImagen, type Imagen, type ImagenInfo } from './imagenes';
+import type { TipoDano } from '../motor/combate';
 
 export interface NotaSesion {
   id: string;
   fecha: string;
   titulo: string;
   texto: string;
+}
+
+/**
+ * Ficha reducida de enemigo o PNJ. No es un personaje completo: al Director le basta con
+ * lo que necesita para resolver un combate, y el resto lo lleva en la cabeza o en notas.
+ */
+export interface Enemigo {
+  id: string;
+  campanaId: string | null;
+  actualizadoEn: string;
+  nombre: string;
+  descripcion?: string;
+  imagenId?: string | null;
+  /** Nivel o categoría de amenaza, sólo informativo. */
+  tipo?: string;
+  puntosVida: number;
+  /** PV actuales durante el combate. */
+  pvActuales?: number;
+  turno: number;
+  ataque: number;
+  defensa: number;
+  tipoDefensa: 'Parada' | 'Esquiva';
+  dano: number;
+  tipoDano: TipoDano;
+  /** Tipo de Armadura contra cada tipo de daño. */
+  TA: Record<TipoDano, number>;
+  notas?: string;
+}
+
+export function enemigoVacio(id: string, campanaId: string | null): Enemigo {
+  return {
+    id,
+    campanaId,
+    actualizadoEn: new Date().toISOString(),
+    nombre: 'Enemigo sin nombre',
+    puntosVida: 100,
+    turno: 50,
+    ataque: 80,
+    defensa: 70,
+    tipoDefensa: 'Parada',
+    dano: 60,
+    tipoDano: 'FIL',
+    TA: { FIL: 2, CON: 2, PEN: 2, CAL: 2, ELE: 0, FRI: 0, ENE: 0 },
+  };
 }
 
 export interface Campana {
@@ -33,8 +78,8 @@ export interface Campana {
 }
 
 const BD = 'anima-manager';
-const VERSION = 1;
-const TIENDAS = ['personajes', 'campanas'] as const;
+const VERSION = 2;
+const TIENDAS = ['personajes', 'campanas', 'enemigos'] as const;
 type Tienda = (typeof TIENDAS)[number];
 
 let promesaBD: Promise<IDBDatabase> | null = null;
@@ -78,11 +123,12 @@ function marcar<T extends { actualizadoEn: string }>(registro: T): T {
 export const almacen = {
   async listarPersonajes(): Promise<Personaje[]> {
     const todos = await transaccion<Personaje[]>('personajes', 'readonly', (s) => s.getAll());
-    return todos.sort((a, b) => a.nombre.localeCompare(b.nombre));
+    return todos.map(migrarPersonaje).sort((a, b) => a.nombre.localeCompare(b.nombre));
   },
 
   async obtenerPersonaje(id: string): Promise<Personaje | undefined> {
-    return transaccion<Personaje | undefined>('personajes', 'readonly', (s) => s.get(id));
+    const p = await transaccion<Personaje | undefined>('personajes', 'readonly', (s) => s.get(id));
+    return p ? migrarPersonaje(p) : undefined;
   },
 
   async guardarPersonaje(p: Personaje): Promise<void> {
@@ -105,6 +151,21 @@ export const almacen = {
   async borrarCampana(id: string): Promise<void> {
     await transaccion('campanas', 'readwrite', (s) => s.delete(id));
   },
+
+  async listarEnemigos(campanaId: string | null): Promise<Enemigo[]> {
+    const todos = await transaccion<Enemigo[]>('enemigos', 'readonly', (s) => s.getAll());
+    return todos
+      .filter((e) => campanaId === null || e.campanaId === campanaId || e.campanaId === null)
+      .sort((a, b) => a.nombre.localeCompare(b.nombre));
+  },
+
+  async guardarEnemigo(e: Enemigo): Promise<void> {
+    await transaccion('enemigos', 'readwrite', (s) => s.put(marcar(e)));
+  },
+
+  async borrarEnemigo(id: string): Promise<void> {
+    await transaccion('enemigos', 'readwrite', (s) => s.delete(id));
+  },
 };
 
 // ─────────────────── Exportar / importar (compartir sin nube) ───────────────────
@@ -120,6 +181,7 @@ export interface Exportacion {
   exportadoEn: string;
   personajes: Personaje[];
   campanas: Campana[];
+  enemigos?: Enemigo[];
   /** Retratos de las fichas exportadas. Sin esto, al compartir se perderían. */
   imagenes?: ImagenExportada[];
 }
@@ -151,9 +213,10 @@ async function recogerRetratos(personajes: Personaje[]): Promise<ImagenExportada
 }
 
 export async function exportarTodo(): Promise<Exportacion> {
-  const [personajes, campanas] = await Promise.all([
+  const [personajes, campanas, enemigos] = await Promise.all([
     almacen.listarPersonajes(),
     almacen.listarCampanas(),
+    almacen.listarEnemigos(null),
   ]);
   return {
     formato: 'anima-manager',
@@ -161,6 +224,7 @@ export async function exportarTodo(): Promise<Exportacion> {
     exportadoEn: new Date().toISOString(),
     personajes,
     campanas,
+    enemigos,
     imagenes: await recogerRetratos(personajes),
   };
 }
@@ -195,13 +259,14 @@ export async function analizarImportacion(
   }
   const personajes = Array.isArray(e.personajes) ? e.personajes : [];
   const campanas = Array.isArray(e.campanas) ? e.campanas : [];
+  const enemigos = Array.isArray(e.enemigos) ? e.enemigos : [];
 
   const existentes = new Set((await almacen.listarPersonajes()).map((p) => p.id));
   const conflictos = personajes.filter((p) => existentes.has(p.id)).map((p) => p.nombre || p.id);
 
   return {
     ok: true,
-    exportacion: { ...(e as Exportacion), personajes, campanas },
+    exportacion: { ...(e as Exportacion), personajes, campanas, enemigos },
     conflictos,
   };
 }
@@ -211,7 +276,8 @@ export async function importar(exportacion: Exportacion, sobrescribir: boolean):
   const importadas = new Set<string>();
   let importados = 0;
 
-  for (const p of exportacion.personajes) {
+  for (const bruto of exportacion.personajes) {
+    const p = migrarPersonaje(bruto);
     if (existentes.has(p.id) && !sobrescribir) continue;
     await almacen.guardarPersonaje(p);
     if (p.retratoId) importadas.add(p.retratoId);
@@ -219,6 +285,9 @@ export async function importar(exportacion: Exportacion, sobrescribir: boolean):
   }
   for (const c of exportacion.campanas) {
     await almacen.guardarCampana(c);
+  }
+  for (const e of exportacion.enemigos ?? []) {
+    await almacen.guardarEnemigo(e);
   }
 
   // Sólo se restauran los retratos de las fichas que de verdad han entrado.

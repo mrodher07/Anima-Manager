@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import type { Personaje } from '../motor/personaje';
+import { nivelTotalDe, type Personaje } from '../motor/personaje';
 import { analizarImportacion, exportarPersonaje, exportarTodo, importar } from '../almacen/almacen';
 
 interface Props {
@@ -101,7 +101,8 @@ export function VistaPersonajes({ personajes, cargando, onAbrir, onCrear, onBorr
             <article key={p.id} className="panel tarjeta">
               <h3>{p.nombre || 'Sin nombre'}</h3>
               <p className="subtitulo">
-                {p.raza} · {p.categoria} · Nivel {p.nivel}
+                {p.raza} · {p.categorias.filter((c) => c.nivel > 0).map((c) => c.categoria).join(' / ')} ·
+                Nivel {nivelTotalDe(p)}
                 {p.jugador && ` · ${p.jugador}`}
               </p>
               <div className="acciones-regla">

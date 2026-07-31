@@ -26,7 +26,9 @@ export function useColeccion<K extends NombreColeccion>(
 /** Los datos que necesita el cálculo de una ficha concreta. */
 export function useDatosCalculo(catalogo: Catalogo, personaje: Personaje | null): DatosCalculo | null {
   const [datos, setDatos] = useState<DatosCalculo | null>(null);
-  const clave = personaje ? `${personaje.raza}|${personaje.categoria}` : '';
+  const clave = personaje
+    ? `${personaje.raza}|${personaje.categorias.map((c) => `${c.categoria}:${c.nivel}`).join(',')}`
+    : '';
   useEffect(() => {
     if (!personaje) { setDatos(null); return; }
     let vigente = true;

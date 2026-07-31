@@ -16,6 +16,12 @@ import {
   type ProteccionTotal,
 } from './combate';
 import { acumularEfectos, type EfectosAplicados } from './efectos';
+import {
+  acumularPorNivel,
+  resumirMulticlase,
+  type EntradaCategoria,
+  type ResumenMulticlase,
+} from './multiclase';
 import type { Catalogo } from '../datos/paquetes';
 import type { Arma, Armadura, Categoria, Raza, TablasBase, Ventaja } from '../datos/tipos';
 
@@ -106,8 +112,11 @@ export interface Personaje {
   /** Imagen de la galería que hace de retrato. */
   retratoId?: string | null;
   raza: string;
-  categoria: string;
-  nivel: number;
+  /**
+   * Categorías del personaje con los niveles hechos en cada una. Un personaje de una sola
+   * clase tiene una entrada; el multiclase, hasta cinco.
+   */
+  categorias: EntradaCategoria[];
 
   /** Valores comprados, antes de modificadores raciales. */
   caracteristicas: Record<Caracteristica, number>;
@@ -172,6 +181,30 @@ export interface Personaje {
   notas?: string;
 }
 
+/**
+ * Adapta fichas guardadas con el modelo antiguo (una sola `categoria` y `nivel`, y PD
+ * sueltos) al modelo multiclase. Así no se pierde nada de lo ya creado.
+ */
+export function migrarPersonaje(p: Personaje & { categoria?: string; nivel?: number }): Personaje {
+  if (Array.isArray(p.categorias) && p.categorias.length > 0) return p;
+  const { categoria, nivel, ...resto } = p;
+  return {
+    ...(resto as Personaje),
+    categorias: [{ categoria: categoria ?? 'Novel', nivel: nivel ?? 1 }],
+  };
+}
+
+/** Categoría en la que está el personaje ahora mismo. */
+export function categoriaActual(p: Personaje): string {
+  const activas = p.categorias.filter((c) => c.categoria && c.nivel > 0);
+  return activas[activas.length - 1]?.categoria ?? p.categorias[0]?.categoria ?? 'Novel';
+}
+
+/** Nivel total: la suma de los niveles de todas sus categorías. */
+export function nivelTotalDe(p: Personaje): number {
+  return p.categorias.reduce((t, c) => t + (c.nivel > 0 ? c.nivel : 0), 0);
+}
+
 export function personajeVacio(id: string): Personaje {
   return {
     id,
@@ -180,8 +213,7 @@ export function personajeVacio(id: string): Personaje {
     actualizadoEn: new Date().toISOString(),
     nombre: '',
     raza: 'Humano',
-    categoria: 'Novel',
-    nivel: 1,
+    categorias: [{ categoria: 'Novel', nivel: 1 }],
     caracteristicas: { AGI: 5, CON: 5, DES: 5, FUE: 5, INT: 5, PER: 5, POD: 5, VOL: 5 },
     pdInvertidos: {},
     habilidadesNaturales: [],
@@ -225,6 +257,7 @@ export interface FichaCalculada {
   /** Nivel que se usa contra la tabla de experiencia. */
   nivelParaExperiencia: number;
   pdTotales: number;
+  multiclase: ResumenMulticlase;
   caracteristicas: Record<Caracteristica, { total: number; bono: number; base: number; raza: number }>;
   puntosVida: ValorDerivado;
   cansancio: ValorDerivado;
@@ -280,7 +313,10 @@ const CLAVES_PSIQUICAS = ['CV', 'ProyeccionPsiquica'];
 /** Contexto de datos que necesita el cálculo. Se carga una vez y se reutiliza. */
 export interface DatosCalculo {
   raza: Raza | undefined;
+  /** La categoría actual, la que manda para costes y límites. */
   categoria: Categoria | undefined;
+  /** Todas las categorías, para poder resolver el multiclase. */
+  categorias: Categoria[];
   tablas: TablasBase;
   armas: Arma[];
   armaduras: Armadura[];
@@ -296,15 +332,24 @@ export async function cargarDatosCalculo(
   personaje: Personaje,
   catalogo: Catalogo,
 ): Promise<DatosCalculo> {
-  const [raza, categoria, tablas, armas, armaduras, ventajas] = await Promise.all([
+  const [raza, categorias, tablas, armas, armaduras, ventajas] = await Promise.all([
     catalogo.buscar('razas', personaje.raza),
-    catalogo.buscar('categorias', personaje.categoria),
+    catalogo.obtener('categorias'),
     catalogo.tablasBase(),
     catalogo.obtener('armas'),
     catalogo.obtener('armaduras'),
     catalogo.obtener('ventajas'),
   ]);
-  return { raza, categoria, tablas, armas, armaduras, ventajas };
+  const actual = categoriaActual(personaje);
+  return {
+    raza,
+    categoria: categorias.find((c) => c.categoria === actual),
+    categorias,
+    tablas,
+    armas,
+    armaduras,
+    ventajas,
+  };
 }
 
 function bonoDe(valor: number, tablas: TablasBase): number {
@@ -334,15 +379,25 @@ export function calcular(
 
   if (!raza) avisos.push({ gravedad: 'error', mensaje: `Raza desconocida: "${personaje.raza}".` });
   if (!categoria)
-    avisos.push({ gravedad: 'error', mensaje: `Categoría desconocida: "${personaje.categoria}".` });
+    avisos.push({
+      gravedad: 'error',
+      mensaje: `Categoría desconocida: "${categoriaActual(personaje)}".`,
+    });
 
   // Efectos de ventajas y desventajas, antes de nada: modifican características.
   const efectos = acumularEfectos([...personaje.ventajas, ...personaje.desventajas]);
 
   const ajusteNivel = raza?.ajusteNivel ?? 0;
-  const nivel = personaje.nivel;
+  const multiclase = resumirMulticlase(
+    personaje.categorias,
+    datos.categorias,
+    personaje.ventajas.includes('Versátil'),
+  );
+  const nivel = multiclase.nivelTotal;
   const nivelParaExperiencia = nivel + ajusteNivel;
-  const pdTotales = nivel * 600;
+  // 600 al crear el personaje y +100 por nivel; los cambios de categoría se descuentan.
+  const pdTotales = multiclase.pdDisponibles;
+  for (const texto of multiclase.avisos) avisos.push({ gravedad: 'aviso', mensaje: texto });
 
   // Características: base + raza, con tope 20 y suelo 0.
   const caracteristicas = {} as FichaCalculada['caracteristicas'];
@@ -377,8 +432,9 @@ export function calcular(
     'puntosVida',
     aplicar('puntosVida', {
       pvBasePorCON: pvBase(caracteristicas.CON.total, tablas),
-      pvCategoria: (categoria?.PV ?? 0) + efectos.pvPorNivel,
-      nivelTotal: nivel,
+      // Cada categoría aporta sus PV por los niveles hechos en ella.
+      pvCategoria: acumularPorNivel(personaje.categorias, datos.categorias, 'PV') + efectos.pvPorNivel * nivel,
+      nivelTotal: 1,
       CON: caracteristicas.CON.total,
       bonoCON: caracteristicas.CON.bono,
     }),
@@ -418,8 +474,9 @@ export function calcular(
     aplicar('zeon', {
       zeonBasePorPOD: pvBase(caracteristicas.POD.total, tablas),
       zeonComprado,
-      zeonCategoria: Number(categoria?.bonoZeon ?? 0) + efectos.zeonPorNivel,
-      nivelTotal: nivel,
+      zeonCategoria:
+        acumularPorNivel(personaje.categorias, datos.categorias, 'bonoZeon') + efectos.zeonPorNivel * nivel,
+      nivelTotal: 1,
     }),
   );
 
@@ -632,6 +689,7 @@ export function calcular(
     ajusteNivel,
     nivelParaExperiencia,
     pdTotales,
+    multiclase,
     caracteristicas,
     puntosVida,
     cansancio,
