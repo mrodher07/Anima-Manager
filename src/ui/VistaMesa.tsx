@@ -57,6 +57,7 @@ export function VistaMesa({ personaje, datos, reglamento, campanaId, onCambiar }
   const pv = estado.pvActuales ?? ficha.puntosVida.valor;
   const cansancio = estado.cansancioActual ?? ficha.cansancio.valor;
   const zeon = estado.zeonActual ?? ficha.zeon.valor;
+  const ki = estado.kiActual ?? ficha.ki.reserva;
 
   const ajustar = (campo: keyof typeof estado, delta: number, maximo: number) => {
     const actual = estado[campo] ?? maximo;
@@ -74,6 +75,7 @@ export function VistaMesa({ personaje, datos, reglamento, campanaId, onCambiar }
         pvActuales: ficha.puntosVida.valor,
         cansancioActual: ficha.cansancio.valor,
         zeonActual: ficha.zeon.valor,
+        kiActual: ficha.ki.reserva,
       },
     });
 
@@ -138,6 +140,9 @@ export function VistaMesa({ personaje, datos, reglamento, campanaId, onCambiar }
             ['Vida', 'pvActuales', pv, ficha.puntosVida.valor, 'vida'],
             ['Cansancio', 'cansancioActual', cansancio, ficha.cansancio.valor, ''],
             ['Zeón', 'zeonActual', zeon, ficha.zeon.valor, 'zeon'],
+            ...(ficha.ki.reserva > 0
+              ? ([['Ki', 'kiActual', ki, ficha.ki.reserva, 'ki']] as const)
+              : []),
           ] as const).map(([etiqueta, campo, actual, maximo, clase]) => (
             <div key={campo} className={`recurso ${clase}`} style={{ border: '1px solid var(--borde)', borderRadius: 'var(--radio-s)', padding: 10 }}>
               <div className="etiqueta">{etiqueta}</div>

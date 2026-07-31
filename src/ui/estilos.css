@@ -222,7 +222,11 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 600; letter-spacing: 0.01em
   border-radius: var(--radio);
 }
 
+/* La misma tira de recursos, pero suelta dentro de un panel: no se pega arriba. */
+.recursos.tira { position: static; top: auto; z-index: auto; }
+
 .recurso { text-align: center; padding: 4px 2px; }
+.recurso .sufijo { display: block; font-size: 0.7rem; color: var(--texto-debil); }
 .recurso .etiqueta { font-size: 0.62rem; letter-spacing: 0.13em; text-transform: uppercase; color: var(--texto-debil); }
 .recurso .cifra { font-family: var(--serif); font-size: 1.5rem; line-height: 1.15; color: var(--texto); }
 .recurso.vida .cifra { color: var(--sangre-claro); }
@@ -436,6 +440,20 @@ input[type='checkbox'] { accent-color: var(--oro); }
 .lista-seleccion input { width: auto; flex: none; }
 .lista-seleccion span { flex: 1; }
 .lista-seleccion em { color: var(--texto-debil); font-size: 0.78rem; font-style: normal; white-space: nowrap; }
+
+/*
+ * Casilla suelta con su explicación. Hace falta porque `input` es `width: 100 %` de
+ * base y una casilla sin acotar se estira hasta ocupar toda la fila.
+ */
+.opcion { display: flex; align-items: flex-start; gap: 10px; cursor: pointer; }
+.opcion input { width: auto; flex: none; margin-top: 3px; }
+.opcion em {
+  display: block;
+  font-style: normal;
+  color: var(--texto-debil);
+  font-size: 0.8rem;
+  margin-top: 2px;
+}
 
 .peligro-texto { color: var(--sangre-claro); }
 

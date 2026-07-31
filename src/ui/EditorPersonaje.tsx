@@ -17,6 +17,7 @@ import { Imagen } from './Imagen';
 import { ErrorImagen, borrarImagen, guardarImagen } from '../almacen/imagenes';
 import { EFECTOS } from '../motor/efectos';
 import { MAX_CATEGORIAS } from '../motor/multiclase';
+import { EditorKi } from './EditorKi';
 
 interface Props {
   personaje: Personaje;
@@ -28,7 +29,7 @@ interface Props {
 
 type Pestana =
   | 'identidad' | 'trasfondo' | 'caracteristicas'
-  | 'habilidades' | 'ventajas' | 'equipo' | 'poderes';
+  | 'habilidades' | 'ventajas' | 'equipo' | 'ki' | 'poderes';
 
 const PESTANAS: { id: Pestana; texto: string }[] = [
   { id: 'identidad', texto: 'Identidad' },
@@ -37,6 +38,7 @@ const PESTANAS: { id: Pestana; texto: string }[] = [
   { id: 'ventajas', texto: 'Ventajas' },
   { id: 'habilidades', texto: 'Habilidades' },
   { id: 'equipo', texto: 'Equipo' },
+  { id: 'ki', texto: 'Ki' },
   { id: 'poderes', texto: 'Poderes' },
 ];
 
@@ -523,6 +525,16 @@ export function EditorPersonaje({ personaje, datos, catalogo, reglamento, onCamb
             />
           </section>
         </>
+      )}
+
+      {pestana === 'ki' && (
+        <EditorKi
+          personaje={personaje}
+          ficha={ficha}
+          datos={datos}
+          catalogo={catalogo}
+          onCambiar={onCambiar}
+        />
       )}
 
       {pestana === 'poderes' && (

@@ -9,6 +9,7 @@ import {
   type Personaje,
 } from '../motor/personaje';
 import type { Reglamento } from '../motor/reglamento';
+import { CARACTERISTICAS_KI } from '../motor/ki';
 
 interface Props {
   personaje: Personaje;
@@ -48,6 +49,14 @@ export function VistaFicha({ personaje, datos, reglamento }: Props) {
         <Recurso etiqueta="Cansancio" valor={estado.cansancioActual ?? ficha.cansancio.valor} maximo={ficha.cansancio.valor} />
         <Recurso etiqueta="Zeón" clase="zeon" valor={estado.zeonActual ?? ficha.zeon.valor} maximo={ficha.zeon.valor} />
         <Recurso etiqueta="ACT" clase="zeon" valor={ficha.act.valor} />
+        {ficha.ki.reserva > 0 && (
+          <Recurso
+            etiqueta="Ki"
+            clase="ki"
+            valor={estado.kiActual ?? ficha.ki.reserva}
+            maximo={ficha.ki.reserva}
+          />
+        )}
         <Recurso etiqueta="Presencia" valor={ficha.presencia.valor} />
         <Recurso etiqueta="Nivel" valor={ficha.nivel} />
       </div>
@@ -141,6 +150,93 @@ export function VistaFicha({ personaje, datos, reglamento }: Props) {
           </table>
         </section>
       </div>
+
+      {(ficha.ki.reserva > 0 || ficha.ki.conocimientoMarcial.total > 0) && (
+        <section className="panel" style={{ marginTop: 16 }}>
+          <h2>Dominios del Ki</h2>
+          <div className="rejilla">
+            <div>
+              <table className="tabla">
+                <thead>
+                  <tr>
+                    <th>Car.</th>
+                    <th>Ki</th>
+                    <th>Acum.</th>
+                    <th>Mitad</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {CARACTERISTICAS_KI.map((c) => (
+                    <tr key={c}>
+                      <th scope="row">{c}</th>
+                      <td>{ficha.ki.puntos[c].total}</td>
+                      <td>{ficha.ki.acumulacion[c].total}</td>
+                      <td>{ficha.ki.acumulacion[c].mitad}</td>
+                    </tr>
+                  ))}
+                  <tr>
+                    <th scope="row">Total</th>
+                    <td>
+                      <strong className="destacado">{ficha.ki.reserva}</strong>
+                    </td>
+                    <td>
+                      <strong className="destacado">{ficha.ki.acumulacionTotal}</strong>
+                    </td>
+                    <td>{ficha.ki.acumulacionReducida}</td>
+                  </tr>
+                </tbody>
+              </table>
+              <p style={{ color: 'var(--texto-debil)', fontSize: '0.8rem' }}>
+                Conocimiento Marcial <strong>{ficha.ki.conocimientoMarcial.total}</strong>
+                {ficha.ki.conocimientoMarcial.disponible >= 0
+                  ? `, de los que quedan libres ${ficha.ki.conocimientoMarcial.disponible}.`
+                  : `, y te faltan ${-ficha.ki.conocimientoMarcial.disponible} para lo que has cogido.`}
+                {ficha.ki.unificado && ' Se juega con la Reserva unificada.'}
+              </p>
+            </div>
+
+            <div>
+              {(ficha.ki.deteccion !== null || ficha.ki.ocultacion !== null) && (
+                <p style={{ margin: '0 0 8px' }}>
+                  {ficha.ki.deteccion !== null && (
+                    <>
+                      Detección del Ki <strong className="destacado">{ficha.ki.deteccion}</strong>
+                      {ficha.ki.ocultacion !== null && ' · '}
+                    </>
+                  )}
+                  {ficha.ki.ocultacion !== null && (
+                    <>
+                      Ocultación del Ki{' '}
+                      <strong className="destacado">{ficha.ki.ocultacion}</strong>
+                    </>
+                  )}
+                </p>
+              )}
+              {personaje.ki.limites.length > 0 && (
+                <p style={{ margin: '0 0 8px', fontSize: '0.9rem' }}>
+                  <strong>Límite:</strong> {personaje.ki.limites.join(', ')}
+                </p>
+              )}
+              {personaje.ki.habilidades.length > 0 && (
+                <p style={{ margin: '0 0 8px', fontSize: '0.9rem' }}>
+                  <strong>Habilidades:</strong> {personaje.ki.habilidades.join(', ')}
+                </p>
+              )}
+              {personaje.ki.artesMarciales.length > 0 && (
+                <p style={{ margin: '0 0 8px', fontSize: '0.9rem' }}>
+                  <strong>Artes marciales:</strong> {personaje.ki.artesMarciales.join(', ')}
+                </p>
+              )}
+              {personaje.ki.tecnicas.length > 0 && (
+                <p style={{ margin: 0, fontSize: '0.9rem' }}>
+                  <strong>Técnicas:</strong>{' '}
+                  {personaje.ki.tecnicas.map((t) => `${t.nombre} (${t.CM} CM)`).join(', ')}
+                </p>
+              )}
+            </div>
+          </div>
+        </section>
+      )}
 
       {(personaje.ventajas.length > 0 || personaje.desventajas.length > 0) && (
         <section className="panel" style={{ marginTop: 16 }}>
