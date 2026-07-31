@@ -407,6 +407,130 @@
    "multiplicador": 4
   }
  ],
+ "potencialPsiquico": [
+  {
+   "VOL": 1,
+   "potencial": 0
+  },
+  {
+   "VOL": 2,
+   "potencial": 0
+  },
+  {
+   "VOL": 3,
+   "potencial": 0
+  },
+  {
+   "VOL": 4,
+   "potencial": 0
+  },
+  {
+   "VOL": 5,
+   "potencial": 10
+  },
+  {
+   "VOL": 6,
+   "potencial": 20
+  },
+  {
+   "VOL": 7,
+   "potencial": 30
+  },
+  {
+   "VOL": 8,
+   "potencial": 40
+  },
+  {
+   "VOL": 9,
+   "potencial": 50
+  },
+  {
+   "VOL": 10,
+   "potencial": 60
+  },
+  {
+   "VOL": 11,
+   "potencial": 70
+  },
+  {
+   "VOL": 12,
+   "potencial": 80
+  },
+  {
+   "VOL": 13,
+   "potencial": 90
+  },
+  {
+   "VOL": 14,
+   "potencial": 100
+  },
+  {
+   "VOL": 15,
+   "potencial": 120
+  },
+  {
+   "VOL": 16,
+   "potencial": 140
+  },
+  {
+   "VOL": 17,
+   "potencial": 160
+  },
+  {
+   "VOL": 18,
+   "potencial": 180
+  },
+  {
+   "VOL": 19,
+   "potencial": 200
+  },
+  {
+   "VOL": 20,
+   "potencial": 220
+  }
+ ],
+ "potencialPorCV": [
+  {
+   "CVacumulados": 1,
+   "bono": 10
+  },
+  {
+   "CVacumulados": 3,
+   "bono": 20
+  },
+  {
+   "CVacumulados": 6,
+   "bono": 30
+  },
+  {
+   "CVacumulados": 10,
+   "bono": 40
+  },
+  {
+   "CVacumulados": 15,
+   "bono": 50
+  },
+  {
+   "CVacumulados": 21,
+   "bono": 60
+  },
+  {
+   "CVacumulados": 28,
+   "bono": 70
+  },
+  {
+   "CVacumulados": 36,
+   "bono": 80
+  },
+  {
+   "CVacumulados": 45,
+   "bono": 90
+  },
+  {
+   "CVacumulados": 55,
+   "bono": 100
+  }
+ ],
  "gnosis": [
   {
    "gnosis": 0,

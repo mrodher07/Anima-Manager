@@ -194,6 +194,14 @@ base['fuerza'] = [
 base['acumulacionPorPOD'] = [
     {'POD': clean(r[0].value), 'multiplicador': clean(r[1].value)}
     for r in cells('Tablas', '$P$14:$Q$33') if clean(r[0].value)]
+# Tabla 68 del manual: Potencial Psíquico base según VOL.
+base['potencialPsiquico'] = [
+    {'VOL': clean(r[0].value), 'potencial': clean(r[1].value)}
+    for r in cells('Tablas', '$W$1064:$X$1083') if clean(r[0].value)]
+# Tabla 70: incrementar el Potencial gastando CV (CV acumulados -> bono).
+base['potencialPorCV'] = [
+    {'CVacumulados': clean(r[0].value), 'bono': clean(r[1].value)}
+    for r in cells('Tablas', '$L$1104:$M$1113') if clean(r[0].value)]
 base['gnosis'] = [
     {'gnosis': clean(r[0].value), 'PDs': clean(r[1].value), 'nivelesSobrenat': clean(r[2].value)}
     for r in cells('Tablas', '$W$27:$Y$37')]

@@ -6,7 +6,7 @@ numéricamente contra el personaje de ejemplo, *Meirmeister*.
 
 Notación: `Bono_X` = bono de la característica X según `tablasBase.bonoCaracteristica`.
 
-**Contrastado además con el Core Exxet** (caps. 1–12, páginas 1–200). Lo marcado con
+**Contrastado además con el Core Exxet completo** (caps. 1–27, páginas 1–346). Lo marcado con
 📖 procede del manual; lo marcado con ✔ se verificó numéricamente contra Meirmeister.
 
 ---
@@ -372,11 +372,85 @@ Nivel de Magia = TRUNC(PD ÷ coste) × 5
 
 ---
 
-## Lo que sigue pendiente (tras las 200 primeras páginas)
+## Psíquica 📖 ✔
 
-- **CVs** y **Potencial Psíquico**: el capítulo de psíquica es el 13, más allá de la
-  página 200.
+Core Exxet, cap. 13.
+
+### Potencial Psíquico
+
+```
+Potencial = tablaPotencialPsiquico[VOL] + bonoPorCVgastados + otros
+```
+
+`tablasBase.potencialPsiquico` (Tabla 68 del manual) va por **VOL**: 4 o menos → +0,
+5 → +10, 6 → +20 … 10 → +60, 15 → +120, 20 → +220.
+
+Verificación Meirmeister (VOL 6): **+20** ✔ (la ficha muestra 20).
+Celda `Psíquicos!H11`.
+
+### Uso de un poder
+
+```
+d100 abierto + Potencial Psíquico  vs  dificultad del poder
+```
+
+Se admiten **tiradas abiertas y pifias**; en una pifia, el nivel de pifia se **resta** del
+resultado. El grado de dificultad alcanzado determina qué efecto se consigue: cada poder
+tiene una tabla de efectos por dificultad (RUT / FAC / MED / DIF / MDF / ABS / CIM / IMP /
+INH / ZEN), que es justo lo que guarda `data/reglas/poderesPsiquicos.json`.
+
+### CV (Cargas Vitales)
+
+Los CV son el recurso del psíquico. Usos:
+
+- **Dominar un poder**: cuesta **1 CV permanente**. Para dominar uno de nivel 2 hay que
+  tener antes uno de nivel 1, y así sucesivamente.
+- **Mejorar el potencial**: **+20 por CV libre**, máximo **5 CV** (+100), declarado antes
+  de tirar.
+- **Eliminar la fatiga**: **1 CV** declarado antes de tirar evita perder Cansancio ese
+  asalto, sin importar el nivel de fracaso.
+- **Adquirir innatos**: mantener un poder de forma pasiva, sin volver a tirar. El innato se
+  mantiene a la dificultad **natural** del potencial (sin la tirada ni bonos temporales):
+  con +60 se mantiene en Fácil; con +120, en Difícil.
+
+`tablasBase.potencialPorCV` (Tabla 70) da el bono por CV **acumulados**: 1 CV → +10,
+3 → +20, 6 → +30, 10 → +40, 15 → +50 … 55 → +100.
+
+### Fatiga psíquica
+
+Al fracasar (cuando el resultado cae en una casilla marcada *Fatiga N*), el personaje
+pierde **N CV libres**. Si se queda sin CV libres, pasa a perder **Cansancio**, hasta caer
+inconsciente o descansar. **Afecta incluso a seres infatigables.**
+
+### Proyección Psíquica
+
+Equivalente psíquico de la Proyección Mágica: mide el control sobre el poder, no la
+puntería. Se usa para atacar y defender. Las disciplinas **Telepatía** y **Sentiente** no
+la requieren, pero si no alcanzan ni el 10 %, el objetivo obtiene **+60 a su RP**.
+
+`disciplinasPsiquicas.json` guarda los modificadores de entorno por disciplina
+(Piroquinesis, Crioquinesis, Electromagnetismo, contacto físico…).
+
+---
+
+## Experiencia 📖
+
+Cap. 15. El reparto de PX es **discrecional del Director de Juego**, no una fórmula:
+se premian las acciones difíciles y relevantes con **1–5 puntos** según la dificultad
+para *ese* personaje y la importancia de la escena. Una acción que el personaje supera sin
+esfuerzo no da experiencia.
+
+Implicación para la app: la gestión de campaña debe permitir **asignar PX a mano**, no
+calcularlos.
+
+---
+
+## Lo que sigue pendiente
+
+Ya no hay nada bloqueado por falta de manual. Queda trabajo de volcado:
+
+- **Técnicas de Ki**: el cap. 10 describe el constructor; falta volcar `Tablas Técnicas`
+  (854 filas) a JSON.
+- **Mejoras de Sheele** (`Tablas Sheele`, 242 filas) y **raíces culturales** (52).
+- **Creación de Seres** (cap. 26) y el **compendio de bestiario** (cap. 27).
 - Coste de **cambio de categoría** en multiclase.
-- **Técnicas de Ki**: el cap. 10 describe el constructor, falta volcar
-  `Tablas Técnicas` (854 filas) a JSON.
-- **Convocatoria** (cap. 12): leído por encima, sin volcar.
