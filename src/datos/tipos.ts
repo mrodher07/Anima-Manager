@@ -135,6 +135,21 @@ export interface EsferaMetamagica {
   coste: number;
 }
 
+/**
+ * Qué pide una criatura para ser invocada por Ki. Apéndice II de *Los que Caminaron con
+ * Nosotros*, que completa los Sellos del Dominus: ese dice **cómo** se invoca, y este
+ * **qué** pide cada ser.
+ */
+export interface SellosCriatura {
+  criatura: string;
+  nivel: number;
+  /** A veces es «Esp.» o un rango como «30/40». */
+  gnosis: string;
+  /** «Fuego Mayor 1, Aire 1», o el motivo de que no se pueda: «Natural», «No Muerto»… */
+  sellos: string;
+  invocable: boolean;
+}
+
 /** Habilidad del Ki o del Némesis. Dominus Exxet, cap. 3. */
 export interface HabilidadKiCatalogo {
   habilidad: string;
@@ -216,6 +231,7 @@ export interface Colecciones {
   habilidadesKi: HabilidadKiCatalogo;
   legadosSangre: LegadoSangre;
   metamagia: EsferaMetamagica;
+  sellosCriatura: SellosCriatura;
   sheele: EntradaTabla;
   efectosTecnica: EfectoTecnica;
   tiposEfectoTecnica: TipoEfectoTecnica;
@@ -243,6 +259,7 @@ export const CLAVE_DE: Record<NombreColeccion, string> = {
   habilidadesKi: 'habilidad',
   legadosSangre: 'legado',
   metamagia: 'posicion',
+  sellosCriatura: 'criatura',
   sheele: 'mejora',
   // Un efecto tiene varias opciones, así que la clave es la pareja efecto + opción.
   efectosTecnica: 'referencia',

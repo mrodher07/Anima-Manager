@@ -1,5 +1,11 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Catalogo, PERSONALIZADOS_VACIOS, paquetePersonalizado } from '../datos/paquetes';
+import {
+  CORE_EXXET,
+  Catalogo,
+  PAQUETES,
+  PERSONALIZADOS_VACIOS,
+  paquetePersonalizado,
+} from '../datos/paquetes';
 import { EditorPersonaje } from './EditorPersonaje';
 import { VistaFicha } from './VistaFicha';
 import { VistaMesa } from './VistaMesa';
@@ -156,6 +162,7 @@ export function App() {
               <VistaMesa
                 personaje={personaje}
                 datos={datos}
+                catalogo={catalogo}
                 reglamento={reglamento}
                 campanaId={campanaId}
                 onCambiar={guardar}
@@ -317,19 +324,50 @@ export function App() {
               </>
             )}
 
-            <h2 style={{ marginTop: 22 }}>Manuales activos</h2>
-            <table>
-              <thead><tr><th>Manual</th><th>Sigla</th><th>Contenido</th></tr></thead>
-              <tbody>
-                {catalogo.paquetesActivos.map((p) => (
-                  <tr key={p.id}>
-                    <td className="destacado">{p.nombre}</td>
-                    <td>{p.sigla}</td>
-                    <td style={{ color: 'var(--texto-tenue)' }}>{p.descripcion}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+            <h2 style={{ marginTop: 22 }}>Manuales</h2>
+            <p style={{ color: 'var(--texto-tenue)', fontSize: '0.86rem', marginTop: 0 }}>
+              Cada manual es un paquete de contenido. Se combinan por orden, y una entrada
+              con el mismo nombre sustituye a la anterior: así un suplemento puede además
+              corregir el básico. Lo que active cada campaña es cosa suya.
+            </p>
+            {campana ? (
+              <div className="lista-seleccion">
+                {PAQUETES.map((p) => {
+                  const activo = paquetes.includes(p.id);
+                  const esBasico = p.id === CORE_EXXET.id;
+                  return (
+                    <label key={p.id} className={activo ? 'elegida' : undefined}>
+                      <input
+                        type="checkbox"
+                        checked={activo}
+                        // El básico no se puede quitar: una campaña necesita al menos uno.
+                        disabled={esBasico}
+                        onChange={() =>
+                          void guardarCampana({
+                            ...campana,
+                            paquetes: activo
+                              ? paquetes.filter((x) => x !== p.id)
+                              : [...paquetes, p.id],
+                          })
+                        }
+                      />
+                      <span>
+                        {p.nombre}
+                        <small style={{ display: 'block', color: 'var(--texto-debil)' }}>
+                          {p.descripcion}
+                          {esBasico && ' · siempre activo'}
+                        </small>
+                      </span>
+                      <em>{p.sigla}</em>
+                    </label>
+                  );
+                })}
+              </div>
+            ) : (
+              <p style={{ color: 'var(--texto-debil)' }}>
+                Elige o crea una campaña para decidir qué manuales usa.
+              </p>
+            )}
           </section>
         )}
       </main>

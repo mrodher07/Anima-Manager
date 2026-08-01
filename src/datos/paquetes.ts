@@ -83,10 +83,32 @@ export const CORE_EXXET: PaqueteContenido = {
 };
 
 /**
+ * *Los que Caminaron con Nosotros*: el compendio de criaturas.
+ *
+ * Es el primer suplemento que llega como paquete aparte en vez de venir ya mezclado en la
+ * ficha de Excel, así que es el que ejercita de verdad la combinación: aporta razas nuevas
+ * y la tabla de Sellos por criatura, y se suma al básico sin tocarlo.
+ */
+export const LOS_QUE_CAMINARON: PaqueteContenido = {
+  id: 'los-que-caminaron',
+  nombre: 'Los que Caminaron con Nosotros',
+  sigla: 'LQC',
+  descripcion: 'Compendio de criaturas: bestiario, Razas Perdidas y Sellos por criatura.',
+  prioridad: 10,
+  cargar: async (coleccion) => {
+    const modulos = import.meta.glob('../../data/los-que-caminaron/*.json');
+    const cargador = modulos[`../../data/los-que-caminaron/${coleccion}.json`];
+    if (!cargador) return null;
+    const mod = (await cargador()) as { default: unknown };
+    return mod.default as never;
+  },
+};
+
+/**
  * Paquetes conocidos. Al llegar un manual nuevo basta con añadir aquí su entrada y sus
  * JSON; ni el motor ni la interfaz necesitan cambiar.
  */
-export const PAQUETES: PaqueteContenido[] = [CORE_EXXET];
+export const PAQUETES: PaqueteContenido[] = [CORE_EXXET, LOS_QUE_CAMINARON];
 
 export function registrarPaquete(paquete: PaqueteContenido): void {
   const i = PAQUETES.findIndex((p) => p.id === paquete.id);

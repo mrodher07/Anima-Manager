@@ -304,6 +304,21 @@ export const ESQUEMAS: EsquemaColeccion[] = [
     ],
   },
   {
+    coleccion: 'sellosCriatura',
+    singular: 'criatura invocable',
+    plural: 'Sellos por criatura',
+    clave: 'criatura',
+    ayuda:
+      'Qué pide cada criatura para ser invocada por Ki. Si no se puede invocar, escribe el ' +
+      'motivo donde van los Sellos: «Natural», «No Muerto», «Creación Mágica»…',
+    campos: [
+      txt('criatura', 'Nombre'),
+      num('nivel', 'Nivel', 'Valores', 70),
+      txt('gnosis', 'Gnosis', '20, «Esp.» o un rango como «30/40»'),
+      txt('sellos', 'Sellos', 'Fuego Mayor 1, Aire 1'),
+    ],
+  },
+  {
     coleccion: 'sheele',
     singular: 'mejora de Sheele',
     plural: 'Mejoras de Sheele',

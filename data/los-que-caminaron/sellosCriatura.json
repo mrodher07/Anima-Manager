@@ -1,0 +1,695 @@
+[
+ {
+  "criatura": "Salamandra Ígnea",
+  "nivel": 0,
+  "gnosis": "10",
+  "sellos": "Fuego 1",
+  "invocable": true
+ },
+ {
+  "criatura": "Carroñero de Almas",
+  "nivel": 1,
+  "gnosis": "20",
+  "sellos": "Madera 1, Aire 1",
+  "invocable": true
+ },
+ {
+  "criatura": "Esqueleto",
+  "nivel": 1,
+  "gnosis": "10",
+  "sellos": "No Muerto",
+  "invocable": false
+ },
+ {
+  "criatura": "Helleborum Gnidium",
+  "nivel": 1,
+  "gnosis": "5",
+  "sellos": "Madera 2",
+  "invocable": true
+ },
+ {
+  "criatura": "Hormiga Roja O.",
+  "nivel": 1,
+  "gnosis": "0",
+  "sellos": "Natural",
+  "invocable": false
+ },
+ {
+  "criatura": "Rana Globo",
+  "nivel": 1,
+  "gnosis": "0",
+  "sellos": "Natural",
+  "invocable": false
+ },
+ {
+  "criatura": "Zopo",
+  "nivel": 1,
+  "gnosis": "0",
+  "sellos": "Natural",
+  "invocable": false
+ },
+ {
+  "criatura": "Balzak Guerrero",
+  "nivel": 2,
+  "gnosis": "5",
+  "sellos": "Natural",
+  "invocable": false
+ },
+ {
+  "criatura": "Balzak Sacerdote",
+  "nivel": 2,
+  "gnosis": "5",
+  "sellos": "Natural",
+  "invocable": false
+ },
+ {
+  "criatura": "Drone",
+  "nivel": 2,
+  "gnosis": "Esp.",
+  "sellos": "Creación",
+  "invocable": false
+ },
+ {
+  "criatura": "Fantasma Menor",
+  "nivel": 2,
+  "gnosis": "10",
+  "sellos": "Aire 2, Metal 1",
+  "invocable": true
+ },
+ {
+  "criatura": "Lapsia",
+  "nivel": 2,
+  "gnosis": "0",
+  "sellos": "Natural",
+  "invocable": false
+ },
+ {
+  "criatura": "Marioneta Menor",
+  "nivel": 2,
+  "gnosis": "10",
+  "sellos": "Creación Mágica",
+  "invocable": false
+ },
+ {
+  "criatura": "Blatoddea",
+  "nivel": 3,
+  "gnosis": "15",
+  "sellos": "Madera 4",
+  "invocable": true
+ },
+ {
+  "criatura": "Cath Flidais",
+  "nivel": 3,
+  "gnosis": "15",
+  "sellos": "Madera 3, Fuego 1",
+  "invocable": true
+ },
+ {
+  "criatura": "Chichusei",
+  "nivel": 3,
+  "gnosis": "15",
+  "sellos": "Agua 2, Oscuridad 2",
+  "invocable": true
+ },
+ {
+  "criatura": "Gusanos de las Profundidades",
+  "nivel": 3,
+  "gnosis": "0",
+  "sellos": "Natural",
+  "invocable": false
+ },
+ {
+  "criatura": "Gwyllgi",
+  "nivel": 3,
+  "gnosis": "15",
+  "sellos": "No Muerto",
+  "invocable": false
+ },
+ {
+  "criatura": "Hormiga Roja G.",
+  "nivel": 3,
+  "gnosis": "0",
+  "sellos": "Natural",
+  "invocable": false
+ },
+ {
+  "criatura": "Súcubo Hija de Abrael",
+  "nivel": 3,
+  "gnosis": "15",
+  "sellos": "Agua 2, Aire 2",
+  "invocable": true
+ },
+ {
+  "criatura": "Súcubo Hija de Lilith",
+  "nivel": 3,
+  "gnosis": "15",
+  "sellos": "Agua 2, Aire 2",
+  "invocable": true
+ },
+ {
+  "criatura": "Yinnum",
+  "nivel": 3,
+  "gnosis": "25",
+  "sellos": "Aire 3, Fuego 1",
+  "invocable": true
+ },
+ {
+  "criatura": "las Profundidades",
+  "nivel": 3,
+  "gnosis": "0",
+  "sellos": "Natural",
+  "invocable": false
+ },
+ {
+  "criatura": "Armadura Animada",
+  "nivel": 4,
+  "gnosis": "15",
+  "sellos": "Creación Mágica",
+  "invocable": false
+ },
+ {
+  "criatura": "Bestia Espectral",
+  "nivel": 4,
+  "gnosis": "20",
+  "sellos": "No Muerto",
+  "invocable": false
+ },
+ {
+  "criatura": "Fantasma Mayor",
+  "nivel": 4,
+  "gnosis": "15",
+  "sellos": "Aire 3, Metal 2",
+  "invocable": true
+ },
+ {
+  "criatura": "Hamadría",
+  "nivel": 4,
+  "gnosis": "20",
+  "sellos": "Madera 3, Metal 2",
+  "invocable": true
+ },
+ {
+  "criatura": "Hijo de Baal",
+  "nivel": 4,
+  "gnosis": "20",
+  "sellos": "Fuego 3, Aire 2",
+  "invocable": true
+ },
+ {
+  "criatura": "Meragrifo",
+  "nivel": 4,
+  "gnosis": "5",
+  "sellos": "Natural",
+  "invocable": false
+ },
+ {
+  "criatura": "Observador Espectral",
+  "nivel": 4,
+  "gnosis": "20",
+  "sellos": "No Muerto",
+  "invocable": false
+ },
+ {
+  "criatura": "Oni Ashura Menor",
+  "nivel": 4,
+  "gnosis": "20",
+  "sellos": "Metal 2, Fuego 3",
+  "invocable": true
+ },
+ {
+  "criatura": "Stribog",
+  "nivel": 4,
+  "gnosis": "20",
+  "sellos": "Aire 2, Fuego 2, Metal 1",
+  "invocable": true
+ },
+ {
+  "criatura": "Type-005",
+  "nivel": 4,
+  "gnosis": "15",
+  "sellos": "No Muerto",
+  "invocable": false
+ },
+ {
+  "criatura": "Zaqqun",
+  "nivel": 4,
+  "gnosis": "20",
+  "sellos": "Madera 2, Metal 3",
+  "invocable": true
+ },
+ {
+  "criatura": "Banshee",
+  "nivel": 5,
+  "gnosis": "25",
+  "sellos": "Aire 2, Agua 2, Madera 2",
+  "invocable": true
+ },
+ {
+  "criatura": "Barroque",
+  "nivel": 5,
+  "gnosis": "25",
+  "sellos": "Aire 2, Agua 2, Fuego 1, Mad. 1",
+  "invocable": true
+ },
+ {
+  "criatura": "Cazador",
+  "nivel": 5,
+  "gnosis": "20",
+  "sellos": "No Muerto / Creación Mágica",
+  "invocable": true
+ },
+ {
+  "criatura": "Ignis",
+  "nivel": 5,
+  "gnosis": "15",
+  "sellos": "Fuego 4, Aire 2",
+  "invocable": true
+ },
+ {
+  "criatura": "Marioneta Mayor",
+  "nivel": 5,
+  "gnosis": "15",
+  "sellos": "Creación Mágica",
+  "invocable": false
+ },
+ {
+  "criatura": "Medusa",
+  "nivel": 5,
+  "gnosis": "10",
+  "sellos": "Fuego 3, Agua 3",
+  "invocable": true
+ },
+ {
+  "criatura": "Minotauro",
+  "nivel": 5,
+  "gnosis": "5",
+  "sellos": "Natural",
+  "invocable": false
+ },
+ {
+  "criatura": "Oni Menor",
+  "nivel": 5,
+  "gnosis": "20",
+  "sellos": "Variable",
+  "invocable": true
+ },
+ {
+  "criatura": "Sierpe Menor",
+  "nivel": 5,
+  "gnosis": "15",
+  "sellos": "Natural",
+  "invocable": false
+ },
+ {
+  "criatura": "Emeth",
+  "nivel": 6,
+  "gnosis": "20",
+  "sellos": "Creación Mágica",
+  "invocable": false
+ },
+ {
+  "criatura": "Huldra",
+  "nivel": 6,
+  "gnosis": "20",
+  "sellos": "Madera Mayor 1",
+  "invocable": true
+ },
+ {
+  "criatura": "Manfeitor",
+  "nivel": 6,
+  "gnosis": "25",
+  "sellos": "Madera Mayor 1",
+  "invocable": true
+ },
+ {
+  "criatura": "Mantícora",
+  "nivel": 6,
+  "gnosis": "20",
+  "sellos": "Fuego Mayor 1",
+  "invocable": true
+ },
+ {
+  "criatura": "Nyx",
+  "nivel": 6,
+  "gnosis": "15",
+  "sellos": "Madera Mayor 1",
+  "invocable": true
+ },
+ {
+  "criatura": "Quimera Ártica",
+  "nivel": 6,
+  "gnosis": "15",
+  "sellos": "Madera Mayor 1",
+  "invocable": true
+ },
+ {
+  "criatura": "Rosa de Sangre",
+  "nivel": 6,
+  "gnosis": "20",
+  "sellos": "Agua Mayor 1",
+  "invocable": true
+ },
+ {
+  "criatura": "Shinigami Menor",
+  "nivel": 6,
+  "gnosis": "25",
+  "sellos": "Aire Mayor 1",
+  "invocable": true
+ },
+ {
+  "criatura": "Simbiosis",
+  "nivel": 6,
+  "gnosis": "20",
+  "sellos": "Fuego Mayor 1",
+  "invocable": true
+ },
+ {
+  "criatura": "Tecnócrita",
+  "nivel": 6,
+  "gnosis": "Esp.",
+  "sellos": "Creación",
+  "invocable": false
+ },
+ {
+  "criatura": "Alius",
+  "nivel": 7,
+  "gnosis": "20",
+  "sellos": "Fuego Mayor 1, Aire 1",
+  "invocable": true
+ },
+ {
+  "criatura": "Archiquimera",
+  "nivel": 7,
+  "gnosis": "25",
+  "sellos": "Aire Mayor 1, Metal 1",
+  "invocable": true
+ },
+ {
+  "criatura": "Caballero del Vacío",
+  "nivel": 7,
+  "gnosis": "20",
+  "sellos": "No Muerto",
+  "invocable": false
+ },
+ {
+  "criatura": "Cerberus",
+  "nivel": 7,
+  "gnosis": "25",
+  "sellos": "Fuego Mayor 1, Madera 1",
+  "invocable": true
+ },
+ {
+  "criatura": "Esfinge",
+  "nivel": 7,
+  "gnosis": "25",
+  "sellos": "Aire Mayor 1, Agua 1",
+  "invocable": true
+ },
+ {
+  "criatura": "Ginnungaus",
+  "nivel": 7,
+  "gnosis": "30",
+  "sellos": "Metal Mayor 1, Fuego 1",
+  "invocable": true
+ },
+ {
+  "criatura": "Humbaba",
+  "nivel": 7,
+  "gnosis": "25",
+  "sellos": "Metal Mayor 1, Madera 1",
+  "invocable": true
+ },
+ {
+  "criatura": "Ira de la Naturaleza",
+  "nivel": 7,
+  "gnosis": "25",
+  "sellos": "Madera Mayor 1, Fuego 1",
+  "invocable": true
+ },
+ {
+  "criatura": "Portador Menor",
+  "nivel": 7,
+  "gnosis": "Esp.",
+  "sellos": "Creación",
+  "invocable": false
+ },
+ {
+  "criatura": "Raziel Archetypum",
+  "nivel": 7,
+  "gnosis": "20",
+  "sellos": "Creación Mágica",
+  "invocable": false
+ },
+ {
+  "criatura": "Recolector de Huesos",
+  "nivel": 7,
+  "gnosis": "20",
+  "sellos": "Madera Mayor 1, Metal 1",
+  "invocable": true
+ },
+ {
+  "criatura": "Sierpe Mayor",
+  "nivel": 7,
+  "gnosis": "15",
+  "sellos": "Natural",
+  "invocable": false
+ },
+ {
+  "criatura": "Valkyria",
+  "nivel": 7,
+  "gnosis": "25",
+  "sellos": "No Muerto",
+  "invocable": false
+ },
+ {
+  "criatura": "Abominación",
+  "nivel": 8,
+  "gnosis": "25",
+  "sellos": "Metal Mayor 1, Madera 2, Fuego 1",
+  "invocable": true
+ },
+ {
+  "criatura": "Ahriman",
+  "nivel": 8,
+  "gnosis": "30",
+  "sellos": "Madera Mayor 1, Aire 3",
+  "invocable": true
+ },
+ {
+  "criatura": "Belphe",
+  "nivel": 8,
+  "gnosis": "30",
+  "sellos": "Fuego Mayor 1, Aire 2, Agua 1",
+  "invocable": true
+ },
+ {
+  "criatura": "Dementia",
+  "nivel": 8,
+  "gnosis": "30/40",
+  "sellos": "Fuego Mayor 1, Aire 3",
+  "invocable": true
+ },
+ {
+  "criatura": "Doncella del Hielo",
+  "nivel": 8,
+  "gnosis": "25",
+  "sellos": "Agua Mayor 1, Aire 2, Fuego 1",
+  "invocable": true
+ },
+ {
+  "criatura": "Necrogolem",
+  "nivel": 8,
+  "gnosis": "20",
+  "sellos": "No Muerto / Creación Mágica",
+  "invocable": true
+ },
+ {
+  "criatura": "Oni Ashura Mayor",
+  "nivel": 8,
+  "gnosis": "25",
+  "sellos": "Metal Mayor 1, Fuego 3",
+  "invocable": true
+ },
+ {
+  "criatura": "Portador Mayor",
+  "nivel": 8,
+  "gnosis": "Esp.",
+  "sellos": "Creación",
+  "invocable": false
+ },
+ {
+  "criatura": "Al-Djinn",
+  "nivel": 9,
+  "gnosis": "35",
+  "sellos": "Aire Mayor 1, Fuego 4, Madera 1",
+  "invocable": true
+ },
+ {
+  "criatura": "Dúllahan",
+  "nivel": 9,
+  "gnosis": "25",
+  "sellos": "Metal Mayor 1, Madera 4, Fuego 1",
+  "invocable": true
+ },
+ {
+  "criatura": "Etrien Gnosos",
+  "nivel": 9,
+  "gnosis": "30",
+  "sellos": "Aire Mayor 1, Tierra 5",
+  "invocable": true
+ },
+ {
+  "criatura": "Fantasma Arcano",
+  "nivel": 9,
+  "gnosis": "25",
+  "sellos": "Aire Mayor 1, Metal 5",
+  "invocable": true
+ },
+ {
+  "criatura": "Maestro de las Sombras",
+  "nivel": 9,
+  "gnosis": "30",
+  "sellos": "Mad. M.1, Metal 3, Aire 1, Fuego 1",
+  "invocable": true
+ },
+ {
+  "criatura": "Pretoriano",
+  "nivel": 9,
+  "gnosis": "Esp.",
+  "sellos": "Creación",
+  "invocable": false
+ },
+ {
+  "criatura": "Raziel NK-X Ver. 1.0",
+  "nivel": 9,
+  "gnosis": "25",
+  "sellos": "No Muerto / Creación Mágica",
+  "invocable": true
+ },
+ {
+  "criatura": "Agni",
+  "nivel": 10,
+  "gnosis": "30",
+  "sellos": "Fuego Mayor 2",
+  "invocable": true
+ },
+ {
+  "criatura": "Arias Vayu",
+  "nivel": 10,
+  "gnosis": "30",
+  "sellos": "Aire Mayor 2",
+  "invocable": true
+ },
+ {
+  "criatura": "Chthon",
+  "nivel": 10,
+  "gnosis": "30",
+  "sellos": "Metal Mayor 2",
+  "invocable": true
+ },
+ {
+  "criatura": "Señor de los Muertos",
+  "nivel": 10,
+  "gnosis": "30",
+  "sellos": "No Muerto",
+  "invocable": false
+ },
+ {
+  "criatura": "Shinigami Mayor",
+  "nivel": 10,
+  "gnosis": "30",
+  "sellos": "Aire Mayor 2",
+  "invocable": true
+ },
+ {
+  "criatura": "Varuna",
+  "nivel": 10,
+  "gnosis": "30",
+  "sellos": "Agua Mayor 2",
+  "invocable": true
+ },
+ {
+  "criatura": "Behemoth",
+  "nivel": 11,
+  "gnosis": "35",
+  "sellos": "Fuego Mayor 2, Metal 1",
+  "invocable": true
+ },
+ {
+  "criatura": "Duque Infernal",
+  "nivel": 11,
+  "gnosis": "30",
+  "sellos": "Mad. M. 1, Fuego Mayor 1, Aire 1",
+  "invocable": true
+ },
+ {
+  "criatura": "La Sombra de Omega",
+  "nivel": 11,
+  "gnosis": "35",
+  "sellos": "NA",
+  "invocable": false
+ },
+ {
+  "criatura": "Hecatondies Sigma",
+  "nivel": 12,
+  "gnosis": "30",
+  "sellos": "Creación Mágica",
+  "invocable": false
+ },
+ {
+  "criatura": "Seraphim Potestas",
+  "nivel": 12,
+  "gnosis": "35",
+  "sellos": "Fuego Mayor 2, Aire 5",
+  "invocable": true
+ },
+ {
+  "criatura": "Dragón de C’iel",
+  "nivel": 13,
+  "gnosis": "35",
+  "sellos": "Fuego Mayor 3",
+  "invocable": true
+ },
+ {
+  "criatura": "Dragón de Gaira",
+  "nivel": 13,
+  "gnosis": "35",
+  "sellos": "Madera Mayor 3",
+  "invocable": true
+ },
+ {
+  "criatura": "Gurmah-Gharus",
+  "nivel": 13,
+  "gnosis": "20",
+  "sellos": "Natural",
+  "invocable": false
+ },
+ {
+  "criatura": "El Orbe del Infinito",
+  "nivel": 14,
+  "gnosis": "40",
+  "sellos": "NA",
+  "invocable": false
+ },
+ {
+  "criatura": "Rudraskha",
+  "nivel": 15,
+  "gnosis": "40",
+  "sellos": "NA",
+  "invocable": false
+ },
+ {
+  "criatura": "El Señor del Infinito",
+  "nivel": 16,
+  "gnosis": "40",
+  "sellos": "NA",
+  "invocable": false
+ },
+ {
+  "criatura": "Lucifer",
+  "nivel": 16,
+  "gnosis": "40",
+  "sellos": "NA",
+  "invocable": false
+ }
+]

@@ -802,6 +802,51 @@ o más** son inmunes, salvo que quieran venir o que tu Gnosis sea mayor.
 > Si la criatura **acepta** el Pacto no lo decide la aplicación. El manual dice que vale
 > cualquier cosa, «desde llegar a un acuerdo con ella hasta forzarla violentamente».
 
+## Los que Caminaron con Nosotros
+
+El primer suplemento que llega **como paquete aparte**, en vez de venir ya mezclado en la
+ficha de Excel. Vive en `data/los-que-caminaron/` y se activa por campaña desde la pestaña
+de Campañas, donde ahora hay un interruptor por manual (antes la lista era sólo de lectura).
+Es el que de verdad ejercita la combinación de paquetes que se diseñó desde el principio.
+
+### Apéndice II: Sellos por criatura ✔
+
+**99 criaturas** con su nivel, su Gnosis y los Sellos que piden. Completa los Sellos del
+Dominus, que dicen **cómo** se invoca pero no **qué** pide cada ser. En la mesa se elige la
+criatura de una lista y la calculadora rellena el nivel y avisa si no es invocable.
+
+De las 99, **61 responden a los Sellos**. Las demás llevan el motivo donde irían: `Natural`
+(14), `No Muerto` (8), `Creación Mágica` (6), `Creación` (5) y `NA` (5).
+
+> El apéndice está maquetado **a dos columnas**. Sin `pdftotext -layout` los nombres, los
+> niveles y los Sellos salen entrelazados y el resultado es inservible. `tools/extraer-sellos-criaturas.py`
+> lo extrae y avisa de criaturas repetidas o de Sellos sospechosamente largos —fue ese
+> aviso el que detectó que dos filas se estaban contando dos veces—. Sólo **una** fila se
+> transcribe a mano: la de los Gusanos de las Profundidades, cuyo nombre ocupa dos líneas.
+
+### Las Razas Perdidas 📖
+
+Capítulo 2. Transcritas a mano, como los Legados. Sólo se cargan en la ficha los
+modificadores **permanentes**; los condicionales se describen para aplicarlos en mesa,
+porque dependen de la situación.
+
+| Raza | Permanentes | Natura | Aj. nivel |
+|---|---|---|---|
+| **Devah** | INT/VOL/POD +1, FUE −1, CON −2, Tamaño +2, RF/RE −10 | 5 | +2 |
+| **Vetala** | ninguno: todos sus bonos son condicionales | 5 | +2 |
+| **Tuan Dalyr** | PER +1 | 0 | +2 |
+| **Nephilim Devah** | — | ⚠ | ⚠ |
+| **Nephilim Vetala** | RE −20 | ⚠ | ⚠ |
+
+> ⚠ El manual **no repite** la Natura Base ni el Modificador de Nivel en las secciones
+> Nephilim, así que no se ponen: inventarlos sería justo lo que no toca. Quien los tenga
+> puede rellenarlos desde Contenido propio.
+
+Ejemplos de bonos condicionales que quedan descritos pero no se aplican solos: el Vetala
+suma +1 a FUE y POD **de noche** y +10 a Toda Acción tras beber sangre; el Tuan Dalyr aplica
+−2 a INT y VOL **mientras está transformado**, y en su noche de ocaso pierde todas sus
+ventajas raciales.
+
 ## Arcana Exxet
 
 **Los conjuros y los poderes psíquicos del Arcana ya venían en el Excel.** Las 14 sub-vías

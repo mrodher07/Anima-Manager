@@ -16,10 +16,13 @@ import { calcular, type DatosCalculo, type Personaje } from '../motor/personaje'
 import type { Reglamento } from '../motor/reglamento';
 import { useEnemigos } from './VistaBestiario';
 import { Imagen } from './Imagen';
+import { useColeccion } from './estado';
+import type { Catalogo } from '../datos/paquetes';
 
 interface Props {
   personaje: Personaje;
   datos: DatosCalculo;
+  catalogo: Catalogo;
   reglamento: Reglamento;
   campanaId: string | null;
   onCambiar: (p: Personaje) => void;
@@ -39,7 +42,7 @@ function describeTirada(t: Tirada): string {
   return `${t.total}`;
 }
 
-export function VistaMesa({ personaje, datos, reglamento, campanaId, onCambiar }: Props) {
+export function VistaMesa({ personaje, datos, catalogo, reglamento, campanaId, onCambiar }: Props) {
   const { enemigos, guardar: guardarEnemigo } = useEnemigos(campanaId);
   const [enemigoId, setEnemigoId] = useState<string>('');
   const ficha = calcular(personaje, datos, reglamento);
@@ -56,6 +59,9 @@ export function VistaMesa({ personaje, datos, reglamento, campanaId, onCambiar }
   const [refuerzoMenor, setRefuerzoMenor] = useState(0);
   const [refuerzoMayor, setRefuerzoMayor] = useState(0);
   const [esPacto, setEsPacto] = useState(false);
+  const [criaturaElegida, setCriaturaElegida] = useState('');
+  const sellosCriatura = useColeccion(catalogo, 'sellosCriatura');
+  const criaturaFicha = sellosCriatura.find((c) => c.criatura === criaturaElegida);
 
   const enemigo = enemigos.find((e) => e.id === enemigoId) ?? null;
 
@@ -243,6 +249,37 @@ export function VistaMesa({ personaje, datos, reglamento, campanaId, onCambiar }
             Sellos dominados: {(personaje.ki?.sellos ?? []).join(', ')}. Los de refuerzo suman
             +5 (Menor) y +25 (Mayor) al Control.
           </p>
+          <div className="campo">
+            <label htmlFor="criatura-catalogo">Criatura del catálogo</label>
+            <select
+              id="criatura-catalogo"
+              value={criaturaElegida}
+              onChange={(e) => {
+                setCriaturaElegida(e.target.value);
+                const c = sellosCriatura.find((x) => x.criatura === e.target.value);
+                if (c) setNivelCriatura(c.nivel);
+              }}
+            >
+              <option value="">A mano…</option>
+              {sellosCriatura.map((c) => (
+                <option key={c.criatura} value={c.criatura}>
+                  {c.criatura} · nivel {c.nivel} · {c.sellos}
+                </option>
+              ))}
+            </select>
+          </div>
+          {criaturaFicha && !criaturaFicha.invocable && (
+            <p className="aviso">
+              {criaturaFicha.criatura} no responde a los Sellos: es «{criaturaFicha.sellos}».
+            </p>
+          )}
+          {criaturaFicha?.invocable && (
+            <p style={{ fontSize: '0.9rem', margin: '0 0 10px' }}>
+              Pide <strong className="destacado">{criaturaFicha.sellos}</strong> · Gnosis{' '}
+              {criaturaFicha.gnosis}
+            </p>
+          )}
+
           <div className="rejilla">
             <div className="campo">
               <label htmlFor="nivel-criatura">Nivel de la criatura</label>
