@@ -171,7 +171,9 @@ export function App() {
           </>
         )}
 
-        {seccion === 'bestiario' && <VistaBestiario campanaId={campanaId} />}
+        {seccion === 'bestiario' && (
+          <VistaBestiario campanaId={campanaId} catalogo={catalogo} />
+        )}
 
         {seccion === 'galeria' && <VistaGaleria campanaId={campanaId} />}
 

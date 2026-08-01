@@ -304,6 +304,36 @@ export const ESQUEMAS: EsquemaColeccion[] = [
     ],
   },
   {
+    coleccion: 'bestiario',
+    singular: 'criatura',
+    plural: 'Criaturas de manual',
+    clave: 'criatura',
+    ayuda:
+      'Fichas de criatura tal como las escribe el manual. Casi todo es texto libre, porque ' +
+      'ahí caben matices que un número solo no recoge: «175 Tentáculos (Especial), 200 ' +
+      'Vaciar mente». Al traerla al bestiario se toma el primer número de cada campo y el ' +
+      'resto se copia a las notas.',
+    campos: [
+      txt('criatura', 'Nombre'),
+      txt('nivel', 'Nivel'),
+      txt('clase', 'Clase', 'Entre mundos 25, Elemental 20…'),
+      txt('puntosVida', 'Puntos de Vida', '3.000 (Especial)'),
+      txt('categoria', 'Categoría'),
+      txt('turno', 'Turno', '60 Natural'),
+      txt('ataque', 'Habilidad de ataque'),
+      txt('defensa', 'Habilidad de defensa', 'Un número, o «Acumulación»'),
+      txt('dano', 'Daño', '130 Tentáculos (Con)'),
+      txt('TA', 'TA', 'Natural 6, o valor por tipo'),
+      txt('tamano', 'Tamaño'),
+      txt('movimiento', 'Movimiento'),
+      txt('regeneracion', 'Regeneración'),
+      txt('cansancio', 'Cansancio'),
+      { clave: 'poderes', etiqueta: 'Poderes', tipo: 'parrafo' },
+      { clave: 'habilidadesEsenciales', etiqueta: 'Habilidades esenciales', tipo: 'parrafo' },
+      { clave: 'secundarias', etiqueta: 'Habilidades secundarias', tipo: 'parrafo' },
+    ],
+  },
+  {
     coleccion: 'sellosCriatura',
     singular: 'criatura invocable',
     plural: 'Sellos por criatura',

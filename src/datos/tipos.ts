@@ -150,6 +150,47 @@ export interface SellosCriatura {
   invocable: boolean;
 }
 
+/**
+ * Ficha de criatura tal como la escribe el manual. Casi todos los campos son texto libre
+ * («175 Tentáculos (Especial), 200 Vaciar mente»), porque el manual mete ahí matices que
+ * un número solo no recoge. `src/motor/bestiario.ts` los traduce a la ficha reducida.
+ */
+export interface CriaturaManual {
+  criatura: string;
+  nivel: string;
+  clase?: string;
+  puntosVida?: string;
+  categoria?: string;
+  caracteristicas?: Record<string, number>;
+  resistencias?: Record<string, number>;
+  turno?: string;
+  ataque?: string;
+  defensa?: string;
+  dano?: string;
+  TA?: string;
+  ACT?: string;
+  zeon?: string;
+  proyeccionMagica?: string;
+  nivelMagia?: string;
+  potencialPsiquico?: string;
+  cvLibres?: string;
+  disciplinas?: string;
+  innatos?: string;
+  proyeccionPsiquica?: string;
+  ki?: string;
+  acumulacionKi?: string;
+  habilidadesKi?: string;
+  tecnicas?: string;
+  habilidadesNaturales?: string;
+  habilidadesEsenciales?: string;
+  poderes?: string;
+  tamano?: string;
+  movimiento?: string;
+  regeneracion?: string;
+  cansancio?: string;
+  secundarias?: string;
+}
+
 /** Habilidad del Ki o del Némesis. Dominus Exxet, cap. 3. */
 export interface HabilidadKiCatalogo {
   habilidad: string;
@@ -232,6 +273,7 @@ export interface Colecciones {
   legadosSangre: LegadoSangre;
   metamagia: EsferaMetamagica;
   sellosCriatura: SellosCriatura;
+  bestiario: CriaturaManual;
   sheele: EntradaTabla;
   efectosTecnica: EfectoTecnica;
   tiposEfectoTecnica: TipoEfectoTecnica;
@@ -260,6 +302,7 @@ export const CLAVE_DE: Record<NombreColeccion, string> = {
   legadosSangre: 'legado',
   metamagia: 'posicion',
   sellosCriatura: 'criatura',
+  bestiario: 'criatura',
   sheele: 'mejora',
   // Un efecto tiene varias opciones, así que la clave es la pareja efecto + opción.
   efectosTecnica: 'referencia',

@@ -824,6 +824,45 @@ De las 99, **61 responden a los Sellos**. Las demás llevan el motivo donde irí
 > aviso el que detectó que dos filas se estaban contando dos veces—. Sólo **una** fila se
 > transcribe a mano: la de los Gusanos de las Profundidades, cuyo nombre ocupa dos líneas.
 
+### El bestiario ✔
+
+**90 criaturas** con su ficha completa, del Elemental Menor (nivel 0) a los tres seres de
+nivel 16. Se cargan como colección `bestiario` del paquete, y desde la pestaña Bestiario se
+trae cualquiera a la campaña con un desplegable.
+
+La ficha del manual es **mucho más rica** que la ficha reducida de la mesa, así que la
+traducción (`src/motor/bestiario.ts`) es deliberadamente conservadora:
+
+| Campo de mesa | De dónde sale |
+|---|---|
+| PV, Turno, Ataque, Daño | **primer número** del campo del manual |
+| Defensa | primer número, salvo si pone `Acumulación` → 0 |
+| Tipo de defensa | `Esquiva` si el manual lo dice; si no, `Parada` |
+| Tipo de daño | el crítico entre paréntesis: `130 Tentáculos (Con)` → CON |
+| TA | `Natural 6` → 6 contra **todo**, Energía incluida |
+| Tipo | `Nivel N · <clase>` |
+| Notas | **todo lo demás, literal y sin resumir** |
+
+El manual escribe estos campos en texto libre —«175 Tentáculos (Especial), 200 Vaciar
+mente», «3.000 (Especial)»— y el número suelto pierde información siempre. Por eso las notas
+recogen los campos **enteros**, incluidos ataque, defensa, daño y TA ya resumidos arriba: la
+ficha sirve para tirar rápido y las notas para no perder nada. Los miles con punto se leen
+como tales (`3.000` → 3000, no 3).
+
+De las 90, **74** traen características y resistencias completas; el resto son criaturas que
+el manual describe sin ellas (elementales, creaciones). Ninguna se queda sin nombre ni sin
+nivel, no hay repetidos, y las 90 se traducen a ficha de mesa sin romperse.
+
+> El bestiario ocupa cuatro capítulos maquetados a una columna, así que aquí toca
+> `pdftotext` en orden de flujo, **no** `-layout`. El extractor tuvo que aprender a
+> distinguir el nombre de una criatura de una línea de estadísticas: dos reglas —una línea
+> con muchas palabras de una sola letra es texto espaciado del maquetador, y un nombre nunca
+> empieza en minúscula— pasaron de dejar 3 criaturas a dejar 90 cuando se corrigieron. La
+> primera versión de esas reglas era demasiado agresiva (`(?:\S\s){4,}` casa con casi
+> cualquier línea) y la segunda estaba dentro de una expresión con `re.I`, que anula un
+> `[a-z]`. Las técnicas propias de cada criatura se detectan por su cabecera `Nivel:` + `CM:`
+> y no se confunden con criaturas nuevas.
+
 ### Las Razas Perdidas 📖
 
 Capítulo 2. Transcritas a mano, como los Legados. Sólo se cargan en la ficha los

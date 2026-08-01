@@ -3,7 +3,9 @@ import { almacen, enemigoVacio, type Enemigo } from '../almacen/almacen';
 import { TIPOS_DANO, type TipoDano } from '../motor/combate';
 import { ErrorImagen, borrarImagen, guardarImagen } from '../almacen/imagenes';
 import { Imagen } from './Imagen';
-import { nuevoId } from './estado';
+import { nuevoId, useColeccion } from './estado';
+import { desdeManual } from '../motor/bestiario';
+import type { Catalogo } from '../datos/paquetes';
 
 export function useEnemigos(campanaId: string | null) {
   const [enemigos, setEnemigos] = useState<Enemigo[]>([]);
@@ -209,8 +211,24 @@ function FichaEnemigo({
   );
 }
 
-export function VistaBestiario({ campanaId }: { campanaId: string | null }) {
+export function VistaBestiario({
+  campanaId,
+  catalogo,
+}: {
+  campanaId: string | null;
+  catalogo: Catalogo;
+}) {
   const { enemigos, guardar, crear, borrar } = useEnemigos(campanaId);
+  const manual = useColeccion(catalogo, 'bestiario');
+  const [aImportar, setAImportar] = useState('');
+
+  const importar = async () => {
+    const c = manual.find((x) => x.criatura === aImportar);
+    if (!c) return;
+    const base = await crear();
+    await guardar({ ...base, ...desdeManual(c) });
+    setAImportar('');
+  };
 
   return (
     <div>
@@ -220,7 +238,40 @@ export function VistaBestiario({ campanaId }: { campanaId: string | null }) {
           Fichas reducidas de enemigos y PNJ: sólo lo que hace falta para resolver un combate.
           Desde la pestaña Mesa puedes atacarlos y llevarles la cuenta de PV.
         </p>
-        <button className="accion primaria" onClick={() => void crear()}>Nuevo enemigo</button>
+
+        {manual.length > 0 && (
+          <>
+            <div className="campo">
+              <label htmlFor="importar-criatura">Traer una criatura de los manuales</label>
+              <select
+                id="importar-criatura"
+                value={aImportar}
+                onChange={(e) => setAImportar(e.target.value)}
+              >
+                <option value="">Elige una…</option>
+                {manual.map((c) => (
+                  <option key={c.criatura} value={c.criatura}>
+                    Nivel {c.nivel} · {c.criatura}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <p style={{ color: 'var(--texto-debil)', fontSize: '0.8rem', marginTop: 0 }}>
+              La ficha de la mesa sólo guarda PV, turno, ataque, defensa, daño y TA. Todo lo
+              demás —poderes, resistencias, disciplinas, habilidades esenciales— se copia
+              entero a las notas, sin resumir, para que lo tengas delante.
+            </p>
+          </>
+        )}
+
+        <div className="acciones-regla">
+          <button className="accion primaria" onClick={() => void crear()}>Nuevo enemigo</button>
+          {manual.length > 0 && (
+            <button className="accion" disabled={!aImportar} onClick={() => void importar()}>
+              Traer del manual
+            </button>
+          )}
+        </div>
       </section>
 
       {enemigos.length === 0 ? (
