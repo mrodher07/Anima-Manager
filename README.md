@@ -52,13 +52,13 @@ En el **IndexedDB del navegador**, en el dispositivo donde la abres. Eso signifi
 - Funciona **sin internet** una vez cargada.
 - Nadie más ve tus campañas: no salen del equipo.
 - Pero **no se sincronizan solas** entre el PC y el móvil, y si borras los datos del
-  navegador se van. Para mover o respaldar una ficha, usa **exportar/importar JSON** desde
-  la pestaña Personajes.
+  navegador se van. Para mover o respaldar una ficha, usa **exportar/importar** desde la
+  pestaña Personajes: en JSON (formato propio, incluye el retrato) o en Excel.
 
 ### Otros comandos
 
 ```bash
-npm test         # 246 pruebas del motor de reglas
+npm test         # 293 pruebas del motor de reglas
 npm run build    # compilar (incluye la comprobación de tipos)
 ```
 
@@ -66,11 +66,12 @@ npm run build    # compilar (incluye la comprobación de tipos)
 
 | Sección | Para qué |
 |---|---|
-| **Personajes** | Lista de fichas, crear, exportar e importar JSON |
+| **Personajes** | Lista de fichas, crear, exportar e importar en JSON y en Excel |
 | **Ficha** | Vista de consulta con recursos, características, resistencias, combate y secundarias |
 | **Editar** | Identidad, características, ventajas, habilidades, equipo y poderes |
 | **Mesa** | Jugar: gastar recursos, tirar iniciativa, resolver ataques, tiradas rápidas |
 | **Bestiario** | Fichas de enemigo con imagen; 90 criaturas importables de los manuales |
+| **Lo sobrenatural** | Invocaciones y Encarnaciones del Arcana, con calculadora de sincronización |
 | **Contenido propio** | Las 23 colecciones del catálogo, personalizables por tu mesa |
 | **Galería** | Mapas, PNJs, enemigos y objetos en imágenes |
 | **Campañas** | Reglas caseras, manuales activos y diario de sesiones |
@@ -80,6 +81,7 @@ npm run build    # compilar (incluye la comprobación de tipos)
 
 ```
 data/reglas/     Catálogo del Core Exxet, el Dominus y el Arcana (~3.400 registros)
+data/arcana/     Paquete aparte: Invocaciones y Encarnaciones
 data/los-que-caminaron/  Paquete aparte: razas, Sellos por criatura y bestiario
 docs/            Análisis de la ficha original y fórmulas verificadas
 src/motor/       Motor de reglas. Funciones puras, sin interfaz
@@ -90,6 +92,8 @@ src/motor/       Motor de reglas. Funciones puras, sin interfaz
   dados.ts         d100 con tiradas abiertas y pifias
 src/datos/       Paquetes de contenido combinables (un manual = un paquete)
 src/almacen/     Persistencia en IndexedDB, exportar e importar
+  xlsx.ts          Leer y escribir .xlsx sin dependencias
+  fichaExcel.ts    Traducción entre la ficha y el libro de Excel
 src/ui/          Interfaz React
 tools/           Extractores: el .xlsm original y los PDF de cada suplemento
 ```
@@ -139,6 +143,31 @@ la mesa no es calculable, y la herramienta no debe fingir que sí. Por eso:
 - La **galería** guarda mapas, PNJs y enemigos como imágenes, sin obligar a fichar nada.
 - Las tiradas se pueden hacer con la app o con dados de verdad y anotar el resultado: los
   recursos se ajustan a mano con los botones de ±1/±5/±10.
+
+## Excel
+
+Cada ficha se puede bajar como **.xlsx** y volver a subir. El libro tiene dos naturalezas a
+la vez, y es a propósito:
+
+- Siete hojas **para leer** —identidad, características, combate, habilidades, ventajas y
+  poderes, equipo y trasfondo— con los valores ya calculados. Es lo que se imprime o se
+  manda por correo, y se puede editar a mano sin saber nada del formato.
+- Una hoja llamada `anima-manager` con la ficha entera en JSON. Al reimportar se lee esa y
+  **no se pierde nada**: ni los PD invertidos, ni los bonos especiales, ni las
+  sobrescrituras manuales, ni el estado de juego. Si el libro no la trae, se reconstruye de
+  las hojas legibles avisando de qué se ha quedado fuera.
+
+También se puede importar **la hoja de cálculo que ya usa la comunidad** (Meirmeister y sus
+derivadas). De ahí se traen la identidad, la categoría, el nivel y las ocho características
+compradas; el resto hay que repasarlo a mano, porque en esa hoja vive dentro de fórmulas y
+no se puede identificar sin riesgo de inventarse datos. Se busca **por etiqueta**, no por
+dirección de celda, para que aguante las distintas versiones que circulan.
+
+Leer y escribir .xlsx está hecho **sin dependencias**: un .xlsx es un ZIP con XML, y hacen
+falta un CRC32, un ZIP sin comprimir y `DecompressionStream`, que ya traen el navegador y
+Node. Es el mismo criterio que llevó a escribir el evaluador de fórmulas en lugar de usar
+`eval`: la aplicación tiene dos dependencias y no parecía buena idea que el navegador del
+máster ejecutase miles de líneas de terceros para abrir una ficha.
 
 ## Imágenes
 

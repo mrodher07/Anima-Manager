@@ -112,6 +112,7 @@ export function App() {
           <VistaPersonajes
             personajes={personajes}
             cargando={cargando}
+            nuevoId={nuevoId}
             onAbrir={abrir}
             onCrear={() => abrir(crear().id)}
             onBorrar={(id) => {

@@ -1,9 +1,13 @@
 import { useRef, useState } from 'react';
 import { nivelTotalDe, type Personaje } from '../motor/personaje';
-import { analizarImportacion, exportarPersonaje, exportarTodo, importar } from '../almacen/almacen';
+import { almacen, analizarImportacion, exportarPersonaje, exportarTodo, importar } from '../almacen/almacen';
+import { exportarAExcel, importarDeExcel } from '../almacen/fichaExcel';
+import { ErrorExcel } from '../almacen/xlsx';
 
 interface Props {
   personajes: Personaje[];
+  /** Para poder generar un id nuevo al importar una ficha como copia. */
+  nuevoId: () => string;
   cargando: boolean;
   onAbrir: (id: string) => void;
   onCrear: () => void;
@@ -11,8 +15,7 @@ interface Props {
   onRecargar: () => void;
 }
 
-function descargar(nombre: string, contenido: unknown) {
-  const blob = new Blob([JSON.stringify(contenido, null, 2)], { type: 'application/json' });
+function bajar(nombre: string, blob: Blob) {
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
@@ -21,8 +24,29 @@ function descargar(nombre: string, contenido: unknown) {
   URL.revokeObjectURL(url);
 }
 
-export function VistaPersonajes({ personajes, cargando, onAbrir, onCrear, onBorrar, onRecargar }: Props) {
+function descargar(nombre: string, contenido: unknown) {
+  bajar(nombre, new Blob([JSON.stringify(contenido, null, 2)], { type: 'application/json' }));
+}
+
+const TIPO_XLSX = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+
+/** Nombre de archivo sin caracteres que molesten a ningún sistema. */
+function nombreArchivo(p: Personaje, extension: string): string {
+  const base = (p.nombre || 'ficha').replace(/[\\/:*?"<>|]/g, '-').trim();
+  return `${base || 'ficha'}.${extension}`;
+}
+
+export function VistaPersonajes({
+  personajes,
+  cargando,
+  nuevoId,
+  onAbrir,
+  onCrear,
+  onBorrar,
+  onRecargar,
+}: Props) {
   const archivo = useRef<HTMLInputElement>(null);
+  const excel = useRef<HTMLInputElement>(null);
   const [mensaje, setMensaje] = useState<{ tipo: 'error' | 'aviso'; texto: string } | null>(null);
   const [confirmar, setConfirmar] = useState<string | null>(null);
 
@@ -52,6 +76,29 @@ export function VistaPersonajes({ personajes, cargando, onAbrir, onCrear, onBorr
     }
   };
 
+  const importarExcel = async (f: File) => {
+    try {
+      const r = await importarDeExcel(await f.arrayBuffer(), nuevoId());
+      await almacen.guardarPersonaje(r.personaje);
+      onRecargar();
+      // Cuando viene de la hoja técnica no hay nada que explicar; en los otros casos los
+      // avisos ya dicen de dónde sale y qué se ha quedado fuera, así que no se repite.
+      const cabecera =
+        r.origen === 'datos'
+          ? `Importada «${r.personaje.nombre}»: ficha completa, tal cual se exportó.`
+          : `Importada «${r.personaje.nombre}».`;
+      setMensaje({ tipo: 'aviso', texto: [cabecera, ...r.avisos].join(' ') });
+    } catch (e) {
+      setMensaje({
+        tipo: 'error',
+        texto:
+          e instanceof ErrorExcel
+            ? e.message
+            : 'No he podido leer el archivo. ¿Seguro que es un .xlsx o un .xlsm?',
+      });
+    }
+  };
+
   return (
     <div>
       <section className="panel" style={{ marginBottom: 16 }}>
@@ -66,7 +113,14 @@ export function VistaPersonajes({ personajes, cargando, onAbrir, onCrear, onBorr
           >
             Exportar todo
           </button>
-          <button className="accion" onClick={() => archivo.current?.click()}>Importar</button>
+          <button className="accion" onClick={() => archivo.current?.click()}>Importar JSON</button>
+          <button
+            className="accion"
+            onClick={() => excel.current?.click()}
+            title="Un .xlsx exportado desde aquí, o la hoja de cálculo de la comunidad"
+          >
+            Importar Excel
+          </button>
           <input
             ref={archivo}
             type="file"
@@ -75,6 +129,17 @@ export function VistaPersonajes({ personajes, cargando, onAbrir, onCrear, onBorr
             onChange={(e) => {
               const f = e.target.files?.[0];
               if (f) void importarArchivo(f);
+              e.target.value = '';
+            }}
+          />
+          <input
+            ref={excel}
+            type="file"
+            accept=".xlsx,.xlsm"
+            style={{ display: 'none' }}
+            onChange={(e) => {
+              const f = e.target.files?.[0];
+              if (f) void importarExcel(f);
               e.target.value = '';
             }}
           />
@@ -109,9 +174,19 @@ export function VistaPersonajes({ personajes, cargando, onAbrir, onCrear, onBorr
                 <button className="accion primaria" onClick={() => onAbrir(p.id)}>Abrir</button>
                 <button
                   className="accion"
-                  onClick={async () => descargar(`${p.nombre || 'ficha'}.json`, await exportarPersonaje(p))}
+                  onClick={async () => descargar(nombreArchivo(p, 'json'), await exportarPersonaje(p))}
+                  title="Formato propio: incluye el retrato"
                 >
-                  Exportar
+                  JSON
+                </button>
+                <button
+                  className="accion"
+                  onClick={() =>
+                    bajar(nombreArchivo(p, 'xlsx'), new Blob([exportarAExcel(p) as BlobPart], { type: TIPO_XLSX }))
+                  }
+                  title="Hoja de cálculo legible; al reimportarla no se pierde nada"
+                >
+                  Excel
                 </button>
                 {confirmar === p.id ? (
                   <>

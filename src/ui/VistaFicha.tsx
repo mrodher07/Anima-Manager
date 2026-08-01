@@ -11,6 +11,7 @@ import {
 import type { Reglamento } from '../motor/reglamento';
 import { CARACTERISTICAS_KI } from '../motor/ki';
 import { calcularTecnica, resumirCoste } from '../motor/tecnicas';
+import { exportarAExcel } from '../almacen/fichaExcel';
 
 interface Props {
   personaje: Personaje;
@@ -43,8 +44,28 @@ export function VistaFicha({ personaje, datos, reglamento }: Props) {
 
   const estado = personaje.estado;
 
+  // Desde aquí la exportación a Excel puede llevar los valores ya calculados; desde la
+  // lista de personajes no, porque allí no está cargado el catálogo de cada ficha.
+  const aExcel = () => {
+    const base = (personaje.nombre || 'ficha').replace(/[\\/:*?"<>|]/g, '-').trim();
+    const blob = new Blob([exportarAExcel(personaje, ficha) as BlobPart], {
+      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${base || 'ficha'}.xlsx`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
   return (
     <div>
+      <div className="acciones-regla" style={{ justifyContent: 'flex-end', marginTop: 0 }}>
+        <button className="accion" onClick={aExcel} title="Hoja de cálculo con los valores ya calculados">
+          Exportar a Excel
+        </button>
+      </div>
       <div className="recursos">
         <Recurso etiqueta="Vida" clase="vida" valor={estado.pvActuales ?? ficha.puntosVida.valor} maximo={ficha.puntosVida.valor} />
         <Recurso etiqueta="Cansancio" valor={estado.cansancioActual ?? ficha.cansancio.valor} maximo={ficha.cansancio.valor} />
