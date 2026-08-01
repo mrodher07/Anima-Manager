@@ -1364,5 +1364,238 @@
    "Balas, Balas de cañón, Dardos de cerbatana, Flechas de descarga, Flechas de fajo, Flechas de mella, Piedras, Saetas, Saetas ligeras, Saetas pesadas",
    0
   ]
+ ],
+ "tiposSheele": [
+  {
+   "tipo": "Aire",
+   "nombre": "Haley",
+   "caracteristicas": {
+    "AGI": 8,
+    "CON": 2,
+    "DES": 8,
+    "FUE": 2,
+    "INT": 8,
+    "PER": 6,
+    "POD": 8,
+    "VOL": 6
+   },
+   "habilidades": {
+    "Acrobacias": 60,
+    "Advertir": 30,
+    "Buscar": 10,
+    "V. Mágica": 80,
+    "Robo": 40,
+    "Baile": 40,
+    "T. Manos": 20
+   }
+  },
+  {
+   "tipo": "Agua",
+   "nombre": "Corale",
+   "caracteristicas": {
+    "AGI": 8,
+    "CON": 3,
+    "DES": 6,
+    "FUE": 3,
+    "INT": 8,
+    "PER": 6,
+    "POD": 8,
+    "VOL": 6
+   },
+   "habilidades": {
+    "Persuasión": 40,
+    "Advertir": 40,
+    "Buscar": 20,
+    "Navegación": 60,
+    "V. Mágica": 80,
+    "Frialdad": 40,
+    "Venenos": 20
+   }
+  },
+  {
+   "tipo": "Fuego",
+   "nombre": "Faren",
+   "caracteristicas": {
+    "AGI": 6,
+    "CON": 4,
+    "DES": 5,
+    "FUE": 4,
+    "INT": 7,
+    "PER": 5,
+    "POD": 8,
+    "VOL": 5
+   },
+   "habilidades": {
+    "Acrobacias": 20,
+    "Advertir": 40,
+    "Buscar": 20,
+    "V. Mágica": 80,
+    "P. Fuerza": 20,
+    "Res. Dolor": 20,
+    "Forja": 20
+   }
+  },
+  {
+   "tipo": "Tierra",
+   "nombre": "Emerald",
+   "caracteristicas": {
+    "AGI": 6,
+    "CON": 5,
+    "DES": 6,
+    "FUE": 6,
+    "INT": 6,
+    "PER": 6,
+    "POD": 8,
+    "VOL": 6
+   },
+   "habilidades": {
+    "Advertir": 30,
+    "Buscar": 10,
+    "Rastrear": 10,
+    "Ciencia": 80,
+    "Memorizar": 20,
+    "Tasación": 20,
+    "V. Mágica": 60,
+    "P. Fuerza": 60,
+    "Res. Dolor": 40,
+    "Cerrajería": 20,
+    "Forja": 20
+   }
+  },
+  {
+   "tipo": "Luz",
+   "nombre": "Shina",
+   "caracteristicas": {
+    "AGI": 5,
+    "CON": 2,
+    "DES": 6,
+    "FUE": 2,
+    "INT": 9,
+    "PER": 7,
+    "POD": 9,
+    "VOL": 8
+   },
+   "habilidades": {
+    "Estilo": 20,
+    "Persuasión": 20,
+    "Advertir": 80,
+    "Buscar": 60,
+    "Animales": 20,
+    "V. Mágica": 100,
+    "Arte": 20,
+    "Música": 20
+   }
+  },
+  {
+   "tipo": "Oscuridad",
+   "nombre": "Xianne",
+   "caracteristicas": {
+    "AGI": 5,
+    "CON": 2,
+    "DES": 6,
+    "FUE": 2,
+    "INT": 9,
+    "PER": 7,
+    "POD": 9,
+    "VOL": 8
+   },
+   "habilidades": {
+    "Intimidar": 20,
+    "Advertir": 60,
+    "Buscar": 40,
+    "V. Mágica": 100,
+    "Ocultarse": 20,
+    "Robo": 60,
+    "Sigilo": 60,
+    "T. Manos": 20
+   }
+  },
+  {
+   "tipo": "Naturaleza",
+   "nombre": "Quinn",
+   "caracteristicas": {
+    "AGI": 7,
+    "CON": 3,
+    "DES": 6,
+    "FUE": 4,
+    "INT": 7,
+    "PER": 8,
+    "POD": 8,
+    "VOL": 6
+   },
+   "habilidades": {
+    "Estilo": 20,
+    "Persuasión": 20,
+    "Advertir": 40,
+    "Buscar": 20,
+    "Animales": 40,
+    "Herbolaria": 80,
+    "Medicina": 20,
+    "V. Mágica": 80,
+    "Venenos": 80
+   }
+  },
+  {
+   "tipo": "Ilusión",
+   "nombre": "Mesmeria",
+   "caracteristicas": {
+    "AGI": 6,
+    "CON": 2,
+    "DES": 8,
+    "FUE": 2,
+    "INT": 9,
+    "PER": 10,
+    "POD": 8,
+    "VOL": 7
+   },
+   "habilidades": {
+    "Persuasión": 80,
+    "Advertir": 40,
+    "Buscar": 20,
+    "V. Mágica": 80,
+    "Disfraz": 20,
+    "Ocultarse": 20,
+    "Robo": 20,
+    "Sigilo": 20
+   }
+  }
+ ],
+ "potenciacionSheele": [
+  {
+   "controlar": 0,
+   "zeonMaximo": 20
+  },
+  {
+   "controlar": 50,
+   "zeonMaximo": 30
+  },
+  {
+   "controlar": 100,
+   "zeonMaximo": 40
+  },
+  {
+   "controlar": 150,
+   "zeonMaximo": 50
+  },
+  {
+   "controlar": 200,
+   "zeonMaximo": 60
+  },
+  {
+   "controlar": 250,
+   "zeonMaximo": 70
+  },
+  {
+   "controlar": 300,
+   "zeonMaximo": 80
+  },
+  {
+   "controlar": 350,
+   "zeonMaximo": 90
+  },
+  {
+   "controlar": 400,
+   "zeonMaximo": 100
+  }
  ]
 }

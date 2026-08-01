@@ -118,6 +118,23 @@ export interface LegadoSangre {
   efecto?: string;
 }
 
+/**
+ * Una esfera del Arcana Shepirah. Arcana Exxet, cap. 3.
+ *
+ * La misma habilidad aparece en varias posiciones del árbol con requisitos y costes
+ * distintos —así lo dibuja el manual—, de modo que lo que identifica una esfera es su
+ * **posición**, no su nombre.
+ */
+export interface EsferaMetamagica {
+  /** Casilla de la hoja «Metamagia», que hace de identificador de la posición. */
+  posicion: string;
+  habilidad: string;
+  /** Nivel de personaje que hay que tener. 0 si es un punto de partida del árbol. */
+  nivelRequerido: number;
+  /** Lo que cuesta en puntos de Nivel de Magia. */
+  coste: number;
+}
+
 /** Habilidad del Ki o del Némesis. Dominus Exxet, cap. 3. */
 export interface HabilidadKiCatalogo {
   habilidad: string;
@@ -198,6 +215,8 @@ export interface Colecciones {
   arsMagnus: EntradaTabla;
   habilidadesKi: HabilidadKiCatalogo;
   legadosSangre: LegadoSangre;
+  metamagia: EsferaMetamagica;
+  sheele: EntradaTabla;
   efectosTecnica: EfectoTecnica;
   tiposEfectoTecnica: TipoEfectoTecnica;
   tecnicasCompendio: TecnicaCompendio;
@@ -223,6 +242,8 @@ export const CLAVE_DE: Record<NombreColeccion, string> = {
   arsMagnus: 'nombre',
   habilidadesKi: 'habilidad',
   legadosSangre: 'legado',
+  metamagia: 'posicion',
+  sheele: 'mejora',
   // Un efecto tiene varias opciones, así que la clave es la pareja efecto + opción.
   efectosTecnica: 'referencia',
   tiposEfectoTecnica: 'efecto',

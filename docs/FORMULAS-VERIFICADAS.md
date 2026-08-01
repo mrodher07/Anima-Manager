@@ -746,9 +746,62 @@ Poderes de Criatura como si tuviera Gnosis 5). Cuando el coste es un rango la fi
 > dos columnas y el texto que sale del PDF las entrelaza: automatizarlo obligaba a inventar
 > nombres y costes, que es justo lo que no se debe hacer.
 
+## Arcana Exxet
+
+**Los conjuros y los poderes psíquicos del Arcana ya venían en el Excel.** Las 14 sub-vías
+del capítulo 4 (Caos, Guerra, Literae, Muerte, Musical, Nobleza, Paz, Pecado, Conocimiento,
+Sangre, Sueños, Tiempo, Umbral y Vacío) están entre los 640 conjuros, y las cinco
+disciplinas psíquicas nuevas del capítulo 8 (Causalidad, Electromagnetismo, Teletransporte,
+Luz e Hipersensibilidad) entre las trece extraídas.
+
+### Nivel de Magia 📖 ✔
+
+Cuesta **5 PD**, iguales para todas las categorías: la tabla de categorías no trae columna
+para él y `PDs!L97:T97` vale 5 en las cinco columnas. Lo comprado es
+`truncar(pd / 5) × 5` (`PDs!V97`).
+
+> ⚠️ La ficha suma además un Nivel de Magia **innato** (`PDs!W97`, un `VLOOKUP` sobre
+> `Principal!AQ15`) que Mogunbun tiene en 50 y Christopher en 40 sin haber invertido un solo
+> PD, más el que da una ventaja por nivel (`PDs!X97`). Eso **todavía no se deriva**: quien lo
+> tenga, que sobrescriba el valor a mano, como cualquier otro derivado.
+
+### Metamagia: el Arcana Shepirah 📖 ✔
+
+Arcana Exxet, cap. 3. El árbol tiene **68 esferas**. Cada una lleva dos números, y en el
+manual se dibujan distintos:
+
+- El **rojo, encima** de la esfera: el **nivel de personaje** que hace falta. Lo confirma la
+  fórmula del rótulo, `=IF(AND($T$12, PDs!$R$17 >= Metamagia!E28), "", "Nv " & E28)`, donde
+  `PDs!R17 = SUM(S7:S16)` es el nivel total.
+- El **de dentro** de la esfera: lo que cuesta en puntos de **Nivel de Magia**.
+
+El Requerimiento de Nivel **no se salta** aunque sobren puntos de Nivel de Magia.
+
+La misma habilidad aparece en varias posiciones del árbol con requisitos y costes distintos
+—«Precisión mística» está en nivel 2 por 5 y en nivel 6 por 10—, así que lo que identifica
+una esfera es su **posición**, no su nombre.
+
+> Lo que **no** se ha podido sacar son las **líneas que unen unas esferas con otras**. La
+> hoja las dibuja como bordes, no como datos. La regla de empezar en una esfera sin
+> requisito y moverse sólo a las conectadas se queda para la mesa; la ficha comprueba el
+> nivel y el gasto, que es lo que sí puede verificar.
+
+### Sheele: Espíritus del Alma
+
+Arcana Exxet, cap. 7. Extraídos del Excel: los **ocho tipos** (Aire/Haley, Agua/Corale,
+Fuego/Faren, Tierra/Emerald, Luz/Shina, Oscuridad/Xianne, Naturaleza/Quinn, Ilusión/Mesmeria)
+con sus características y habilidades de partida, las **95 mejoras** —las de Esotéricas,
+Forma de Alma, Magia y Potenciación valen para cualquiera; las demás sólo para su elemento—
+y la tabla de **Potenciación Mística** (Controlar 0-400 → Zeón máximo 20-100).
+
+Por ahora son datos consultables y personalizables; falta el editor de Sheele en la ficha.
+
 ## Pendiente de modelar
-- **Ki**: falta el capítulo 8, los Sellos de Invocación. Puntos, Acumulación, CM,
-  habilidades del Ki y del Némesis, Límites, Ars Magnus, Legados de Sangre y la creación de
-  Técnicas ya están.
+- **Dominus Exxet**: falta el capítulo 8, los Sellos de Invocación.
+- **Arcana Exxet**: falta el editor de Sheele en la ficha, las Invocaciones y Encarnaciones
+  (caps. 5 y 6), los Teoremas de Magia (cap. 2: Onmyodo, Vodoun, Shamánica y Magia Natural),
+  los Rituales y Grimorios (cap. 9) y las reglas opcionales de Nodos y Sanctum Sanctorum
+  (cap. 10). Los tres PDF son **escaneos sin capa de texto**, así que lo que no esté en el
+  Excel hay que leerlo a ojo página a página.
 - **Conjuros y poderes psíquicos seleccionados** como listas del personaje.
 - Bestiario y creación de seres.

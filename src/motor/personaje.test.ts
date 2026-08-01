@@ -11,6 +11,7 @@ import habilidadesKiJson from '../../data/reglas/habilidadesKi.json';
 import artesMarcialesJson from '../../data/reglas/artesMarciales.json';
 import arsMagnusJson from '../../data/reglas/arsMagnus.json';
 import legadosJson from '../../data/reglas/legadosSangre.json';
+import metamagiaJson from '../../data/reglas/metamagia.json';
 import efectosTecnicaJson from '../../data/reglas/efectosTecnica.json';
 import tiposEfectoJson from '../../data/reglas/tiposEfectoTecnica.json';
 import type {
@@ -19,6 +20,7 @@ import type {
   Categoria,
   EfectoTecnica,
   EntradaTabla,
+  EsferaMetamagica,
   HabilidadKiCatalogo,
   LegadoSangre,
   Raza,
@@ -43,6 +45,7 @@ const datos = (nombreRaza: string, nombreCategoria: string): DatosCalculo => ({
   artesMarciales: artesMarcialesJson as EntradaTabla[],
   arsMagnus: arsMagnusJson as EntradaTabla[],
   legadosSangre: legadosJson as LegadoSangre[],
+  metamagia: metamagiaJson as EsferaMetamagica[],
   efectosTecnica: efectosTecnicaJson as EfectoTecnica[],
   tiposEfectoTecnica: tiposEfectoJson as TipoEfectoTecnica[],
 });
@@ -177,6 +180,31 @@ describe('derivación de la ficha de Meirmeister', () => {
     p.legados = ['Sangre de las Grandes Bestias']; // «1, 2 o 3»
     const r = calcular(p, datos('Jayán', 'Paladín Oscuro (RD)'), REGLAMENTO_OFICIAL);
     expect(r.puntosCreacion.gastados).toBe(ficha.puntosCreacion.gastados + 1);
+  });
+
+  it('las esferas metamágicas gastan Nivel de Magia, no PD', () => {
+    const p = meirmeister();
+    p.pdInvertidos = { ...p.pdInvertidos, NivelMagia: 60 };
+    // C20 «Eliminar protección» cuesta 5 y no pide nivel; F20 «Área potenciada» cuesta 10.
+    p.metamagia = ['C20', 'F20'];
+    const r = calcular(p, datos('Jayán', 'Paladín Oscuro (RD)'), REGLAMENTO_OFICIAL);
+    expect(r.metamagia.gastado).toBe(15);
+    expect(r.metamagia.disponible).toBe(r.nivelMagia.valor - 15);
+  });
+
+  it('avisa si una esfera pide más nivel del que tienes', () => {
+    const p = meirmeister();
+    p.pdInvertidos = { ...p.pdInvertidos, NivelMagia: 200 };
+    p.metamagia = ['F20']; // pide nivel 3 y Meirmeister es de nivel 1
+    const r = calcular(p, datos('Jayán', 'Paladín Oscuro (RD)'), REGLAMENTO_OFICIAL);
+    expect(r.avisos.some((a) => a.mensaje.includes('pide nivel 3'))).toBe(true);
+  });
+
+  it('avisa si las esferas cuestan más Nivel de Magia del que hay', () => {
+    const p = meirmeister();
+    p.metamagia = ['C20'];
+    const r = calcular(p, datos('Jayán', 'Paladín Oscuro (RD)'), REGLAMENTO_OFICIAL);
+    expect(r.avisos.some((a) => a.mensaje.includes('puntos de Nivel de Magia'))).toBe(true);
   });
 
   it('los PD de Ki y Acumulación cuentan como habilidades de combate', () => {

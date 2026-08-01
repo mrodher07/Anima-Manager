@@ -158,6 +158,30 @@ export function VistaFicha({ personaje, datos, reglamento }: Props) {
         </section>
       </div>
 
+      {(personaje.metamagia ?? []).length > 0 && (
+        <section className="panel" style={{ marginTop: 16 }}>
+          <h2>Metamagia</h2>
+          <p style={{ color: 'var(--texto-debil)', fontSize: '0.85rem', marginTop: 0 }}>
+            Nivel de Magia <strong>{ficha.nivelMagia.valor}</strong>, de los que{' '}
+            <strong>{ficha.metamagia.gastado}</strong> se van en esferas y quedan libres{' '}
+            <strong>{ficha.metamagia.disponible}</strong>.
+          </p>
+          <ul className="lista-simple">
+            {(personaje.metamagia ?? []).map((pos) => {
+              const e = datos.metamagia.find((x) => x.posicion === pos);
+              return (
+                <li key={pos}>
+                  {e ? `${e.habilidad} (${e.coste} Nv. Magia)` : pos}
+                  {e && e.nivelRequerido > 0 && (
+                    <span style={{ color: 'var(--texto-debil)' }}> · nivel {e.nivelRequerido}</span>
+                  )}
+                </li>
+              );
+            })}
+          </ul>
+        </section>
+      )}
+
       {(ficha.ki.reserva > 0 || ficha.ki.conocimientoMarcial.total > 0) && (
         <section className="panel" style={{ marginTop: 16 }}>
           <h2>Dominios del Ki</h2>

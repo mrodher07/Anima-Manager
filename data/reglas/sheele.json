@@ -1,0 +1,762 @@
+[
+ {
+  "mejora": "Naturaleza espiritual",
+  "grupo": "ESOTÉRICAS",
+  "zeon": "-",
+  "proyeccion": "-",
+  "dano": "-",
+  "efecto": "A voluntad. Intangibilidad e invisibilidad."
+ },
+ {
+  "mejora": "Sentidos Vinculados",
+  "grupo": "ESOTÉRICAS",
+  "zeon": "-",
+  "proyeccion": "-",
+  "dano": "-",
+  "efecto": "El Señor de la Sheele puede ver, oír y hablar a través de ella."
+ },
+ {
+  "mejora": "Desvinculado Esp.",
+  "grupo": "ESOTÉRICAS",
+  "zeon": "-",
+  "proyeccion": "-",
+  "dano": "-",
+  "efecto": "No hay límite de distancia entre la Sheele y su señor."
+ },
+ {
+  "mejora": "Vinculación de Vida",
+  "grupo": "ESOTÉRICAS",
+  "zeon": "-",
+  "proyeccion": "-",
+  "dano": "-",
+  "efecto": "La Sheele y su señor pueden transferirse el daño recibido."
+ },
+ {
+  "mejora": "Elementalismo",
+  "grupo": "ESOTÉRICAS",
+  "zeon": "-",
+  "proyeccion": "-",
+  "dano": "-",
+  "efecto": "+50 RM contra conjuros de su vía. Inmunidad al elemento para ella y su señor si está en contacto"
+ },
+ {
+  "mejora": "Forma de Alma",
+  "grupo": "FORMA DE ALMA",
+  "zeon": "-",
+  "proyeccion": "-",
+  "dano": "-",
+  "efecto": "Ver manual."
+ },
+ {
+  "mejora": "Transformación mejorada",
+  "grupo": "FORMA DE ALMA",
+  "zeon": "-",
+  "proyeccion": "-",
+  "dano": "-",
+  "efecto": "Mantenimiento de forma de alma -10 Zeon (mínimo 10)"
+ },
+ {
+  "mejora": "Poderes Mejorados",
+  "grupo": "FORMA DE ALMA",
+  "zeon": "-",
+  "proyeccion": "-",
+  "dano": "-",
+  "efecto": "Gnosis 30 para elegir poderes (no permite Alta magia)"
+ },
+ {
+  "mejora": "Forma Mayor",
+  "grupo": "FORMA DE ALMA",
+  "zeon": "-",
+  "proyeccion": "-",
+  "dano": "-",
+  "efecto": "+1 nivel en Forma de Alma. Se puede coger hasta 3 veces."
+ },
+ {
+  "mejora": "Proyección Mejorada",
+  "grupo": "MAGIA",
+  "zeon": "-",
+  "proyeccion": "-",
+  "dano": "-",
+  "efecto": "+20 proyección mágica. Sin límite (a partir de Proyección 200 da la mitad)"
+ },
+ {
+  "mejora": "Conjuros Mejorados",
+  "grupo": "MAGIA",
+  "zeon": "-",
+  "proyeccion": "-",
+  "dano": "-",
+  "efecto": "+10 Nivel de vía. A partir de Nivel 50 solo da +5"
+ },
+ {
+  "mejora": "Acumulación Mejorada",
+  "grupo": "MAGIA",
+  "zeon": "-",
+  "proyeccion": "-",
+  "dano": "-",
+  "efecto": "+5 ACT para la Sheele"
+ },
+ {
+  "mejora": "Aguante Mejorado",
+  "grupo": "POTENCIACIÓN",
+  "zeon": "-",
+  "proyeccion": "-",
+  "dano": "-",
+  "efecto": "Los puntos de vida se incrementan a Presencia·4 (120)"
+ },
+ {
+  "mejora": "Potenciación Mejorada",
+  "grupo": "POTENCIACIÓN",
+  "zeon": "-",
+  "proyeccion": "-",
+  "dano": "-",
+  "efecto": "+25 al zeon máximo de potenciación mística, hasta un máximo de 150"
+ },
+ {
+  "mejora": "Por tipo",
+  "grupo": "POTENCIACIÓN",
+  "zeon": null,
+  "proyeccion": null,
+  "dano": null,
+  "efecto": null
+ },
+ {
+  "mejora": "Trueno del Alma",
+  "grupo": "AIRE",
+  "zeon": 250,
+  "proyeccion": 110,
+  "dano": 60,
+  "efecto": "Ataque en ELE. Afecta a sobrenaturales. Afecta a 5m de la línea de ataque."
+ },
+ {
+  "mejora": "Vendaval Afilado",
+  "grupo": "AIRE",
+  "zeon": 100,
+  "proyeccion": 60,
+  "dano": 60,
+  "efecto": "Ataque FIL. Área 25m. Aquellos en contacto directo no son afectados"
+ },
+ {
+  "mejora": "Velocidad Absoluta",
+  "grupo": "AIRE",
+  "zeon": 100,
+  "proyeccion": "-",
+  "dano": "-",
+  "efecto": "5 asaltos. +50 turno y dobla el ACT concedido. Después sufre -50 ata (10/asalto)"
+ },
+ {
+  "mejora": "Mano de Aire",
+  "grupo": "AIRE",
+  "zeon": "20 /obj",
+  "proyeccion": 60,
+  "dano": "x +10",
+  "efecto": "Puede mover objetos de no más de 20kg. Puede atacar con ellos."
+ },
+ {
+  "mejora": "Teletransporte",
+  "grupo": "AIRE",
+  "zeon": "-",
+  "proyeccion": "-",
+  "dano": "-",
+  "efecto": "Transporte hasta 100m. Necesita esperar 5 asaltos entre salto y salto."
+ },
+ {
+  "mejora": "Vuelo Mejorado",
+  "grupo": "AIRE",
+  "zeon": "-",
+  "proyeccion": "-",
+  "dano": "-",
+  "efecto": "Tipo de Vuelo Místico 14"
+ },
+ {
+  "mejora": "Proyectiles Potenciados",
+  "grupo": "AIRE",
+  "zeon": "-",
+  "proyeccion": "-",
+  "dano": "-",
+  "efecto": "+2 FUE al alcance y +10 al daño de proyectiles de quien esté en contacto con ella."
+ },
+ {
+  "mejora": "Hab. Mejoradas (Aire)",
+  "grupo": "AIRE",
+  "zeon": "-",
+  "proyeccion": "-",
+  "dano": "-",
+  "efecto": "+40 a todas sus Habilidades secundarias. +20 si se escoge repetidamente."
+ },
+ {
+  "mejora": "Forma eléctrica",
+  "grupo": "AIRE",
+  "zeon": "25 (5)",
+  "proyeccion": "-",
+  "dano": "-",
+  "efecto": "Inmune a ataques físicos. Aquel en contacto RF 70 o sufre [Nv de fracaso] daño."
+ },
+ {
+  "mejora": "Reacción Veloz",
+  "grupo": "AIRE",
+  "zeon": "-",
+  "proyeccion": "-",
+  "dano": "-",
+  "efecto": "+50 turno"
+ },
+ {
+  "mejora": "Agujas de hielo",
+  "grupo": "AGUA",
+  "zeon": "100 (20)",
+  "proyeccion": 60,
+  "dano": 50,
+  "efecto": "FRI y PEN. Si se mantiene hace un ataque automático al inicio del turno. Ver."
+ },
+ {
+  "mejora": "Ola de Poder",
+  "grupo": "AGUA",
+  "zeon": "100 (20)",
+  "proyeccion": 60,
+  "dano": 30,
+  "efecto": "CON. Área 30m. Impacto FUE 8. Aquellos en contacto son inmunes."
+ },
+ {
+  "mejora": "Defensa Absoluta",
+  "grupo": "AGUA",
+  "zeon": 30,
+  "proyeccion": "-",
+  "dano": "-",
+  "efecto": "Declarar antes de iniciativa. +50 Proyección Defensiva este asalto."
+ },
+ {
+  "mejora": "Cristal de la Aurora",
+  "grupo": "AGUA",
+  "zeon": 100,
+  "proyeccion": "Auto",
+  "dano": "-",
+  "efecto": "50m. RM o RF 70- 5*[TA FRI]. Parálisis parcial (completa si se falla por 40+)"
+ },
+ {
+  "mejora": "Pantalla de Cristal",
+  "grupo": "AGUA",
+  "zeon": 150,
+  "proyeccion": 110,
+  "dano": "-",
+  "efecto": "Escudo sobrenatural de 500"
+ },
+ {
+  "mejora": "Mov. Acuático Mejorado",
+  "grupo": "AGUA",
+  "zeon": "-",
+  "proyeccion": "-",
+  "dano": "-",
+  "efecto": "Tipo de Movimiento 15 en agua."
+ },
+ {
+  "mejora": "Potenciación Defensiva",
+  "grupo": "AGUA",
+  "zeon": null,
+  "proyeccion": "-",
+  "dano": "-",
+  "efecto": "Aquel en contacto suma el bono de AGI de la Sheele a la defensa."
+ },
+ {
+  "mejora": "Hab. Mejoradas (Agua)",
+  "grupo": "AGUA",
+  "zeon": "-",
+  "proyeccion": "-",
+  "dano": "-",
+  "efecto": "+40 a todas sus Habilidades secundarias. +20 si se escoge repetidamente."
+ },
+ {
+  "mejora": "Forma de Cristal",
+  "grupo": "AGUA",
+  "zeon": 10,
+  "proyeccion": "-",
+  "dano": "-",
+  "efecto": "Inmune a Luz y Oscuridad este asalto."
+ },
+ {
+  "mejora": "Regeneración",
+  "grupo": "AGUA",
+  "zeon": "-",
+  "proyeccion": "-",
+  "dano": "-",
+  "efecto": "Recupera 10 PV/ asalto independientemente de su Regeneración."
+ },
+ {
+  "mejora": "Fenix",
+  "grupo": "FUEGO",
+  "zeon": 100,
+  "proyeccion": 110,
+  "dano": 60,
+  "efecto": "CAL. Afecta sobrenaturales. RF [daño*2], [Nv de fracaso] daño adicional."
+ },
+ {
+  "mejora": "Ignición del Alma",
+  "grupo": "FUEGO",
+  "zeon": 100,
+  "proyeccion": "Auto",
+  "dano": "-",
+  "efecto": "50m. Tira 1d100+ 70 en 'Tabla 76: En llamas' (Core p.234)"
+ },
+ {
+  "mejora": "Sheol",
+  "grupo": "FUEGO",
+  "zeon": 50,
+  "proyeccion": "-",
+  "dano": "-",
+  "efecto": "5 asaltos. +30 al daño y Proy. Mágica Ofensiva. -50 PV al activar."
+ },
+ {
+  "mejora": "Llamas de Ghehena",
+  "grupo": "FUEGO",
+  "zeon": 50,
+  "proyeccion": 60,
+  "dano": "30+10*",
+  "efecto": "CAL. Área 6*[# ataques sucesivos] m. Daño 30+10*[# ataques sucesivos]"
+ },
+ {
+  "mejora": "Ignis",
+  "grupo": "FUEGO",
+  "zeon": "-",
+  "proyeccion": 60,
+  "dano": "Intens*5",
+  "efecto": "La Sheele controla el fuego de hasta 8 intensidades. Puede atacar con él."
+ },
+ {
+  "mejora": "Hab. Mejoradas (Fuego)",
+  "grupo": "FUEGO",
+  "zeon": "-",
+  "proyeccion": "-",
+  "dano": "-",
+  "efecto": "+40 a todas sus Habilidades secundarias. +20 si se escoge repetidamente."
+ },
+ {
+  "mejora": "Armas Igneas",
+  "grupo": "FUEGO",
+  "zeon": "-",
+  "proyeccion": "-",
+  "dano": "-",
+  "efecto": "En contacto: Obtiene crítico secundario CAL, y +10 daño."
+ },
+ {
+  "mejora": "Forma de fuego",
+  "grupo": "FUEGO",
+  "zeon": "25 (5)",
+  "proyeccion": "-",
+  "dano": "-",
+  "efecto": "A voluntad, solo vulnerable a energía o frío. En contacto: RF 70 o [Nv de fracaso] daño."
+ },
+ {
+  "mejora": "Poder Destructivo",
+  "grupo": "FUEGO",
+  "zeon": "-",
+  "proyeccion": "-",
+  "dano": "-",
+  "efecto": "+20 al daño de sus conjuros ofensivos."
+ },
+ {
+  "mejora": "Fogosidad",
+  "grupo": "FUEGO",
+  "zeon": "-",
+  "proyeccion": "-",
+  "dano": "-",
+  "efecto": "+2 Fue, +2 Agi, +2 Des"
+ },
+ {
+  "mejora": "Meteoro",
+  "grupo": "TIERRA",
+  "zeon": 150,
+  "proyeccion": "-",
+  "dano": 90,
+  "efecto": "Área 10m. Tras su activación tarda un turno en llegar al blanco."
+ },
+ {
+  "mejora": "Gravedad Absoluta",
+  "grupo": "TIERRA",
+  "zeon": 150,
+  "proyeccion": "Auto",
+  "dano": "-",
+  "efecto": "Área 25m. RM 70: -50 turno y x0.5 movimiento. En contacto: Inmune."
+ },
+ {
+  "mejora": "Indestructible",
+  "grupo": "TIERRA",
+  "zeon": 150,
+  "proyeccion": "-",
+  "dano": "-",
+  "efecto": "5 asaltos. Solo podrá ser dañada por medio de resistencias. 1min enfriamiento."
+ },
+ {
+  "mejora": "Rotura de Gaïa",
+  "grupo": "TIERRA",
+  "zeon": 80,
+  "proyeccion": "-",
+  "dano": "-",
+  "efecto": "Area 60m. Construcciones e individuos sobre el suelo control de AGI 4 o derribados"
+ },
+ {
+  "mejora": "Aguante",
+  "grupo": "TIERRA",
+  "zeon": "-",
+  "proyeccion": "-",
+  "dano": "-",
+  "efecto": "+250 PV"
+ },
+ {
+  "mejora": "Potenciación Física",
+  "grupo": "TIERRA",
+  "zeon": "-",
+  "proyeccion": "-",
+  "dano": "-",
+  "efecto": "En contacto: +2 FUE, inhumanidad en FUE."
+ },
+ {
+  "mejora": "Furia de la Tierra",
+  "grupo": "TIERRA",
+  "zeon": 150,
+  "proyeccion": 110,
+  "dano": null,
+  "efecto": "100m. Si >0%, Control FUE 16-[TA CON]: 10*[Nv de fracaso] daño (*5 si Acumulación)"
+ },
+ {
+  "mejora": "Hab. Mejoradas (Tierra)",
+  "grupo": "TIERRA",
+  "zeon": "-",
+  "proyeccion": "-",
+  "dano": "-",
+  "efecto": "+40 a todas sus Habilidades secundarias. +20 si se escoge repetidamente."
+ },
+ {
+  "mejora": "Movimiento de Tierra",
+  "grupo": "TIERRA",
+  "zeon": "-",
+  "proyeccion": "-",
+  "dano": "-",
+  "efecto": "Movimiento subterráneo de Tipo 8"
+ },
+ {
+  "mejora": "Aguante de Diamante",
+  "grupo": "TIERRA",
+  "zeon": "-",
+  "proyeccion": "-",
+  "dano": "-",
+  "efecto": "Barrera de daño 120 y TA 6 contra todo ataque no basado en energía."
+ },
+ {
+  "mejora": "Esferas de Luz",
+  "grupo": "LUZ",
+  "zeon": 250,
+  "proyeccion": 60,
+  "dano": 40,
+  "efecto": "Crea 8 proyectiles durante 6 asaltos. Máximo 4 ataques/ turno. Ataca en ENE."
+ },
+ {
+  "mejora": "Fulgor Final",
+  "grupo": "LUZ",
+  "zeon": 250,
+  "proyeccion": "60+",
+  "dano": 60,
+  "efecto": "ENE. +15 Proy. cada asalto que lo prepare, máximo 8."
+ },
+ {
+  "mejora": "Ascensión",
+  "grupo": "LUZ",
+  "zeon": 250,
+  "proyeccion": "-",
+  "dano": "-",
+  "efecto": "5 asaltos. +20 a toda acción y al ACT transferible. Después, -50 ata (10/ asalto)"
+ },
+ {
+  "mejora": "Luz de Vida",
+  "grupo": "LUZ",
+  "zeon": 10,
+  "proyeccion": "-",
+  "dano": "-",
+  "efecto": "Cura 30 PV o elimina penalizadores por el mismo valor. 1 uso/ persona/ día."
+ },
+ {
+  "mejora": "Guardián de los Sueños",
+  "grupo": "LUZ",
+  "zeon": "-",
+  "proyeccion": "-",
+  "dano": "-",
+  "efecto": "Evita las pesadillas. En la vigilia tiene un nivel superior para sus poderes."
+ },
+ {
+  "mejora": "Detección",
+  "grupo": "LUZ",
+  "zeon": "-",
+  "proyeccion": "-",
+  "dano": "-",
+  "efecto": "+100 Advertir y Buscar."
+ },
+ {
+  "mejora": "Aura",
+  "grupo": "LUZ",
+  "zeon": "-",
+  "proyeccion": "-",
+  "dano": "-",
+  "efecto": "En contacto: +20 a todas las resistencias."
+ },
+ {
+  "mejora": "Hab. Mejoradas (Luz)",
+  "grupo": "LUZ",
+  "zeon": "-",
+  "proyeccion": "-",
+  "dano": "-",
+  "efecto": "+40 a todas sus Habilidades secundarias. +20 si se escoge repetidamente."
+ },
+ {
+  "mejora": "Forma de luz",
+  "grupo": "LUZ",
+  "zeon": "-",
+  "proyeccion": "-",
+  "dano": "-",
+  "efecto": "A voluntad. Inmune a ataques físicos. Puede cegar a quien la mire, RM 70. Ver"
+ },
+ {
+  "mejora": "Resistencia",
+  "grupo": "LUZ",
+  "zeon": "-",
+  "proyeccion": "-",
+  "dano": "-",
+  "efecto": "+50 a todas sus resistencias."
+ },
+ {
+  "mejora": "Maestra de las Sombras",
+  "grupo": "OSCURIDAD",
+  "zeon": null,
+  "proyeccion": null,
+  "dano": null,
+  "efecto": "+100 Sigilo y Ocultación."
+ },
+ {
+  "mejora": "Obscuritas Delta",
+  "grupo": "OSCURIDAD",
+  "zeon": 300,
+  "proyeccion": 160,
+  "dano": 60,
+  "efecto": "RM [daño]: Penalizador a toda acción de [Nv de fracaso]."
+ },
+ {
+  "mejora": "Alas de Sombra",
+  "grupo": "OSCURIDAD",
+  "zeon": 250,
+  "proyeccion": 60,
+  "dano": "-",
+  "efecto": "Defensa. RM 70: -50 a toda acción que se recupera a 10/asalto"
+ },
+ {
+  "mejora": "Forma de Oscuridad",
+  "grupo": "OSCURIDAD",
+  "zeon": 20,
+  "proyeccion": "-",
+  "dano": "-",
+  "efecto": "A voluntad. Inmunidad a ataques físicos. Puede crear un domo de oscuridad 5 asaltos."
+ },
+ {
+  "mejora": "Ruina de Almas",
+  "grupo": "OSCURIDAD",
+  "zeon": 200,
+  "proyeccion": "-",
+  "dano": "-",
+  "efecto": "Automático 50m. RM 60: -20 a toda acción."
+ },
+ {
+  "mejora": "Ascensión Oscura",
+  "grupo": "OSCURIDAD",
+  "zeon": 250,
+  "proyeccion": "-",
+  "dano": "-",
+  "efecto": "5 asaltos. +20 ATA y al ACT trasferible. Al finalizar, -50 ATA (-10/asalto)"
+ },
+ {
+  "mejora": "Señora de Pesadillas",
+  "grupo": "OSCURIDAD",
+  "zeon": "-",
+  "proyeccion": "-",
+  "dano": "-",
+  "efecto": "Objetivo durmiendo. RM 70 o malos sueños. En la Vigilia es más potente. Ver"
+ },
+ {
+  "mejora": "Ensombrecer",
+  "grupo": "OSCURIDAD",
+  "zeon": "-",
+  "proyeccion": "-",
+  "dano": "-",
+  "efecto": "En contacto: +40 Sigilo y Ocultarse. Obtiene Ocultación del Ki."
+ },
+ {
+  "mejora": "Hab. Mejoradas (Osc.)",
+  "grupo": "OSCURIDAD",
+  "zeon": "-",
+  "proyeccion": "-",
+  "dano": "-",
+  "efecto": "+40 a todas sus Habilidades secundarias. +20 si se escoge repetidamente."
+ },
+ {
+  "mejora": "Demonio",
+  "grupo": "OSCURIDAD",
+  "zeon": "-",
+  "proyeccion": "-",
+  "dano": 10,
+  "efecto": "Puede atacar y defender usando su proyección. Daño base [Presencia]+[Bono Fue]"
+ },
+ {
+  "mejora": "Lazos de Vida",
+  "grupo": "NATURALEZA",
+  "zeon": "100 (10)",
+  "proyeccion": 110,
+  "dano": "-",
+  "efecto": "Presa de FUE 8. Se puede mantener pagando el coste de zeon."
+ },
+ {
+  "mejora": "Escudo del Alma",
+  "grupo": "NATURALEZA",
+  "zeon": 150,
+  "proyeccion": 110,
+  "dano": "-",
+  "efecto": "Escudo sobrenatural 300 PV, que dura máximo 6 asaltos."
+ },
+ {
+  "mejora": "Exaltación",
+  "grupo": "NATURALEZA",
+  "zeon": 50,
+  "proyeccion": "-",
+  "dano": "-",
+  "efecto": "5 asaltos. +20 Nivel de magia y +1 Grado de conjuros. 5 turnos enfriamiento."
+ },
+ {
+  "mejora": "Polvo de Vida",
+  "grupo": "NATURALEZA",
+  "zeon": 10,
+  "proyeccion": "-",
+  "dano": "-",
+  "efecto": "Cura 60 PV. 1 uso/ persona/ día."
+ },
+ {
+  "mejora": "Ola de Poder",
+  "grupo": "NATURALEZA",
+  "zeon": 150,
+  "proyeccion": 60,
+  "dano": 30,
+  "efecto": "Area 20m, ENE a criaturas con alma. Anímico. En contacto: Inmune"
+ },
+ {
+  "mejora": "Influencia Mejorada",
+  "grupo": "NATURALEZA",
+  "zeon": "-",
+  "proyeccion": "-",
+  "dano": "-",
+  "efecto": "+20 a la RM de sus conjuros."
+ },
+ {
+  "mejora": "Alma",
+  "grupo": "NATURALEZA",
+  "zeon": "-",
+  "proyeccion": "-",
+  "dano": "-",
+  "efecto": "En contacto: +4 Regeneración y Ver espíritus."
+ },
+ {
+  "mejora": "Hab. Mejoradas (Nat.)",
+  "grupo": "NATURALEZA",
+  "zeon": "-",
+  "proyeccion": "-",
+  "dano": "-",
+  "efecto": "+40 a todas sus Habilidades secundarias. +20 si se escoge repetidamente."
+ },
+ {
+  "mejora": "Forma Natural",
+  "grupo": "NATURALEZA",
+  "zeon": "20*forma",
+  "proyeccion": "-",
+  "dano": "-",
+  "efecto": "Puede convertirse en animal o planta adoptando sus habilidades. Ver."
+ },
+ {
+  "mejora": "Defensora",
+  "grupo": "NATURALEZA",
+  "zeon": "-",
+  "proyeccion": "-",
+  "dano": "-",
+  "efecto": "+40 a Proyección mágica defensiva."
+ },
+ {
+  "mejora": "Hipnos Ragna",
+  "grupo": "ILUSIÓN",
+  "zeon": 100,
+  "proyeccion": 110,
+  "dano": 60,
+  "efecto": "Ataque fantasmal. Afecta a seres sobrenaturales. Daño no real."
+ },
+ {
+  "mejora": "Espejo de Geminis",
+  "grupo": "ILUSIÓN",
+  "zeon": 200,
+  "proyeccion": "-",
+  "dano": "-",
+  "efecto": "5 Asaltos. Se divide en dos. Ambas se benefician del ACT. Ver."
+ },
+ {
+  "mejora": "Salto de Espejo",
+  "grupo": "ILUSIÓN",
+  "zeon": "-",
+  "proyeccion": "-",
+  "dano": "-",
+  "efecto": "Puede saltar entre espejos separados hasta 10km. 1 turno enfriamiento."
+ },
+ {
+  "mejora": "Alas de la Confusión",
+  "grupo": "ILUSIÓN",
+  "zeon": 100,
+  "proyeccion": "Auto",
+  "dano": "-",
+  "efecto": "Área 25m. RM 70: -[fracaso] Hab. PER y -0.5*[fracaso] ata. En contacto: Inmune"
+ },
+ {
+  "mejora": "Fantasía o Realidad",
+  "grupo": "ILUSIÓN",
+  "zeon": "-",
+  "proyeccion": "-",
+  "dano": "-",
+  "efecto": "Puede repetir una de sus tiradas cada día."
+ },
+ {
+  "mejora": "Maestra Ilusionista",
+  "grupo": "ILUSIÓN",
+  "zeon": "-",
+  "proyeccion": "-",
+  "dano": "-",
+  "efecto": "+20 RM de sus conjuros."
+ },
+ {
+  "mejora": "Mil Ilusiones",
+  "grupo": "ILUSIÓN",
+  "zeon": 200,
+  "proyeccion": "+10/c",
+  "dano": "-",
+  "efecto": "Defensa. Crea 8 copias. Se desvanece 1/ turno y 1/ defensa. Ver."
+ },
+ {
+  "mejora": "Dualidad",
+  "grupo": "ILUSIÓN",
+  "zeon": "-",
+  "proyeccion": "-",
+  "dano": "-",
+  "efecto": "En contacto: \"Destello de Ilusión\" en el primer ataque de cada adversario."
+ },
+ {
+  "mejora": "Hab. Mejoradas (Ilusión)",
+  "grupo": "ILUSIÓN",
+  "zeon": "-",
+  "proyeccion": "-",
+  "dano": "-",
+  "efecto": "+40 a todas sus Habilidades secundarias. +20 si se escoge repetidamente."
+ },
+ {
+  "mejora": "Cuerpo de Ilusión",
+  "grupo": "ILUSIÓN",
+  "zeon": "50 (10)",
+  "proyeccion": "-",
+  "dano": "-",
+  "efecto": "A voluntad. Solo vulnerable a destrucción de sortilegios (Base, valor zeonico 60)"
+ }
+]

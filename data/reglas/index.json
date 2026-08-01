@@ -14,11 +14,13 @@
   "efectosTecnica": 555,
   "tiposEfectoTecnica": 65,
   "tecnicasCompendio": 159,
+  "metamagia": 68,
+  "sheele": 95,
   "conjuros": 640,
   "poderesPsiquicos": 125,
   "disciplinasPsiquicas": 13,
   "poderesCriatura": 494,
   "elan": 185,
-  "tablasBase": 15
+  "tablasBase": 17
  }
 }

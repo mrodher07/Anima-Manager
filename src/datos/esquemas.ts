@@ -288,6 +288,40 @@ export const ESQUEMAS: EsquemaColeccion[] = [
     ],
   },
   {
+    coleccion: 'metamagia',
+    singular: 'esfera metamágica',
+    plural: 'Esferas metamágicas',
+    clave: 'posicion',
+    ayuda:
+      'Esferas del Arcana Shepirah. La misma habilidad está en varios puntos del árbol con ' +
+      'requisitos y costes distintos, así que lo que identifica una esfera es su posición. ' +
+      'El coste se paga con puntos de Nivel de Magia.',
+    campos: [
+      txt('posicion', 'Posición', 'C20, F11… o el nombre que quieras darle'),
+      txt('habilidad', 'Habilidad'),
+      num('nivelRequerido', 'Nivel requerido', 'Valores', 110),
+      num('coste', 'Coste en Nivel de Magia', 'Valores', 140),
+    ],
+  },
+  {
+    coleccion: 'sheele',
+    singular: 'mejora de Sheele',
+    plural: 'Mejoras de Sheele',
+    clave: 'mejora',
+    ayuda:
+      'Mejoras de los Espíritus del Alma. Las de los grupos Esotéricas, Forma de Alma, ' +
+      'Magia y Potenciación valen para cualquier Sheele; las demás sólo para las de su ' +
+      'elemento. Las ofensivas traen su Zeón, su Proyección y su Daño.',
+    campos: [
+      txt('mejora', 'Nombre'),
+      txt('grupo', 'Grupo', 'ESOTÉRICAS, AIRE, AGUA…'),
+      num('zeon', 'Zeón', 'Valores', 80),
+      num('proyeccion', 'Proyección', 'Valores', 100),
+      num('dano', 'Daño', 'Valores', 80),
+      { clave: 'efecto', etiqueta: 'Qué hace', tipo: 'parrafo' },
+    ],
+  },
+  {
     coleccion: 'efectosTecnica',
     singular: 'efecto de Técnica',
     plural: 'Efectos de Técnica',

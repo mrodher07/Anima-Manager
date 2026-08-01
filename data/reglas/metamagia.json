@@ -1,0 +1,410 @@
+[
+ {
+  "posicion": "C20",
+  "habilidad": "Eliminar protección",
+  "nivelRequerido": 0,
+  "coste": 5
+ },
+ {
+  "posicion": "C28",
+  "habilidad": "Escudos potenciados",
+  "nivelRequerido": 4,
+  "coste": 5
+ },
+ {
+  "posicion": "C35",
+  "habilidad": "Erudición defensiva",
+  "nivelRequerido": 5,
+  "coste": 10
+ },
+ {
+  "posicion": "C42",
+  "habilidad": "Forzar velocidad",
+  "nivelRequerido": 2,
+  "coste": 5
+ },
+ {
+  "posicion": "C50",
+  "habilidad": "Sentir la magia",
+  "nivelRequerido": 0,
+  "coste": 5
+ },
+ {
+  "posicion": "F11",
+  "habilidad": "Escudos potenciados",
+  "nivelRequerido": 0,
+  "coste": 5
+ },
+ {
+  "posicion": "F20",
+  "habilidad": "Área potenciada",
+  "nivelRequerido": 3,
+  "coste": 10
+ },
+ {
+  "posicion": "F26",
+  "habilidad": "Erudición defensiva",
+  "nivelRequerido": 6,
+  "coste": 10
+ },
+ {
+  "posicion": "F33",
+  "habilidad": "Doble daño",
+  "nivelRequerido": 10,
+  "coste": 20
+ },
+ {
+  "posicion": "F44",
+  "habilidad": "Control del espacio",
+  "nivelRequerido": 6,
+  "coste": 10
+ },
+ {
+  "posicion": "F50",
+  "habilidad": "Transmisión de magia",
+  "nivelRequerido": 3,
+  "coste": 10
+ },
+ {
+  "posicion": "F59",
+  "habilidad": "Seguridad defensiva",
+  "nivelRequerido": 0,
+  "coste": 5
+ },
+ {
+  "posicion": "I10",
+  "habilidad": "Incremento destructivo",
+  "nivelRequerido": 0,
+  "coste": 10
+ },
+ {
+  "posicion": "I15",
+  "habilidad": "Erudición defensiva",
+  "nivelRequerido": 0,
+  "coste": 10
+ },
+ {
+  "posicion": "I20",
+  "habilidad": "Erudición ofensiva",
+  "nivelRequerido": 4,
+  "coste": 10
+ },
+ {
+  "posicion": "I25",
+  "habilidad": "Precisión mística",
+  "nivelRequerido": 6,
+  "coste": 10
+ },
+ {
+  "posicion": "I30",
+  "habilidad": "Erudición ofensiva",
+  "nivelRequerido": 7,
+  "coste": 10
+ },
+ {
+  "posicion": "I40",
+  "habilidad": "Doble conjuro innato",
+  "nivelRequerido": 7,
+  "coste": 20
+ },
+ {
+  "posicion": "I45",
+  "habilidad": "Bucle existencial",
+  "nivelRequerido": 6,
+  "coste": 15
+ },
+ {
+  "posicion": "I50",
+  "habilidad": "Magia vital",
+  "nivelRequerido": 3,
+  "coste": 5
+ },
+ {
+  "posicion": "I55",
+  "habilidad": "Control de la energía",
+  "nivelRequerido": 0,
+  "coste": 10
+ },
+ {
+  "posicion": "I60",
+  "habilidad": "Magia vital",
+  "nivelRequerido": 0,
+  "coste": 5
+ },
+ {
+  "posicion": "L11",
+  "habilidad": "Eliminar protección",
+  "nivelRequerido": 0,
+  "coste": 5
+ },
+ {
+  "posicion": "L20",
+  "habilidad": "Precisión mística",
+  "nivelRequerido": 2,
+  "coste": 5
+ },
+ {
+  "posicion": "L26",
+  "habilidad": "Área potenciada",
+  "nivelRequerido": 6,
+  "coste": 10
+ },
+ {
+  "posicion": "L37",
+  "habilidad": "Mantenimiento añadido",
+  "nivelRequerido": 10,
+  "coste": 20
+ },
+ {
+  "posicion": "L44",
+  "habilidad": "Bucle existencial",
+  "nivelRequerido": 9,
+  "coste": 25
+ },
+ {
+  "posicion": "L50",
+  "habilidad": "Aguante al daño sobrenatural",
+  "nivelRequerido": 3,
+  "coste": 10
+ },
+ {
+  "posicion": "L59",
+  "habilidad": "Forzar velocidad",
+  "nivelRequerido": 0,
+  "coste": 5
+ },
+ {
+  "posicion": "O20",
+  "habilidad": "Incremento destructivo",
+  "nivelRequerido": 4,
+  "coste": 10
+ },
+ {
+  "posicion": "O50",
+  "habilidad": "Magia oculta",
+  "nivelRequerido": 0,
+  "coste": 5
+ },
+ {
+  "posicion": "R15",
+  "habilidad": "Eliminar protección",
+  "nivelRequerido": 0,
+  "coste": 5
+ },
+ {
+  "posicion": "R20",
+  "habilidad": "Erudición ofensiva",
+  "nivelRequerido": 5,
+  "coste": 10
+ },
+ {
+  "posicion": "R25",
+  "habilidad": "Conjuro especializado Nv 50",
+  "nivelRequerido": 2,
+  "coste": 5
+ },
+ {
+  "posicion": "R45",
+  "habilidad": "Forzar velocidad",
+  "nivelRequerido": 2,
+  "coste": 5
+ },
+ {
+  "posicion": "R50",
+  "habilidad": "Proyección mágica determinada",
+  "nivelRequerido": 5,
+  "coste": 5
+ },
+ {
+  "posicion": "R55",
+  "habilidad": "Regeneración zeónica avanzada",
+  "nivelRequerido": 5,
+  "coste": 5
+ },
+ {
+  "posicion": "U20",
+  "habilidad": "Distancia incrementada",
+  "nivelRequerido": 0,
+  "coste": 5
+ },
+ {
+  "posicion": "U50",
+  "habilidad": "Proyección mágica determinada",
+  "nivelRequerido": 4,
+  "coste": 5
+ },
+ {
+  "posicion": "X11",
+  "habilidad": "Conjuro especializado Nv 30",
+  "nivelRequerido": 0,
+  "coste": 5
+ },
+ {
+  "posicion": "X20",
+  "habilidad": "Conjuro especializado Nv 60",
+  "nivelRequerido": 3,
+  "coste": 5
+ },
+ {
+  "posicion": "X26",
+  "habilidad": "Doble conjuro",
+  "nivelRequerido": 7,
+  "coste": 20
+ },
+ {
+  "posicion": "X33",
+  "habilidad": "Alta Magia",
+  "nivelRequerido": 10,
+  "coste": 20
+ },
+ {
+  "posicion": "X44",
+  "habilidad": "Regeneración zeónica avanzada",
+  "nivelRequerido": 8,
+  "coste": 5
+ },
+ {
+  "posicion": "X50",
+  "habilidad": "Magia combinada",
+  "nivelRequerido": 3,
+  "coste": 5
+ },
+ {
+  "posicion": "X59",
+  "habilidad": "Regeneración zeónica avanzada",
+  "nivelRequerido": 0,
+  "coste": 5
+ },
+ {
+  "posicion": "AA10",
+  "habilidad": "Concentración mística",
+  "nivelRequerido": 0,
+  "coste": 5
+ },
+ {
+  "posicion": "AA15",
+  "habilidad": "Distancia incrementada",
+  "nivelRequerido": 0,
+  "coste": 5
+ },
+ {
+  "posicion": "AA20",
+  "habilidad": "Maximización de conjuros",
+  "nivelRequerido": 5,
+  "coste": 10
+ },
+ {
+  "posicion": "AA25",
+  "habilidad": "Conjuro especializado Nv 80",
+  "nivelRequerido": 8,
+  "coste": 5
+ },
+ {
+  "posicion": "AA30",
+  "habilidad": "Conjuro innato superior",
+  "nivelRequerido": 9,
+  "coste": 20
+ },
+ {
+  "posicion": "AA40",
+  "habilidad": "Avatar",
+  "nivelRequerido": 9,
+  "coste": 20
+ },
+ {
+  "posicion": "AA45",
+  "habilidad": "Elevación",
+  "nivelRequerido": 6,
+  "coste": 5
+ },
+ {
+  "posicion": "AA50",
+  "habilidad": "Proyección mágica determinada",
+  "nivelRequerido": 6,
+  "coste": 5
+ },
+ {
+  "posicion": "AA55",
+  "habilidad": "Proyección mágica determinada",
+  "nivelRequerido": 0,
+  "coste": 5
+ },
+ {
+  "posicion": "AA60",
+  "habilidad": "Proyección mágica determinada",
+  "nivelRequerido": 0,
+  "coste": 5
+ },
+ {
+  "posicion": "AD11",
+  "habilidad": "Conjuro especializado Nv 30",
+  "nivelRequerido": 0,
+  "coste": 5
+ },
+ {
+  "posicion": "AD20",
+  "habilidad": "Romper resistencias",
+  "nivelRequerido": 2,
+  "coste": 5
+ },
+ {
+  "posicion": "AD26",
+  "habilidad": "Enlazar conjuros",
+  "nivelRequerido": 8,
+  "coste": 25
+ },
+ {
+  "posicion": "AD37",
+  "habilidad": "Zeón ilimitado",
+  "nivelRequerido": 10,
+  "coste": 20
+ },
+ {
+  "posicion": "AD44",
+  "habilidad": "Proyección mágica determinada",
+  "nivelRequerido": 10,
+  "coste": 5
+ },
+ {
+  "posicion": "AD50",
+  "habilidad": "Efectos persistentes",
+  "nivelRequerido": 3,
+  "coste": 5
+ },
+ {
+  "posicion": "AD59",
+  "habilidad": "Explotación de la energía física",
+  "nivelRequerido": 0,
+  "coste": 5
+ },
+ {
+  "posicion": "AG20",
+  "habilidad": "Conjuro especializado Nv 60",
+  "nivelRequerido": 3,
+  "coste": 5
+ },
+ {
+  "posicion": "AG28",
+  "habilidad": "Romper resistencias",
+  "nivelRequerido": 4,
+  "coste": 5
+ },
+ {
+  "posicion": "AG35",
+  "habilidad": "Conjuro especializado Nv 70",
+  "nivelRequerido": 5,
+  "coste": 5
+ },
+ {
+  "posicion": "AG42",
+  "habilidad": "Proyección mágica determinada",
+  "nivelRequerido": 3,
+  "coste": 5
+ },
+ {
+  "posicion": "AG50",
+  "habilidad": "Explotación de la energía física",
+  "nivelRequerido": 3,
+  "coste": 5
+ }
+]

@@ -9,6 +9,7 @@ import {
   type Caracteristica,
   type DatosCalculo,
   type Personaje,
+  COSTE_NIVEL_MAGIA,
 } from '../motor/personaje';
 import type { Reglamento } from '../motor/reglamento';
 import type { EscalaArma } from '../motor/combate';
@@ -42,21 +43,33 @@ const PESTANAS: { id: Pestana; texto: string }[] = [
   { id: 'poderes', texto: 'Poderes' },
 ];
 
-const PRIMARIAS_COMBATE = [
+/** Una habilidad primaria: su clave, cómo se llama y de dónde sale su coste en PD. */
+interface Primaria {
+  clave: string;
+  nombre: string;
+  /** Columna de la categoría con el coste. */
+  coste: string;
+  /** Coste igual para todas las categorías, cuando la tabla no trae columna. */
+  costeFijo?: number;
+}
+
+const PRIMARIAS_COMBATE: Primaria[] = [
   { clave: 'HAtaque', nombre: 'Habilidad de Ataque', coste: 'costeHA' },
   { clave: 'HParada', nombre: 'Habilidad de Parada', coste: 'costeHP' },
   { clave: 'HEsquiva', nombre: 'Habilidad de Esquiva', coste: 'costeHE' },
   { clave: 'LlevarArmadura', nombre: 'Llevar Armadura', coste: 'costeLlevarArmadura' },
 ];
 
-const PRIMARIAS_MISTICAS = [
+const PRIMARIAS_MISTICAS: Primaria[] = [
   { clave: 'Zeon', nombre: 'Zeón', coste: 'costeZeon' },
   { clave: 'ACT', nombre: 'ACT (Acumulación)', coste: 'costeACT' },
   { clave: 'ProyeccionMagica', nombre: 'Proyección Mágica', coste: 'costeProyeccionMagica' },
-  { clave: 'NivelMagia', nombre: 'Nivel de Magia', coste: 'costeNivelMagia' },
+  // El Nivel de Magia cuesta 5 PD en todas las categorías: la tabla no trae columna
+  // propia para él, así que se pasa fijo.
+  { clave: 'NivelMagia', nombre: 'Nivel de Magia', coste: 'costeNivelMagia', costeFijo: COSTE_NIVEL_MAGIA },
 ];
 
-const PRIMARIAS_PSIQUICAS = [
+const PRIMARIAS_PSIQUICAS: Primaria[] = [
   { clave: 'CV', nombre: 'Cargas Vitales (CV)', coste: 'costeCV' },
   { clave: 'ProyeccionPsiquica', nombre: 'Proyección Psíquica', coste: 'costeProyeccionPsiquica' },
 ];
@@ -83,6 +96,7 @@ export function EditorPersonaje({ personaje, datos, catalogo, reglamento, onCamb
   const armaduras = useColeccion(catalogo, 'armaduras');
   const ventajas = useColeccion(catalogo, 'ventajas');
   const legados = useColeccion(catalogo, 'legadosSangre');
+  const metamagia = useColeccion(catalogo, 'metamagia');
   const conjuros = useColeccion(catalogo, 'conjuros');
   const poderes = useColeccion(catalogo, 'poderesPsiquicos');
   const ficha = calcular(personaje, datos, reglamento);
@@ -369,7 +383,7 @@ export function EditorPersonaje({ personaje, datos, catalogo, reglamento, onCamb
                     ...PRIMARIAS_MISTICAS,
                     ...PRIMARIAS_PSIQUICAS,
                   ].map((h) => {
-                    const coste = Number(datos.categoria?.[h.coste] ?? 0);
+                    const coste = h.costeFijo ?? Number(datos.categoria?.[h.coste] ?? 0);
                     const disponible = coste > 0;
                     return (
                       <tr key={h.clave} style={disponible ? undefined : { opacity: 0.4 }}>
@@ -393,7 +407,8 @@ export function EditorPersonaje({ personaje, datos, catalogo, reglamento, onCamb
                           {h.clave === 'LlevarArmadura' && ficha.combate.llevarArmadura.valor}
                           {h.clave === 'Zeon' && ficha.zeon.valor}
                           {h.clave === 'ACT' && ficha.act.valor}
-                          {!['HAtaque', 'HParada', 'HEsquiva', 'LlevarArmadura', 'Zeon', 'ACT'].includes(h.clave) &&
+                          {h.clave === 'NivelMagia' && ficha.nivelMagia.valor}
+                          {!['HAtaque', 'HParada', 'HEsquiva', 'LlevarArmadura', 'Zeon', 'ACT', 'NivelMagia'].includes(h.clave) &&
                             (disponible ? Math.trunc((personaje.pdInvertidos[h.clave] ?? 0) / coste) : '—')}
                         </td>
                       </tr>
@@ -575,6 +590,39 @@ export function EditorPersonaje({ personaje, datos, catalogo, reglamento, onCamb
 
       {pestana === 'poderes' && (
         <>
+          <section className="panel" style={{ marginBottom: 16 }}>
+            <h2>Metamagia · Arcana Shepirah</h2>
+            <p style={{ color: 'var(--texto-tenue)', fontSize: '0.86rem', marginTop: 0 }}>
+              Las esferas se pagan con puntos de <strong>Nivel de Magia</strong>, no con PD. Cada
+              una pide además un nivel mínimo de personaje, y ese requisito no se salta ni
+              teniendo puntos de sobra. Empiezas por una esfera sin requisito y te mueves sólo a
+              las que estén unidas por una línea en el árbol del manual: <em>esa</em> parte la
+              lleváis vosotros, porque el Excel no guarda las uniones.
+            </p>
+            <p style={{ margin: '0 0 12px', fontSize: '0.95rem' }}>
+              Nivel de Magia <strong className="destacado">{ficha.nivelMagia.valor}</strong> ·
+              gastado en esferas{' '}
+              <strong
+                className={ficha.metamagia.disponible < 0 ? 'peligro-texto' : 'destacado'}
+              >
+                {ficha.metamagia.gastado}
+              </strong>{' '}
+              · libre <strong className="destacado">{ficha.metamagia.disponible}</strong>
+            </p>
+            <Selector
+              opciones={metamagia}
+              claveDe={(m) => m.posicion}
+              detalleDe={(m) =>
+                `${m.habilidad} · ${m.coste} Nv. Magia` +
+                (m.nivelRequerido > 0 ? ` · pide nivel ${m.nivelRequerido}` : ' · de partida')
+              }
+              grupoDe={(m) => (m.nivelRequerido > 0 ? `Nivel ${m.nivelRequerido}` : 'Sin requisito')}
+              seleccionadas={personaje.metamagia ?? []}
+              onCambiar={(v) => set({ metamagia: v })}
+              etiquetaBusqueda="Buscar esfera"
+            />
+          </section>
+
           <section className="panel" style={{ marginBottom: 16 }}>
             <h2>Conjuros</h2>
             <p style={{ color: 'var(--texto-tenue)', fontSize: '0.86rem', marginTop: 0 }}>

@@ -267,6 +267,100 @@ for t in data['tecnicasCompendio']:
     t.pop('_cmReducido', None)
     t['arbol'] = t.pop('_seccion', None)
 
+# --- Metamagia: el Arcana Shepirah -------------------------------------
+# Arcana Exxet, cap. 3. La hoja «Metamagia» dibuja el árbol como una rejilla: el nombre
+# de la esfera va en una columna, el **nivel de personaje requerido** dos columnas a la
+# derecha, y el **coste en puntos de Nivel de Magia** tres filas más abajo en esa misma
+# columna. Lo confirma la fórmula de la celda del rótulo:
+#     =IF(AND($T$12, PDs!$R$17 >= Metamagia!E28), "", "Nv " & Metamagia!E28)
+# donde `PDs!R17` es el nivel del personaje.
+#
+# La misma habilidad aparece en varias posiciones del árbol con requisitos y costes
+# distintos: así funciona el Shepirah, y el manual lo dibuja igual. Por eso la clave es
+# la posición (la celda), no el nombre.
+#
+# Lo que **no** se puede sacar de aquí son las líneas que unen unas esferas con otras.
+# La regla de moverse sólo a esferas conectadas se queda para la mesa.
+metamagia = []
+for col in range(3, 36, 3):
+    for fila in range(9, 63):
+        nombre = clean(wb['Metamagia'].cell(fila, col).value)
+        if not isinstance(nombre, str) or nombre in ('0', 'Nivel Usado'):
+            continue
+        if nombre.startswith('Nv '):
+            continue
+        coste = clean(wb['Metamagia'].cell(fila + 3, col + 2).value)
+        if not isinstance(coste, int):
+            continue
+        metamagia.append({
+            'posicion': f'{openpyxl.utils.get_column_letter(col)}{fila}',
+            'habilidad': nombre,
+            'nivelRequerido': clean(wb['Metamagia'].cell(fila, col + 2).value) or 0,
+            'coste': coste,
+        })
+data['metamagia'] = metamagia
+
+# --- Sheele: espíritus del alma ----------------------------------------
+# Arcana Exxet, cap. 7. Ocho tipos elementales, cada uno con sus características, sus
+# habilidades de partida y sus mejoras. Las mejoras generales sirven para cualquier
+# Sheele; las de la sección de un elemento, sólo para las de ese tipo.
+TIPOS_SHEELE = ['Aire', 'Agua', 'Fuego', 'Tierra', 'Luz', 'Oscuridad', 'Naturaleza', 'Ilusión']
+
+sheele = {'tipos': [], 'mejoras': [], 'potenciacion': []}
+
+# Nombre propio y características base de cada tipo. `Tablas Sheele`, filas 5-12 y 18-25.
+nombres_propios = {clean(r[0].value): clean(r[1].value)
+                   for r in cells('Tablas Sheele', '$C$5:$G$12') if clean(r[0].value)}
+for i, tipo in enumerate(TIPOS_SHEELE):
+    entrada = {'tipo': tipo, 'nombre': None, 'caracteristicas': {}, 'habilidades': {}}
+    for fila in cells('Tablas Sheele', '$C$18:$O$25'):
+        car = clean(fila[0].value)
+        if car:
+            entrada['caracteristicas'][car] = clean(fila[4 + i].value)
+    for fila in cells('Tablas Sheele', '$C$30:$K$80'):
+        hab = clean(fila[0].value)
+        valor = clean(fila[1 + i].value)
+        if hab and valor:
+            entrada['habilidades'][hab] = valor
+    sheele['tipos'].append(entrada)
+
+# Los nombres propios van en la columna G de la tabla de tipos (Haley, Corale, Faren…).
+for fila in cells('Tablas Sheele', '$C$5:$G$12'):
+    tipo, propio = clean(fila[0].value), clean(fila[4].value)
+    for e in sheele['tipos']:
+        if e['tipo'] == tipo:
+            e['nombre'] = propio
+
+# Mejoras: generales primero y luego las de cada elemento, con su coste y su efecto.
+seccion = None
+for fila in cells('Tablas Sheele', '$C$91:$L$200'):
+    nombre = clean(fila[0].value)
+    if not nombre:
+        continue
+    if nombre.startswith('>'):
+        seccion = nombre.lstrip('> ').strip()
+        continue
+    sheele['mejoras'].append({
+        'mejora': nombre,
+        'grupo': seccion,
+        # Sólo las de elemento tienen coste en Zeón, Proyección y Daño.
+        'zeon': clean(fila[6].value),
+        'proyeccion': clean(fila[7].value),
+        'dano': clean(fila[8].value),
+        'efecto': clean(fila[9].value),
+    })
+
+# Potenciación Mística: cuánto Zeón máximo da cada grado de Controlar. Filas 5-13.
+sheele['potenciacion'] = [
+    {'controlar': clean(r[0].value), 'zeonMaximo': clean(r[1].value)}
+    for r in cells('Tablas Sheele', '$I$5:$J$13') if clean(r[1].value) is not None]
+
+# La colección es la lista de mejoras, que es lo que se elige; los tipos y la tabla de
+# Potenciación Mística son tablas de referencia y van con las demás.
+data['sheele'] = sheele['mejoras']
+TIPOS_SHEELE_DATOS = sheele['tipos']
+POTENCIACION_SHEELE = sheele['potenciacion']
+
 # --- Conjuros ----------------------------------------------------------
 data['conjuros'] = table('Tablas Magia', '$D$6:$Z$680', [
     'conjuro', 'via', 'nivel', 'diario', 'tipo', 'accion',
@@ -353,6 +447,9 @@ base['armasEnormes'] = [
      'multDano': clean(r[4].value), 'c5': clean(r[5].value), 'c6': clean(r[6].value)}
     for r in cells('Tablas', '$AE$598:$AK$600') if clean(r[0].value)]
 base['tipologias'] = [[clean(c.value) for c in r] for r in cells('Tablas', '$X$603:$AA$614')]
+# Arcana Exxet, cap. 7: los ocho tipos de Sheele y su tabla de Potenciación Mística.
+base['tiposSheele'] = TIPOS_SHEELE_DATOS
+base['potenciacionSheele'] = POTENCIACION_SHEELE
 data['tablasBase'] = base
 
 os.makedirs(OUT, exist_ok=True)

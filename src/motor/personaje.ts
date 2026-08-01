@@ -38,6 +38,7 @@ import type {
   EfectoTecnica,
   EntradaTabla,
   HabilidadKiCatalogo,
+  EsferaMetamagica,
   LegadoSangre,
   Raza,
   TipoEfectoTecnica,
@@ -156,6 +157,12 @@ export interface Personaje {
    * dan **+1 al ajuste de nivel** por muchos que se tengan (Dominus Exxet, cap. 6).
    */
   legados?: string[];
+  /**
+   * Esferas metamágicas del Arcana Shepirah, por su posición en el árbol. La misma
+   * habilidad está en varios sitios con costes distintos, así que lo que identifica una
+   * elección es la posición, no el nombre.
+   */
+  metamagia?: string[];
 
   /** Conjuros aprendidos, por nombre. */
   conjuros: string[];
@@ -298,6 +305,9 @@ export interface FichaCalculada {
   resistencias: Record<Resistencia, ValorDerivado>;
   zeon: ValorDerivado;
   act: ValorDerivado;
+  nivelMagia: ValorDerivado;
+  /** Esferas del Arcana Shepirah y lo que consumen del Nivel de Magia. */
+  metamagia: { esferas: string[]; gastado: number; disponible: number };
   ki: FichaKi;
   secundarias: Record<string, ValorDerivado>;
   /** Lo que aportan las ventajas y desventajas elegidas. */
@@ -368,9 +378,13 @@ export interface DatosCalculo {
   artesMarciales: EntradaTabla[];
   arsMagnus: EntradaTabla[];
   legadosSangre: LegadoSangre[];
+  metamagia: EsferaMetamagica[];
   efectosTecnica: EfectoTecnica[];
   tiposEfectoTecnica: TipoEfectoTecnica[];
 }
+
+/** Lo que cuesta un bloque de Nivel de Magia, igual para todas las categorías. */
+export const COSTE_NIVEL_MAGIA = 5;
 
 /** Puntos de Creación: 3 de partida, más los que den las desventajas. */
 export const PC_INICIALES = 3;
@@ -392,6 +406,7 @@ export async function cargarDatosCalculo(
     artesMarciales,
     arsMagnus,
     legadosSangre,
+    metamagia,
     efectosTecnica,
     tiposEfectoTecnica,
   ] = await Promise.all([
@@ -405,6 +420,7 @@ export async function cargarDatosCalculo(
     catalogo.obtener('artesMarciales'),
     catalogo.obtener('arsMagnus'),
     catalogo.obtener('legadosSangre'),
+    catalogo.obtener('metamagia'),
     catalogo.obtener('efectosTecnica'),
     catalogo.obtener('tiposEfectoTecnica'),
   ]);
@@ -421,6 +437,7 @@ export async function cargarDatosCalculo(
     artesMarciales,
     arsMagnus,
     legadosSangre,
+    metamagia,
     efectosTecnica,
     tiposEfectoTecnica,
   };
@@ -686,6 +703,55 @@ export function calcular(
     for (const texto of arma.avisos) avisos.push({ gravedad: 'aviso', mensaje: `${arma.arma}: ${texto}` });
   }
 
+  // ── Nivel de Magia y Metamagia (Arcana Exxet, cap. 3) ──
+  // El Nivel de Magia cuesta **5 PD fijos**, no lo que diga la categoría: en la ficha,
+  // `PDs!L97:T97` vale 5 en todas las columnas y no hay columna «CosteNivelMagia».
+  //
+  // Ojo: la ficha suma además un Nivel de Magia **innato** (`PDs!W97`, que Mogunbun tiene
+  // en 50 y Christopher en 40 sin haber invertido un solo PD) y el que da una ventaja por
+  // nivel. Eso todavía no se deriva aquí; si tu personaje lo tiene, sobrescribe el valor
+  // a mano como cualquier otro derivado.
+  const nivelMagia = derivar(
+    'NivelMagia',
+    aplicar('nivelMagia', {
+      pd: personaje.pdInvertidos['NivelMagia'] ?? 0,
+      coste: COSTE_NIVEL_MAGIA,
+    }),
+  );
+
+  const esferasElegidas = personaje.metamagia ?? [];
+  const porPosicion = new Map(datos.metamagia.map((m) => [m.posicion, m]));
+  let metamagiaGastada = 0;
+  for (const posicion of esferasElegidas) {
+    const esfera = porPosicion.get(posicion);
+    if (!esfera) {
+      avisos.push({ gravedad: 'aviso', mensaje: `Esfera metamágica desconocida: "${posicion}".` });
+      continue;
+    }
+    metamagiaGastada += esfera.coste;
+    if (esfera.nivelRequerido > nivel) {
+      avisos.push({
+        gravedad: 'aviso',
+        mensaje:
+          `${esfera.habilidad} pide nivel ${esfera.nivelRequerido} y tienes ${nivel}. El ` +
+          'Requerimiento de Nivel no se salta ni teniendo puntos de Nivel de Magia de sobra.',
+      });
+    }
+  }
+  if (metamagiaGastada > nivelMagia.valor) {
+    avisos.push({
+      gravedad: 'error',
+      mensaje:
+        `Las esferas metamágicas cuestan ${metamagiaGastada} puntos de Nivel de Magia y sólo ` +
+        `tienes ${nivelMagia.valor}.`,
+    });
+  }
+  const metamagia = {
+    esferas: esferasElegidas,
+    gastado: metamagiaGastada,
+    disponible: nivelMagia.valor - metamagiaGastada,
+  };
+
   // ── Dominios del Ki ──
   // Va después de las secundarias porque Detección y Ocultación se calculan sobre
   // Advertir y Ocultarse ya resueltas.
@@ -853,6 +919,8 @@ export function calcular(
     resistencias,
     zeon,
     act,
+    nivelMagia,
+    metamagia,
     ki,
     secundarias,
     efectos,
