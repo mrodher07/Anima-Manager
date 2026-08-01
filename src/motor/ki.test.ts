@@ -20,6 +20,8 @@ import { REGLAMENTO_OFICIAL } from './reglamento';
 import habilidadesKiJson from '../../data/reglas/habilidadesKi.json';
 import tablasBase from '../../data/reglas/tablasBase.json';
 import artesMarcialesJson from '../../data/reglas/artesMarciales.json';
+import efectosJson from '../../data/reglas/efectosTecnica.json';
+import tiposJson from '../../data/reglas/tiposEfectoTecnica.json';
 
 const habilidades = habilidadesKiJson as HabilidadKi[];
 const tablaAcumulacion = tablasBase.acumulacionKi;
@@ -366,6 +368,54 @@ describe('consecuencias de acumular', () => {
     expect(consecuenciaDe(45)?.perdidaSiNoSeUsa).toBe(5);
     expect(consecuenciaDe(80)?.perdidaSiNoSeUsa).toBe(10);
     expect(consecuenciaDe(300)?.perdidaSiNoSeUsa).toBe('mitad');
+  });
+});
+
+describe('Ars Magnus', () => {
+  const conArs = (nombres: string[]) =>
+    calcularKi(
+      vacias({ arsMagnus: nombres }),
+      { ...datos, arsMagnus: { Berserker: { CM: 10, PD: 30 }, Kiai: { CM: 10, PD: 10 } } },
+      ctx({ cmCategoria: 100 }),
+      REGLAMENTO_OFICIAL,
+    );
+
+  it('se pagan en CM y además en PD', () => {
+    const r = conArs(['Berserker', 'Kiai']);
+    expect(r.conocimientoMarcial.gastado).toBe(20);
+    expect(r.pdArsMagnus).toBe(40);
+  });
+
+  it('avisa si el Ars Magnus no existe', () => {
+    const r = conArs(['Inventado']);
+    expect(r.avisos.join(' ')).toContain('Ars Magnus desconocido');
+  });
+});
+
+describe('Técnicas propias', () => {
+  it('su CM se recalcula desde el diseño y se cobra', () => {
+    const r = calcularKi(
+      vacias({
+        propias: [
+          {
+            nombre: 'Tajo del viento',
+            nivel: 1,
+            efectos: [{ referencia: 'Habilidad De Ataque +40', primario: true, reparto: {} }],
+            desventajas: [],
+            mantenida: false,
+            sostenida: null,
+            reduccionKi: {},
+            descuentoCM: 0,
+          },
+        ],
+      }),
+      { ...datos, tecnicas: { opciones: efectosJson as never, fichas: tiposJson as never } },
+      ctx({ cmCategoria: 100 }),
+      REGLAMENTO_OFICIAL,
+    );
+    // 10 CM del Efecto, pero el mínimo de nivel 1 son 20.
+    expect(r.conocimientoMarcial.gastado).toBe(20);
+    expect(r.avisos).toEqual([]);
   });
 });
 

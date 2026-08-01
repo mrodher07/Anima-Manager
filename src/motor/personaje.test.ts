@@ -9,6 +9,7 @@ import armadurasJson from '../../data/reglas/armaduras.json';
 import ventajasJson from '../../data/reglas/ventajas.json';
 import habilidadesKiJson from '../../data/reglas/habilidadesKi.json';
 import artesMarcialesJson from '../../data/reglas/artesMarciales.json';
+import arsMagnusJson from '../../data/reglas/arsMagnus.json';
 import efectosTecnicaJson from '../../data/reglas/efectosTecnica.json';
 import tiposEfectoJson from '../../data/reglas/tiposEfectoTecnica.json';
 import type {
@@ -24,6 +25,10 @@ import type {
   Ventaja,
 } from '../datos/tipos';
 
+/**
+ * Los PD de Ki y Acumulación se guardan por característica (`KiAGI`, `AcumKiPOD`…), así
+ * que hay que comprobar que el reparto los cuenta dentro del límite de combate.
+ */
 const datos = (nombreRaza: string, nombreCategoria: string): DatosCalculo => ({
   raza: (razas as Raza[]).find((r) => r.raza === nombreRaza),
   categoria: (categorias as unknown as Categoria[]).find((c) => c.categoria === nombreCategoria),
@@ -34,6 +39,7 @@ const datos = (nombreRaza: string, nombreCategoria: string): DatosCalculo => ({
   ventajas: ventajasJson as Ventaja[],
   habilidadesKi: habilidadesKiJson as HabilidadKiCatalogo[],
   artesMarciales: artesMarcialesJson as EntradaTabla[],
+  arsMagnus: arsMagnusJson as EntradaTabla[],
   efectosTecnica: efectosTecnicaJson as EfectoTecnica[],
   tiposEfectoTecnica: tiposEfectoJson as TipoEfectoTecnica[],
 });
@@ -142,6 +148,14 @@ describe('derivación de la ficha de Meirmeister', () => {
     expect(ficha.limites.combate).toBe(360);
     expect(ficha.limites.misticas).toBe(300);
     expect(ficha.avisos.filter((a) => a.gravedad === 'error')).toEqual([]);
+  });
+
+  it('los PD de Ki y Acumulación cuentan como habilidades de combate', () => {
+    // Se guardan por característica (KiAGI, AcumKiPOD…), no en una clave suelta.
+    const p = meirmeister();
+    p.pdInvertidos = { ...p.pdInvertidos, KiFUE: 10, AcumKiPOD: 20, CM: 15 };
+    const conKi = calcular(p, datos('Jayán', 'Paladín Oscuro (RD)'), REGLAMENTO_OFICIAL);
+    expect(conKi.pdGastados.combate).toBe(300 + 10 + 20 + 15);
   });
 });
 

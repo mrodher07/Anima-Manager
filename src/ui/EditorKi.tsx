@@ -59,6 +59,7 @@ function ordenarArbol(habilidades: HabilidadKi[]): HabilidadKi[] {
 export function EditorKi({ personaje, ficha, datos, catalogo, onCambiar }: Props) {
   const habilidadesKi = useColeccion(catalogo, 'habilidadesKi');
   const artesMarciales = useColeccion(catalogo, 'artesMarciales');
+  const arsMagnus = useColeccion(catalogo, 'arsMagnus');
   const compendio = useColeccion(catalogo, 'tecnicasCompendio');
   const limites = datos.tablas.limitesKi ?? [];
   const ki = ficha.ki;
@@ -385,6 +386,47 @@ export function EditorKi({ personaje, ficha, datos, catalogo, onCambiar }: Props
           onCambiar={(v) => setKi({ artesMarciales: v })}
           etiquetaBusqueda="Buscar arte marcial"
         />
+      </section>
+
+      <section className="panel" style={{ marginBottom: 16 }}>
+        <h2>Ars Magnus</h2>
+        <p style={{ color: 'var(--texto-tenue)', fontSize: '0.86rem', marginTop: 0 }}>
+          Capacidades únicas de luchador: desde entrar en frenesí hasta manejar armas
+          imposibles. Se pagan <strong>dos veces</strong>, en CM y en PD, y los PD cuentan
+          dentro del límite de habilidades de combate. Ahora mismo llevas{' '}
+          <strong className="destacado">{ki.pdArsMagnus}</strong> PD en Ars Magnus.
+        </p>
+        <Selector
+          opciones={arsMagnus}
+          claveDe={(a) => String(a.nombre ?? '')}
+          detalleDe={(a) => `${a.PD ?? 0} PD · ${a.CM ?? 0} CM`}
+          grupoDe={(a) => String(a._seccion ?? '')}
+          seleccionadas={elecciones.arsMagnus ?? []}
+          onCambiar={(v) => setKi({ arsMagnus: v })}
+          etiquetaBusqueda="Buscar Ars Magnus"
+        />
+        {(elecciones.arsMagnus ?? []).length > 0 && (
+          <div style={{ marginTop: 12 }}>
+            {(elecciones.arsMagnus ?? []).map((nombre) => {
+              const ars = arsMagnus.find((a) => a.nombre === nombre);
+              if (!ars) return null;
+              return (
+                <p key={nombre} style={{ fontSize: '0.86rem', margin: '6px 0' }}>
+                  <strong className="destacado">{String(ars.nombre)}</strong>{' '}
+                  <span style={{ color: 'var(--texto-debil)' }}>
+                    ({ars.PD ?? 0} PD, {ars.CM ?? 0} CM
+                    {ars.requisitos && ars.requisitos !== '-' && ars.requisitos !== 'NO'
+                      ? `, requiere ${ars.requisitos}`
+                      : ''}
+                    )
+                  </span>
+                  <br />
+                  {String(ars.descripcion ?? '')}
+                </p>
+              );
+            })}
+          </div>
+        )}
       </section>
 
       <section className="panel">

@@ -174,6 +174,8 @@ export interface FichaKi {
     /** Tope de PD que se pueden meter en CM. */
     limitePD: number;
   };
+  /** PD que se van en Ars Magnus. Cuentan como habilidades de combate. */
+  pdArsMagnus: number;
   deteccion: number | null;
   ocultacion: number | null;
   /** Si la mesa juega con la Reserva de Ki unificada. */
@@ -195,6 +197,8 @@ export interface EleccionesKi {
   propias?: DisenoTecnica[];
   /** Grados de arte marcial dominados. */
   artesMarciales: string[];
+  /** Ars Magnus adquiridos. Gastan CM y además PD de combate. */
+  arsMagnus?: string[];
   unificado?: boolean;
 }
 
@@ -204,6 +208,7 @@ export const ELECCIONES_KI_VACIAS: EleccionesKi = {
   tecnicas: [],
   propias: [],
   artesMarciales: [],
+  arsMagnus: [],
 };
 
 export interface DatosKi {
@@ -212,6 +217,8 @@ export interface DatosKi {
   limites: LimiteKi[];
   /** CM que aporta cada grado de arte marcial, por nombre. */
   cmPorArteMarcial: Record<string, number>;
+  /** Lo que cuesta cada Ars Magnus, en CM y en PD. */
+  arsMagnus?: Record<string, { CM: number; PD: number }>;
   /** Tablas de creación de Técnicas, para poder cobrar las propias. */
   tecnicas?: CatalogoTecnicas;
 }
@@ -373,7 +380,20 @@ export function calcularKi(
       avisos.push(`${diseno.nombre || 'Técnica sin nombre'}: ${texto}`);
     }
   }
-  const cmGastado = cmHabilidades + cmLimites + cmTecnicas + cmPropias;
+  // Los Ars Magnus se pagan en CM **y** en PD; los PD van aparte, en el reparto normal.
+  let cmArsMagnus = 0;
+  let pdArsMagnus = 0;
+  for (const nombre of elecciones.arsMagnus ?? []) {
+    const ars = datos.arsMagnus?.[nombre];
+    if (!ars) {
+      avisos.push(`Ars Magnus desconocido: "${nombre}".`);
+      continue;
+    }
+    cmArsMagnus += ars.CM;
+    pdArsMagnus += ars.PD;
+  }
+
+  const cmGastado = cmHabilidades + cmLimites + cmTecnicas + cmPropias + cmArsMagnus;
   if (cmGastado > cmTotal) {
     avisos.push(`Has comprometido ${cmGastado} CM y sólo tienes ${cmTotal}.`);
   }
@@ -424,6 +444,7 @@ export function calcularKi(
       disponible: cmTotal - cmGastado,
       limitePD,
     },
+    pdArsMagnus,
     deteccion,
     ocultacion,
     unificado: elecciones.unificado ?? false,

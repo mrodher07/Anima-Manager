@@ -334,7 +334,16 @@ function truncarPD(pd: number, coste: number): number {
   return coste > 0 ? Math.trunc(pd / coste) : 0;
 }
 
-const CLAVES_COMBATE = ['HAtaque', 'HParada', 'HEsquiva', 'LlevarArmadura', 'Ki', 'AcumKi', 'CM'];
+/**
+ * El Ki y la Acumulación se compran **por característica**, así que sus claves son
+ * `KiAGI`, `AcumKiPOD`… y hay que enumerarlas todas para que el gasto cuente dentro del
+ * límite de habilidades de combate.
+ */
+const CLAVES_COMBATE = [
+  'HAtaque', 'HParada', 'HEsquiva', 'LlevarArmadura', 'CM',
+  ...CARACTERISTICAS_KI.map((c) => `Ki${c}`),
+  ...CARACTERISTICAS_KI.map((c) => `AcumKi${c}`),
+];
 const CLAVES_MISTICAS = ['Zeon', 'ACT', 'ProyeccionMagica', 'NivelMagia', 'Convocar', 'Controlar', 'Atar', 'Desconvocar'];
 const CLAVES_PSIQUICAS = ['CV', 'ProyeccionPsiquica'];
 
@@ -351,6 +360,7 @@ export interface DatosCalculo {
   ventajas: Ventaja[];
   habilidadesKi: HabilidadKiCatalogo[];
   artesMarciales: EntradaTabla[];
+  arsMagnus: EntradaTabla[];
   efectosTecnica: EfectoTecnica[];
   tiposEfectoTecnica: TipoEfectoTecnica[];
 }
@@ -373,6 +383,7 @@ export async function cargarDatosCalculo(
     ventajas,
     habilidadesKi,
     artesMarciales,
+    arsMagnus,
     efectosTecnica,
     tiposEfectoTecnica,
   ] = await Promise.all([
@@ -384,6 +395,7 @@ export async function cargarDatosCalculo(
     catalogo.obtener('ventajas'),
     catalogo.obtener('habilidadesKi'),
     catalogo.obtener('artesMarciales'),
+    catalogo.obtener('arsMagnus'),
     catalogo.obtener('efectosTecnica'),
     catalogo.obtener('tiposEfectoTecnica'),
   ]);
@@ -398,6 +410,7 @@ export async function cargarDatosCalculo(
     ventajas,
     habilidadesKi,
     artesMarciales,
+    arsMagnus,
     efectosTecnica,
     tiposEfectoTecnica,
   };
@@ -669,6 +682,11 @@ export function calcular(
     const nombre = String(arte.arte ?? '');
     if (nombre) cmPorArteMarcial[nombre] = Number(arte.CM ?? 0);
   }
+  const costesArsMagnus: Record<string, { CM: number; PD: number }> = {};
+  for (const ars of datos.arsMagnus) {
+    const nombre = String(ars.nombre ?? '');
+    if (nombre) costesArsMagnus[nombre] = { CM: Number(ars.CM ?? 0), PD: Number(ars.PD ?? 0) };
+  }
   const caracteristicasKi = Object.fromEntries(
     CARACTERISTICAS_KI.map((c) => [c, caracteristicas[c].total]),
   ) as Record<CaracteristicaKi, number>;
@@ -688,6 +706,7 @@ export function calcular(
       habilidades: datos.habilidadesKi,
       limites: tablas.limitesKi ?? [],
       cmPorArteMarcial,
+      arsMagnus: costesArsMagnus,
       tecnicas: { opciones: datos.efectosTecnica, fichas: datos.tiposEfectoTecnica },
     },
     {
@@ -747,7 +766,8 @@ export function calcular(
     claves.reduce((t, k) => t + (personaje.pdInvertidos[k] ?? 0), 0);
   const pdSecundarias = SECUNDARIAS.reduce((t, d) => t + (personaje.pdInvertidos[d.nombre] ?? 0), 0);
   const pdGastados = {
-    combate: sumar(CLAVES_COMBATE),
+    // Los Ars Magnus se pagan en PD además de en CM, y son habilidades de combate.
+    combate: sumar(CLAVES_COMBATE) + ki.pdArsMagnus,
     misticas: sumar(CLAVES_MISTICAS),
     psiquicas: sumar(CLAVES_PSIQUICAS),
     secundarias: pdSecundarias,
