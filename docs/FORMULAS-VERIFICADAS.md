@@ -730,8 +730,25 @@ POD 8**. Y con el de las Sostenidas: +100 al Daño en una Mayor sostenida 5 asal
 > Se sigue **la tabla**, que es además lo que implementa la ficha: el coste es 6, no 7. El
 > CM sí coincide (15 + 10 = 25).
 
+### Legados de Sangre
+
+Dominus Exxet, cap. 6. Se compran con **Puntos de Creación**, como una ventaja, pero
+además dan **+1 al ajuste de nivel** — uno solo, por muchos Legados que se tengan. No suben
+los bonos: encarecen la experiencia, igual que el ajuste racial. No se pueden coger al subir
+de nivel, ni con la regla opcional de Liberalización de Puntos de Creación.
+
+Son 16, con coste 1 salvo Ojos de la Muerte, Ojos del Destino y Devorador de Existencia,
+que valen 2, y Sangre de las Grandes Bestias, que admite 1, 2 o 3 (40, 80 o 120 PD de
+Poderes de Criatura como si tuviera Gnosis 5). Cuando el coste es un rango la ficha cobra el
+**mínimo** y el resto lo decide el jugador.
+
+> `data/reglas/legadosSangre.json` está **escrito a mano**, no extraído. El capítulo va a
+> dos columnas y el texto que sale del PDF las entrelaza: automatizarlo obligaba a inventar
+> nombres y costes, que es justo lo que no se debe hacer.
+
 ## Pendiente de modelar
-- **Ki**: falta enganchar los Ars Magnus al CM y añadir Legados de Sangre y Sellos de
-  Invocación. Puntos, Acumulación, CM, habilidades, Límites y creación de Técnicas ya están.
+- **Ki**: falta el capítulo 8, los Sellos de Invocación. Puntos, Acumulación, CM,
+  habilidades del Ki y del Némesis, Límites, Ars Magnus, Legados de Sangre y la creación de
+  Técnicas ya están.
 - **Conjuros y poderes psíquicos seleccionados** como listas del personaje.
 - Bestiario y creación de seres.

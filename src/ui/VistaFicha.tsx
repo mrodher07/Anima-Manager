@@ -64,8 +64,14 @@ export function VistaFicha({ personaje, datos, reglamento }: Props) {
 
       {ficha.ajusteNivel > 0 && (
         <p className="cinta-campana" style={{ marginBottom: 14 }}>
-          Ajuste de nivel <strong>+{ficha.ajusteNivel}</strong> por la raza: no da bonos, sólo
-          encarece la experiencia (subes como si fueras de nivel {ficha.nivelParaExperiencia}).
+          Ajuste de nivel <strong>+{ficha.ajusteNivel}</strong>{' '}
+          {(personaje.legados ?? []).length > 0
+            ? ficha.ajusteNivel > 1
+              ? 'por la raza y por ser Legado de Sangre'
+              : 'por ser Legado de Sangre'
+            : 'por la raza'}
+          : no da bonos, sólo encarece la experiencia (subes como si fueras de nivel{' '}
+          {ficha.nivelParaExperiencia}).
         </p>
       )}
 
@@ -275,10 +281,22 @@ export function VistaFicha({ personaje, datos, reglamento }: Props) {
         </section>
       )}
 
-      {(personaje.ventajas.length > 0 || personaje.desventajas.length > 0) && (
+      {(personaje.ventajas.length > 0 ||
+        personaje.desventajas.length > 0 ||
+        (personaje.legados ?? []).length > 0) && (
         <section className="panel" style={{ marginTop: 16 }}>
-          <h2>Ventajas y desventajas</h2>
+          <h2>Ventajas, desventajas y Legados</h2>
           <div className="rejilla">
+            {(personaje.legados ?? []).length > 0 && (
+              <div>
+                <h3 style={{ fontSize: '0.82rem', color: 'var(--texto-tenue)', marginBottom: 6 }}>
+                  Legados de Sangre
+                </h3>
+                <ul className="lista-simple">
+                  {(personaje.legados ?? []).map((l) => <li key={l}>{l}</li>)}
+                </ul>
+              </div>
+            )}
             {personaje.ventajas.length > 0 && (
               <div>
                 <h3 style={{ fontSize: '0.82rem', color: 'var(--texto-tenue)', marginBottom: 6 }}>Ventajas</h3>

@@ -38,6 +38,7 @@ import type {
   EfectoTecnica,
   EntradaTabla,
   HabilidadKiCatalogo,
+  LegadoSangre,
   Raza,
   TipoEfectoTecnica,
   TablasBase,
@@ -150,6 +151,11 @@ export interface Personaje {
 
   ventajas: string[];
   desventajas: string[];
+  /**
+   * Legados de Sangre. Se pagan con Puntos de Creación como las ventajas, pero además
+   * dan **+1 al ajuste de nivel** por muchos que se tengan (Dominus Exxet, cap. 6).
+   */
+  legados?: string[];
 
   /** Conjuros aprendidos, por nombre. */
   conjuros: string[];
@@ -361,6 +367,7 @@ export interface DatosCalculo {
   habilidadesKi: HabilidadKiCatalogo[];
   artesMarciales: EntradaTabla[];
   arsMagnus: EntradaTabla[];
+  legadosSangre: LegadoSangre[];
   efectosTecnica: EfectoTecnica[];
   tiposEfectoTecnica: TipoEfectoTecnica[];
 }
@@ -384,6 +391,7 @@ export async function cargarDatosCalculo(
     habilidadesKi,
     artesMarciales,
     arsMagnus,
+    legadosSangre,
     efectosTecnica,
     tiposEfectoTecnica,
   ] = await Promise.all([
@@ -396,6 +404,7 @@ export async function cargarDatosCalculo(
     catalogo.obtener('habilidadesKi'),
     catalogo.obtener('artesMarciales'),
     catalogo.obtener('arsMagnus'),
+    catalogo.obtener('legadosSangre'),
     catalogo.obtener('efectosTecnica'),
     catalogo.obtener('tiposEfectoTecnica'),
   ]);
@@ -411,6 +420,7 @@ export async function cargarDatosCalculo(
     habilidadesKi,
     artesMarciales,
     arsMagnus,
+    legadosSangre,
     efectosTecnica,
     tiposEfectoTecnica,
   };
@@ -454,7 +464,9 @@ export function calcular(
   // Efectos de ventajas y desventajas, antes de nada: modifican características.
   const efectos = acumularEfectos([...personaje.ventajas, ...personaje.desventajas]);
 
-  const ajusteNivel = raza?.ajusteNivel ?? 0;
+  // Ser Legado encarece la experiencia: +1 sea cual sea el número de Legados que tengas.
+  const esLegado = (personaje.legados ?? []).length > 0;
+  const ajusteNivel = (raza?.ajusteNivel ?? 0) + (esLegado ? 1 : 0);
   const multiclase = resumirMulticlase(
     personaje.categorias,
     datos.categorias,
@@ -743,7 +755,16 @@ export function calcular(
   // ── Puntos de Creación: ventajas contra desventajas ──
   const costeDe = (nombre: string) =>
     Math.abs(datos.ventajas.find((v) => v.nombre === nombre)?.coste ?? 0);
-  const gastados = personaje.ventajas.reduce((t, n) => t + costeDe(n), 0);
+  // Los Legados de Sangre salen de los mismos Puntos de Creación que las ventajas. Cuando
+  // el coste es un rango («1, 2 o 3») se cobra el mínimo: lo demás lo decide el jugador.
+  const costeLegado = (nombre: string) => {
+    const l = datos.legadosSangre.find((x) => x.legado === nombre);
+    if (!l) return 0;
+    return typeof l.coste === 'number' ? l.coste : Number(String(l.coste).match(/\d+/)?.[0] ?? 0);
+  };
+  const gastados =
+    personaje.ventajas.reduce((t, n) => t + costeDe(n), 0) +
+    (personaje.legados ?? []).reduce((t, n) => t + costeLegado(n), 0);
   const ganadosBruto = personaje.desventajas.reduce((t, n) => t + costeDe(n), 0);
   const ganados = Math.min(ganadosBruto, PC_MAXIMO_POR_DESVENTAJAS);
   const puntosCreacion = { disponibles: PC_INICIALES + ganados, gastados, ganados };

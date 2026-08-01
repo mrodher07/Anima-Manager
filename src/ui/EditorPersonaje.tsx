@@ -82,6 +82,7 @@ export function EditorPersonaje({ personaje, datos, catalogo, reglamento, onCamb
   const armas = useColeccion(catalogo, 'armas');
   const armaduras = useColeccion(catalogo, 'armaduras');
   const ventajas = useColeccion(catalogo, 'ventajas');
+  const legados = useColeccion(catalogo, 'legadosSangre');
   const conjuros = useColeccion(catalogo, 'conjuros');
   const poderes = useColeccion(catalogo, 'poderesPsiquicos');
   const ficha = calcular(personaje, datos, reglamento);
@@ -507,6 +508,41 @@ export function EditorPersonaje({ personaje, datos, catalogo, reglamento, onCamb
               onCambiar={(v) => set({ ventajas: v })}
               etiquetaBusqueda="Buscar ventaja"
             />
+          </section>
+
+          <section className="panel" style={{ marginBottom: 16 }}>
+            <h2>Legados de Sangre</h2>
+            <p style={{ color: 'var(--texto-tenue)', fontSize: '0.86rem', marginTop: 0 }}>
+              Poderes que se llevan en la sangre, del Dominus Exxet. Se pagan con los mismos
+              Puntos de Creación que las ventajas, pero además dan{' '}
+              <strong>+1 al ajuste de nivel</strong> por muchos que tengas: no suben tus bonos,
+              sólo encarecen la experiencia. No se pueden coger al subir de nivel — o naces con
+              ellos o no.
+            </p>
+            <Selector
+              opciones={legados}
+              claveDe={(l) => l.legado}
+              detalleDe={(l) => `${l.coste} PC`}
+              seleccionadas={personaje.legados ?? []}
+              onCambiar={(v) => set({ legados: v })}
+              etiquetaBusqueda="Buscar Legado"
+            />
+            {(personaje.legados ?? []).length > 0 && (
+              <div style={{ marginTop: 12 }}>
+                {(personaje.legados ?? []).map((nombre) => {
+                  const l = legados.find((x) => x.legado === nombre);
+                  if (!l) return null;
+                  return (
+                    <p key={nombre} style={{ fontSize: '0.86rem', margin: '6px 0' }}>
+                      <strong className="destacado">{l.legado}</strong>{' '}
+                      <span style={{ color: 'var(--texto-debil)' }}>({l.coste} PC)</span>
+                      <br />
+                      {l.efecto}
+                    </p>
+                  );
+                })}
+              </div>
+            )}
           </section>
 
           <section className="panel">

@@ -273,6 +273,21 @@ export const ESQUEMAS: EsquemaColeccion[] = [
     ],
   },
   {
+    coleccion: 'legadosSangre',
+    singular: 'Legado de Sangre',
+    plural: 'Legados de Sangre',
+    clave: 'legado',
+    ayuda:
+      'Poderes heredados en la sangre. Se pagan con Puntos de Creación y dan +1 al ajuste ' +
+      'de nivel. El coste admite un rango, como el «1, 2 o 3» de Sangre de las Grandes ' +
+      'Bestias; en ese caso la ficha cobra el mínimo y el resto lo decides tú.',
+    campos: [
+      txt('legado', 'Nombre'),
+      txt('coste', 'Coste en PC', '1, o «1, 2 o 3» si admite varios grados'),
+      { clave: 'efecto', etiqueta: 'Qué otorga', tipo: 'parrafo' },
+    ],
+  },
+  {
     coleccion: 'efectosTecnica',
     singular: 'efecto de Técnica',
     plural: 'Efectos de Técnica',

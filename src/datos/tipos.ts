@@ -107,6 +107,17 @@ export interface EntradaTabla {
   [columna: string]: string | number | null | undefined;
 }
 
+/**
+ * Legado de Sangre. Dominus Exxet, cap. 6. Se compra con Puntos de Creación como una
+ * ventaja, pero **da +1 al ajuste de nivel**, y por eso va en su propia colección.
+ */
+export interface LegadoSangre {
+  legado: string;
+  /** Casi todos valen 1 o 2 PC; Grandes Bestias admite «1, 2 o 3». */
+  coste: number | string;
+  efecto?: string;
+}
+
 /** Habilidad del Ki o del Némesis. Dominus Exxet, cap. 3. */
 export interface HabilidadKiCatalogo {
   habilidad: string;
@@ -186,6 +197,7 @@ export interface Colecciones {
   artesMarciales: EntradaTabla;
   arsMagnus: EntradaTabla;
   habilidadesKi: HabilidadKiCatalogo;
+  legadosSangre: LegadoSangre;
   efectosTecnica: EfectoTecnica;
   tiposEfectoTecnica: TipoEfectoTecnica;
   tecnicasCompendio: TecnicaCompendio;
@@ -210,6 +222,7 @@ export const CLAVE_DE: Record<NombreColeccion, string> = {
   artesMarciales: 'arte',
   arsMagnus: 'nombre',
   habilidadesKi: 'habilidad',
+  legadosSangre: 'legado',
   // Un efecto tiene varias opciones, así que la clave es la pareja efecto + opción.
   efectosTecnica: 'referencia',
   tiposEfectoTecnica: 'efecto',

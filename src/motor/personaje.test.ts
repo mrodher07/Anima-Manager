@@ -10,6 +10,7 @@ import ventajasJson from '../../data/reglas/ventajas.json';
 import habilidadesKiJson from '../../data/reglas/habilidadesKi.json';
 import artesMarcialesJson from '../../data/reglas/artesMarciales.json';
 import arsMagnusJson from '../../data/reglas/arsMagnus.json';
+import legadosJson from '../../data/reglas/legadosSangre.json';
 import efectosTecnicaJson from '../../data/reglas/efectosTecnica.json';
 import tiposEfectoJson from '../../data/reglas/tiposEfectoTecnica.json';
 import type {
@@ -19,6 +20,7 @@ import type {
   EfectoTecnica,
   EntradaTabla,
   HabilidadKiCatalogo,
+  LegadoSangre,
   Raza,
   TablasBase,
   TipoEfectoTecnica,
@@ -40,6 +42,7 @@ const datos = (nombreRaza: string, nombreCategoria: string): DatosCalculo => ({
   habilidadesKi: habilidadesKiJson as HabilidadKiCatalogo[],
   artesMarciales: artesMarcialesJson as EntradaTabla[],
   arsMagnus: arsMagnusJson as EntradaTabla[],
+  legadosSangre: legadosJson as LegadoSangre[],
   efectosTecnica: efectosTecnicaJson as EfectoTecnica[],
   tiposEfectoTecnica: tiposEfectoJson as TipoEfectoTecnica[],
 });
@@ -148,6 +151,32 @@ describe('derivación de la ficha de Meirmeister', () => {
     expect(ficha.limites.combate).toBe(360);
     expect(ficha.limites.misticas).toBe(300);
     expect(ficha.avisos.filter((a) => a.gravedad === 'error')).toEqual([]);
+  });
+
+  it('un Legado de Sangre gasta PC y suma +1 al ajuste de nivel', () => {
+    const p = meirmeister();
+    p.legados = ['Ojos del Alma'];
+    const conLegado = calcular(p, datos('Jayán', 'Paladín Oscuro (RD)'), REGLAMENTO_OFICIAL);
+    // El Jayán ya traía +1; ser Legado suma otro.
+    expect(conLegado.ajusteNivel).toBe(2);
+    expect(conLegado.nivelParaExperiencia).toBe(3);
+    expect(conLegado.puntosCreacion.gastados).toBe(ficha.puntosCreacion.gastados + 1);
+  });
+
+  it('varios Legados sólo suman +1 al ajuste, no uno por cada uno', () => {
+    const p = meirmeister();
+    p.legados = ['Ojos del Alma', 'Sangre Latente', 'Sangre de Kami'];
+    const conLegados = calcular(p, datos('Jayán', 'Paladín Oscuro (RD)'), REGLAMENTO_OFICIAL);
+    expect(conLegados.ajusteNivel).toBe(2);
+    // Pero sí se cobran los tres en Puntos de Creación.
+    expect(conLegados.puntosCreacion.gastados).toBe(ficha.puntosCreacion.gastados + 3);
+  });
+
+  it('un Legado con coste en rango cobra el mínimo', () => {
+    const p = meirmeister();
+    p.legados = ['Sangre de las Grandes Bestias']; // «1, 2 o 3»
+    const r = calcular(p, datos('Jayán', 'Paladín Oscuro (RD)'), REGLAMENTO_OFICIAL);
+    expect(r.puntosCreacion.gastados).toBe(ficha.puntosCreacion.gastados + 1);
   });
 
   it('los PD de Ki y Acumulación cuentan como habilidades de combate', () => {
