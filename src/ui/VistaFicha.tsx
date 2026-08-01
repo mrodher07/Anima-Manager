@@ -10,6 +10,7 @@ import {
 } from '../motor/personaje';
 import type { Reglamento } from '../motor/reglamento';
 import { CARACTERISTICAS_KI } from '../motor/ki';
+import { calcularTecnica, resumirCoste } from '../motor/tecnicas';
 
 interface Props {
   personaje: Personaje;
@@ -228,10 +229,46 @@ export function VistaFicha({ personaje, datos, reglamento }: Props) {
                 </p>
               )}
               {personaje.ki.tecnicas.length > 0 && (
-                <p style={{ margin: 0, fontSize: '0.9rem' }}>
+                <p style={{ margin: '0 0 8px', fontSize: '0.9rem' }}>
                   <strong>Técnicas:</strong>{' '}
                   {personaje.ki.tecnicas.map((t) => `${t.nombre} (${t.CM} CM)`).join(', ')}
                 </p>
+              )}
+              {(personaje.ki.propias ?? []).length > 0 && (
+                <div style={{ fontSize: '0.9rem' }}>
+                  <strong>Técnicas propias:</strong>
+                  {(personaje.ki.propias ?? []).map((diseno, i) => {
+                    const calc = calcularTecnica(diseno, {
+                      opciones: datos.efectosTecnica,
+                      fichas: datos.tiposEfectoTecnica,
+                    });
+                    return (
+                      <p key={i} style={{ margin: '4px 0' }}>
+                        <strong className="destacado">{diseno.nombre || 'Sin nombre'}</strong>{' '}
+                        <span style={{ color: 'var(--texto-debil)' }}>
+                          (nivel {diseno.nivel}
+                          {diseno.arbol ? `, ${diseno.arbol}` : ''})
+                        </span>
+                        <br />
+                        {calc.CM} CM · Ki: {resumirCoste(calc.ki) || '—'}
+                        {calc.kiMantenimiento > 0 &&
+                          ` · mantenerla cuesta ${calc.kiMantenimiento} por asalto`}
+                        <br />
+                        <span style={{ color: 'var(--texto-tenue)' }}>
+                          {calc.detalles
+                            .map((d) => `${d.efecto} (${d.opcion})${d.primario ? ' — primario' : ''}`)
+                            .join(', ') || 'Sin Efectos todavía.'}
+                        </span>
+                        {diseno.descripcion && (
+                          <>
+                            <br />
+                            <em style={{ color: 'var(--texto-tenue)' }}>{diseno.descripcion}</em>
+                          </>
+                        )}
+                      </p>
+                    );
+                  })}
+                </div>
               )}
             </div>
           </div>

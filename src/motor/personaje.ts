@@ -35,9 +35,11 @@ import type {
   Arma,
   Armadura,
   Categoria,
+  EfectoTecnica,
   EntradaTabla,
   HabilidadKiCatalogo,
   Raza,
+  TipoEfectoTecnica,
   TablasBase,
   Ventaja,
 } from '../datos/tipos';
@@ -349,6 +351,8 @@ export interface DatosCalculo {
   ventajas: Ventaja[];
   habilidadesKi: HabilidadKiCatalogo[];
   artesMarciales: EntradaTabla[];
+  efectosTecnica: EfectoTecnica[];
+  tiposEfectoTecnica: TipoEfectoTecnica[];
 }
 
 /** Puntos de Creación: 3 de partida, más los que den las desventajas. */
@@ -360,17 +364,29 @@ export async function cargarDatosCalculo(
   personaje: Personaje,
   catalogo: Catalogo,
 ): Promise<DatosCalculo> {
-  const [raza, categorias, tablas, armas, armaduras, ventajas, habilidadesKi, artesMarciales] =
-    await Promise.all([
-      catalogo.buscar('razas', personaje.raza),
-      catalogo.obtener('categorias'),
-      catalogo.tablasBase(),
-      catalogo.obtener('armas'),
-      catalogo.obtener('armaduras'),
-      catalogo.obtener('ventajas'),
-      catalogo.obtener('habilidadesKi'),
-      catalogo.obtener('artesMarciales'),
-    ]);
+  const [
+    raza,
+    categorias,
+    tablas,
+    armas,
+    armaduras,
+    ventajas,
+    habilidadesKi,
+    artesMarciales,
+    efectosTecnica,
+    tiposEfectoTecnica,
+  ] = await Promise.all([
+    catalogo.buscar('razas', personaje.raza),
+    catalogo.obtener('categorias'),
+    catalogo.tablasBase(),
+    catalogo.obtener('armas'),
+    catalogo.obtener('armaduras'),
+    catalogo.obtener('ventajas'),
+    catalogo.obtener('habilidadesKi'),
+    catalogo.obtener('artesMarciales'),
+    catalogo.obtener('efectosTecnica'),
+    catalogo.obtener('tiposEfectoTecnica'),
+  ]);
   const actual = categoriaActual(personaje);
   return {
     raza,
@@ -382,6 +398,8 @@ export async function cargarDatosCalculo(
     ventajas,
     habilidadesKi,
     artesMarciales,
+    efectosTecnica,
+    tiposEfectoTecnica,
   };
 }
 
@@ -670,6 +688,7 @@ export function calcular(
       habilidades: datos.habilidadesKi,
       limites: tablas.limitesKi ?? [],
       cmPorArteMarcial,
+      tecnicas: { opciones: datos.efectosTecnica, fichas: datos.tiposEfectoTecnica },
     },
     {
       caracteristicas: caracteristicasKi,

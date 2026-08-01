@@ -121,6 +121,8 @@ export interface HabilidadKiCatalogo {
  * Los dos costes en Ki son el de la característica principal y el de una secundaria.
  */
 export interface EfectoTecnica {
+  /** Clave única: el efecto y su opción juntos, «Habilidad De Ataque +25». */
+  referencia: string;
   efecto: string;
   opcion: string;
   kiPrincipal?: number;

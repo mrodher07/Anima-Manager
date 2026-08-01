@@ -9,14 +9,18 @@ import armadurasJson from '../../data/reglas/armaduras.json';
 import ventajasJson from '../../data/reglas/ventajas.json';
 import habilidadesKiJson from '../../data/reglas/habilidadesKi.json';
 import artesMarcialesJson from '../../data/reglas/artesMarciales.json';
+import efectosTecnicaJson from '../../data/reglas/efectosTecnica.json';
+import tiposEfectoJson from '../../data/reglas/tiposEfectoTecnica.json';
 import type {
   Arma,
   Armadura,
   Categoria,
+  EfectoTecnica,
   EntradaTabla,
   HabilidadKiCatalogo,
   Raza,
   TablasBase,
+  TipoEfectoTecnica,
   Ventaja,
 } from '../datos/tipos';
 
@@ -30,6 +34,8 @@ const datos = (nombreRaza: string, nombreCategoria: string): DatosCalculo => ({
   ventajas: ventajasJson as Ventaja[],
   habilidadesKi: habilidadesKiJson as HabilidadKiCatalogo[],
   artesMarciales: artesMarcialesJson as EntradaTabla[],
+  efectosTecnica: efectosTecnicaJson as EfectoTecnica[],
+  tiposEfectoTecnica: tiposEfectoJson as TipoEfectoTecnica[],
 });
 
 /**

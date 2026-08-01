@@ -609,7 +609,129 @@ salvo con Versátil. Hasta cinco categorías por personaje.
 Cada categoría aporta sus bonos **por los niveles hechos en ella**, y la categoría actual
 —la última con niveles— es la que manda para costes y límites.
 
+## Los Dominios del Ki
+
+Base en el Core Exxet, capítulo 10; ampliación en **Dominus Exxet**. Todo lo de abajo está
+contrastado con las fórmulas de la hoja `Ki` y de `PDs`, y con los ejemplos del manual.
+
+### Puntos de Ki 📖 ✔
+
+`PDs!W30`: `=AGI + IF(AGI-10>0, AGI-10, 0)`. Cada punto hasta 10 da **1** de Ki y cada
+punto por encima de 10 da **2**. Sólo cuentan las seis características acumulables: **AGI,
+CON, DES, FUE, POD y VOL** (fuera INT y PER).
+
+Verificado con el ejemplo de Celia del Core: 5 + 9 + 10 + 5 + 6 + 4 = **39**. Y con el que
+da el propio manual para el doble: DES 13 → **16**.
+
+La **Reserva de Ki** es la suma. Con la ventaja **Poder innato** (Dominus Exxet) pasa a ser
+seis veces el Ki del Poder más lo comprado con PD — `Ki!F24` —, y esa ventaja **exige** la
+regla opcional de Unificación. Ryo tiene 51 por suma y **60** por Poder innato.
+
+### Acumulación de Ki 📖 ✔
+
+Tabla 53, indexada por el valor de **cualquiera** de las seis características (en el JSON
+se llamaba `acumulacionPorPOD` por error; ahora es `acumulacionKi`):
+
+| Característica | Acumulación base |
+|---|---|
+| 1 a 9 | 1 |
+| 10 a 12 | 2 |
+| 13 a 15 | 3 |
+| 16 o más | 4 |
+
+Una característica a **0 da 0**, no 1: `IF(AGI=0, 0, VLOOKUP(...))`.
+
+`PDs!AA36` da el total: `MAX(0, base + comprada + especial + IF(Mod_ATA<0, MIN(0,
+TRUNC(Mod_ATA/20,0)), 0))`. Es decir, **la armadura resta 1 de Acumulación por cada 20
+puntos de penalizador**.
+
+Si el personaje hace cualquier otra cosa durante el asalto, la Acumulación se reduce **a la
+mitad redondeando hacia arriba** (`CEILING`, `Ki!E12`). La ventaja **Acumulación plena** lo
+evita.
+
+### Conocimiento Marcial 📖 ✔
+
+`PDs!AA42` = CM de la categoría **× los niveles hechos en ella** + CM de las artes
+marciales dominadas + Maestro marcial (40 / 80 / 120) + lo comprado con PD.
+
+Comprarlo cuesta **5 PD por cada 5 CM**, sea cual sea la categoría, y no se puede meter en
+CM más de **una décima parte** de los PD totales. Ese gasto entra además dentro del límite
+de habilidades de combate.
+
+Verificado: Christopher (Mentalista, nivel 11) tiene 10 × 11 = **110**; Ryo (Tecnicista,
+nivel 1) tiene 50 + 10 de artes marciales = **60**.
+
+### Detección y Ocultación del Ki 📖 ✔
+
+Son habilidades secundarias especiales, y **sólo existen si se ha desarrollado la habilidad
+del Ki correspondiente**.
+
+- Detección = `truncar((CM total + Advertir) / 2)` + especiales + 10 × nivel con
+  **Percepción del Ki**. Ejemplo de Celia: (120 + 60) / 2 = **90**.
+- Ocultación = `truncar((CM total + Ocultarse) / 2)` + especiales + 10 × nivel con
+  **Ki imperceptible** + **50 si es D'Anjayni** (30 si Nephilim D'Anjayni).
+
+### Consecuencias de acumular
+
+Dominus Exxet, cap. 1. Si el asalto acaba sin descargar la energía, se pierde Ki:
+
+| Acumulado | Se pierde | Qué pasa |
+|---|---|---|
+| 20 | 1 | El aura se vuelve visible para todos |
+| 40 | 5 | Temblores, piedras flotando, viento fuerte |
+| 80 | 10 | Tormentas y rayos; la tierra se agrieta |
+| 120+ | la mitad | Lo decide el Director |
+
+Se recuperan **6 puntos por hora** (uno por característica), el doble meditando. La ventaja
+**Recuperación de Ki** lo sube a 1 por minuto / 30 s / 6 s según su nivel. Con **10 o menos**
+de Ki se pierde 1 de Cansancio cada cinco minutos; con **0**, cada cinco asaltos.
+
+### Límites
+
+Los siete del manual coinciden **exactamente** con los que ya venían del Excel (`Tablas!
+C1065:M1071`). Sólo se puede tener uno, salvo con la ventaja **Límite dual**, y hacen falta
+**Natura 10 o más**.
+
+### Creación de Técnicas 📖 ✔
+
+Dominus Exxet, cap. 5. Una Técnica es **un** Efecto Primario y los Secundarios que quepan.
+
+| Nivel | CM mínimo | CM máximo | Máx. desventajas |
+|---|---|---|---|
+| 1 (Básica) | 20 | 50 | 1 |
+| 2 (Mayor) | 40 | 100 | 2 |
+| 3 (Arcana) | 60 | 200 | 3 |
+
+- El **Primario** siempre cuesta menos Ki que el mismo efecto como Secundario.
+- Si los Efectos suman **menos** del mínimo del nivel, la Técnica **cuesta el mínimo**.
+- Cada Efecto tiene una característica natural y otras opcionales con **recargo**: usar una
+  opcional suma su recargo al coste en Ki del Efecto.
+- **Árbol**: para una de nivel 2 hacen falta **dos** de nivel 1; para una Arcana, **dos** de
+  nivel 2. La ventaja **Técnicas desvinculadas** se lo salta.
+- **Mantenida**: +10 / +20 / +30 CM según el nivel, más el Ki de la columna `Mant.`, que
+  hay que volver a pagar cada asalto.
+- **Sostenida** (sólo niveles 2 y 3): Menor 5 asaltos, Mayor 20. Cuesta +40/+60 CM en
+  nivel 2 y +60/+90 en nivel 3, y **sólo admite Efectos de nivel inferior al suyo**. No se
+  mezcla con Mantenida.
+- **Alterar el coste**: cada punto de Ki que se rebaje cuesta **10 CM** (máximo 5 puntos,
+  nunca por debajo de la mitad del coste base redondeando hacia arriba, y hace falta que la
+  Técnica se apoye en **tres características distintas**). Al revés, se descuentan hasta
+  **20 CM** a razón de 2 puntos de Ki por cada 5.
+
+Verificado con el ejemplo paso a paso del manual: Habilidad de Ataque +125 (Primario) +
+Ataque a Distancia 100 m + Apuntar −100 dan **70 CM**, y al pasar los 18 de Destreza a
+Fuerza y Agilidad (+2 cada una) se convierten en 22, quedando **AGI 12, FUE 10, DES 9 y
+POD 8**. Y con el de las Sostenidas: +100 al Daño en una Mayor sostenida 5 asaltos = 30 + 40
+= **70 CM**.
+
+> ⚠️ **Errata del manual.** El ejemplo de «Mantener las Técnicas» dice que un +50 al Daño
+> cuesta *«5 puntos de Ki y 15 de CM»* y saca 7 tras sumar el mantenimiento. Pero la tabla
+> de Aumento de Daño del mismo capítulo da **Primario 4**, Secundario 6, CM 15 y Mant. 2.
+> Se sigue **la tabla**, que es además lo que implementa la ficha: el coste es 6, no 7. El
+> CM sí coincide (15 + 10 = 25).
+
 ## Pendiente de modelar
-- **Ki**: puntos, acumulación, técnicas y Límites. A la espera del manual correspondiente.
+- **Ki**: falta enganchar los Ars Magnus al CM y añadir Legados de Sangre y Sellos de
+  Invocación. Puntos, Acumulación, CM, habilidades, Límites y creación de Técnicas ya están.
 - **Conjuros y poderes psíquicos seleccionados** como listas del personaje.
 - Bestiario y creación de seres.

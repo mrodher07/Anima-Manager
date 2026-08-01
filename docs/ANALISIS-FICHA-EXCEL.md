@@ -244,7 +244,13 @@ Observaciones que conviene recordar al construir:
    con un resumen siempre visible (PV, Cansancio, Zeón/Ki/CVs, iniciativa).
 7. **Uso en mesa**: durante la partida lo que importa es tirar dados, restar PV/Zeón/Ki y
    consultar. La creación de personaje y el juego en mesa son dos modos muy distintos.
-8. **Temas**: cada tema es un bloque de variables CSS en `src/ui/estilos.css` bajo
+8. **Cuidado con los ciclos de importación.** `ki.ts` necesita `tecnicas.ts` para cobrar
+   las Técnicas propias, y `tecnicas.ts` necesitaba las seis características acumulables
+   de `ki.ts`. Vitest se lo traga sin rechistar, pero el paquete de producción arranca con
+   `Cannot access 'Ve' before initialization` y la página se queda en blanco. Por eso las
+   constantes compartidas viven en `src/motor/caracteristicasKi.ts`. **Los tests no bastan
+   para esto: hay que abrir la aplicación compilada en el navegador.**
+9. **Temas**: cada tema es un bloque de variables CSS en `src/ui/estilos.css` bajo
    `:root[data-tema='<id>']` (el oscuro, que es el de por defecto, es el `:root` pelado),
    más una entrada en `src/ui/temas.ts`. Los motivos decorativos —remaches y engranajes en
    el steampunk, pergamino, fleurones y capitulares en el medieval— van en pseudoelementos

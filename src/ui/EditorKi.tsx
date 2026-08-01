@@ -10,6 +10,7 @@ import {
   type HabilidadKi,
 } from '../motor/ki';
 import { Selector } from './Selector';
+import { CreadorTecnicas } from './CreadorTecnicas';
 
 interface Props {
   personaje: Personaje;
@@ -74,6 +75,9 @@ export function EditorKi({ personaje, ficha, datos, catalogo, onCambiar }: Props
 
   const set = (cambios: Partial<Personaje>) => onCambiar({ ...personaje, ...cambios });
   const setKi = (cambios: Partial<EleccionesKi>) => set({ ki: { ...elecciones, ...cambios } });
+  /** Nivel de una Técnica del compendio, para la regla de árbol. */
+  const nivelDelCompendio = (nombre: string) =>
+    Number(compendio.find((t) => t.tecnica === nombre)?.nivel ?? 1);
   const setPD = (clave: string, pd: number) =>
     set({ pdInvertidos: { ...personaje.pdInvertidos, [clave]: Math.max(0, pd || 0) } });
 
@@ -426,6 +430,19 @@ export function EditorKi({ personaje, ficha, datos, catalogo, onCambiar }: Props
           </div>
         )}
       </section>
+
+      <div style={{ marginTop: 16 }}>
+        <CreadorTecnicas
+          propias={elecciones.propias ?? []}
+          nivelesConocidos={[
+            ...elecciones.tecnicas.map((t) => t.nivel ?? nivelDelCompendio(t.nombre)),
+            ...(elecciones.propias ?? []).map((t) => t.nivel),
+          ]}
+          tecnicasDesvinculadas={personaje.ventajas.includes('Técnicas desvinculadas')}
+          catalogo={catalogo}
+          onCambiar={(propias) => setKi({ propias })}
+        />
+      </div>
     </>
   );
 }

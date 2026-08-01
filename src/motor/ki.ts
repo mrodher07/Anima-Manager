@@ -15,13 +15,10 @@
 import type { Reglamento } from './reglamento';
 import { REGLAMENTO_OFICIAL } from './reglamento';
 import type { Caracteristica } from './personaje';
+import { calcularTecnica, type CatalogoTecnicas, type DisenoTecnica } from './tecnicas';
+import { CARACTERISTICAS_KI, type CaracteristicaKi } from './caracteristicasKi';
 
-/**
- * Las seis características acumulables. INT y PER quedan fuera: el Ki es energía
- * física y espiritual, no intelectual (Core Exxet, cap. 10).
- */
-export const CARACTERISTICAS_KI = ['AGI', 'CON', 'DES', 'FUE', 'POD', 'VOL'] as const;
-export type CaracteristicaKi = (typeof CARACTERISTICAS_KI)[number];
+export { CARACTERISTICAS_KI, type CaracteristicaKi };
 
 export function esCaracteristicaKi(c: Caracteristica): c is CaracteristicaKi {
   return (CARACTERISTICAS_KI as readonly string[]).includes(c);
@@ -188,8 +185,14 @@ export interface FichaKi {
 export interface EleccionesKi {
   habilidades: string[];
   limites: string[];
-  /** Técnicas del compendio o propias, con su coste en CM ya resuelto. */
-  tecnicas: { nombre: string; CM: number }[];
+  /** Técnicas del compendio, con su coste en CM ya resuelto. */
+  tecnicas: { nombre: string; CM: number; nivel?: number }[];
+  /**
+   * Técnicas construidas efecto a efecto con el creador del capítulo 5. Se guarda el
+   * diseño entero, no el resultado: así una fórmula distinta o un manual nuevo recalculan
+   * el coste sin que haya que rehacerlas.
+   */
+  propias?: DisenoTecnica[];
   /** Grados de arte marcial dominados. */
   artesMarciales: string[];
   unificado?: boolean;
@@ -199,6 +202,7 @@ export const ELECCIONES_KI_VACIAS: EleccionesKi = {
   habilidades: [],
   limites: [],
   tecnicas: [],
+  propias: [],
   artesMarciales: [],
 };
 
@@ -208,6 +212,8 @@ export interface DatosKi {
   limites: LimiteKi[];
   /** CM que aporta cada grado de arte marcial, por nombre. */
   cmPorArteMarcial: Record<string, number>;
+  /** Tablas de creación de Técnicas, para poder cobrar las propias. */
+  tecnicas?: CatalogoTecnicas;
 }
 
 export interface ContextoKi {
@@ -356,7 +362,18 @@ export function calcularKi(
   }
 
   const cmTecnicas = elecciones.tecnicas.reduce((t, x) => t + (x.CM || 0), 0);
-  const cmGastado = cmHabilidades + cmLimites + cmTecnicas;
+  // Las Técnicas propias se recalculan desde su diseño en cada pasada: así una fórmula
+  // de la mesa o un manual nuevo cambian su coste sin tener que rehacerlas.
+  let cmPropias = 0;
+  for (const diseno of elecciones.propias ?? []) {
+    if (!datos.tecnicas) break;
+    const calculada = calcularTecnica(diseno, datos.tecnicas);
+    cmPropias += calculada.CM;
+    for (const texto of calculada.avisos) {
+      avisos.push(`${diseno.nombre || 'Técnica sin nombre'}: ${texto}`);
+    }
+  }
+  const cmGastado = cmHabilidades + cmLimites + cmTecnicas + cmPropias;
   if (cmGastado > cmTotal) {
     avisos.push(`Has comprometido ${cmGastado} CM y sólo tienes ${cmTotal}.`);
   }

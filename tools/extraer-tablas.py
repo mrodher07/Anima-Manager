@@ -236,6 +236,10 @@ data['efectosTecnica'] = table('Tablas Técnicas', '$C$10:$K$643', [
 for e in data['efectosTecnica']:
     # Un efecto tiene varias opciones; lo que identifica una fila es la pareja.
     e['referencia'] = f"{e['efecto']} {e.get('opcion', '')}".strip()
+# «EFECTOS PERSONALIZADOS» son los huecos vacíos que la hoja deja para inventarse
+# efectos. Quien quiera los suyos los añade desde Contenido propio.
+data['efectosTecnica'] = [
+    e for e in data['efectosTecnica'] if e.get('_seccion') != 'EFECTOS PERSONALIZADOS']
 
 # Ficha de cada efecto: a qué característica va, de qué tipo y clase es, y con qué
 # elementos casa. `caracteristicas` viene como «DES (AGI+2, FUE+2, POD+2, VOL+3)»:
@@ -245,6 +249,12 @@ data['tiposEfectoTecnica'] = table('Tablas Técnicas', '$O$9:$W$98', [
     'elemento1', 'elemento2', 'elemento3', 'elementos'])
 for t in data['tiposEfectoTecnica']:
     t.pop('_ref', None)
+# El bloque «EFECTOS PERSONALIZADOS» son huecos vacíos de la propia hoja y, a
+# continuación, la tabla de Reducción de CM, que no es un efecto. Fuera los dos: quien
+# quiera inventarse efectos los añade desde Contenido propio.
+data['tiposEfectoTecnica'] = [
+    t for t in data['tiposEfectoTecnica']
+    if t.get('_seccion') != 'EFECTOS PERSONALIZADOS']
 
 # --- Compendio de Técnicas del Dominus Exxet --------------------------
 # Las filas 655-665 son huecos para las Técnicas propias del jugador; el compendio

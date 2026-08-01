@@ -678,49 +678,5 @@
   "elemento3": "Oscuridad",
   "elementos": "Agua, Luz, Oscuridad",
   "_seccion": "EFECTOS VARIADOS"
- },
- {
-  "efecto": "Efecto Personalizado #1",
-  "_seccion": "EFECTOS PERSONALIZADOS"
- },
- {
-  "efecto": "Efecto Personalizado #2",
-  "_seccion": "EFECTOS PERSONALIZADOS"
- },
- {
-  "efecto": "Efecto Personalizado #3",
-  "_seccion": "EFECTOS PERSONALIZADOS"
- },
- {
-  "efecto": "Efecto Personalizado #4",
-  "_seccion": "EFECTOS PERSONALIZADOS"
- },
- {
-  "efecto": "Efecto Personalizado #5",
-  "_seccion": "EFECTOS PERSONALIZADOS"
- },
- {
-  "efecto": "Reducción de CM",
-  "_seccion": "EFECTOS PERSONALIZADOS"
- },
- {
-  "efecto": 0,
-  "_seccion": "EFECTOS PERSONALIZADOS"
- },
- {
-  "efecto": -5,
-  "_seccion": "EFECTOS PERSONALIZADOS"
- },
- {
-  "efecto": -10,
-  "_seccion": "EFECTOS PERSONALIZADOS"
- },
- {
-  "efecto": -15,
-  "_seccion": "EFECTOS PERSONALIZADOS"
- },
- {
-  "efecto": -20,
-  "_seccion": "EFECTOS PERSONALIZADOS"
  }
 ]
