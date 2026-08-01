@@ -334,6 +334,50 @@ export const ESQUEMAS: EsquemaColeccion[] = [
     ],
   },
   {
+    coleccion: 'invocaciones',
+    singular: 'invocación',
+    plural: 'Invocaciones',
+    clave: 'invocacion',
+    ayuda:
+      'Aeones y Grandes Bestias del Arcana Exxet. Los valores van como texto porque el ' +
+      'manual los escribe así: la Habilidad de Ataque puede ser «160+» —el + significa que ' +
+      'crece con el poder del invocador— o «NA», y la dificultad de un ser con varios ' +
+      'poderes es «280 (invocación inicial)».',
+    campos: [
+      txt('invocacion', 'Nombre'),
+      txt('grupo', 'Grupo', 'Poderes Menores, Grandes Potencias…'),
+      txt('parteDe', 'Poder de', 'Si es uno de los poderes de otra invocación'),
+      txt('dificultad', 'Dificultad'),
+      txt('coste', 'Coste en Zeon'),
+      txt('hAtaque', 'H. Ataque', 'Un número, «160+» o «NA»'),
+      txt('hDefensa', 'H. Defensa'),
+      txt('accion', 'Acción', 'Activa, Pasiva…'),
+      txt('duracion', 'Duración'),
+      { clave: 'descripcion', etiqueta: 'Descripción', tipo: 'parrafo' },
+      { clave: 'pacto', etiqueta: 'Pacto', tipo: 'parrafo' },
+      { clave: 'efecto', etiqueta: 'Efecto', tipo: 'parrafo' },
+      { clave: 'apariencia', etiqueta: 'Apariencia habitual', tipo: 'parrafo' },
+      { clave: 'notas', etiqueta: 'Notas', tipo: 'parrafo' },
+    ],
+  },
+  {
+    coleccion: 'encarnaciones',
+    singular: 'encarnación',
+    plural: 'Encarnaciones',
+    clave: 'encarnacion',
+    ayuda:
+      'Los «héroes de la existencia» del Arcana Exxet. Cada una tiene tres grados de ' +
+      'afinidad —Menor, Intermedia y Real— con su propio nivel mínimo, dificultad, coste y ' +
+      'poderes, y una tabla de rasgos del invocador que suben o bajan la dificultad de ' +
+      'sincronizar. Los grados y los modificadores se editan desde la ficha de la ' +
+      'encarnación, no aquí.',
+    campos: [
+      txt('encarnacion', 'Nombre'),
+      { clave: 'descripcion', etiqueta: 'Descripción', tipo: 'parrafo' },
+      { clave: 'poderesGenericos', etiqueta: 'Poderes genéricos', tipo: 'parrafo' },
+    ],
+  },
+  {
     coleccion: 'sellosCriatura',
     singular: 'criatura invocable',
     plural: 'Sellos por criatura',

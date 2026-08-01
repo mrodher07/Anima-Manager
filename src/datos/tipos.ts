@@ -257,6 +257,59 @@ export interface TablasBase {
   [tabla: string]: unknown;
 }
 
+/**
+ * Invocación del Arcana Exxet: Aeones y Grandes Bestias.
+ *
+ * Los valores van como texto porque el manual los escribe así: la Habilidad de Ataque
+ * puede ser «160+» (el + significa que crece con el poder del invocador) o «NA», y la
+ * dificultad de un ser con varios poderes es «280 (invocación inicial)».
+ */
+export interface Invocacion {
+  invocacion: string;
+  grupo: string;
+  pagina?: number;
+  /** Si es uno de los poderes de otra invocación, el nombre de la entrada madre. */
+  parteDe?: string;
+  descripcion?: string;
+  pacto?: string;
+  dificultad: string;
+  coste: string;
+  hAtaque: string;
+  hDefensa: string;
+  accion: string;
+  efecto: string;
+  duracion: string;
+  apariencia: string;
+  notas?: string;
+}
+
+/** Un grado de afinidad de una Encarnación: sus valores de combate y sus poderes. */
+export interface AfinidadEncarnacion {
+  grado: 'Menor' | 'Intermedia' | 'Real';
+  nivel: number;
+  dificultad: number;
+  zeon: number;
+  hAtaque?: number;
+  hDefensa?: number;
+  tipoDefensa?: 'Parada' | 'Esquiva';
+  proyeccionMagica?: number;
+  /** Casi siempre un número, pero algunas cambian según el arma: «80 / -40». */
+  turno?: number | string;
+  arma?: string;
+  poderes: string;
+}
+
+/** Encarnación del Arcana Exxet: un héroe de la existencia con tres grados de afinidad. */
+export interface Encarnacion {
+  encarnacion: string;
+  pagina?: number;
+  descripcion?: string;
+  /** Rasgos del invocador que suben o bajan la dificultad de sincronizar. */
+  modificadores: { rasgo: string; modificador: number }[];
+  poderesGenericos?: string;
+  afinidades: AfinidadEncarnacion[];
+}
+
 /** Nombre de cada colección del catálogo y el tipo que contiene. */
 export interface Colecciones {
   razas: Raza;
@@ -274,6 +327,8 @@ export interface Colecciones {
   metamagia: EsferaMetamagica;
   sellosCriatura: SellosCriatura;
   bestiario: CriaturaManual;
+  invocaciones: Invocacion;
+  encarnaciones: Encarnacion;
   sheele: EntradaTabla;
   efectosTecnica: EfectoTecnica;
   tiposEfectoTecnica: TipoEfectoTecnica;
@@ -303,6 +358,8 @@ export const CLAVE_DE: Record<NombreColeccion, string> = {
   metamagia: 'posicion',
   sellosCriatura: 'criatura',
   bestiario: 'criatura',
+  invocaciones: 'invocacion',
+  encarnaciones: 'encarnacion',
   sheele: 'mejora',
   // Un efecto tiene varias opciones, así que la clave es la pareja efecto + opción.
   efectosTecnica: 'referencia',

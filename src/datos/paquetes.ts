@@ -105,10 +105,36 @@ export const LOS_QUE_CAMINARON: PaqueteContenido = {
 };
 
 /**
+ * *Arcana Exxet*: los secretos de lo sobrenatural.
+ *
+ * Sus reglas de Nivel de Magia, Metamagia y Sheele ya venían en la ficha de Excel y viven
+ * en el paquete básico. Lo que este paquete añade es lo que **sólo** está en el manual:
+ * las Invocaciones (Aeones y Grandes Bestias) y las Encarnaciones.
+ */
+export const ARCANA_EXXET: PaqueteContenido = {
+  id: 'arcana-exxet',
+  nombre: 'Arcana Exxet',
+  sigla: 'AE',
+  descripcion: 'Secretos de lo sobrenatural: Invocaciones y Encarnaciones.',
+  prioridad: 5,
+  cargar: async (coleccion) => {
+    const modulos = import.meta.glob('../../data/arcana/*.json');
+    const cargador = modulos[`../../data/arcana/${coleccion}.json`];
+    if (!cargador) return null;
+    const mod = (await cargador()) as { default: unknown };
+    return mod.default as never;
+  },
+  cargarTablasBase: async () => {
+    const mod = await import('../../data/arcana/tablas.json');
+    return mod.default as unknown as Partial<TablasBase>;
+  },
+};
+
+/**
  * Paquetes conocidos. Al llegar un manual nuevo basta con añadir aquí su entrada y sus
  * JSON; ni el motor ni la interfaz necesitan cambiar.
  */
-export const PAQUETES: PaqueteContenido[] = [CORE_EXXET, LOS_QUE_CAMINARON];
+export const PAQUETES: PaqueteContenido[] = [CORE_EXXET, ARCANA_EXXET, LOS_QUE_CAMINARON];
 
 export function registrarPaquete(paquete: PaqueteContenido): void {
   const i = PAQUETES.findIndex((p) => p.id === paquete.id);

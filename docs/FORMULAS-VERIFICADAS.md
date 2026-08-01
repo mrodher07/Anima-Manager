@@ -936,12 +936,70 @@ y la tabla de **Potenciación Mística** (Controlar 0-400 → Zeón máximo 20-1
 
 Por ahora son datos consultables y personalizables; falta el editor de Sheele en la ficha.
 
+### Invocaciones ✔
+
+Capítulo 5. **69 entradas**: 29 seres —Aeones y Grandes Bestias— de los que 15 tienen
+varios poderes que se invocan por separado, y esos poderes son entradas propias colgadas de
+su madre por un campo `parteDe`. Repartidas en Poderes Menores (11), Poderes Intermedios
+(16), Grandes Potencias (6), la Trinidad de las Bestias (9) y las Bestias Cardinales (27).
+
+Cada una lleva los siete campos que el propio manual promete en su introducción —Pacto,
+Dificultad, Coste, H. Ataque, H. Defensa, Efecto, Duración y Apariencia habitual— más la
+Acción (Activa/Pasiva), que el manual usa en todas las fichas aunque no la anuncie.
+
+Los valores van como **texto, no como número**, y a propósito: la Habilidad de Ataque de la
+Naaga es `160+` —el `+` significa que crece con el poder del invocador— y la dificultad de
+un ser con varios poderes es `280 (invocación inicial)`. Convertirlos a número perdería
+justo lo que hace falta saber en mesa.
+
+> Los seres con varios poderes tienen entrada madre aunque por sí sola no haga nada: es
+> donde viven el pacto, la apariencia y el coste de establecer el vínculo, que son comunes.
+
+También se recoge la **Tabla 11 (Pandora)**, de estados aleatorios.
+
+> ⚠ **Errata del manual**: la Tabla 11 imprime `36-30` en la sexta fila. Es un evidente
+> `26-30`, porque `36-40` aparece dos filas más abajo. Se corrige y queda anotado en el
+> propio JSON.
+
+> ⚠ **Defecto del escaneo**: la página 68 está cortada por el margen derecho y se pierden
+> las últimas letras de cada línea de la columna derecha (Genbu). Todos los **valores
+> numéricos están completos**; la prosa se ha reconstruido sólo donde la palabra cortada no
+> admitía otra lectura, y queda avisado en el campo `notas` de la propia entrada.
+
+### Encarnaciones ✔
+
+Capítulo 6. **Las 15** del manual, cada una con sus tres grados de afinidad —Menor,
+Intermedia y Real— y su tabla de Modificadores de Invocación.
+
+Es lo único de estos dos capítulos que de verdad **se calcula**, así que tiene motor y
+calculadora. La dificultad del Control de Invocación sale de sumar:
+
+| Término | De dónde |
+|---|---|
+| Dificultad base | del grado de afinidad que se pretende |
+| Rasgos del invocador | tabla de Modificadores de esa encarnación |
+| Tiempo de sincronización | **Tabla 12** (5 asaltos −50 … una hora +120) |
+| +50 si no la conoce bien | regla del capítulo, casilla que marca el Director |
+
+El **signo de los rasgos está invertido** respecto a como los imprime el manual, y conviene
+saberlo: el manual escribe «Ser mujer +10» y «Oprimir a la gente −100», y dice que *cuantos
+más rasgos tengan en común, más fácil le resultará entrar en sincronización*. Los rasgos
+afines son los de signo positivo, luego un `+10` **resta** 10 a la dificultad. El manual no
+lo explicita; esta es la lectura que hace la aplicación, y está aislada en una función con
+su propio comentario para que una mesa que lo lea de otro modo pueda cambiarlo.
+
+El **requisito de nivel avisa pero no bloquea**, igual que el resto de límites. La prueba
+reproduce el ejemplo del propio manual: *«Evangeline, invocadora de nivel 4, podría tratar
+de invocar a Linx Kazte Hex en afinidad menor, ya que el nivel requerido de esta es 4, pero
+no en grado intermedio o real, ya que requiere 8 y 12»*.
+
 ## Pendiente de modelar
 - **Dominus Exxet**: completo.
-- **Arcana Exxet**: falta el editor de Sheele en la ficha, las Invocaciones y Encarnaciones
-  (caps. 5 y 6), los Teoremas de Magia (cap. 2: Onmyodo, Vodoun, Shamánica y Magia Natural),
-  los Rituales y Grimorios (cap. 9) y las reglas opcionales de Nodos y Sanctum Sanctorum
-  (cap. 10). Los tres PDF son **escaneos sin capa de texto**, así que lo que no esté en el
-  Excel hay que leerlo a ojo página a página.
+- **Arcana Exxet**: hechos los caps. 5 y 6 (Invocaciones y Encarnaciones), el Nivel de
+  Magia, la Metamagia y los datos de Sheele. Falta el editor de Sheele en la ficha, los
+  Teoremas de Magia (cap. 2: Onmyodo, Vodoun, Shamánica y Magia Natural), los Rituales y
+  Grimorios (cap. 9) y las reglas opcionales de Nodos y Sanctum Sanctorum (cap. 10). Los
+  tres PDF son **escaneos sin capa de texto**, así que lo que no esté en el Excel hay que
+  leerlo a ojo página a página.
 - **Conjuros y poderes psíquicos seleccionados** como listas del personaje.
 - Bestiario y creación de seres.

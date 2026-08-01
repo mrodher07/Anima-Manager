@@ -11,6 +11,7 @@ import { VistaFicha } from './VistaFicha';
 import { VistaMesa } from './VistaMesa';
 import { VistaPersonajes } from './VistaPersonajes';
 import { VistaBestiario } from './VistaBestiario';
+import { VistaArcana } from './VistaArcana';
 import { VistaPersonalizado } from './VistaPersonalizado';
 import { VistaGaleria } from './VistaGaleria';
 import { VistaReglas } from './VistaReglas';
@@ -24,7 +25,7 @@ import './estilos.css';
 
 type Seccion =
   | 'personajes' | 'ficha' | 'editor' | 'mesa'
-  | 'bestiario' | 'galeria' | 'propio' | 'reglas' | 'campanas';
+  | 'bestiario' | 'arcana' | 'galeria' | 'propio' | 'reglas' | 'campanas';
 
 export function App() {
   const [seccion, setSeccion] = useState<Seccion>('personajes');
@@ -66,6 +67,7 @@ export function App() {
     { id: 'editor', texto: 'Editar', requierePersonaje: true },
     { id: 'mesa', texto: 'Mesa', requierePersonaje: true },
     { id: 'bestiario', texto: 'Bestiario' },
+    { id: 'arcana', texto: 'Lo sobrenatural' },
     { id: 'galeria', texto: 'Galería' },
     { id: 'propio', texto: 'Contenido propio' },
     { id: 'campanas', texto: 'Campañas' },
@@ -174,6 +176,8 @@ export function App() {
         {seccion === 'bestiario' && (
           <VistaBestiario campanaId={campanaId} catalogo={catalogo} />
         )}
+
+        {seccion === 'arcana' && <VistaArcana catalogo={catalogo} />}
 
         {seccion === 'galeria' && <VistaGaleria campanaId={campanaId} />}
 

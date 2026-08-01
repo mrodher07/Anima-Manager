@@ -1,0 +1,41 @@
+{
+  "tablaPandora": {
+    "referencia": "Arcana Exxet, Tabla 11 (pág. 64)",
+    "nota": "El manual imprime «36-30» en la sexta fila, que es una errata evidente: debe decir 26-30, porque 36-40 aparece dos filas más abajo.",
+    "filas": [
+      { "tirada": "1-5", "estado": "Recupera 200 PV" },
+      { "tirada": "6-10", "estado": "Fascinación" },
+      { "tirada": "11-15", "estado": "+20 a Toda Acción" },
+      { "tirada": "16-20", "estado": "Dolor" },
+      { "tirada": "21-25", "estado": "Daño" },
+      { "tirada": "26-30", "estado": "Ira" },
+      { "tirada": "31-35", "estado": "+40 a Todas las resistencias" },
+      { "tirada": "36-40", "estado": "Ceguera" },
+      { "tirada": "41-45", "estado": "Sordera" },
+      { "tirada": "46-50", "estado": "Euforia" },
+      { "tirada": "51-55", "estado": "Mudez" },
+      { "tirada": "56-60", "estado": "Inconsciencia" },
+      { "tirada": "61-65", "estado": "Coma" },
+      { "tirada": "66-70", "estado": "Éxtasis" },
+      { "tirada": "71-75", "estado": "Alucinaciones" },
+      { "tirada": "76-80", "estado": "Debilidad" },
+      { "tirada": "81-85", "estado": "Paralización completa" },
+      { "tirada": "86-90", "estado": "Miedo" },
+      { "tirada": "91-95", "estado": "Terror" },
+      { "tirada": "96-99", "estado": "+50 a Toda Acción" },
+      { "tirada": "100", "estado": "Muerte" }
+    ]
+  },
+  "tiempoSincronizacion": {
+    "referencia": "Arcana Exxet, Tabla 12 (pág. 73)",
+    "nota": "Cuánto se encarece la invocación según el tiempo que se quiera mantener activa la Encarnación.",
+    "filas": [
+      { "tiempo": "5 Asaltos", "modificador": -50 },
+      { "tiempo": "10 Asaltos", "modificador": -25 },
+      { "tiempo": "Un minuto", "modificador": 0 },
+      { "tiempo": "Diez minutos", "modificador": 40 },
+      { "tiempo": "Media hora", "modificador": 80 },
+      { "tiempo": "Una hora", "modificador": 120 }
+    ]
+  }
+}
