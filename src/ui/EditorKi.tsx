@@ -11,6 +11,14 @@ import {
 } from '../motor/ki';
 import { Selector } from './Selector';
 import { CreadorTecnicas } from './CreadorTecnicas';
+import {
+  CATALOGO_SELLOS,
+  CM_SELLO,
+  FICHAS_SELLO,
+  KI_SELLO,
+  MENORES_POR_MAYOR,
+  clave as claveSello,
+} from '../motor/sellos';
 
 interface Props {
   personaje: Personaje;
@@ -386,6 +394,59 @@ export function EditorKi({ personaje, ficha, datos, catalogo, onCambiar }: Props
           onCambiar={(v) => setKi({ artesMarciales: v })}
           etiquetaBusqueda="Buscar arte marcial"
         />
+      </section>
+
+      <section className="panel" style={{ marginBottom: 16 }}>
+        <h2>Sellos de Invocación</h2>
+        <p style={{ color: 'var(--texto-tenue)', fontSize: '0.86rem', marginTop: 0 }}>
+          Convocar criaturas con Ki, sin tocar Convocar ni Dominación. Dominar un Sello cuesta
+          CM; ejecutarlo, puntos de Ki. Un Sello <strong>Mayor</strong> vale por{' '}
+          {MENORES_POR_MAYOR} Menores de su elemento a la hora de llamar a un ser, pero sale
+          más barato en Ki. Para el Mayor de un elemento hace falta antes su Menor.
+          {ki.cmSellos > 0 && (
+            <>
+              {' '}
+              Llevas <strong className="destacado">{ki.cmSellos}</strong> CM en Sellos.
+            </>
+          )}
+        </p>
+        <div className="lista-seleccion">
+          {CATALOGO_SELLOS.map((s) => {
+            const nombre = claveSello(s);
+            const elegido = (elecciones.sellos ?? []).includes(nombre);
+            const ficha = FICHAS_SELLO[s.sello];
+            return (
+              <label key={nombre} className={elegido ? 'elegida' : undefined}>
+                <input
+                  type="checkbox"
+                  checked={elegido}
+                  onChange={() =>
+                    setKi({
+                      sellos: elegido
+                        ? (elecciones.sellos ?? []).filter((x) => x !== nombre)
+                        : [...(elecciones.sellos ?? []), nombre],
+                    })
+                  }
+                />
+                <span>
+                  {nombre}
+                  <small style={{ display: 'block', color: 'var(--texto-debil)' }}>
+                    {ficha.elemento} · {ficha.afinidades}
+                  </small>
+                </span>
+                <em>
+                  {CM_SELLO[s.grado]} CM · {KI_SELLO[s.grado]} Ki
+                </em>
+              </label>
+            );
+          })}
+        </div>
+        <p style={{ color: 'var(--texto-debil)', fontSize: '0.8rem', marginBottom: 0 }}>
+          Sólo responden a los Sellos los Seres Entre Mundos y los Espíritus: ni los Seres
+          Naturales, ni los construidos, ni los no muertos. Y hace falta un{' '}
+          <strong>Pacto de Sangre</strong> con la criatura antes de poder llamarla a voluntad —
+          si acepta o no, lo decidís en la mesa.
+        </p>
       </section>
 
       <section className="panel" style={{ marginBottom: 16 }}>

@@ -746,6 +746,62 @@ Poderes de Criatura como si tuviera Gnosis 5). Cuando el coste es un rango la fi
 > dos columnas y el texto que sale del PDF las entrelaza: automatizarlo obligaba a inventar
 > nombres y costes, que es justo lo que no se debe hacer.
 
+### Sellos de Invocación 📖 ✔
+
+Dominus Exxet, cap. 8. Convocar criaturas con Ki, sin tocar Convocar, Dominación, Atar ni
+Desconvocar. Los cinco Sellos salen de los elementos del Samsara de Varja:
+
+| Sello | Elemento | Atrae a |
+|---|---|---|
+| Aire | Aire | Seres muy veloces, criaturas voladoras, entes etéreos |
+| Agua | Agua | Criaturas marinas, seres de gran fuerza, entidades muy hermosas |
+| Fuego | Fuego y Luz | Entidades puras, criaturas violentas, seres de comportamiento extremo |
+| Metal | Tierra | Lo sólido y lo material, todo lo ajeno al mundo místico |
+| Madera | Oscuridad | Seres de la naturaleza, seres espirituales, entidades mágicas |
+
+- **Dominarlos** cuesta **30 CM** el Menor y **60 CM** el Mayor. Para el Mayor de un
+  elemento hace falta antes su Menor. *Verificado con el ejemplo de Takanosuke: Madera
+  Menor + Madera Mayor + Fuego Menor = **120 CM**.*
+- **Ejecutarlos** cuesta **5 puntos de Ki** el Menor y **15** el Mayor.
+- Un Sello **Mayor vale por cinco Menores** de su elemento a la hora de llamar a un ser,
+  pero sale más barato en Ki: la Asagiri pide 5 Menores de Madera (25 de Ki) o 1 Mayor (15).
+- Sin poder gesticular con las manos, las Acumulaciones bajan **a la mitad** redondeando
+  hacia arriba. La ventaja **Inutilidad Gestual** lo evita.
+
+**Control de Invocación**: D100 contra **10 por cada nivel** en que la criatura te supere.
+Las de nivel igual o inferior vienen solas, salvo Pifia. Los Sellos de refuerzo suman **+5**
+(Menor) y **+25** (Mayor). Admite Abiertos y Pifias.
+
+*Verificado con el ejemplo del elemental oscuro: Sombra de nivel 3 contra criatura de nivel
+7 → dificultad 40, menos 30 de refuerzo (un Menor y un Mayor) = hay que sacar **10**.*
+
+**Pacto de Sangre** (la invocación inicial): la dificultad sube **30** —como si la criatura
+fuese tres niveles más— y el coste en Ki de los Sellos se **dobla**. *Verificado: nivel 2
+contra demonio de nivel 6 → 70.*
+
+**Tabla 25, fracaso al invocar:**
+
+| Nivel de fracaso | Consecuencia |
+|---|---|
+| 0 a −20 | Falla y pierdes el Ki invertido |
+| −21 a −50 | Además se rompe el Pacto de Sangre con esa criatura |
+| −51 a −100 | Además pierdes el doble de Ki y la mitad de tu Cansancio total |
+| −101 o peor | Pierdes la consciencia y todo tu Ki |
+
+> El manual escribe los dos tramos centrales como «Entre -21 y -50» y «Entre -50 y -100»,
+> de modo que el **−50 cae en los dos**. Aquí se cierra en −51 para que no haya ambigüedad.
+
+**Mantener** a la criatura cuesta **1 punto de Ki por asalto**, o **2** si es de nivel 10 o
+más. Es automático, sin acumular. **Retrasar** una invocación ya preparada cuesta tantos
+puntos de Ki como Sellos lleve. Invocar tiene **Turno +20**, el mismo que atacar desarmado.
+
+**Qué se puede invocar**: sólo Seres Entre Mundos y Espíritus. Ni Seres Naturales, ni
+construidos (golems, marionetas tecnomágicas), ni no muertos. Las criaturas con **Gnosis 35
+o más** son inmunes, salvo que quieran venir o que tu Gnosis sea mayor.
+
+> Si la criatura **acepta** el Pacto no lo decide la aplicación. El manual dice que vale
+> cualquier cosa, «desde llegar a un acuerdo con ella hasta forzarla violentamente».
+
 ## Arcana Exxet
 
 **Los conjuros y los poderes psíquicos del Arcana ya venían en el Excel.** Las 14 sub-vías
@@ -797,7 +853,7 @@ y la tabla de **Potenciación Mística** (Controlar 0-400 → Zeón máximo 20-1
 Por ahora son datos consultables y personalizables; falta el editor de Sheele en la ficha.
 
 ## Pendiente de modelar
-- **Dominus Exxet**: falta el capítulo 8, los Sellos de Invocación.
+- **Dominus Exxet**: completo.
 - **Arcana Exxet**: falta el editor de Sheele en la ficha, las Invocaciones y Encarnaciones
   (caps. 5 y 6), los Teoremas de Magia (cap. 2: Onmyodo, Vodoun, Shamánica y Magia Natural),
   los Rituales y Grimorios (cap. 9) y las reglas opcionales de Nodos y Sanctum Sanctorum

@@ -17,6 +17,7 @@ import { REGLAMENTO_OFICIAL } from './reglamento';
 import type { Caracteristica } from './personaje';
 import { calcularTecnica, type CatalogoTecnicas, type DisenoTecnica } from './tecnicas';
 import { CARACTERISTICAS_KI, type CaracteristicaKi } from './caracteristicasKi';
+import { resumirSellos } from './sellos';
 
 export { CARACTERISTICAS_KI, type CaracteristicaKi };
 
@@ -176,6 +177,8 @@ export interface FichaKi {
   };
   /** PD que se van en Ars Magnus. Cuentan como habilidades de combate. */
   pdArsMagnus: number;
+  /** CM comprometido en Sellos de Invocación. */
+  cmSellos: number;
   deteccion: number | null;
   ocultacion: number | null;
   /** Si la mesa juega con la Reserva de Ki unificada. */
@@ -199,6 +202,8 @@ export interface EleccionesKi {
   artesMarciales: string[];
   /** Ars Magnus adquiridos. Gastan CM y además PD de combate. */
   arsMagnus?: string[];
+  /** Sellos de Invocación dominados, como «Fuego Mayor». Gastan CM. */
+  sellos?: string[];
   unificado?: boolean;
 }
 
@@ -209,6 +214,7 @@ export const ELECCIONES_KI_VACIAS: EleccionesKi = {
   propias: [],
   artesMarciales: [],
   arsMagnus: [],
+  sellos: [],
 };
 
 export interface DatosKi {
@@ -393,7 +399,12 @@ export function calcularKi(
     pdArsMagnus += ars.PD;
   }
 
-  const cmGastado = cmHabilidades + cmLimites + cmTecnicas + cmPropias + cmArsMagnus;
+  // Sellos de Invocación: se dominan con CM, igual que las habilidades del Ki.
+  const sellos = resumirSellos(elecciones.sellos ?? []);
+  avisos.push(...sellos.avisos);
+
+  const cmGastado =
+    cmHabilidades + cmLimites + cmTecnicas + cmPropias + cmArsMagnus + sellos.cm;
   if (cmGastado > cmTotal) {
     avisos.push(`Has comprometido ${cmGastado} CM y sólo tienes ${cmTotal}.`);
   }
@@ -445,6 +456,7 @@ export function calcularKi(
       limitePD,
     },
     pdArsMagnus,
+    cmSellos: sellos.cm,
     deteccion,
     ocultacion,
     unificado: elecciones.unificado ?? false,

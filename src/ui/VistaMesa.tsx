@@ -6,6 +6,12 @@ import {
   type TipoDano,
 } from '../motor/combate';
 import { tirarD100, type Tirada } from '../motor/dados';
+import {
+  consecuenciaFracaso,
+  controlDeInvocacion,
+  costeEnKi,
+  mantenimiento,
+} from '../motor/sellos';
 import { calcular, type DatosCalculo, type Personaje } from '../motor/personaje';
 import type { Reglamento } from '../motor/reglamento';
 import { useEnemigos } from './VistaBestiario';
@@ -45,6 +51,11 @@ export function VistaMesa({ personaje, datos, reglamento, campanaId, onCambiar }
   const [taEnemigo, setTaEnemigo] = useState(2);
   const [pvEnemigo, setPvEnemigo] = useState(100);
   const [armaElegida, setArmaElegida] = useState(0);
+  // Invocación por Ki: lo que se declara antes de tirar el Control.
+  const [nivelCriatura, setNivelCriatura] = useState(1);
+  const [refuerzoMenor, setRefuerzoMenor] = useState(0);
+  const [refuerzoMayor, setRefuerzoMayor] = useState(0);
+  const [esPacto, setEsPacto] = useState(false);
 
   const enemigo = enemigos.find((e) => e.id === enemigoId) ?? null;
 
@@ -85,6 +96,61 @@ export function VistaMesa({ personaje, datos, reglamento, campanaId, onCambiar }
     const base = arma?.turno ?? ficha.combate.turnoNatural.valor;
     const t = tirarD100(base);
     anotar(`Iniciativa: ${base + t.total}`, `${base} de turno + ${describeTirada(t)}`);
+  };
+
+  /**
+   * Control de Invocación (Dominus Exxet, cap. 8). La dificultad sube 10 por cada nivel en
+   * que la criatura te supere, y los Sellos de refuerzo la bajan. Admite Abiertos y Pifias.
+   */
+  const invocar = () => {
+    const control = controlDeInvocacion({
+      nivelInvocador: ficha.nivel,
+      nivelCriatura: nivelCriatura,
+      refuerzo: [
+        { sello: 'Aire', grado: 'Menor', cantidad: refuerzoMenor },
+        { sello: 'Aire', grado: 'Mayor', cantidad: refuerzoMayor },
+      ],
+      esPacto,
+    });
+    const kiSellos = costeEnKi(
+      [
+        { sello: 'Aire', grado: 'Menor', cantidad: refuerzoMenor },
+        { sello: 'Aire', grado: 'Mayor', cantidad: refuerzoMayor },
+      ],
+      esPacto,
+    );
+
+    if (control.automatica) {
+      anotar(
+        `Invocación automática (criatura de nivel ${nivelCriatura})`,
+        'Las criaturas de nivel igual o inferior vienen solas, salvo Pifia.',
+      );
+      return;
+    }
+
+    const t = tirarD100(0);
+    const margen = t.total - control.objetivo;
+    const exito = margen >= 0 && !t.pifia;
+    const detalle =
+      `${describeTirada(t)} contra ${control.objetivo}` +
+      (control.bonoRefuerzo > 0
+        ? ` (dificultad ${control.dificultad} − ${control.bonoRefuerzo} de refuerzo)`
+        : '') +
+      (kiSellos > 0 ? ` · ${kiSellos} de Ki en refuerzos` : '');
+
+    if (exito) {
+      anotar(
+        `Invocación conseguida · mantenerla cuesta ${mantenimiento(nivelCriatura)} de Ki por asalto`,
+        detalle,
+      );
+    } else {
+      const nivelFracaso = t.pifia ? Math.min(margen, -21) : margen;
+      anotar(
+        `Invocación fallida por ${Math.abs(nivelFracaso)}`,
+        `${detalle}. ${consecuenciaFracaso(nivelFracaso).efecto}`,
+        true,
+      );
+    }
   };
 
   const atacar = () => {
@@ -169,6 +235,60 @@ export function VistaMesa({ personaje, datos, reglamento, campanaId, onCambiar }
           <button className="accion" onClick={tirarIniciativa}>Tirar iniciativa</button>
         </div>
       </section>
+
+      {(personaje.ki?.sellos ?? []).length > 0 && (
+        <section className="panel" style={{ marginBottom: 16 }}>
+          <h2>Invocación por Ki</h2>
+          <p style={{ color: 'var(--texto-tenue)', fontSize: '0.86rem', marginTop: 0 }}>
+            Sellos dominados: {(personaje.ki?.sellos ?? []).join(', ')}. Los de refuerzo suman
+            +5 (Menor) y +25 (Mayor) al Control.
+          </p>
+          <div className="rejilla">
+            <div className="campo">
+              <label htmlFor="nivel-criatura">Nivel de la criatura</label>
+              <input
+                id="nivel-criatura"
+                type="number"
+                min={0}
+                value={nivelCriatura}
+                onChange={(e) => setNivelCriatura(Math.max(0, Number(e.target.value) || 0))}
+              />
+            </div>
+            <div className="campo">
+              <label htmlFor="ref-menor">Sellos Menores de refuerzo</label>
+              <input
+                id="ref-menor"
+                type="number"
+                min={0}
+                value={refuerzoMenor}
+                onChange={(e) => setRefuerzoMenor(Math.max(0, Number(e.target.value) || 0))}
+              />
+            </div>
+            <div className="campo">
+              <label htmlFor="ref-mayor">Sellos Mayores de refuerzo</label>
+              <input
+                id="ref-mayor"
+                type="number"
+                min={0}
+                value={refuerzoMayor}
+                onChange={(e) => setRefuerzoMayor(Math.max(0, Number(e.target.value) || 0))}
+              />
+            </div>
+          </div>
+          <label className="opcion" style={{ marginBottom: 10 }}>
+            <input type="checkbox" checked={esPacto} onChange={(e) => setEsPacto(e.target.checked)} />
+            <span>
+              Invocación inicial (Pacto de Sangre)
+              <em>Sube 30 la dificultad y dobla el coste en Ki de los Sellos.</em>
+            </span>
+          </label>
+          <div className="acciones-regla">
+            <button className="accion primaria" onClick={invocar}>
+              Control de Invocación
+            </button>
+          </div>
+        </section>
+      )}
 
       <div className="rejilla">
         <section className="panel">

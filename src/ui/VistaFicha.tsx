@@ -253,6 +253,16 @@ export function VistaFicha({ personaje, datos, reglamento }: Props) {
                   <strong>Habilidades:</strong> {personaje.ki.habilidades.join(', ')}
                 </p>
               )}
+              {(personaje.ki.sellos ?? []).length > 0 && (
+                <p style={{ margin: '0 0 8px', fontSize: '0.9rem' }}>
+                  <strong>Sellos de Invocación:</strong> {(personaje.ki.sellos ?? []).join(', ')}
+                </p>
+              )}
+              {(personaje.ki.arsMagnus ?? []).length > 0 && (
+                <p style={{ margin: '0 0 8px', fontSize: '0.9rem' }}>
+                  <strong>Ars Magnus:</strong> {(personaje.ki.arsMagnus ?? []).join(', ')}
+                </p>
+              )}
               {personaje.ki.artesMarciales.length > 0 && (
                 <p style={{ margin: '0 0 8px', fontSize: '0.9rem' }}>
                   <strong>Artes marciales:</strong> {personaje.ki.artesMarciales.join(', ')}
