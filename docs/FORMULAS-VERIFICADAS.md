@@ -1037,12 +1037,67 @@ Lo que **no** decide la aplicación: el nivel de un efecto natural (el manual di
 explícitamente que el jugador explica lo que pretende y el Director le pone un 1-5) y si los
 espíritus de un sitio son afines al personaje. Ambos se preguntan.
 
+### Rituales y Grimorios ✔
+
+Capítulo 9. **17 rituales** y **18 grimorios**, con el esquema que usa el propio manual.
+
+Lo que hace a los rituales distintos de todo lo demás: **no hace falta el Don**. Son
+fórmulas prehechas que basta con conocer y cuyos requisitos son habilidades secundarias
+—Ocultismo, Arte, Memorizar, Arquitectura…—, así que un personaje sin una gota de magia
+puede ejecutarlos. El coste en Zeon se puede repartir entre todos los ritualistas: lo único
+que importa es que la suma alcance.
+
+Cada ritual lleva sus siete campos: Realización, Efecto, Integrantes Necesarios, Tiempo de
+Realización, In Momentum, Requerimientos y Coste. Los Integrantes y el Coste van como texto
+porque el manual no siempre da un número: son «1 por cada nivel que tenga el brujo a
+maldecir» y «300 por kilómetro cuadrado».
+
+De los grimorios se recoge lo que el manual enumera —idioma, conjuros, rituales, criaturas,
+invocaciones, teoría mágica, conocimiento y especial—, también como texto: un grimorio da
+«todos los conjuros de la Vía de Tierra hasta nivel 50 lanzados en grado intermedio», y eso
+no cabe en una lista de nombres de conjuro.
+
+> El manual dice explícitamente que cualquier Director puede inventarse sus propios
+> rituales, así que ambas colecciones se pueden ampliar desde Contenido propio.
+
+### Nodos y Sanctum Sanctorum ✔
+
+Capítulo 10, reglas **opcionales**. Sólo hay siete Nodos en toda Gaïa, y sincronizarse con
+uno da poderes casi divinos a cambio de un riesgo brutal.
+
+La mecánica es una suma limpia: **Control de Poder contra 10** más el modificador de cada
+beneficio elegido (Tablas 18, 20 y 22, según se intente magia, poderes psíquicos o Ki), más
+el estado del nodo (Tabla 24: +1 a +5 corrompido, −1 a −3 controlado) y +1 la primera vez.
+La prueba reproduce el ejemplo del manual: doblar el ACT (+5) y gastar la mitad de Zeon
+(+2) dan **dificultad 17**.
+
+Tres reglas que la calculadora aplica sola:
+
+- **No se puede elegir dos veces el mismo tipo de ventaja.** Está modelado como grupos: dos
+  beneficios del mismo grupo no conviven, y se queda el de más modificador.
+- **El bono al ACT no se combina con el que lo multiplica.** Es un caso aparte porque son
+  dos filas distintas de la tabla.
+- **Un Nodo ignora cualquier modificador innatural al Poder**: el Control se hace con el
+  atributo desnudo. Eso no es una cuenta, es un aviso, y como tal sale.
+
+Fallar tiene tres tramos —Shock, Consunción Espiritual y Descreación— y **los tramos cambian
+según el dominio**: con magia se llega a Descreación fallando por 7, con Ki hace falta 9. La
+Consunción Espiritual con magia quita el Don para siempre; la Descreación borra al personaje
+sin posible salvación.
+
+El **Sanctum Sanctorum** no se tira: se paga. Cada Efecto Menor cuesta 50 puntos de Zeon
+**máximo** y cada Efecto Mayor un punto del atributo de Poder, y ambos son permanentes. La
+prueba reproduce el otro ejemplo del manual: un Santuario de grado 2 con cinco Efectos
+Menores y uno Mayor sacrifica **250 de Zeon máximo y 1 de Poder**. Nada obliga a elegir el
+máximo: se puede hacer uno de grado 3 con ocho Menores y ningún Mayor, y el manual lo dice.
+
+> ⚠ **Errata del manual**: el texto remite a la «Tabla 24» para la presencia base requerida,
+> pero esa es la de Otros Modificadores. La presencia está en la **Tabla 25**.
+
 ## Pendiente de modelar
 - **Dominus Exxet**: completo.
-- **Arcana Exxet**: hechos los caps. 2, 5 y 6 (Teoremas, Invocaciones y Encarnaciones), el
-  Nivel de Magia, la Metamagia y los datos de Sheele. Falta el editor de Sheele en la ficha,
-  los Rituales y Grimorios (cap. 9) y las reglas opcionales de Nodos y Sanctum Sanctorum
-  (cap. 10). Los tres PDF son **escaneos sin capa de texto**, así que lo que no esté en el
-  Excel hay que leerlo a ojo página a página.
+- **Arcana Exxet**: hechos los caps. 2, 5, 6, 9 y 10, el Nivel de Magia, la Metamagia y los
+  datos de Sheele. Falta sólo el **editor de Sheele en la ficha**. Los tres PDF son
+  **escaneos sin capa de texto**, así que todo esto se ha leído a ojo página a página.
 - **Conjuros y poderes psíquicos seleccionados** como listas del personaje.
 - Bestiario y creación de seres.

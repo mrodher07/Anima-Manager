@@ -507,5 +507,386 @@
     "efecto": "Manipular la percepción del mundo de otras personas: crear ilusiones, volver a alguien invisible."
    }
   ]
+ },
+ "infeccionSobrenatural": {
+  "referencia": "Arcana Exxet, Tabla 16 (pág. 119)",
+  "nota": "Se comparan la suma de presencias de los objetos místicos que lleva el personaje con su propia presencia.",
+  "filas": [
+   {
+    "diferencia": "La suma de presencias de los objetos supera la presencia del personaje por diez",
+    "efecto": "Interferencia Mística"
+   },
+   {
+    "diferencia": "La suma de presencias de los objetos supera la presencia del personaje por veinte",
+    "efecto": "Infección Anímica"
+   }
+  ]
+ },
+ "mutaciones": {
+  "referencia": "Arcana Exxet, Tabla 17 (pág. 120)",
+  "nota": "No es normal que se den todos a la vez.",
+  "filas": [
+   {
+    "exposicion": "Exposición Menor",
+    "gnosis": 5,
+    "nivel": 1,
+    "poderes": 50
+   },
+   {
+    "exposicion": "Exposición Media",
+    "gnosis": 10,
+    "nivel": 2,
+    "poderes": 150
+   },
+   {
+    "exposicion": "Exposición Mayor",
+    "gnosis": 15,
+    "nivel": 3,
+    "poderes": 300
+   }
+  ]
+ },
+ "bonificadoresMagicos": {
+  "referencia": "Arcana Exxet, Tabla 18 (pág. 122)",
+  "filas": [
+   {
+    "beneficio": "ACT +10",
+    "modificador": 0,
+    "grupo": "ACT",
+    "nota": "NA"
+   },
+   {
+    "beneficio": "ACT +20",
+    "modificador": 1,
+    "grupo": "ACT"
+   },
+   {
+    "beneficio": "ACT +30",
+    "modificador": 2,
+    "grupo": "ACT"
+   },
+   {
+    "beneficio": "ACT +40",
+    "modificador": 3,
+    "grupo": "ACT"
+   },
+   {
+    "beneficio": "ACT +50",
+    "modificador": 4,
+    "grupo": "ACT"
+   },
+   {
+    "beneficio": "ACT Doble",
+    "modificador": 5,
+    "grupo": "ACT multiplicado"
+   },
+   {
+    "beneficio": "ACT Triple",
+    "modificador": 6,
+    "grupo": "ACT multiplicado"
+   },
+   {
+    "beneficio": "ACT Cuádruple",
+    "modificador": 7,
+    "grupo": "ACT multiplicado"
+   },
+   {
+    "beneficio": "ACT Quíntuple",
+    "modificador": 8,
+    "grupo": "ACT multiplicado"
+   },
+   {
+    "beneficio": "Gasto de Zeon a Mitad",
+    "modificador": 2,
+    "grupo": "Zeon"
+   },
+   {
+    "beneficio": "Sin gasto de Zeon",
+    "modificador": 4,
+    "grupo": "Zeon"
+   },
+   {
+    "beneficio": "Nivel Máximo +1",
+    "modificador": 1,
+    "grupo": "Nivel máximo"
+   },
+   {
+    "beneficio": "Nivel Máximo +2",
+    "modificador": 2,
+    "grupo": "Nivel máximo"
+   },
+   {
+    "beneficio": "Nivel Máximo +3",
+    "modificador": 3,
+    "grupo": "Nivel máximo"
+   },
+   {
+    "beneficio": "Nivel Máximo +4",
+    "modificador": 4,
+    "grupo": "Nivel máximo"
+   },
+   {
+    "beneficio": "Nivel Máximo +5",
+    "modificador": 5,
+    "grupo": "Nivel máximo"
+   },
+   {
+    "beneficio": "Proyección Mágica +25",
+    "modificador": 1,
+    "grupo": "Proyección"
+   },
+   {
+    "beneficio": "Proyección Mágica +50",
+    "modificador": 2,
+    "grupo": "Proyección"
+   },
+   {
+    "beneficio": "Proyección Mágica +75",
+    "modificador": 3,
+    "grupo": "Proyección"
+   },
+   {
+    "beneficio": "Proyección Mágica +100",
+    "modificador": 4,
+    "grupo": "Proyección"
+   },
+   {
+    "beneficio": "Alta Magia",
+    "modificador": 1,
+    "grupo": "Magia superior",
+    "nota": "Con Gnosis inferior a 25."
+   },
+   {
+    "beneficio": "Magia Divina",
+    "modificador": 8,
+    "grupo": "Magia superior",
+    "nota": "Con Gnosis inferior a 40."
+   }
+  ]
+ },
+ "bonificadoresPsiquicos": {
+  "referencia": "Arcana Exxet, Tabla 20 (pág. 123)",
+  "filas": [
+   {
+    "beneficio": "Potencial Psíquico +10",
+    "modificador": 0,
+    "grupo": "Potencial",
+    "nota": "NA"
+   },
+   {
+    "beneficio": "Potencial Psíquico +20",
+    "modificador": 1,
+    "grupo": "Potencial"
+   },
+   {
+    "beneficio": "Potencial Psíquico +30",
+    "modificador": 2,
+    "grupo": "Potencial"
+   },
+   {
+    "beneficio": "Potencial Psíquico +40",
+    "modificador": 3,
+    "grupo": "Potencial"
+   },
+   {
+    "beneficio": "Potencial Psíquico +50",
+    "modificador": 4,
+    "grupo": "Potencial"
+   },
+   {
+    "beneficio": "Proyección Psíquica +10",
+    "modificador": 1,
+    "grupo": "Proyección"
+   },
+   {
+    "beneficio": "Proyección Psíquica +25",
+    "modificador": 2,
+    "grupo": "Proyección"
+   },
+   {
+    "beneficio": "Proyección Psíquica +50",
+    "modificador": 3,
+    "grupo": "Proyección"
+   },
+   {
+    "beneficio": "Poder de Nivel 1",
+    "modificador": 1,
+    "grupo": "Poder"
+   },
+   {
+    "beneficio": "Poder de Nivel 2",
+    "modificador": 2,
+    "grupo": "Poder"
+   },
+   {
+    "beneficio": "Poder de Nivel 3",
+    "modificador": 3,
+    "grupo": "Poder"
+   }
+  ]
+ },
+ "bonificadoresKi": {
+  "referencia": "Arcana Exxet, Tabla 22 (pág. 124)",
+  "filas": [
+   {
+    "beneficio": "Acumulaciones +1",
+    "modificador": 1,
+    "grupo": "Acumulaciones"
+   },
+   {
+    "beneficio": "Acumulaciones +2",
+    "modificador": 2,
+    "grupo": "Acumulaciones"
+   },
+   {
+    "beneficio": "Acumulaciones +3",
+    "modificador": 4,
+    "grupo": "Acumulaciones"
+   },
+   {
+    "beneficio": "Gasto de Ki a Mitad",
+    "modificador": 2,
+    "grupo": "Ki"
+   },
+   {
+    "beneficio": "Sin gasto de Ki",
+    "modificador": 4,
+    "grupo": "Ki"
+   }
+  ]
+ },
+ "otrosModificadoresNodo": {
+  "referencia": "Arcana Exxet, Tabla 24 (pág. 124)",
+  "filas": [
+   {
+    "modificador": "Nodo Caótico o Corrompido",
+    "desde": 1,
+    "hasta": 5,
+    "efecto": "Algunos nodos tienen energías especialmente peligrosas por estar corrompidos o alterados."
+   },
+   {
+    "modificador": "Nodo Controlado",
+    "desde": -1,
+    "hasta": -3,
+    "efecto": "Sistemas de control creados por civilizaciones antiguas, normalmente en el interior de inmensas construcciones."
+   },
+   {
+    "modificador": "Primer Enlace",
+    "desde": 1,
+    "hasta": 1,
+    "efecto": "La primera vez que alguien trata de enlazarse con un nodo, por falta de experiencia."
+   }
+  ]
+ },
+ "falloNodo": {
+  "referencia": "Arcana Exxet, Tablas 19, 21 y 23 (págs. 123-124)",
+  "nota": "El nivel de fracaso del Control de Poder decide la consecuencia, y los tramos cambian según se intentara magia, poderes psíquicos o Ki.",
+  "magia": [
+   {
+    "desde": 1,
+    "hasta": 3,
+    "resultado": "Shock Sobrenatural",
+    "efecto": "-120 a Toda Acción y pierde la mitad de sus puntos de vida actuales. Ambas pérdidas se recuperan a 10 puntos por día, sin importar su regeneración ni ningún medio sobrenatural. Además, debe superar un control de Presencia Base contra 140 o perderá un Punto de Poder por cada 10 puntos por los que falle."
+   },
+   {
+    "desde": 3,
+    "hasta": 6,
+    "resultado": "Consunción Espiritual",
+    "efecto": "El alma queda parcialmente consumida: inconsciente durante un periodo indeterminado (de horas a años enteros) y destruida por completo su capacidad de usar magia el resto de su existencia. Se considera que el personaje deja de poseer el Don."
+   },
+   {
+    "desde": 7,
+    "hasta": 9999,
+    "resultado": "Descreación",
+    "efecto": "La existencia del hechicero es completamente consumida por el poder del nodo, destruyendo absolutamente cualquier rastro de él sin posible salvación."
+   }
+  ],
+  "psiquico": [
+   {
+    "desde": 1,
+    "hasta": 4,
+    "resultado": "Shock Psíquico",
+    "efecto": "Fatiga 10 y -60 a toda acción, que se recupera a 10 puntos por día sin importar los medios que se empleen. Además, debe superar un control de Presencia Base contra 140 o perderá un Punto de Voluntad por cada 10 puntos por los que falle."
+   },
+   {
+    "desde": 5,
+    "hasta": 8,
+    "resultado": "Consunción Espiritual",
+    "efecto": "La mente queda parcialmente destrozada: inconsciente durante un periodo indeterminado y con Inteligencia y Voluntad reducidas a la mitad."
+   },
+   {
+    "desde": 9,
+    "hasta": 9999,
+    "resultado": "Descreación",
+    "efecto": "La existencia del mentalista es completamente consumida, sin posible salvación."
+   }
+  ],
+  "ki": [
+   {
+    "desde": 1,
+    "hasta": 4,
+    "resultado": "Shock Físico",
+    "efecto": "-60 a toda acción y pierde la mitad de sus puntos de vida actuales, ambas recuperables a 10 puntos por día. Además, control de Presencia Base contra 140 o pierde un Punto de Voluntad por cada 10 puntos de fracaso."
+   },
+   {
+    "desde": 5,
+    "hasta": 8,
+    "resultado": "Consunción Espiritual",
+    "efecto": "Las energías físicas quedan parcialmente consumidas: inconsciente durante un periodo indeterminado, y sus acumulaciones y su reserva máxima de Ki quedan a la mitad."
+   },
+   {
+    "desde": 9,
+    "hasta": 9999,
+    "resultado": "Descreación",
+    "efecto": "La existencia del personaje es completamente consumida, sin posible salvación."
+   }
+  ]
+ },
+ "sanctumSanctorum": {
+  "referencia": "Arcana Exxet, Tabla 25 (pág. 125)",
+  "nota": "Cada Efecto Menor cuesta 50 puntos de Zeon máximos; cada Efecto Mayor, un punto del Atributo de Poder.",
+  "erratas": "El texto remite a la «Tabla 24» para la presencia requerida, pero esa es la de Otros Modificadores: la presencia está en la Tabla 25.",
+  "filas": [
+   {
+    "grado": 1,
+    "presencia": 40,
+    "menores": 3,
+    "mayores": 0,
+    "ritual": "Muy Difícil",
+    "requisitos": "Grabados en el suelo, marcas con sangre o preparativos similares. De tres horas a un día entero."
+   },
+   {
+    "grado": 2,
+    "presencia": 50,
+    "menores": 6,
+    "mayores": 1,
+    "ritual": "Absurdo",
+    "requisitos": "Construcciones de complejidad media y grabados detallados, de precio similar al de una pequeña mansión. De una semana a tres meses."
+   },
+   {
+    "grado": 3,
+    "presencia": 60,
+    "menores": 9,
+    "mayores": 2,
+    "ritual": "Casi Imposible",
+    "requisitos": "Como el anterior, más dos o tres componentes sobrenaturales únicos."
+   },
+   {
+    "grado": 4,
+    "presencia": 70,
+    "menores": 12,
+    "mayores": 3,
+    "ritual": "Imposible",
+    "requisitos": "Edificaciones muy grandes o extremadamente complejas de materiales inusuales. Puede llevar varios años."
+   },
+   {
+    "grado": 5,
+    "presencia": 85,
+    "menores": 15,
+    "mayores": 4,
+    "ritual": "Inhumano",
+    "requisitos": "Magna Sacra Sanctum Sanctorum: construcciones por valor de una pequeña ciudad, componentes únicos, artefactos de alto poder existencial o sacrificios de individuos únicos. Más de una década."
+   }
+  ]
  }
 }

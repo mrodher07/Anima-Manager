@@ -397,6 +397,50 @@ export const ESQUEMAS: EsquemaColeccion[] = [
     ],
   },
   {
+    coleccion: 'rituales',
+    singular: 'ritual místico',
+    plural: 'Rituales místicos',
+    clave: 'ritual',
+    ayuda:
+      'Fórmulas prehechas que producen efectos sobrenaturales **sin necesidad del Don**: ' +
+      'basta con conocerlas y cumplir sus requisitos en habilidades secundarias. El coste ' +
+      'en Zeon se puede repartir entre todos los ritualistas. El manual dice explícitamente ' +
+      'que cualquier Director puede inventarse los suyos, así que aquí se pueden añadir.',
+    campos: [
+      txt('ritual', 'Nombre'),
+      txt('integrantes', 'Integrantes necesarios', '1, 7+, «1 por nivel del brujo»…'),
+      txt('tiempo', 'Tiempo de realización'),
+      txt('requerimientos', 'Requerimientos', 'Ocultismo 160, Herbolaria 80…'),
+      txt('coste', 'Coste en Zeon', '150, o «300 por kilómetro cuadrado»'),
+      { clave: 'descripcion', etiqueta: 'Descripción', tipo: 'parrafo' },
+      { clave: 'realizacion', etiqueta: 'Realización', tipo: 'parrafo' },
+      { clave: 'efecto', etiqueta: 'Efecto', tipo: 'parrafo' },
+      { clave: 'inMomentum', etiqueta: 'In Momentum', tipo: 'parrafo' },
+    ],
+  },
+  {
+    coleccion: 'grimorios',
+    singular: 'grimorio',
+    plural: 'Grimorios',
+    clave: 'grimorio',
+    ayuda:
+      'Libros de magia. Lo que aportan va en texto libre porque el manual lo escribe así: ' +
+      'un grimorio puede dar «todos los conjuros de la Vía de Tierra hasta nivel 50 lanzados ' +
+      'en grado intermedio», y eso no cabe en una lista de nombres.',
+    campos: [
+      txt('grimorio', 'Nombre'),
+      txt('idioma', 'Idioma'),
+      txt('teoriaMagica', 'Teoría Mágica', 'Hasta qué nivel permite estudiar'),
+      { clave: 'descripcion', etiqueta: 'Descripción', tipo: 'parrafo' },
+      { clave: 'conjuros', etiqueta: 'Conjuros', tipo: 'parrafo' },
+      { clave: 'rituales', etiqueta: 'Rituales', tipo: 'parrafo' },
+      { clave: 'invocaciones', etiqueta: 'Invocaciones', tipo: 'parrafo' },
+      { clave: 'criaturas', etiqueta: 'Criaturas', tipo: 'parrafo' },
+      { clave: 'conocimiento', etiqueta: 'Conocimiento', tipo: 'parrafo' },
+      { clave: 'especial', etiqueta: 'Especial', tipo: 'parrafo' },
+    ],
+  },
+  {
     coleccion: 'sellosCriatura',
     singular: 'criatura invocable',
     plural: 'Sellos por criatura',

@@ -10,6 +10,7 @@ import {
 } from '../motor/encarnaciones';
 import { useColeccion } from './estado';
 import { Teoremas } from './Teoremas';
+import { Nodos } from './Nodos';
 
 const etiqueta = {
   fontSize: '0.68rem',
@@ -317,9 +318,11 @@ export function VistaArcana({ catalogo }: { catalogo: Catalogo }) {
   const invocaciones = useColeccion(catalogo, 'invocaciones');
   const encarnaciones = useColeccion(catalogo, 'encarnaciones');
   const teoremas = useColeccion(catalogo, 'teoremas');
-  const [pestana, setPestana] = useState<'invocaciones' | 'encarnaciones' | 'teoremas'>(
-    'invocaciones',
-  );
+  const rituales = useColeccion(catalogo, 'rituales');
+  const grimorios = useColeccion(catalogo, 'grimorios');
+  const [pestana, setPestana] = useState<
+    'invocaciones' | 'encarnaciones' | 'teoremas' | 'nodos'
+  >('invocaciones');
 
   if (invocaciones.length === 0 && encarnaciones.length === 0 && teoremas.length === 0) {
     return (
@@ -363,12 +366,19 @@ export function VistaArcana({ catalogo }: { catalogo: Catalogo }) {
           >
             Teoremas de Magia ({teoremas.length})
           </button>
+          <button
+            className={`accion${pestana === 'nodos' ? ' primaria' : ''}`}
+            onClick={() => setPestana('nodos')}
+          >
+            Nodos, rituales y grimorios
+          </button>
         </div>
       </section>
 
       {pestana === 'invocaciones' && <Invocaciones invocaciones={invocaciones} />}
       {pestana === 'encarnaciones' && <Encarnaciones encarnaciones={encarnaciones} />}
       {pestana === 'teoremas' && <Teoremas teoremas={teoremas} />}
+      {pestana === 'nodos' && <Nodos rituales={rituales} grimorios={grimorios} />}
     </div>
   );
 }

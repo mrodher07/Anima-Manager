@@ -328,6 +328,37 @@ export interface TeoremaMagia {
   reglas?: string;
 }
 
+/** Ritual místico. Arcana Exxet, cap. 9. No hace falta el Don para ejecutarlos. */
+export interface RitualMistico {
+  ritual: string;
+  pagina?: number;
+  descripcion?: string;
+  realizacion: string;
+  efecto: string;
+  /** «1», «7+», o incluso «1 por cada nivel que tenga el brujo a maldecir». */
+  integrantes: string;
+  tiempo: string;
+  inMomentum?: string;
+  requerimientos: string;
+  /** A veces un número, a veces «300 por kilómetro cuadrado». */
+  coste: string;
+}
+
+/** Grimorio. Arcana Exxet, cap. 9. Los campos van tal como los enumera el manual. */
+export interface Grimorio {
+  grimorio: string;
+  pagina?: number;
+  descripcion?: string;
+  idioma: string;
+  conjuros?: string;
+  rituales?: string;
+  criaturas?: string;
+  invocaciones?: string;
+  teoriaMagica?: string;
+  conocimiento?: string;
+  especial?: string;
+}
+
 /** Nombre de cada colección del catálogo y el tipo que contiene. */
 export interface Colecciones {
   razas: Raza;
@@ -348,6 +379,8 @@ export interface Colecciones {
   invocaciones: Invocacion;
   encarnaciones: Encarnacion;
   teoremas: TeoremaMagia;
+  rituales: RitualMistico;
+  grimorios: Grimorio;
   sheele: EntradaTabla;
   efectosTecnica: EfectoTecnica;
   tiposEfectoTecnica: TipoEfectoTecnica;
@@ -380,6 +413,8 @@ export const CLAVE_DE: Record<NombreColeccion, string> = {
   invocaciones: 'invocacion',
   encarnaciones: 'encarnacion',
   teoremas: 'teorema',
+  rituales: 'ritual',
+  grimorios: 'grimorio',
   sheele: 'mejora',
   // Un efecto tiene varias opciones, así que la clave es la pareja efecto + opción.
   efectosTecnica: 'referencia',
