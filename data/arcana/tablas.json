@@ -1,41 +1,511 @@
 {
-  "tablaPandora": {
-    "referencia": "Arcana Exxet, Tabla 11 (pág. 64)",
-    "nota": "El manual imprime «36-30» en la sexta fila, que es una errata evidente: debe decir 26-30, porque 36-40 aparece dos filas más abajo.",
-    "filas": [
-      { "tirada": "1-5", "estado": "Recupera 200 PV" },
-      { "tirada": "6-10", "estado": "Fascinación" },
-      { "tirada": "11-15", "estado": "+20 a Toda Acción" },
-      { "tirada": "16-20", "estado": "Dolor" },
-      { "tirada": "21-25", "estado": "Daño" },
-      { "tirada": "26-30", "estado": "Ira" },
-      { "tirada": "31-35", "estado": "+40 a Todas las resistencias" },
-      { "tirada": "36-40", "estado": "Ceguera" },
-      { "tirada": "41-45", "estado": "Sordera" },
-      { "tirada": "46-50", "estado": "Euforia" },
-      { "tirada": "51-55", "estado": "Mudez" },
-      { "tirada": "56-60", "estado": "Inconsciencia" },
-      { "tirada": "61-65", "estado": "Coma" },
-      { "tirada": "66-70", "estado": "Éxtasis" },
-      { "tirada": "71-75", "estado": "Alucinaciones" },
-      { "tirada": "76-80", "estado": "Debilidad" },
-      { "tirada": "81-85", "estado": "Paralización completa" },
-      { "tirada": "86-90", "estado": "Miedo" },
-      { "tirada": "91-95", "estado": "Terror" },
-      { "tirada": "96-99", "estado": "+50 a Toda Acción" },
-      { "tirada": "100", "estado": "Muerte" }
-    ]
-  },
-  "tiempoSincronizacion": {
-    "referencia": "Arcana Exxet, Tabla 12 (pág. 73)",
-    "nota": "Cuánto se encarece la invocación según el tiempo que se quiera mantener activa la Encarnación.",
-    "filas": [
-      { "tiempo": "5 Asaltos", "modificador": -50 },
-      { "tiempo": "10 Asaltos", "modificador": -25 },
-      { "tiempo": "Un minuto", "modificador": 0 },
-      { "tiempo": "Diez minutos", "modificador": 40 },
-      { "tiempo": "Media hora", "modificador": 80 },
-      { "tiempo": "Una hora", "modificador": 120 }
-    ]
-  }
+ "tablaPandora": {
+  "referencia": "Arcana Exxet, Tabla 11 (pág. 64)",
+  "nota": "El manual imprime «36-30» en la sexta fila, que es una errata evidente: debe decir 26-30, porque 36-40 aparece dos filas más abajo.",
+  "filas": [
+   {
+    "tirada": "1-5",
+    "estado": "Recupera 200 PV"
+   },
+   {
+    "tirada": "6-10",
+    "estado": "Fascinación"
+   },
+   {
+    "tirada": "11-15",
+    "estado": "+20 a Toda Acción"
+   },
+   {
+    "tirada": "16-20",
+    "estado": "Dolor"
+   },
+   {
+    "tirada": "21-25",
+    "estado": "Daño"
+   },
+   {
+    "tirada": "26-30",
+    "estado": "Ira"
+   },
+   {
+    "tirada": "31-35",
+    "estado": "+40 a Todas las resistencias"
+   },
+   {
+    "tirada": "36-40",
+    "estado": "Ceguera"
+   },
+   {
+    "tirada": "41-45",
+    "estado": "Sordera"
+   },
+   {
+    "tirada": "46-50",
+    "estado": "Euforia"
+   },
+   {
+    "tirada": "51-55",
+    "estado": "Mudez"
+   },
+   {
+    "tirada": "56-60",
+    "estado": "Inconsciencia"
+   },
+   {
+    "tirada": "61-65",
+    "estado": "Coma"
+   },
+   {
+    "tirada": "66-70",
+    "estado": "Éxtasis"
+   },
+   {
+    "tirada": "71-75",
+    "estado": "Alucinaciones"
+   },
+   {
+    "tirada": "76-80",
+    "estado": "Debilidad"
+   },
+   {
+    "tirada": "81-85",
+    "estado": "Paralización completa"
+   },
+   {
+    "tirada": "86-90",
+    "estado": "Miedo"
+   },
+   {
+    "tirada": "91-95",
+    "estado": "Terror"
+   },
+   {
+    "tirada": "96-99",
+    "estado": "+50 a Toda Acción"
+   },
+   {
+    "tirada": "100",
+    "estado": "Muerte"
+   }
+  ]
+ },
+ "tiempoSincronizacion": {
+  "referencia": "Arcana Exxet, Tabla 12 (pág. 73)",
+  "nota": "Cuánto se encarece la invocación según el tiempo que se quiera mantener activa la Encarnación.",
+  "filas": [
+   {
+    "tiempo": "5 Asaltos",
+    "modificador": -50
+   },
+   {
+    "tiempo": "10 Asaltos",
+    "modificador": -25
+   },
+   {
+    "tiempo": "Un minuto",
+    "modificador": 0
+   },
+   {
+    "tiempo": "Diez minutos",
+    "modificador": 40
+   },
+   {
+    "tiempo": "Media hora",
+    "modificador": 80
+   },
+   {
+    "tiempo": "Una hora",
+    "modificador": 120
+   }
+  ]
+ },
+ "caligrafiaRitual": {
+  "referencia": "Arcana Exxet, Tabla 3 (pág. 13)",
+  "nota": "Dificultad del control de Caligrafía Ritual para crear un Ofuda, según el nivel del conjuro.",
+  "filas": [
+   {
+    "desde": 2,
+    "hasta": 20,
+    "dificultad": 40
+   },
+   {
+    "desde": 22,
+    "hasta": 30,
+    "dificultad": 80
+   },
+   {
+    "desde": 32,
+    "hasta": 40,
+    "dificultad": 120
+   },
+   {
+    "desde": 42,
+    "hasta": 50,
+    "dificultad": 140
+   },
+   {
+    "desde": 52,
+    "hasta": 60,
+    "dificultad": 180
+   },
+   {
+    "desde": 62,
+    "hasta": 70,
+    "dificultad": 240
+   },
+   {
+    "desde": 72,
+    "hasta": 80,
+    "dificultad": 320
+   },
+   {
+    "desde": 82,
+    "hasta": 90,
+    "dificultad": 440
+   }
+  ]
+ },
+ "tiempoOfuda": {
+  "referencia": "Arcana Exxet, Tabla 4 (pág. 13)",
+  "nota": "Bono al control de Caligrafía Ritual por el tiempo dedicado al Ofuda.",
+  "filas": [
+   {
+    "tiempo": "Un minuto",
+    "modificador": -40
+   },
+   {
+    "tiempo": "Cinco minutos",
+    "modificador": -20
+   },
+   {
+    "tiempo": "Media hora",
+    "modificador": 0
+   },
+   {
+    "tiempo": "Una hora",
+    "modificador": 20
+   },
+   {
+    "tiempo": "Un día",
+    "modificador": 40
+   },
+   {
+    "tiempo": "Una semana",
+    "modificador": 80
+   },
+   {
+    "tiempo": "Un mes",
+    "modificador": 120
+   }
+  ]
+ },
+ "vinculosFisicos": {
+  "referencia": "Arcana Exxet, Tabla 5 (pág. 14)",
+  "nota": "Bono a la RM que ha de superar el objetivo. No se pueden usar dos vínculos del mismo tipo.",
+  "filas": [
+   {
+    "vinculo": "Pelo",
+    "bono": 10,
+    "descripcion": "Algunos mechones de la víctima; no sirve uno o dos cabellos. Pierde sus propiedades pasados unos meses."
+   },
+   {
+    "vinculo": "Sangre",
+    "bono": 20,
+    "descripcion": "Algo de sangre del objetivo. Seca y pasado un mes, pierde sus propiedades."
+   },
+   {
+    "vinculo": "Un pedazo de su cuerpo",
+    "bono": 20,
+    "descripcion": "Un dedo, un ojo, una oreja… No pierde nunca sus cualidades hasta que se usa."
+   },
+   {
+    "vinculo": "Objeto personal",
+    "bono": 10,
+    "descripcion": "Pertenencia relevante. Normalmente hay que destruirla; si no se puede romper, se consume su lazo. No se apila con el objeto personal mayor."
+   },
+   {
+    "vinculo": "Objeto personal mayor",
+    "bono": 20,
+    "descripcion": "Un artefacto fundamental con el que la víctima tiene una relación esencial."
+   },
+   {
+    "vinculo": "Un retrato",
+    "bono": 10,
+    "descripcion": "Un dibujo o cuadro de gran calidad con su nombre completo. Sólo se puede usar una vez por persona, nunca más."
+   },
+   {
+    "vinculo": "Un familiar directo",
+    "bono": 30,
+    "descripcion": "El brujo arrebata la vida de un familiar cercano al lanzar el conjuro. No se apila con los restos de un familiar directo."
+   },
+   {
+    "vinculo": "Restos de un familiar directo",
+    "bono": 10,
+    "descripcion": "Huesos, cabello o carne seca de un familiar directo."
+   }
+  ]
+ },
+ "zonasEspirituales": {
+  "referencia": "Arcana Exxet, cap. 2 (pág. 16)",
+  "nota": "Llamar Espíritus sube la zona al grado indicado gastando ese Zeon. Una zona conserva siempre su grado original: no se puede subir un lugar que ya esté por encima del suyo natural.",
+  "filas": [
+   {
+    "zona": "Excepcional",
+    "llamarDesde": null,
+    "coste": null,
+    "efecto": "Los conjuros se vuelven energía espiritual e invisibles para quien no vea espíritus. Se gasta la mitad del Zeon y se aplica +30 al ACT y a la Proyección Mágica."
+   },
+   {
+    "zona": "Poderosa",
+    "llamarDesde": "Excepcional",
+    "coste": 500,
+    "efecto": "Se gasta sólo la mitad del Zeon necesario, como con la ventaja Metamágica Zeon ilimitado."
+   },
+   {
+    "zona": "Normal",
+    "llamarDesde": "Poderosa",
+    "coste": 200,
+    "efecto": "Se lanza con normalidad, sin modificador. Única limitación: no se puede lanzar en grado arcano."
+   },
+   {
+    "zona": "Débil",
+    "llamarDesde": "Normal",
+    "coste": 200,
+    "efecto": "Hace falta un asalto entero de preparación y 10 puntos de Zeon para empezar. Después se lanza con normalidad al menos una hora, pero sólo en grado base."
+   },
+   {
+    "zona": "Vacía",
+    "llamarDesde": "Débil",
+    "coste": 1000,
+    "efecto": "No hay espíritus con los que enlazarse: no se puede lanzar ningún conjuro."
+   }
+  ]
+ },
+ "afinidadEspiritual": {
+  "referencia": "Arcana Exxet, cap. 2 (pág. 16)",
+  "filas": [
+   {
+    "afinidad": "Afines",
+    "gradosDeCambio": 1,
+    "efecto": "Todos los conjuros salen con un grado por encima, saltándose el límite de la zona."
+   },
+   {
+    "afinidad": "Neutrales",
+    "gradosDeCambio": 0,
+    "efecto": "Ningún modificador especial."
+   },
+   {
+    "afinidad": "Opuestos",
+    "gradosDeCambio": -1,
+    "efecto": "Todos los conjuros salen con un grado menos. En grado base, el sortilegio fracasa automáticamente."
+   }
+  ]
+ },
+ "nivelEfectoNatural": {
+  "referencia": "Arcana Exxet, Tabla 6 (pág. 17)",
+  "filas": [
+   {
+    "nivel": 1,
+    "control": 14
+   },
+   {
+    "nivel": 2,
+    "control": 18
+   },
+   {
+    "nivel": 3,
+    "control": 24
+   },
+   {
+    "nivel": 4,
+    "control": 30
+   },
+   {
+    "nivel": 5,
+    "control": 36
+   }
+  ]
+ },
+ "distanciaEfectoNatural": {
+  "referencia": "Arcana Exxet, Tabla 7 (pág. 17)",
+  "filas": [
+   {
+    "distancia": "Toque",
+    "modificador": 0
+   },
+   {
+    "distancia": "Objeto",
+    "modificador": 1
+   },
+   {
+    "distancia": "Proyectado +0",
+    "modificador": 1
+   },
+   {
+    "distancia": "Proyectado +40",
+    "modificador": 2
+   },
+   {
+    "distancia": "Proyectado +80",
+    "modificador": 3
+   },
+   {
+    "distancia": "Proyectado +120",
+    "modificador": 4
+   }
+  ]
+ },
+ "duracionEfectoNatural": {
+  "referencia": "Arcana Exxet, Tabla 7 (pág. 17)",
+  "filas": [
+   {
+    "duracion": "Instantáneo",
+    "modificador": 0
+   },
+   {
+    "duracion": "5 asaltos",
+    "modificador": 1
+   },
+   {
+    "duracion": "1 minuto",
+    "modificador": 2
+   },
+   {
+    "duracion": "10 minutos",
+    "modificador": 3
+   },
+   {
+    "duracion": "1 hora",
+    "modificador": 4
+   },
+   {
+    "duracion": "1 día",
+    "modificador": 5
+   }
+  ]
+ },
+ "zeonEfectoNatural": {
+  "referencia": "Arcana Exxet, Tabla 8 (pág. 18)",
+  "nota": "Bono al control de Poder según el Zeon acumulado.",
+  "filas": [
+   {
+    "zeon": 0,
+    "bono": -8
+   },
+   {
+    "zeon": 20,
+    "bono": -4
+   },
+   {
+    "zeon": 50,
+    "bono": 0
+   },
+   {
+    "zeon": 100,
+    "bono": 2
+   },
+   {
+    "zeon": 150,
+    "bono": 4
+   },
+   {
+    "zeon": 200,
+    "bono": 6
+   },
+   {
+    "zeon": 300,
+    "bono": 8
+   },
+   {
+    "zeon": 400,
+    "bono": 10
+   },
+   {
+    "zeon": 500,
+    "bono": 12
+   },
+   {
+    "zeon": 750,
+    "bono": 14
+   },
+   {
+    "zeon": 1000,
+    "bono": 16
+   }
+  ]
+ },
+ "resultadoEfectoNatural": {
+  "referencia": "Arcana Exxet, Tabla 9 (pág. 18)",
+  "nota": "Margen del control de Poder frente a la dificultad final.",
+  "filas": [
+   {
+    "desde": 3,
+    "resultado": "3+",
+    "efecto": "El efecto tiene éxito, sin que ello suponga el más mínimo perjuicio para el lanzador."
+   },
+   {
+    "desde": 1,
+    "resultado": "1+",
+    "efecto": "El efecto tiene éxito, aunque el lanzador pierde una cantidad de puntos de cansancio equivalente al nivel de dicho efecto."
+   },
+   {
+    "desde": 0,
+    "resultado": "0+",
+    "efecto": "El efecto tiene éxito parcial, por lo que sus poderes son ligeramente más débiles de lo esperado."
+   },
+   {
+    "desde": -4,
+    "resultado": "-1 a -4",
+    "efecto": "El efecto fracasa y el lanzador pierde una cantidad de puntos de cansancio equivalente al nivel de dicho efecto."
+   },
+   {
+    "desde": -8,
+    "resultado": "-5 a -8",
+    "efecto": "El efecto fracasa estrepitosamente, produciendo consecuencias negativas inesperadas proporcionales al poder natural del lanzador. Además, este pierde la mitad de sus puntos de Zeon restantes y aplica un negativo a toda acción de -80 que se recupera a un ritmo de 10 puntos por hora."
+   },
+   {
+    "desde": -9999,
+    "resultado": "-9 o inferior",
+    "efecto": "El efecto es un absoluto fracaso. El lanzador queda inconsciente durante varios días y pierde de manera irremediable una cantidad de puntos de Poder equivalentes al nivel del efecto."
+   }
+  ]
+ },
+ "especialidadesNaturales": {
+  "referencia": "Arcana Exxet, cap. 2 (pág. 18)",
+  "nota": "+2 a los controles de Poder del campo propio y -2 a todos los demás. El elementalista puede ceñirse a un solo elemento y obtener +4 en lugar de +2, pero entonces no obtiene bono alguno con el resto.",
+  "filas": [
+   {
+    "especialidad": "Creador",
+    "efecto": "Crear cosas, dando forma de la nada a elementos hasta entonces inexistentes."
+   },
+   {
+    "especialidad": "Destructor",
+    "efecto": "La destrucción y la descomposición de cosas. La mayoría de descargas de ataque están ligadas a este principio."
+   },
+   {
+    "especialidad": "Transmutador",
+    "efecto": "Alterar las cosas existentes en otras distintas, o transportarlas de un lugar a otro."
+   },
+   {
+    "especialidad": "Controlador",
+    "efecto": "El control de la voluntad de los seres vivos y la manipulación de sentimientos y emociones."
+   },
+   {
+    "especialidad": "Animista",
+    "efecto": "La manipulación de almas y el mundo sobrenatural, y las reglas de la existencia."
+   },
+   {
+    "especialidad": "Sanador",
+    "efecto": "Curar daño o recuperar de negativos a otro individuo."
+   },
+   {
+    "especialidad": "Elementalista",
+    "efecto": "Dominar los elementos y todo lo relacionado con ellos."
+   },
+   {
+    "especialidad": "Ilusionista",
+    "efecto": "Manipular la percepción del mundo de otras personas: crear ilusiones, volver a alguien invisible."
+   }
+  ]
+ }
 }

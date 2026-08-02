@@ -58,7 +58,7 @@ En el **IndexedDB del navegador**, en el dispositivo donde la abres. Eso signifi
 ### Otros comandos
 
 ```bash
-npm test         # 293 pruebas del motor de reglas
+npm test         # 328 pruebas del motor de reglas
 npm run build    # compilar (incluye la comprobación de tipos)
 ```
 
@@ -71,8 +71,8 @@ npm run build    # compilar (incluye la comprobación de tipos)
 | **Editar** | Identidad, características, ventajas, habilidades, equipo y poderes |
 | **Mesa** | Jugar: gastar recursos, tirar iniciativa, resolver ataques, tiradas rápidas |
 | **Bestiario** | Fichas de enemigo con imagen; 90 criaturas importables de los manuales |
-| **Lo sobrenatural** | Invocaciones y Encarnaciones del Arcana, con calculadora de sincronización |
-| **Contenido propio** | Las 23 colecciones del catálogo, personalizables por tu mesa |
+| **Lo sobrenatural** | Invocaciones, Encarnaciones y los cuatro Teoremas de Magia, con sus calculadoras |
+| **Contenido propio** | Las 24 colecciones del catálogo, personalizables por tu mesa |
 | **Galería** | Mapas, PNJs, enemigos y objetos en imágenes |
 | **Campañas** | Reglas caseras, manuales activos y diario de sesiones |
 | **Reglas** | Reescribir o desactivar cualquier fórmula, y restablecerla |
@@ -81,7 +81,7 @@ npm run build    # compilar (incluye la comprobación de tipos)
 
 ```
 data/reglas/     Catálogo del Core Exxet, el Dominus y el Arcana (~3.400 registros)
-data/arcana/     Paquete aparte: Invocaciones y Encarnaciones
+data/arcana/     Paquete aparte: Teoremas, Invocaciones y Encarnaciones
 data/los-que-caminaron/  Paquete aparte: razas, Sellos por criatura y bestiario
 docs/            Análisis de la ficha original y fórmulas verificadas
 src/motor/       Motor de reglas. Funciones puras, sin interfaz
@@ -119,7 +119,7 @@ suplemento basta con registrar su paquete y sus JSON: sus entradas se combinan c
 básico y pueden corregirlas, y cada entrada recuerda de qué manual viene.
 
 **El contenido propio de una mesa es otro paquete más**, con prioridad por encima de los
-manuales. Se pueden crear entradas de cualquiera de las 23 colecciones, y el editor está
+manuales. Se pueden crear entradas de cualquiera de las 24 colecciones, y el editor está
 dirigido por esquema (`src/datos/esquemas.ts`): describir una colección basta para poder
 editarla.
 
@@ -184,8 +184,8 @@ lugar de fallar en silencio.
 
 Está anotado al final de `docs/FORMULAS-VERIFICADAS.md`. En resumen:
 
-- Del **Arcana Exxet** quedan las Invocaciones y Encarnaciones, los Teoremas de Magia, los
-  Rituales y Grimorios, y los Nodos.
+- Del **Arcana Exxet** quedan los Rituales y Grimorios, los Nodos y el editor de Sheele en
+  la ficha.
 - De **Los que Caminaron con Nosotros** quedan los poderes nuevos de criatura y las reglas
   de Combate de Masas y Combate Dramático.
 - De las 292 ventajas, 74 modifican la ficha solas; el resto se eligen igual y las que
@@ -197,7 +197,7 @@ Está anotado al final de `docs/FORMULAS-VERIFICADAS.md`. En resumen:
 |---|---|
 | **Core Exxet** | Todo el básico: razas, categorías, ventajas, habilidades, equipo, magia y psíquica |
 | **Dominus Exxet** | Ki completo: puntos, acumulación, Habilidades, Límites, creador de Técnicas, Legados de Sangre y Sellos de Invocación |
-| **Arcana Exxet** | Nivel de Magia, Metamagia (Arcana Shepirah) y Sheele |
+| **Arcana Exxet** | Nivel de Magia, Metamagia, Sheele, Teoremas de Magia, Invocaciones y Encarnaciones |
 | **Los que Caminaron con Nosotros** | Paquete activable por campaña: Razas Perdidas, Sellos de 99 criaturas y un bestiario de 90 |
 
 ## Regenerar el catálogo

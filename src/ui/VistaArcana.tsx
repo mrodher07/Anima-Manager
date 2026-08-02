@@ -9,6 +9,7 @@ import {
   type Grado,
 } from '../motor/encarnaciones';
 import { useColeccion } from './estado';
+import { Teoremas } from './Teoremas';
 
 const etiqueta = {
   fontSize: '0.68rem',
@@ -315,14 +316,18 @@ function Encarnaciones({ encarnaciones }: { encarnaciones: Encarnacion[] }) {
 export function VistaArcana({ catalogo }: { catalogo: Catalogo }) {
   const invocaciones = useColeccion(catalogo, 'invocaciones');
   const encarnaciones = useColeccion(catalogo, 'encarnaciones');
-  const [pestana, setPestana] = useState<'invocaciones' | 'encarnaciones'>('invocaciones');
+  const teoremas = useColeccion(catalogo, 'teoremas');
+  const [pestana, setPestana] = useState<'invocaciones' | 'encarnaciones' | 'teoremas'>(
+    'invocaciones',
+  );
 
-  if (invocaciones.length === 0 && encarnaciones.length === 0) {
+  if (invocaciones.length === 0 && encarnaciones.length === 0 && teoremas.length === 0) {
     return (
       <div className="vacio panel">
         <h2>El Arcana Exxet no está activo</h2>
         <p>
-          Las Invocaciones y las Encarnaciones vienen en el paquete <strong>Arcana Exxet</strong>.
+          Las Invocaciones, las Encarnaciones y los Teoremas de Magia vienen en el paquete{' '}
+          <strong>Arcana Exxet</strong>.
           Actívalo en la pestaña Campañas para verlas aquí.
         </p>
       </div>
@@ -334,9 +339,10 @@ export function VistaArcana({ catalogo }: { catalogo: Catalogo }) {
       <section className="panel" style={{ marginBottom: 16 }}>
         <h2>Lo sobrenatural</h2>
         <p style={{ color: 'var(--texto-tenue)', fontSize: '0.9rem', marginTop: 0 }}>
-          Aeones, Grandes Bestias y los «héroes de la existencia» del Arcana Exxet. Las
-          invocaciones se consultan; de las encarnaciones se calcula además la dificultad de
-          sincronización, que es lo único de todo el capítulo que de verdad sale de una suma.
+          Aeones, Grandes Bestias, los «héroes de la existencia» y las formas alternativas de
+          formular la magia. Lo que se puede calcular se calcula —la sincronización de una
+          encarnación, un Ofuda, los Vínculos de un brujo Vodoun, un efecto natural—; lo que
+          decide la mesa se pregunta y ya está.
         </p>
         <div className="acciones-regla">
           <button
@@ -351,14 +357,18 @@ export function VistaArcana({ catalogo }: { catalogo: Catalogo }) {
           >
             Encarnaciones ({encarnaciones.length})
           </button>
+          <button
+            className={`accion${pestana === 'teoremas' ? ' primaria' : ''}`}
+            onClick={() => setPestana('teoremas')}
+          >
+            Teoremas de Magia ({teoremas.length})
+          </button>
         </div>
       </section>
 
-      {pestana === 'invocaciones' ? (
-        <Invocaciones invocaciones={invocaciones} />
-      ) : (
-        <Encarnaciones encarnaciones={encarnaciones} />
-      )}
+      {pestana === 'invocaciones' && <Invocaciones invocaciones={invocaciones} />}
+      {pestana === 'encarnaciones' && <Encarnaciones encarnaciones={encarnaciones} />}
+      {pestana === 'teoremas' && <Teoremas teoremas={teoremas} />}
     </div>
   );
 }

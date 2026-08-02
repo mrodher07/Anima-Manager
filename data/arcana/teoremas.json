@@ -1,0 +1,46 @@
+[
+{
+ "teorema": "General",
+ "pagina": 12,
+ "resumen": "El sistema del manual básico. No es «el normal» frente a los demás: es el Teorema más extendido y usado, sin más.",
+ "descripcion": "El propio sistema básico no es sino el teorema más extendido y usado, pero no por ello el único. Ninguno es «mejor» o «peor» que los demás; simplemente, tienen sus propias ventajas y desventajas, que potencian algunos de sus aspectos y perjudican otros.",
+ "ventajas": "",
+ "desventajas": ""
+},
+{
+ "teorema": "Onmyodo",
+ "pagina": 12,
+ "resumen": "Magia ritual oriental. Los conjuros se preparan de antemano en talismanes (Ofuda), y con ellos se lanzan mucho más rápido y barato; sin ellos, el brujo queda muy limitado.",
+ "descripcion": "Onmyodo es un sistema de formulación mágica que mezcla el control de las facetas naturales del mundo con prácticas ocultistas. Se originó en las tierras orientales, donde la existencia de la magia estaba directamente atada a los planos existenciales del Samsara y el mundo material. Sus practicantes creen que hay flujos energéticos cosmotelúricos que influyen sobre todo lo que vive y que están basados en la interrelación de cinco elementos básicos: madera, fuego, tierra, metal y agua. Los practicantes del sistema Onmyodo, a los que generalmente se conoce como onmyoji, inscriben en pergaminos fórmulas sobrenaturales usando el lenguaje divino y, otorgándoles magia, las usan como medio para alterar el equilibrio de los elementos casi automáticamente.",
+ "ventajas": "Un Ofuda apropiado aporta automáticamente el Zeon que lleva dentro (la mitad del coste en Grado Base del conjuro), así que se puede lanzar en un solo asalto lo que el ACT natural no permitiría. Sacar el Ofuda es parte de la acción de lanzar y nunca reduce la acumulación de ACT. Un conjuro mantenido lanzado a través de un Ofuda apropiado reduce su coste de mantenimiento a la mitad, y el Ofuda sigue existiendo hasta que el hechicero deje de mantenerlo (si lo destruyen, el conjuro se rompe de inmediato). Nada impide usar un Ofuda creado por otro hechicero.",
+ "desventajas": "Sin Ofuda sólo se puede lanzar en Grado Base y al doble de coste de Zeon. Con un Ofuda de otro conjuro sólo vale si es de la misma Vía y no de nivel inferior: entonces se puede lanzar en cualquier Grado, pero sin aprovechar su Zeon y aun así al doble de coste. Cada Ofuda creado reduce el Zeon Máximo del creador en la cantidad que lleva dentro, hasta que se consume o lo destruyen.",
+ "reglas": "Crear un Ofuda: se decide el conjuro y se hace un control de Caligrafía Ritual contra la dificultad de la Tabla 3, aplicando el modificador de tiempo de la Tabla 4. De tener éxito se introduce Zeon equivalente a la mitad del valor del sortilegio en Grado Base; no es posible introducir más de esa cantidad, o el Ofuda se quema de inmediato."
+},
+{
+ "teorema": "Vodoun",
+ "pagina": 14,
+ "resumen": "Magia de vínculos. Contra un objetivo del que se posea algo suyo, los conjuros anímicos pegan mucho más fuerte o incluso le alcanzan automáticamente; a cambio, es flojísimo en combate directo.",
+ "descripcion": "Vodoun es un Teorema mágico que basa los principios de la hechicería en el uso y control de los lazos sobrenaturales que atan todo cuanto existe. Según sus bases, cada una de las cosas que hay en la creación está entrelazada con otros elementos de un modo más o menos directo, y cuanto más cercano es dicho lazo, más fácil resulta acceder a él. Un brujo que utilice este Teorema aprovecha esos lazos para facilitar que sus sortilegios afecten a sus objetivos, potenciándolos mediante el uso de tales «vínculos».",
+ "ventajas": "Al lanzar un conjuro Anímico se puede consumir cualquier cantidad de Vínculos físicos —pero nunca dos del mismo tipo— para subir la RM que ha de superar el objetivo (Tabla 5). Con al menos un Vínculo físico se puede además realizar el Ritual de Vinculación: el conjuro Anímico alcanza al objetivo como si fuera Automático, sin control de Proyección Mágica. A gran distancia sigue siendo posible si se conoce el nombre de la víctima y su aspecto, con un ritual de una hora por cada 25 kilómetros.",
+ "desventajas": "Debilidad ofensiva: todos los conjuros de Ataque lanzados por sus practicantes ven reducido su daño final a la mitad, redondeado en grupos de 5 hacia arriba. En el Ritual de Vinculación el afectado obtiene un bono de +40 a su RM y el Vínculo gastado en vincular el hechizo no aporta su bono; a gran distancia el bono sube a +100. Usar un Vínculo equivocado hace fallar el hechizo automáticamente. Los Vínculos no modifican la RM de conjuros que afecten a varias personas a la vez.",
+ "reglas": "Un conjuro de vinculación no puede afectar a quien esté refugiado en un lugar sellado sobrenaturalmente que no permitiría que la magia le alcanzase."
+},
+{
+ "teorema": "Shamanica",
+ "pagina": 15,
+ "resumen": "Magia de espíritus. Su poder depende por completo del sitio: en una zona espiritual fuerte es demoledora, en una vacía no se puede lanzar nada.",
+ "descripcion": "La magia shamanica es un teorema que se basa en influir en entes superiores para pedirles u obligarles a que produzcan diferentes efectos sobrenaturales. Sus practicantes emplean energías místicas para atraer espíritus y, a través de ellos, transformar dicho poder en conjuros. En cierta manera, podría decirse que son estas potencias místicas, y no los brujos, quienes lanzan en realidad los sortilegios.",
+ "ventajas": "En zonas espirituales ricas se gasta la mitad del Zeon —como la ventaja Metamágica Zeon ilimitado— y en las excepcionales se suma además +30 al ACT y a la Proyección Mágica. Un chamán puede además Llamar Espíritus: gastando el Zeon indicado sube temporalmente la zona un grado (tarda de uno a cinco turnos y dura varias horas). Si los espíritus del lugar le son afines, todos sus conjuros salen con un grado por encima, saltándose el límite de la zona.",
+ "desventajas": "El poder depende del emplazamiento: en una Zona Débil hace falta un asalto entero de preparación y 10 puntos de Zeon para empezar, y sólo se puede lanzar en Grado Base; en una Zona Vacía no se puede lanzar nada. Si los espíritus están opuestos al personaje, todos sus conjuros bajan un grado, y en Grado Base fracasan automáticamente. Una Zona mantiene siempre su condición original: no se puede subir de grado un lugar que ya esté por encima del suyo natural.",
+ "reglas": "Nigromancia: un practicante de magia shamanica no puede aprender ni lanzar conjuros de nigromancia, porque no hay espíritus en el flujo de almas que respondan a esas energías."
+},
+{
+ "teorema": "Magia natural",
+ "pagina": 17,
+ "resumen": "Magia sin conjuros: se describe el efecto que se quiere y se tira un control de Poder. No hace falta conocimiento sobrenatural, pero es caótica y mucho menos potente.",
+ "descripcion": "Las personas que poseen el Don pueden imitar los efectos de los hechizos de un modo innato, usando el poder que brota de sus almas para cambiar el orden de las cosas a su antojo. Se trata de un estado salvaje de la magia, energía caótica en estado puro que los personajes enfocan, a veces incluso inconscientemente, para hacer cosas imposibles.",
+ "ventajas": "No requiere tener conocimientos sobrenaturales: cualquier persona con el Don puede emplear sus poderes sin aprender conjuros. Se puede elegir una Especialidad, que da +2 a los controles de Poder de su campo (o +4 si el elementalista se ciñe a un solo elemento).",
+ "desventajas": "Es caótica e impredecible, y sus efectos son mucho menos potentes que los depurados a través de sortilegios. La Especialidad aplica −2 a todos los controles ajenos a su campo (y el elementalista de un solo elemento no obtiene bono alguno con el resto). Un mago acostumbrado a conjuros que recurra a la magia natural sufre −4 a sus controles de Poder (regla opcional «Un paso atrás»).",
+ "reglas": "Límite de Tiempo: ningún efecto puede durar más de un día; al acabar, cualquier alteración innatural de la realidad vuelve a su estado natural, salvo lo que no tenga vuelta atrás. Límite de Afección: no se puede lanzar sobre un objetivo un mismo tipo de efecto anímico más de una vez al día. Límite de Naturaleza: los seres creados mediante magia no pueden usar magia natural."
+}
+]

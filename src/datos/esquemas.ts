@@ -378,6 +378,25 @@ export const ESQUEMAS: EsquemaColeccion[] = [
     ],
   },
   {
+    coleccion: 'teoremas',
+    singular: 'Teorema de Magia',
+    plural: 'Teoremas de Magia',
+    clave: 'teorema',
+    ayuda:
+      'Formas alternativas de formular la magia. Un personaje sólo puede **usar** uno: ' +
+      'puede conocer los demás, pero no beneficiarse de sus reglas especiales. Las tablas ' +
+      'de cada Teorema —Caligrafía Ritual, Vínculos físicos, zonas espirituales…— viven en ' +
+      'las tablas base y se cambian desde la pestaña Reglas.',
+    campos: [
+      txt('teorema', 'Nombre'),
+      txt('resumen', 'Resumen', 'Una línea para el desplegable de la ficha'),
+      { clave: 'descripcion', etiqueta: 'Descripción', tipo: 'parrafo' },
+      { clave: 'ventajas', etiqueta: 'Ventajas', tipo: 'parrafo' },
+      { clave: 'desventajas', etiqueta: 'Desventajas', tipo: 'parrafo' },
+      { clave: 'reglas', etiqueta: 'Otras reglas', tipo: 'parrafo' },
+    ],
+  },
+  {
     coleccion: 'sellosCriatura',
     singular: 'criatura invocable',
     plural: 'Sellos por criatura',

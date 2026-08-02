@@ -993,13 +993,56 @@ reproduce el ejemplo del propio manual: *«Evangeline, invocadora de nivel 4, po
 de invocar a Linx Kazte Hex en afinidad menor, ya que el nivel requerido de esta es 4, pero
 no en grado intermedio o real, ya que requiere 8 y 12»*.
 
+### Teoremas de Magia ✔
+
+Capítulo 2. Un Teorema es una forma alternativa de formular la magia, y la regla que lo
+ordena todo es que **un personaje sólo puede usar uno**: puede conocer los demás, pero no
+beneficiarse de sus reglas especiales. Por eso en la ficha es un campo, no una lista.
+
+El sistema del manual básico **es** uno de los cinco, no «lo normal» frente al resto: el
+manual dice literalmente que *«el propio sistema básico no es sino el teorema más extendido
+y usado, pero no por ello el único»*.
+
+| Teorema | Qué gana | Qué pierde |
+|---|---|---|
+| **Onmyodo** | Los Ofuda aportan su Zeon y saltan el límite de ACT; los mantenidos cuestan la mitad | Sin Ofuda, sólo Grado Base y al doble de coste |
+| **Vodoun** | Los Vínculos suben la RM del conjuro, o le alcanzan sin Proyección Mágica | Los conjuros de Ataque hacen **la mitad de daño** |
+| **Shamanica** | En zonas ricas, mitad de Zeon y +30 al ACT y a la Proyección | En zona Débil sólo Grado Base; en zona Vacía, nada |
+| **Magia natural** | No hace falta aprender conjuros: basta el Don | Caótica, mucho menos potente y con fracasos graves |
+
+Los cuatro traen tablas, y las cuatro están implementadas con calculadora. Las pruebas
+reproducen **los ejemplos del propio manual**:
+
+- **Onmyodo**: Descarga Oscura de coste base 50 mete 25 en el Ofuda; Impacto de Agua de
+  coste base 40 cuesta 80 sin Ofuda; un Ofuda de Control sobre los Líquidos (Agua 22) sirve
+  para Impacto de Agua (Agua 20), pero no al revés.
+- **Shamanica**: un chamán en Zona Débil gasta 200 Zeon para subirla a Normal y ahí se
+  acaba, *porque sigue siendo originalmente Débil*; con espíritus afines, un conjuro de
+  grado base en una zona débil sale en grado intermedio.
+- **Magia natural**: el ejemplo de Alice, punto por punto — efecto de nivel 2 → dificultad
+  18, +1 por Proyectado +0 → 19; con Poder 8 y 150 de Zeon el control es 12; con un 8 en el
+  dado, 20; margen +1, que en la Tabla 9 es «1+».
+
+> ⚠ **Redondeo del Ofuda.** El manual dice que dentro va «la mitad del valor del sortilegio
+> en Grado Base» y que **no es posible introducir más** de esa cantidad, o el Ofuda se quema.
+> Con un coste impar se redondea **hacia abajo**, porque redondear arriba sería meter más de
+> la mitad.
+
+> ⚠ **El vínculo que se gasta.** En el Ritual de Vinculación, el vínculo consumido para
+> enlazar el hechizo **no aporta su bono**: sólo sirve para alcanzar al blanco. La
+> calculadora gasta el de menor bono, que es lo que le conviene al brujo; el manual no dice
+> cuál se gasta, así que esa elección es de la aplicación.
+
+Lo que **no** decide la aplicación: el nivel de un efecto natural (el manual dice
+explícitamente que el jugador explica lo que pretende y el Director le pone un 1-5) y si los
+espíritus de un sitio son afines al personaje. Ambos se preguntan.
+
 ## Pendiente de modelar
 - **Dominus Exxet**: completo.
-- **Arcana Exxet**: hechos los caps. 5 y 6 (Invocaciones y Encarnaciones), el Nivel de
-  Magia, la Metamagia y los datos de Sheele. Falta el editor de Sheele en la ficha, los
-  Teoremas de Magia (cap. 2: Onmyodo, Vodoun, Shamánica y Magia Natural), los Rituales y
-  Grimorios (cap. 9) y las reglas opcionales de Nodos y Sanctum Sanctorum (cap. 10). Los
-  tres PDF son **escaneos sin capa de texto**, así que lo que no esté en el Excel hay que
-  leerlo a ojo página a página.
+- **Arcana Exxet**: hechos los caps. 2, 5 y 6 (Teoremas, Invocaciones y Encarnaciones), el
+  Nivel de Magia, la Metamagia y los datos de Sheele. Falta el editor de Sheele en la ficha,
+  los Rituales y Grimorios (cap. 9) y las reglas opcionales de Nodos y Sanctum Sanctorum
+  (cap. 10). Los tres PDF son **escaneos sin capa de texto**, así que lo que no esté en el
+  Excel hay que leerlo a ojo página a página.
 - **Conjuros y poderes psíquicos seleccionados** como listas del personaje.
 - Bestiario y creación de seres.

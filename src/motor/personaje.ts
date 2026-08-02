@@ -164,6 +164,12 @@ export interface Personaje {
    */
   metamagia?: string[];
 
+  /**
+   * Teorema de Magia con el que formula (Arcana Exxet, cap. 2). Sólo se puede usar uno.
+   * Vacío o «General» es el sistema del manual básico.
+   */
+  teorema?: string;
+
   /** Conjuros aprendidos, por nombre. */
   conjuros: string[];
   /** Poderes psíquicos dominados, por nombre. */

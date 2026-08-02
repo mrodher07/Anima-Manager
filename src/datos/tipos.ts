@@ -310,6 +310,24 @@ export interface Encarnacion {
   afinidades: AfinidadEncarnacion[];
 }
 
+/**
+ * Un Teorema de Magia. Arcana Exxet, cap. 2.
+ *
+ * Un personaje sólo puede **usar** uno: puede conocer los demás, pero no beneficiarse de
+ * sus reglas especiales. Por eso en la ficha es un campo y no una lista.
+ */
+export interface TeoremaMagia {
+  teorema: string;
+  pagina?: number;
+  /** Una línea para el desplegable de la ficha. */
+  resumen: string;
+  descripcion: string;
+  ventajas: string;
+  desventajas: string;
+  /** Reglas sueltas que no son ni ventaja ni desventaja. */
+  reglas?: string;
+}
+
 /** Nombre de cada colección del catálogo y el tipo que contiene. */
 export interface Colecciones {
   razas: Raza;
@@ -329,6 +347,7 @@ export interface Colecciones {
   bestiario: CriaturaManual;
   invocaciones: Invocacion;
   encarnaciones: Encarnacion;
+  teoremas: TeoremaMagia;
   sheele: EntradaTabla;
   efectosTecnica: EfectoTecnica;
   tiposEfectoTecnica: TipoEfectoTecnica;
@@ -360,6 +379,7 @@ export const CLAVE_DE: Record<NombreColeccion, string> = {
   bestiario: 'criatura',
   invocaciones: 'invocacion',
   encarnaciones: 'encarnacion',
+  teoremas: 'teorema',
   sheele: 'mejora',
   // Un efecto tiene varias opciones, así que la clave es la pareja efecto + opción.
   efectosTecnica: 'referencia',

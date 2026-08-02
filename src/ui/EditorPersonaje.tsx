@@ -91,6 +91,7 @@ export function EditorPersonaje({ personaje, datos, catalogo, reglamento, onCamb
   const [falloRetrato, setFalloRetrato] = useState<string | null>(null);
   const retrato = useRef<HTMLInputElement>(null);
   const razas = useColeccion(catalogo, 'razas');
+  const teoremas = useColeccion(catalogo, 'teoremas');
   const categorias = useColeccion(catalogo, 'categorias');
   const armas = useColeccion(catalogo, 'armas');
   const armaduras = useColeccion(catalogo, 'armaduras');
@@ -590,6 +591,33 @@ export function EditorPersonaje({ personaje, datos, catalogo, reglamento, onCamb
 
       {pestana === 'poderes' && (
         <>
+          <section className="panel" style={{ marginBottom: 16 }}>
+            <h2>Teorema de Magia</h2>
+            <p style={{ color: 'var(--texto-tenue)', fontSize: '0.86rem', marginTop: 0 }}>
+              Cómo formula tu personaje la magia. Sólo se puede <strong>usar</strong> uno:
+              puede conocer los demás, pero no beneficiarse de sus reglas especiales. Las
+              cuentas de cada Teorema están en la pestaña «Lo sobrenatural».
+            </p>
+            <div className="campo" style={{ maxWidth: 420 }}>
+              <label htmlFor="teorema">Teorema</label>
+              <select
+                id="teorema"
+                value={personaje.teorema ?? 'General'}
+                onChange={(e) => onCambiar({ ...personaje, teorema: e.target.value })}
+              >
+                {teoremas.length === 0 ? (
+                  <option value="General">General (sistema del manual básico)</option>
+                ) : (
+                  teoremas.map((t) => (
+                    <option key={t.teorema} value={t.teorema}>
+                      {t.teorema} — {t.resumen}
+                    </option>
+                  ))
+                )}
+              </select>
+            </div>
+          </section>
+
           <section className="panel" style={{ marginBottom: 16 }}>
             <h2>Metamagia · Arcana Shepirah</h2>
             <p style={{ color: 'var(--texto-tenue)', fontSize: '0.86rem', marginTop: 0 }}>
