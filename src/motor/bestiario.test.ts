@@ -10,6 +10,8 @@ import {
 } from './bestiario';
 import bestiarioJson from '../../data/los-que-caminaron/bestiario.json';
 import type { CriaturaManual } from '../datos/tipos';
+import poderesLqc from '../../data/los-que-caminaron/poderesCriatura.json';
+import poderesCore from '../../data/reglas/poderesCriatura.json';
 
 const bestiario = bestiarioJson as CriaturaManual[];
 const buscar = (n: string) => bestiario.find((c) => c.criatura === n)!;
@@ -134,5 +136,46 @@ describe('los datos extraídos del bestiario', () => {
       expect(Number.isFinite(e.ataque)).toBe(true);
       expect(e.nombre).toBeTruthy();
     }
+  });
+});
+
+describe('los poderes de criatura del capítulo 3', () => {
+  // El paquete carga por glob, así que basta con que el JSON exista para que entren.
+  const poderes = poderesLqc as { nombre: string; coste: number; gnosis: number }[];
+  const core = poderesCore as { nombre: string; coste?: number; gnosis?: number }[];
+
+  it('trae las opciones del capítulo, cada una como entrada propia', () => {
+    expect(poderes.length).toBeGreaterThan(80);
+    // «Escudo» tiene ocho opciones, de la rodela al escudo místico irrompible.
+    const escudo = poderes.filter((p) => p.nombre.startsWith('Escudo ('));
+    expect(escudo).toHaveLength(8);
+    expect(escudo.map((p) => p.coste)).toEqual([10, 20, 30, 20, 40, 60, 80, 120]);
+  });
+
+  it('ninguna se queda sin coste ni sin Gnosis', () => {
+    const cojas = poderes.filter(
+      (p) => !p.nombre?.trim() || !Number.isFinite(p.coste) || !Number.isFinite(p.gnosis),
+    );
+    expect(cojas).toEqual([]);
+  });
+
+  it('no hay nombres repetidos', () => {
+    expect(new Set(poderes.map((p) => p.nombre)).size).toBe(poderes.length);
+  });
+
+  /**
+   * Un suplemento **puede** corregir al básico: esa es la gracia de los paquetes. Pero si
+   * lo hace sin querer, se pierde una entrada en silencio. Los seis nombres que coinciden
+   * son repeticiones literales, y esta prueba lo comprueba en vez de darlo por hecho.
+   */
+  it('lo que repite del Core lo repite idéntico, así que no pisa nada', () => {
+    const porNombre = new Map(core.map((p) => [p.nombre, p]));
+    const distintos = poderes
+      .filter((p) => porNombre.has(p.nombre))
+      .filter((p) => {
+        const c = porNombre.get(p.nombre)!;
+        return c.coste !== p.coste || c.gnosis !== p.gnosis;
+      });
+    expect(distintos.map((p) => p.nombre)).toEqual([]);
   });
 });

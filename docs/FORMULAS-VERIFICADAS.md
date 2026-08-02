@@ -863,6 +863,27 @@ nivel, no hay repetidos, y las 90 se traducen a ficha de mesa sin romperse.
 > `[a-z]`. Las técnicas propias de cada criatura se detectan por su cabecera `Nivel:` + `CM:`
 > y no se confunden con criaturas nuevas.
 
+### Poderes de criatura nuevos ✔
+
+Capítulo 3. **85 opciones** repartidas en 26 poderes, cada opción como entrada propia de la
+colección `poderesCriatura` —«Escudo (Rodela)», «Escudo (Escudo Místico Irrompible)»—, que
+es como ya estaban las del Core.
+
+Seis nombres coinciden con poderes del Core: **Carga Natural, Crítico Automático, Estilo
+Defensivo, Impactos de Fuerza, Inmunidad Crítica y Mente Sistemática**. Son repeticiones
+literales —mismo coste y mismo Gnosis—, así que la fusión de paquetes sustituye una entrada
+por otra idéntica y no se pierde nada. Hay una prueba que lo comprueba en vez de darlo por
+hecho: si un suplemento futuro repitiera un nombre con valores distintos, se enteraría.
+
+> El capítulo va **a dos columnas**, y ahí `pdftotext -layout` no vale: mezcla las filas de
+> una tabla con la prosa de al lado. `tools/extraer-poderes-lqc.py` recorta cada columna por
+> separado con `-x/-W`. Aun así el recorte deja pasar restos de la columna vecina al
+> principio de la línea, y esos restos rompieron la primera versión: un título precedido de
+> un resto ya no parecía ir «después de una línea en blanco», y sus opciones se colgaban del
+> poder anterior —«Escudo» llegó a tener 13 opciones en vez de 8—. La detección se cambió a
+> la firma propia del encabezado: **un título corto seguido de un párrafo sangrado y largo**.
+> El extractor contrasta tres recuentos contra el manual y avisa si vuelven a descuadrar.
+
 ### Las Razas Perdidas 📖
 
 Capítulo 2. Transcritas a mano, como los Legados. Sólo se cargan en la ficha los
@@ -1097,7 +1118,12 @@ máximo: se puede hacer uno de grado 3 con ocho Menores y ningún Mayor, y el ma
 ## Pendiente de modelar
 - **Dominus Exxet**: completo.
 - **Arcana Exxet**: hechos los caps. 2, 5, 6, 9 y 10, el Nivel de Magia, la Metamagia y los
-  datos de Sheele. Falta sólo el **editor de Sheele en la ficha**. Los tres PDF son
+  datos de Sheele. Falta sólo el **editor de Sheele en la ficha**.
+- **Los que Caminaron con Nosotros**: hechos los caps. 1, 2 y 3 y los dos apéndices. Falta el
+  **cap. 4**, que son dos sistemas de combate alternativos completos —Combate de Masas y
+  Combate Dramático— y no datos: cada uno es un subsistema con sus propias reglas de
+  iniciativa, daño y resolución, así que pide su propio motor y su propia pantalla de mesa,
+  no una tabla más. Los tres PDF son
   **escaneos sin capa de texto**, así que todo esto se ha leído a ojo página a página.
 - **Conjuros y poderes psíquicos seleccionados** como listas del personaje.
 - Bestiario y creación de seres.

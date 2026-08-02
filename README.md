@@ -58,7 +58,7 @@ En el **IndexedDB del navegador**, en el dispositivo donde la abres. Eso signifi
 ### Otros comandos
 
 ```bash
-npm test         # 352 pruebas del motor de reglas
+npm test         # 356 pruebas del motor de reglas
 npm run build    # compilar (incluye la comprobación de tipos)
 ```
 
@@ -82,7 +82,7 @@ npm run build    # compilar (incluye la comprobación de tipos)
 ```
 data/reglas/     Catálogo del Core Exxet, el Dominus y el Arcana (~3.400 registros)
 data/arcana/     Paquete aparte: Teoremas, Invocaciones, Encarnaciones, rituales y grimorios
-data/los-que-caminaron/  Paquete aparte: razas, Sellos por criatura y bestiario
+data/los-que-caminaron/  Paquete aparte: razas, Sellos, bestiario y poderes de criatura
 docs/            Análisis de la ficha original y fórmulas verificadas
 src/motor/       Motor de reglas. Funciones puras, sin interfaz
   expresiones.ts   Evaluador acotado para las fórmulas (sin eval)
@@ -185,8 +185,9 @@ lugar de fallar en silencio.
 Está anotado al final de `docs/FORMULAS-VERIFICADAS.md`. En resumen:
 
 - Del **Arcana Exxet** queda sólo el editor de Sheele en la ficha.
-- De **Los que Caminaron con Nosotros** quedan los poderes nuevos de criatura y las reglas
-  de Combate de Masas y Combate Dramático.
+- De **Los que Caminaron con Nosotros** quedan las reglas de **Combate de Masas** y
+  **Combate Dramático** (cap. 4): son dos sistemas de combate alternativos completos, no
+  datos, así que piden su propio motor y su propia pantalla de mesa.
 - De las 292 ventajas, 74 modifican la ficha solas; el resto se eligen igual y las que
   tienen efecto no automatizable lo muestran como recordatorio.
 
@@ -197,7 +198,7 @@ Está anotado al final de `docs/FORMULAS-VERIFICADAS.md`. En resumen:
 | **Core Exxet** | Todo el básico: razas, categorías, ventajas, habilidades, equipo, magia y psíquica |
 | **Dominus Exxet** | Ki completo: puntos, acumulación, Habilidades, Límites, creador de Técnicas, Legados de Sangre y Sellos de Invocación |
 | **Arcana Exxet** | Nivel de Magia, Metamagia, Sheele, Teoremas, Invocaciones, Encarnaciones, rituales, grimorios y Nodos |
-| **Los que Caminaron con Nosotros** | Paquete activable por campaña: Razas Perdidas, Sellos de 99 criaturas y un bestiario de 90 |
+| **Los que Caminaron con Nosotros** | Paquete activable por campaña: Razas Perdidas, Sellos de 99 criaturas, un bestiario de 90 y 85 poderes de criatura |
 
 ## Regenerar el catálogo
 
