@@ -67,7 +67,7 @@ sigue igual.
 ### Otros comandos
 
 ```bash
-npm test         # 481 pruebas del motor de reglas y la sincronización
+npm test         # 485 pruebas del motor de reglas y la sincronización
 npm run build    # compilar (incluye la comprobación de tipos)
 ```
 
@@ -83,7 +83,7 @@ npm run build    # compilar (incluye la comprobación de tipos)
 | **Lo sobrenatural** | Invocaciones, Encarnaciones, Teoremas, Nodos, rituales y grimorios, con sus calculadoras |
 | **Contenido propio** | Las 26 colecciones del catálogo, personalizables por tu mesa |
 | **Galería** | Mapas, PNJs, enemigos y objetos en imágenes |
-| **Campañas** | Sistema de combate, reglas caseras, manuales activos y diario de sesiones |
+| **Campañas** | Crear la mesa, invitar jugadores, nivel de inicio, manuales, reglas caseras y diario |
 | **Reglas** | Reescribir o desactivar cualquier fórmula, y restablecerla |
 | **Copia de seguridad** | Guardar y restaurar **todo** lo de este dispositivo |
 | **Cuenta** | Registro y sincronización entre dispositivos, si la nube está configurada |
@@ -245,6 +245,22 @@ comentada en `supabase/esquema.sql` que lo cambia.
 Fichas, campañas y enemigos se guardan como **un jsonb entero**, no como columnas: el modelo
 crece cada vez que llega un manual nuevo, y con columnas cada suplemento sería una migración.
 Sólo se sacan a columna los campos por los que se consulta —dueño, campaña, fecha.
+
+### Montar una campaña
+
+Al crear una campaña se pregunta de una vez todo lo que se decide en una sesión cero, con
+los valores del manual básico ya puestos —si tu mesa juega estándar, con el nombre basta:
+
+| | Por defecto | Para qué |
+|---|---|---|
+| **Nivel de inicio** | 1 | Los PD de partida: 400 a nivel 0, 600 a nivel 1, +100 por nivel. Las fichas creadas en la campaña nacen con él |
+| **Puntos de Creación** | 3 | Subirlos es lo que hace una campaña más heroica |
+| **Tope por desventajas** | 3 | Evita cargarse de defectos para comprarlo todo |
+| **Sistema de combate** | Normal | Normal o Dramático |
+| **Manuales** | Core Exxet | Los paquetes de contenido activos |
+
+Estas cifras **no son decorativas**: llegan a la ficha. Si tu mesa da 5 Puntos de Creación,
+el contador de la pestaña Ventajas dice 5 y deja de avisar al cuarto.
 
 ### Unirse a una mesa
 

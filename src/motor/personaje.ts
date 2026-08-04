@@ -399,9 +399,15 @@ export interface DatosCalculo {
 /** Lo que cuesta un bloque de Nivel de Magia, igual para todas las categorías. */
 export const COSTE_NIVEL_MAGIA = 5;
 
-/** Puntos de Creación: 3 de partida, más los que den las desventajas. */
+/**
+ * Puntos de Creación: 3 de partida, más los que den las desventajas, con tope de 3.
+ * Core Exxet, cap. 1.
+ *
+ * Se quedan aquí como referencia de lo que dice el manual, pero **el cálculo ya no los
+ * usa**: las cifras vigentes salen de `reglamento.creacion()`, porque una mesa puede
+ * decidir empezar con más. Los valores por defecto de allí son exactamente estos.
+ */
 export const PC_INICIALES = 3;
-/** Tope de PC que se pueden ganar con desventajas. Core Exxet, cap. 1. */
 export const PC_MAXIMO_POR_DESVENTAJAS = 3;
 
 export async function cargarDatosCalculo(
@@ -845,8 +851,12 @@ export function calcular(
     personaje.ventajas.reduce((t, n) => t + costeDe(n), 0) +
     (personaje.legados ?? []).reduce((t, n) => t + costeLegado(n), 0);
   const ganadosBruto = personaje.desventajas.reduce((t, n) => t + costeDe(n), 0);
-  const ganados = Math.min(ganadosBruto, PC_MAXIMO_POR_DESVENTAJAS);
-  const puntosCreacion = { disponibles: PC_INICIALES + ganados, gastados, ganados };
+  // Las cifras de partida salen de la mesa, no de una constante: una campaña heroica puede
+  // dar cinco Puntos de Creación en vez de tres, y eso lo decide el Director en su campaña.
+  // Sin campaña activa, el reglamento devuelve los números del manual básico.
+  const creacion = reglamento.creacion();
+  const ganados = Math.min(ganadosBruto, creacion.maximoPorDesventajas);
+  const puntosCreacion = { disponibles: creacion.puntosCreacion + ganados, gastados, ganados };
 
   if (gastados > puntosCreacion.disponibles) {
     avisos.push({
@@ -854,10 +864,12 @@ export function calcular(
       mensaje: `Has gastado ${gastados} Puntos de Creación y sólo tienes ${puntosCreacion.disponibles}.`,
     });
   }
-  if (ganadosBruto > PC_MAXIMO_POR_DESVENTAJAS) {
+  if (ganadosBruto > creacion.maximoPorDesventajas) {
     avisos.push({
       gravedad: 'aviso',
-      mensaje: `Las desventajas dan como mucho ${PC_MAXIMO_POR_DESVENTAJAS} PC; las tuyas sumarían ${ganadosBruto}.`,
+      mensaje:
+        `Las desventajas dan como mucho ${creacion.maximoPorDesventajas} PC; ` +
+        `las tuyas sumarían ${ganadosBruto}.`,
     });
   }
 

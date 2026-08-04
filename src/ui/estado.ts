@@ -66,9 +66,17 @@ export function usePersonajes() {
     pendientes.current.set(p.id, setTimeout(() => { void almacen.guardarPersonaje(p); }, 400));
   }, []);
 
-  const crear = useCallback((): Personaje => {
+  /**
+   * Ficha nueva. Si hay campaña activa nace dentro de ella y **con el nivel que la mesa ha
+   * dicho**, que es lo que hace que ese ajuste sirva para algo: si no, el Director acuerda
+   * empezar a nivel 3 y cada jugador tiene que acordarse de cambiarlo a mano.
+   */
+  const crear = useCallback((campanaId: string | null = null, nivelInicial = 1): Personaje => {
     const p = personajeVacio(nuevoId());
     p.nombre = 'Personaje sin nombre';
+    p.campanaId = campanaId;
+    // Nivel 0 es legítimo en Anima, así que se respeta el 0; sólo se descartan los negativos.
+    p.categorias = [{ categoria: '', nivel: Math.max(0, nivelInicial) }];
     void almacen.guardarPersonaje(p);
     setPersonajes((antes) => [...antes, p]);
     return p;
@@ -93,17 +101,19 @@ export function useCampanas() {
     await recargar();
   }, [recargar]);
 
-  const crear = useCallback(async (nombre: string) => {
+  /**
+   * Crea una campaña con lo que traiga el formulario. Recibe la campaña entera menos lo
+   * que pone la propia aplicación —id, dueño y fecha— en vez de sólo el nombre: las
+   * decisiones de una sesión cero se toman juntas, y con un `nombre` suelto había que
+   * guardar primero y editar después.
+   */
+  const crear = useCallback(async (datos: Omit<Campana, 'id' | 'propietario' | 'actualizadoEn'>) => {
     const c: Campana = {
       id: nuevoId(),
       propietario: null,
       actualizadoEn: new Date().toISOString(),
-      nombre,
-      paquetes: ['core-exxet'],
-      sistemaCombate: 'normal',
-      ajustes: {},
-      notasSesion: [],
       personalizados: PERSONALIZADOS_VACIOS,
+      ...datos,
     };
     await almacen.guardarCampana(c);
     await recargar();

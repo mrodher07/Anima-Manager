@@ -392,15 +392,45 @@ export function definicion(clave: ClaveRegla): DefinicionRegla {
   return d;
 }
 
+/**
+ * Lo que una mesa decide **antes** de que nadie reparta un punto.
+ *
+ * No son fórmulas, son cifras de partida, y por eso van aparte: el manual las da como
+ * números concretos y lo que hace un Director es subirlas o bajarlas, no reescribirlas.
+ * Todos los valores por defecto son los del manual básico; si aquí no hay nada, la ficha
+ * sale exactamente igual que antes de que esto existiera.
+ */
+export interface AjustesCreacion {
+  /**
+   * Nivel con el que empiezan los personajes de la mesa. No cambia ningún cálculo —cada
+   * ficha lleva su propio nivel— pero es lo que se rellena al crear una ficha nueva en
+   * esta campaña, para no tener que decirlo de viva voz en cada sesión cero.
+   */
+  nivelInicial?: number;
+  /** Puntos de Creación de partida. El básico da 3. */
+  puntosCreacion?: number;
+  /** Tope de PC que pueden dar las desventajas. El básico lo pone en 3. */
+  maximoPorDesventajas?: number;
+}
+
 /** Ajustes de una mesa concreta: sólo lo que se desvía de los valores por defecto. */
 export interface AjustesMesa {
   /** Fórmulas reescritas, por clave de regla. */
   formulas?: Partial<Record<ClaveRegla, string>>;
   /** Reglas opcionales desactivadas. */
   desactivadas?: ClaveRegla[];
+  /** Cifras de partida de la mesa. */
+  creacion?: AjustesCreacion;
 }
 
 export const AJUSTES_VACIOS: AjustesMesa = {};
+
+/** Lo que dice el manual básico cuando la mesa no ha tocado nada. */
+export const CREACION_POR_DEFECTO: Required<AjustesCreacion> = {
+  nivelInicial: 1,
+  puntosCreacion: 3,
+  maximoPorDesventajas: 3,
+};
 
 export class Reglamento {
   constructor(private ajustes: AjustesMesa = AJUSTES_VACIOS) {}
@@ -417,6 +447,30 @@ export class Reglamento {
 
   estaActiva(clave: ClaveRegla): boolean {
     return !(this.ajustes.desactivadas ?? []).includes(clave);
+  }
+
+  /**
+   * Las cifras de partida de la mesa, ya rellenadas con las del manual donde no haya nada.
+   * Quien las usa no tiene que saber cuáles vienen de la campaña y cuáles del básico.
+   */
+  creacion(): Required<AjustesCreacion> {
+    return { ...CREACION_POR_DEFECTO, ...(this.ajustes.creacion ?? {}) };
+  }
+
+  /** true si la mesa se ha apartado de los números del manual. */
+  creacionPersonalizada(): boolean {
+    const c = this.creacion();
+    return (Object.keys(CREACION_POR_DEFECTO) as (keyof AjustesCreacion)[]).some(
+      (k) => c[k] !== CREACION_POR_DEFECTO[k],
+    );
+  }
+
+  /** Devuelve un reglamento nuevo con una cifra de partida cambiada. */
+  conCreacion(cambios: AjustesCreacion): Reglamento {
+    return new Reglamento({
+      ...this.ajustes,
+      creacion: { ...(this.ajustes.creacion ?? {}), ...cambios },
+    });
   }
 
   /**
