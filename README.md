@@ -52,13 +52,16 @@ En el **IndexedDB del navegador**, en el dispositivo donde la abres. Eso signifi
 - Funciona **sin internet** una vez cargada.
 - Nadie más ve tus campañas: no salen del equipo.
 - Pero **no se sincronizan solas** entre el PC y el móvil, y si borras los datos del
-  navegador se van. Para mover o respaldar una ficha, usa **exportar/importar** desde la
-  pestaña Personajes: en JSON (formato propio, incluye el retrato) o en Excel.
+  navegador se van.
+
+Por eso hay una pestaña **Copia de seguridad**: guárdala de vez en cuando y no dependerás de
+este equipo. Para mover una ficha suelta a otro sitio, usa exportar/importar desde la pestaña
+Personajes, en JSON o en Excel.
 
 ### Otros comandos
 
 ```bash
-npm test         # 400 pruebas del motor de reglas
+npm test         # 416 pruebas del motor de reglas
 npm run build    # compilar (incluye la comprobación de tipos)
 ```
 
@@ -76,6 +79,7 @@ npm run build    # compilar (incluye la comprobación de tipos)
 | **Galería** | Mapas, PNJs, enemigos y objetos en imágenes |
 | **Campañas** | Sistema de combate, reglas caseras, manuales activos y diario de sesiones |
 | **Reglas** | Reescribir o desactivar cualquier fórmula, y restablecerla |
+| **Copia de seguridad** | Guardar y restaurar **todo** lo de este dispositivo |
 
 ## Cómo está montado
 
@@ -96,6 +100,7 @@ src/datos/       Paquetes de contenido combinables (un manual = un paquete)
 src/almacen/     Persistencia en IndexedDB, exportar e importar
   xlsx.ts          Leer y escribir .xlsx sin dependencias
   fichaExcel.ts    Traducción entre la ficha y el libro de Excel
+  copiaSeguridad.ts  Copia y restauración de todo el dispositivo
 src/ui/          Interfaz React
 tools/           Extractores: el .xlsm original y los PDF de cada suplemento
 ```
@@ -145,6 +150,23 @@ la mesa no es calculable, y la herramienta no debe fingir que sí. Por eso:
 - La **galería** guarda mapas, PNJs y enemigos como imágenes, sin obligar a fichar nada.
 - Las tiradas se pueden hacer con la app o con dados de verdad y anotar el resultado: los
   recursos se ajustan a mano con los botones de ±1/±5/±10.
+
+## Copia de seguridad
+
+Exportar una ficha sirve para **compartirla**. La copia de seguridad es otra cosa: sirve para
+**no perder nada**. Se lleva todo lo que hay en el dispositivo —fichas, campañas con sus
+reglas caseras, su contenido propio y su diario, enemigos, la galería entera con sus imágenes
+dentro, y hasta el tema que tengas puesto— y lo devuelve tal cual estaba.
+
+Al restaurar se enseña primero **qué trae el archivo** y se elige cómo entra:
+
+- **Fusionar**: devuelve lo de la copia sin borrar nada de lo que ya tengas. Lo que coincida
+  por id se sustituye por lo de la copia, que es lo que se espera de una restauración.
+- **Reemplazar todo**: borra lo que hay y deja el dispositivo exactamente como estaba el día
+  de la copia. Pide confirmación aparte y dice cuántas cosas va a borrar antes de hacerlo.
+
+Si una imagen viniera dañada se anota y el resto se restaura igual: perder un mapa no es
+motivo para dejar las fichas a medias.
 
 ## Sistemas de combate
 

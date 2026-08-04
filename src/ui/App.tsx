@@ -15,6 +15,7 @@ import { VistaArcana } from './VistaArcana';
 import { VistaPersonalizado } from './VistaPersonalizado';
 import { VistaGaleria } from './VistaGaleria';
 import { VistaReglas } from './VistaReglas';
+import { VistaCopia } from './VistaCopia';
 import { Imagen } from './Imagen';
 import { nuevoId } from './estado';
 import { SelectorTema } from './SelectorTema';
@@ -25,7 +26,7 @@ import './estilos.css';
 
 type Seccion =
   | 'personajes' | 'ficha' | 'editor' | 'mesa'
-  | 'bestiario' | 'arcana' | 'galeria' | 'propio' | 'reglas' | 'campanas';
+  | 'bestiario' | 'arcana' | 'galeria' | 'propio' | 'reglas' | 'campanas' | 'copia';
 
 export function App() {
   const [seccion, setSeccion] = useState<Seccion>('personajes');
@@ -36,7 +37,13 @@ export function App() {
   const [textoNota, setTextoNota] = useState('');
 
   const { personajes, cargando, guardar, crear, borrar, recargar } = usePersonajes();
-  const { campanas, guardar: guardarCampana, crear: crearCampana, borrar: borrarCampana } = useCampanas();
+  const {
+    campanas,
+    guardar: guardarCampana,
+    crear: crearCampana,
+    borrar: borrarCampana,
+    recargar: recargarCampanas,
+  } = useCampanas();
 
   const campana = campanas.find((c) => c.id === campanaId) ?? null;
   const { reglamento, cambiar: cambiarReglamento } = useReglamento(campana, (c) => void guardarCampana(c));
@@ -72,6 +79,7 @@ export function App() {
     { id: 'propio', texto: 'Contenido propio' },
     { id: 'campanas', texto: 'Campañas' },
     { id: 'reglas', texto: 'Reglas' },
+    { id: 'copia', texto: 'Copia de seguridad' },
   ];
 
   const necesitaFicha = seccion === 'ficha' || seccion === 'editor' || seccion === 'mesa';
@@ -180,6 +188,18 @@ export function App() {
         )}
 
         {seccion === 'arcana' && <VistaArcana catalogo={catalogo} />}
+
+        {seccion === 'copia' && (
+          <VistaCopia
+            onRecargar={() => {
+              void recargar();
+              void recargarCampanas();
+              // Tras restaurar, la campaña abierta puede haber dejado de existir.
+              setAbiertoId(null);
+              setCampanaId(null);
+            }}
+          />
+        )}
 
         {seccion === 'galeria' && <VistaGaleria campanaId={campanaId} />}
 

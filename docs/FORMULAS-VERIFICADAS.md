@@ -1176,6 +1176,39 @@ hechicero con ACT 60 que cede 20 se queda con 40 y su Sheele acumula 20.
 > imprimir 31-40** en la de Tierra, dejando 21-30 sin asignar. Se corrige a 21-30, que es lo
 > único que encaja para que el d100 quede cubierto sin huecos.
 
+## Copia de seguridad
+
+No es una regla del juego, pero es la decisión de diseño con más consecuencias para quien la
+usa: **todo vive en el navegador de un dispositivo**. Si se borran los datos de navegación,
+se va todo.
+
+Por eso hay dos cosas distintas y no una:
+
+| | Para qué | Qué lleva |
+|---|---|---|
+| **Exportar ficha** (JSON o Excel) | compartir | una ficha y su retrato |
+| **Copia de seguridad** | no perder nada | absolutamente todo lo del dispositivo |
+
+La copia se lleva fichas, campañas —con sus reglas caseras, su contenido propio, su diario y
+su sistema de combate—, enemigos, **la galería entera con los bytes de cada imagen** y las
+preferencias que viven en `localStorage` y no en la base de datos, como el tema.
+
+Tres decisiones que conviene conocer:
+
+- **Analizar y restaurar son dos pasos.** Primero se lee el archivo y se enseña qué trae,
+  sin tocar nada; sólo después se escribe. Reemplazar borra cosas, y eso no se hace sin
+  enseñar antes qué hay.
+- **Sólo se restauran las preferencias que la aplicación conoce.** Un archivo manipulado no
+  debería poder escribir lo que le apetezca en el `localStorage` de quien lo abre.
+- **Un fallo suelto no aborta la restauración.** Si una imagen viene dañada se anota y se
+  sigue: perder un mapa no es motivo para dejar las fichas a medio restaurar.
+
+> El módulo usa `arrayBuffer()` en vez de `FileReader`, que sólo existe en el navegador. Así
+> el código que **no puede fallar** se prueba de verdad en Node —incluido el viaje completo:
+> copiar, borrarlo todo y comprobar que se vuelve al mismo estado— en vez de a través de un
+> simulacro. En el navegador está comprobado además que una imagen restaurada **se ve**, no
+> sólo que vuelve a estar en la base de datos.
+
 ## Pendiente de modelar
 - **Dominus Exxet**: completo.
 - **Arcana Exxet**: completo.
