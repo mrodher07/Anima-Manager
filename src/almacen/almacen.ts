@@ -11,6 +11,15 @@ import { migrarPersonaje, type Personaje } from '../motor/personaje';
 import type { AjustesMesa } from '../motor/reglamento';
 import type { SistemaCombate } from '../motor/combateAlternativo';
 import { obtenerImagen, type Imagen, type ImagenInfo } from './imagenes';
+import {
+  listarLapidas,
+  ponerLapida,
+  quitarLapida,
+  transaccion,
+  type Coleccion,
+  type Lapida,
+  type Tienda,
+} from './bd';
 import type { TipoDano } from '../motor/combate';
 import { PERSONALIZADOS_VACIOS, type Personalizados } from '../datos/paquetes';
 
@@ -89,45 +98,6 @@ export interface Campana {
   personalizados?: Personalizados;
 }
 
-const BD = 'anima-manager';
-const VERSION = 2;
-const TIENDAS = ['personajes', 'campanas', 'enemigos'] as const;
-type Tienda = (typeof TIENDAS)[number];
-
-let promesaBD: Promise<IDBDatabase> | null = null;
-
-function abrir(): Promise<IDBDatabase> {
-  if (promesaBD) return promesaBD;
-  promesaBD = new Promise((resolver, rechazar) => {
-    const solicitud = indexedDB.open(BD, VERSION);
-    solicitud.onupgradeneeded = () => {
-      const bd = solicitud.result;
-      for (const t of TIENDAS) {
-        if (!bd.objectStoreNames.contains(t)) bd.createObjectStore(t, { keyPath: 'id' });
-      }
-    };
-    solicitud.onsuccess = () => resolver(solicitud.result);
-    solicitud.onerror = () => rechazar(solicitud.error);
-  });
-  return promesaBD;
-}
-
-function transaccion<T>(
-  tienda: Tienda,
-  modo: IDBTransactionMode,
-  fn: (store: IDBObjectStore) => IDBRequest<T>,
-): Promise<T> {
-  return abrir().then(
-    (bd) =>
-      new Promise<T>((resolver, rechazar) => {
-        const tx = bd.transaction(tienda, modo);
-        const solicitud = fn(tx.objectStore(tienda));
-        solicitud.onsuccess = () => resolver(solicitud.result);
-        solicitud.onerror = () => rechazar(solicitud.error);
-      }),
-  );
-}
-
 function marcar<T extends { actualizadoEn: string }>(registro: T): T {
   return { ...registro, actualizadoEn: new Date().toISOString() };
 }
@@ -145,10 +115,12 @@ export const almacen = {
 
   async guardarPersonaje(p: Personaje): Promise<void> {
     await transaccion('personajes', 'readwrite', (s) => s.put(marcar(p)));
+    await quitarLapida('personajes', p.id);
   },
 
   async borrarPersonaje(id: string): Promise<void> {
     await transaccion('personajes', 'readwrite', (s) => s.delete(id));
+    await ponerLapida('personajes', id);
   },
 
   async listarCampanas(): Promise<Campana[]> {
@@ -160,10 +132,12 @@ export const almacen = {
 
   async guardarCampana(c: Campana): Promise<void> {
     await transaccion('campanas', 'readwrite', (s) => s.put(marcar(c)));
+    await quitarLapida('campanas', c.id);
   },
 
   async borrarCampana(id: string): Promise<void> {
     await transaccion('campanas', 'readwrite', (s) => s.delete(id));
+    await ponerLapida('campanas', id);
   },
 
   async listarEnemigos(campanaId: string | null): Promise<Enemigo[]> {
@@ -175,12 +149,46 @@ export const almacen = {
 
   async guardarEnemigo(e: Enemigo): Promise<void> {
     await transaccion('enemigos', 'readwrite', (s) => s.put(marcar(e)));
+    await quitarLapida('enemigos', e.id);
   },
 
   async borrarEnemigo(id: string): Promise<void> {
     await transaccion('enemigos', 'readwrite', (s) => s.delete(id));
+    await ponerLapida('enemigos', id);
+  },
+
+  // ── Lo que usa la sincronización ──────────────────────────────────────────
+  //
+  // Estos métodos existen porque la nube necesita algo que las pantallas no: escribir un
+  // registro **sin tocarle la fecha**. `guardarPersonaje` y compañía llaman a `marcar()`,
+  // que pone `actualizadoEn` a ahora mismo — es lo correcto cuando quien edita es una
+  // persona, y es exactamente lo que no se puede hacer con algo que baja del servidor: le
+  // pondría una fecha más nueva que la del servidor y la siguiente sincronización lo
+  // volvería a subir, en bucle, para siempre.
+
+  /** Escribe un registro tal cual viene, respetando su `actualizadoEn`. */
+  async guardarCrudo(tienda: Tienda, registro: { id: string } & Record<string, unknown>): Promise<void> {
+    await transaccion(tienda, 'readwrite', (s) => s.put(registro));
+    await quitarLapida(tienda, registro.id);
+  },
+
+  /** Borra sin dejar lápida: el borrado ya venía de fuera, no hay que devolvérselo. */
+  async borrarCrudo(tienda: Tienda, id: string): Promise<void> {
+    await transaccion(tienda, 'readwrite', (s) => s.delete(id));
+  },
+
+  /** Todo lo que se ha borrado aquí, para poder comunicárselo a la nube. */
+  async listarLapidas(coleccion?: Coleccion): Promise<Lapida[]> {
+    return listarLapidas(coleccion);
+  },
+
+  /** Una lápida ya comunicada deja de hacer falta. */
+  async olvidarLapida(coleccion: Coleccion, registroId: string): Promise<void> {
+    await quitarLapida(coleccion, registroId);
   },
 };
+
+export type { Coleccion, Lapida, Tienda };
 
 // ─────────────────── Exportar / importar (compartir sin nube) ───────────────────
 

@@ -15,6 +15,10 @@ import { VistaArcana } from './VistaArcana';
 import { VistaPersonalizado } from './VistaPersonalizado';
 import { VistaGaleria } from './VistaGaleria';
 import { VistaReglas } from './VistaReglas';
+import { VistaCopia } from './VistaCopia';
+import { VistaCuenta } from './VistaCuenta';
+import { PanelMesa } from './PanelMesa';
+import { useCuenta } from '../nube/cuenta';
 import { Imagen } from './Imagen';
 import { nuevoId } from './estado';
 import { SelectorTema } from './SelectorTema';
@@ -25,7 +29,7 @@ import './estilos.css';
 
 type Seccion =
   | 'personajes' | 'ficha' | 'editor' | 'mesa'
-  | 'bestiario' | 'arcana' | 'galeria' | 'propio' | 'reglas' | 'campanas';
+  | 'bestiario' | 'arcana' | 'galeria' | 'propio' | 'reglas' | 'campanas' | 'copia' | 'cuenta';
 
 export function App() {
   const [seccion, setSeccion] = useState<Seccion>('personajes');
@@ -36,10 +40,45 @@ export function App() {
   const [textoNota, setTextoNota] = useState('');
 
   const { personajes, cargando, guardar, crear, borrar, recargar } = usePersonajes();
-  const { campanas, guardar: guardarCampana, crear: crearCampana, borrar: borrarCampana } = useCampanas();
+  const {
+    campanas,
+    guardar: guardarCampana,
+    crear: crearCampana,
+    borrar: borrarCampana,
+    recargar: recargarCampanas,
+  } = useCampanas();
 
-  const campana = campanas.find((c) => c.id === campanaId) ?? null;
-  const { reglamento, cambiar: cambiarReglamento } = useReglamento(campana, (c) => void guardarCampana(c));
+  // Cuando la nube trae cambios de otro dispositivo, las listas tienen que releerse: si no,
+  // la ficha que acabas de editar en el móvil no aparecería aquí hasta recargar la página.
+  const cuenta = useCuenta(
+    () => {
+      void recargar();
+      void recargarCampanas();
+    },
+    (preferencias) => {
+      // El tema elegido en el ordenador aparece también en el móvil.
+      if (typeof preferencias.tema === 'string') setTema(preferencias.tema);
+    },
+  );
+
+  // Las campañas propias y aquellas en las que juego sin ser el máster. Las segundas son de
+  // sólo lectura, pero hacen falta igual: llevan las reglas caseras y los manuales activos
+  // con los que hay que calcular la ficha.
+  const todasLasCampanas = [...campanas, ...cuenta.campanasAjenas];
+  const campana = todasLasCampanas.find((c) => c.id === campanaId) ?? null;
+  const soyElMaster = campanas.some((c) => c.id === campanaId);
+  /**
+   * La campaña sólo si puedo escribirla. Todo lo que edita la mesa —reglas, manuales,
+   * diario, contenido propio— cuelga de esto, para que un jugador que ha activado la
+   * campaña de su máster la vea entera pero no pueda tocarla.
+   */
+  const campanaEditable = soyElMaster ? campana : null;
+  // Sólo se guardan los cambios de reglas si la campaña es mía. La de un máster se lee
+  // para calcular con sus reglas, pero un jugador no la edita: intentarlo escribiría en
+  // local una campaña que el servidor luego rechazaría.
+  const { reglamento, cambiar: cambiarReglamento } = useReglamento(campana, (c) => {
+    if (soyElMaster) void guardarCampana(c);
+  });
 
   const paquetes = campana?.paquetes ?? ['core-exxet'];
   const propio = campana?.personalizados ?? PERSONALIZADOS_VACIOS;
@@ -72,6 +111,8 @@ export function App() {
     { id: 'propio', texto: 'Contenido propio' },
     { id: 'campanas', texto: 'Campañas' },
     { id: 'reglas', texto: 'Reglas' },
+    { id: 'copia', texto: 'Copia de seguridad' },
+    { id: 'cuenta', texto: 'Cuenta' },
   ];
 
   const necesitaFicha = seccion === 'ficha' || seccion === 'editor' || seccion === 'mesa';
@@ -95,7 +136,28 @@ export function App() {
                 {s.texto}
               </button>
             ))}
-          <SelectorTema tema={tema} onCambiar={setTema} />
+          {cuenta.estado === 'dentro' && (
+            <button
+              className="estado-nube"
+              onClick={() => setSeccion('cuenta')}
+              title={cuenta.usuario?.correo}
+            >
+              {cuenta.sincronizando
+                ? 'Sincronizando…'
+                : cuenta.ultima && !cuenta.ultima.ok
+                  ? 'Sin sincronizar'
+                  : 'Al día'}
+            </button>
+          )}
+          <SelectorTema
+            tema={tema}
+            onCambiar={(t) => {
+              setTema(t);
+              // Se sube aquí y no en el efecto del tema: así el tema que **llega** de la
+              // nube no rebota inmediatamente de vuelta al servidor.
+              void cuenta.guardarPreferencia('tema', t);
+            }}
+          />
         </nav>
       </header>
 
@@ -181,13 +243,35 @@ export function App() {
 
         {seccion === 'arcana' && <VistaArcana catalogo={catalogo} />}
 
+        {seccion === 'copia' && (
+          <VistaCopia
+            onRecargar={() => {
+              void recargar();
+              void recargarCampanas();
+              // Tras restaurar, la campaña abierta puede haber dejado de existir.
+              setAbiertoId(null);
+              setCampanaId(null);
+            }}
+          />
+        )}
+
+        {seccion === 'cuenta' && (
+          <VistaCuenta
+            cuenta={cuenta}
+            onRecargar={() => {
+              void recargar();
+              void recargarCampanas();
+            }}
+          />
+        )}
+
         {seccion === 'galeria' && <VistaGaleria campanaId={campanaId} />}
 
         {seccion === 'propio' && (
-          campana ? (
+          campanaEditable ? (
             <VistaPersonalizado
               personalizados={propio}
-              onCambiar={(p) => void guardarCampana({ ...campana, personalizados: p })}
+              onCambiar={(p) => void guardarCampana({ ...campanaEditable, personalizados: p })}
             />
           ) : (
             <div className="vacio panel">
@@ -235,7 +319,7 @@ export function App() {
               )}
             </div>
 
-            {campanas.length === 0 ? (
+            {todasLasCampanas.length === 0 ? (
               <p style={{ color: 'var(--texto-debil)', margin: 0 }}>Todavía no hay campañas.</p>
             ) : (
               <table>
@@ -243,33 +327,52 @@ export function App() {
                   <tr><th>Campaña</th><th className="num">Reglas caseras</th><th></th></tr>
                 </thead>
                 <tbody>
-                  {campanas.map((c) => (
-                    <tr key={c.id}>
-                      <td className={c.id === campanaId ? 'destacado' : undefined}>{c.nombre}</td>
-                      <td className="num">
-                        {Object.keys(c.ajustes.formulas ?? {}).length + (c.ajustes.desactivadas?.length ?? 0)}
-                      </td>
-                      <td style={{ textAlign: 'right', whiteSpace: 'nowrap' }}>
-                        <button className="accion" onClick={() => setCampanaId(c.id)}>Activar</button>{' '}
-                        <button
-                          className="accion"
-                          onClick={() => {
-                            void borrarCampana(c.id);
-                            if (campanaId === c.id) setCampanaId(null);
-                          }}
-                        >
-                          Borrar
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
+                  {todasLasCampanas.map((c) => {
+                    // Las campañas donde juego sin ser el máster se pueden activar —hacen
+                    // falta para calcular la ficha con sus reglas— pero no borrar: no son
+                    // mías. Salir de ellas se hace desde la pestaña Cuenta.
+                    const mia = campanas.some((p) => p.id === c.id);
+                    return (
+                      <tr key={c.id}>
+                        <td className={c.id === campanaId ? 'destacado' : undefined}>
+                          {c.nombre}
+                          {!mia && (
+                            <small style={{ display: 'block', color: 'var(--texto-debil)' }}>
+                              juegas en ella · sólo lectura
+                            </small>
+                          )}
+                        </td>
+                        <td className="num">
+                          {Object.keys(c.ajustes.formulas ?? {}).length + (c.ajustes.desactivadas?.length ?? 0)}
+                        </td>
+                        <td style={{ textAlign: 'right', whiteSpace: 'nowrap' }}>
+                          <button className="accion" onClick={() => setCampanaId(c.id)}>Activar</button>{' '}
+                          {mia && (
+                            <button
+                              className="accion"
+                              onClick={() => {
+                                void borrarCampana(c.id);
+                                if (campanaId === c.id) setCampanaId(null);
+                              }}
+                            >
+                              Borrar
+                            </button>
+                          )}
+                        </td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
             )}
 
-            {campana && (
+            {campana && cuenta.estado === 'dentro' && (
+              <PanelMesa campanaId={campana.id} soyElMaster={soyElMaster} />
+            )}
+
+            {campanaEditable && (
               <>
-                <h2 style={{ marginTop: 22 }}>Diario de «{campana.nombre}»</h2>
+                <h2 style={{ marginTop: 22 }}>Diario de «{campanaEditable.nombre}»</h2>
                 <p style={{ color: 'var(--texto-tenue)', fontSize: '0.88rem', marginTop: 0 }}>
                   Lo que pasó en cada sesión. Aquí no hay reglas: lo escribís vosotros.
                 </p>
@@ -286,15 +389,15 @@ export function App() {
                   disabled={!textoNota.trim()}
                   onClick={() => {
                     void guardarCampana({
-                      ...campana,
+                      ...campanaEditable,
                       notasSesion: [
                         {
                           id: nuevoId(),
                           fecha: new Date().toISOString(),
-                          titulo: tituloNota.trim() || `Sesión ${campana.notasSesion.length + 1}`,
+                          titulo: tituloNota.trim() || `Sesión ${campanaEditable.notasSesion.length + 1}`,
                           texto: textoNota.trim(),
                         },
-                        ...campana.notasSesion,
+                        ...campanaEditable.notasSesion,
                       ],
                     });
                     setTituloNota('');
@@ -304,9 +407,9 @@ export function App() {
                   Guardar sesión
                 </button>
 
-                {campana.notasSesion.length > 0 && (
+                {campanaEditable.notasSesion.length > 0 && (
                   <div className="diario" style={{ marginTop: 18 }}>
-                    {campana.notasSesion.map((n) => (
+                    {campanaEditable.notasSesion.map((n) => (
                       <article key={n.id}>
                         <h3>{n.titulo}</h3>
                         <time>{new Date(n.fecha).toLocaleDateString('es-ES', {
@@ -318,8 +421,8 @@ export function App() {
                           style={{ marginTop: 6 }}
                           onClick={() =>
                             void guardarCampana({
-                              ...campana,
-                              notasSesion: campana.notasSesion.filter((x) => x.id !== n.id),
+                              ...campanaEditable,
+                              notasSesion: campanaEditable.notasSesion.filter((x) => x.id !== n.id),
                             })
                           }
                         >
@@ -340,7 +443,7 @@ export function App() {
               desde el principio del combate. El <strong>Combate de Masas</strong> no hace
               falta activarlo: está siempre disponible en la pestaña Mesa.
             </p>
-            {campana ? (
+            {campanaEditable ? (
               <div className="lista-seleccion">
                 {(
                   [
@@ -353,7 +456,7 @@ export function App() {
                     ],
                   ] as const
                 ).map(([id, texto, ayuda]) => {
-                  const elegido = (campana.sistemaCombate ?? 'normal') === id;
+                  const elegido = (campanaEditable.sistemaCombate ?? 'normal') === id;
                   return (
                     <label key={id} className={elegido ? 'elegida' : undefined}>
                       <input
@@ -361,7 +464,7 @@ export function App() {
                         name="sistema-combate"
                         checked={elegido}
                         onChange={() =>
-                          void guardarCampana({ ...campana, sistemaCombate: id })
+                          void guardarCampana({ ...campanaEditable, sistemaCombate: id })
                         }
                       />
                       <span>
@@ -376,7 +479,11 @@ export function App() {
               </div>
             ) : (
               <p style={{ color: 'var(--texto-debil)' }}>
-                Elige o crea una campaña para decidir su sistema de combate.
+                {campana
+                  ? `Esto lo decide el máster de «${campana.nombre}». Ahora mismo la mesa usa ${
+                      (campana.sistemaCombate ?? 'normal') === 'dramatico' ? 'Combate Dramático' : 'el sistema normal'
+                    }.`
+                  : 'Elige o crea una campaña para decidir su sistema de combate.'}
               </p>
             )}
 
@@ -386,7 +493,7 @@ export function App() {
               con el mismo nombre sustituye a la anterior: así un suplemento puede además
               corregir el básico. Lo que active cada campaña es cosa suya.
             </p>
-            {campana ? (
+            {campanaEditable ? (
               <div className="lista-seleccion">
                 {PAQUETES.map((p) => {
                   const activo = paquetes.includes(p.id);
@@ -400,7 +507,7 @@ export function App() {
                         disabled={esBasico}
                         onChange={() =>
                           void guardarCampana({
-                            ...campana,
+                            ...campanaEditable,
                             paquetes: activo
                               ? paquetes.filter((x) => x !== p.id)
                               : [...paquetes, p.id],
@@ -421,7 +528,9 @@ export function App() {
               </div>
             ) : (
               <p style={{ color: 'var(--texto-debil)' }}>
-                Elige o crea una campaña para decidir qué manuales usa.
+                {campana
+                  ? `Los manuales los decide el máster de «${campana.nombre}».`
+                  : 'Elige o crea una campaña para decidir qué manuales usa.'}
               </p>
             )}
           </section>

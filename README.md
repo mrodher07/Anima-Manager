@@ -10,6 +10,8 @@ defecto), **claro**, **steampunk** y **medieval**.
 
 Sólo hace falta **Node.js 20 o superior** ([nodejs.org](https://nodejs.org), la versión LTS
 sirve). No hay base de datos, ni servidor, ni cuenta que crear: todo vive en el navegador.
+(Si quieres cuentas y sincronizar entre dispositivos, eso se añade aparte y es opcional:
+[Cuentas y nube](#cuentas-y-nube-opcional).)
 
 ```bash
 git clone https://github.com/mrodher07/Anima-Manager.git
@@ -52,13 +54,20 @@ En el **IndexedDB del navegador**, en el dispositivo donde la abres. Eso signifi
 - Funciona **sin internet** una vez cargada.
 - Nadie más ve tus campañas: no salen del equipo.
 - Pero **no se sincronizan solas** entre el PC y el móvil, y si borras los datos del
-  navegador se van. Para mover o respaldar una ficha, usa **exportar/importar** desde la
-  pestaña Personajes: en JSON (formato propio, incluye el retrato) o en Excel.
+  navegador se van.
+
+Por eso hay una pestaña **Copia de seguridad**: guárdala de vez en cuando y no dependerás de
+este equipo. Para mover una ficha suelta a otro sitio, usa exportar/importar desde la pestaña
+Personajes, en JSON o en Excel.
+
+Si además quieres **cuentas y sincronización** entre dispositivos, mira
+[Cuentas y nube](#cuentas-y-nube-opcional). Es opcional: sin configurarla, todo lo de arriba
+sigue igual.
 
 ### Otros comandos
 
 ```bash
-npm test         # 400 pruebas del motor de reglas
+npm test         # 481 pruebas del motor de reglas y la sincronización
 npm run build    # compilar (incluye la comprobación de tipos)
 ```
 
@@ -76,6 +85,8 @@ npm run build    # compilar (incluye la comprobación de tipos)
 | **Galería** | Mapas, PNJs, enemigos y objetos en imágenes |
 | **Campañas** | Sistema de combate, reglas caseras, manuales activos y diario de sesiones |
 | **Reglas** | Reescribir o desactivar cualquier fórmula, y restablecerla |
+| **Copia de seguridad** | Guardar y restaurar **todo** lo de este dispositivo |
+| **Cuenta** | Registro y sincronización entre dispositivos, si la nube está configurada |
 
 ## Cómo está montado
 
@@ -96,7 +107,15 @@ src/datos/       Paquetes de contenido combinables (un manual = un paquete)
 src/almacen/     Persistencia en IndexedDB, exportar e importar
   xlsx.ts          Leer y escribir .xlsx sin dependencias
   fichaExcel.ts    Traducción entre la ficha y el libro de Excel
+  copiaSeguridad.ts  Copia y restauración de todo el dispositivo
+src/nube/        Sincronización con Supabase, toda opcional
+  fusion.ts        Qué versión gana: funciones puras, sin red ni base de datos
+  sincronizacion.ts  Llevar y traer entre IndexedDB y el servidor
+  imagenesNube.ts  Imágenes: la fila a la tabla, el archivo a Storage
+  mesa.ts          Perfiles, preferencias, invitaciones y campañas compartidas
+  cuenta.ts        Registro, sesión y sincronización periódica
 src/ui/          Interfaz React
+supabase/        El SQL que hay que ejecutar en el proyecto de Supabase
 tools/           Extractores: el .xlsm original y los PDF de cada suplemento
 ```
 
@@ -112,9 +131,15 @@ fórmula o desactivar las opcionales, y volver a los valores por defecto cuando 
 guarda **sólo lo que cambia**, así que las correcciones futuras del reglamento oficial
 llegan solas a quien no lo haya tocado.
 
-Las fórmulas se evalúan con un intérprete propio y acotado — **nunca con `eval`**. Cuando
-llegue la sincronización, una fórmula escrita por un jugador se ejecutaría en el navegador
-del máster al abrir su ficha.
+Las fórmulas se evalúan con un intérprete propio y acotado — **nunca con `eval`**. Ahora que
+hay sincronización esto ha dejado de ser una precaución teórica: una fórmula escrita por un
+jugador se ejecuta en el navegador del máster en cuanto abre su ficha.
+
+**La nube es una copia, no el sitio donde viven los datos.** Guardar escribe en IndexedDB y
+devuelve el control al instante; sincronizar viene después y por su cuenta. Y lo que decide
+qué versión gana (`src/nube/fusion.ts`) son funciones puras sin red ni base de datos: la
+parte de una sincronización que de verdad se puede equivocar merece probarse con casos
+concretos, no comprobarse a ojo abriendo la aplicación en dos móviles.
 
 **Un manual es un paquete de contenido.** El Core Exxet es sólo el primero. Al añadir un
 suplemento basta con registrar su paquete y sus JSON: sus entradas se combinan con las del
@@ -145,6 +170,129 @@ la mesa no es calculable, y la herramienta no debe fingir que sí. Por eso:
 - La **galería** guarda mapas, PNJs y enemigos como imágenes, sin obligar a fichar nada.
 - Las tiradas se pueden hacer con la app o con dados de verdad y anotar el resultado: los
   recursos se ajustan a mano con los botones de ±1/±5/±10.
+
+## Copia de seguridad
+
+Exportar una ficha sirve para **compartirla**. La copia de seguridad es otra cosa: sirve para
+**no perder nada**. Se lleva todo lo que hay en el dispositivo —fichas, campañas con sus
+reglas caseras, su contenido propio y su diario, enemigos, la galería entera con sus imágenes
+dentro, y hasta el tema que tengas puesto— y lo devuelve tal cual estaba.
+
+Al restaurar se enseña primero **qué trae el archivo** y se elige cómo entra:
+
+- **Fusionar**: devuelve lo de la copia sin borrar nada de lo que ya tengas. Lo que coincida
+  por id se sustituye por lo de la copia, que es lo que se espera de una restauración.
+- **Reemplazar todo**: borra lo que hay y deja el dispositivo exactamente como estaba el día
+  de la copia. Pide confirmación aparte y dice cuántas cosas va a borrar antes de hacerlo.
+
+Si una imagen viniera dañada se anota y el resto se restaura igual: perder un mapa no es
+motivo para dejar las fichas a medias.
+
+## Cuentas y nube (opcional)
+
+Con una cuenta puedes abrir tus fichas desde el móvil y desde el ordenador, y tu máster ve
+las de su campaña. **Es opcional**: sin configurar nada, la aplicación funciona exactamente
+igual que siempre, en local.
+
+### Cómo está pensado
+
+**Local-first.** Guardar una ficha escribe en IndexedDB y devuelve el control al instante;
+la nube se entera después. Si no hay conexión, o el servidor está caído, o directamente no
+hay cuenta, se sigue jugando igual. La nube es una copia, no el sitio donde viven los datos.
+
+Se sincroniza sola al entrar, cada tres minutos, al volver la conexión y al volver a la
+pestaña. Y hay un botón, por si tienes prisa.
+
+**Quién ve qué:**
+
+| | Lo ve | Lo edita |
+|---|---|---|
+| Tus fichas | tú y el máster de tu campaña | sólo tú |
+| Tus campañas | tú y quienes juegan en ellas | sólo tú |
+| Tu bestiario | sólo tú | sólo tú |
+| Imágenes de una campaña | toda esa mesa | sólo quien las subió |
+| Imágenes sin campaña | sólo tú | sólo tú |
+| Tu nombre visible | quien comparte mesa contigo | sólo tú |
+| Tu correo | nadie más que tú | — |
+
+Que el máster **no** pueda editar las fichas de sus jugadores es una decisión, no un
+descuido: la ficha de un jugador es suya. Si tu mesa lo prefiere al revés, hay una línea
+comentada en `supabase/esquema.sql` que lo cambia.
+
+### Qué tablas hay
+
+| Tabla | Qué guarda |
+|---|---|
+| `perfiles` | El nombre visible de cada usuario. Se crea solo al registrarse |
+| `campanas` | La mesa entera: reglas caseras, manuales activos, diario y contenido propio |
+| `miembros_campana` | Quién juega en cada campaña |
+| `invitaciones_campana` | Los códigos para unirse a una mesa |
+| `personajes` | Las fichas |
+| `enemigos` | El bestiario del máster |
+| `imagenes` | La ficha técnica de cada imagen; el archivo va al bucket `imagenes` |
+| `preferencias` | El tema y lo que vaya haciendo falta, por usuario |
+
+Fichas, campañas y enemigos se guardan como **un jsonb entero**, no como columnas: el modelo
+crece cada vez que llega un manual nuevo, y con columnas cada suplemento sería una migración.
+Sólo se sacan a columna los campos por los que se consulta —dueño, campaña, fecha.
+
+### Unirse a una mesa
+
+El máster genera un código en **Campañas → Invitaciones** y se lo pasa a sus jugadores, que
+lo canjean en **Cuenta → Unirte a una mesa**. Los códigos caducan a los 30 días y tienen un
+número limitado de usos; si uno se escapa por un chat, se borra y se genera otro sin echar a
+nadie.
+
+Hace falta un código y no basta con el id de la campaña porque ese id **viaja dentro de cada
+ficha exportada**: cualquiera que hubiera visto una ficha podría haberse metido en la mesa y
+leído las del resto.
+
+Al unirte recibes la campaña de tu máster en **sólo lectura**. No es un adorno: la campaña
+lleva las reglas caseras y los manuales activos, y la misma ficha calculada con el reglamento
+por defecto no da los mismos números.
+
+### Montarlo
+
+1. Crea un proyecto gratuito en [supabase.com](https://supabase.com).
+2. **SQL Editor → New query**, pega entero `supabase/esquema.sql` y ejecútalo. Crea las ocho
+   tablas, el bucket de imágenes y —lo importante— las políticas de acceso.
+3. **Project Settings → API**: copia la *Project URL* y la clave *anon public*.
+4. `cp .env.example .env.local` y rellena esos dos valores.
+5. `npm run dev`. Aparece la pestaña **Cuenta**.
+
+Si lo despliegas en Vercel, las mismas dos variables van en **Settings → Environment
+Variables** (y hay que volver a desplegar: Vite las incrusta al compilar, no las lee en
+tiempo de ejecución).
+
+Por defecto Supabase pide confirmar el correo antes de dejar entrar. Para pruebas se puede
+quitar en **Authentication → Providers → Email**.
+
+### Lo que conviene saber antes de fiarte
+
+- **La clave `anon` es pública.** Va dentro del JavaScript que se descarga cualquiera. Lo
+  único que impide que un usuario lea los datos de otro son las políticas del paso 2. Si te
+  saltas ese paso, la base de datos queda abierta. El propio archivo trae al final una
+  consulta para comprobar que Row Level Security está activo en las ocho tablas.
+- **Las imágenes ocupan.** El plan gratuito de Supabase da 1 GB de Storage. La aplicación ya
+  reescala y convierte a WebP antes de subir (1600 px de lado para mapas, 640 para retratos),
+  así que una imagen ronda las decenas de kilobytes y hacen falta muchas partidas para
+  llenarlo — pero conviene saber que ese límite existe.
+- **Gana la última versión guardada.** Si editas la misma ficha en dos dispositivos sin
+  conexión, cuando ambos sincronicen se queda la que se guardó más tarde y la otra se pierde.
+  Es la resolución de conflictos más simple que existe, y es suficiente porque cada ficha
+  tiene un dueño que la edita. Fusionar campo a campo multiplicaría la complejidad para un
+  problema que en una mesa de rol casi no aparece.
+- **Borrar deja lápida.** Al borrar no se quita la fila, se marca. Sin eso, una ficha borrada
+  en el móvil reaparecería en la siguiente sincronización desde el portátil, que todavía la
+  tiene.
+- **La copia de seguridad no sobra.** Sigue siendo lo único que te protege de borrar algo por
+  error, porque el borrado sí se sincroniza. La nube te protege de perder el dispositivo; la
+  copia, de equivocarte.
+
+### Salir de la cuenta no borra nada
+
+Lo que hay en el dispositivo se queda. La aplicación vuelve a ser lo que era antes de
+registrarse.
 
 ## Sistemas de combate
 
@@ -183,8 +331,9 @@ dirección de celda, para que aguante las distintas versiones que circulan.
 Leer y escribir .xlsx está hecho **sin dependencias**: un .xlsx es un ZIP con XML, y hacen
 falta un CRC32, un ZIP sin comprimir y `DecompressionStream`, que ya traen el navegador y
 Node. Es el mismo criterio que llevó a escribir el evaluador de fórmulas en lugar de usar
-`eval`: la aplicación tiene dos dependencias y no parecía buena idea que el navegador del
-máster ejecutase miles de líneas de terceros para abrir una ficha.
+`eval`: la aplicación tiene tres dependencias —React, React DOM y el cliente de Supabase, y
+esta última sólo si se usa la nube— y no parecía buena idea que el navegador del máster
+ejecutase miles de líneas de terceros para abrir una ficha.
 
 ## Imágenes
 
@@ -197,6 +346,13 @@ Al exportar una ficha, **su retrato viaja con ella** como data URI, para que lle
 completa a quien la reciba. Si el navegador se queda sin espacio, la aplicación lo dice en
 lugar de fallar en silencio.
 
+Con nube configurada también se sincronizan: la ficha técnica va a la tabla `imagenes` y el
+archivo al bucket privado, en `{tu-id}/{id}.webp`. Esa ruta no es decoración — las políticas
+de Storage miran la primera carpeta para saber de quién es el archivo, así que la estructura
+**es** el permiso. Al subir se manda primero el archivo y después la fila, y al borrar
+justo al revés: si algo se corta a medias, lo que queda es un archivo huérfano —basura
+invisible— y nunca un mapa anunciado que ya no se puede descargar.
+
 ## Qué falta
 
 Está anotado al final de `docs/FORMULAS-VERIFICADAS.md`. En resumen:
@@ -205,6 +361,12 @@ Los cuatro manuales están completos. Lo único que sigue sin automatizarse por 
 propia: de las 292 ventajas, 74 modifican la ficha solas; el resto se eligen igual y las que
 tienen un efecto no automatizable lo muestran como recordatorio en vez de fingir que se
 aplican.
+
+De la nube no queda nada esencial pendiente: fichas, campañas, bestiario, imágenes,
+preferencias y perfiles se sincronizan. Lo que sigue siendo un límite consciente es la
+resolución de conflictos —gana el último que guardó— y que el diario de campaña viaja dentro
+del documento de la campaña, así que dos ediciones simultáneas del máster desde dos
+dispositivos sin conexión se pisarían.
 
 ## Manuales incorporados
 

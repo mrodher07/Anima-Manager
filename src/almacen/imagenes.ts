@@ -10,6 +10,8 @@
  * navegador en pocas subidas.
  */
 
+import { ponerLapida, quitarLapida } from './bd';
+
 export type TipoImagen = 'retrato' | 'mapa' | 'pnj' | 'enemigo' | 'objeto' | 'otro';
 
 export interface Imagen {
@@ -25,7 +27,25 @@ export interface Imagen {
   altura: number;
   bytes: number;
   creadoEn: string;
+  /**
+   * Cuándo se tocó por última vez. `creadoEn` no vale para sincronizar: renombrar un mapa
+   * no lo crea de nuevo, pero sí tiene que ganarle a la versión del servidor.
+   */
+  actualizadoEn?: string;
   datos: Blob;
+}
+
+/** El píxel no cambia, pero el nombre o la descripción sí. */
+function tocada<T extends { creadoEn: string; actualizadoEn?: string }>(imagen: T): T {
+  return { ...imagen, actualizadoEn: new Date().toISOString() };
+}
+
+/**
+ * La fecha con la que se compara al sincronizar. Las imágenes anteriores a la nube no
+ * tienen `actualizadoEn`; para ellas vale la de creación, que es cuando se tocaron.
+ */
+export function fechaDe(imagen: { creadoEn: string; actualizadoEn?: string }): string {
+  return imagen.actualizadoEn ?? imagen.creadoEn;
 }
 
 /** Metadatos sin el Blob, para listar sin cargar las imágenes en memoria. */
@@ -142,11 +162,13 @@ export async function guardarImagen(archivo: File, opciones: OpcionesGuardado): 
     altura,
     bytes: blob.size,
     creadoEn: new Date().toISOString(),
+    actualizadoEn: new Date().toISOString(),
     datos: blob,
   };
 
   try {
     await pedir('readwrite', (t) => t.put(imagen));
+    await quitarLapida('imagenes', imagen.id);
   } catch (e) {
     // El navegador limita cuánto puede guardar un sitio; conviene decirlo claro.
     if (e instanceof DOMException && (e.name === 'QuotaExceededError' || e.name === 'NS_ERROR_DOM_QUOTA_REACHED')) {
@@ -160,9 +182,14 @@ export async function guardarImagen(archivo: File, opciones: OpcionesGuardado): 
   return imagen;
 }
 
-/** Guarda una imagen ya construida, sin reescalar. Se usa al importar. */
+/**
+ * Guarda una imagen ya construida, sin reescalar ni cambiarle la fecha. Se usa al importar
+ * y al bajarla de la nube: en los dos casos la fecha que trae es la buena, y ponerle la de
+ * ahora haría que pareciera más nueva que la del servidor y se volviera a subir en bucle.
+ */
 export async function guardarImagenCruda(imagen: Imagen): Promise<void> {
   await pedir('readwrite', (t) => t.put(imagen));
+  await quitarLapida('imagenes', imagen.id);
 }
 
 export async function obtenerImagen(id: string): Promise<Imagen | undefined> {
@@ -179,15 +206,21 @@ export async function listarImagenes(campanaId: string | null): Promise<ImagenIn
 
 export async function borrarImagen(id: string): Promise<void> {
   await pedir('readwrite', (t) => t.delete(id));
+  await ponerLapida('imagenes', id);
+}
+
+/** Borra sin dejar lápida: el borrado venía de fuera, no hay que devolvérselo. */
+export async function borrarImagenCruda(id: string): Promise<void> {
+  await pedir('readwrite', (t) => t.delete(id));
 }
 
 export async function actualizarImagen(
   id: string,
-  cambios: Partial<Pick<Imagen, 'nombre' | 'descripcion' | 'tipo'>>,
+  cambios: Partial<Pick<Imagen, 'nombre' | 'descripcion' | 'tipo' | 'campanaId'>>,
 ): Promise<void> {
   const actual = await obtenerImagen(id);
   if (!actual) return;
-  await pedir('readwrite', (t) => t.put({ ...actual, ...cambios }));
+  await pedir('readwrite', (t) => t.put(tocada({ ...actual, ...cambios })));
 }
 
 /** Cuánto ocupan las imágenes, para poder avisar antes de llenar la cuota. */

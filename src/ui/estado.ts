@@ -115,7 +115,7 @@ export function useCampanas() {
     await recargar();
   }, [recargar]);
 
-  return { campanas, guardar, crear, borrar };
+  return { campanas, guardar, crear, borrar, recargar };
 }
 
 /** El reglamento de la campaña activa, o el oficial si no hay ninguna. */
