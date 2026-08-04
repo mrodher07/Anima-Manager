@@ -16,6 +16,7 @@ import {
 import type { Reglamento } from '../motor/reglamento';
 import type { EscalaArma } from '../motor/combate';
 import { Selector } from './Selector';
+import { Seccion, cuenta } from './Seccion';
 import { Imagen } from './Imagen';
 import { ErrorImagen, borrarImagen, guardarImagen } from '../almacen/imagenes';
 import { EFECTOS } from '../motor/efectos';
@@ -34,15 +35,23 @@ type Pestana =
   | 'identidad' | 'trasfondo' | 'caracteristicas'
   | 'habilidades' | 'ventajas' | 'equipo' | 'ki' | 'poderes';
 
+/*
+ * En el orden en que se hace un personaje, que es el del manual y el de la ficha de Excel:
+ * quién es, cuánto tiene de cada característica, qué ventajas compra, en qué se gasta los
+ * PD, con qué va equipado y qué poderes tiene.
+ *
+ * «Trasfondo» estaba la segunda y pasa al final: es texto libre que no afecta a ningún
+ * número, y de segunda obligaba a saltársela cada vez para llegar a las características.
+ */
 const PESTANAS: { id: Pestana; texto: string }[] = [
   { id: 'identidad', texto: 'Identidad' },
-  { id: 'trasfondo', texto: 'Trasfondo' },
   { id: 'caracteristicas', texto: 'Características' },
   { id: 'ventajas', texto: 'Ventajas' },
   { id: 'habilidades', texto: 'Habilidades' },
   { id: 'equipo', texto: 'Equipo' },
   { id: 'ki', texto: 'Ki' },
   { id: 'poderes', texto: 'Poderes' },
+  { id: 'trasfondo', texto: 'Trasfondo' },
 ];
 
 /** Una habilidad primaria: su clave, cómo se llama y de dónde sale su coste en PD. */
@@ -423,12 +432,15 @@ export function EditorPersonaje({ personaje, datos, catalogo, reglamento, onCamb
             </div>
           </section>
 
-          <section className="panel">
-            <h2>Habilidades secundarias</h2>
-            <p style={{ color: 'var(--texto-tenue)', fontSize: '0.86rem', marginTop: 0 }}>
-              «Nat.» marca las cinco Habilidades Naturales (+10). «Esp.» es el bono especial que te
-              den raza, ventajas o poderes: se escribe a mano, igual que en la ficha original.
-            </p>
+          <Seccion
+            titulo="Habilidades secundarias"
+            ayuda={
+              <>
+                «Nat.» marca las cinco Habilidades Naturales (+10). «Esp.» es el bono especial que te
+                den raza, ventajas o poderes: se escribe a mano, igual que en la ficha original.
+              </>
+            }
+          >
             {GRUPOS_SECUNDARIAS.map((grupo) => (
               <details key={grupo} open={grupo === 'Atléticas'}>
                 <summary>{grupo}</summary>
@@ -495,20 +507,20 @@ export function EditorPersonaje({ personaje, datos, catalogo, reglamento, onCamb
                 </div>
               </details>
             ))}
-          </section>
+          </Seccion>
         </>
       )}
 
       {pestana === 'ventajas' && (
         <>
-          <section className="panel" style={{ marginBottom: 16 }}>
-            <h2>Puntos de Creación</h2>
-            <p style={{ color: 'var(--texto-tenue)', fontSize: '0.86rem', marginTop: 0 }}>
-              Las marcadas «automática» modifican la ficha solas. El resto se eligen igual,
-              pero su efecto lo aplicáis vosotros (o lo anotas en la columna «Esp.»).
-            </p>
+          {/*
+            Los Puntos de Creación son la cuenta que hay que mirar mientras se eligen
+            ventajas, así que van arriba y no se pliegan: un contador escondido no cuenta.
+          */}
+          <section className="panel marcador">
             <p style={{ margin: 0, fontSize: '0.95rem' }}>
-              Gastados <strong className={ficha.puntosCreacion.gastados > ficha.puntosCreacion.disponibles ? 'peligro-texto' : 'destacado'}>
+              Puntos de Creación · gastados{' '}
+              <strong className={ficha.puntosCreacion.gastados > ficha.puntosCreacion.disponibles ? 'peligro-texto' : 'destacado'}>
                 {ficha.puntosCreacion.gastados}
               </strong>{' '}
               de <strong className="destacado">{ficha.puntosCreacion.disponibles}</strong>
@@ -516,8 +528,16 @@ export function EditorPersonaje({ personaje, datos, catalogo, reglamento, onCamb
             </p>
           </section>
 
-          <section className="panel" style={{ marginBottom: 16 }}>
-            <h2>Ventajas</h2>
+          <Seccion
+            titulo="Ventajas"
+            resumen={cuenta(personaje.ventajas.length, 'elegida', 'elegidas', 'ninguna')}
+            ayuda={
+              <>
+                Las marcadas «automática» modifican la ficha solas. El resto se eligen igual,
+                pero su efecto lo aplicáis vosotros (o lo anotas en la columna «Esp.»).
+              </>
+            }
+          >
             <Selector
               opciones={ventajas.filter((v) => !v.esDesventaja)}
               claveDe={(v) => v.nombre}
@@ -527,17 +547,43 @@ export function EditorPersonaje({ personaje, datos, catalogo, reglamento, onCamb
               onCambiar={(v) => set({ ventajas: v })}
               etiquetaBusqueda="Buscar ventaja"
             />
-          </section>
+          </Seccion>
 
-          <section className="panel" style={{ marginBottom: 16 }}>
-            <h2>Legados de Sangre</h2>
-            <p style={{ color: 'var(--texto-tenue)', fontSize: '0.86rem', marginTop: 0 }}>
-              Poderes que se llevan en la sangre, del Dominus Exxet. Se pagan con los mismos
-              Puntos de Creación que las ventajas, pero además dan{' '}
-              <strong>+1 al ajuste de nivel</strong> por muchos que tengas: no suben tus bonos,
-              sólo encarecen la experiencia. No se pueden coger al subir de nivel — o naces con
-              ellos o no.
-            </p>
+          <Seccion
+            titulo="Desventajas"
+            resumen={
+              personaje.desventajas.length
+                ? `${personaje.desventajas.length} · +${ficha.puntosCreacion.ganados} PC`
+                : 'ninguna'
+            }
+            abierta={personaje.desventajas.length > 0}
+            ayuda="Dan Puntos de Creación, con un tope de 3."
+          >
+            <Selector
+              opciones={ventajas.filter((v) => v.esDesventaja)}
+              claveDe={(v) => v.nombre}
+              detalleDe={(v) => `+${Math.abs(v.coste)} PC${EFECTOS[v.nombre] ? ' · automática' : ''}`}
+              grupoDe={(v) => v.tipo}
+              seleccionadas={personaje.desventajas}
+              onCambiar={(v) => set({ desventajas: v })}
+              etiquetaBusqueda="Buscar desventaja"
+            />
+          </Seccion>
+
+          <Seccion
+            titulo="Legados de Sangre"
+            resumen={cuenta(personaje.legados?.length ?? 0, 'elegido', 'elegidos')}
+            abierta={(personaje.legados ?? []).length > 0}
+            ayuda={
+              <>
+                Poderes que se llevan en la sangre, del Dominus Exxet. Se pagan con los mismos
+                Puntos de Creación que las ventajas, pero además dan{' '}
+                <strong>+1 al ajuste de nivel</strong> por muchos que tengas: no suben tus bonos,
+                sólo encarecen la experiencia. No se pueden coger al subir de nivel — o naces con
+                ellos o no.
+              </>
+            }
+          >
             <Selector
               opciones={legados}
               claveDe={(l) => l.legado}
@@ -562,23 +608,7 @@ export function EditorPersonaje({ personaje, datos, catalogo, reglamento, onCamb
                 })}
               </div>
             )}
-          </section>
-
-          <section className="panel">
-            <h2>Desventajas</h2>
-            <p style={{ color: 'var(--texto-tenue)', fontSize: '0.86rem', marginTop: 0 }}>
-              Dan Puntos de Creación, con un tope de 3.
-            </p>
-            <Selector
-              opciones={ventajas.filter((v) => v.esDesventaja)}
-              claveDe={(v) => v.nombre}
-              detalleDe={(v) => `+${Math.abs(v.coste)} PC${EFECTOS[v.nombre] ? ' · automática' : ''}`}
-              grupoDe={(v) => v.tipo}
-              seleccionadas={personaje.desventajas}
-              onCambiar={(v) => set({ desventajas: v })}
-              etiquetaBusqueda="Buscar desventaja"
-            />
-          </section>
+          </Seccion>
         </>
       )}
 
@@ -594,13 +624,62 @@ export function EditorPersonaje({ personaje, datos, catalogo, reglamento, onCamb
 
       {pestana === 'poderes' && (
         <>
-          <section className="panel" style={{ marginBottom: 16 }}>
-            <h2>Teorema de Magia</h2>
-            <p style={{ color: 'var(--texto-tenue)', fontSize: '0.86rem', marginTop: 0 }}>
-              Cómo formula tu personaje la magia. Sólo se puede <strong>usar</strong> uno:
-              puede conocer los demás, pero no beneficiarse de sus reglas especiales. Las
-              cuentas de cada Teorema están en la pestaña «Lo sobrenatural».
-            </p>
+          {/*
+            El orden es por cuántos personajes lo usan, no por el orden del manual: primero
+            conjuros y poderes psíquicos, que son lo que tiene casi cualquiera que lance
+            algo, y detrás lo de Arcana y los Espíritus del Alma, que son casos concretos.
+            Antes estaba al revés y había que bajar tres pantallas para llegar a lo normal.
+          */}
+          <Seccion
+            titulo="Conjuros"
+            resumen={cuenta(personaje.conjuros.length, 'elegido', 'elegidos')}
+            abierta={personaje.conjuros.length > 0 || ficha.zeon.valor > 0}
+            ayuda={
+              <>
+                Zeón {ficha.zeon.valor} · ACT {ficha.act.valor}. Sin el Don y sin Nivel de Magia
+                no podrás lanzarlos, pero puedes anotarlos igualmente.
+              </>
+            }
+          >
+            <Selector
+              opciones={conjuros}
+              claveDe={(c) => c.conjuro}
+              detalleDe={(c) => `Nv ${c.nivel} · ${c.zeonBase ?? '—'} Zeón`}
+              grupoDe={(c) => c.via}
+              seleccionadas={personaje.conjuros}
+              onCambiar={(v) => set({ conjuros: v })}
+              etiquetaBusqueda="Buscar conjuro"
+            />
+          </Seccion>
+
+          <Seccion
+            titulo="Poderes psíquicos"
+            resumen={cuenta(personaje.poderesPsiquicos.length, 'elegido', 'elegidos')}
+            abierta={personaje.poderesPsiquicos.length > 0}
+          >
+            <Selector
+              opciones={poderes}
+              claveDe={(p) => p.poder}
+              detalleDe={(p) => `Nivel ${p.nivel}`}
+              grupoDe={(p) => p.disciplina}
+              seleccionadas={personaje.poderesPsiquicos}
+              onCambiar={(v) => set({ poderesPsiquicos: v })}
+              etiquetaBusqueda="Buscar poder"
+            />
+          </Seccion>
+
+          <Seccion
+            titulo="Teorema de Magia"
+            resumen={personaje.teorema ?? 'General'}
+            abierta={false}
+            ayuda={
+              <>
+                Cómo formula tu personaje la magia. Sólo se puede <strong>usar</strong> uno:
+                puede conocer los demás, pero no beneficiarse de sus reglas especiales. Las
+                cuentas de cada Teorema están en la pestaña «Lo sobrenatural».
+              </>
+            }
+          >
             <div className="campo" style={{ maxWidth: 420 }}>
               <label htmlFor="teorema">Teorema</label>
               <select
@@ -619,39 +698,26 @@ export function EditorPersonaje({ personaje, datos, catalogo, reglamento, onCamb
                 )}
               </select>
             </div>
-          </section>
+          </Seccion>
 
-          <EditorSheele
-            elecciones={personaje.sheele ?? SHEELE_VACIA}
-            senor={{
-              presencia: ficha.presencia.valor,
-              // La presencia **base** es la que dobla la Proyección Mágica de la Sheele.
-              presenciaBase: Math.floor(ficha.pdTotales / 20),
-              turnoDesarmado: ficha.combate.turnoNatural.valor,
-              resistencias: Object.fromEntries(
-                Object.entries(ficha.resistencias).map(([k, v]) => [k, v.valor]),
-              ),
-              nivel: ficha.nivel,
-              controlar: ficha.secundarias.Controlar?.valor ?? 0,
-            }}
-            tipos={(datos.tablas.tiposSheele ?? []) as unknown as TipoSheele[]}
-            habilidadesDelSenor={Object.fromEntries(
-              Object.entries(ficha.secundarias).map(([k, v]) => [k, v.valor]),
-            )}
-            mejoras={mejorasSheele}
-            actDelSenor={ficha.act.valor}
-            onCambiar={(sheele) => onCambiar({ ...personaje, sheele })}
-          />
-
-          <section className="panel" style={{ marginBottom: 16 }}>
-            <h2>Metamagia · Arcana Shepirah</h2>
-            <p style={{ color: 'var(--texto-tenue)', fontSize: '0.86rem', marginTop: 0 }}>
-              Las esferas se pagan con puntos de <strong>Nivel de Magia</strong>, no con PD. Cada
-              una pide además un nivel mínimo de personaje, y ese requisito no se salta ni
-              teniendo puntos de sobra. Empiezas por una esfera sin requisito y te mueves sólo a
-              las que estén unidas por una línea en el árbol del manual: <em>esa</em> parte la
-              lleváis vosotros, porque el Excel no guarda las uniones.
-            </p>
+          <Seccion
+            titulo="Metamagia · Arcana Shepirah"
+            resumen={
+              (personaje.metamagia ?? []).length
+                ? `${cuenta(personaje.metamagia?.length ?? 0, 'esfera', 'esferas')} · ${ficha.metamagia.disponible} libre`
+                : 'sin esferas'
+            }
+            abierta={(personaje.metamagia ?? []).length > 0}
+            ayuda={
+              <>
+                Las esferas se pagan con puntos de <strong>Nivel de Magia</strong>, no con PD. Cada
+                una pide además un nivel mínimo de personaje, y ese requisito no se salta ni
+                teniendo puntos de sobra. Empiezas por una esfera sin requisito y te mueves sólo a
+                las que estén unidas por una línea en el árbol del manual: <em>esa</em> parte la
+                lleváis vosotros, porque el Excel no guarda las uniones.
+              </>
+            }
+          >
             <p style={{ margin: '0 0 12px', fontSize: '0.95rem' }}>
               Nivel de Magia <strong className="destacado">{ficha.nivelMagia.valor}</strong> ·
               gastado en esferas{' '}
@@ -674,44 +740,41 @@ export function EditorPersonaje({ personaje, datos, catalogo, reglamento, onCamb
               onCambiar={(v) => set({ metamagia: v })}
               etiquetaBusqueda="Buscar esfera"
             />
-          </section>
+          </Seccion>
 
-          <section className="panel" style={{ marginBottom: 16 }}>
-            <h2>Conjuros</h2>
-            <p style={{ color: 'var(--texto-tenue)', fontSize: '0.86rem', marginTop: 0 }}>
-              Zeón {ficha.zeon.valor} · ACT {ficha.act.valor}. Sin el Don y sin Nivel de Magia
-              no podrás lanzarlos, pero puedes anotarlos igualmente.
-            </p>
-            <Selector
-              opciones={conjuros}
-              claveDe={(c) => c.conjuro}
-              detalleDe={(c) => `Nv ${c.nivel} · ${c.zeonBase ?? '—'} Zeón`}
-              grupoDe={(c) => c.via}
-              seleccionadas={personaje.conjuros}
-              onCambiar={(v) => set({ conjuros: v })}
-              etiquetaBusqueda="Buscar conjuro"
-            />
-          </section>
-
-          <section className="panel">
-            <h2>Poderes psíquicos</h2>
-            <Selector
-              opciones={poderes}
-              claveDe={(p) => p.poder}
-              detalleDe={(p) => `Nivel ${p.nivel}`}
-              grupoDe={(p) => p.disciplina}
-              seleccionadas={personaje.poderesPsiquicos}
-              onCambiar={(v) => set({ poderesPsiquicos: v })}
-              etiquetaBusqueda="Buscar poder"
-            />
-          </section>
+          <EditorSheele
+            elecciones={personaje.sheele ?? SHEELE_VACIA}
+            senor={{
+              presencia: ficha.presencia.valor,
+              // La presencia **base** es la que dobla la Proyección Mágica de la Sheele.
+              presenciaBase: Math.floor(ficha.pdTotales / 20),
+              turnoDesarmado: ficha.combate.turnoNatural.valor,
+              resistencias: Object.fromEntries(
+                Object.entries(ficha.resistencias).map(([k, v]) => [k, v.valor]),
+              ),
+              nivel: ficha.nivel,
+              controlar: ficha.secundarias.Controlar?.valor ?? 0,
+            }}
+            tipos={(datos.tablas.tiposSheele ?? []) as unknown as TipoSheele[]}
+            habilidadesDelSenor={Object.fromEntries(
+              Object.entries(ficha.secundarias).map(([k, v]) => [k, v.valor]),
+            )}
+            mejoras={mejorasSheele}
+            actDelSenor={ficha.act.valor}
+            onCambiar={(sheele) => onCambiar({ ...personaje, sheele })}
+          />
         </>
       )}
 
       {pestana === 'equipo' && (
         <>
-          <section className="panel" style={{ marginBottom: 16 }}>
-            <h2>Armadura</h2>
+          <Seccion
+            titulo="Armadura"
+            resumen={
+              cuenta(personaje.equipo.armadura.length, 'pieza', 'piezas', 'sin armadura')
+            }
+            abierta={personaje.equipo.armadura.length > 0}
+          >
             {personaje.equipo.armadura.map((pieza, i) => (
               <div key={i} style={{ display: 'flex', gap: 8, marginBottom: 8, alignItems: 'center' }}>
                 <select
@@ -783,10 +846,13 @@ export function EditorPersonaje({ personaje, datos, catalogo, reglamento, onCamb
               {ficha.combate.proteccion.penalizadorAccionFisica < 0 &&
                 ` · ${ficha.combate.proteccion.penalizadorAccionFisica} a toda acción física`}
             </p>
-          </section>
+          </Seccion>
 
-          <section className="panel">
-            <h2>Armas</h2>
+          <Seccion
+            titulo="Armas"
+            resumen={cuenta(personaje.equipo.armas.length, 'equipada', 'equipadas', 'ninguna')}
+            abierta={personaje.equipo.armas.length > 0}
+          >
             {personaje.equipo.armas.map((a, i) => {
               const cambiar = (cambios: Partial<typeof a>) => {
                 const nuevas = [...personaje.equipo.armas];
@@ -880,7 +946,7 @@ export function EditorPersonaje({ personaje, datos, catalogo, reglamento, onCamb
             >
               Añadir arma
             </button>
-          </section>
+          </Seccion>
         </>
       )}
     </div>
