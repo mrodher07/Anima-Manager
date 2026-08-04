@@ -100,6 +100,7 @@ export function useCampanas() {
       actualizadoEn: new Date().toISOString(),
       nombre,
       paquetes: ['core-exxet'],
+      sistemaCombate: 'normal',
       ajustes: {},
       notasSesion: [],
       personalizados: PERSONALIZADOS_VACIOS,

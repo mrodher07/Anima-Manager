@@ -18,6 +18,8 @@ import { useEnemigos } from './VistaBestiario';
 import { Imagen } from './Imagen';
 import { useColeccion } from './estado';
 import type { Catalogo } from '../datos/paquetes';
+import { CombateAlternativo } from './CombateAlternativo';
+import type { SistemaCombate } from '../motor/combateAlternativo';
 
 interface Props {
   personaje: Personaje;
@@ -25,6 +27,8 @@ interface Props {
   catalogo: Catalogo;
   reglamento: Reglamento;
   campanaId: string | null;
+  /** El de la campaña activa. Sólo cambia cuánto dura cada asalto. */
+  sistemaCombate: SistemaCombate;
   onCambiar: (p: Personaje) => void;
 }
 
@@ -42,7 +46,15 @@ function describeTirada(t: Tirada): string {
   return `${t.total}`;
 }
 
-export function VistaMesa({ personaje, datos, catalogo, reglamento, campanaId, onCambiar }: Props) {
+export function VistaMesa({
+  personaje,
+  datos,
+  catalogo,
+  reglamento,
+  campanaId,
+  sistemaCombate,
+  onCambiar,
+}: Props) {
   const { enemigos, guardar: guardarEnemigo } = useEnemigos(campanaId);
   const [enemigoId, setEnemigoId] = useState<string>('');
   const ficha = calcular(personaje, datos, reglamento);
@@ -203,8 +215,18 @@ export function VistaMesa({ personaje, datos, catalogo, reglamento, campanaId, o
     anotar(`${nombre}: ${valor + t.total}`, `${valor} + ${describeTirada(t)}`);
   };
 
+  // Para el aviso del tope recomendado del Combate Dramático: la media de lo que este
+  // personaje sabe hacer en combate.
+  const habilidadMedia = Math.round(
+    (ficha.combate.HAtaque.valor +
+      Math.max(ficha.combate.HParada.valor, ficha.combate.HEsquiva.valor)) /
+      2,
+  );
+
   return (
     <div>
+      <CombateAlternativo sistema={sistemaCombate} habilidadMedia={habilidadMedia} />
+
       <section className="panel" style={{ marginBottom: 16 }}>
         <h2>Recursos</h2>
         <div className="rejilla">

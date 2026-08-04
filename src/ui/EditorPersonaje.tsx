@@ -1,6 +1,8 @@
 import { useRef, useState } from 'react';
 import type { Catalogo } from '../datos/paquetes';
 import { useColeccion } from './estado';
+import { EditorSheele } from './EditorSheele';
+import { SHEELE_VACIA, type TipoSheele } from '../motor/sheele';
 import {
   CARACTERISTICAS,
   GRUPOS_SECUNDARIAS,
@@ -92,6 +94,7 @@ export function EditorPersonaje({ personaje, datos, catalogo, reglamento, onCamb
   const retrato = useRef<HTMLInputElement>(null);
   const razas = useColeccion(catalogo, 'razas');
   const teoremas = useColeccion(catalogo, 'teoremas');
+  const mejorasSheele = useColeccion(catalogo, 'sheele');
   const categorias = useColeccion(catalogo, 'categorias');
   const armas = useColeccion(catalogo, 'armas');
   const armaduras = useColeccion(catalogo, 'armaduras');
@@ -617,6 +620,28 @@ export function EditorPersonaje({ personaje, datos, catalogo, reglamento, onCamb
               </select>
             </div>
           </section>
+
+          <EditorSheele
+            elecciones={personaje.sheele ?? SHEELE_VACIA}
+            senor={{
+              presencia: ficha.presencia.valor,
+              // La presencia **base** es la que dobla la Proyección Mágica de la Sheele.
+              presenciaBase: Math.floor(ficha.pdTotales / 20),
+              turnoDesarmado: ficha.combate.turnoNatural.valor,
+              resistencias: Object.fromEntries(
+                Object.entries(ficha.resistencias).map(([k, v]) => [k, v.valor]),
+              ),
+              nivel: ficha.nivel,
+              controlar: ficha.secundarias.Controlar?.valor ?? 0,
+            }}
+            tipos={(datos.tablas.tiposSheele ?? []) as unknown as TipoSheele[]}
+            habilidadesDelSenor={Object.fromEntries(
+              Object.entries(ficha.secundarias).map(([k, v]) => [k, v.valor]),
+            )}
+            mejoras={mejorasSheele}
+            actDelSenor={ficha.act.valor}
+            onCambiar={(sheele) => onCambiar({ ...personaje, sheele })}
+          />
 
           <section className="panel" style={{ marginBottom: 16 }}>
             <h2>Metamagia · Arcana Shepirah</h2>

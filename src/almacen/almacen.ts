@@ -9,6 +9,7 @@
 
 import { migrarPersonaje, type Personaje } from '../motor/personaje';
 import type { AjustesMesa } from '../motor/reglamento';
+import type { SistemaCombate } from '../motor/combateAlternativo';
 import { obtenerImagen, type Imagen, type ImagenInfo } from './imagenes';
 import type { TipoDano } from '../motor/combate';
 import { PERSONALIZADOS_VACIOS, type Personalizados } from '../datos/paquetes';
@@ -73,6 +74,13 @@ export interface Campana {
   descripcion?: string;
   /** Paquetes de contenido activos en esta campaña. */
   paquetes: string[];
+  /**
+   * Sistema de combate de la mesa. El **dramático** sólo estira la duración de cada asalto
+   * para que un duelo entre leyendas se sienta épico; no cambia ninguna otra regla. Se
+   * decide por campaña porque el manual pide que todos lo sepan desde el principio.
+   * (*Los que Caminaron con Nosotros*, cap. 4.)
+   */
+  sistemaCombate?: SistemaCombate;
   /** Reglas caseras de la mesa. */
   ajustes: AjustesMesa;
   /** Diario de la campaña: lo que pasó en cada sesión. Lo escribe la mesa. */

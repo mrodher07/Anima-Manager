@@ -168,6 +168,7 @@ export function App() {
                 catalogo={catalogo}
                 reglamento={reglamento}
                 campanaId={campanaId}
+                sistemaCombate={campana?.sistemaCombate ?? 'normal'}
                 onCambiar={guardar}
               />
             )}
@@ -329,6 +330,54 @@ export function App() {
                   </div>
                 )}
               </>
+            )}
+
+            <h2 style={{ marginTop: 22 }}>Sistema de combate</h2>
+            <p style={{ color: 'var(--texto-tenue)', fontSize: '0.86rem', marginTop: 0 }}>
+              El <strong>Combate Dramático</strong> no cambia ninguna regla: sólo estira la
+              duración de cada asalto para que un duelo entre leyendas se sienta épico. Se
+              elige aquí y no en mitad de la partida porque el manual pide que todos lo sepan
+              desde el principio del combate. El <strong>Combate de Masas</strong> no hace
+              falta activarlo: está siempre disponible en la pestaña Mesa.
+            </p>
+            {campana ? (
+              <div className="lista-seleccion">
+                {(
+                  [
+                    ['normal', 'Normal', 'Cada asalto dura tres segundos, como siempre.'],
+                    [
+                      'dramatico',
+                      'Combate Dramático',
+                      'El primer asalto dura tres segundos y a partir de ahí se dobla: 6, 12, 24… ' +
+                        'y desde el quinto, un minuto.',
+                    ],
+                  ] as const
+                ).map(([id, texto, ayuda]) => {
+                  const elegido = (campana.sistemaCombate ?? 'normal') === id;
+                  return (
+                    <label key={id} className={elegido ? 'elegida' : undefined}>
+                      <input
+                        type="radio"
+                        name="sistema-combate"
+                        checked={elegido}
+                        onChange={() =>
+                          void guardarCampana({ ...campana, sistemaCombate: id })
+                        }
+                      />
+                      <span>
+                        {texto}
+                        <small style={{ display: 'block', color: 'var(--texto-debil)' }}>
+                          {ayuda}
+                        </small>
+                      </span>
+                    </label>
+                  );
+                })}
+              </div>
+            ) : (
+              <p style={{ color: 'var(--texto-debil)' }}>
+                Elige o crea una campaña para decidir su sistema de combate.
+              </p>
             )}
 
             <h2 style={{ marginTop: 22 }}>Manuales</h2>

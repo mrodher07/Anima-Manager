@@ -58,7 +58,7 @@ En el **IndexedDB del navegador**, en el dispositivo donde la abres. Eso signifi
 ### Otros comandos
 
 ```bash
-npm test         # 356 pruebas del motor de reglas
+npm test         # 400 pruebas del motor de reglas
 npm run build    # compilar (incluye la comprobación de tipos)
 ```
 
@@ -69,12 +69,12 @@ npm run build    # compilar (incluye la comprobación de tipos)
 | **Personajes** | Lista de fichas, crear, exportar e importar en JSON y en Excel |
 | **Ficha** | Vista de consulta con recursos, características, resistencias, combate y secundarias |
 | **Editar** | Identidad, características, ventajas, habilidades, equipo y poderes |
-| **Mesa** | Jugar: gastar recursos, tirar iniciativa, resolver ataques, tiradas rápidas |
+| **Mesa** | Jugar: gastar recursos, tirar iniciativa, resolver ataques, Combate de Masas |
 | **Bestiario** | Fichas de enemigo con imagen; 90 criaturas importables de los manuales |
 | **Lo sobrenatural** | Invocaciones, Encarnaciones, Teoremas, Nodos, rituales y grimorios, con sus calculadoras |
 | **Contenido propio** | Las 26 colecciones del catálogo, personalizables por tu mesa |
 | **Galería** | Mapas, PNJs, enemigos y objetos en imágenes |
-| **Campañas** | Reglas caseras, manuales activos y diario de sesiones |
+| **Campañas** | Sistema de combate, reglas caseras, manuales activos y diario de sesiones |
 | **Reglas** | Reescribir o desactivar cualquier fórmula, y restablecerla |
 
 ## Cómo está montado
@@ -89,6 +89,8 @@ src/motor/       Motor de reglas. Funciones puras, sin interfaz
   reglamento.ts    Catálogo de reglas configurable por mesa
   personaje.ts     Modelo de ficha y derivación de valores
   combate.ts       Armadura, armas y resolución de asaltos
+  combateAlternativo.ts  Combate Dramático y Combate de Masas
+  sheele.ts        Espíritus del Alma: casi todo sale de su señor
   dados.ts         d100 con tiradas abiertas y pifias
 src/datos/       Paquetes de contenido combinables (un manual = un paquete)
 src/almacen/     Persistencia en IndexedDB, exportar e importar
@@ -144,6 +146,21 @@ la mesa no es calculable, y la herramienta no debe fingir que sí. Por eso:
 - Las tiradas se pueden hacer con la app o con dados de verdad y anotar el resultado: los
   recursos se ajustan a mano con los botones de ±1/±5/±10.
 
+## Sistemas de combate
+
+Cada campaña elige el suyo en la pestaña **Campañas**, antes de empezar:
+
+- **Normal**: cada asalto dura tres segundos, como siempre.
+- **Combate Dramático**: no cambia ninguna regla, sólo estira el asalto para que un duelo
+  entre leyendas se sienta épico. El primero dura tres segundos y a partir de ahí se dobla —
+  6, 12, 24— hasta quedarse en un minuto desde el quinto. Se elige aquí y no en mitad de la
+  partida porque el manual pide que todos lo sepan desde el principio del combate.
+
+El **Combate de Masas** no hace falta activarlo: está siempre en la pestaña Mesa. Convierte
+un ejército entero en un solo contrincante con acumulación de daño, y calcula su aguante,
+su bono al ataque según cuántos son, cuántos van cayendo, el multiplicador de un ataque en
+área y qué le hace un conjuro que cubra terreno.
+
 ## Excel
 
 Cada ficha se puede bajar como **.xlsx** y volver a subir. El libro tiene dos naturalezas a
@@ -184,12 +201,10 @@ lugar de fallar en silencio.
 
 Está anotado al final de `docs/FORMULAS-VERIFICADAS.md`. En resumen:
 
-- Del **Arcana Exxet** queda sólo el editor de Sheele en la ficha.
-- De **Los que Caminaron con Nosotros** quedan las reglas de **Combate de Masas** y
-  **Combate Dramático** (cap. 4): son dos sistemas de combate alternativos completos, no
-  datos, así que piden su propio motor y su propia pantalla de mesa.
-- De las 292 ventajas, 74 modifican la ficha solas; el resto se eligen igual y las que
-  tienen efecto no automatizable lo muestran como recordatorio.
+Los cuatro manuales están completos. Lo único que sigue sin automatizarse por decisión
+propia: de las 292 ventajas, 74 modifican la ficha solas; el resto se eligen igual y las que
+tienen un efecto no automatizable lo muestran como recordatorio en vez de fingir que se
+aplican.
 
 ## Manuales incorporados
 

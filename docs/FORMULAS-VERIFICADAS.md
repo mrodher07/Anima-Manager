@@ -1115,15 +1115,71 @@ máximo: se puede hacer uno de grado 3 con ocho Menores y ningún Mayor, y el ma
 > ⚠ **Errata del manual**: el texto remite a la «Tabla 24» para la presencia base requerida,
 > pero esa es la de Otros Modificadores. La presencia está en la **Tabla 25**.
 
+### Sistemas de combate alternativos ✔
+
+Capítulo 4 de *Los que Caminaron con Nosotros*. Son dos cosas muy distintas, y por eso se
+tratan distinto:
+
+**Combate Dramático.** No cambia **ninguna** regla: sólo estira cuánto dura cada asalto para
+que un duelo entre leyendas se sienta épico. Se elige **por campaña**, porque el manual pide
+que todos lo sepan desde el principio del combate. El primer asalto dura tres segundos —la
+toma de contacto— y a partir de ahí se dobla: 6, 12, 24, y desde el quinto un minuto fijo.
+El manual recomienda no pasar de doce segundos con habilidad media de 150 o menos, ni de un
+minuto con 200 o menos; eso sale como aviso, no como límite. Y un asalto vuelve a durar tres
+segundos mientras alguien está apresado o paralizado.
+
+**Combate de Masas.** Está siempre disponible, sin activar nada: es una herramienta para
+resolver una escena, no una forma de jugar. Convierte un ejército en un solo contrincante
+con acumulación de daño. Las pruebas reproducen **los seis ejemplos del manual**:
+
+| Ejemplo | Resultado |
+|---|---|
+| 10 soldados de 140 PV | 1.000 de aguante |
+| 25 pretorianos de 210 PV | 5.000 |
+| 1.200 soldados de 120 PV | 21.000 (10.000 por los cien primeros + 11.000 por el resto) |
+| 10 cadáveres animados de 345 PV, con acumulación | 1.650 (300 del primero + 1.350 de los otros nueve) |
+| 15 drones a 900 de aguante | han caído 6 |
+| 20 guardias contra 4 personajes | +50 al ataque, no +90 |
+
+Dos reglas que es fácil pasar por alto y que la calculadora aplica sola: el bono de la Tabla
+1 se calcula **repartiendo** los enemigos entre los personajes, porque no pueden luchar
+todos contra el mismo; y el multiplicador al daño de un ataque en área **nunca puede pasar
+de lo que permite el tamaño de la masa**, así que un conjuro de medio kilómetro contra ocho
+adversarios se queda en ×4.
+
+### Sheele: el editor ✔
+
+Arcana Exxet, cap. 7. Lo que hace especial a una Sheele es que **no se calcula como una
+criatura normal**: no tiene PD, no desarrolla habilidades, y casi todos sus valores salen de
+su señor. Por eso vive en `src/motor/sheele.ts` y no como un caso más de `personaje.ts` —
+aplicarle la ficha normal daría números equivocados en casi todas las casillas.
+
+| Valor | De dónde sale |
+|---|---|
+| Puntos de Vida | **el doble de la presencia del señor** — no de su Constitución |
+| Turno | el del señor **sin armas** |
+| Resistencias | las mismas que las del señor |
+| Proyección Mágica | el doble de la presencia **base**, y **sin** sumar el bono de Destreza |
+| Características | las de su elemento, +1 por **cada** nivel del señor (no uno cada dos) |
+| Habilidades | las de su elemento, +10 a cinco distintas por nivel del señor |
+
+Y un techo que se avisa: *«ninguna de ellas puede tener jamás una habilidad basada en el
+conocimiento superior al valor que posee su señor en esa misma habilidad»*.
+
+La **Potenciación Mística** reproduce el ejemplo del manual: con Controlar 120 el tope son
+40 puntos de Zeon, que dan +40 a una acción de la Sheele, y sólo +20 si está en Forma de
+Alma. Ese medio no es la mitad exacta sino *«redondeado en grupos de 5 hacia abajo»*, así
+que 55 en Forma de Alma siguen dando +25. **Ceder ACT** también sale del manual: un
+hechicero con ACT 60 que cede 20 se queda con 40 y su Sheele acumula 20.
+
+> ⚠ **Errata del manual**: la Tabla 13 imprime «31-40» en la fila de Naturaleza y **vuelve a
+> imprimir 31-40** en la de Tierra, dejando 21-30 sin asignar. Se corrige a 21-30, que es lo
+> único que encaja para que el d100 quede cubierto sin huecos.
+
 ## Pendiente de modelar
 - **Dominus Exxet**: completo.
-- **Arcana Exxet**: hechos los caps. 2, 5, 6, 9 y 10, el Nivel de Magia, la Metamagia y los
-  datos de Sheele. Falta sólo el **editor de Sheele en la ficha**.
-- **Los que Caminaron con Nosotros**: hechos los caps. 1, 2 y 3 y los dos apéndices. Falta el
-  **cap. 4**, que son dos sistemas de combate alternativos completos —Combate de Masas y
-  Combate Dramático— y no datos: cada uno es un subsistema con sus propias reglas de
-  iniciativa, daño y resolución, así que pide su propio motor y su propia pantalla de mesa,
-  no una tabla más. Los tres PDF son
+- **Arcana Exxet**: completo.
+- **Los que Caminaron con Nosotros**: completo. Los tres PDF son
   **escaneos sin capa de texto**, así que todo esto se ha leído a ojo página a página.
 - **Conjuros y poderes psíquicos seleccionados** como listas del personaje.
 - Bestiario y creación de seres.

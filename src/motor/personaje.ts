@@ -7,6 +7,7 @@
  */
 
 import { Reglamento, REGLAMENTO_OFICIAL, type ClaveRegla } from './reglamento';
+import type { EleccionesSheele } from './sheele';
 import {
   calcularArma,
   combinarArmadura,
@@ -169,6 +170,12 @@ export interface Personaje {
    * Vacío o «General» es el sistema del manual básico.
    */
   teorema?: string;
+
+  /**
+   * Espíritu del Alma (Arcana Exxet, cap. 7). No es un personaje aparte: casi todos sus
+   * valores salen de este, así que vive dentro de su ficha.
+   */
+  sheele?: EleccionesSheele;
 
   /** Conjuros aprendidos, por nombre. */
   conjuros: string[];
