@@ -1,0 +1,1322 @@
+[
+ {
+  "nombre": "Resistencia al cansancio",
+  "gnosis": 0,
+  "coste": 10,
+  "implementada": 1,
+  "_seccion": "VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Don",
+  "gnosis": 5,
+  "coste": 30,
+  "implementada": 2,
+  "_seccion": "VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Acceso a 1 disciplina psíquica",
+  "gnosis": 5,
+  "coste": 15,
+  "_seccion": "VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Acceso a disciplinas psíquicas",
+  "gnosis": 5,
+  "coste": 30,
+  "_seccion": "VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Sentido agudizado Gusto",
+  "gnosis": 0,
+  "coste": 10,
+  "implementada": 1,
+  "_seccion": "VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Sentido agudizado Oído",
+  "gnosis": 0,
+  "coste": 10,
+  "implementada": 1,
+  "_seccion": "VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Sentido agudizado Olfato",
+  "gnosis": 0,
+  "coste": 10,
+  "implementada": 1,
+  "_seccion": "VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Sentido agudizado Tacto",
+  "gnosis": 0,
+  "coste": 10,
+  "implementada": 1,
+  "_seccion": "VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Sentido agudizado Vista",
+  "gnosis": 0,
+  "coste": 10,
+  "implementada": 1,
+  "_seccion": "VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Afinidad",
+  "gnosis": 5,
+  "coste": 10,
+  "_seccion": "VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Car. físicas sobrehumanas",
+  "gnosis": 0,
+  "coste": 20,
+  "implementada": 1,
+  "_seccion": "VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Car. anímicas sobrehumanas",
+  "gnosis": 5,
+  "coste": 20,
+  "implementada": 1,
+  "_seccion": "VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Car. físicas sobrenaturales",
+  "gnosis": 20,
+  "coste": 40,
+  "implementada": 1,
+  "_seccion": "VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Car. anímicas sobrenaturales",
+  "gnosis": 20,
+  "coste": 40,
+  "implementada": 1,
+  "_seccion": "VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Car. físicas divinas",
+  "gnosis": 30,
+  "coste": 80,
+  "implementada": 1,
+  "_seccion": "VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Car. anímicas divinas",
+  "gnosis": 35,
+  "coste": 80,
+  "implementada": 1,
+  "_seccion": "VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Característica incrementada AGI +1",
+  "gnosis": 0,
+  "coste": 20,
+  "implementada": 1,
+  "_seccion": "VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Característica incrementada AGI +2",
+  "gnosis": 5,
+  "coste": 40,
+  "implementada": 1,
+  "_seccion": "VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Característica incrementada AGI +3",
+  "gnosis": 15,
+  "coste": 60,
+  "implementada": 1,
+  "_seccion": "VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Característica incrementada AGI +4",
+  "gnosis": 20,
+  "coste": 120,
+  "_seccion": "VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Característica incrementada AGI +5",
+  "gnosis": 25,
+  "coste": 180,
+  "_seccion": "VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Característica incrementada CON +1",
+  "gnosis": 0,
+  "coste": 20,
+  "implementada": 1,
+  "_seccion": "VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Característica incrementada CON +2",
+  "gnosis": 5,
+  "coste": 40,
+  "implementada": 1,
+  "_seccion": "VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Característica incrementada CON +3",
+  "gnosis": 15,
+  "coste": 60,
+  "implementada": 1,
+  "_seccion": "VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Característica incrementada CON +4",
+  "gnosis": 20,
+  "coste": 120,
+  "_seccion": "VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Característica incrementada CON +5",
+  "gnosis": 25,
+  "coste": 180,
+  "_seccion": "VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Característica incrementada DES +1",
+  "gnosis": 0,
+  "coste": 20,
+  "implementada": 1,
+  "_seccion": "VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Característica incrementada DES +2",
+  "gnosis": 5,
+  "coste": 40,
+  "implementada": 1,
+  "_seccion": "VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Característica incrementada DES +3",
+  "gnosis": 15,
+  "coste": 60,
+  "implementada": 1,
+  "_seccion": "VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Característica incrementada DES +4",
+  "gnosis": 20,
+  "coste": 120,
+  "_seccion": "VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Característica incrementada DES +5",
+  "gnosis": 25,
+  "coste": 180,
+  "_seccion": "VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Característica incrementada FUE +1",
+  "gnosis": 0,
+  "coste": 20,
+  "implementada": 1,
+  "_seccion": "VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Característica incrementada FUE +2",
+  "gnosis": 5,
+  "coste": 40,
+  "implementada": 1,
+  "_seccion": "VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Característica incrementada FUE +3",
+  "gnosis": 15,
+  "coste": 60,
+  "implementada": 1,
+  "_seccion": "VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Característica incrementada FUE +4",
+  "gnosis": 20,
+  "coste": 120,
+  "_seccion": "VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Característica incrementada FUE +5",
+  "gnosis": 25,
+  "coste": 180,
+  "_seccion": "VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Característica incrementada INT +1",
+  "gnosis": 0,
+  "coste": 20,
+  "implementada": 1,
+  "_seccion": "VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Característica incrementada INT +2",
+  "gnosis": 5,
+  "coste": 40,
+  "implementada": 1,
+  "_seccion": "VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Característica incrementada INT +3",
+  "gnosis": 15,
+  "coste": 60,
+  "implementada": 1,
+  "_seccion": "VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Característica incrementada INT +4",
+  "gnosis": 20,
+  "coste": 120,
+  "implementada": 1,
+  "_seccion": "VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Característica incrementada INT +5",
+  "gnosis": 25,
+  "coste": 180,
+  "implementada": 1,
+  "_seccion": "VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Característica incrementada PER +1",
+  "gnosis": 0,
+  "coste": 20,
+  "implementada": 1,
+  "_seccion": "VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Característica incrementada PER +2",
+  "gnosis": 5,
+  "coste": 40,
+  "implementada": 1,
+  "_seccion": "VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Característica incrementada PER +3",
+  "gnosis": 15,
+  "coste": 60,
+  "implementada": 1,
+  "_seccion": "VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Característica incrementada PER +4",
+  "gnosis": 20,
+  "coste": 120,
+  "_seccion": "VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Característica incrementada PER +5",
+  "gnosis": 25,
+  "coste": 180,
+  "_seccion": "VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Característica incrementada POD +1",
+  "gnosis": 0,
+  "coste": 20,
+  "implementada": 1,
+  "_seccion": "VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Característica incrementada POD +2",
+  "gnosis": 5,
+  "coste": 40,
+  "implementada": 1,
+  "_seccion": "VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Característica incrementada POD +3",
+  "gnosis": 15,
+  "coste": 60,
+  "implementada": 1,
+  "_seccion": "VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Característica incrementada POD +4",
+  "gnosis": 20,
+  "coste": 120,
+  "_seccion": "VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Característica incrementada POD +5",
+  "gnosis": 25,
+  "coste": 180,
+  "_seccion": "VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Característica incrementada VOL +1",
+  "gnosis": 0,
+  "coste": 20,
+  "implementada": 1,
+  "_seccion": "VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Característica incrementada VOL +2",
+  "gnosis": 5,
+  "coste": 40,
+  "implementada": 1,
+  "_seccion": "VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Característica incrementada VOL +3",
+  "gnosis": 15,
+  "coste": 60,
+  "implementada": 1,
+  "_seccion": "VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Característica incrementada VOL +4",
+  "gnosis": 20,
+  "coste": 120,
+  "_seccion": "VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Característica incrementada VOL +5",
+  "gnosis": 25,
+  "coste": 180,
+  "_seccion": "VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Tamaño no natural +1",
+  "gnosis": 0,
+  "coste": 10,
+  "implementada": 1,
+  "_seccion": "VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Tamaño no natural +2",
+  "gnosis": 0,
+  "coste": 10,
+  "implementada": 1,
+  "_seccion": "VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Tamaño no natural +3",
+  "gnosis": 0,
+  "coste": 10,
+  "implementada": 1,
+  "_seccion": "VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Tamaño no natural +4",
+  "gnosis": 0,
+  "coste": 10,
+  "implementada": 1,
+  "_seccion": "VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Tamaño no natural +5",
+  "gnosis": 0,
+  "coste": 10,
+  "implementada": 1,
+  "_seccion": "VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Tamaño no natural -1",
+  "gnosis": 0,
+  "coste": 10,
+  "implementada": 1,
+  "_seccion": "VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Tamaño no natural -2",
+  "gnosis": 0,
+  "coste": 10,
+  "implementada": 1,
+  "_seccion": "VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Tamaño no natural -3",
+  "gnosis": 0,
+  "coste": 10,
+  "implementada": 1,
+  "_seccion": "VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Tamaño no natural -4",
+  "gnosis": 0,
+  "coste": 10,
+  "implementada": 1,
+  "_seccion": "VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Tamaño no natural -5",
+  "gnosis": 0,
+  "coste": 10,
+  "implementada": 1,
+  "_seccion": "VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Ambidiestro",
+  "gnosis": 0,
+  "coste": 30,
+  "implementada": 1,
+  "_seccion": "VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Inhumanidad",
+  "gnosis": 0,
+  "coste": 10,
+  "implementada": 2,
+  "_seccion": "VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Zen",
+  "gnosis": 25,
+  "coste": 20,
+  "implementada": 2,
+  "_seccion": "VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Respiración acuática",
+  "gnosis": 0,
+  "coste": 10,
+  "_seccion": "VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Sin inconsciencia",
+  "gnosis": 5,
+  "coste": 10,
+  "_seccion": "VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Incansable",
+  "gnosis": 15,
+  "coste": 20,
+  "implementada": 1,
+  "_seccion": "VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "No respira",
+  "gnosis": 15,
+  "coste": 10,
+  "_seccion": "VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "No se alimenta",
+  "gnosis": 15,
+  "coste": 10,
+  "_seccion": "VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "No duerme",
+  "gnosis": 15,
+  "coste": 10,
+  "_seccion": "VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Inmune a venenos naturales",
+  "gnosis": 20,
+  "coste": 20,
+  "_seccion": "VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Inm. a enfermedades naturales",
+  "gnosis": 20,
+  "coste": 10,
+  "_seccion": "VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Inm. a fenómenos climáticos",
+  "gnosis": 15,
+  "coste": 10,
+  "_seccion": "VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Exención física",
+  "gnosis": 20,
+  "coste": 50,
+  "implementada": 2,
+  "_seccion": "VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Inm. a elemento: mitad daño",
+  "gnosis": 20,
+  "coste": 10,
+  "_seccion": "VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Inm. a elemento: completa",
+  "gnosis": 25,
+  "coste": 30,
+  "_seccion": "VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Inmunidad psicológica",
+  "gnosis": 10,
+  "coste": 20,
+  "_seccion": "VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Recuperación superior de magia",
+  "gnosis": 5,
+  "coste": 30,
+  "implementada": 1,
+  "_seccion": "VENTAJAS MÁGICAS ESENCIALES"
+ },
+ {
+  "nombre": "Con. Natural de vía Luz 20",
+  "gnosis": 10,
+  "coste": 10,
+  "implementada": 1,
+  "_seccion": "VENTAJAS MÁGICAS ESENCIALES"
+ },
+ {
+  "nombre": "Con. Natural de vía Luz 40",
+  "gnosis": 15,
+  "coste": 20,
+  "implementada": 1,
+  "_seccion": "VENTAJAS MÁGICAS ESENCIALES"
+ },
+ {
+  "nombre": "Con. Natural de vía Luz 60",
+  "gnosis": 20,
+  "coste": 30,
+  "implementada": 1,
+  "_seccion": "VENTAJAS MÁGICAS ESENCIALES"
+ },
+ {
+  "nombre": "Con. Natural de vía Luz 80",
+  "gnosis": 25,
+  "coste": 40,
+  "implementada": 1,
+  "_seccion": "VENTAJAS MÁGICAS ESENCIALES"
+ },
+ {
+  "nombre": "Con. Natural de vía Luz 90",
+  "gnosis": 30,
+  "coste": 50,
+  "implementada": 1,
+  "_seccion": "VENTAJAS MÁGICAS ESENCIALES"
+ },
+ {
+  "nombre": "Con. Natural de vía Oscuridad 20",
+  "gnosis": 10,
+  "coste": 10,
+  "implementada": 1,
+  "_seccion": "VENTAJAS MÁGICAS ESENCIALES"
+ },
+ {
+  "nombre": "Con. Natural de vía Oscuridad 40",
+  "gnosis": 15,
+  "coste": 20,
+  "implementada": 1,
+  "_seccion": "VENTAJAS MÁGICAS ESENCIALES"
+ },
+ {
+  "nombre": "Con. Natural de vía Oscuridad 60",
+  "gnosis": 20,
+  "coste": 30,
+  "implementada": 1,
+  "_seccion": "VENTAJAS MÁGICAS ESENCIALES"
+ },
+ {
+  "nombre": "Con. Natural de vía Oscuridad 80",
+  "gnosis": 25,
+  "coste": 40,
+  "implementada": 1,
+  "_seccion": "VENTAJAS MÁGICAS ESENCIALES"
+ },
+ {
+  "nombre": "Con. Natural de vía Oscuridad 90",
+  "gnosis": 30,
+  "coste": 50,
+  "implementada": 1,
+  "_seccion": "VENTAJAS MÁGICAS ESENCIALES"
+ },
+ {
+  "nombre": "Con. Natural de vía Fuego 20",
+  "gnosis": 10,
+  "coste": 10,
+  "implementada": 1,
+  "_seccion": "VENTAJAS MÁGICAS ESENCIALES"
+ },
+ {
+  "nombre": "Con. Natural de vía Fuego 40",
+  "gnosis": 15,
+  "coste": 20,
+  "implementada": 1,
+  "_seccion": "VENTAJAS MÁGICAS ESENCIALES"
+ },
+ {
+  "nombre": "Con. Natural de vía Fuego 60",
+  "gnosis": 20,
+  "coste": 30,
+  "implementada": 1,
+  "_seccion": "VENTAJAS MÁGICAS ESENCIALES"
+ },
+ {
+  "nombre": "Con. Natural de vía Fuego 80",
+  "gnosis": 25,
+  "coste": 40,
+  "implementada": 1,
+  "_seccion": "VENTAJAS MÁGICAS ESENCIALES"
+ },
+ {
+  "nombre": "Con. Natural de vía Fuego 90",
+  "gnosis": 30,
+  "coste": 50,
+  "implementada": 1,
+  "_seccion": "VENTAJAS MÁGICAS ESENCIALES"
+ },
+ {
+  "nombre": "Con. Natural de vía Agua 20",
+  "gnosis": 10,
+  "coste": 10,
+  "implementada": 1,
+  "_seccion": "VENTAJAS MÁGICAS ESENCIALES"
+ },
+ {
+  "nombre": "Con. Natural de vía Agua 40",
+  "gnosis": 15,
+  "coste": 20,
+  "implementada": 1,
+  "_seccion": "VENTAJAS MÁGICAS ESENCIALES"
+ },
+ {
+  "nombre": "Con. Natural de vía Agua 60",
+  "gnosis": 20,
+  "coste": 30,
+  "implementada": 1,
+  "_seccion": "VENTAJAS MÁGICAS ESENCIALES"
+ },
+ {
+  "nombre": "Con. Natural de vía Agua 80",
+  "gnosis": 25,
+  "coste": 40,
+  "implementada": 1,
+  "_seccion": "VENTAJAS MÁGICAS ESENCIALES"
+ },
+ {
+  "nombre": "Con. Natural de vía Agua 90",
+  "gnosis": 30,
+  "coste": 50,
+  "implementada": 1,
+  "_seccion": "VENTAJAS MÁGICAS ESENCIALES"
+ },
+ {
+  "nombre": "Con. Natural de vía Aire 20",
+  "gnosis": 10,
+  "coste": 10,
+  "implementada": 1,
+  "_seccion": "VENTAJAS MÁGICAS ESENCIALES"
+ },
+ {
+  "nombre": "Con. Natural de vía Aire 40",
+  "gnosis": 15,
+  "coste": 20,
+  "implementada": 1,
+  "_seccion": "VENTAJAS MÁGICAS ESENCIALES"
+ },
+ {
+  "nombre": "Con. Natural de vía Aire 60",
+  "gnosis": 20,
+  "coste": 30,
+  "implementada": 1,
+  "_seccion": "VENTAJAS MÁGICAS ESENCIALES"
+ },
+ {
+  "nombre": "Con. Natural de vía Aire 80",
+  "gnosis": 25,
+  "coste": 40,
+  "implementada": 1,
+  "_seccion": "VENTAJAS MÁGICAS ESENCIALES"
+ },
+ {
+  "nombre": "Con. Natural de vía Aire 90",
+  "gnosis": 30,
+  "coste": 50,
+  "implementada": 1,
+  "_seccion": "VENTAJAS MÁGICAS ESENCIALES"
+ },
+ {
+  "nombre": "Con. Natural de vía Tierra 20",
+  "gnosis": 10,
+  "coste": 10,
+  "implementada": 1,
+  "_seccion": "VENTAJAS MÁGICAS ESENCIALES"
+ },
+ {
+  "nombre": "Con. Natural de vía Tierra 40",
+  "gnosis": 15,
+  "coste": 20,
+  "implementada": 1,
+  "_seccion": "VENTAJAS MÁGICAS ESENCIALES"
+ },
+ {
+  "nombre": "Con. Natural de vía Tierra 60",
+  "gnosis": 20,
+  "coste": 30,
+  "implementada": 1,
+  "_seccion": "VENTAJAS MÁGICAS ESENCIALES"
+ },
+ {
+  "nombre": "Con. Natural de vía Tierra 80",
+  "gnosis": 25,
+  "coste": 40,
+  "implementada": 1,
+  "_seccion": "VENTAJAS MÁGICAS ESENCIALES"
+ },
+ {
+  "nombre": "Con. Natural de vía Tierra 90",
+  "gnosis": 30,
+  "coste": 50,
+  "implementada": 1,
+  "_seccion": "VENTAJAS MÁGICAS ESENCIALES"
+ },
+ {
+  "nombre": "Con. Natural de vía Creación 20",
+  "gnosis": 10,
+  "coste": 10,
+  "implementada": 1,
+  "_seccion": "VENTAJAS MÁGICAS ESENCIALES"
+ },
+ {
+  "nombre": "Con. Natural de vía Creación 40",
+  "gnosis": 15,
+  "coste": 20,
+  "implementada": 1,
+  "_seccion": "VENTAJAS MÁGICAS ESENCIALES"
+ },
+ {
+  "nombre": "Con. Natural de vía Creación 60",
+  "gnosis": 20,
+  "coste": 30,
+  "implementada": 1,
+  "_seccion": "VENTAJAS MÁGICAS ESENCIALES"
+ },
+ {
+  "nombre": "Con. Natural de vía Creación 80",
+  "gnosis": 25,
+  "coste": 40,
+  "implementada": 1,
+  "_seccion": "VENTAJAS MÁGICAS ESENCIALES"
+ },
+ {
+  "nombre": "Con. Natural de vía Creación 90",
+  "gnosis": 30,
+  "coste": 50,
+  "implementada": 1,
+  "_seccion": "VENTAJAS MÁGICAS ESENCIALES"
+ },
+ {
+  "nombre": "Con. Natural de vía Destrucción 20",
+  "gnosis": 10,
+  "coste": 10,
+  "implementada": 1,
+  "_seccion": "VENTAJAS MÁGICAS ESENCIALES"
+ },
+ {
+  "nombre": "Con. Natural de vía Destrucción 40",
+  "gnosis": 15,
+  "coste": 20,
+  "implementada": 1,
+  "_seccion": "VENTAJAS MÁGICAS ESENCIALES"
+ },
+ {
+  "nombre": "Con. Natural de vía Destrucción 60",
+  "gnosis": 20,
+  "coste": 30,
+  "implementada": 1,
+  "_seccion": "VENTAJAS MÁGICAS ESENCIALES"
+ },
+ {
+  "nombre": "Con. Natural de vía Destrucción 80",
+  "gnosis": 25,
+  "coste": 40,
+  "implementada": 1,
+  "_seccion": "VENTAJAS MÁGICAS ESENCIALES"
+ },
+ {
+  "nombre": "Con. Natural de vía Destrucción 90",
+  "gnosis": 30,
+  "coste": 50,
+  "implementada": 1,
+  "_seccion": "VENTAJAS MÁGICAS ESENCIALES"
+ },
+ {
+  "nombre": "Con. Natural de vía Esencia 20",
+  "gnosis": 10,
+  "coste": 10,
+  "implementada": 1,
+  "_seccion": "VENTAJAS MÁGICAS ESENCIALES"
+ },
+ {
+  "nombre": "Con. Natural de vía Esencia 40",
+  "gnosis": 15,
+  "coste": 20,
+  "implementada": 1,
+  "_seccion": "VENTAJAS MÁGICAS ESENCIALES"
+ },
+ {
+  "nombre": "Con. Natural de vía Esencia 60",
+  "gnosis": 20,
+  "coste": 30,
+  "implementada": 1,
+  "_seccion": "VENTAJAS MÁGICAS ESENCIALES"
+ },
+ {
+  "nombre": "Con. Natural de vía Esencia 80",
+  "gnosis": 25,
+  "coste": 40,
+  "implementada": 1,
+  "_seccion": "VENTAJAS MÁGICAS ESENCIALES"
+ },
+ {
+  "nombre": "Con. Natural de vía Esencia 90",
+  "gnosis": 30,
+  "coste": 50,
+  "implementada": 1,
+  "_seccion": "VENTAJAS MÁGICAS ESENCIALES"
+ },
+ {
+  "nombre": "Con. Natural de vía Ilusión 20",
+  "gnosis": 10,
+  "coste": 10,
+  "implementada": 1,
+  "_seccion": "VENTAJAS MÁGICAS ESENCIALES"
+ },
+ {
+  "nombre": "Con. Natural de vía Ilusión 40",
+  "gnosis": 15,
+  "coste": 20,
+  "implementada": 1,
+  "_seccion": "VENTAJAS MÁGICAS ESENCIALES"
+ },
+ {
+  "nombre": "Con. Natural de vía Ilusión 60",
+  "gnosis": 20,
+  "coste": 30,
+  "implementada": 1,
+  "_seccion": "VENTAJAS MÁGICAS ESENCIALES"
+ },
+ {
+  "nombre": "Con. Natural de vía Ilusión 80",
+  "gnosis": 25,
+  "coste": 40,
+  "implementada": 1,
+  "_seccion": "VENTAJAS MÁGICAS ESENCIALES"
+ },
+ {
+  "nombre": "Con. Natural de vía Ilusión 90",
+  "gnosis": 30,
+  "coste": 50,
+  "implementada": 1,
+  "_seccion": "VENTAJAS MÁGICAS ESENCIALES"
+ },
+ {
+  "nombre": "Con. Natural de vía Nigromancia 20",
+  "gnosis": 10,
+  "coste": 10,
+  "implementada": 1,
+  "_seccion": "VENTAJAS MÁGICAS ESENCIALES"
+ },
+ {
+  "nombre": "Con. Natural de vía Nigromancia 40",
+  "gnosis": 15,
+  "coste": 20,
+  "implementada": 1,
+  "_seccion": "VENTAJAS MÁGICAS ESENCIALES"
+ },
+ {
+  "nombre": "Con. Natural de vía Nigromancia 60",
+  "gnosis": 20,
+  "coste": 30,
+  "implementada": 1,
+  "_seccion": "VENTAJAS MÁGICAS ESENCIALES"
+ },
+ {
+  "nombre": "Con. Natural de vía Nigromancia 80",
+  "gnosis": 25,
+  "coste": 40,
+  "implementada": 1,
+  "_seccion": "VENTAJAS MÁGICAS ESENCIALES"
+ },
+ {
+  "nombre": "Con. Natural de vía Nigromancia 90",
+  "gnosis": 30,
+  "coste": 50,
+  "implementada": 1,
+  "_seccion": "VENTAJAS MÁGICAS ESENCIALES"
+ },
+ {
+  "nombre": "Inutilidad somática",
+  "gnosis": 5,
+  "coste": 20,
+  "_seccion": "VENTAJAS MÁGICAS ESENCIALES"
+ },
+ {
+  "nombre": "Inutilidad oral",
+  "gnosis": 5,
+  "coste": 20,
+  "_seccion": "VENTAJAS MÁGICAS ESENCIALES"
+ },
+ {
+  "nombre": "Magia innata mejorada",
+  "gnosis": 5,
+  "coste": 20,
+  "implementada": 1,
+  "_seccion": "VENTAJAS MÁGICAS ESENCIALES"
+ },
+ {
+  "nombre": "Mantenimiento añadido",
+  "gnosis": 5,
+  "coste": 30,
+  "_seccion": "VENTAJAS PSÍQUICAS ESENCIALES"
+ },
+ {
+  "nombre": "Resistencia a la fatiga psíquica",
+  "gnosis": 5,
+  "coste": 30,
+  "_seccion": "VENTAJAS PSÍQUICAS ESENCIALES"
+ },
+ {
+  "nombre": "Recuperación rápida de CVs",
+  "gnosis": 5,
+  "coste": 20,
+  "_seccion": "VENTAJAS PSÍQUICAS ESENCIALES"
+ },
+ {
+  "nombre": "Concentración extrema",
+  "gnosis": 5,
+  "coste": 30,
+  "implementada": 1,
+  "_seccion": "VENTAJAS PSÍQUICAS ESENCIALES"
+ },
+ {
+  "nombre": "Calibre",
+  "gnosis": 5,
+  "coste": 20,
+  "implementada": 1,
+  "_seccion": "VENTAJAS PSÍQUICAS ESENCIALES"
+ },
+ {
+  "nombre": "Des. psíquico Piroquinesis",
+  "gnosis": 5,
+  "coste": 20,
+  "implementada": 1,
+  "_seccion": "VENTAJAS PSÍQUICAS ESENCIALES"
+ },
+ {
+  "nombre": "Des. psíquico Crioquinesis",
+  "gnosis": 5,
+  "coste": 20,
+  "implementada": 1,
+  "_seccion": "VENTAJAS PSÍQUICAS ESENCIALES"
+ },
+ {
+  "nombre": "Des. psíquico Telequinesis",
+  "gnosis": 5,
+  "coste": 20,
+  "implementada": 1,
+  "_seccion": "VENTAJAS PSÍQUICAS ESENCIALES"
+ },
+ {
+  "nombre": "Des. psíquico Telepatía",
+  "gnosis": 5,
+  "coste": 20,
+  "implementada": 1,
+  "_seccion": "VENTAJAS PSÍQUICAS ESENCIALES"
+ },
+ {
+  "nombre": "Des. psíquico Energía",
+  "gnosis": 5,
+  "coste": 20,
+  "implementada": 1,
+  "_seccion": "VENTAJAS PSÍQUICAS ESENCIALES"
+ },
+ {
+  "nombre": "Des. psíquico Incremento Físico",
+  "gnosis": 5,
+  "coste": 20,
+  "implementada": 1,
+  "_seccion": "VENTAJAS PSÍQUICAS ESENCIALES"
+ },
+ {
+  "nombre": "Des. psíquico Sentiente",
+  "gnosis": 5,
+  "coste": 20,
+  "implementada": 1,
+  "_seccion": "VENTAJAS PSÍQUICAS ESENCIALES"
+ },
+ {
+  "nombre": "Des. psíquico Telemetría",
+  "gnosis": 5,
+  "coste": 20,
+  "implementada": 1,
+  "_seccion": "VENTAJAS PSÍQUICAS ESENCIALES"
+ },
+ {
+  "nombre": "Des. psíquico Causalidad",
+  "gnosis": 5,
+  "coste": 20,
+  "implementada": 1,
+  "_seccion": "VENTAJAS PSÍQUICAS ESENCIALES"
+ },
+ {
+  "nombre": "Des. psíquico Electromagnetismo",
+  "gnosis": 5,
+  "coste": 20,
+  "implementada": 1,
+  "_seccion": "VENTAJAS PSÍQUICAS ESENCIALES"
+ },
+ {
+  "nombre": "Des. psíquico Teletransporte",
+  "gnosis": 5,
+  "coste": 20,
+  "implementada": 1,
+  "_seccion": "VENTAJAS PSÍQUICAS ESENCIALES"
+ },
+ {
+  "nombre": "Des. psíquico Luz",
+  "gnosis": 5,
+  "coste": 20,
+  "implementada": 1,
+  "_seccion": "VENTAJAS PSÍQUICAS ESENCIALES"
+ },
+ {
+  "nombre": "Des. psíquico Hipersensibilidad",
+  "gnosis": 5,
+  "coste": 20,
+  "implementada": 1,
+  "_seccion": "VENTAJAS PSÍQUICAS ESENCIALES"
+ },
+ {
+  "nombre": "Concentración pasiva",
+  "gnosis": 5,
+  "coste": 30,
+  "_seccion": "VENTAJAS PSÍQUICAS ESENCIALES"
+ },
+ {
+  "nombre": "Vicio racial",
+  "gnosis": 0,
+  "coste": -10,
+  "_seccion": "DESVENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Miembros atrofiados",
+  "gnosis": 0,
+  "coste": -20,
+  "_seccion": "DESVENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Miedo racial",
+  "gnosis": 10,
+  "coste": -10,
+  "_seccion": "DESVENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Terror racial",
+  "gnosis": 10,
+  "coste": -20,
+  "_seccion": "DESVENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Carencia de un sentido",
+  "gnosis": 0,
+  "coste": -10,
+  "_seccion": "DESVENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Ciego",
+  "gnosis": 0,
+  "coste": -20,
+  "_seccion": "DESVENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Necesidad física",
+  "gnosis": 0,
+  "coste": -10,
+  "_seccion": "DESVENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Necesidad extrema",
+  "gnosis": 10,
+  "coste": -20,
+  "_seccion": "DESVENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Vul. a elemento +50% daño",
+  "gnosis": 20,
+  "coste": -10,
+  "_seccion": "DESVENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Vul. a elemento doble daño",
+  "gnosis": 20,
+  "coste": -20,
+  "_seccion": "DESVENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Vulnerable a tipo de ataque",
+  "gnosis": 10,
+  "coste": -20,
+  "_seccion": "DESVENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Obligación oral",
+  "gnosis": 5,
+  "coste": -10,
+  "_seccion": "DESV. MÁGICAS ESENCIALES"
+ },
+ {
+  "nombre": "Obligación somática",
+  "gnosis": 5,
+  "coste": -10,
+  "_seccion": "DESV. MÁGICAS ESENCIALES"
+ },
+ {
+  "nombre": "Lenta recuperación magia",
+  "gnosis": 5,
+  "coste": -10,
+  "implementada": 1,
+  "_seccion": "DESV. MÁGICAS ESENCIALES"
+ },
+ {
+  "nombre": "Magia estanca",
+  "gnosis": 5,
+  "coste": -30,
+  "implementada": 1,
+  "_seccion": "DESV. MÁGICAS ESENCIALES"
+ },
+ {
+  "nombre": "Extenuación mágica",
+  "gnosis": 5,
+  "coste": -10,
+  "_seccion": "DESV. MÁGICAS ESENCIALES"
+ },
+ {
+  "nombre": "Brujería / Magia atada a acción",
+  "gnosis": 5,
+  "coste": -20,
+  "_seccion": "DESV. MÁGICAS ESENCIALES"
+ },
+ {
+  "nombre": "Sin concentración",
+  "gnosis": 5,
+  "coste": -10,
+  "implementada": 1,
+  "_seccion": "DESV. PSÍQUICAS ESENCIALES"
+ },
+ {
+  "nombre": "Extenuación psíquica",
+  "gnosis": 5,
+  "coste": -10,
+  "_seccion": "DESV. PSÍQUICAS ESENCIALES"
+ },
+ {
+  "nombre": "Consumición física",
+  "gnosis": 5,
+  "coste": -20,
+  "_seccion": "DESV. PSÍQUICAS ESENCIALES"
+ },
+ {
+  "nombre": "Sentido del peligro",
+  "gnosis": 20,
+  "coste": 40,
+  "_seccion": "[CN] VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Recuperación de Ki",
+  "gnosis": 20,
+  "coste": 20,
+  "_seccion": "[CN] VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Potencial enfrentado",
+  "gnosis": 10,
+  "coste": 10,
+  "_seccion": "[CN] VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Al límite",
+  "gnosis": 5,
+  "coste": 20,
+  "_seccion": "[CN] VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Superviviente",
+  "gnosis": 0,
+  "coste": 10,
+  "_seccion": "[CN] VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Magia opuesta",
+  "gnosis": 10,
+  "coste": 20,
+  "implementada": 1,
+  "_seccion": "[CN] VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Poder natural",
+  "gnosis": 10,
+  "coste": 20,
+  "_seccion": "[CN] VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Ambivalencia psíquica",
+  "gnosis": 15,
+  "coste": 30,
+  "_seccion": "[CN] VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Modificador psíquico incrementado",
+  "gnosis": 10,
+  "coste": 20,
+  "_seccion": "[CN] VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Poder innato",
+  "gnosis": 5,
+  "coste": 20,
+  "implementada": 1,
+  "_seccion": "[CN] VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Inmune al dolor",
+  "gnosis": 0,
+  "coste": 20,
+  "implementada": 1,
+  "_seccion": "[CN] VENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Vulnerable al daño",
+  "gnosis": 0,
+  "coste": -30,
+  "_seccion": "[CN] DESVENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Punto vulnerable adicional",
+  "gnosis": 0,
+  "coste": -20,
+  "_seccion": "[CN] DESVENTAJAS ESENCIALES"
+ },
+ {
+  "nombre": "Habilidad #1",
+  "gnosis": 0,
+  "coste": 0,
+  "_seccion": "H.ESENCIALESPERSONALIZADAS"
+ },
+ {
+  "nombre": "Habilidad #2",
+  "gnosis": 0,
+  "coste": 0,
+  "_seccion": "H.ESENCIALESPERSONALIZADAS"
+ },
+ {
+  "nombre": "Habilidad #3",
+  "gnosis": 0,
+  "coste": 0,
+  "_seccion": "H.ESENCIALESPERSONALIZADAS"
+ },
+ {
+  "nombre": "Habilidad #4",
+  "gnosis": 0,
+  "coste": 0,
+  "_seccion": "H.ESENCIALESPERSONALIZADAS"
+ },
+ {
+  "nombre": "Habilidad #5",
+  "gnosis": 0,
+  "coste": 0,
+  "_seccion": "H.ESENCIALESPERSONALIZADAS"
+ }
+]

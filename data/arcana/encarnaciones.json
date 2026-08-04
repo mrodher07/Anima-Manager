@@ -1,0 +1,1288 @@
+[
+ {
+  "encarnacion": "Linx Kazte Hex, La sombra que trae la Muerte",
+  "pagina": 73,
+  "descripcion": "Linx es una heroina legendaria de Togarini, una mujer que durante los tiempos más oscuros se enfrentó al Imperio de Yehudah convirtiéndose en una pesadilla para los Reyes Brujos. Cualquiera que abusaba de su poder podía estar seguro de que pronto sentirían su frío acero. Más de una década se enfrentó al orden establecido escapando siempre sin un rasguño ya que la suerte parecía estar de su parte. Aunque nunca se llegó a saber quién era en realidad, las leyendas cuentan que era una mujer noble de excepcional belleza e inigualable carisma que usaba su posición pública para ocultarse y abrirse camino hasta los lugares donde su identidad como Linx más tarde atacaría. Su logro final fue acabar con el primer señor de Yehudah en combate personal, aunque aparentemente, murió durante la confrontación.",
+  "modificadores": [
+   {
+    "rasgo": "Ser mujer",
+    "modificador": 10
+   },
+   {
+    "rasgo": "Tener Estilo 140 o más",
+    "modificador": 10
+   },
+   {
+    "rasgo": "Tener al menos Apariencia 9",
+    "modificador": 20
+   },
+   {
+    "rasgo": "Mostrar rebeldía ante la autoridad",
+    "modificador": 20
+   },
+   {
+    "rasgo": "No llevarse bien con los hechiceros",
+    "modificador": 30
+   },
+   {
+    "rasgo": "Obtener una posesión de Linx",
+    "modificador": 40
+   },
+   {
+    "rasgo": "Poseer el broche de Linx",
+    "modificador": 120
+   },
+   {
+    "rasgo": "Tener el Don",
+    "modificador": -30
+   },
+   {
+    "rasgo": "Poseer un defecto físico",
+    "modificador": -40
+   },
+   {
+    "rasgo": "Ser sincero",
+    "modificador": -50
+   },
+   {
+    "rasgo": "Oprimir a la gente",
+    "modificador": -100
+   }
+  ],
+  "poderesGenericos": "Existencia Maldita: El invocador obtiene la consideración de tener las ventajas Encanto y Afortunado.\nVerhexen: Todos los que rodean al Invocador obtienen automáticamente la desventaja Mala suerte.",
+  "afinidades": [
+   {
+    "grado": "Menor",
+    "nivel": 4,
+    "dificultad": 260,
+    "zeon": 400,
+    "hAtaque": 130,
+    "hDefensa": 170,
+    "tipoDefensa": "Esquiva",
+    "turno": 120,
+    "arma": "Blutige Rose",
+    "poderes": "Blutige Rose (Arma): Crea un Cestus. Es un arma de calidad +5 con Daño 50 que ataca en Penetrante y Filo.\nSchweinerei: El invocador recibe un bonificador de +20 a la hora de calcular críticos causados por Blutige Rose.\nMaestra de Sombras (Menor): El invocador obtiene habilidad final 140 en las siguientes habilidades secundarias; Acrobacias, Ocultarse, Estilo, Persuasión, Advertir, Buscar y Robo."
+   },
+   {
+    "grado": "Intermedia",
+    "nivel": 8,
+    "dificultad": 300,
+    "zeon": 600,
+    "hAtaque": 200,
+    "hDefensa": 250,
+    "tipoDefensa": "Esquiva",
+    "turno": 160,
+    "arma": "Blutige Rose & Wonne Stieg",
+    "poderes": "Ambidextra: El invocador obtiene la consideración de tener la ventaja Ambidestría.\nVerhexen Amplificado: Las personas que poseen de por si la desventaja Mala Suerte duplican sus efectos hasta grados casi inverosímiles.\nBlutige Rose (Arma): La calidad de Blutige Rose aumenta hasta +10 y su daño base hasta 60. Es capaz de dañar energía.\nWonne Stieg (Arma): Crea un Látigo. Es un arma de calidad +10 con Daño 60 que ataca en PENetrante y CONtundente como crítico secundario.\nElectric Lash: Una vez por minuto durante un asalto el invocador puede transformar su látigo en un relámpago viviente, aumentando el alcance de Wonne Stieg a 50 metros y su daño base a 100. Ataca en ELEctricidad.\nBlizt: Una vez por asalto, al coste de un punto de cansancio el invocador puede moverse instantáneamente a una localización objetivo que no este situada a un distancia superior a 100 metros.\nErweitern Wunden: El invocador recibe un bonificador de +40 a la hora de calcular críticos causados por Blutige Rose.\nMaestra de las Sombras (Intermedia): El invocador obtiene habilidad final 200 en las siguientes habilidades secundarias; Acrobacias, Ocultarse, Estilo, Persuasión, Advertir, Buscar y Robo."
+   },
+   {
+    "grado": "Real",
+    "nivel": 12,
+    "dificultad": 380,
+    "zeon": 900,
+    "hAtaque": 250,
+    "hDefensa": 300,
+    "tipoDefensa": "Esquiva",
+    "turno": 200,
+    "arma": "Blutige Rose & Wonne Stieg",
+    "poderes": "Blutige Rose (Arma): La calidad de Blutige Rose aumenta hasta +15 y su daño base hasta 70. Adicionalmente, todos los ataques que se realicen con ella se consideran que atacan a puntos vulnerables a la hora de contabilizar si producen o no críticos.\nWonne Stieg (Arma): La calidad de Wonne Stieg aumenta hasta +15 y su daño base hasta 70. Adicionalmente, pasa a atacar en la Electricidad.\nSeismiche Angriff: Gastando un punto de cansancio sus ataques sucesivos obtienen un -10 acumulativo en lugar de -25.\nTodeswunde: El invocador recibe un bonificador de +60 a la hora de calcular críticos causados por Blutige Rose.\nMaestra de las Sombras (Real): El invocador obtiene habilidad final 260 en las siguientes habilidades secundarias; Acrobacias, Ocultarse, Estilo, Persuasión, Advertir, Buscar y Robo."
+   }
+  ]
+ },
+ {
+  "encarnacion": "Nerval, Defensor de los Perdidos",
+  "pagina": 74,
+  "descripcion": "Nerval es una de las encarnaciones de las que menos se conoce, pues su origen data de los primeros siglos de la Era del Caos. Muchos invocadores han usado sus poderes a lo largo de la historia, sabiendo poco más de él que el hecho de que fue el primero de los Lim Shide cuyo nombre se recuerda. Las únicas cosas que realmente han perdurado de él es que mientras estuvieron a su cargo, ni una sola persona a la que protegió perdió nunca la vida.",
+  "modificadores": [
+   {
+    "rasgo": "Proteger a los débiles",
+    "modificador": 10
+   },
+   {
+    "rasgo": "Ser conocido",
+    "modificador": 20
+   },
+   {
+    "rasgo": "Ganarse la confianza de la gente",
+    "modificador": 20
+   },
+   {
+    "rasgo": "Sufrir por los demás",
+    "modificador": 30
+   },
+   {
+    "rasgo": "Obtener una posesión de Nerval",
+    "modificador": 40
+   },
+   {
+    "rasgo": "Poseer Claudius",
+    "modificador": 130
+   },
+   {
+    "rasgo": "Mentir",
+    "modificador": -30
+   },
+   {
+    "rasgo": "Ser codicioso",
+    "modificador": -40
+   },
+   {
+    "rasgo": "Faltar a tu palabra",
+    "modificador": -50
+   },
+   {
+    "rasgo": "Ser incapaz de proteger una vida",
+    "modificador": -100
+   }
+  ],
+  "poderesGenericos": "Alerta Absoluta: El invocador obtiene la consideración de tener la ventaja Sentido del Peligro.\nNestor (Armadura): Al invocar a Nerval el cuerpo del invocador se recubre por una armadura de hueso de dragón que le proporciona Tipo de Armadura 5 contra todos los ataques físicos y Tipo de Armadura 3 contra ENErgía. Lamentablemente, eso también le produce un negativo de -40 al turno durante el tiempo que tenga activa esta encarnación.\nDefensor de los perdidos: El invocador obtiene la consideración de poseer el Magnus Menor Guardián.",
+  "afinidades": [
+   {
+    "grado": "Menor",
+    "nivel": 4,
+    "dificultad": 280,
+    "zeon": 350,
+    "hAtaque": 150,
+    "hDefensa": 180,
+    "tipoDefensa": "Parada",
+    "turno": 40,
+    "arma": "Claudius",
+    "poderes": "Claudius (Arma): Crea una espada bastarda. Es un arma de calidad +5 con daño base 80 que ataca en Filo y Frío. Es capaz de dañar a todo tipo de ser.\nPiel de Acero: El invocador recibe un +100 a sus puntos de vida."
+   },
+   {
+    "grado": "Intermedia",
+    "nivel": 7,
+    "dificultad": 340,
+    "zeon": 700,
+    "hAtaque": 200,
+    "hDefensa": 240,
+    "tipoDefensa": "Parada",
+    "turno": 70,
+    "arma": "Claudius",
+    "poderes": "Piel de Acero Intermedia: El invocador recibe un +200 a sus puntos de vida.\nRoth Zaxxon: El invocador no recibe negativos al realizar un segundo ataque adicional, aunque en caso de declarar que realiza tres, todos ellos aplican un -40 con normalidad.\nClaudius (Arma): La calidad de Claudius aumenta hasta +10 y su daño base hasta 90.\nDefensor Insuperable: Si alguien protegido por el personaje que encarna a Claudius se encuentra por debajo de una cuarta parte de sus puntos de vida, el invocador obtiene un +50 a la defensa contra los ataques que tengan como objetivo a dicho individuo. Estas defensas no le permiten contraatacar."
+   },
+   {
+    "grado": "Real",
+    "nivel": 11,
+    "dificultad": 400,
+    "zeon": 900,
+    "hAtaque": 280,
+    "hDefensa": 330,
+    "tipoDefensa": "Parada",
+    "turno": 100,
+    "arma": "Claudius",
+    "poderes": "Claudius (Arma): La calidad de Claudius aumenta hasta +20 y su daño base hasta 120.\nPiel de Acero Real: El invocador recibe un +350 a sus puntos de vida.\nGlorius Nestor: Nestor se considera una armadura inmodificable.\nCesarius: Una vez cada diez asaltos el invocador puede aplicar un +100 a su habilidad a una de sus defensas por asalto."
+   }
+  ]
+ },
+ {
+  "encarnacion": "Eiko, La princesa Oni",
+  "pagina": 75,
+  "descripcion": "Eiko era la joven hija menor de un poderoso Daimyo del clan Asakura por cuya sangre corría fuerte el poder de los Kami. Sin embargo sus increíbles capacidades naturales, superior al de todos sus hermanos y hermanas, escondían el hecho de que su madre era en realidad una de las reinas Oni. Combinando poderes divinos y demoniacos en su cuerpo, en vida Eiko fue la más grande de los guerreros de la familia Asakura, que se convirtió en el ideal absoluto de todas las doncellas samurai, que aún hoy veneran su nombre. Nadie sabe exactamente como murió, pues desapareció misteriosamente sin dejar rastro, pero hay quien asegura que fue evitando la resurrección del Aeon oscuro Orochi, a quien detuvo con sus propias manos antes de ser mortalmente envenenada por la sangre impía de la entidad.",
+  "modificadores": [
+   {
+    "rasgo": "Pertenecer al clan Asakura",
+    "modificador": 10
+   },
+   {
+    "rasgo": "Ser mujer",
+    "modificador": 10
+   },
+   {
+    "rasgo": "Tener un deseo imparable de mejorar",
+    "modificador": 20
+   },
+   {
+    "rasgo": "Tener en las venas sangre de Oni",
+    "modificador": 50
+   },
+   {
+    "rasgo": "Obtener una posesión de Eiko",
+    "modificador": 40
+   },
+   {
+    "rasgo": "Poseer Chinomi",
+    "modificador": 140
+   },
+   {
+    "rasgo": "Conspirar contra tus aliados",
+    "modificador": -20
+   },
+   {
+    "rasgo": "Abusar de los débiles",
+    "modificador": -20
+   },
+   {
+    "rasgo": "No mostrar compasión",
+    "modificador": -60
+   },
+   {
+    "rasgo": "No tener honor",
+    "modificador": -100
+   }
+  ],
+  "poderesGenericos": "Ojos de la Noche: El invocador obtiene la consideración de tener la ventaja Visión Nocturna.\nJigoku Shoujo: El invocador puede realizar acciones físicas inhumanas.",
+  "afinidades": [
+   {
+    "grado": "Menor",
+    "nivel": 3,
+    "dificultad": 220,
+    "zeon": 200,
+    "hAtaque": 150,
+    "hDefensa": 100,
+    "tipoDefensa": "Parada",
+    "turno": 20,
+    "arma": "Chinomi Tetsubo",
+    "poderes": "Sangre de Oni: El invocador recibe un +30 a sus puntos de vida y +25 a su RF. Adicionalmente, su atributo de Fuerza se considera 11 para determinar el peso que puede soportar.\nChinomi Tetsubo (Arma): Crea un Tetsubo. Es un arma de calidad +5 con daño base 100 que ataca en Contundente y Electricidad.\nFunkei (Armadura): Crea una coraza que cubre el brazo derecho del invocador. Es una armadura natural y a la vez mística que proporciona Tipo de Armadura 3 contra todos los ataques naturales y 6 contra ENErgía.\nImparable (Menor): El invocador obtiene habilidad final 140 en las siguientes habilidades secundarias; Frialdad, Proezas de Fuerza, y Resistencia al dolor."
+   },
+   {
+    "grado": "Intermedia",
+    "nivel": 6,
+    "dificultad": 300,
+    "zeon": 480,
+    "hAtaque": 200,
+    "hDefensa": 150,
+    "tipoDefensa": "Parada",
+    "turno": 35,
+    "arma": "Chinomi Tetsubo",
+    "poderes": "Jigoku Shoujo: El invocador obtiene la consideración de tener las Ventajas Inquietante y Visión Nocturna.\nSangre de Oni Intermedia: El invocador recibe un +100 a sus puntos de vida y +50 a su RF. Adicionalmente, su atributo de Fuerza se considera 12 para determinar el peso que puede soportar.\nChinomi (Arma): La calidad de Chinomi aumenta hasta +15 y su daño base hasta 120. Es capaz de dañar energía.\nInazuma: Una vez por minuto puede convocar una columna de electricidad para atacar a un oponente a una distancia de 200 metros. Inazuma tiene 100 puntos de daño base y ataca en la TA de Electricidad. Esta habilidad sólo puede ser activada en exteriores.\nSukketsu: Una vez por minuto puede despertar la verdadera forma de Chinomi, obteniendo un bono de +40 a su habilidad de ataque y daño, un +20 al crítico producido, y el invocador recupera tantos puntos de vida como la mitad del daño causado (en caso de tratarse de un ser con acumulación, esta cantidad se divide por el múltiplo de acumulación de la criatura).\nImparable (Intermedia): El invocador obtiene habilidad final 180 en las siguientes habilidades secundarias; Frialdad, Proezas de Fuerza, y Resistencia al dolor."
+   },
+   {
+    "grado": "Real",
+    "nivel": 9,
+    "dificultad": 360,
+    "zeon": 600,
+    "hAtaque": 250,
+    "hDefensa": 200,
+    "tipoDefensa": "Parada",
+    "turno": 50,
+    "arma": "Chinomi Tetsubo",
+    "poderes": "Sangre de Oni Real: El invocador recibe un +200 a sus puntos de vida y +75 a su RF. Adicionalmente, su atributo de Fuerza se considera 14 para determinar el peso que puede soportar.\nDemonio Imparable: Siempre que gaste un punto de cansancio antes de determinar su iniciativa el invocador no puede ser puesto a la defensiva ese asalto. Esta habilidad queda invalidad en caso de recibir un crítico.\nChinomi (Arma): La calidad de Chinomi aumenta hasta +20 y su daño base hasta 140.\nInazuma Tenshou: Gastando un punto de cansancio y golpeando el suelo con su tetsubo, el invocador puede proyectar una onda de choche con un poder destructivo inconmensurable. El ataque afecta todo lo que haya en una línea de 10 metros de longitud, dentro de la cual no es posible designar blancos. Además de tener un daño base 120 y atacar en CONtundente, todo aquel que sufra daño proveniente de este ataque recibe además un embate de Fuerza 14.\nImparable (Real): El invocador obtiene habilidad final 240 en las siguientes habilidades secundarias; Frialdad, Proezas de Fuerza, y Resistencia al dolor."
+   }
+  ]
+ },
+ {
+  "encarnacion": "Quezcatli, Hijo del sol",
+  "pagina": 76,
+  "descripcion": "La tradición de Izti no estaría completa sin la figura de Quezcatli, el héroe popular más admirado y venerado por su pueblo. Cuentan las leyendas que hace muchos siglos, el hombre se separó del camino marcado por los dioses y estos, enfurecidos, les arrebataron el sol. Como castigo, encerraron su fulgor en una piedra que depositaron en el valle de los muertos, condenando así a la humanidad. Los sacerdotes, a través de muchos sacrificios, lograron descubrir abrir un camino hasta el valle, pero ninguno de los guerreros y campeones que viajaron hasta allí tuvo éxito en su empeño. Irónicamente, sería un joven soldado de clase humilde llamado Quezcatli quien se adentró en las profundidades del valle oscuro, vagando por sus profundidades durante siete años. Al llegar ante la piedra, comprendió que únicamente con un sacrificio acorde lograría liberar la luz de su interior. Sin ápice de duda, Quezcatli se arrancó el corazón, ofreciendo su propia vida a cambio de la de su pueblo. Aplacada la cólera divina, el sol ascendió de nuevo a los cielos, pero al observar el cuerpo muerto del humano que lo había liberado, se vio anegado por la pena. Sus lágrimas bañaron el cuerpo del joven y, al acabar finalmente la noche sin fin, hasta el último de los habitantes del mundo sabría a quien debían su luz.",
+  "modificadores": [
+   {
+    "rasgo": "Ser humano",
+    "modificador": 10
+   },
+   {
+    "rasgo": "Comportarse con valentía",
+    "modificador": 20
+   },
+   {
+    "rasgo": "Despreciar las recompensas",
+    "modificador": 20
+   },
+   {
+    "rasgo": "Sacrificarse por los demás",
+    "modificador": 30
+   },
+   {
+    "rasgo": "Obtener una posesión de Quezcatli",
+    "modificador": 40
+   },
+   {
+    "rasgo": "Poseer el collar de Quezcatli",
+    "modificador": 150
+   },
+   {
+    "rasgo": "Ser egoísta",
+    "modificador": -10
+   },
+   {
+    "rasgo": "Poseer muchos bienes",
+    "modificador": -20
+   },
+   {
+    "rasgo": "Ignorar a los necesitados",
+    "modificador": -50
+   },
+   {
+    "rasgo": "Ofender a los dioses",
+    "modificador": -100
+   }
+  ],
+  "poderesGenericos": "Caminante de la Noche Eterna: El invocador obtiene la consideración de tener la ventaja Visión Nocturna.",
+  "afinidades": [
+   {
+    "grado": "Menor",
+    "nivel": 2,
+    "dificultad": 200,
+    "zeon": 150,
+    "hAtaque": 100,
+    "hDefensa": 120,
+    "tipoDefensa": "Esquiva",
+    "turno": 60,
+    "arma": "Macahuitl & Atlatl",
+    "poderes": "Vigoroso: El invocador recibe un +30 a sus puntos de vida.\nMacahuitl (Arma): Crea una maza. Es un arma de calidad +5 con Daño 60 que ataca en Contundente.\nAtlatl (Arma): Crea una jabalina. Es un arma de calidad +5 con Daño 50 que ataca en Penetrante.\nCazador (Menor): El invocador obtiene habilidad final 120 en las siguientes habilidades secundarias; Advertir, Buscar y Rastrear."
+   },
+   {
+    "grado": "Intermedia",
+    "nivel": 4,
+    "dificultad": 240,
+    "zeon": 300,
+    "hAtaque": 140,
+    "hDefensa": 140,
+    "tipoDefensa": "Esquiva",
+    "turno": 70,
+    "arma": "Macahuitl & Atlatl",
+    "poderes": "En el Valle Muerto: Los ataques del invocador son capaces de dañar energía.\nAtlatl Ramudah: Una vez durante el periodo en el que la encarnación permanece activa, el invocador puede lanzar Atlatl aplicando un bono de +40 a su habilidad ofensiva. Al realizar este ataque, puede apuntar a cualquier parte del cuerpo de un enemigo sin aplicar por ello penalizador alguno a su habilidad.\nMascara del Sol: El invocador recibe mitad de daño ante ataques producidos por el calor y recibe la ventaja Ver lo Sobrenatural.\nCazador (Intermedio): El invocador obtiene habilidad final 150 en las siguientes habilidades secundarias; Advertir, Buscar y Rastrear."
+   },
+   {
+    "grado": "Real",
+    "nivel": 6,
+    "dificultad": 260,
+    "zeon": 450,
+    "hAtaque": 160,
+    "hDefensa": 180,
+    "tipoDefensa": "Esquiva",
+    "turno": 80,
+    "arma": "Macahuitl & Atlatl",
+    "poderes": "Hijo del Sol: El invocador obtiene la consideración de tener la ventaja Al Límite.\nLa Sangre del Sol: La sangre del invocador está maldita y abrasa el alma de aquellos que la derraman. Cualquiera que le ataque y le produzca una herida que le haga perder al menos 50 puntos de vida debe superar automáticamente un control de RF contra 140 o sufrir un daño equivalente al doble del nivel de fracaso basado en calor, o contra 160 si el ataque hizo perder al invocador más de 100 puntos de vida.\nCazador (Real): El invocador obtiene habilidad final 180 en las siguientes habilidades secundarias; Advertir, Buscar y Rastrear."
+   }
+  ]
+ },
+ {
+  "encarnacion": "Gygjur, Asesino de Dragones",
+  "pagina": 77,
+  "descripcion": "En los tiempos antiguos en el que los dragones eran la mayor de las bestias y nadie se atrevía a desafiar su poder, Gygjur fue el primer guerrero Shide que logró acabar con una de estas monstruosidades. Pero esa no fue su única hazaña; allí donde una gran bestia se alzaba, el cazador Lim Shide viajó incansable, acabando con todas las criaturas de leyenda que aterrorizaban a su pueblo, sin conocer jamás la derrota.",
+  "modificadores": [
+   {
+    "rasgo": "Tener Proezas de Fuerza 180 o superior",
+    "modificador": 20
+   },
+   {
+    "rasgo": "Acabar con al menos un ser de Tamaño 25 o superior",
+    "modificador": 20
+   },
+   {
+    "rasgo": "Matar a un Dragón",
+    "modificador": 50
+   },
+   {
+    "rasgo": "Obtener una posesión de Gygjur",
+    "modificador": 40
+   },
+   {
+    "rasgo": "Poseer el fragmento de colmillo del primer dragón que exterminó",
+    "modificador": 140
+   },
+   {
+    "rasgo": "Aliarse con un ser sobrenatural",
+    "modificador": -30
+   },
+   {
+    "rasgo": "Poseer un tamaño inferior a 19",
+    "modificador": -40
+   },
+   {
+    "rasgo": "Evitar un confrontamiento con un dragón",
+    "modificador": -50
+   },
+   {
+    "rasgo": "Temer a la muerte",
+    "modificador": -100
+   }
+  ],
+  "poderesGenericos": "Matadragones: Todos los ataques del invocador contra seres enormes (Tamaño 25 o superior) producen doble daño.\nSangre Eterna: Se considera que el invocador tiene el Legado de Sangre Eterna.\nFuerza inhumana: Gygjur otorga al invocador el equivalente a Fuerza 13, y puede realizar acciones inhumanas que dependan de dicho atributo.",
+  "afinidades": [
+   {
+    "grado": "Menor",
+    "nivel": 5,
+    "dificultad": 270,
+    "zeon": 390,
+    "hAtaque": 170,
+    "hDefensa": 170,
+    "tipoDefensa": "Parada",
+    "turno": 40,
+    "arma": "Nothung",
+    "poderes": "Nothung (Arma): Crea un hacha a dos manos. Es un arma de calidad +10 con daño base 120 que ataca en Filo y Frío.\nPiel de Dragón: La piel de Gygjur tenía la capacidad de absorber la potencia de cualquier ataque que recibiera, lo que confiere la habilidad al invocador de reducir 10 puntos el daño base de cualquier ataque que vaya dirigido contra él.\nFuerza Irrefrenable: Gygjur puede ignorar la primera vez que es puesto a la defensiva por asalto. Si recibe más de un ataque que le obligan a ir a la defensa, esta habilidad deja de tener efecto."
+   },
+   {
+    "grado": "Intermedia",
+    "nivel": 9,
+    "dificultad": 380,
+    "zeon": 750,
+    "hAtaque": 250,
+    "hDefensa": 250,
+    "tipoDefensa": "Parada",
+    "turno": 60,
+    "arma": "Nothung",
+    "poderes": "Nothung (Arma): La calidad de Nothung aumenta hasta +15 y su daño base hasta 130.\nPiel de Dragón intermedia: Los efectos de la reducción de daño del invocador se incrementan a 20 puntos.\nForma de Combate: A voluntad, una vez durante la duración de la encarnación el invocador es capaz de conectar con la forma de combate de Gygjur, aumentando su masa muscular de un modo desproporcionado. Durante diez asaltos adquiere Fuerza 15, incrementa su daño base 20 puntos, obtiene Tipo de Armadura 6 contra toda clase de ataque. Lamentablemente, mientras esté en este estado sufre un -30 a su turno y reduce en 2 grados el tipo de movimiento."
+   },
+   {
+    "grado": "Real",
+    "nivel": 13,
+    "dificultad": 490,
+    "zeon": 1400,
+    "hAtaque": 320,
+    "hDefensa": 320,
+    "tipoDefensa": "Parada",
+    "turno": 80,
+    "arma": "Nothung",
+    "poderes": "Nothung (Arma): La calidad de Nothung aumenta hasta +20 y su daño base hasta 140.\nInsensible: El invocador ignora cualquier penalizador a la acción que no sea provocado por carencias físicas o efectos sobrenaturales.\nSombra de la Destrucción: Una vez cada diez asaltos, si antes de determinar su iniciativa declara que quiere prepararse para activar sombra de destrucción, durante el asalto siguiente el invocador puede realizar cinco ataques con habilidad plena."
+   }
+  ]
+ },
+ {
+  "encarnacion": "Arturia, El León Blanco",
+  "pagina": 78,
+  "descripcion": "Arturia es una criatura como no ha existido nunca otra; es el único animal natural que, a lo largo de toda la historia, ha obtenido la consideración de encarnación. Fue el inseparable compañero del primer emperador Zhorne Giovanni, luchando a su lado contra criaturas y pesadillas que hubieran aterrorizado incluso a los dioses. Su mayor acto de heroísmo fue el de sacrificarse para salvar la vida de su amigo; en mas de un sentido, fue esa acción la que permitió al mundo entero salir de la mayor crisis que jamás tuviera que afrontar.",
+  "modificadores": [
+   {
+    "rasgo": "Pasar largas temporadas en zonas salvajes",
+    "modificador": 10
+   },
+   {
+    "rasgo": "Tener conocimiento de Animales",
+    "modificador": 20
+   },
+   {
+    "rasgo": "Pelo de Arturia",
+    "modificador": 40
+   },
+   {
+    "rasgo": "Estar dispuesto a sacrificarse por un amigo",
+    "modificador": 50
+   },
+   {
+    "rasgo": "Poseer una antigua posesión de Zhorne",
+    "modificador": 100
+   },
+   {
+    "rasgo": "Pasar largas temporadas en ciudades",
+    "modificador": -20
+   },
+   {
+    "rasgo": "No tener amigos",
+    "modificador": -50
+   },
+   {
+    "rasgo": "No ser un ser natural",
+    "modificador": -100
+   }
+  ],
+  "poderesGenericos": "Naturaleza Animal: El invocador obtiene la consideración de tener la ventaja Afinidad Animal.\nPiel de bestia: El invocador obtiene una TA de 4 contra todo tipo de ataque menos ENErgía.",
+  "afinidades": [
+   {
+    "grado": "Menor",
+    "nivel": 1,
+    "dificultad": 160,
+    "zeon": 180,
+    "hAtaque": 80,
+    "hDefensa": 80,
+    "tipoDefensa": "Esquiva",
+    "turno": 70,
+    "arma": "Fauces y Garras de Bestia",
+    "poderes": "Fauces y Garras de Bestia (Arma): El invocador obtiene armas naturales. Atacan con Daño 50 en FILo y PENetrante ignorando un punto de la TA defensora.\nAtributos de bestia (Menor): El invocador obtiene un 10 en sus atributos de Fuerza, Agilidad y Constitución.\nBestia (Menor): El invocador obtiene habilidad final 120 en las siguientes habilidades secundarias; Intimidar, Nadar, Atletismo, Saltar, Trepar y Resistir el Dolor."
+   },
+   {
+    "grado": "Intermedia",
+    "nivel": 3,
+    "dificultad": 200,
+    "zeon": 300,
+    "hAtaque": 110,
+    "hDefensa": 110,
+    "tipoDefensa": "Esquiva",
+    "turno": 100,
+    "arma": "Fauces y Garras de Bestia",
+    "poderes": "Fauces y Garras de Bestia (Arma): Las armas naturales del invocador mejoran sus cualidades, aumentando su Daño hasta 80 e ignorando tres puntos de la TA defensora.\nAtributos de bestia (Intermedio): El invocador incrementa a 12 sus atributos de Fuerza, Agilidad y Constitución, y es capaz de realizar acciones inhumanas.\nSentidos Animales: El invocador obtiene la consideración de tener la ventaja Visión Nocturna y Sentidos Agudos.\nBestia (Intermedia): El invocador obtiene habilidad final 150 en las siguientes habilidades secundarias; Intimidar, Nadar, Atletismo, Saltar, Trepar y Resistir el Dolor."
+   },
+   {
+    "grado": "Real",
+    "nivel": 6,
+    "dificultad": 280,
+    "zeon": 400,
+    "hAtaque": 170,
+    "hDefensa": 170,
+    "tipoDefensa": "Esquiva",
+    "turno": 130,
+    "arma": "Fauces y Garras de Bestia",
+    "poderes": "Fauces y Garras de Bestia (Arma): Las armas naturales del invocador mejoran sus cualidades, aumentando su Daño hasta 100 e ignorando cinco puntos de la TA defensora.\nAtributos de bestia (Intermedio): El invocador incrementa a 13 sus atributos de Fuerza, Agilidad y Constitución, y es capaz de realizar acciones inhumanas.\nBestia (Intermedia): El invocador obtiene habilidad final 200 en las siguientes habilidades secundarias; Intimidar, Nadar, Atletismo, Saltar, Trepar y Resistir el Dolor."
+   }
+  ]
+ },
+ {
+  "encarnacion": "Kha-nefer, El Sacerdote Impío",
+  "pagina": 78,
+  "descripcion": "Aún hoy, en Estigia se sigue pronunciando el nombre de Kha-nefer con miedo y recelo. Dios viviente para unos, tirano innombrable para otros, aquel al que llaman el Sacerdote Impío fue el consejero personal del joven Faraón Mikheth, a quien usó como marioneta para regir el país con mano de hierro. Bajo su mandato, Estigia consiguió prosperidad a costa de vivir con terror. Dotado de poderes inconcebibles, sus seguidores le consideraron el mayor héroe de la historia, al defender sus fronteras de las mayores pesadillas… siendo él mismo una monstruosidad mucho mayor. Su fin, como el de todos los tiranos, fue acabar a manos de su propio pueblo, quien lo enterró maldito en las profundidades de la Necrópolis.",
+  "modificadores": [
+   {
+    "rasgo": "Provocar terror",
+    "modificador": 10
+   },
+   {
+    "rasgo": "Manipular a la gente",
+    "modificador": 20
+   },
+   {
+    "rasgo": "Abusar de los débiles",
+    "modificador": 40
+   },
+   {
+    "rasgo": "Idolatrar tu poder",
+    "modificador": 50
+   },
+   {
+    "rasgo": "Obtener una posesión de Kha-nefer",
+    "modificador": 40
+   },
+   {
+    "rasgo": "Obtener el Bastón de Sacerdote de Kha-nefer",
+    "modificador": 120
+   },
+   {
+    "rasgo": "Ser mujer",
+    "modificador": -20
+   },
+   {
+    "rasgo": "Servir fielmente a un dios",
+    "modificador": -60
+   },
+   {
+    "rasgo": "Mostrar Piedad",
+    "modificador": -60
+   }
+  ],
+  "poderesGenericos": "Aura de Superioridad: El invocador obtiene la consideración de tener la ventaja Inquietante.",
+  "afinidades": [
+   {
+    "grado": "Menor",
+    "nivel": 3,
+    "dificultad": 230,
+    "zeon": 200,
+    "hAtaque": 120,
+    "hDefensa": 120,
+    "tipoDefensa": "Parada",
+    "proyeccionMagica": 120,
+    "turno": 50,
+    "arma": "Kophesh",
+    "poderes": "Kophesh (Arma): Crea una espada larga. Es un arma de calidad +5 con Daño 60 que ataca en Filo.\nDescarga Impía: El invocador puede lanzar cada turno, independientemente de si ataca físicamente o no, una descarga sobrenatural con daño 60 que ataca en ENErgía. Esta habilidad es equivalente a un conjuro con un valor zeónico de 50 puntos. De causar daño, el blanco del ataque debe de realizar una RE contra 100 o sufrirá náuseas y un malestar general que le producirá un negativo a toda acción de -20.\nLengua Afilada (Menor): El invocador obtiene habilidad final 120 en las siguientes habilidades secundarias; Persuasión, Intimidar y liderazgo."
+   },
+   {
+    "grado": "Intermedia",
+    "nivel": 6,
+    "dificultad": 280,
+    "zeon": 450,
+    "hAtaque": 150,
+    "hDefensa": 150,
+    "tipoDefensa": "Parada",
+    "proyeccionMagica": 150,
+    "turno": 65,
+    "arma": "Kophesh",
+    "poderes": "Vórtice de Arena: El invocador puede usar una vez por minuto una poderosa descarga solar capaz de abrasar cualquier cosa, el ataque se realiza en Calor y tiene un daño base de 80 puntos.\nPantalla de Escarabajos: Una vez por minuto el invocador puede crear un escudo sobrenatural hecho de escarabajos con un aguante al daño de 600 puntos. Esta habilidad es equivalente a un conjuro con un valor zeónico de 80 puntos. Cualquier ser orgánico que trate de atacarle físicamente mientras está rodeado por las alimañas debe de superar automáticamente cada asalto una RV contra 120 o sufrir un daño equivalente al doble del nivel de fracaso. El escudo permanece activo hasta que es destruido.\nCuerpo Eterno: El invocador obtiene la consideración las capacidades de Ki uso de la energía necesaria.\nResistencia al Calor: Recibe mitad de daño por ataques basados en fuego.\nLengua Afilada (Intermedia): El invocador obtiene habilidad final 160 en las siguientes habilidades secundarias; Persuasión, Intimidar y liderazgo."
+   },
+   {
+    "grado": "Real",
+    "nivel": 9,
+    "dificultad": 320,
+    "zeon": 550,
+    "hAtaque": 200,
+    "hDefensa": 200,
+    "tipoDefensa": "Parada",
+    "proyeccionMagica": 200,
+    "turno": 80,
+    "arma": "Kophesh",
+    "poderes": "Existencia Atormentada: El invocador es inmune al daño de fuego, e ignora cualquier crítico o penalizador causado por heridas o necesidades físicas. A efectos de conjuros, se le considera un ser No Muerto.\nAzote del desierto: Todo aquel que toque el cuerpo del invocador se verá afectado automáticamente por el conjuro Secar lanzado en grado intermedio (120 RM o mitad de daño). Por el contrario, los objetos inanimados, deberán superar un control de RM contra 120 o se fundirán en pocos asaltos.\nEnjambre de Fuego Impío: Una vez por minuto el invocador es capaz de crear un enjambre de insectos de fuego, que se extienden 25 metros a su alrededor abrasando todo cuanto toquen, sin selección de blanco posible. Esta habilidad es equivalente a un conjuro con un valor zeónico de 150 puntos. El ataque tiene un daño base 80 y ataca en CALor, aunque es capaz de dañar seres inmateriales.\nVenganza Inexorable: La calidad de Kophesh aumenta hasta +15, su daño base aumenta hasta 80 y ataca en CALor. A voluntad, una vez por minuto el invocador puede hacer que una persona que haya recibido daños por un ataque de Kophesh (no necesariamente en ese momento) se incendie automáticamente, entrando directamente en el estado En Llamas.\nLengua Afilada (Real): El invocador obtiene habilidad final 200 en las siguientes habilidades secundarias; Persuasión, Intimidar y liderazgo."
+   }
+  ]
+ },
+ {
+  "encarnacion": "Anassilish, el Sin Rostro",
+  "pagina": 79,
+  "descripcion": "Anassilish fue el D'anjayni mas reconocido de su época. Nadie sabe con seguridad si fue un hombre o una mujer, así que lo único que se puede asegurar de su vida es que a lo largo de su existencia llegó a robar cientos de identidades de algunos de los individuos más importantes de la historia. Sin embargo, lo verdaderamente extraño es que nadie sabe con exactitud como logró convertirse en encarnación, o al menos, ya nadie lo recuerda…",
+  "modificadores": [
+   {
+    "rasgo": "Poseer sangre o ser Nephilim D'anjayni",
+    "modificador": 10
+   },
+   {
+    "rasgo": "Poseer diferentes estilos de combate",
+    "modificador": 10
+   },
+   {
+    "rasgo": "Tener Disfraz 180 o superior",
+    "modificador": 20
+   },
+   {
+    "rasgo": "Tener una personalidad que le haga pasar desapercibido",
+    "modificador": 30
+   },
+   {
+    "rasgo": "Obtener una posesión de Anassilish",
+    "modificador": 60
+   },
+   {
+    "rasgo": "No poseer un nombre",
+    "modificador": 150
+   },
+   {
+    "rasgo": "Dar a conocer el nombre verdadero",
+    "modificador": -10
+   },
+   {
+    "rasgo": "Ser incapaz de adaptarse y cambiar",
+    "modificador": -20
+   },
+   {
+    "rasgo": "Tener una personalidad fuerte",
+    "modificador": -20
+   },
+   {
+    "rasgo": "Ser conocido",
+    "modificador": -60
+   }
+  ],
+  "poderesGenericos": "Máscaras: Dependiendo de la máscara que esté utilizando en ese momento esta encarnación otorga unas habilidades diferentes. El invocador puede cambiar de máscara una vez por turno como acción pasiva al inicio del asalto pasando su mano por delante de la cara.",
+  "afinidades": [
+   {
+    "grado": "Menor",
+    "nivel": 2,
+    "dificultad": 180,
+    "zeon": 150,
+    "hAtaque": 100,
+    "hDefensa": 100,
+    "tipoDefensa": "Esquiva",
+    "proyeccionMagica": 90,
+    "turno": 40,
+    "arma": "Máscaras disponibles: Barro, Madera",
+    "poderes": "Máscara de Barro (impureza) — H. Ataque +20, H. Esquiva -10, Turno -10, Arma: Kalidus.\nKalidus (Arma): Crea una Guadaña de Guerra. Es un arma de calidad +5 con Daño 60 que ataca en Filo.\nAmplificador de Dolor: Los negativos que pudieran llegar a causar los críticos producidos por el personaje se doblan.\nSegadora: Si alguien muere a manos del invocador, este recupera la mitad de los puntos de Zeon que le quedasen a su víctima en ese momento.\nDesangradora: Todos los ataques de Kalidus producen desangramiento en su objetivo (en caso, naturalmente, de que pudiese sangrar).\n\nMáscara de Madera (estabilidad) — H. Ataque +0, H. Esquiva +0, Turno +0, Arma: Daldevar.\nDaldevar (Arma): Crea una Vara. Es un arma de calidad +5 con Daño 40 que ataca en Contundente.\nEstilo Defensivo: El invocador obtiene un +50 en vez de +30 al realizar la maniobra defensa total.\nDefensas Múltiples: El invocador no empieza a sufrir los efectos de los ataques adicionales hasta haber recibido el tercer ataque.\nResistente como la Madera: El invocador recibe un +20 a sus puntos de vida y +10 a su RF."
+   },
+   {
+    "grado": "Intermedia",
+    "nivel": 5,
+    "dificultad": 280,
+    "zeon": 400,
+    "hAtaque": 150,
+    "hDefensa": 150,
+    "tipoDefensa": "Esquiva",
+    "proyeccionMagica": 130,
+    "turno": 60,
+    "arma": "Máscaras disponibles: Barro, Madera, Hierro, Marfil, Oro",
+    "poderes": "Máscara de Hierro (tiranía) — H. Ataque +10, H. Esquiva -10, Turno +0, Arma: Hades.\nHades (Arma): Crea una Cadena. Es un arma de calidad +10 con Daño 50 que ataca en Contundente. Tiene la capacidad de realizar presa como si tuviese una Fuerza 10. Es capaz de dañar energía.\nCadenas Opresoras: Si realiza una maniobra de presa sobre un enemigo el invocador aplica únicamente un penalizador de -20 a su habilidad. Si tiene éxito (sin importar el grado) cada asalto posterior las cadenas incrementan la Fuerza con la que presan un punto, hasta un máximo de 16.\nTransmitir agonía: Si tiene a alguien apresado con al menos un nivel medio de presa, el invocador puede gastar un punto de cansancio para que su enemigo realice una RF contra 100 mas 1 por cada punto de vida que haya perdido a consecuencia de los ataques del invocador. El objetivo sufre un daño equivalente al nivel de fracaso.\nMáscara de hierro: El invocador obtiene +40 a su RF, barrera de daño 80 y puede alcanzar inhumanidad en todas sus acciones físicas.\n\nMáscara de Marfil (pureza) — H. Ataque +0, H. Esquiva -0, Turno -20, Arma: Olimpus.\nOlimpus (Arma): Crea un Arco largo y munición ilimitada. Es un arma de calidad +10 y sus flechas atacan en PENetrante con Daño 60. Son capaces de dañar energía.\nSigma: Si produce daño con una de sus flechas, el objetivo debe superar una RM contra 140 o quedará en estado de fascinación durante 10 asaltos, siendo incapaz de realizar acciones activas durante ese tiempo.\n\nMáscara de Oro (autoridad) — H. Ataque +10, H. Esquiva +10, Turno -10, Arma: Bastón de Reyes.\nBastón de Reyes (Arma): Crea una maza. Es un arma de calidad +10 con Daño 60 que ataca en Contundente. Es capaz de dañar energía.\nRey: Todo el que mire durante al menos dos asaltos consecutivos al invocador portando esta máscara deberá superar una RM de 100 o quedar fascinado por él hasta que aparte la vista un asalto entero o supere la RM. Cada asalto consecutivo que observe la máscara superando el control, la RM aumentará su dificultad 5 puntos, hasta un máximo de 140.\nMáscara de oro: Obtiene +50 a todas sus resistencias para evitar ser controlado o manipulado.\nMonarca: El invocador obtiene habilidad final 180 en las siguientes habilidades secundarias; Liderazgo, Intimidar y Estilo."
+   },
+   {
+    "grado": "Real",
+    "nivel": 8,
+    "dificultad": 300,
+    "zeon": 600,
+    "hAtaque": 200,
+    "hDefensa": 190,
+    "tipoDefensa": "Esquiva",
+    "proyeccionMagica": 160,
+    "turno": 80,
+    "arma": "Máscaras disponibles: Barro, Madera, Hierro, Marfil, Oro, Platino",
+    "poderes": "Máscara de Platino (Heroísmo) — H. Ataque +0, H. Esquiva -0, Turno +10, Arma: Ashurian.\nAshurian (Arma): Crea una Espada Larga. Es un arma de calidad +15 con Daño 70 que ataca en Filo y posee la regla de precisa.\nEl que Siempre se Levanta: Al finalizar el turno siguiente al que lo ha sufrido, el invocador elimina cualquier negativo a la acción, sin importar cual sean sus orígenes o naturaleza. Esta habilidad no tiene efectos sobre penalizadores que hubiera obtenido antes de haberse puesto la mascara de platino.\nInvencible: El personaje recupera todos los asaltos 25 puntos de vida y un punto de cansancio que haya perdido durante el tiempo que tenía la máscara de platino puesta."
+   }
+  ]
+ },
+ {
+  "encarnacion": "Ambrose Magus, El Hechicero",
+  "pagina": 81,
+  "descripcion": "El archimago Ambrose Magus es posiblemente una de las encarnaciones más recientes que se conocen. El antiguo Azathoth de Yehudah que se convirtió en el creador de la orden que lleva su nombre fue un hechicero que revolucionó las ideas de la magia y es visto como un héroe por infinidad de ocultistas. Murió durante una de las guerras secretas luchando al lado del emperador Joshiah Giovanni, pero puede que por su enorme presencia sobrenatural sus energías dieron forma a una encarnación.",
+  "modificadores": [
+   {
+    "rasgo": "Poseer el Don",
+    "modificador": 10
+   },
+   {
+    "rasgo": "Tener Ocultismo y Valoración mágica 140 o superior",
+    "modificador": 20
+   },
+   {
+    "rasgo": "Dedicar tu vida a la magia",
+    "modificador": 40
+   },
+   {
+    "rasgo": "Ser una inspiración para el uso de la magia",
+    "modificador": 50
+   },
+   {
+    "rasgo": "Obtener una posesión de Magus",
+    "modificador": 40
+   },
+   {
+    "rasgo": "Poseer el libro de hechizos de Magus",
+    "modificador": 140
+   },
+   {
+    "rasgo": "Considerarse superior",
+    "modificador": -20
+   },
+   {
+    "rasgo": "Provocar el miedo a lo sobrenatural",
+    "modificador": -60
+   },
+   {
+    "rasgo": "Ser un tirano",
+    "modificador": -100
+   }
+  ],
+  "poderesGenericos": "Ojos Mágicos: El invocador tiene la capacidad de ver mágica y seres espirituales.\nResistencia sobrenatural: El invocador obtiene un bono de +40 a su RM.",
+  "afinidades": [
+   {
+    "grado": "Menor",
+    "nivel": 4,
+    "dificultad": 240,
+    "zeon": 200,
+    "proyeccionMagica": 140,
+    "turno": 80,
+    "arma": "Ninguna",
+    "poderes": "Archimago (Menor): El invocador puede usar cada asalto dos de las habilidades especiales de Magus marcadas con el epígrafe «Magia» en su título. Puede o bien repetirse dos veces la misma o por el contrario usar diferentes habilidades.\nRayo Místico (Magia): El invocador puede lanzar una descarga sobrenatural con daño 50 que ataca en ENErgía. Esta habilidad es equivalente a un conjuro con un valor zeónico de 50 puntos.\nEscudo Místico (Magia): El invocador puede lanzar un escudo de energía mágica capaz de detener todo tipo de ataque con un aguante al daño de 300 puntos. Esta habilidad es equivalente a un conjuro con un valor zeónico de 50 puntos.\nSello Místico (Magia): El invocador lanza un efecto equivalente a un conjuro anímico con una RM 120. De tener éxito, el objetivo no puede usar ninguna de sus habilidades místicas en un número de horas equivalente al nivel de fracaso. Esta habilidad es equivalente a un conjuro con un valor zeónico de 50 puntos.\nTransporte Místico (Magia): El invocador se transporta a una distancia máxima de 50 metros. Esta habilidad es equivalente a un conjuro con un valor zeónico de 50 puntos.\nMístico (Menor): El invocador obtiene habilidad final 120 en las siguientes habilidades secundarias; Valoración mágica, Ocultismo, Estilo."
+   },
+   {
+    "grado": "Intermedia",
+    "nivel": 6,
+    "dificultad": 260,
+    "zeon": 350,
+    "proyeccionMagica": 160,
+    "turno": 90,
+    "arma": "Ninguna",
+    "poderes": "Vuelo de Brujo: El invocador tiene la capacidad de moverse por el aire con Tipo de Vuelo 8.\nQuebrar la Magia (Magia): Como una acción pasiva, una vez por turno el invocador puede anular un conjuro de valor zeónico 50 o inferior. Esta habilidad es equivalente a un conjuro con un valor zeónico de 50 puntos.\nQuebrar Matrices (Magia): Como una acción pasiva, una vez por turno el invocador puede anular un poder psíquico de potencial 140 o inferior. Esta habilidad es equivalente a un conjuro con un valor zeónico de 50 puntos.\nEnergizar (Magia): Una persona a elección del invocador obtiene un bono de +10 a toda acción y sus ataques son capaces de dañar energía. Esta habilidad es equivalente a un conjuro con un valor zeónico de 50 puntos.\nPotenciación Mística (Magia): El invocador obtiene un bono de +20 a su Proyección Mágica hasta el final del turno.\nMístico (Intermedio): El invocador obtiene habilidad final 180 en las siguientes habilidades secundarias; Valoración mágica, Ocultismo, Estilo."
+   },
+   {
+    "grado": "Real",
+    "nivel": 8,
+    "dificultad": 280,
+    "zeon": 500,
+    "proyeccionMagica": 190,
+    "turno": 110,
+    "arma": "Ninguna",
+    "poderes": "Archimago (Real): El invocador puede usar cada asalto tres de las habilidades especiales de Magus marcadas con el epígrafe «Magia» en su título, o una de las marcadas como «Magia Mayor».\nOla de Magia (Magia Mayor): El invocador realiza una descarga de magia que ataca en ENErgia en un área de 25 metros de radio con daño base 100. Esta habilidad es equivalente a un conjuro con un valor zeónico de 120 puntos.\nBarrera de Poder (Magia Mayor): El invocador puede lanzar un escudo de energía mágica capaz de detener todo tipo de ataque con un aguante al daño de 1.500 puntos. Esta habilidad es equivalente a un conjuro con un valor zeónico de 120 puntos.\nMístico (Real): El invocador obtiene habilidad final 240 en las siguientes habilidades secundarias; Valoración mágica, Ocultismo, Estilo."
+   }
+  ]
+ },
+ {
+  "encarnacion": "Ruatha Synn",
+  "pagina": 82,
+  "descripcion": "Ruatha es uno de los Lim Sidhe más conocidos, pues es quien lideró a su pueblo contra la invasión de las grandes bestias. También es principalmente conocido por ser el portador de una de las armas de leyenda, Mjolnir, y por haber perdido ambas manos en un combate contra el dragón ancestral Hatherell, del que obtuvo como recompensa de los grandes espíritus dos manos de plata bendita. Irónicamente, perdió la vida a causa de la mujer que amaba, que no era otra que la hija de su enemigo Hatherell, que había tomado forma humana para engatusarle.",
+  "modificadores": [
+   {
+    "rasgo": "Poseer Estilo 140 o superior",
+    "modificador": 10
+   },
+   {
+    "rasgo": "Ser valiente",
+    "modificador": 10
+   },
+   {
+    "rasgo": "Salvar a los débiles",
+    "modificador": 20
+   },
+   {
+    "rasgo": "Haber derrotado a grandes monstruos",
+    "modificador": 30
+   },
+   {
+    "rasgo": "Ser herido gravemente ayudando a los demás",
+    "modificador": 30
+   },
+   {
+    "rasgo": "Obtener una posesión de Ruatha Synn",
+    "modificador": 40
+   },
+   {
+    "rasgo": "Poseer un fragmento de las manos de plata",
+    "modificador": 50
+   },
+   {
+    "rasgo": "Poseer Mjolnir",
+    "modificador": 100
+   },
+   {
+    "rasgo": "Tener menos de Fuerza 9",
+    "modificador": -20
+   },
+   {
+    "rasgo": "Actuar con prudencia",
+    "modificador": -40
+   },
+   {
+    "rasgo": "Negarse a ayudar a una mujer",
+    "modificador": -60
+   },
+   {
+    "rasgo": "Despreciar a los espíritus",
+    "modificador": -80
+   }
+  ],
+  "poderesGenericos": "Luz de Héroe: El invocador obtiene la consideración de tener las ventajas Seductor, Superviviente y Tocado por el Destino.",
+  "afinidades": [
+   {
+    "grado": "Menor",
+    "nivel": 4,
+    "dificultad": 280,
+    "zeon": 450,
+    "hAtaque": 160,
+    "hDefensa": 160,
+    "tipoDefensa": "Parada",
+    "turno": 30,
+    "arma": "Mjolnir",
+    "poderes": "Mjolnir (Arma): Crea un martillo de guerra de metal plateado. Es un arma de calidad +10 con Daño 80 que ataca en CONtundente. Adicionalmente, cualquier enemigo que sufra un golpe de Mjolnir recibe automáticamente un impacto de Fuerza 12. Este arma sólo puede ser sostenida por el invocador.\nMano de Plata: El invocador obtiene la consideración de que todos los ataques que realice son capaces de dañar a cualquier clase de ser, y puede tocar cosas sobrenaturales e intangibles con las manos desnudas.\nConocimiento Lilium (Menor): El invocador obtiene habilidad final 140 en las siguientes habilidades secundarias; Animales, Herbolaria, Medicina y Rastrear."
+   },
+   {
+    "grado": "Intermedia",
+    "nivel": 8,
+    "dificultad": 360,
+    "zeon": 750,
+    "hAtaque": 230,
+    "hDefensa": 230,
+    "tipoDefensa": "Parada",
+    "turno": 60,
+    "arma": "Mjolnir",
+    "poderes": "Mjolnir (Arma): La calidad de Mjolnir aumenta hasta +15, su Daño base hasta 100, y los impactos que produce son de Fuerza 14.\nLuz de Vida: El invocador puede tocar a un herido y sanarle 50 puntos de vida. Esta habilidad sólo funciona una vez por día por persona.\nTerremoto: Una vez por minuto, en lugar de realizar un ataque el invocador puede golpear el suelo con Mjolnir para provocar un tremendo terremoto. Cualquier personaje que se encuentre a menos de 50 metros de él deberá superar un control de Agilidad contra dificultad 14 o caerá al suelo incapaz de mantener el equilibrio tres asaltos enteros. Cualquier construcción con una barrera de daño inferior a 80 es destruida de inmediato.\nConocimiento Lilium (Intermedio): El invocador obtiene habilidad final 180 en las siguientes habilidades secundarias; Animales, Herbolaria, Medicina y Rastrear."
+   },
+   {
+    "grado": "Real",
+    "nivel": 12,
+    "dificultad": 460,
+    "zeon": 1000,
+    "hAtaque": 300,
+    "hDefensa": 290,
+    "tipoDefensa": "Parada",
+    "turno": 100,
+    "arma": "Mjolnir",
+    "poderes": "Mjolnir (Arma): La calidad de Mjolnir aumenta hasta +20, su Daño base hasta 120, y los impactos que produce son de Fuerza 15. Cualquier ser con un Gnosis superior a 25 que sea impactado por Mjolnir sufre doble daño contra sus ataques.\nDador de Vida: El invocador puede tocar con sus manos a una persona que haya muerto hace menos de un minuto para tratar de devolverle a la vida. El objetivo debe superar un control de RF contra 140 y, en caso de superarlo, recupera la vida, aunque se encuentra en un estado crítico (0 PV) del que tardará una semana en despertar. Cada vez que usa esta habilidad el invocador debe de sacrificar la mitad de sus puntos de vida actuales.\nGrito de los Lim Shide: Una vez por minuto el invocador lanza un grito que incita a sus compañeros a luchar, dándoles energía y coraje para afrontar cualquier reto. Todos sus aliados que se encuentren lo suficientemente cerca para oírle gritar obtiene un +10 a toda acción durante un minuto entero y pueden ignorar los efectos negativos de cualquier estado psicológico.\nConocimiento Lilium (Real): El invocador obtiene habilidad final 240 en las siguientes habilidades secundarias; Animales, Herbolaria, Medicina y Rastrear."
+   }
+  ]
+ },
+ {
+  "encarnacion": "Kristoff, el Rey Pirata",
+  "pagina": 82,
+  "descripcion": "Temido por quienes se escudan tras las leyes y reverenciado por aquellos que buscaban libertad sin límites se encuentra Bartholomew Alexander Samuel Kristoff, el primer y más grande Rey Pirata del Mar Interior. Fundador de la isla Ojo del Huracán y del credo «todo está permitido si eres capaz de obtenerlo por tus propios medios», este temible hombre desapareció de los mares hace casi un milenio, pero su poder e influencia aún se siente a través de los invocadores que le llaman.",
+  "modificadores": [
+   {
+    "rasgo": "Buscar una venganza",
+    "modificador": 10
+   },
+   {
+    "rasgo": "Ser marino",
+    "modificador": 10
+   },
+   {
+    "rasgo": "Buscado por la autoridad",
+    "modificador": 20
+   },
+   {
+    "rasgo": "Haber sufrido una traición",
+    "modificador": 30
+   },
+   {
+    "rasgo": "Obtener una posesión de Kristoff",
+    "modificador": 40
+   },
+   {
+    "rasgo": "Poseer un fragmento del barco de Kristoff",
+    "modificador": 120
+   },
+   {
+    "rasgo": "No cumplir tu palabra",
+    "modificador": -30
+   },
+   {
+    "rasgo": "Traicionar a alguien",
+    "modificador": -40
+   },
+   {
+    "rasgo": "No ser muy codicioso",
+    "modificador": -50
+   },
+   {
+    "rasgo": "Ser pobre",
+    "modificador": -50
+   },
+   {
+    "rasgo": "Incumplir el código del pirata",
+    "modificador": -100
+   }
+  ],
+  "poderesGenericos": "Reputación Aterradora: El invocador obtiene la consideración de tener la ventaja Inquietante.\nNeblina Siniestra: El invocador se ve rodeado de una neblina tenebrosa de unos 50 metros de radio, que permanece fija en el lugar donde la encarnación fue invocada originalmente.",
+  "afinidades": [
+   {
+    "grado": "Menor",
+    "nivel": 4,
+    "dificultad": 250,
+    "zeon": 350,
+    "hAtaque": 170,
+    "hDefensa": 130,
+    "tipoDefensa": "Parada",
+    "turno": "80 / -40",
+    "arma": "Ancla Oxidada & Archana",
+    "poderes": "El Ancla Oxidada (Arma): Crea una enorme ancla atada a la muñeca del invocador por una larga cadena. Es un arma de calidad +5 con Daño 160 que ataca en Filo y Contundente. El invocador puede usarla o bien como arma cuerpo a cuerpo o para lanzarla como arma a distancia con un alcance máximo de 20 metros (el alcance de la cadena), en cuyo caso, no puede usarla hasta el asalto siguiente. Si emplea Ancla Oxidada para luchar, su turno queda reducido a -40 y no puede combatir con Archana.\nArchana (Arma): Crea un sable. Es un arma de calidad +5 con Daño 60 que ataca en Penetrante y Filo. Si emplea Archana para luchar, su turno es de 80 pero no puede combatir con El Ancla Oxidada.\nTiburón Tigre (Menor): Una vez cada cinco asaltos el invocador puede lanzar con su puño un chorro de agua concentrada con la forma de un enorme tiburón azul que provoca un daño de 80 y produce un impacto de Fuerza 8 sobre su objetivo. Tiene un alcance de 50 metros.\nRey Pirata (Menor): El invocador obtiene habilidad final 140 en las siguientes habilidades secundarias; Liderazgo, Navegación, Sigilo, Acrobacias y Advertir."
+   },
+   {
+    "grado": "Intermedia",
+    "nivel": 8,
+    "dificultad": 300,
+    "zeon": 500,
+    "hAtaque": 250,
+    "hDefensa": 200,
+    "tipoDefensa": "Parada",
+    "turno": "90 / -30",
+    "arma": "Ancla Oxidada & Archana",
+    "poderes": "¡Anclas Abajo!: Una vez cada vez que es invocado Kristoff puede hacer que centenares de anclas fantasmales caigan a su alrededor dentro del área de efecto de Neblina Siniestra. Todo el que esté dentro de dicha área menos el invocador recibe un ataque CONtundente de habilidad final 240 con daño 120. A partir de ese momento, las anclas y sus cadenas permanecen clavadas en el suelo, haciendo muy complicado el movimiento dentro del área de la niebla. Cualquiera que trate de moverse o luchar dentro de dicho espacio, menos el propio invocador, sufre el penalizador de espacio reducido.\nRey Pirata (Intermedio): El invocador obtiene habilidad final 180 en las siguientes habilidades secundarias; Liderazgo, Navegación, Sigilo, Acrobacias y Advertir."
+   },
+   {
+    "grado": "Real",
+    "nivel": 11,
+    "dificultad": 380,
+    "zeon": 800,
+    "hAtaque": 280,
+    "hDefensa": 240,
+    "tipoDefensa": "Parada",
+    "turno": "110 / -10",
+    "arma": "Ancla Oxidada & Archana",
+    "poderes": "Tiburón Tigre (Real): Una vez cada cinco asaltos el invocador puede lanzar con su puño un chorro de agua concentrada con la forma de un enorme tiburón azul que provoca un daño de 120 y produce un impacto de Fuerza 12 sobre su objetivo. Tiene un alcance de 50 metros.\nMovimiento Fantasma: Una vez por asalto, al coste de un punto de cansancio el invocador puede moverse instantáneamente a una localización objetivo que éste situada dentro de la Neblina Siniestra.\nRey Pirata (Mayor): El invocador obtiene habilidad final 180 en las siguientes habilidades secundarias; Liderazgo, Navegación, Sigilo, Acrobacias y Advertir."
+   }
+  ]
+ },
+ {
+  "encarnacion": "Loly Ann",
+  "pagina": 84,
+  "descripcion": "Loly Ann, maestra de marionetas, fue famosa no sólo por su particular estilo de combate, sino por su estrambótico aspecto. Aparentemente, fue maldita siendo sólo una niña para que jamás pudiera crecer, por lo que muchos la conocieron como la niña eterna.",
+  "modificadores": [
+   {
+    "rasgo": "Ser un foco de alegría para la gente",
+    "modificador": 10
+   },
+   {
+    "rasgo": "Creer en la fantasía",
+    "modificador": 20
+   },
+   {
+    "rasgo": "Tener aspecto adorable",
+    "modificador": 30
+   },
+   {
+    "rasgo": "Ser menor de quince años",
+    "modificador": 50
+   },
+   {
+    "rasgo": "Obtener una posesión de Loly Ann",
+    "modificador": 40
+   },
+   {
+    "rasgo": "Poseer uno de los muñecos originales",
+    "modificador": 150
+   },
+   {
+    "rasgo": "Ser hombre",
+    "modificador": -20
+   },
+   {
+    "rasgo": "Perder la ilusión",
+    "modificador": -20
+   },
+   {
+    "rasgo": "Ser mayor de 18 años",
+    "modificador": -50
+   },
+   {
+    "rasgo": "Tener aspecto inquietante o moderno",
+    "modificador": -100
+   }
+  ],
+  "poderesGenericos": "Marionetista: El invocador se transforma en una de las marionetas de Loly, adquiriendo las habilidades especiales de esta. Al inicio de cada asalto, antes de determinar la iniciativa, puede declarar que quiere transformarse en cualquiera de las otras marionetas, modificando su forma y sus poderes, aunque ese asalto aplica un -40 a toda acción hasta acostumbrarse a sus nuevas habilidades.\nReina de Marionetas: Si el invocador lo declara, puede designar a otras personas que acepten voluntariamente ser afectados por la encarnación para transformarse en una de las marionetas de Loly. Si lo hace, el invocador como tal no obtiene ninguna habilidad especial, ya que en lugar de encarnar a uno de los muñecos, encarna la propia Loly Ann, quien maneja a distancia a sus «pequeños» con hilo de energía. Lógicamente, y dado que sólo hay tres marionetas, sólo es posible afectar a tres personas; una será Ren, otra Dash y la última Motobu.",
+  "afinidades": [
+   {
+    "grado": "Menor",
+    "nivel": 1,
+    "dificultad": 180,
+    "zeon": 150,
+    "hAtaque": 100,
+    "hDefensa": 100,
+    "tipoDefensa": "Esquiva",
+    "turno": 80,
+    "arma": "Marioneta Ren",
+    "poderes": "Ren (Un gato blanco con un lazo rosa en la cabeza) — H. Ataque 100, H. Esquiva 100, Turno 80.\nZarpas (Arma): Ren ataca con sus garras retráctiles. Es un arma natural con Daño 60 que ataca en Filo.\nSiete Vidas: En lugar de tirar los dados para defenderse, Ren puede esquivar un ataque de forma automática al coste de 1 punto de Cansancio por cada 50 (o fracción) de puntuación de ataque final. Los seres incansables no pueden hacer uso de esta habilidad.\nÁgil como un gato: El invocador obtiene Agilidad 10.\nPeluche (gato): El invocador obtiene habilidad final 120 en las siguientes habilidades secundarias; Acrobacias, Atletismo, Trepar y Saltar."
+   },
+   {
+    "grado": "Intermedia",
+    "nivel": 3,
+    "dificultad": 220,
+    "zeon": 250,
+    "hAtaque": 120,
+    "hDefensa": 120,
+    "tipoDefensa": "Esquiva",
+    "turno": 100,
+    "arma": "Marioneta Ren y Dash",
+    "poderes": "Ren — H. Ataque 120, H. Esquiva 120, Turno 100.\nDash — H. Ataque 150, H. Parada 100, Turno 50.\n\nDash (Un cocodrilo vestido con traje y sombrero):\nMordisco (Arma): Dash ataca con sus poderosas mandíbulas. Es un arma natural de calidad +5 con Daño 80 que ataca en FILo.\nPiel Armada: Dash obtiene TA 4 contra todo tipo de ataques.\nLatigazo: Al coste de un punto de Cansancio, Dash gira sobre sí mismo de manera cómica golpeando a su adversario con su cola de reptil. Este ataque provoca un Daño CONtundente de 120 y un impacto de Fuerza 8."
+   },
+   {
+    "grado": "Real",
+    "nivel": 5,
+    "dificultad": 280,
+    "zeon": 400,
+    "hAtaque": 140,
+    "hDefensa": 170,
+    "tipoDefensa": "Esquiva",
+    "turno": 120,
+    "arma": "Marioneta Ren, Dash y Motobu",
+    "poderes": "Ren — H. Ataque 140, H. Esquiva 170, Turno 120.\nDash — H. Ataque 180, H. Parada 130, Turno 60.\nMotobu — H. Ataque 170, H. Parada 160, Turno 70.\n\nMotobu (Un oso panda vestido de monje budista):\nEstilo Invencible Autoenseñado de las Mil Agonías (Arma): Motobu combate con una combinación de diversas artes marciales concentradas en un vistoso estilo propio que le proporcionan un Daño 50 CONtundente.\nMegamaestro: Cada asalto, Motobu puede usar una de las habilidades marcadas con la palabra «Técnica».\nPatada Voladora del Gorrión Sublime (Técnica): Motobu se lanza contra su objetivo hasta una distancia de 50 metros golpeándolo con una potente patada voladora con Daño 100 basado en CONtundente.\nSesenta Manos del Infierno (Técnica): Motobu mueve sus manos a gran velocidad ante él, creando una bola de aire caliente que desencadena contra un objetivo. Se considera un ataque a distancia con Daño base 80 y ataca en CALor, aunque es capaz de dañar seres inmateriales.\nPanza del Dragón Saciado (Técnica): Motobu golpea a su oponente con un poderoso panzazo que provoca Daño base 100 y un impacto de Fuerza 12 sobre el blanco.\nGolpe de los Cuatro Lotos Chachis (Técnica): Motobu ataca con sus dedos índice y corazón, imbuidos de Ki, con Daño base 50 en ENErgía. Si causa daño, su oponente reduce automáticamente un punto todas sus acumulaciones de Ki durante diez asaltos.\nLa Serenidad del Dios de Jade (Técnica): Motobu recibe un bonificador a todas sus Resistencias de +20."
+   }
+  ]
+ },
+ {
+  "encarnacion": "Aeriel, El Caballero de Argenta",
+  "pagina": 85,
+  "descripcion": "Aeriel ul del Sylvanus, el rey argenta, fue en su momento una de las mayores potencias de la antigüedad. Como el más poderoso de los siete monarcas Sylvain de su era y el primer ser conocido que montó a uno de los Ilona, fue quien encabezó a su pueblo contra los Duk'zarist durante la ancestral Guerra de la Oscuridad. Su mayor y última hazaña fue la de herir en un brazo al emperador oscuro Ghestalt Noah Orbatos, dando origen a la frase «No hay nada que temer… ¿Veis? Sangra igual que yo».",
+  "modificadores": [
+   {
+    "rasgo": "Poseer sangre o ser Nephilim Sylvain",
+    "modificador": 10
+   },
+   {
+    "rasgo": "Participar en una guerra y ser el bando ganador",
+    "modificador": 20
+   },
+   {
+    "rasgo": "Tener Montar 180 o superior",
+    "modificador": 20
+   },
+   {
+    "rasgo": "Ser el superior de un grupo de soldados",
+    "modificador": 30
+   },
+   {
+    "rasgo": "Obtener una posesión de Aeriel",
+    "modificador": 40
+   },
+   {
+    "rasgo": "Poseer la corona de Aeriel",
+    "modificador": 140
+   },
+   {
+    "rasgo": "Actuar en solitario",
+    "modificador": -30
+   },
+   {
+    "rasgo": "Ser pesimista",
+    "modificador": -40
+   },
+   {
+    "rasgo": "Tener vínculos con la oscuridad",
+    "modificador": -50
+   },
+   {
+    "rasgo": "Poseer sangre o ser Nephilim Duk'zarist",
+    "modificador": -100
+   }
+  ],
+  "poderesGenericos": "Ámbar: El personaje que encarne a Aeriel monta automáticamente a Ámbar, el rey de los Ilona; es parte de la encarnación y por ningún concepto puede separarse de este. Se considera una montura sobrenatural con 14 en todos sus atributos físicos, acumulación de daño con 2.000 puntos de vida y Tipo de Armadura 4 contra todo tipo de ataque.\nProtección Sobrenatural: Tanto Ámbar como el invocador poseen barrera de daño 80.\nEl Mayor de los Jinetes: A la hora de cabalgar, el invocador y Ámbar lo hacen como un solo ser. Por tanto, el personaje no aplica ningún penalizador a su habilidad de combate por estar montando y supera automáticamente cualquier chequeo de Montar hasta una dificultad de Casi Imposible.",
+  "afinidades": [
+   {
+    "grado": "Menor",
+    "nivel": 6,
+    "dificultad": 290,
+    "zeon": 450,
+    "hAtaque": 190,
+    "hDefensa": 190,
+    "tipoDefensa": "Parada",
+    "turno": 100,
+    "arma": "Silfur",
+    "poderes": "Silfur (Arma): Crea una lanza de caballería. Es un arma de calidad +10 con daño base 100 que ataca en la Filo y Frío, aunque si se usa para realizar una carga, incrementa su daño base hasta 150. Es capaz de dañar a todo tipo de ser.\nAtaque en Arco: El invocador puede alterar la forma de Silfur dándole la apariencia de una extraña guadaña circular. Con ella, si declara un ataque en área afecta a todos los adversarios que se encuentren a 5 metros de él.\nEsencia de Luz: El invocador provoca doble daño contra seres basados en oscuridad o emociones negativas."
+   },
+   {
+    "grado": "Intermedia",
+    "nivel": 9,
+    "dificultad": 380,
+    "zeon": 750,
+    "hAtaque": 250,
+    "hDefensa": 250,
+    "tipoDefensa": "Parada",
+    "turno": 120,
+    "arma": "Silfur & Srebro",
+    "poderes": "Silfur (Arma): La calidad de Silfur aumenta hasta +15 y su daño base hasta 120, aunque si se usa para realizar una carga, incrementa su daño base hasta 170.\nSrebro (Arma): Crea un arco largo con un número infinito de flechas. Es un arma de calidad +20 con daño base 100 que ataca en Penetrante. Sus flechas alcanzan un kilómetro de distancia, y no aplican penalizador alguno por disparar por encima de la mitad de su alcance máximo. Es capaz de dañar a todo tipo de ser.\nErgent Lux: Una vez por minuto el invocador puede realizar un ataque de carga especial, para lo que necesita estar cabalgando en línea recta al menos un asalto entero. Al hacerlo, obtiene un +100 a su habilidad de ataque con Silfur y se desplaza 150 metros en línea recta (siguiendo la trayectoria que había seguido el asalto anterior), atacando por igual a todo aquel que se encuentre en dicho recorrido."
+   },
+   {
+    "grado": "Real",
+    "nivel": 12,
+    "dificultad": 460,
+    "zeon": 1250,
+    "hAtaque": 300,
+    "hDefensa": 300,
+    "tipoDefensa": "Parada",
+    "turno": 140,
+    "arma": "Silfur, Srebro & Zelber",
+    "poderes": "Aura de Reyes: Cualquiera que trate de atacar al invocador debe de superar de manera automática un control de Frialdad contra dificultad 180 o aplicará un negativo de -60 a su habilidad ofensiva. Los seres inmunes a los estados psicológicos no requieren control alguno.\nSilfur (Arma): La calidad de Silfur aumenta hasta +20 y su daño base hasta 130, aunque si se usa para realizar una carga, incrementa su daño base hasta 180.\nZelber (Arma): Crea una espada larga. Conocida como el filo del fin, es un arma de calidad +20 con daño base 120 que ataca en Filo. Sus ataques ignoran por completo la armadura del defensor y producen un crítico automático (salvo en los seres con acumulación de daños, a los que ataca como si todo su cuerpo fuera un punto vulnerable). Es capaz de dañar a todo tipo de ser."
+   }
+  ]
+ },
+ {
+  "encarnacion": "Wang Shou Bo",
+  "pagina": 85,
+  "descripcion": "El venerable Wang Shou Bo fue el ancestral maestro que desarrolló la mayoría de artes marciales orientales. Pese a ser humano, su maestría era tal que incluso los propios Kami respetaban su habilidad, y en dos ocasiones ayudó a las fuerzas del emperador dorado a repeler los ataques del dios insidioso. Se cuenta que fue el primer mortal capaz de enfrentarse a Yagarema personalmente y lograr herirle. Aunque falleció en el combate, tal fue el respeto que Kami tenebroso sintió hacia el anciano que se retiró por voluntad propia siete días, dando tiempo a sus enemigos a enterrarle con el honor debido.",
+  "modificadores": [
+   {
+    "rasgo": "Comportarse con dignidad",
+    "modificador": 10
+   },
+   {
+    "rasgo": "Ser humilde",
+    "modificador": 10
+   },
+   {
+    "rasgo": "No inmiscuirse en asuntos ajenos",
+    "modificador": 20
+   },
+   {
+    "rasgo": "Aprender nuevas formas de combate",
+    "modificador": 30
+   },
+   {
+    "rasgo": "Mantener un estilo de vida frugal",
+    "modificador": 30
+   },
+   {
+    "rasgo": "Obtener una posesión de Wang Shou Bo",
+    "modificador": 80
+   },
+   {
+    "rasgo": "Comportarse con presunción",
+    "modificador": -40
+   },
+   {
+    "rasgo": "Inmiscuirse en asuntos ajenos",
+    "modificador": -40
+   },
+   {
+    "rasgo": "Disfrutar de lujos innecesarios",
+    "modificador": -40
+   },
+   {
+    "rasgo": "Vivir en medio del lujo por placer",
+    "modificador": -100
+   }
+  ],
+  "poderesGenericos": "Concentración de la Reina Mantis: El invocador tiene un bono de +25 a sus resistencias contra cualquier tipo de poder que afecte su juicio mental.\nGracialidad de Grulla Blanca: El invocador obtiene la consideración de poseer un Tipo de Movimiento 12.",
+  "afinidades": [
+   {
+    "grado": "Menor",
+    "nivel": 5,
+    "dificultad": 260,
+    "zeon": 400,
+    "hAtaque": 150,
+    "hDefensa": 140,
+    "tipoDefensa": "Esquiva",
+    "turno": 100,
+    "arma": "Caricia del Aroma del Loto (Artes marciales)",
+    "poderes": "Caricia del Aroma del Loto (Arma): El invocador lucha con una combinación de diferentes artes marciales conocidas como la Caricia del Aroma del Loto. Con él, provoca un Daño base de 60 y ataca en ENErgía.\nEl Viento Mece los Juncos: Gastando un punto de cansancio, el invocador puede realizar uno de sus golpes cuerpo a cuerpo hasta 50 metros de distancia. Dado que el golpe está basado en aire ataca en CONtundente, pero es invisible para todo aquel que no sea capaz de superar un control de Advertir contra Muy Difícil.\nAstucia del Mono Dorado (Menor): El invocador obtiene la capacidad de incrementar en +10 una de sus tiradas de ataque o defensa cada asalto. Debe declarar su uso antes de lanzar la iniciativa.\nConocimiento Marcial: El invocador obtiene la consideración de las siguientes habilidades de Ki: Control del Ki, Detección del Ki (200), Erudición, Eliminación de peso, Extrusión de Presencia, Inhumanidad y Uso de la Energía Necesaria."
+   },
+   {
+    "grado": "Intermedia",
+    "nivel": 9,
+    "dificultad": 300,
+    "zeon": 600,
+    "hAtaque": 200,
+    "hDefensa": 190,
+    "tipoDefensa": "Esquiva",
+    "turno": 140,
+    "arma": "Caricia del Aroma del Loto & Puño de las Cien Tormentas",
+    "poderes": "Puño de Cien Tormentos (Arma): Si lo desea, el invocador puede sustituir el Aroma del Loto por el estilo Puño de las Cien tormentas, en cuyo caso provoca Daño 100, ataca en CONtundentes, y los críticos que cause aumentan su valor en +20.\nAstucia del Mono Dorado (Intermedio): El invocador obtiene la capacidad de incrementar en +40 una de sus tiradas de ataque o defensa cada asalto, o por el contrario aplicar un +20 a dos tiradas diferentes.\nGolpe de los Cien Huesos Rotos: Una vez por minuto el invocador puede concentrar su Ki en un ataque devastador que, en caso de provocar daños, causa un crítico automático aplicando un bono de +50 al resultado.\nMaestría Marcial: El invocador obtiene la consideración de las siguientes habilidades de Ki, además de las anteriormente citadas; Levitación, Armadura de Energía, Transmisión de Ki, Curación por Ki y Zen."
+   },
+   {
+    "grado": "Real",
+    "nivel": 13,
+    "dificultad": 500,
+    "zeon": 1200,
+    "hAtaque": 260,
+    "hDefensa": 260,
+    "tipoDefensa": "Esquiva",
+    "turno": 165,
+    "arma": "Caricia del Aroma del Loto & Puño de las Cien Tormentas",
+    "poderes": "Dios de las Artes Marciales: El invocador incrementa en +20 el daño base del estilo de combate elegido.\nAstucia del Mono Dorado (Mayor): El invocador obtiene la capacidad de incrementar en +60 una de sus tiradas de ataque o defensa cada asalto, o por el contrario aplicar un +20 a tres tiradas diferentes.\nMás Rápido que el Viento: El invocador puede efectuar hasta tres ataques por asalto sin penalizador alguno.\nOmnisciencia Marcial: El invocador obtiene la consideración de posee todas las habilidades de Ki."
+   }
+  ]
+ },
+ {
+  "encarnacion": "Holst, Rey de Héroes",
+  "pagina": 86,
+  "descripcion": "Holst, el que nunca debió nacer, fundador y rey del reino de Haufmarsormen, aquel que desafió incluso al propio destino, ha sido para muchos el mayor héroe de todos los tiempos. Más mito que real, son tantas las historias que se cuentan de este hombre que se codeaba con dioses que su leyenda transciende fronteras y eras. Guerrero inigualable, líder nato y pensador, muchos invocadores consideran que Holst es la más poderosa de todas las encarnaciones conocida; un poder equiparable al de un verdadero semidiós.",
+  "modificadores": [
+   {
+    "rasgo": "Hablar Utlew'alariel",
+    "modificador": 10
+   },
+   {
+    "rasgo": "Tener Rastrear 180 o superior",
+    "modificador": 10
+   },
+   {
+    "rasgo": "Recuperarse del estado de entre la vida y la muerte sin ayuda",
+    "modificador": 20
+   },
+   {
+    "rasgo": "Ser huérfano",
+    "modificador": 20
+   },
+   {
+    "rasgo": "Ser proclamado Rey por méritos propios",
+    "modificador": 50
+   },
+   {
+    "rasgo": "Obtener una posesión de Holst",
+    "modificador": 40
+   },
+   {
+    "rasgo": "Poseer Mournehäven",
+    "modificador": 150
+   },
+   {
+    "rasgo": "No ayudar los necesitados",
+    "modificador": -30
+   },
+   {
+    "rasgo": "Traicionar a tus aliados",
+    "modificador": -40
+   },
+   {
+    "rasgo": "Faltar el respeto a los demás",
+    "modificador": -50
+   }
+  ],
+  "poderesGenericos": "Carisma: El invocador obtiene la consideración de tener la ventaja Encanto.\nLa Sangre del Dragón: El invocador obtiene un bono de +50 a su RM y RP.\nPor encima de lo Humano: Todas las características físicas del invocador se consideran 13 y puede realizar acciones inhumanas.",
+  "afinidades": [
+   {
+    "grado": "Menor",
+    "nivel": 8,
+    "dificultad": 360,
+    "zeon": 750,
+    "hAtaque": 230,
+    "hDefensa": 230,
+    "tipoDefensa": "Parada",
+    "turno": 90,
+    "arma": "Mournehäven & Regalo de Uruz",
+    "poderes": "Mournehäven (Arma): Crea una espada bastarda. Es un arma de calidad +15 con Daño 120 que ataca en Filo y Contundente. Es capaz de dañar a cualquier clase de ser.\nRegalo de Uruz (Arma): Crea un arco largo y nueve flechas. Es un arma de calidad +20 con daño base 100 que ataca en Penetrante. El arco sólo puede disparar una flecha por asalto, pero estas aplican las mismas reglas que si hubieran lanzado sobre ellas un conjuro de blanco perfecto en grado intermedio. Es capaz de dañar a todo tipo de ser.\nEl Elegido del Mundo: El invocador puede repetir una de sus tiradas cada asalto.\nEl Héroe Perfecto (Menor): El invocador obtiene habilidad final 140 en todas las habilidades secundarias."
+   },
+   {
+    "grado": "Intermedia",
+    "nivel": 12,
+    "dificultad": 440,
+    "zeon": 1200,
+    "hAtaque": 310,
+    "hDefensa": 310,
+    "tipoDefensa": "Parada",
+    "turno": 120,
+    "arma": "Mournehäven & Regalo de Uruz",
+    "poderes": "Comprensión Sobrenatural (Intermedio): Si un contrincante es capaz de alcanzar dos veces en combate cuerpo a cuerpo al invocador, el personaje obtiene un bono de +40 a su habilidad de defensa contra todos los ataques que dicho enemigo realice contra él a partir de ese momento.\nTrascender el Destino: Una vez cada diez asaltos, antes de tirar los dados, el invocador puede hacer que una de sus tiradas de ataque o defensa sea automáticamente una tirada abierta, sin importar el resultado.\nDainself: Una vez cada diez asaltos, el invocador puede hacer un ataque sumando un bono de +50 a su habilidad ofensiva. En caso de causar daños, su objetivo debe de superar un control de RM contra 140 o perderá su capacidad de usar cualquier clase de habilidad sobrenatural durante un día entero.\nEl Héroe Perfecto (Intermedio): El invocador obtiene habilidad final 200 en todas las habilidades secundarias."
+   },
+   {
+    "grado": "Real",
+    "nivel": 15,
+    "dificultad": 520,
+    "zeon": 1500,
+    "hAtaque": 330,
+    "hDefensa": 330,
+    "tipoDefensa": "Parada",
+    "turno": 140,
+    "arma": "Mournehäven & Regalo de Uruz",
+    "poderes": "Avalon: Avalon es el nombre que recibía el ataque final de Holst, aquel que le permitía destruir a un adversario por completo reduciendo su existencia a la nada. Esta habilidad permite al invocador realizar un único ataque doblando su daño base y aplicando un bono de +200 a su habilidad ofensiva. Este ataque ignora cualquier tipo de armadura o protección y produce un crítico automático. Tras usar este ataque, la encarnación finaliza, sin importar cuanto tiempo quedase aún.\nEl Héroe Perfecto (Real): El invocador obtiene habilidad final 280 en todas las habilidades secundarias."
+   }
+  ]
+ }
+]

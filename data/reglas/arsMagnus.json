@@ -1,0 +1,458 @@
+[
+ {
+  "nombre": "Berserker",
+  "PD": 30,
+  "CM": 10,
+  "requisitos": "-",
+  "descripcion": "+10 al Ataque, -20 a Defensa e ignora penalizador por Dolor o Cansancio. Chequeo de VOL para dejar de luchar (-2 si está a 1/4 de PVs)",
+  "_seccion": "ARS MAGNUS MENORES"
+ },
+ {
+  "nombre": "Yuuse Batojutsu",
+  "PD": 20,
+  "CM": 10,
+  "requisitos": "NO",
+  "descripcion": "+10 a Ataque y Turno por cada asalto con el arma enfundada y concentrándose (Max +30). No puede atacar ni desenfundar pero sí defenderse y acumular Ki",
+  "_seccion": "ARS MAGNUS MENORES"
+ },
+ {
+  "nombre": "Kiai",
+  "PD": 10,
+  "CM": 10,
+  "requisitos": "NO",
+  "descripcion": "Añade +10 al Daño de Artes Marciales y permite atacar energía. Consume 1 de Ki y sólo puede usarse cada 5 asaltos o consume Cansancio",
+  "_seccion": "ARS MAGNUS MENORES"
+ },
+ {
+  "nombre": "Guardián",
+  "PD": 40,
+  "CM": 10,
+  "requisitos": "-",
+  "descripcion": "No hace falta tener acción para proteger a otro personaje. Penalizador por defender a otro pasa a -10",
+  "_seccion": "ARS MAGNUS MENORES"
+ },
+ {
+  "nombre": "Ataque Final",
+  "PD": 30,
+  "CM": 10,
+  "requisitos": "-",
+  "descripcion": "Permite realizar un Ataque con +20 y cada Cansancio  añade +20 en lugar de +15. Sólo una vez al día y si los PVs son menos de la mitad",
+  "_seccion": "ARS MAGNUS MENORES"
+ },
+ {
+  "nombre": "Maniobra Especial",
+  "PD": 30,
+  "CM": 10,
+  "requisitos": "-",
+  "descripcion": "Bono especial condicionado de +20 al Ataque",
+  "_seccion": "ARS MAGNUS MENORES"
+ },
+ {
+  "nombre": "Ashuriam: Asalto Dimensional",
+  "PD": 80,
+  "CM": 80,
+  "requisitos": "NO",
+  "descripcion": "Asalto Dimensional: Permite cambiar de dimensión y atacar a través de las rendijas entre los dos mundos",
+  "_seccion": "ARS MAGNUS MAYORES"
+ },
+ {
+  "nombre": "Agnitum: Ojo Absoluto",
+  "PD": 30,
+  "CM": 30,
+  "requisitos": "NO",
+  "descripcion": "Ojo Absoluto: Permite desplazar los sentidos a objetos disparados o lanzados y controlarlos a distancia",
+  "_seccion": "ARS MAGNUS MAYORES"
+ },
+ {
+  "nombre": "Caos Meister: Control del Caos",
+  "PD": 80,
+  "CM": 100,
+  "requisitos": "NO",
+  "descripcion": "Alteración Existencial, Dualidad del Destino, Null Tempus",
+  "_seccion": "ARS MAGNUS MAYORES"
+ },
+ {
+  "nombre": "Etherial: Ataques Infinitos",
+  "PD": 40,
+  "CM": 40,
+  "requisitos": "NO",
+  "descripcion": "Crítico Seguro, Ataque Absoluto, Mil Golpes, Sello de Poder",
+  "_seccion": "ARS MAGNUS MAYORES"
+ },
+ {
+  "nombre": "Haima: Sombra de Sangre",
+  "PD": 30,
+  "CM": 30,
+  "requisitos": "NO",
+  "descripcion": "Sombra de Sangre: Permite crear dobles instantáneos que absorben el daño recibido",
+  "_seccion": "ARS MAGNUS MAYORES"
+ },
+ {
+  "nombre": "Magnum: Liberación de Poder",
+  "PD": 30,
+  "CM": 50,
+  "requisitos": "NO",
+  "descripcion": "Liberación de Poder: Permite concentrar energía (de 1 a 5 asaltos) para un ataque potenciado (+20 HA/asalto). -20 Defensa en concentración",
+  "_seccion": "ARS MAGNUS MAYORES"
+ },
+ {
+  "nombre": "Infinium: Fluctuación del Espacio",
+  "PD": 40,
+  "CM": 40,
+  "requisitos": "NO",
+  "descripcion": "Fluctuación del Espacio: Permite el movimiento instantáneo para obtener Flanco o Espalda",
+  "_seccion": "ARS MAGNUS MAYORES"
+ },
+ {
+  "nombre": "Matrix: División Existencial",
+  "PD": 50,
+  "CM": 50,
+  "requisitos": "NO",
+  "descripcion": "División Existencial: Permite crear dobles perfectos del usuario",
+  "_seccion": "ARS MAGNUS MAYORES"
+ },
+ {
+  "nombre": "Mundus: Control del Entorno",
+  "PD": 30,
+  "CM": 50,
+  "requisitos": "NO",
+  "descripcion": "Control del entorno como arma, Usos especializados",
+  "_seccion": "ARS MAGNUS MAYORES"
+ },
+ {
+  "nombre": "Raikou: Hoja Relámpago",
+  "PD": 60,
+  "CM": 60,
+  "requisitos": "NO",
+  "descripcion": "Hoja Relámpago: Permite encadenar ataques obteniendo bonificadores por cada ataque exitoso",
+  "_seccion": "ARS MAGNUS MAYORES"
+ },
+ {
+  "nombre": "Rem: Los Ojos del Destino",
+  "PD": 40,
+  "CM": 60,
+  "requisitos": "NO",
+  "descripcion": "Los Ojos del Destino: Permite obtener bonificadores tras estudiar ataques y técnicas de los oponentes",
+  "_seccion": "ARS MAGNUS MAYORES"
+ },
+ {
+  "nombre": "Samiel: Retribución Final",
+  "PD": 60,
+  "CM": 60,
+  "requisitos": "NO",
+  "descripcion": "Retribución Final: Permite obtener bonificadores contra un oponente tras haber sido dañado por él",
+  "_seccion": "ARS MAGNUS MAYORES"
+ },
+ {
+  "nombre": "Shinkyou: La Posición Espejo",
+  "PD": 60,
+  "CM": 80,
+  "requisitos": "NO",
+  "descripcion": "La Posición Espejo: Bono de +50 a Defensa y Contraataque automático durante 5 asaltos. Sin Acciones activas",
+  "_seccion": "ARS MAGNUS MAYORES"
+ },
+ {
+  "nombre": "Summun: Acumulación de Energía",
+  "PD": 30,
+  "CM": 30,
+  "requisitos": "NO",
+  "descripcion": "Acumulación de Energía: Permite atacar a distancia deformando el espacio entre los luchadores",
+  "_seccion": "ARS MAGNUS MAYORES"
+ },
+ {
+  "nombre": "Transformación: El Despertar",
+  "PD": 50,
+  "CM": 50,
+  "requisitos": "NO",
+  "descripcion": "El Despertar: Transformación que otorga el bono de POD a toda acción y un bono variable a las Acumulaciones de Ki. Concede Zen",
+  "_seccion": "ARS MAGNUS MAYORES"
+ },
+ {
+  "nombre": "Transformación: Poder Físico",
+  "PD": 30,
+  "CM": 50,
+  "requisitos": "NO",
+  "descripcion": "Primer Estado, Segundo Estado",
+  "_seccion": "ARS MAGNUS MAYORES"
+ },
+ {
+  "nombre": "Transformación: Eliodón",
+  "PD": 20,
+  "CM": 40,
+  "requisitos": "NO",
+  "descripcion": "Eliodón: Transformación temporal obteniendo Poderes de Criatura adicionales",
+  "_seccion": "ARS MAGNUS MAYORES"
+ },
+ {
+  "nombre": "Transformación: Ruptura del Destino",
+  "PD": 100,
+  "CM": 100,
+  "requisitos": "NO",
+  "descripcion": "Ruptura del Destino: Transformación que permite obtener un +100 a la actividad, que decae en -10 por turno hasta -100",
+  "_seccion": "ARS MAGNUS MAYORES"
+ },
+ {
+  "nombre": "Transformación: Los Sellos del Dragón",
+  "PD": 20,
+  "CM": 50,
+  "requisitos": "NO",
+  "descripcion": "Sellos del Dragón, Las Puertas",
+  "_seccion": "ARS MAGNUS MAYORES"
+ },
+ {
+  "nombre": "Umbra: Ataque de Sombras",
+  "PD": 30,
+  "CM": 50,
+  "requisitos": "NO",
+  "descripcion": "Control de la propia sombra como arma",
+  "_seccion": "ARS MAGNUS MAYORES"
+ },
+ {
+  "nombre": "Aries: Masificación armas y cadenas",
+  "PD": 40,
+  "CM": 40,
+  "requisitos": "NO",
+  "descripcion": "Uso de Aries, Elección de armas, Ataque masivo",
+  "_seccion": "ARMAS IMPOSIBLES"
+ },
+ {
+  "nombre": "Taurus: Enormes armas dobles",
+  "PD": 20,
+  "CM": 30,
+  "requisitos": "NO",
+  "descripcion": "Uso de Taurus, Lanzamiento en arco, Parar el ataque, Recoger el arma",
+  "_seccion": "ARMAS IMPOSIBLES"
+ },
+ {
+  "nombre": "Gémini: Marionetas",
+  "PD": 50,
+  "CM": 50,
+  "requisitos": "NO",
+  "descripcion": "Uso de Marionetas de combate, Ver reglas",
+  "_seccion": "ARMAS IMPOSIBLES"
+ },
+ {
+  "nombre": "Cáncer: Monofilos",
+  "PD": 40,
+  "CM": 20,
+  "requisitos": "NO",
+  "descripcion": "Uso de Cáncer, Casi invisible, Presa mitad penalizador, Perforadora, Parada -10",
+  "_seccion": "ARMAS IMPOSIBLES"
+ },
+ {
+  "nombre": "Cáncer Magister: Monofilos",
+  "PD": 30,
+  "CM": 30,
+  "requisitos": "NO",
+  "descripcion": "Sin penalizador por Presa, Visibilidad menor, Perforación incrementada, Imparable, Ataque en área a todos los enemigos a 10m de radio",
+  "_seccion": "ARMAS IMPOSIBLES"
+ },
+ {
+  "nombre": "Leo: Armas-pistola",
+  "PD": 20,
+  "CM": 10,
+  "requisitos": "NO",
+  "descripcion": "Uso de Leo, Ataque combinado",
+  "_seccion": "ARMAS IMPOSIBLES"
+ },
+ {
+  "nombre": "Virgo: Instrumentos pequeños de viento",
+  "PD": 50,
+  "CM": 50,
+  "requisitos": "NO",
+  "descripcion": "Uso de Virgo, Daño por resonancia, Ignora protecciones, Ataque sónico, Ataque en área -10 (5m), Ataque único, Fascinación",
+  "_seccion": "ARMAS IMPOSIBLES"
+ },
+ {
+  "nombre": "Virgo: Instrumentos grandes de viento",
+  "PD": 50,
+  "CM": 50,
+  "requisitos": "NO",
+  "descripcion": "Uso de Virgo, Daño por resonancia, Ignora protecciones, Ataque sónico, Ataque en área -10 (5m), Ataque único, Daño incrementado",
+  "_seccion": "ARMAS IMPOSIBLES"
+ },
+ {
+  "nombre": "Virgo: Instrumentos de cuerda",
+  "PD": 50,
+  "CM": 50,
+  "requisitos": "NO",
+  "descripcion": "Uso de Virgo, Daño por resonancia, Ignora protecciones, Ataque sónico, Ataque en área -10 (5m), Ataque único, Resonancia, Cáncer reducido",
+  "_seccion": "ARMAS IMPOSIBLES"
+ },
+ {
+  "nombre": "Virgo: Instrumentos de percusión",
+  "PD": 50,
+  "CM": 50,
+  "requisitos": "NO",
+  "descripcion": "Uso de Virgo, Daño por resonancia, Ignora protecciones, Ataque sónico, Ataque en área -10 (5m), Ataque único, Impacto FUE 12",
+  "_seccion": "ARMAS IMPOSIBLES"
+ },
+ {
+  "nombre": "Libra: Arma variable",
+  "PD": 30,
+  "CM": 20,
+  "requisitos": "NO",
+  "descripcion": "Uso de Libra, Capacidades variables",
+  "_seccion": "ARMAS IMPOSIBLES"
+ },
+ {
+  "nombre": "Scorpio: Espada-látigo",
+  "PD": 10,
+  "CM": 10,
+  "requisitos": "NO",
+  "descripcion": "Uso de Scorpio, Forma dual, Presa con Daño completo, Torbellino envolvente",
+  "_seccion": "ARMAS IMPOSIBLES"
+ },
+ {
+  "nombre": "Sagittarius: Objetos arrojadizos",
+  "PD": 40,
+  "CM": 30,
+  "requisitos": "NO",
+  "descripcion": "Uso de Sagittarius, Proyectiles disparados",
+  "_seccion": "ARMAS IMPOSIBLES"
+ },
+ {
+  "nombre": "Sagittarius Magister: Obj. arrojadizos",
+  "PD": 30,
+  "CM": 30,
+  "requisitos": "NO",
+  "descripcion": "Escoger 2 (o 3 con especialización): Destructor, Penetrante, Área, Precisión absoluta, Exterminador, Quebrantador de escudos",
+  "_seccion": "ARMAS IMPOSIBLES"
+ },
+ {
+  "nombre": "Capricornius: Agujas",
+  "PD": 20,
+  "CM": 20,
+  "requisitos": "NO",
+  "descripcion": "Uso de Capricornius, Crítico incrementado +20, Daño completo para calculo de Crítico",
+  "_seccion": "ARMAS IMPOSIBLES"
+ },
+ {
+  "nombre": "Aquarius: Capas y prendas de vestir",
+  "PD": 20,
+  "CM": 20,
+  "requisitos": "NO",
+  "descripcion": "Uso de Aquarius, Escudo contra proyectiles, Posición defensiva",
+  "_seccion": "ARMAS IMPOSIBLES"
+ },
+ {
+  "nombre": "Piscis: Yoyó",
+  "PD": 10,
+  "CM": 20,
+  "requisitos": "NO",
+  "descripcion": "Uso de Piscis, Cuchillas (opcional), Ataque en área (5m)",
+  "_seccion": "ARMAS IMPOSIBLES"
+ },
+ {
+  "nombre": "Ophiucos: Señor de Espadas Infinitas",
+  "PD": 50,
+  "CM": 100,
+  "requisitos": "NO",
+  "descripcion": "Uso de Ophiucos, Liberación absoluta, Liberación en área, Uso sellado, Combinación con Ki",
+  "_seccion": "ARMAS IMPOSIBLES"
+ },
+ {
+  "nombre": "Ophiucos Sigma",
+  "PD": 60,
+  "CM": 70,
+  "requisitos": "NO",
+  "descripcion": "Uso de Ophiucos Sigma, Vórtice, Desenfundado Automático, Combinación con Ataques Múltiples, Preparación Previa, Liberación Absoluta",
+  "_seccion": "ARMAS IMPOSIBLES"
+ },
+ {
+  "nombre": "Ars Magnus Personalizado 1",
+  "PD": 0,
+  "CM": 0,
+  "requisitos": "-",
+  "descripcion": "Ars Magnus Personalizado 1",
+  "_seccion": "ARS MAGNUS PERSONALIZADOS"
+ },
+ {
+  "nombre": "Ars Magnus Personalizado 2",
+  "PD": 0,
+  "CM": 0,
+  "requisitos": "-",
+  "descripcion": "Ars Magnus Personalizado 2",
+  "_seccion": "ARS MAGNUS PERSONALIZADOS"
+ },
+ {
+  "nombre": "Ars Magnus Personalizado 3",
+  "PD": 0,
+  "CM": 0,
+  "requisitos": "-",
+  "descripcion": "Ars Magnus Personalizado 3",
+  "_seccion": "ARS MAGNUS PERSONALIZADOS"
+ },
+ {
+  "nombre": "Atrapar",
+  "PD": 20,
+  "CM": 10,
+  "requisitos": "NO",
+  "descripcion": "Ver poder requerido. Permite considerar que el arma tiene Presa o si la tiene sólo -10 de penalizador",
+  "_seccion": "TABLAS DE COMBATE SOBRENATURAL"
+ },
+ {
+  "nombre": "Controlar a distancia",
+  "PD": 20,
+  "CM": 20,
+  "requisitos": "NO",
+  "descripcion": "Ver poder requerido. Aplica sólo un -20 a su Ataque y Defensa, para luchar con una arma movida a distancia",
+  "_seccion": "TABLAS DE COMBATE SOBRENATURAL"
+ },
+ {
+  "nombre": "Ataque a distancia",
+  "PD": 20,
+  "CM": 20,
+  "requisitos": "NO",
+  "descripcion": "Ver poder requerido. Permite proyectar intensidades de energía a distancia. Consumo: 1 Ki o 10 Zeón. Ver tiempo de reutilización",
+  "_seccion": "TABLAS DE COMBATE SOBRENATURAL"
+ },
+ {
+  "nombre": "Movimiento acelerado",
+  "PD": 20,
+  "CM": 0,
+  "requisitos": "NO",
+  "descripcion": "Ver poder requerido. Permite incrementar el Tipo de Movimiento",
+  "_seccion": "TABLAS DE COMBATE SOBRENATURAL"
+ },
+ {
+  "nombre": "Incremento de daño",
+  "PD": 20,
+  "CM": 20,
+  "requisitos": "-",
+  "descripcion": "Ver poder requerido. Permite incrementar el Daño",
+  "_seccion": "TABLAS DE COMBATE SOBRENATURAL"
+ },
+ {
+  "nombre": "Escudo protector",
+  "PD": 10,
+  "CM": 10,
+  "requisitos": "NO",
+  "descripcion": "Ver poder requerido. Crea un escudo elemental para bloquear ataques a distancia",
+  "_seccion": "TABLAS DE COMBATE SOBRENATURAL"
+ },
+ {
+  "nombre": "Refuerzo físico",
+  "PD": 20,
+  "CM": 10,
+  "requisitos": "-",
+  "descripcion": "Ver poder requerido. Bono a la FUE",
+  "_seccion": "TABLAS DE COMBATE SOBRENATURAL"
+ },
+ {
+  "nombre": "Técnica característica",
+  "PD": 40,
+  "CM": 30,
+  "requisitos": "NO",
+  "descripcion": "Ver poder requerido. Efectos variables a definir. Consumo: 1 Ki o 10 Zeón. Ver tiempo de reutilización",
+  "_seccion": "TABLAS DE COMBATE SOBRENATURAL"
+ },
+ {
+  "nombre": "Técnica mayor",
+  "PD": 20,
+  "CM": 20,
+  "requisitos": "NO",
+  "descripcion": "Ver poder requerido. Consumo: 2 Ki o 20 Zeón",
+  "_seccion": "TABLAS DE COMBATE SOBRENATURAL"
+ }
+]

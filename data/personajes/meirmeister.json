@@ -1,0 +1,191 @@
+{
+  "_nota": "Ficha de ejemplo transcrita desde Meirmeister.xlsm (ficha comunitaria 'Meirmeister'). Sirve como caso de prueba del modelo de datos: personaje de nivel bajo, no sobrenatural, con raza de ajuste de nivel.",
+  "identidad": {
+    "nombre": "Meirmeister",
+    "categoria": "Paladín Oscuro (RD)",
+    "nivel": 1,
+    "ajusteNivel": 1,
+    "nivelTotal": "1 + 1",
+    "raza": "Jayán",
+    "tipoCriatura": "Natural",
+    "gnosis": 10,
+    "sexo": "Hombre",
+    "edad": 37,
+    "alturaM": 3.56,
+    "pesoKg": 234,
+    "tez": "blanca",
+    "ojos": "azules",
+    "cabello": "largo y parcialmente recogido",
+    "apariencia": 8,
+    "tamano": 23,
+    "categoriaTamano": "Grande"
+  },
+  "trasfondo": {
+    "particularidades": "Aprecia la valentía y lo justo. Detesta lo contrario.",
+    "personalidad": "Carácter fuerte y serio, debido al incidente de su pueblo. Hará cualquier cosa por evitar que pase algo similar en cualquier sitio.",
+    "suenosObjetivos": "Volver a ver a su hermano y poder volver a disfrutar de una vida tranquila con él.",
+    "historia": "Tras el incidente de Venta Nueva, Meir junto a su hermano huyeron, y para ganarse la vida Meir tuvo que asumir el hecho de ser un mercenario para ganar el dinero para mantenerlos mientras su hermano pudiera disfrutar de lo que quedara de su infancia, protegiéndolo de cualquier responsabilidad innecesaria para mantener la inocencia y la esperanza de su pequeño hermano, aunque su dolor y remordimientos crecieran a medida que pasara el tiempo. Una vez creció su hermano lo suficiente, se separaron para poder luego en un futuro encontrarse fortalecidos y con posibles amistades que le ayudarán con su propósito de volver a Venta Nueva...",
+    "idiomas": ["Latín", "Kola", "Jashú"]
+  },
+  "experiencia": {
+    "incremental": true,
+    "actual": 59,
+    "total": 59,
+    "siguienteNivel": 125
+  },
+  "caracteristicas": {
+    "_columnas": "base = comprada con PCs; total = base + raza + ventajas; bono = tabla bonoCaracteristica",
+    "AGI": { "base": 10, "total": 10, "bono": 15 },
+    "CON": { "base": 8, "total": 9, "bono": 10 },
+    "DES": { "base": 10, "total": 10, "bono": 15 },
+    "FUE": { "base": 10, "total": 12, "bono": 20 },
+    "INT": { "base": 4, "total": 4, "bono": -5 },
+    "PER": { "base": 5, "total": 5, "bono": 0 },
+    "POD": { "base": 4, "total": 3, "bono": -10 },
+    "VOL": { "base": 6, "total": 6, "bono": 5 }
+  },
+  "derivados": {
+    "puntosVida": 135,
+    "cansancio": 12,
+    "regeneracion": 2,
+    "regeneracionTexto": "20 PV / día",
+    "movimiento": 8,
+    "movimientoTexto": "28 m / asalto",
+    "penalizadorNatural": -20,
+    "puntosDestino": 3,
+    "iniciativaTurno": {
+      "base": 55,
+      "agiMasDes": 30,
+      "categoria": 5,
+      "armadura": -20,
+      "sinArma": 20,
+      "total": 90
+    },
+    "accionesPorTurno": 4
+  },
+  "resistencias": {
+    "presenciaBase": 30,
+    "RF": { "base": 30, "bono": 10, "raza": 20, "total": 60 },
+    "RE": { "base": 30, "bono": 10, "raza": 0, "total": 40 },
+    "RV": { "base": 30, "bono": 10, "raza": 0, "total": 40 },
+    "RM": { "base": 30, "bono": -10, "raza": -20, "total": 0 },
+    "RP": { "base": 30, "bono": 5, "raza": 0, "total": 35 }
+  },
+  "desarrollo": {
+    "PDsTotalesNivel": 600,
+    "limiteHabilidadesCombate": 360,
+    "limiteHabilidadesMisticas": 300,
+    "limiteHabilidadesPsiquicas": 300
+  },
+  "habilidadesPrimarias": {
+    "combate": {
+      "HAtaque":        { "PDs": 150, "base": 75, "bono": 15, "categoria": 5, "total": 95 },
+      "HParada":        { "PDs": 110, "base": 55, "bono": 15, "categoria": 0, "total": 70 },
+      "HEsquiva":       { "PDs": 0,   "base": 0,  "bono": 15, "categoria": 0, "total": 15 },
+      "LlevarArmadura": { "PDs": 40,  "base": 20, "bono": 25, "categoria": 5, "total": 50 },
+      "conocimientoMarcial": { "categoria": 20, "total": 20, "usado": 10 }
+    },
+    "ki": {
+      "puntos": { "AGI": 10, "CON": 9, "DES": 10, "FUE": 14, "POD": 3, "VOL": 6, "total": 52 },
+      "acumulacion": { "AGI": 2, "CON": 1, "DES": 2, "FUE": 2, "POD": 1, "VOL": 1, "total": 9 },
+      "unificacion": true,
+      "limitesLibres": 1
+    },
+    "misticas": {
+      "zeon": 40,
+      "ACT": 0,
+      "proyeccionMagica": 15,
+      "nivelMagia": 0,
+      "convocar": -10,
+      "controlar": 5,
+      "atar": -10,
+      "desconvocar": -10
+    },
+    "psiquicas": {
+      "CV": 1,
+      "proyeccionPsiquica": 15,
+      "potencialPsiquico": 20
+    }
+  },
+  "habilidadesSecundarias": {
+    "_nota": "total = PDs/coste + bono de característica + bono de categoría + bonos especiales",
+    "atleticas":     { "Acrobacias": 20, "Atletismo": 5, "Montar": 5, "Nadar": -5, "Trepar": -35, "Saltar": -30, "Pilotar": 0 },
+    "sociales":      { "Estilo": -25, "Intimidar": 90, "Liderazgo": -40, "Persuasión": -30, "Comercio": -25, "Callejeo": -35, "Etiqueta": -35 },
+    "perceptivas":   { "Advertir": 80, "Buscar": -10, "Rastrear": -30, "Animales": -35 },
+    "intelectuales": { "Ciencia": null, "Ley": -35, "Herbolaria": -35, "Historia": null, "Táctica": -35, "Medicina": null, "Memorizar": -25, "Navegación": -35, "Ocultismo": -35, "Tasación": null, "Valoración Mágica": null },
+    "vigor":         { "Frialdad": 45, "Proezas de Fuerza": 60, "Resistencia al Dolor": -15 },
+    "subterfugio":   { "Cerrajería": -15, "Disfraz": 0, "Ocultarse": -50, "Robo": -15, "Sigilo": -35, "Trampería": -15, "Venenos": null },
+    "creativas":     { "Arte": -20, "Baile": null, "Forja": null, "Runas": -15, "Alquimia": -35, "Animismo": -40, "Música": null, "Trucos de Manos": -15, "Caligrafía ritual": -15, "Orfebrería": -15, "Confección": -15, "Confección de marionetas": -40 }
+  },
+  "ventajas": [],
+  "desventajas": [
+    "Arma exclusiva",
+    "Adicción o vicio grave",
+    "Código de conducta",
+    "PC exclusivos trasfondo"
+  ],
+  "capacidadesRaciales": [
+    "Gigantes", "Físico excepcional", "Aguante al cansancio", "Resistencia física",
+    "El tercer ojo", "Armas naturales", "Fuerza Inhumana", "Debilidad contra magia",
+    "Modificador de nivel: +1"
+  ],
+  "arsMagnus": [
+    { "nombre": "Berserker", "CM": 10, "descripcion": "+10 al Ataque, -20 a Defensa e ignora penalizador por Dolor o Cansancio. Chequeo de VOL para dejar de luchar (-2 si está a 1/4 de PVs)" }
+  ],
+  "tablasDeEstilo": [
+    { "nombre": "Tabla de Defensa contra proyectiles", "PDs": 40, "efecto": "Uso de armas tipo Mandoble como si fuesen de tipo Escudo" }
+  ],
+  "combate": {
+    "armaDesarrollada": "Hacha a dos manos",
+    "armas": [
+      {
+        "nombre": "Hacha a dos manos",
+        "empunadura": "A dos manos",
+        "tamano": "Enorme",
+        "conocimiento": "Conocida",
+        "turno": 0,
+        "ataque": 95,
+        "defensa": 70,
+        "tipoDefensa": "Parada",
+        "dano": 190,
+        "criticos": ["FIL", "CON"],
+        "entereza": 23,
+        "rotura": 13,
+        "presencia": 30,
+        "fueMinima": 11,
+        "turnoBaseSiNoCumple": -70
+      }
+    ],
+    "desarmado": {
+      "turno": 90, "ataque": 5, "defensa": 15, "tipoDefensa": "Esquiva",
+      "dano": 40, "criticos": ["CON"], "entereza": 10, "rotura": 1, "presencia": 30
+    },
+    "armadura": {
+      "piezas": [
+        { "nombre": "Completa", "localizacion": "Completa", "calidad": 0,
+          "TA": { "FIL": 4, "CON": 3, "PEN": 2, "CAL": 3, "ELE": 2, "FRI": 2, "ENE": 0 },
+          "entereza": 15, "presencia": 30, "restriccionMovimiento": 2 },
+        { "nombre": "Capucha de Malla", "localizacion": "Cabeza", "calidad": 0,
+          "TA": { "FIL": 4, "CON": 2, "PEN": 1, "CAL": 2, "ELE": 0, "FRI": 1, "ENE": 0 },
+          "entereza": 13, "presencia": 20 }
+      ],
+      "TATotal": { "FIL": 4, "CON": 3, "PEN": 2, "CAL": 3, "ELE": 2, "FRI": 2, "ENE": 0 },
+      "restriccionMovimiento": 2,
+      "requisitoLlevarArmadura": 50,
+      "penalizadorNatural": -20
+    }
+  },
+  "equipo": {
+    "dinero": { "oro": 0, "plata": 12, "cobre": 36 },
+    "variado": [
+      "saco grande", "2 odres", "piedra de afilar", "cubo", "3 antorchas",
+      "arco de encendido", "yesca y pedernal", "barril de vino 50l",
+      "ración de comida semana (5 días)", "Nota de los rebeldes"
+    ],
+    "indicePeso": 12,
+    "pesoNaturalKg": 350,
+    "pesoMaximoKg": 1000
+  },
+  "saludMental": { "umbralDeLocura": 10, "cordura": 30 },
+  "notas": "Adicción al vino. Código de conducta: hacer todo lo que haga falta para que no pase otro incidente como el de su pueblo."
+}

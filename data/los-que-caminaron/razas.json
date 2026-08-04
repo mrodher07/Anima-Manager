@@ -1,0 +1,39 @@
+[
+ {
+  "_nota": "Los que Caminaron con Nosotros, cap. 2: Las Razas Perdidas. Transcrito a mano del manual. Sólo van aquí los modificadores **permanentes**; los condicionales (de noche, transformado, tras beber sangre) se describen para que los apliquéis en mesa, porque dependen de la situación y eso no lo decide la aplicación.",
+  "raza": "Devah",
+  "INT": 1,
+  "VOL": 1,
+  "POD": 1,
+  "FUE": -1,
+  "CON": -2,
+  "tamano": 2,
+  "RF": -10,
+  "RE": -10,
+  "natura": 5,
+  "ajusteNivel": 2,
+  "descripciones": "Mente y Alma Superior: +1 a INT, VOL y POD. Fragilidad Física: −1 FUE, −2 CON y −10 a RF y RE. Tamaño Innatural: +2 al Tamaño pese a los negativos físicos. Mente Compleja: +15 a RM y RP contra quien intente leerle la mente o provocarle emociones. El Ojo del Alma: ve criaturas anímicas y sus afinidades elementales, y mirando dos o tres asaltos a un Ser Entre Mundos o Ánima sabe su nombre real; no sirve con poderes psíquicos ni con Gnosis superior a 30. Lazos Existenciales: +10 a Convocar, Controlar, Atar y Desconvocar. Comunicación Sobrenatural: habla con otros Devah por el tercer ojo, transmitiendo palabras, emociones, ideas y recuerdos. Alma Innatural: está obligado a elegir el Don o Acceso a Poderes Psíquicos."
+ },
+ {
+  "raza": "Nephilim Devah",
+  "descripciones": "Versión Nephilim del Devah. Mente Compleja: +10 a RM y RP en vez de +15. El Ojo del Alma: al cerrar los ojos reales ve criaturas anímicas y sus afinidades, y sabe el nombre real de Seres Entre Mundos y Ánimas; no sirve con poderes psíquicos ni mágicos, ni con Gnosis superior a 30. Lazos Existenciales: +10, pero sólo a Convocar y Desconvocar. ⚠ El manual no repite aquí su Natura Base ni su Modificador de Nivel; ponedlos vosotros desde Contenido propio cuando los tengáis."
+ },
+ {
+  "raza": "Vetala",
+  "natura": 5,
+  "ajusteNivel": 2,
+  "descripciones": "No tiene modificadores permanentes a las características: todos sus bonos son condicionales. Hijos de la Noche: +1 a FUE y POD durante la noche. Éxtasis Sanguíneo: tras beber mucha sangre, +10 a Toda Acción y +1 a un Atributo entre uno y cinco minutos después; no se repite hasta pasadas dos o tres horas. Aguante al Daño Crítico: ignora los críticos en cuerpo y cabeza salvo los que decapiten. Curación Rápida: su cuerpo sana a gran velocidad. Ultrasonidos: influye en animales de sentidos agudos; afecta automáticamente a masas de nivel 0 con INT 3 o menos, o a seres de nivel superior e INT parecida cuya suma de presencias no pase del doble de la suya. Vulnerable a la Luz: ante luz potente o pura, RF contra 80-160 o sufre daño igual al nivel de fracaso; fallando por más de 50 queda En Llamas. Su Visión del Mundo: −2 a la experiencia de cada sesión. Come sólo sangre y es prácticamente inmortal, aunque envejece: anciano a los quinientos años y cataléptico dos o tres siglos después."
+ },
+ {
+  "raza": "Nephilim Vetala",
+  "RE": -20,
+  "descripciones": "Versión Nephilim del Vetala. Éxtasis Sanguíneo: igual que el puro, +10 a Toda Acción y +1 a un Atributo. Curación Rápida: sólo +1 al nivel de regeneración natural. Piel Fotosensible: ante luz muy potente, RF contra 40-140; fallando por menos de 30 sufre 10 de daño y −20 a Toda Acción, y por más, 20 de daño y −40, que se mantiene hasta tres asaltos después de apartarse. Obsesión por la Sangre: si llega al Éxtasis desarrolla la desventaja Adicción Grave a la sangre, y si ya la tenía se le doblan los penalizadores y ha de superar Voluntad cada vez que vea correr sangre. Salud Enfermiza: −20 a la RE. Alma inmortal: −3 a la experiencia de cada sesión. ⚠ El manual no repite aquí su Natura Base ni su Modificador de Nivel."
+ },
+ {
+  "raza": "Tuan Dalyr",
+  "PER": 1,
+  "natura": 0,
+  "ajusteNivel": 2,
+  "descripciones": "Hombres bestia que pueden transformarse. Sentido de Animal: +1 a PER, y con la ventaja Sentidos Agudos gana +40 a Advertir y Buscar en vez de +30. Transformado gana bonos físicos pero aplica −2 a INT y VOL y −10 a RM y RP. Hijos de la Luna: cada uno tiene su noche de auge, en la que suma +1 más a los atributos que mejora al transformarse, y su noche de ocaso, en la que no puede transformarse y pierde todas sus ventajas raciales. Rasgos Animales: al perder el control por rabia, miedo o pasión, sus pupilas se vuelven animales."
+ }
+]

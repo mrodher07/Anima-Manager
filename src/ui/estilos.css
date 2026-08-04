@@ -1,0 +1,787 @@
+/* Anima Manager — tema de fantasía oscura.
+   Todo en variables para poder ofrecer temas alternativos más adelante. */
+
+:root {
+  --tinta: #0a0908;
+  --pergamino: #e8e0d0;
+
+  --fondo: #0d0c0f;
+  --fondo-2: #14131a;
+  --panel: #1a1922;
+  --panel-alto: #22212c;
+  --borde: #2e2c3a;
+  --borde-suave: #26242f;
+
+  --texto: #e6e2dc;
+  --texto-tenue: #9a94a6;
+  --texto-debil: #6b6578;
+
+  --oro: #c9a227;
+  --oro-claro: #e8c65a;
+  --sangre: #8b1e2d;
+  --sangre-claro: #c4324a;
+  --arcano: #6d5ba8;
+  --arcano-claro: #9b86e0;
+  --verde: #4a7c59;
+
+  --radio: 10px;
+  --radio-s: 6px;
+  --sombra: 0 8px 24px rgba(0, 0, 0, 0.45);
+  --serif: 'Iowan Old Style', 'Palatino Linotype', Palatino, 'Book Antiqua', Georgia, serif;
+  --sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+
+  /* Capa decorativa del fondo; cada tema la suya. */
+  --velo: radial-gradient(1200px 600px at 50% -10%, rgba(109, 91, 168, 0.13), transparent 60%);
+}
+
+/* ── Claro: pergamino, para jugar a plena luz ── */
+:root[data-tema='claro'] {
+  --fondo: #efeae0;
+  --fondo-2: #e5dfd2;
+  --panel: #faf7f1;
+  --panel-alto: #fffdf8;
+  --borde: #cec5b4;
+  --borde-suave: #ded6c6;
+  --texto: #221f1a;
+  --texto-tenue: #5d564a;
+  --texto-debil: #857d6e;
+  --oro: #8a6d10;
+  /* En un tema claro, «claro» significa más énfasis: sobre pergamino eso es más oscuro. */
+  --oro-claro: #6b5409;
+  --sangre: #9b2233;
+  --sangre-claro: #b4293c;
+  --arcano: #55458c;
+  --arcano-claro: #6a56ab;
+  --sombra: 0 6px 18px rgba(60, 50, 30, 0.15);
+  --velo: radial-gradient(1200px 600px at 50% -10%, rgba(85, 69, 140, 0.08), transparent 60%);
+}
+
+/* ── Steampunk: latón, cobre y cardenillo sobre cuero ── */
+:root[data-tema='steampunk'] {
+  --fondo: #17120d;
+  --fondo-2: #221a12;
+  --panel: #2a2018;
+  --panel-alto: #34271c;
+  --borde: #4a3826;
+  --borde-suave: #3b2c1e;
+  --texto: #f0e2cc;
+  --texto-tenue: #b39d7e;
+  --texto-debil: #8a7358;
+  /* El «oro» del tema es latón pulido. */
+  --oro: #c68b3c;
+  --oro-claro: #e8b264;
+  --sangre: #8f3a1c;
+  --sangre-claro: #cc5a2e;
+  /* Y el «arcano», el cardenillo del cobre oxidado. */
+  --arcano: #2f7d72;
+  --arcano-claro: #52b3a3;
+  --verde: #5a7a4a;
+  --sombra: 0 8px 22px rgba(0, 0, 0, 0.55);
+  --radio: 4px;
+  --radio-s: 3px;
+  --serif: 'Rockwell', 'Roboto Slab', 'Bookman Old Style', Georgia, serif;
+  --velo:
+    radial-gradient(900px 500px at 50% -10%, rgba(198, 139, 60, 0.12), transparent 60%),
+    repeating-linear-gradient(135deg, rgba(198, 139, 60, 0.035) 0 2px, transparent 2px 9px);
+}
+
+/* ── Medieval: pergamino, tinta ferrogálica y bermellón ── */
+:root[data-tema='medieval'] {
+  --fondo: #e6d9ba;
+  --fondo-2: #dccbA6;
+  --fondo-2: #dccba6;
+  --panel: #f3e9d2;
+  --panel-alto: #faf2df;
+  --borde: #b9a377;
+  --borde-suave: #cdb992;
+  --texto: #2b2113;
+  --texto-tenue: #5f4d33;
+  --texto-debil: #8a7452;
+  --oro: #96702a;
+  /* Más oscuro que el base: sobre pergamino, oscurecer es destacar. */
+  --oro-claro: #6f5017;
+  /* El bermellón de las capitulares. */
+  --sangre: #9c2b1d;
+  --sangre-claro: #b83525;
+  --arcano: #3f5c86;
+  --arcano-claro: #4f70a0;
+  --verde: #4a6b3a;
+  --sombra: 0 5px 16px rgba(90, 70, 35, 0.22);
+  --radio: 3px;
+  --radio-s: 2px;
+  --serif: 'Palatino Linotype', Palatino, 'Book Antiqua', 'Iowan Old Style', Georgia, serif;
+  --sans: 'Palatino Linotype', Palatino, 'Book Antiqua', Georgia, serif;
+  --velo:
+    radial-gradient(700px 420px at 15% 0%, rgba(156, 43, 29, 0.07), transparent 60%),
+    radial-gradient(700px 420px at 85% 100%, rgba(150, 112, 42, 0.09), transparent 60%);
+}
+
+* { box-sizing: border-box; }
+
+/* El degradado va en html para que cubra toda la altura al hacer scroll. */
+html {
+  min-height: 100%;
+  background: var(--fondo);
+}
+
+body {
+  margin: 0;
+  background:
+    var(--velo),
+    linear-gradient(180deg, var(--fondo-2), var(--fondo) 40%);
+  background-attachment: fixed;
+  color: var(--texto);
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.5;
+  min-height: 100vh;
+  -webkit-text-size-adjust: 100%;
+}
+
+h1, h2, h3 { font-family: var(--serif); font-weight: 600; letter-spacing: 0.01em; margin: 0; }
+
+/* ─────────────────────────── Estructura ─────────────────────────── */
+
+.app { display: flex; flex-direction: column; min-height: 100vh; }
+
+.cabecera {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 10px 18px;
+  background: color-mix(in srgb, var(--fondo) 88%, transparent);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--borde);
+}
+
+.marca {
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  color: var(--oro-claro);
+  white-space: nowrap;
+}
+.marca span { color: var(--texto-tenue); font-size: 0.8rem; display: block; letter-spacing: 0.14em; text-transform: uppercase; }
+
+.nav { display: flex; gap: 4px; margin-left: auto; flex-wrap: wrap; }
+
+.nav button {
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--texto-tenue);
+  padding: 7px 13px;
+  border-radius: var(--radio-s);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.9rem;
+  transition: color 0.15s, background 0.15s, border-color 0.15s;
+}
+.nav button:hover { color: var(--texto); background: var(--panel); }
+.nav button[aria-current='page'] { color: var(--oro-claro); border-color: var(--borde); background: var(--panel); }
+
+.contenido { flex: 1; width: 100%; max-width: 1180px; margin: 0 auto; padding: 22px 18px 64px; }
+
+/* ─────────────────────────── Piezas ─────────────────────────── */
+
+.panel {
+  background: linear-gradient(180deg, var(--panel-alto), var(--panel));
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+  padding: 16px 18px;
+  box-shadow: var(--sombra);
+}
+
+.panel > h2 {
+  font-size: 0.78rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--oro);
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--borde-suave);
+}
+
+.rejilla { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+
+/* Barra de recursos siempre visible durante la partida. */
+.recursos {
+  position: sticky;
+  top: 57px;
+  z-index: 15;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(96px, 1fr));
+  gap: 8px;
+  padding: 10px;
+  margin-bottom: 18px;
+  background: color-mix(in srgb, var(--panel) 92%, transparent);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+}
+
+/* La misma tira de recursos, pero suelta dentro de un panel: no se pega arriba. */
+.recursos.tira { position: static; top: auto; z-index: auto; }
+
+.recurso { text-align: center; padding: 4px 2px; }
+.recurso .sufijo { display: block; font-size: 0.7rem; color: var(--texto-debil); }
+.recurso .etiqueta { font-size: 0.62rem; letter-spacing: 0.13em; text-transform: uppercase; color: var(--texto-debil); }
+.recurso .cifra { font-family: var(--serif); font-size: 1.5rem; line-height: 1.15; color: var(--texto); }
+.recurso.vida .cifra { color: var(--sangre-claro); }
+.recurso.zeon .cifra { color: var(--arcano-claro); }
+.recurso.ki .cifra { color: var(--oro-claro); }
+
+/* Características */
+.caracteristicas { display: grid; grid-template-columns: repeat(auto-fit, minmax(78px, 1fr)); gap: 8px; }
+
+.caracteristica {
+  background: var(--fondo-2);
+  border: 1px solid var(--borde-suave);
+  border-radius: var(--radio-s);
+  padding: 8px 4px;
+  text-align: center;
+}
+.caracteristica .nombre { font-size: 0.66rem; letter-spacing: 0.12em; color: var(--texto-debil); }
+.caracteristica .valor { font-family: var(--serif); font-size: 1.6rem; line-height: 1.1; }
+.caracteristica .bono { font-size: 0.78rem; color: var(--oro); }
+.caracteristica .mod-raza { font-size: 0.62rem; color: var(--arcano-claro); }
+
+/* Tablas */
+table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+th {
+  text-align: left;
+  font-size: 0.66rem;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--texto-debil);
+  font-weight: 600;
+  padding: 6px 8px;
+  border-bottom: 1px solid var(--borde);
+}
+td { padding: 5px 8px; border-bottom: 1px solid var(--borde-suave); }
+tr:last-child td { border-bottom: none; }
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+.negativo { color: var(--texto-debil); }
+.destacado { color: var(--oro-claro); font-weight: 600; }
+
+.desplazable { overflow-x: auto; }
+
+/* Avisos */
+.avisos { display: grid; gap: 8px; margin-bottom: 18px; }
+.aviso {
+  padding: 9px 13px;
+  border-radius: var(--radio-s);
+  border-left: 3px solid;
+  font-size: 0.88rem;
+}
+.aviso.error { background: color-mix(in srgb, var(--sangre) 15%, var(--panel)); border-color: var(--sangre-claro); }
+.aviso.aviso { background: color-mix(in srgb, var(--oro) 15%, var(--panel)); border-color: var(--oro); }
+
+/* Controles */
+button.accion {
+  background: var(--panel-alto);
+  border: 1px solid var(--borde);
+  color: var(--texto);
+  padding: 8px 15px;
+  border-radius: var(--radio-s);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.88rem;
+  transition: border-color 0.15s, color 0.15s;
+}
+button.accion:hover { border-color: var(--oro); color: var(--oro-claro); }
+button.accion.primaria { background: var(--oro); border-color: var(--oro); color: #17140a; font-weight: 600; }
+button.accion.primaria:hover { background: var(--oro-claro); color: #17140a; }
+button.accion:disabled { opacity: 0.45; cursor: not-allowed; }
+
+input, select, textarea {
+  background: var(--fondo-2);
+  border: 1px solid var(--borde);
+  color: var(--texto);
+  border-radius: var(--radio-s);
+  padding: 7px 10px;
+  font: inherit;
+  font-size: 0.9rem;
+  width: 100%;
+}
+input:focus, select:focus, textarea:focus { outline: 2px solid var(--arcano); outline-offset: 1px; }
+textarea.formula { font-family: var(--mono); font-size: 0.84rem; min-height: 62px; resize: vertical; }
+
+.campo { display: grid; gap: 5px; margin-bottom: 12px; }
+.campo label { font-size: 0.68rem; letter-spacing: 0.11em; text-transform: uppercase; color: var(--texto-debil); }
+
+/* Reglas */
+.regla { border: 1px solid var(--borde); border-radius: var(--radio); padding: 14px; margin-bottom: 12px; background: var(--panel); }
+.regla header { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; margin-bottom: 9px; }
+.regla h3 { font-size: 0.98rem; }
+.etiqueta-pill {
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 99px;
+  border: 1px solid var(--borde);
+  color: var(--texto-debil);
+}
+.etiqueta-pill.modificada { color: var(--oro-claro); border-color: var(--oro); }
+.etiqueta-pill.desactivada { color: var(--sangre-claro); border-color: var(--sangre); }
+.referencia { font-size: 0.8rem; color: var(--texto-tenue); margin: 8px 0 0; font-style: italic; }
+.variables { font-size: 0.78rem; color: var(--texto-debil); margin-top: 8px; }
+.variables code { color: var(--arcano-claro); font-family: var(--mono); }
+.error-formula { color: var(--sangre-claro); font-size: 0.82rem; margin-top: 6px; }
+.acciones-regla { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+
+.vacio { text-align: center; padding: 48px 20px; color: var(--texto-tenue); }
+.vacio h2 { font-size: 1.3rem; margin-bottom: 8px; color: var(--texto); }
+
+.pie { text-align: center; padding: 20px; color: var(--texto-debil); font-size: 0.78rem; }
+
+@media (max-width: 620px) {
+  .cabecera { padding: 9px 12px; gap: 8px; }
+  .marca { font-size: 0.95rem; }
+  .marca span { font-size: 0.62rem; letter-spacing: 0.1em; }
+  .nav { gap: 2px; flex-wrap: nowrap; }
+  .nav button { padding: 6px 9px; font-size: 0.8rem; }
+  .contenido { padding: 16px 12px 56px; }
+  .recursos { top: 53px; }
+  .recurso .cifra { font-size: 1.28rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}
+
+/* ─────────────────────── Piezas añadidas ─────────────────────── */
+
+button.marca {
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  padding: 0;
+  font-family: var(--serif);
+}
+
+.pestanas { display: flex; gap: 4px; margin-bottom: 16px; flex-wrap: wrap; border-bottom: 1px solid var(--borde); }
+.pestanas button {
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--texto-tenue);
+  padding: 8px 14px;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.9rem;
+}
+.pestanas button:hover { color: var(--texto); }
+.pestanas button[aria-current='page'] { color: var(--oro-claro); border-bottom-color: var(--oro); }
+
+.tarjeta h3 { font-size: 1.1rem; margin-bottom: 2px; }
+.tarjeta .subtitulo { color: var(--texto-tenue); font-size: 0.85rem; margin: 0 0 12px; }
+
+button.accion.peligro { border-color: var(--sangre); color: var(--sangre-claro); }
+button.accion.peligro:hover { background: var(--sangre); color: #fff; }
+
+.cinta-campana {
+  margin: 0 0 16px;
+  padding: 8px 13px;
+  border-radius: var(--radio-s);
+  background: color-mix(in srgb, var(--arcano) 15%, var(--panel));
+  border-left: 3px solid var(--arcano-claro);
+  font-size: 0.86rem;
+}
+
+details { margin-bottom: 10px; }
+details > summary {
+  cursor: pointer;
+  padding: 7px 0;
+  font-size: 0.75rem;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--oro);
+  border-bottom: 1px solid var(--borde-suave);
+}
+details > summary:hover { color: var(--oro-claro); }
+
+.registro { list-style: none; margin: 0; padding: 0; display: grid; gap: 7px; }
+.registro li {
+  padding: 8px 12px;
+  border-radius: var(--radio-s);
+  background: var(--fondo-2);
+  border-left: 3px solid var(--borde);
+}
+.registro li.critico { border-left-color: var(--sangre-claro); background: color-mix(in srgb, var(--sangre) 14%, var(--panel)); }
+.registro li strong { display: block; font-size: 0.92rem; }
+.registro li span { display: block; color: var(--texto-debil); font-size: 0.78rem; font-family: var(--mono); margin-top: 3px; }
+
+input[type='checkbox'] { accent-color: var(--oro); }
+
+.lista-seleccion {
+  max-height: 380px;
+  overflow-y: auto;
+  border: 1px solid var(--borde);
+  border-radius: var(--radio-s);
+  background: var(--fondo-2);
+}
+.lista-seleccion label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 12px;
+  border-bottom: 1px solid var(--borde-suave);
+  cursor: pointer;
+  font-size: 0.88rem;
+}
+.lista-seleccion label:last-child { border-bottom: none; }
+.lista-seleccion label:hover { background: var(--panel); }
+.lista-seleccion label.elegida { background: color-mix(in srgb, var(--oro) 14%, var(--panel)); }
+.lista-seleccion input { width: auto; flex: none; }
+.lista-seleccion span { flex: 1; }
+.lista-seleccion em { color: var(--texto-debil); font-size: 0.78rem; font-style: normal; white-space: nowrap; }
+
+/*
+ * Casilla suelta con su explicación. Hace falta porque `input` es `width: 100 %` de
+ * base y una casilla sin acotar se estira hasta ocupar toda la fila.
+ */
+.opcion { display: flex; align-items: flex-start; gap: 10px; cursor: pointer; }
+.opcion input { width: auto; flex: none; margin-top: 3px; }
+.opcion em {
+  display: block;
+  font-style: normal;
+  color: var(--texto-debil);
+  font-size: 0.8rem;
+  margin-top: 2px;
+}
+
+.peligro-texto { color: var(--sangre-claro); }
+
+/* ─────────────────────── Imágenes ─────────────────────── */
+
+.galeria {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+}
+
+.tarjeta-imagen { padding: 10px; margin: 0; }
+.tarjeta-imagen .miniatura {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: var(--radio-s);
+  background: var(--fondo-2);
+  display: block;
+}
+.tarjeta-imagen figcaption { margin-top: 9px; }
+.tarjeta-imagen .meta { color: var(--texto-debil); font-size: 0.74rem; margin: 5px 0 0; }
+
+.imagen-cargando, .imagen-fallo {
+  background: var(--fondo-2);
+  border: 1px dashed var(--borde);
+  border-radius: var(--radio-s);
+  display: grid;
+  place-items: center;
+  color: var(--texto-debil);
+  min-height: 80px;
+}
+
+.retrato {
+  width: 100%;
+  max-width: 220px;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  border-radius: var(--radio);
+  border: 1px solid var(--borde);
+  display: block;
+}
+
+.visor {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(6, 5, 8, 0.92);
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+.visor-imagen { max-width: 100%; max-height: 92vh; object-fit: contain; border-radius: var(--radio-s); }
+.visor-cerrar { position: absolute; top: 16px; right: 16px; }
+
+.diario { display: grid; gap: 12px; }
+.diario article { border-left: 3px solid var(--arcano); padding-left: 12px; }
+.diario h3 { font-size: 1rem; margin-bottom: 2px; }
+.diario time { color: var(--texto-debil); font-size: 0.76rem; }
+.diario p { white-space: pre-wrap; margin: 6px 0 0; font-size: 0.9rem; }
+
+.cabecera-ficha { display: flex; gap: 16px; align-items: center; margin-bottom: 18px; }
+.retrato-mini {
+  width: 72px;
+  height: 96px;
+  object-fit: cover;
+  border-radius: var(--radio-s);
+  border: 1px solid var(--borde);
+  flex: none;
+}
+@media (max-width: 620px) {
+  .retrato-mini { width: 56px; height: 74px; }
+}
+
+.lista-simple { margin: 0; padding-left: 18px; font-size: 0.88rem; }
+.lista-simple li { margin-bottom: 4px; }
+.lista-simple strong { color: var(--oro-claro); }
+
+
+/* ─────────────────────── Selector de tema ─────────────────────── */
+
+.selector-tema { position: relative; }
+.selector-tema > button .nombre-tema { margin-left: 5px; }
+@media (max-width: 900px) {
+  .selector-tema > button .nombre-tema { display: none; }
+}
+
+.selector-tema > menu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 6px);
+  z-index: 40;
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+  min-width: 232px;
+  background: var(--panel-alto);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+}
+
+.selector-tema > menu button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: 1px solid transparent;
+  border-radius: var(--radio-s);
+  color: var(--texto);
+  padding: 7px 10px;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.88rem;
+}
+.selector-tema > menu button:hover { background: var(--panel); border-color: var(--borde); }
+.selector-tema > menu button[aria-current='true'] { border-color: var(--oro); color: var(--oro-claro); }
+.selector-tema > menu button span {
+  display: block;
+  font-size: 0.74rem;
+  color: var(--texto-debil);
+  margin-top: 2px;
+}
+.selector-tema > menu button[aria-current='true'] span { color: var(--texto-tenue); }
+
+/* ═══════════════════════ Motivos del tema Steampunk ═══════════════════════
+   Placas de latón remachadas sobre cuero. Todo con degradados: ni una imagen. */
+
+:root[data-tema='steampunk'] .panel {
+  position: relative;
+  background:
+    linear-gradient(180deg, rgba(198, 139, 60, 0.07), transparent 38%),
+    linear-gradient(180deg, var(--panel-alto), var(--panel));
+  border: 1px solid var(--borde);
+  box-shadow:
+    var(--sombra),
+    inset 0 1px 0 rgba(232, 178, 100, 0.16),
+    inset 0 0 0 3px rgba(0, 0, 0, 0.18);
+}
+
+/* Los cuatro remaches de las esquinas. */
+:root[data-tema='steampunk'] .panel::before {
+  content: '';
+  position: absolute;
+  inset: 7px;
+  pointer-events: none;
+  border-radius: 2px;
+  background:
+    radial-gradient(circle 3px at 0 0, #e8b264 38%, #7a4f1c 62%, transparent 66%),
+    radial-gradient(circle 3px at 100% 0, #e8b264 38%, #7a4f1c 62%, transparent 66%),
+    radial-gradient(circle 3px at 0 100%, #e8b264 38%, #7a4f1c 62%, transparent 66%),
+    radial-gradient(circle 3px at 100% 100%, #e8b264 38%, #7a4f1c 62%, transparent 66%);
+}
+
+/* Los rótulos, como una placa grabada con su fileteado. */
+:root[data-tema='steampunk'] .panel > h2 {
+  border-bottom: 2px solid;
+  border-image: linear-gradient(90deg, var(--oro), rgba(198, 139, 60, 0.15)) 1;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.6);
+}
+:root[data-tema='steampunk'] .panel > h2::after {
+  content: ' ⚙';
+  opacity: 0.5;
+  font-size: 0.9em;
+}
+
+/* Cabecera: cuero con un raíl de latón debajo. */
+:root[data-tema='steampunk'] .cabecera {
+  border-bottom: 3px solid;
+  border-image: linear-gradient(90deg, #5a3d1c, var(--oro), #5a3d1c) 1;
+  background:
+    repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.13) 0 1px, transparent 1px 5px),
+    color-mix(in srgb, var(--fondo) 92%, transparent);
+}
+
+/* Botones biselados, como piezas de metal. */
+:root[data-tema='steampunk'] button.accion {
+  background: linear-gradient(180deg, #3c2c1e, #291e14);
+  box-shadow: inset 0 1px 0 rgba(232, 178, 100, 0.2), 0 1px 2px rgba(0, 0, 0, 0.45);
+}
+:root[data-tema='steampunk'] button.accion.primaria {
+  background: linear-gradient(180deg, #e0a54e, #b8802f);
+  box-shadow: inset 0 1px 0 rgba(255, 226, 170, 0.45), 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Las cifras de recursos, como esferas de manómetro. */
+:root[data-tema='steampunk'] .recurso {
+  border-radius: 3px;
+  background: radial-gradient(circle at 50% 30%, rgba(232, 178, 100, 0.09), transparent 70%);
+}
+:root[data-tema='steampunk'] .caracteristica {
+  background:
+    linear-gradient(180deg, rgba(232, 178, 100, 0.06), transparent 60%),
+    var(--fondo-2);
+  box-shadow: inset 0 1px 0 rgba(232, 178, 100, 0.12);
+}
+
+/* ═══════════════════════ Motivos del tema Medieval ═══════════════════════
+   Pergamino veteado, marco de manuscrito y capitulares en bermellón. */
+
+:root[data-tema='medieval'] body {
+  background:
+    var(--velo),
+    /* Vetas y manchas del pergamino. */
+    radial-gradient(ellipse 300px 120px at 12% 22%, rgba(150, 112, 42, 0.10), transparent 70%),
+    radial-gradient(ellipse 260px 100px at 78% 58%, rgba(122, 88, 40, 0.09), transparent 70%),
+    radial-gradient(ellipse 200px 90px at 40% 88%, rgba(156, 43, 29, 0.05), transparent 70%),
+    repeating-linear-gradient(92deg, rgba(120, 92, 48, 0.035) 0 1px, transparent 1px 4px),
+    linear-gradient(180deg, var(--fondo-2), var(--fondo) 40%);
+}
+
+/* Los paneles, como hojas de pergamino con doble filete. */
+:root[data-tema='medieval'] .panel {
+  position: relative;
+  border: 1px solid var(--borde);
+  box-shadow: var(--sombra), inset 0 0 0 1px rgba(255, 253, 245, 0.55);
+  background:
+    radial-gradient(ellipse 220px 90px at 85% 8%, rgba(150, 112, 42, 0.07), transparent 70%),
+    linear-gradient(180deg, var(--panel-alto), var(--panel));
+}
+:root[data-tema='medieval'] .panel::before {
+  content: '';
+  position: absolute;
+  inset: 5px;
+  pointer-events: none;
+  border: 1px solid color-mix(in srgb, var(--oro) 30%, transparent);
+  border-radius: 2px;
+}
+
+/* Rótulos con fleurón, como los epígrafes de un manuscrito. */
+:root[data-tema='medieval'] .panel > h2 {
+  border-bottom: 1px solid color-mix(in srgb, var(--oro) 45%, transparent);
+  letter-spacing: 0.2em;
+}
+:root[data-tema='medieval'] .panel > h2::before {
+  content: '❦ ';
+  color: var(--sangre);
+  letter-spacing: 0;
+}
+
+/* Capitular: la primera letra del nombre, en bermellón y a mayor cuerpo. */
+:root[data-tema='medieval'] .contenido > h1::first-letter,
+:root[data-tema='medieval'] .cabecera-ficha h1::first-letter {
+  font-size: 1.7em;
+  line-height: 0.8;
+  color: var(--sangre);
+  padding-right: 2px;
+  text-shadow: 1px 1px 0 rgba(150, 112, 42, 0.35);
+}
+
+/* Cabecera con filete doble, como el encabezado de una página iluminada. */
+:root[data-tema='medieval'] .cabecera {
+  border-bottom: 3px double var(--oro);
+  background: color-mix(in srgb, var(--panel-alto) 90%, transparent);
+}
+
+:root[data-tema='medieval'] .caracteristica {
+  background: linear-gradient(180deg, rgba(255, 253, 245, 0.7), transparent 70%), var(--fondo-2);
+  box-shadow: inset 0 0 0 1px rgba(255, 253, 245, 0.6);
+}
+:root[data-tema='medieval'] .caracteristica .valor { color: var(--sangre); }
+
+:root[data-tema='medieval'] button.accion.primaria {
+  background: linear-gradient(180deg, #b08a38, #96702a);
+  color: #fdf6e6;
+}
+
+/* Filete decorativo al final de cada sección de la ficha. */
+:root[data-tema='medieval'] .pie::before {
+  content: '❦ ⬥ ❦';
+  display: block;
+  color: var(--oro);
+  letter-spacing: 0.5em;
+  margin-bottom: 8px;
+}
+:root[data-tema='steampunk'] .pie::before {
+  content: '⚙ ⚙ ⚙';
+  display: block;
+  color: var(--oro);
+  letter-spacing: 0.6em;
+  opacity: 0.55;
+  margin-bottom: 8px;
+}
+
+/* Remaches algo más marcados: a tamaño real casi no se veían. */
+:root[data-tema='steampunk'] .panel::before {
+  background:
+    radial-gradient(circle 4px at 0 0, #f2c179 30%, #8a5a20 58%, rgba(0,0,0,0.5) 74%, transparent 78%),
+    radial-gradient(circle 4px at 100% 0, #f2c179 30%, #8a5a20 58%, rgba(0,0,0,0.5) 74%, transparent 78%),
+    radial-gradient(circle 4px at 0 100%, #f2c179 30%, #8a5a20 58%, rgba(0,0,0,0.5) 74%, transparent 78%),
+    radial-gradient(circle 4px at 100% 100%, #f2c179 30%, #8a5a20 58%, rgba(0,0,0,0.5) 74%, transparent 78%);
+}
+
+/* La barra de recursos, como una consola de manómetros atornillada. */
+:root[data-tema='steampunk'] .recursos {
+  border: 1px solid var(--borde);
+  box-shadow: var(--sombra), inset 0 1px 0 rgba(232, 178, 100, 0.18);
+  background:
+    repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.12) 0 1px, transparent 1px 6px),
+    color-mix(in srgb, var(--panel) 94%, transparent);
+}
+:root[data-tema='steampunk'] .recurso + .recurso {
+  border-left: 1px solid color-mix(in srgb, var(--oro) 22%, transparent);
+}
+
+/* Avisos y cintas en tono pergamino, no gris. */
+:root[data-tema='medieval'] .cinta-campana {
+  background: linear-gradient(180deg, rgba(255, 253, 245, 0.75), rgba(150, 112, 42, 0.10));
+  border-left: 3px solid var(--sangre);
+  box-shadow: inset 0 0 0 1px rgba(255, 253, 245, 0.6);
+}
+:root[data-tema='medieval'] .aviso {
+  box-shadow: inset 0 0 0 1px rgba(255, 253, 245, 0.55);
+}
+
+/* La barra de recursos, como el encabezamiento de un códice. */
+:root[data-tema='medieval'] .recursos {
+  border: 1px solid var(--borde);
+  box-shadow: var(--sombra), inset 0 0 0 1px rgba(255, 253, 245, 0.6);
+  background:
+    radial-gradient(ellipse 240px 70px at 20% 0%, rgba(150, 112, 42, 0.09), transparent 70%),
+    color-mix(in srgb, var(--panel-alto) 94%, transparent);
+}
+:root[data-tema='medieval'] .recurso + .recurso {
+  border-left: 1px solid color-mix(in srgb, var(--oro) 30%, transparent);
+}
+:root[data-tema='medieval'] .recurso .etiqueta { color: var(--texto-tenue); }
+
+/* Las tablas, con renglones de manuscrito. */
+:root[data-tema='medieval'] td { border-bottom: 1px solid color-mix(in srgb, var(--oro) 22%, transparent); }
+:root[data-tema='medieval'] th { border-bottom: 1px solid color-mix(in srgb, var(--oro) 50%, transparent); }

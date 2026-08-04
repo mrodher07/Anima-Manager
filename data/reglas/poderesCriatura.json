@@ -1,0 +1,2966 @@
+[
+ {
+  "nombre": "Armas naturales",
+  "gnosis": 0,
+  "coste": 20,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Ataque adicional -60 Ataque",
+  "gnosis": 0,
+  "coste": 20,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Ataque adicional -50 Ataque",
+  "gnosis": 0,
+  "coste": 30,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Ataque adicional -40 Ataque",
+  "gnosis": 0,
+  "coste": 40,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Ataque adicional -30 Ataque",
+  "gnosis": 5,
+  "coste": 50,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Ataque adicional -20 Ataque",
+  "gnosis": 5,
+  "coste": 60,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Ataque adicional -10 Ataque",
+  "gnosis": 10,
+  "coste": 80,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Ataque adicional Completo",
+  "gnosis": 15,
+  "coste": 100,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Daño incrementado +10 al Daño",
+  "gnosis": 0,
+  "coste": 10,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Daño incrementado +20 al Daño",
+  "gnosis": 0,
+  "coste": 20,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Daño incrementado +30 al Daño",
+  "gnosis": 0,
+  "coste": 30,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Daño incrementado +40 al Daño",
+  "gnosis": 0,
+  "coste": 40,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Daño incrementado +50 al Daño",
+  "gnosis": 5,
+  "coste": 50,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Daño incrementado +60 al Daño",
+  "gnosis": 10,
+  "coste": 60,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Daño incrementado +80 al Daño",
+  "gnosis": 20,
+  "coste": 80,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Daño incrementado +100 al Daño",
+  "gnosis": 25,
+  "coste": 100,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Daño incrementado +120 al Daño",
+  "gnosis": 30,
+  "coste": 120,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Reacción incrementada +10 al Turno",
+  "gnosis": 0,
+  "coste": 10,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Reacción incrementada +20 al Turno",
+  "gnosis": 10,
+  "coste": 20,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Reacción incrementada +30 al Turno",
+  "gnosis": 20,
+  "coste": 30,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Daña energía",
+  "gnosis": 10,
+  "coste": 10,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Modificador de armadura -1 TA Defensora",
+  "gnosis": 0,
+  "coste": 10,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Modificador de armadura -2 TA Defensora",
+  "gnosis": 10,
+  "coste": 15,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Modificador de armadura -3 TA Defensora",
+  "gnosis": 15,
+  "coste": 20,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Modificador de armadura -4 TA Defensora",
+  "gnosis": 20,
+  "coste": 25,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Modificador de armadura -5 TA Defensora",
+  "gnosis": 25,
+  "coste": 30,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Ataque especial Distancia hasta 25m",
+  "gnosis": 5,
+  "coste": 10,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Ataque especial Distancia hasta 50m",
+  "gnosis": 10,
+  "coste": 20,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Ataque especial Distancia hasta 100m",
+  "gnosis": 15,
+  "coste": 30,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Ataque especial Distancia hasta 250m",
+  "gnosis": 20,
+  "coste": 40,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Ataque especial Distancia hasta 500m",
+  "gnosis": 25,
+  "coste": 50,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Ataque especial Distancia hasta 1km",
+  "gnosis": 30,
+  "coste": 60,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Ataque especial Distancia hasta 10 km",
+  "gnosis": 35,
+  "coste": 70,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Ataque especial Cualquier distancia visible",
+  "gnosis": 40,
+  "coste": 80,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Ataque especial Daño Base 40",
+  "gnosis": 5,
+  "coste": 10,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Ataque especial Daño Base 50",
+  "gnosis": 10,
+  "coste": 15,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Ataque especial Daño Base 60",
+  "gnosis": 10,
+  "coste": 20,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Ataque especial Daño Base 80",
+  "gnosis": 10,
+  "coste": 25,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Ataque especial Daño Base 100",
+  "gnosis": 15,
+  "coste": 30,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Ataque especial Daño Base 120",
+  "gnosis": 20,
+  "coste": 50,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Ataque especial Daño Base 150",
+  "gnosis": 20,
+  "coste": 60,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Ataque especial Daño Base 200",
+  "gnosis": 25,
+  "coste": 80,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Ataque especial Daño Base 250",
+  "gnosis": 30,
+  "coste": 100,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Ataque especial 1m de radio",
+  "gnosis": 10,
+  "coste": 10,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Ataque especial 3m de radio",
+  "gnosis": 10,
+  "coste": 20,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Ataque especial 5m de radio",
+  "gnosis": 15,
+  "coste": 30,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Ataque especial 10m de radio",
+  "gnosis": 20,
+  "coste": 40,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Ataque especial 25m de radio",
+  "gnosis": 25,
+  "coste": 50,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Ataque especial 50m de radio",
+  "gnosis": 30,
+  "coste": 60,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Ataque especial 100m de radio",
+  "gnosis": 35,
+  "coste": 80,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Ataque especial Uso adicional",
+  "gnosis": 10,
+  "coste": 5,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Ataque especial Sin límite",
+  "gnosis": 20,
+  "coste": 60,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Ataque especial Preparación 1 turno",
+  "gnosis": 5,
+  "coste": -10,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Ataque especial Preparación 2 turnos",
+  "gnosis": 5,
+  "coste": -20,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Ataque especial Preparación 3 turnos",
+  "gnosis": 5,
+  "coste": -30,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Ataque especial Preparación 5 turnos",
+  "gnosis": 5,
+  "coste": -40,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Ataque especial Preparación 10 turnos",
+  "gnosis": 5,
+  "coste": -50,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Ataque venenoso Veneno de Nv 10",
+  "gnosis": 0,
+  "coste": 10,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Ataque venenoso Veneno de Nv 20",
+  "gnosis": 0,
+  "coste": 20,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Ataque venenoso Veneno de Nv 30",
+  "gnosis": 0,
+  "coste": 30,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Ataque venenoso Veneno de Nv 40",
+  "gnosis": 0,
+  "coste": 40,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Ataque venenoso Veneno de Nv 50",
+  "gnosis": 0,
+  "coste": 50,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Ataque venenoso Veneno de Nv 60",
+  "gnosis": 0,
+  "coste": 60,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Ataque venenoso Veneno de Nv 70",
+  "gnosis": 0,
+  "coste": 80,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Ataque venenoso Veneno de Nv 80",
+  "gnosis": 10,
+  "coste": 100,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Ataque venenoso Veneno de Nv 90",
+  "gnosis": 20,
+  "coste": 140,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Ataque venenoso Veneno de Nv 100",
+  "gnosis": 30,
+  "coste": 180,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Efecto místico añadido RM o RF 40",
+  "gnosis": 5,
+  "coste": 20,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Efecto místico añadido RM o RF 60",
+  "gnosis": 10,
+  "coste": 30,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Efecto místico añadido RM o RF 80",
+  "gnosis": 15,
+  "coste": 40,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Efecto místico añadido RM o RF 100",
+  "gnosis": 15,
+  "coste": 50,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Efecto místico añadido RM o RF 120",
+  "gnosis": 20,
+  "coste": 60,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Efecto místico añadido RM o RF 140",
+  "gnosis": 25,
+  "coste": 80,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Efecto místico añadido RM o RF 160",
+  "gnosis": 30,
+  "coste": 100,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Efecto místico añadido RM o RF 180",
+  "gnosis": 35,
+  "coste": 120,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Efecto místico añadido RM o RF 200",
+  "gnosis": 40,
+  "coste": 140,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Efecto místico añadido Miedo",
+  "gnosis": 10,
+  "coste": 20,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Efecto místico añadido Terror",
+  "gnosis": 20,
+  "coste": 60,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Efecto místico añadido Dolor",
+  "gnosis": 10,
+  "coste": 20,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Efecto místico añadido Dolor extremo",
+  "gnosis": 20,
+  "coste": 40,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Efecto místico añadido Debilidad",
+  "gnosis": 10,
+  "coste": 50,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Efecto místico añadido Paralización parcial",
+  "gnosis": 20,
+  "coste": 40,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Efecto místico añadido Paralización completa",
+  "gnosis": 20,
+  "coste": 80,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Efecto místico añadido Ira",
+  "gnosis": 20,
+  "coste": 20,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Efecto místico añadido Ceguera",
+  "gnosis": 10,
+  "coste": 50,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Efecto místico añadido Sordera",
+  "gnosis": 10,
+  "coste": 10,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Efecto místico añadido Mudez",
+  "gnosis": 10,
+  "coste": 10,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Efecto místico añadido Fascinación",
+  "gnosis": 20,
+  "coste": 20,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Efecto místico añadido Daño simple",
+  "gnosis": 10,
+  "coste": 30,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Efecto místico añadido Daño doble",
+  "gnosis": 20,
+  "coste": 60,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Efecto místico añadido Inconsciencia",
+  "gnosis": 20,
+  "coste": 100,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Efecto místico añadido Dominio",
+  "gnosis": 25,
+  "coste": 120,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Efecto místico añadido Muerte",
+  "gnosis": 25,
+  "coste": 140,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Efecto místico añadido Locura",
+  "gnosis": 20,
+  "coste": 20,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Efecto místico añadido Vejez",
+  "gnosis": 20,
+  "coste": 60,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Efecto místico añadido Petrificación",
+  "gnosis": 20,
+  "coste": 120,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Efecto místico añadido Pen a toda acción",
+  "gnosis": 20,
+  "coste": 60,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Efecto místico añadido Dest de características",
+  "gnosis": 20,
+  "coste": 120,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Efecto místico añadido Posesión",
+  "gnosis": 25,
+  "coste": 120,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Efecto místico añadido Drenaje (Mitad)",
+  "gnosis": 10,
+  "coste": 20,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Efecto místico añadido Drenaje (Completo)",
+  "gnosis": 15,
+  "coste": 50,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Efecto místico añadido Drenaje (Doble)",
+  "gnosis": 20,
+  "coste": 100,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Efecto místico añadido Efecto adicional",
+  "gnosis": 10,
+  "coste": 10,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Efecto místico añadido Efecto condicionado",
+  "gnosis": 10,
+  "coste": -20,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Crítico incrementado +10 al Crítico",
+  "gnosis": 0,
+  "coste": 10,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Crítico incrementado +20 al Crítico",
+  "gnosis": 0,
+  "coste": 20,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Crítico incrementado +30 al Crítico",
+  "gnosis": 0,
+  "coste": 30,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Crítico incrementado +40 al Crítico",
+  "gnosis": 5,
+  "coste": 40,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Crítico incrementado +50 al Crítico",
+  "gnosis": 5,
+  "coste": 50,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Crítico incrementado +60 al Crítico",
+  "gnosis": 10,
+  "coste": 60,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Crítico incrementado +70 al Crítico",
+  "gnosis": 20,
+  "coste": 70,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Crítico incrementado +80 al Crítico",
+  "gnosis": 30,
+  "coste": 80,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Crítico incrementado +90 al Crítico",
+  "gnosis": 30,
+  "coste": 90,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Crítico incrementado +100 al Crítico",
+  "gnosis": 40,
+  "coste": 100,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Presa especial Presa 6",
+  "gnosis": 0,
+  "coste": 10,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Presa especial Presa 8",
+  "gnosis": 0,
+  "coste": 20,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Presa especial Presa 10",
+  "gnosis": 0,
+  "coste": 30,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Presa especial Presa 12",
+  "gnosis": 10,
+  "coste": 40,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Presa especial Presa 14",
+  "gnosis": 20,
+  "coste": 60,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Presa especial Presa 16",
+  "gnosis": 25,
+  "coste": 80,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Ataque sobrenatural",
+  "gnosis": 20,
+  "coste": 60,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Ataque elemental Fuego",
+  "gnosis": 10,
+  "coste": 10,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Ataque elemental Aire",
+  "gnosis": 10,
+  "coste": 10,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Ataque elemental Agua",
+  "gnosis": 10,
+  "coste": 10,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Ataque elemental Tierra",
+  "gnosis": 10,
+  "coste": 10,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Ataque elemental Luz",
+  "gnosis": 10,
+  "coste": 10,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Ataque elemental Oscuridad",
+  "gnosis": 10,
+  "coste": 10,
+  "_seccion": "HABILIDADES OFENSIVAS"
+ },
+ {
+  "nombre": "Desplazamiento especial Movimiento acuático",
+  "gnosis": 0,
+  "coste": 20,
+  "_seccion": "DESPLAZAMIENTOS Y TRANSPORTES"
+ },
+ {
+  "nombre": "Desplazamiento especial Movimiento libre",
+  "gnosis": 5,
+  "coste": 20,
+  "_seccion": "DESPLAZAMIENTOS Y TRANSPORTES"
+ },
+ {
+  "nombre": "Desplazamiento especial Movimiento sin peso",
+  "gnosis": 15,
+  "coste": 10,
+  "_seccion": "DESPLAZAMIENTOS Y TRANSPORTES"
+ },
+ {
+  "nombre": "Desplazamiento especial Movimiento subterráneo",
+  "gnosis": 0,
+  "coste": 10,
+  "_seccion": "DESPLAZAMIENTOS Y TRANSPORTES"
+ },
+ {
+  "nombre": "Desplazamiento especial Movimiento subterráneo superior",
+  "gnosis": 20,
+  "coste": 30,
+  "_seccion": "DESPLAZAMIENTOS Y TRANSPORTES"
+ },
+ {
+  "nombre": "Desplazamiento especial Movimiento libre por la naturaleza",
+  "gnosis": 10,
+  "coste": 10,
+  "_seccion": "DESPLAZAMIENTOS Y TRANSPORTES"
+ },
+ {
+  "nombre": "Transporte automático 20 m",
+  "gnosis": 10,
+  "coste": 10,
+  "_seccion": "DESPLAZAMIENTOS Y TRANSPORTES"
+ },
+ {
+  "nombre": "Transporte automático 50 m",
+  "gnosis": 10,
+  "coste": 20,
+  "_seccion": "DESPLAZAMIENTOS Y TRANSPORTES"
+ },
+ {
+  "nombre": "Transporte automático 100 m",
+  "gnosis": 15,
+  "coste": 40,
+  "_seccion": "DESPLAZAMIENTOS Y TRANSPORTES"
+ },
+ {
+  "nombre": "Transporte automático 250 m",
+  "gnosis": 15,
+  "coste": 60,
+  "_seccion": "DESPLAZAMIENTOS Y TRANSPORTES"
+ },
+ {
+  "nombre": "Transporte automático 500 m",
+  "gnosis": 20,
+  "coste": 80,
+  "_seccion": "DESPLAZAMIENTOS Y TRANSPORTES"
+ },
+ {
+  "nombre": "Transporte automático 1 km",
+  "gnosis": 20,
+  "coste": 100,
+  "_seccion": "DESPLAZAMIENTOS Y TRANSPORTES"
+ },
+ {
+  "nombre": "Transporte automático 5 km",
+  "gnosis": 25,
+  "coste": 120,
+  "_seccion": "DESPLAZAMIENTOS Y TRANSPORTES"
+ },
+ {
+  "nombre": "Transporte automático 25 km",
+  "gnosis": 30,
+  "coste": 140,
+  "_seccion": "DESPLAZAMIENTOS Y TRANSPORTES"
+ },
+ {
+  "nombre": "Transporte automático 100 km",
+  "gnosis": 35,
+  "coste": 160,
+  "_seccion": "DESPLAZAMIENTOS Y TRANSPORTES"
+ },
+ {
+  "nombre": "Transporte automático Puerta",
+  "gnosis": 35,
+  "coste": 200,
+  "_seccion": "DESPLAZAMIENTOS Y TRANSPORTES"
+ },
+ {
+  "nombre": "Transporte automático Uso adicional",
+  "gnosis": 10,
+  "coste": 10,
+  "_seccion": "DESPLAZAMIENTOS Y TRANSPORTES"
+ },
+ {
+  "nombre": "Transporte automático Sin límite",
+  "gnosis": 35,
+  "coste": 100,
+  "_seccion": "DESPLAZAMIENTOS Y TRANSPORTES"
+ },
+ {
+  "nombre": "Transporte automático Preparación 1 turno",
+  "gnosis": 10,
+  "coste": -10,
+  "_seccion": "DESPLAZAMIENTOS Y TRANSPORTES"
+ },
+ {
+  "nombre": "Transporte automático Preparación 5 turnos",
+  "gnosis": 10,
+  "coste": -30,
+  "_seccion": "DESPLAZAMIENTOS Y TRANSPORTES"
+ },
+ {
+  "nombre": "Transporte automático Preparación 10 turnos",
+  "gnosis": 10,
+  "coste": -50,
+  "_seccion": "DESPLAZAMIENTOS Y TRANSPORTES"
+ },
+ {
+  "nombre": "Transporte automático Medio o elemento concreto",
+  "gnosis": 10,
+  "coste": -30,
+  "_seccion": "DESPLAZAMIENTOS Y TRANSPORTES"
+ },
+ {
+  "nombre": "Tipo de Movimiento +1",
+  "gnosis": 0,
+  "coste": 10,
+  "_seccion": "DESPLAZAMIENTOS Y TRANSPORTES"
+ },
+ {
+  "nombre": "Tipo de Movimiento +2",
+  "gnosis": 5,
+  "coste": 20,
+  "_seccion": "DESPLAZAMIENTOS Y TRANSPORTES"
+ },
+ {
+  "nombre": "Tipo de Movimiento +3",
+  "gnosis": 10,
+  "coste": 30,
+  "_seccion": "DESPLAZAMIENTOS Y TRANSPORTES"
+ },
+ {
+  "nombre": "Tipo de Movimiento +4",
+  "gnosis": 20,
+  "coste": 40,
+  "_seccion": "DESPLAZAMIENTOS Y TRANSPORTES"
+ },
+ {
+  "nombre": "Vuelo natural Tipo 6",
+  "gnosis": 0,
+  "coste": 40,
+  "_seccion": "DESPLAZAMIENTOS Y TRANSPORTES"
+ },
+ {
+  "nombre": "Vuelo natural Tipo 8",
+  "gnosis": 0,
+  "coste": 60,
+  "_seccion": "DESPLAZAMIENTOS Y TRANSPORTES"
+ },
+ {
+  "nombre": "Vuelo natural Tipo 10",
+  "gnosis": 0,
+  "coste": 80,
+  "_seccion": "DESPLAZAMIENTOS Y TRANSPORTES"
+ },
+ {
+  "nombre": "Vuelo natural Tipo 12",
+  "gnosis": 0,
+  "coste": 100,
+  "_seccion": "DESPLAZAMIENTOS Y TRANSPORTES"
+ },
+ {
+  "nombre": "Vuelo natural Tipo 14",
+  "gnosis": 10,
+  "coste": 120,
+  "_seccion": "DESPLAZAMIENTOS Y TRANSPORTES"
+ },
+ {
+  "nombre": "Vuelo místico Tipo 4",
+  "gnosis": 10,
+  "coste": 20,
+  "_seccion": "DESPLAZAMIENTOS Y TRANSPORTES"
+ },
+ {
+  "nombre": "Vuelo místico Tipo 6",
+  "gnosis": 15,
+  "coste": 40,
+  "_seccion": "DESPLAZAMIENTOS Y TRANSPORTES"
+ },
+ {
+  "nombre": "Vuelo místico Tipo 8",
+  "gnosis": 20,
+  "coste": 60,
+  "_seccion": "DESPLAZAMIENTOS Y TRANSPORTES"
+ },
+ {
+  "nombre": "Vuelo místico Tipo 10",
+  "gnosis": 20,
+  "coste": 80,
+  "_seccion": "DESPLAZAMIENTOS Y TRANSPORTES"
+ },
+ {
+  "nombre": "Vuelo místico Tipo 12",
+  "gnosis": 25,
+  "coste": 100,
+  "_seccion": "DESPLAZAMIENTOS Y TRANSPORTES"
+ },
+ {
+  "nombre": "Vuelo místico Tipo 14",
+  "gnosis": 30,
+  "coste": 120,
+  "_seccion": "DESPLAZAMIENTOS Y TRANSPORTES"
+ },
+ {
+  "nombre": "Vuelo místico Tipo 16",
+  "gnosis": 35,
+  "coste": 140,
+  "_seccion": "DESPLAZAMIENTOS Y TRANSPORTES"
+ },
+ {
+  "nombre": "Vuelo místico Vuelo condicionado",
+  "gnosis": 10,
+  "coste": -20,
+  "_seccion": "DESPLAZAMIENTOS Y TRANSPORTES"
+ },
+ {
+  "nombre": "Resistencia física mejorada +10",
+  "gnosis": 0,
+  "coste": 10,
+  "_seccion": "RESISTENCIAS Y REGENERACIONES"
+ },
+ {
+  "nombre": "Resistencia física mejorada +20",
+  "gnosis": 0,
+  "coste": 20,
+  "_seccion": "RESISTENCIAS Y REGENERACIONES"
+ },
+ {
+  "nombre": "Resistencia física mejorada +30",
+  "gnosis": 10,
+  "coste": 30,
+  "_seccion": "RESISTENCIAS Y REGENERACIONES"
+ },
+ {
+  "nombre": "Resistencia física mejorada +40",
+  "gnosis": 20,
+  "coste": 40,
+  "_seccion": "RESISTENCIAS Y REGENERACIONES"
+ },
+ {
+  "nombre": "Resistencia física mejorada +50",
+  "gnosis": 30,
+  "coste": 50,
+  "_seccion": "RESISTENCIAS Y REGENERACIONES"
+ },
+ {
+  "nombre": "Resistencia física mejorada Única (RF)",
+  "gnosis": 10,
+  "coste": -20,
+  "_seccion": "RESISTENCIAS Y REGENERACIONES"
+ },
+ {
+  "nombre": "Resistencia física mejorada Única (RE)",
+  "gnosis": 10,
+  "coste": -20,
+  "_seccion": "RESISTENCIAS Y REGENERACIONES"
+ },
+ {
+  "nombre": "Resistencia física mejorada Única (RV)",
+  "gnosis": 10,
+  "coste": -20,
+  "_seccion": "RESISTENCIAS Y REGENERACIONES"
+ },
+ {
+  "nombre": "Resistencia mística mejorada +10 RP",
+  "gnosis": 10,
+  "coste": 10,
+  "_seccion": "RESISTENCIAS Y REGENERACIONES"
+ },
+ {
+  "nombre": "Resistencia mística mejorada +20 RP",
+  "gnosis": 15,
+  "coste": 20,
+  "_seccion": "RESISTENCIAS Y REGENERACIONES"
+ },
+ {
+  "nombre": "Resistencia mística mejorada +30 RP",
+  "gnosis": 20,
+  "coste": 30,
+  "_seccion": "RESISTENCIAS Y REGENERACIONES"
+ },
+ {
+  "nombre": "Resistencia mística mejorada +40 RP",
+  "gnosis": 25,
+  "coste": 40,
+  "_seccion": "RESISTENCIAS Y REGENERACIONES"
+ },
+ {
+  "nombre": "Resistencia mística mejorada +50 RP",
+  "gnosis": 35,
+  "coste": 50,
+  "_seccion": "RESISTENCIAS Y REGENERACIONES"
+ },
+ {
+  "nombre": "Pen a la Resistencia mística -10 RP",
+  "gnosis": 10,
+  "coste": -10,
+  "_seccion": "RESISTENCIAS Y REGENERACIONES"
+ },
+ {
+  "nombre": "Pen a la Resistencia mística -20 RP",
+  "gnosis": 10,
+  "coste": -15,
+  "_seccion": "RESISTENCIAS Y REGENERACIONES"
+ },
+ {
+  "nombre": "Pen a la Resistencia mística -30 RP",
+  "gnosis": 10,
+  "coste": -20,
+  "_seccion": "RESISTENCIAS Y REGENERACIONES"
+ },
+ {
+  "nombre": "Pen a la Resistencia mística -40 RP",
+  "gnosis": 20,
+  "coste": -25,
+  "_seccion": "RESISTENCIAS Y REGENERACIONES"
+ },
+ {
+  "nombre": "Pen a la Resistencia mística -50 RP",
+  "gnosis": 20,
+  "coste": -30,
+  "_seccion": "RESISTENCIAS Y REGENERACIONES"
+ },
+ {
+  "nombre": "Resistencia mística mejorada +10 RM",
+  "gnosis": 10,
+  "coste": 10,
+  "_seccion": "RESISTENCIAS Y REGENERACIONES"
+ },
+ {
+  "nombre": "Resistencia mística mejorada +20 RM",
+  "gnosis": 15,
+  "coste": 20,
+  "_seccion": "RESISTENCIAS Y REGENERACIONES"
+ },
+ {
+  "nombre": "Resistencia mística mejorada +30 RM",
+  "gnosis": 20,
+  "coste": 30,
+  "_seccion": "RESISTENCIAS Y REGENERACIONES"
+ },
+ {
+  "nombre": "Resistencia mística mejorada +40 RM",
+  "gnosis": 25,
+  "coste": 40,
+  "_seccion": "RESISTENCIAS Y REGENERACIONES"
+ },
+ {
+  "nombre": "Resistencia mística mejorada +50 RM",
+  "gnosis": 35,
+  "coste": 50,
+  "_seccion": "RESISTENCIAS Y REGENERACIONES"
+ },
+ {
+  "nombre": "Pen a la Resistencia mística -10 RM",
+  "gnosis": 10,
+  "coste": -10,
+  "_seccion": "RESISTENCIAS Y REGENERACIONES"
+ },
+ {
+  "nombre": "Pen a la Resistencia mística -20 RM",
+  "gnosis": 10,
+  "coste": -15,
+  "_seccion": "RESISTENCIAS Y REGENERACIONES"
+ },
+ {
+  "nombre": "Pen a la Resistencia mística -30 RM",
+  "gnosis": 10,
+  "coste": -20,
+  "_seccion": "RESISTENCIAS Y REGENERACIONES"
+ },
+ {
+  "nombre": "Pen a la Resistencia mística -40 RM",
+  "gnosis": 20,
+  "coste": -25,
+  "_seccion": "RESISTENCIAS Y REGENERACIONES"
+ },
+ {
+  "nombre": "Pen a la Resistencia mística -50 RM",
+  "gnosis": 20,
+  "coste": -30,
+  "_seccion": "RESISTENCIAS Y REGENERACIONES"
+ },
+ {
+  "nombre": "Regeneración Tipo 2",
+  "gnosis": 0,
+  "coste": 10,
+  "_seccion": "RESISTENCIAS Y REGENERACIONES"
+ },
+ {
+  "nombre": "Regeneración Tipo 4",
+  "gnosis": 0,
+  "coste": 20,
+  "_seccion": "RESISTENCIAS Y REGENERACIONES"
+ },
+ {
+  "nombre": "Regeneración Tipo 6",
+  "gnosis": 0,
+  "coste": 30,
+  "_seccion": "RESISTENCIAS Y REGENERACIONES"
+ },
+ {
+  "nombre": "Regeneración Tipo 8",
+  "gnosis": 5,
+  "coste": 40,
+  "_seccion": "RESISTENCIAS Y REGENERACIONES"
+ },
+ {
+  "nombre": "Regeneración Tipo 10",
+  "gnosis": 10,
+  "coste": 60,
+  "_seccion": "RESISTENCIAS Y REGENERACIONES"
+ },
+ {
+  "nombre": "Regeneración Tipo 12",
+  "gnosis": 15,
+  "coste": 100,
+  "_seccion": "RESISTENCIAS Y REGENERACIONES"
+ },
+ {
+  "nombre": "Regeneración Tipo 14",
+  "gnosis": 20,
+  "coste": 140,
+  "_seccion": "RESISTENCIAS Y REGENERACIONES"
+ },
+ {
+  "nombre": "Regeneración Tipo 16",
+  "gnosis": 25,
+  "coste": 160,
+  "_seccion": "RESISTENCIAS Y REGENERACIONES"
+ },
+ {
+  "nombre": "Regeneración Tipo 18",
+  "gnosis": 35,
+  "coste": 180,
+  "_seccion": "RESISTENCIAS Y REGENERACIONES"
+ },
+ {
+  "nombre": "Regeneración Tipo 19",
+  "gnosis": 45,
+  "coste": 200,
+  "_seccion": "RESISTENCIAS Y REGENERACIONES"
+ },
+ {
+  "nombre": "Regeneración Tipo 20",
+  "gnosis": 50,
+  "coste": 220,
+  "_seccion": "RESISTENCIAS Y REGENERACIONES"
+ },
+ {
+  "nombre": "Regeneración Excepto ataque o condición",
+  "gnosis": 0,
+  "coste": -10,
+  "_seccion": "RESISTENCIAS Y REGENERACIONES"
+ },
+ {
+  "nombre": "Regeneración Sólo contra ataque o condición",
+  "gnosis": 10,
+  "coste": -40,
+  "_seccion": "RESISTENCIAS Y REGENERACIONES"
+ },
+ {
+  "nombre": "Degeneración Regeneración 0",
+  "gnosis": 10,
+  "coste": -30,
+  "_seccion": "RESISTENCIAS Y REGENERACIONES"
+ },
+ {
+  "nombre": "Degeneración -10 PVs/día",
+  "gnosis": 10,
+  "coste": -40,
+  "_seccion": "RESISTENCIAS Y REGENERACIONES"
+ },
+ {
+  "nombre": "Degeneración -25 PVs/día",
+  "gnosis": 10,
+  "coste": -45,
+  "_seccion": "RESISTENCIAS Y REGENERACIONES"
+ },
+ {
+  "nombre": "Degeneración -50 PVs/día",
+  "gnosis": 10,
+  "coste": -50,
+  "_seccion": "RESISTENCIAS Y REGENERACIONES"
+ },
+ {
+  "nombre": "Degeneración -100 PVs/día",
+  "gnosis": 10,
+  "coste": -60,
+  "_seccion": "RESISTENCIAS Y REGENERACIONES"
+ },
+ {
+  "nombre": "Inmunidad física: Con cualquier Presencia",
+  "gnosis": 15,
+  "coste": 40,
+  "_seccion": "INMUNIDADES ESPECIALES"
+ },
+ {
+  "nombre": "Inmunidad física: Presencia inferior a 80",
+  "gnosis": 20,
+  "coste": 60,
+  "_seccion": "INMUNIDADES ESPECIALES"
+ },
+ {
+  "nombre": "Inmunidad física: Presencia inferior a 100",
+  "gnosis": 20,
+  "coste": 80,
+  "_seccion": "INMUNIDADES ESPECIALES"
+ },
+ {
+  "nombre": "Inmunidad física: Presencia inferior a 120",
+  "gnosis": 25,
+  "coste": 100,
+  "_seccion": "INMUNIDADES ESPECIALES"
+ },
+ {
+  "nombre": "Inmunidad física: Presencia inferior a 140",
+  "gnosis": 30,
+  "coste": 140,
+  "_seccion": "INMUNIDADES ESPECIALES"
+ },
+ {
+  "nombre": "Inmunidad física: Presencia inferior a 160",
+  "gnosis": 35,
+  "coste": 180,
+  "_seccion": "INMUNIDADES ESPECIALES"
+ },
+ {
+  "nombre": "Inmunidad mágica: Valor zeónico inferior a 60",
+  "gnosis": 15,
+  "coste": 30,
+  "_seccion": "INMUNIDADES ESPECIALES"
+ },
+ {
+  "nombre": "Inmunidad mágica: Valor zeónico inferior a 80",
+  "gnosis": 15,
+  "coste": 40,
+  "_seccion": "INMUNIDADES ESPECIALES"
+ },
+ {
+  "nombre": "Inmunidad mágica: Valor zeónico inferior a 100",
+  "gnosis": 20,
+  "coste": 50,
+  "_seccion": "INMUNIDADES ESPECIALES"
+ },
+ {
+  "nombre": "Inmunidad mágica: Valor zeónico inferior a 150",
+  "gnosis": 20,
+  "coste": 75,
+  "_seccion": "INMUNIDADES ESPECIALES"
+ },
+ {
+  "nombre": "Inmunidad mágica: Valor zeónico inferior a 200",
+  "gnosis": 25,
+  "coste": 100,
+  "_seccion": "INMUNIDADES ESPECIALES"
+ },
+ {
+  "nombre": "Inmunidad mágica: Valor zeónico inferior a 250",
+  "gnosis": 30,
+  "coste": 125,
+  "_seccion": "INMUNIDADES ESPECIALES"
+ },
+ {
+  "nombre": "Inmunidad mágica: Valor zeónico inferior a 300",
+  "gnosis": 35,
+  "coste": 150,
+  "_seccion": "INMUNIDADES ESPECIALES"
+ },
+ {
+  "nombre": "Inmunidad psíquica: Potencial Muy Difícil",
+  "gnosis": 15,
+  "coste": 60,
+  "_seccion": "INMUNIDADES ESPECIALES"
+ },
+ {
+  "nombre": "Inmunidad psíquica: Potencial Absurdo",
+  "gnosis": 20,
+  "coste": 80,
+  "_seccion": "INMUNIDADES ESPECIALES"
+ },
+ {
+  "nombre": "Inmunidad psíquica: Potencial Casi Imposible",
+  "gnosis": 25,
+  "coste": 120,
+  "_seccion": "INMUNIDADES ESPECIALES"
+ },
+ {
+  "nombre": "Inmunidad psíquica: Potencial Imposible",
+  "gnosis": 30,
+  "coste": 140,
+  "_seccion": "INMUNIDADES ESPECIALES"
+ },
+ {
+  "nombre": "Inmunidad Condición",
+  "gnosis": 15,
+  "coste": -30,
+  "_seccion": "INMUNIDADES ESPECIALES"
+ },
+ {
+  "nombre": "Vulnerabilidad extrema Un elemento concreto",
+  "gnosis": 15,
+  "coste": -20,
+  "_seccion": "INMUNIDADES ESPECIALES"
+ },
+ {
+  "nombre": "Vulnerabilidad extrema Un objeto determinado",
+  "gnosis": 15,
+  "coste": -10,
+  "_seccion": "INMUNIDADES ESPECIALES"
+ },
+ {
+  "nombre": "Vulnerabilidad extrema Una palabra o sonido",
+  "gnosis": 15,
+  "coste": -10,
+  "_seccion": "INMUNIDADES ESPECIALES"
+ },
+ {
+  "nombre": "Vulnerabilidad extrema Un material genérico",
+  "gnosis": 15,
+  "coste": -20,
+  "_seccion": "INMUNIDADES ESPECIALES"
+ },
+ {
+  "nombre": "Vulnerabilidad extrema Un material raro",
+  "gnosis": 15,
+  "coste": -10,
+  "_seccion": "INMUNIDADES ESPECIALES"
+ },
+ {
+  "nombre": "Vulnerabilidad extrema Un lugar determinado",
+  "gnosis": 20,
+  "coste": -10,
+  "_seccion": "INMUNIDADES ESPECIALES"
+ },
+ {
+  "nombre": "Vulnerabilidad extrema Condición determinada",
+  "gnosis": 25,
+  "coste": -10,
+  "_seccion": "INMUNIDADES ESPECIALES"
+ },
+ {
+  "nombre": "Vulnerabilidad extrema Daño equivalente al Nv fracaso",
+  "gnosis": 20,
+  "coste": -10,
+  "_seccion": "INMUNIDADES ESPECIALES"
+ },
+ {
+  "nombre": "Vulnerabilidad extrema Pen equivalente al Nv fracaso",
+  "gnosis": 20,
+  "coste": -10,
+  "_seccion": "INMUNIDADES ESPECIALES"
+ },
+ {
+  "nombre": "Vulnerabilidad extrema Inconsciencia",
+  "gnosis": 20,
+  "coste": -20,
+  "_seccion": "INMUNIDADES ESPECIALES"
+ },
+ {
+  "nombre": "Vulnerabilidad extrema Paralización completa",
+  "gnosis": 20,
+  "coste": -15,
+  "_seccion": "INMUNIDADES ESPECIALES"
+ },
+ {
+  "nombre": "Vulnerabilidad extrema Debilidad",
+  "gnosis": 20,
+  "coste": -10,
+  "_seccion": "INMUNIDADES ESPECIALES"
+ },
+ {
+  "nombre": "Vulnerabilidad extrema Muerte",
+  "gnosis": 20,
+  "coste": -30,
+  "_seccion": "INMUNIDADES ESPECIALES"
+ },
+ {
+  "nombre": "Vulnerabilidad extrema RM o RF 140",
+  "gnosis": 20,
+  "coste": -10,
+  "_seccion": "INMUNIDADES ESPECIALES"
+ },
+ {
+  "nombre": "Vulnerabilidad extrema RM o RF 160",
+  "gnosis": 20,
+  "coste": -15,
+  "_seccion": "INMUNIDADES ESPECIALES"
+ },
+ {
+  "nombre": "Vulnerabilidad extrema RM o RF 180",
+  "gnosis": 20,
+  "coste": -20,
+  "_seccion": "INMUNIDADES ESPECIALES"
+ },
+ {
+  "nombre": "Vulnerabilidad extrema RM o RF 200",
+  "gnosis": 20,
+  "coste": -25,
+  "_seccion": "INMUNIDADES ESPECIALES"
+ },
+ {
+  "nombre": "Barrera de daño 40",
+  "gnosis": 0,
+  "coste": 5,
+  "_seccion": "INMUNIDADES ESPECIALES"
+ },
+ {
+  "nombre": "Barrera de daño 60",
+  "gnosis": 0,
+  "coste": 10,
+  "_seccion": "INMUNIDADES ESPECIALES"
+ },
+ {
+  "nombre": "Barrera de daño 80",
+  "gnosis": 5,
+  "coste": 15,
+  "_seccion": "INMUNIDADES ESPECIALES"
+ },
+ {
+  "nombre": "Barrera de daño 100",
+  "gnosis": 5,
+  "coste": 20,
+  "_seccion": "INMUNIDADES ESPECIALES"
+ },
+ {
+  "nombre": "Barrera de daño 120",
+  "gnosis": 10,
+  "coste": 25,
+  "_seccion": "INMUNIDADES ESPECIALES"
+ },
+ {
+  "nombre": "Barrera de daño 140",
+  "gnosis": 10,
+  "coste": 30,
+  "_seccion": "INMUNIDADES ESPECIALES"
+ },
+ {
+  "nombre": "Barrera de daño 160",
+  "gnosis": 10,
+  "coste": 40,
+  "_seccion": "INMUNIDADES ESPECIALES"
+ },
+ {
+  "nombre": "Armadura física TA 1",
+  "gnosis": 0,
+  "coste": 10,
+  "_seccion": "ARMADURAS"
+ },
+ {
+  "nombre": "Armadura física TA 2",
+  "gnosis": 0,
+  "coste": 20,
+  "_seccion": "ARMADURAS"
+ },
+ {
+  "nombre": "Armadura física TA 3",
+  "gnosis": 0,
+  "coste": 30,
+  "_seccion": "ARMADURAS"
+ },
+ {
+  "nombre": "Armadura física TA 4",
+  "gnosis": 5,
+  "coste": 40,
+  "_seccion": "ARMADURAS"
+ },
+ {
+  "nombre": "Armadura física TA 5",
+  "gnosis": 10,
+  "coste": 50,
+  "_seccion": "ARMADURAS"
+ },
+ {
+  "nombre": "Armadura física TA 6",
+  "gnosis": 15,
+  "coste": 60,
+  "_seccion": "ARMADURAS"
+ },
+ {
+  "nombre": "Armadura física TA 7",
+  "gnosis": 20,
+  "coste": 80,
+  "_seccion": "ARMADURAS"
+ },
+ {
+  "nombre": "Armadura física TA 8",
+  "gnosis": 25,
+  "coste": 100,
+  "_seccion": "ARMADURAS"
+ },
+ {
+  "nombre": "Armadura física TA 9",
+  "gnosis": 30,
+  "coste": 120,
+  "_seccion": "ARMADURAS"
+ },
+ {
+  "nombre": "Armadura física TA 10",
+  "gnosis": 35,
+  "coste": 140,
+  "_seccion": "ARMADURAS"
+ },
+ {
+  "nombre": "Armadura física TA 12",
+  "gnosis": 40,
+  "coste": 180,
+  "_seccion": "ARMADURAS"
+ },
+ {
+  "nombre": "Armadura física Limitada FIL",
+  "gnosis": 0,
+  "coste": -10,
+  "_seccion": "ARMADURAS"
+ },
+ {
+  "nombre": "Armadura física Limitada CON",
+  "gnosis": 0,
+  "coste": -10,
+  "_seccion": "ARMADURAS"
+ },
+ {
+  "nombre": "Armadura física Limitada PEN",
+  "gnosis": 0,
+  "coste": -10,
+  "_seccion": "ARMADURAS"
+ },
+ {
+  "nombre": "Armadura física Limitada CAL",
+  "gnosis": 0,
+  "coste": -10,
+  "_seccion": "ARMADURAS"
+ },
+ {
+  "nombre": "Armadura física Limitada ELE",
+  "gnosis": 0,
+  "coste": -10,
+  "_seccion": "ARMADURAS"
+ },
+ {
+  "nombre": "Armadura física Limitada FRI",
+  "gnosis": 0,
+  "coste": -10,
+  "_seccion": "ARMADURAS"
+ },
+ {
+  "nombre": "Armadura física Abierta",
+  "gnosis": 0,
+  "coste": -10,
+  "_seccion": "ARMADURAS"
+ },
+ {
+  "nombre": "Armadura mística TA 1",
+  "gnosis": 5,
+  "coste": 10,
+  "_seccion": "ARMADURAS"
+ },
+ {
+  "nombre": "Armadura mística TA 2",
+  "gnosis": 10,
+  "coste": 20,
+  "_seccion": "ARMADURAS"
+ },
+ {
+  "nombre": "Armadura mística TA 3",
+  "gnosis": 15,
+  "coste": 30,
+  "_seccion": "ARMADURAS"
+ },
+ {
+  "nombre": "Armadura mística TA 4",
+  "gnosis": 20,
+  "coste": 40,
+  "_seccion": "ARMADURAS"
+ },
+ {
+  "nombre": "Armadura mística TA 5",
+  "gnosis": 25,
+  "coste": 50,
+  "_seccion": "ARMADURAS"
+ },
+ {
+  "nombre": "Armadura mística TA 6",
+  "gnosis": 30,
+  "coste": 60,
+  "_seccion": "ARMADURAS"
+ },
+ {
+  "nombre": "Armadura mística TA 7",
+  "gnosis": 35,
+  "coste": 70,
+  "_seccion": "ARMADURAS"
+ },
+ {
+  "nombre": "Armadura mística TA 8",
+  "gnosis": 40,
+  "coste": 80,
+  "_seccion": "ARMADURAS"
+ },
+ {
+  "nombre": "Habilidades espirituales Interacción con el mundo",
+  "gnosis": 30,
+  "coste": 30,
+  "_seccion": "ÁNIMAS"
+ },
+ {
+  "nombre": "Habilidades espirituales Manifestación",
+  "gnosis": 20,
+  "coste": 20,
+  "_seccion": "ÁNIMAS"
+ },
+ {
+  "nombre": "Habilidades espirituales Encarnación",
+  "gnosis": 30,
+  "coste": 60,
+  "_seccion": "ÁNIMAS"
+ },
+ {
+  "nombre": "Forma Forma inmaterial",
+  "gnosis": 20,
+  "coste": 80,
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+ },
+ {
+  "nombre": "Forma Forma elemental",
+  "gnosis": 20,
+  "coste": 100,
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+ },
+ {
+  "nombre": "Forma Forma espectral",
+  "gnosis": 20,
+  "coste": 100,
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+ },
+ {
+  "nombre": "Forma Forma física a voluntad",
+  "gnosis": 20,
+  "coste": 10,
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+ },
+ {
+  "nombre": "Forma Forma mayor",
+  "gnosis": 30,
+  "coste": 20,
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+ },
+ {
+  "nombre": "Forma Condición",
+  "gnosis": 20,
+  "coste": -20,
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+ },
+ {
+  "nombre": "Magia Innata Conjuro innato (Variable)",
+  "gnosis": 0,
+  "coste": 0,
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+ },
+ {
+  "nombre": "Magia Innata Un uso adicional",
+  "gnosis": 10,
+  "coste": 5,
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+ },
+ {
+  "nombre": "Magia Innata Sin límite",
+  "gnosis": 30,
+  "coste": 100,
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+ },
+ {
+  "nombre": "Magia Innata Condicionado",
+  "gnosis": 10,
+  "coste": -30,
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+ },
+ {
+  "nombre": "Magia Innata Preparación 1 turno",
+  "gnosis": 10,
+  "coste": -10,
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+ },
+ {
+  "nombre": "Magia Innata Preparación 2 turnos",
+  "gnosis": 10,
+  "coste": -20,
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+ },
+ {
+  "nombre": "Magia Innata Preparación 3 turnos",
+  "gnosis": 10,
+  "coste": -30,
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+ },
+ {
+  "nombre": "Magia Innata Preparación 5 turnos",
+  "gnosis": 10,
+  "coste": -40,
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+ },
+ {
+  "nombre": "Magia Innata Preparación 10 turnos",
+  "gnosis": 10,
+  "coste": -50,
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+ },
+ {
+  "nombre": "Psíquica innata Poder innato (Variable)",
+  "gnosis": 0,
+  "coste": 0,
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+ },
+ {
+  "nombre": "Psíquica innata Un uso adicional",
+  "gnosis": 10,
+  "coste": 5,
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+ },
+ {
+  "nombre": "Psíquica innata Sin límite",
+  "gnosis": 25,
+  "coste": 80,
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+ },
+ {
+  "nombre": "Psíquica Innata Condicionado",
+  "gnosis": 10,
+  "coste": -30,
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+ },
+ {
+  "nombre": "Psíquica Innata Preparación 1 turno",
+  "gnosis": 10,
+  "coste": -10,
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+ },
+ {
+  "nombre": "Psíquica Innata Preparación 2 turnos",
+  "gnosis": 10,
+  "coste": -20,
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+ },
+ {
+  "nombre": "Psíquica Innata Preparación 3 turnos",
+  "gnosis": 10,
+  "coste": -30,
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+ },
+ {
+  "nombre": "Psíquica Innata Preparación 5 turnos",
+  "gnosis": 10,
+  "coste": -40,
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+ },
+ {
+  "nombre": "Psíquica Innata Preparación 10 turnos",
+  "gnosis": 10,
+  "coste": -50,
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+ },
+ {
+  "nombre": "Metamorfismo Básico",
+  "gnosis": 15,
+  "coste": 40,
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+ },
+ {
+  "nombre": "Metamorfismo Medio",
+  "gnosis": 20,
+  "coste": 60,
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+ },
+ {
+  "nombre": "Metamorfismo Avanzado",
+  "gnosis": 25,
+  "coste": 100,
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+ },
+ {
+  "nombre": "Metamorfismo Condicionado",
+  "gnosis": 20,
+  "coste": -20,
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+ },
+ {
+  "nombre": "Indetecciones +50 a la Resistencia",
+  "gnosis": 10,
+  "coste": 10,
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+ },
+ {
+  "nombre": "Indetecciones +100 a la Resistencia",
+  "gnosis": 20,
+  "coste": 20,
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+ },
+ {
+  "nombre": "Indetecciones +150 a la Resistencia",
+  "gnosis": 20,
+  "coste": 40,
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+ },
+ {
+  "nombre": "Indetecciones +200 a la Resistencia",
+  "gnosis": 25,
+  "coste": 80,
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+ },
+ {
+  "nombre": "Indetecciones Camuflaje camaleónico",
+  "gnosis": 10,
+  "coste": 50,
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+ },
+ {
+  "nombre": "Indetecciones Invisibilidad Espiritual",
+  "gnosis": 20,
+  "coste": 80,
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+ },
+ {
+  "nombre": "Indetecciones Invisibilidad",
+  "gnosis": 25,
+  "coste": 100,
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+ },
+ {
+  "nombre": "Indetecciones Invisibilidad Completa",
+  "gnosis": 30,
+  "coste": 150,
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+ },
+ {
+  "nombre": "Indetecciones Indetección ante un sentido",
+  "gnosis": 10,
+  "coste": 50,
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+ },
+ {
+  "nombre": "Indetecciones Sólo en determinadas situaciones",
+  "gnosis": 20,
+  "coste": -30,
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+ },
+ {
+  "nombre": "Aura 1m de radio",
+  "gnosis": 20,
+  "coste": 40,
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+ },
+ {
+  "nombre": "Aura 5m de radio",
+  "gnosis": 20,
+  "coste": 60,
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+ },
+ {
+  "nombre": "Aura 10m de radio",
+  "gnosis": 25,
+  "coste": 80,
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+ },
+ {
+  "nombre": "Aura 25m de radio",
+  "gnosis": 25,
+  "coste": 100,
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+ },
+ {
+  "nombre": "Aura 50m de radio",
+  "gnosis": 30,
+  "coste": 120,
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+ },
+ {
+  "nombre": "Aura 100m de radio",
+  "gnosis": 35,
+  "coste": 140,
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+ },
+ {
+  "nombre": "Aura RM o RF 40",
+  "gnosis": 20,
+  "coste": 20,
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+ },
+ {
+  "nombre": "Aura RM o RF 60",
+  "gnosis": 20,
+  "coste": 30,
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+ },
+ {
+  "nombre": "Aura RM o RF 80",
+  "gnosis": 25,
+  "coste": 40,
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+ },
+ {
+  "nombre": "Aura RM o RF 100",
+  "gnosis": 25,
+  "coste": 50,
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+ },
+ {
+  "nombre": "Aura RM o RF 120",
+  "gnosis": 30,
+  "coste": 60,
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+ },
+ {
+  "nombre": "Aura RM o RF 140",
+  "gnosis": 35,
+  "coste": 80,
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+ },
+ {
+  "nombre": "Aura Miedo",
+  "gnosis": 20,
+  "coste": 60,
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+ },
+ {
+  "nombre": "Aura Terror",
+  "gnosis": 30,
+  "coste": 80,
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+ },
+ {
+  "nombre": "Aura Dolor",
+  "gnosis": 20,
+  "coste": 60,
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+ },
+ {
+  "nombre": "Aura Dolor extremo",
+  "gnosis": 25,
+  "coste": 80,
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+ },
+ {
+  "nombre": "Aura Debilidad",
+  "gnosis": 20,
+  "coste": 100,
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+ },
+ {
+  "nombre": "Aura Paralización parcial",
+  "gnosis": 20,
+  "coste": 80,
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+ },
+ {
+  "nombre": "Aura Paralización completa",
+  "gnosis": 30,
+  "coste": 120,
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+ },
+ {
+  "nombre": "Aura Ira",
+  "gnosis": 20,
+  "coste": 60,
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+ },
+ {
+  "nombre": "Aura Ceguera",
+  "gnosis": 20,
+  "coste": 80,
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+ },
+ {
+  "nombre": "Aura Sordera",
+  "gnosis": 20,
+  "coste": 40,
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+ },
+ {
+  "nombre": "Aura Mudez",
+  "gnosis": 20,
+  "coste": 40,
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+ },
+ {
+  "nombre": "Aura Fascinación",
+  "gnosis": 20,
+  "coste": 40,
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+ },
+ {
+  "nombre": "Aura Daño simple",
+  "gnosis": 20,
+  "coste": 60,
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+ },
+ {
+  "nombre": "Aura Daño doble",
+  "gnosis": 30,
+  "coste": 100,
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+ },
+ {
+  "nombre": "Aura Inconsciencia",
+  "gnosis": 20,
+  "coste": 120,
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+ },
+ {
+  "nombre": "Aura Dominio",
+  "gnosis": 30,
+  "coste": 140,
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+ },
+ {
+  "nombre": "Aura Muerte",
+  "gnosis": 35,
+  "coste": 160,
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+ },
+ {
+  "nombre": "Aura Locura",
+  "gnosis": 20,
+  "coste": 40,
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+ },
+ {
+  "nombre": "Aura Vejez",
+  "gnosis": 25,
+  "coste": 80,
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+ },
+ {
+  "nombre": "Aura Petrificación",
+  "gnosis": 30,
+  "coste": 140,
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+ },
+ {
+  "nombre": "Aura Penalización a toda acción",
+  "gnosis": 20,
+  "coste": 100,
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+ },
+ {
+  "nombre": "Aura Efecto adicional",
+  "gnosis": 20,
+  "coste": 10,
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+ },
+ {
+  "nombre": "Aura Condición adicional",
+  "gnosis": 20,
+  "coste": -30,
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+ },
+ {
+  "nombre": "Visión especial Visión nocturna",
+  "gnosis": 0,
+  "coste": 10,
+  "_seccion": "PERCEPCIONES ESPECIALES"
+ },
+ {
+  "nombre": "Visión especial Visión nocturna completa",
+  "gnosis": 10,
+  "coste": 20,
+  "_seccion": "PERCEPCIONES ESPECIALES"
+ },
+ {
+  "nombre": "Visión especial Visión extrasensorial",
+  "gnosis": 10,
+  "coste": 30,
+  "_seccion": "PERCEPCIONES ESPECIALES"
+ },
+ {
+  "nombre": "Visión especial Ver magia",
+  "gnosis": 10,
+  "coste": 10,
+  "_seccion": "PERCEPCIONES ESPECIALES"
+ },
+ {
+  "nombre": "Visión especial Ver matrices",
+  "gnosis": 10,
+  "coste": 10,
+  "_seccion": "PERCEPCIONES ESPECIALES"
+ },
+ {
+  "nombre": "Visión especial Ver espíritus",
+  "gnosis": 10,
+  "coste": 10,
+  "_seccion": "PERCEPCIONES ESPECIALES"
+ },
+ {
+  "nombre": "Visión especial Ver lo sobrenatural",
+  "gnosis": 20,
+  "coste": 30,
+  "_seccion": "PERCEPCIONES ESPECIALES"
+ },
+ {
+  "nombre": "Detección sobrenatural 5m",
+  "gnosis": 10,
+  "coste": 10,
+  "_seccion": "PERCEPCIONES ESPECIALES"
+ },
+ {
+  "nombre": "Detección sobrenatural 10m",
+  "gnosis": 10,
+  "coste": 20,
+  "_seccion": "PERCEPCIONES ESPECIALES"
+ },
+ {
+  "nombre": "Detección sobrenatural 25m",
+  "gnosis": 15,
+  "coste": 30,
+  "_seccion": "PERCEPCIONES ESPECIALES"
+ },
+ {
+  "nombre": "Detección sobrenatural 50m",
+  "gnosis": 15,
+  "coste": 40,
+  "_seccion": "PERCEPCIONES ESPECIALES"
+ },
+ {
+  "nombre": "Detección sobrenatural 100m",
+  "gnosis": 20,
+  "coste": 50,
+  "_seccion": "PERCEPCIONES ESPECIALES"
+ },
+ {
+  "nombre": "Detección sobrenatural 500m",
+  "gnosis": 20,
+  "coste": 60,
+  "_seccion": "PERCEPCIONES ESPECIALES"
+ },
+ {
+  "nombre": "Detección sobrenatural 1km",
+  "gnosis": 25,
+  "coste": 80,
+  "_seccion": "PERCEPCIONES ESPECIALES"
+ },
+ {
+  "nombre": "Detección sobrenatural RM 100",
+  "gnosis": 10,
+  "coste": 10,
+  "_seccion": "PERCEPCIONES ESPECIALES"
+ },
+ {
+  "nombre": "Detección sobrenatural RM 140",
+  "gnosis": 10,
+  "coste": 20,
+  "_seccion": "PERCEPCIONES ESPECIALES"
+ },
+ {
+  "nombre": "Detección sobrenatural RM 180",
+  "gnosis": 15,
+  "coste": 40,
+  "_seccion": "PERCEPCIONES ESPECIALES"
+ },
+ {
+  "nombre": "Detección sobrenatural RM 220",
+  "gnosis": 20,
+  "coste": 80,
+  "_seccion": "PERCEPCIONES ESPECIALES"
+ },
+ {
+  "nombre": "Detección sobrenatural RM 260",
+  "gnosis": 25,
+  "coste": 120,
+  "_seccion": "PERCEPCIONES ESPECIALES"
+ },
+ {
+  "nombre": "Detección sobrenatural Detección de vida",
+  "gnosis": 10,
+  "coste": 20,
+  "_seccion": "PERCEPCIONES ESPECIALES"
+ },
+ {
+  "nombre": "Detección sobrenatural Algo determinado",
+  "gnosis": 20,
+  "coste": 30,
+  "_seccion": "PERCEPCIONES ESPECIALES"
+ },
+ {
+  "nombre": "Ataque adicional independiente",
+  "gnosis": 5,
+  "coste": 20,
+  "_seccion": "[CN] PODERES DE COMBATE"
+ },
+ {
+  "nombre": "Ataque retardado 1 turno",
+  "gnosis": 10,
+  "coste": 10,
+  "_seccion": "[CN] PODERES DE COMBATE"
+ },
+ {
+  "nombre": "Ataque retardado 3 turnos",
+  "gnosis": 20,
+  "coste": 20,
+  "_seccion": "[CN] PODERES DE COMBATE"
+ },
+ {
+  "nombre": "Ataque retardado 5 turnos",
+  "gnosis": 25,
+  "coste": 30,
+  "_seccion": "[CN] PODERES DE COMBATE"
+ },
+ {
+  "nombre": "Ataque retardado 20 turnos (1 min)",
+  "gnosis": 30,
+  "coste": 40,
+  "_seccion": "[CN] PODERES DE COMBATE"
+ },
+ {
+  "nombre": "Ataque camuflado Advertir 120 / Buscar 40",
+  "gnosis": 5,
+  "coste": 20,
+  "_seccion": "[CN] PODERES DE COMBATE"
+ },
+ {
+  "nombre": "Ataque camuflado Advertir 140 / Buscar 80",
+  "gnosis": 10,
+  "coste": 30,
+  "_seccion": "[CN] PODERES DE COMBATE"
+ },
+ {
+  "nombre": "Ataque camuflado Advertir 180 / Buscar 120",
+  "gnosis": 15,
+  "coste": 40,
+  "_seccion": "[CN] PODERES DE COMBATE"
+ },
+ {
+  "nombre": "Ataque camuflado Advertir 240 / Buscar 140",
+  "gnosis": 25,
+  "coste": 60,
+  "_seccion": "[CN] PODERES DE COMBATE"
+ },
+ {
+  "nombre": "Ataque camuflado Advertir 280 / Buscar 180",
+  "gnosis": 30,
+  "coste": 80,
+  "_seccion": "[CN] PODERES DE COMBATE"
+ },
+ {
+  "nombre": "Ataque mantenido 1 turno adicional",
+  "gnosis": 10,
+  "coste": 50,
+  "_seccion": "[CN] PODERES DE COMBATE"
+ },
+ {
+  "nombre": "Ataque mantenido 2 turnos adicionales",
+  "gnosis": 15,
+  "coste": 60,
+  "_seccion": "[CN] PODERES DE COMBATE"
+ },
+ {
+  "nombre": "Ataque mantenido 3 turnos adicionales",
+  "gnosis": 20,
+  "coste": 80,
+  "_seccion": "[CN] PODERES DE COMBATE"
+ },
+ {
+  "nombre": "Ataque mantenido 4 turnos adicionales",
+  "gnosis": 25,
+  "coste": 100,
+  "_seccion": "[CN] PODERES DE COMBATE"
+ },
+ {
+  "nombre": "Ataque mantenido 5 turnos adicionales",
+  "gnosis": 30,
+  "coste": 120,
+  "_seccion": "[CN] PODERES DE COMBATE"
+ },
+ {
+  "nombre": "Imparable -80 Defensa / -20 Ataque",
+  "gnosis": 0,
+  "coste": 20,
+  "_seccion": "[CN] PODERES DE COMBATE"
+ },
+ {
+  "nombre": "Imparable -60 Defensa / -10 Ataque",
+  "gnosis": 10,
+  "coste": 40,
+  "_seccion": "[CN] PODERES DE COMBATE"
+ },
+ {
+  "nombre": "Imparable -40 Defensa",
+  "gnosis": 30,
+  "coste": 60,
+  "_seccion": "[CN] PODERES DE COMBATE"
+ },
+ {
+  "nombre": "Reflejar ataques Ataque a distancia",
+  "gnosis": 10,
+  "coste": 30,
+  "_seccion": "[CN] PODERES DE COMBATE"
+ },
+ {
+  "nombre": "Reflejar ataques Ataque cuerpo a cuerpo",
+  "gnosis": 15,
+  "coste": 40,
+  "_seccion": "[CN] PODERES DE COMBATE"
+ },
+ {
+  "nombre": "Reflejar ataques Elección de blanco",
+  "gnosis": 15,
+  "coste": 20,
+  "_seccion": "[CN] PODERES DE COMBATE"
+ },
+ {
+  "nombre": "Reflejar ataques Contrataque limitado",
+  "gnosis": 30,
+  "coste": 40,
+  "_seccion": "[CN] PODERES DE COMBATE"
+ },
+ {
+  "nombre": "Arma natural a distancia",
+  "gnosis": 5,
+  "coste": 20,
+  "_seccion": "[CN] PODERES DE COMBATE"
+ },
+ {
+  "nombre": "Arma natural a distancia Munición avanzada",
+  "gnosis": 10,
+  "coste": 20,
+  "_seccion": "[CN] PODERES DE COMBATE"
+ },
+ {
+  "nombre": "Arma natural a distancia Munición ilimitada",
+  "gnosis": 20,
+  "coste": 40,
+  "_seccion": "[CN] PODERES DE COMBATE"
+ },
+ {
+  "nombre": "Arma natural a distancia Larga distancia",
+  "gnosis": 10,
+  "coste": 30,
+  "_seccion": "[CN] PODERES DE COMBATE"
+ },
+ {
+  "nombre": "Arma natural a distancia Disparo",
+  "gnosis": 10,
+  "coste": 20,
+  "_seccion": "[CN] PODERES DE COMBATE"
+ },
+ {
+  "nombre": "Impactos de Fuerza",
+  "gnosis": 15,
+  "coste": 50,
+  "_seccion": "[CN] PODERES DE COMBATE"
+ },
+ {
+  "nombre": "Ataque automático condicionado Ataque -60",
+  "gnosis": 5,
+  "coste": 10,
+  "_seccion": "[CN] PODERES DE COMBATE"
+ },
+ {
+  "nombre": "Ataque automático condicionado Ataque -40",
+  "gnosis": 10,
+  "coste": 20,
+  "_seccion": "[CN] PODERES DE COMBATE"
+ },
+ {
+  "nombre": "Ataque automático condicionado Ataque -20",
+  "gnosis": 20,
+  "coste": 30,
+  "_seccion": "[CN] PODERES DE COMBATE"
+ },
+ {
+  "nombre": "Ataque automático condicionado Ataque Pleno",
+  "gnosis": 30,
+  "coste": 40,
+  "_seccion": "[CN] PODERES DE COMBATE"
+ },
+ {
+  "nombre": "Ataque automático condicionado Daño menor",
+  "gnosis": 20,
+  "coste": 40,
+  "_seccion": "[CN] PODERES DE COMBATE"
+ },
+ {
+  "nombre": "Ataque automático condicionado Daño mayor",
+  "gnosis": 10,
+  "coste": 20,
+  "_seccion": "[CN] PODERES DE COMBATE"
+ },
+ {
+  "nombre": "Ataque automático condicionado Crítico",
+  "gnosis": 15,
+  "coste": 30,
+  "_seccion": "[CN] PODERES DE COMBATE"
+ },
+ {
+  "nombre": "Ataque automático condicionado Muerte",
+  "gnosis": 5,
+  "coste": 10,
+  "_seccion": "[CN] PODERES DE COMBATE"
+ },
+ {
+  "nombre": "Ataque automático condicionado Compleja",
+  "gnosis": 10,
+  "coste": 10,
+  "_seccion": "[CN] PODERES DE COMBATE"
+ },
+ {
+  "nombre": "Ataque automático condicionado Simple",
+  "gnosis": 20,
+  "coste": 40,
+  "_seccion": "[CN] PODERES DE COMBATE"
+ },
+ {
+  "nombre": "Rotura +5",
+  "gnosis": 5,
+  "coste": 10,
+  "_seccion": "[CN] PODERES DE COMBATE"
+ },
+ {
+  "nombre": "Rotura +10",
+  "gnosis": 10,
+  "coste": 20,
+  "_seccion": "[CN] PODERES DE COMBATE"
+ },
+ {
+  "nombre": "Rotura +15",
+  "gnosis": 15,
+  "coste": 40,
+  "_seccion": "[CN] PODERES DE COMBATE"
+ },
+ {
+  "nombre": "Rotura +20",
+  "gnosis": 30,
+  "coste": 60,
+  "_seccion": "[CN] PODERES DE COMBATE"
+ },
+ {
+  "nombre": "Rotura +25",
+  "gnosis": 35,
+  "coste": 80,
+  "_seccion": "[CN] PODERES DE COMBATE"
+ },
+ {
+  "nombre": "Crítico Automático",
+  "gnosis": 30,
+  "coste": 100,
+  "_seccion": "[CN] PODERES DE COMBATE"
+ },
+ {
+  "nombre": "Acumular ataque Daño hasta 50",
+  "gnosis": 10,
+  "coste": 10,
+  "_seccion": "[CN] PODERES DE COMBATE"
+ },
+ {
+  "nombre": "Acumular ataque Daño hasta 100",
+  "gnosis": 20,
+  "coste": 20,
+  "_seccion": "[CN] PODERES DE COMBATE"
+ },
+ {
+  "nombre": "Acumular ataque Habilidad hasta 50",
+  "gnosis": 15,
+  "coste": 20,
+  "_seccion": "[CN] PODERES DE COMBATE"
+ },
+ {
+  "nombre": "Acumular ataque Habilidad hasta 100",
+  "gnosis": 25,
+  "coste": 40,
+  "_seccion": "[CN] PODERES DE COMBATE"
+ },
+ {
+  "nombre": "Acumular ataque Acumulación rápida",
+  "gnosis": 15,
+  "coste": 10,
+  "_seccion": "[CN] PODERES DE COMBATE"
+ },
+ {
+  "nombre": "Acumular ataque Acumulación dual",
+  "gnosis": 20,
+  "coste": 10,
+  "_seccion": "[CN] PODERES DE COMBATE"
+ },
+ {
+  "nombre": "Acumular ataque Acumulación múltiple",
+  "gnosis": 30,
+  "coste": 20,
+  "_seccion": "[CN] PODERES DE COMBATE"
+ },
+ {
+  "nombre": "Ataques múltiples aleatorios D5",
+  "gnosis": 20,
+  "coste": 120,
+  "_seccion": "[CN] PODERES DE COMBATE"
+ },
+ {
+  "nombre": "Ataques múltiples aleatorios D10",
+  "gnosis": 30,
+  "coste": 220,
+  "_seccion": "[CN] PODERES DE COMBATE"
+ },
+ {
+  "nombre": "Ataques múltiples aleatorios Ataque -80",
+  "gnosis": 20,
+  "coste": 30,
+  "_seccion": "[CN] PODERES DE COMBATE"
+ },
+ {
+  "nombre": "Ataques múltiples aleatorios Ataque -60",
+  "gnosis": 20,
+  "coste": 40,
+  "_seccion": "[CN] PODERES DE COMBATE"
+ },
+ {
+  "nombre": "Ataques múltiples aleatorios Ataque -40",
+  "gnosis": 20,
+  "coste": 50,
+  "_seccion": "[CN] PODERES DE COMBATE"
+ },
+ {
+  "nombre": "Ataques múltiples aleatorios Ataque -20",
+  "gnosis": 20,
+  "coste": 60,
+  "_seccion": "[CN] PODERES DE COMBATE"
+ },
+ {
+  "nombre": "Ataques múltiples aleatorios Ataque pleno",
+  "gnosis": 20,
+  "coste": 80,
+  "_seccion": "[CN] PODERES DE COMBATE"
+ },
+ {
+  "nombre": "Carga Natural",
+  "gnosis": 0,
+  "coste": 20,
+  "_seccion": "[CN] PODERES DE COMBATE"
+ },
+ {
+  "nombre": "Reducción de daño Daño -10",
+  "gnosis": 10,
+  "coste": 30,
+  "_seccion": "[CN] PODERES DE COMBATE"
+ },
+ {
+  "nombre": "Reducción de daño Daño -20",
+  "gnosis": 20,
+  "coste": 50,
+  "_seccion": "[CN] PODERES DE COMBATE"
+ },
+ {
+  "nombre": "Reducción de daño Daño -30",
+  "gnosis": 25,
+  "coste": 80,
+  "_seccion": "[CN] PODERES DE COMBATE"
+ },
+ {
+  "nombre": "Reducción de daño Daño -40",
+  "gnosis": 30,
+  "coste": 110,
+  "_seccion": "[CN] PODERES DE COMBATE"
+ },
+ {
+  "nombre": "Reducción de daño Daño -50",
+  "gnosis": 35,
+  "coste": 140,
+  "_seccion": "[CN] PODERES DE COMBATE"
+ },
+ {
+  "nombre": "Reducción de daño Limitado",
+  "gnosis": 10,
+  "coste": -15,
+  "_seccion": "[CN] PODERES DE COMBATE"
+ },
+ {
+  "nombre": "Estilo Defensivo",
+  "gnosis": 5,
+  "coste": 20,
+  "_seccion": "[CN] PODERES DE COMBATE"
+ },
+ {
+  "nombre": "Escudo Rodela",
+  "gnosis": 0,
+  "coste": 10,
+  "_seccion": "[CN] PODERES DE COMBATE"
+ },
+ {
+  "nombre": "Escudo Escudo medio",
+  "gnosis": 0,
+  "coste": 20,
+  "_seccion": "[CN] PODERES DE COMBATE"
+ },
+ {
+  "nombre": "Escudo Escudo corporal",
+  "gnosis": 0,
+  "coste": 30,
+  "_seccion": "[CN] PODERES DE COMBATE"
+ },
+ {
+  "nombre": "Escudo Escudo místico 500",
+  "gnosis": 10,
+  "coste": 20,
+  "_seccion": "[CN] PODERES DE COMBATE"
+ },
+ {
+  "nombre": "Escudo Escudo místico 1000",
+  "gnosis": 15,
+  "coste": 40,
+  "_seccion": "[CN] PODERES DE COMBATE"
+ },
+ {
+  "nombre": "Escudo Escudo místico 1500",
+  "gnosis": 20,
+  "coste": 60,
+  "_seccion": "[CN] PODERES DE COMBATE"
+ },
+ {
+  "nombre": "Escudo Escudo místico 2000",
+  "gnosis": 25,
+  "coste": 80,
+  "_seccion": "[CN] PODERES DE COMBATE"
+ },
+ {
+  "nombre": "Escudo Escudo místico irrompible",
+  "gnosis": 35,
+  "coste": 120,
+  "_seccion": "[CN] PODERES DE COMBATE"
+ },
+ {
+  "nombre": "Ataque especial incrementado Ataque +10",
+  "gnosis": 5,
+  "coste": 10,
+  "_seccion": "[CN] PODERES DE COMBATE"
+ },
+ {
+  "nombre": "Ataque especial incrementado Ataque +20",
+  "gnosis": 5,
+  "coste": 20,
+  "_seccion": "[CN] PODERES DE COMBATE"
+ },
+ {
+  "nombre": "Ataque especial incrementado Ataque +30",
+  "gnosis": 10,
+  "coste": 30,
+  "_seccion": "[CN] PODERES DE COMBATE"
+ },
+ {
+  "nombre": "Ataque especial incrementado Ataque +40",
+  "gnosis": 15,
+  "coste": 40,
+  "_seccion": "[CN] PODERES DE COMBATE"
+ },
+ {
+  "nombre": "Ataque especial incrementado Ataque +50",
+  "gnosis": 25,
+  "coste": 50,
+  "_seccion": "[CN] PODERES DE COMBATE"
+ },
+ {
+  "nombre": "Sentidos especiales Visión radial",
+  "gnosis": 5,
+  "coste": 20,
+  "_seccion": "[CN] PODERES VARIOS"
+ },
+ {
+  "nombre": "Sentidos especiales Visión gnóstica",
+  "gnosis": 20,
+  "coste": 30,
+  "_seccion": "[CN] PODERES VARIOS"
+ },
+ {
+  "nombre": "Sentidos especiales Ojos de la realidad",
+  "gnosis": 15,
+  "coste": 10,
+  "_seccion": "[CN] PODERES VARIOS"
+ },
+ {
+  "nombre": "Planear",
+  "gnosis": 0,
+  "coste": 20,
+  "_seccion": "[CN] PODERES VARIOS"
+ },
+ {
+  "nombre": "Efecto permanente Un blanco",
+  "gnosis": 15,
+  "coste": 30,
+  "_seccion": "[CN] PODERES VARIOS"
+ },
+ {
+  "nombre": "Efecto permanente Cualquier blanco",
+  "gnosis": 30,
+  "coste": 60,
+  "_seccion": "[CN] PODERES VARIOS"
+ },
+ {
+  "nombre": "Transformación Por Daño",
+  "gnosis": 20,
+  "coste": 40,
+  "_seccion": "[CN] PODERES VARIOS"
+ },
+ {
+  "nombre": "Transformación Voluntaria",
+  "gnosis": 25,
+  "coste": 60,
+  "_seccion": "[CN] PODERES VARIOS"
+ },
+ {
+  "nombre": "Transformación Invulnerable",
+  "gnosis": 30,
+  "coste": 50,
+  "_seccion": "[CN] PODERES VARIOS"
+ },
+ {
+  "nombre": "Transformación Crisálida",
+  "gnosis": 20,
+  "coste": -20,
+  "_seccion": "[CN] PODERES VARIOS"
+ },
+ {
+  "nombre": "Transformación Daño transferido",
+  "gnosis": 20,
+  "coste": -20,
+  "_seccion": "[CN] PODERES VARIOS"
+ },
+ {
+  "nombre": "Maestría sobrenatural Añadido +1",
+  "gnosis": 10,
+  "coste": 20,
+  "_seccion": "[CN] PODERES MAGICOS Y PSIQUICOS"
+ },
+ {
+  "nombre": "Maestría sobrenatural Añadido +2",
+  "gnosis": 20,
+  "coste": 30,
+  "_seccion": "[CN] PODERES MAGICOS Y PSIQUICOS"
+ },
+ {
+  "nombre": "Maestría sobrenatural Añadido +3",
+  "gnosis": 25,
+  "coste": 40,
+  "_seccion": "[CN] PODERES MAGICOS Y PSIQUICOS"
+ },
+ {
+  "nombre": "Maestría sobrenatural Añadido +4",
+  "gnosis": 30,
+  "coste": 60,
+  "_seccion": "[CN] PODERES MAGICOS Y PSIQUICOS"
+ },
+ {
+  "nombre": "Maestría sobrenatural Añadido +5",
+  "gnosis": 35,
+  "coste": 80,
+  "_seccion": "[CN] PODERES MAGICOS Y PSIQUICOS"
+ },
+ {
+  "nombre": "Maestría sobrenatural Magia menor",
+  "gnosis": 10,
+  "coste": -20,
+  "_seccion": "[CN] PODERES MAGICOS Y PSIQUICOS"
+ },
+ {
+  "nombre": "Magia natural Conjuro de efecto",
+  "gnosis": 30,
+  "coste": 100,
+  "_seccion": "[CN] PODERES MAGICOS Y PSIQUICOS"
+ },
+ {
+  "nombre": "Magia natural Todos",
+  "gnosis": 35,
+  "coste": 150,
+  "_seccion": "[CN] PODERES MAGICOS Y PSIQUICOS"
+ },
+ {
+  "nombre": "Mente Sistemática",
+  "gnosis": 30,
+  "coste": 150,
+  "_seccion": "[CN] PODERES MAGICOS Y PSIQUICOS"
+ },
+ {
+  "nombre": "Inmunidad Crítica",
+  "gnosis": 35,
+  "coste": 40,
+  "_seccion": "[CN] PODERES DIVINOS"
+ },
+ {
+  "nombre": "Existencia compacta Gigantesco",
+  "gnosis": 35,
+  "coste": 40,
+  "_seccion": "[CN] PODERES DIVINOS"
+ },
+ {
+  "nombre": "Existencia compacta Colosal",
+  "gnosis": 40,
+  "coste": 60,
+  "_seccion": "[CN] PODERES DIVINOS"
+ },
+ {
+  "nombre": "Espacio cerrado Espacio temporal",
+  "gnosis": 35,
+  "coste": 40,
+  "_seccion": "[CN] PODERES DIVINOS"
+ },
+ {
+  "nombre": "Espacio cerrado Espacio contínuo",
+  "gnosis": 35,
+  "coste": 40,
+  "_seccion": "[CN] PODERES DIVINOS"
+ },
+ {
+  "nombre": "Espacio cerrado Zona mayor",
+  "gnosis": 40,
+  "coste": 20,
+  "_seccion": "[CN] PODERES DIVINOS"
+ },
+ {
+  "nombre": "Barrera existencial",
+  "gnosis": 35,
+  "coste": 50,
+  "_seccion": "[CN] PODERES DIVINOS"
+ },
+ {
+  "nombre": "Daño existencial",
+  "gnosis": 30,
+  "coste": 40,
+  "_seccion": "[CN] PODERES DIVINOS"
+ },
+ {
+  "nombre": "Poder #1",
+  "gnosis": 0,
+  "coste": 0,
+  "_seccion": "PODERES PERSONALIZADOS"
+ },
+ {
+  "nombre": "Poder #2",
+  "gnosis": 0,
+  "coste": 0,
+  "_seccion": "PODERES PERSONALIZADOS"
+ },
+ {
+  "nombre": "Poder #3",
+  "gnosis": 0,
+  "coste": 0,
+  "_seccion": "PODERES PERSONALIZADOS"
+ },
+ {
+  "nombre": "Poder #4",
+  "gnosis": 0,
+  "coste": 0,
+  "_seccion": "PODERES PERSONALIZADOS"
+ },
+ {
+  "nombre": "Poder #5",
+  "gnosis": 0,
+  "coste": 0,
+  "_seccion": "PODERES PERSONALIZADOS"
+ },
+ {
+  "nombre": "Poder #6",
+  "gnosis": 0,
+  "coste": 0,
+  "_seccion": "PODERES PERSONALIZADOS"
+ },
+ {
+  "nombre": "Poder #7",
+  "gnosis": 0,
+  "coste": 0,
+  "_seccion": "PODERES PERSONALIZADOS"
+ },
+ {
+  "nombre": "Poder #8",
+  "gnosis": 0,
+  "coste": 0,
+  "_seccion": "PODERES PERSONALIZADOS"
+ },
+ {
+  "nombre": "Poder #9",
+  "gnosis": 0,
+  "coste": 0,
+  "_seccion": "PODERES PERSONALIZADOS"
+ },
+ {
+  "nombre": "Poder #10",
+  "gnosis": 0,
+  "coste": 0,
+  "_seccion": "PODERES PERSONALIZADOS"
+ }
+]

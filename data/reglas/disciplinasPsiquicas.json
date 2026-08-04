@@ -1,0 +1,54 @@
+[
+ {
+  "disciplina": "Causalidad",
+  "modificadores": "Sin modificador"
+ },
+ {
+  "disciplina": "Crioquinesis",
+  "modificadores": "El entorno modifica el Potencial: Volcán -30, Incendio de gran tamaño -10, Terreno frío y lluvioso +10, Frío intenso +20, Zona helada +30"
+ },
+ {
+  "disciplina": "Energía",
+  "modificadores": "Sin modificador"
+ },
+ {
+  "disciplina": "Electromagnetismo",
+  "modificadores": "Añade +20 en ambientes ionizados. Aplica -20 en zonas sin magnetismo"
+ },
+ {
+  "disciplina": "Hipersensibilidad",
+  "modificadores": "Modificadores como las Habilidades Perceptivas"
+ },
+ {
+  "disciplina": "Incremento Físico",
+  "modificadores": "Sin modificador"
+ },
+ {
+  "disciplina": "Luz",
+  "modificadores": "Sin modificador"
+ },
+ {
+  "disciplina": "Piroquinesis",
+  "modificadores": "El entorno modifica el Potencial: Zona helada -30, Frío intenso -10, Gran hoguera +10, Incendio de gran tamaño +20, Volcán +30"
+ },
+ {
+  "disciplina": "Sentiente",
+  "modificadores": "No requiere Proyección Psíquica, pero si no alcanza ni el 10%, el objetivo tiene +60 a su RP. Añade 20 a su Potencial si está en contacto físico con el objetivo"
+ },
+ {
+  "disciplina": "Telemetría",
+  "modificadores": "Añade 10 a su Potencial si está en contacto físico con el objetivo"
+ },
+ {
+  "disciplina": "Telepatía",
+  "modificadores": "No requiere Proyección Psíquica, pero si no alcanza ni el 10%, el objetivo tiene +60 a su RP. Añade 20 a su Potencial si está en contacto físico con el objetivo"
+ },
+ {
+  "disciplina": "Telequinesis",
+  "modificadores": "Sin modificador"
+ },
+ {
+  "disciplina": "Teletransporte",
+  "modificadores": "Sin modificador"
+ }
+]

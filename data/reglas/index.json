@@ -1,0 +1,26 @@
+{
+ "fuente": "Meirmeister.xlsm",
+ "conjuntos": {
+  "razas": 21,
+  "categorias": 22,
+  "ventajas": 292,
+  "habilidadesEsenciales": 198,
+  "armas": 170,
+  "armaduras": 48,
+  "yelmos": 9,
+  "artesMarciales": 88,
+  "arsMagnus": 57,
+  "habilidadesKi": 75,
+  "efectosTecnica": 555,
+  "tiposEfectoTecnica": 65,
+  "tecnicasCompendio": 159,
+  "metamagia": 68,
+  "sheele": 95,
+  "conjuros": 640,
+  "poderesPsiquicos": 125,
+  "disciplinasPsiquicas": 13,
+  "poderesCriatura": 494,
+  "elan": 185,
+  "tablasBase": 17
+ }
+}

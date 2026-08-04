@@ -1,0 +1,512 @@
+[
+ {
+  "nombre": "Ataque Adicional Independiente (Ataque Independiente)",
+  "gnosis": 5,
+  "coste": 20,
+  "_seccion": "Poderes de Combate"
+ },
+ {
+  "nombre": "Ataque Retardado (1 Turno)",
+  "gnosis": 10,
+  "coste": 10,
+  "_seccion": "Poderes de Combate"
+ },
+ {
+  "nombre": "Ataque Retardado (3 Turnos)",
+  "gnosis": 20,
+  "coste": 20,
+  "_seccion": "Poderes de Combate"
+ },
+ {
+  "nombre": "Ataque Retardado (5 Turnos)",
+  "gnosis": 25,
+  "coste": 30,
+  "_seccion": "Poderes de Combate"
+ },
+ {
+  "nombre": "Ataque Retardado (20 Turnos (1 minuto))",
+  "gnosis": 30,
+  "coste": 40,
+  "_seccion": "Poderes de Combate"
+ },
+ {
+  "nombre": "Ataque Camuflado (120 / 40)",
+  "gnosis": 5,
+  "coste": 20,
+  "_seccion": "Poderes de Combate"
+ },
+ {
+  "nombre": "Ataque Camuflado (140 / 80)",
+  "gnosis": 10,
+  "coste": 30,
+  "_seccion": "Poderes de Combate"
+ },
+ {
+  "nombre": "Ataque Camuflado (180 / 120)",
+  "gnosis": 15,
+  "coste": 40,
+  "_seccion": "Poderes de Combate"
+ },
+ {
+  "nombre": "Ataque Camuflado (240 / 140)",
+  "gnosis": 25,
+  "coste": 60,
+  "_seccion": "Poderes de Combate"
+ },
+ {
+  "nombre": "Ataque Camuflado (280 / 180)",
+  "gnosis": 30,
+  "coste": 80,
+  "_seccion": "Poderes de Combate"
+ },
+ {
+  "nombre": "Ataque Mantenido (1 Turno Adicional)",
+  "gnosis": 10,
+  "coste": 50,
+  "_seccion": "Poderes de Combate"
+ },
+ {
+  "nombre": "Ataque Mantenido (2 Turnos Adicionales)",
+  "gnosis": 15,
+  "coste": 60,
+  "_seccion": "Poderes de Combate"
+ },
+ {
+  "nombre": "Ataque Mantenido (3 Turnos Adicionales)",
+  "gnosis": 20,
+  "coste": 80,
+  "_seccion": "Poderes de Combate"
+ },
+ {
+  "nombre": "Ataque Mantenido (4 Turnos Adicionales)",
+  "gnosis": 25,
+  "coste": 100,
+  "_seccion": "Poderes de Combate"
+ },
+ {
+  "nombre": "Ataque Mantenido (5 Turnos Adicionales)",
+  "gnosis": 30,
+  "coste": 120,
+  "_seccion": "Poderes de Combate"
+ },
+ {
+  "nombre": "Imparable (-80 Defensa / -20 Ataque)",
+  "gnosis": 0,
+  "coste": 20,
+  "_seccion": "Poderes de Combate"
+ },
+ {
+  "nombre": "Imparable (-60 Defensa / -10 Ataque)",
+  "gnosis": 10,
+  "coste": 40,
+  "_seccion": "Poderes de Combate"
+ },
+ {
+  "nombre": "Imparable (-40 Defensa)",
+  "gnosis": 30,
+  "coste": 60,
+  "_seccion": "Poderes de Combate"
+ },
+ {
+  "nombre": "Reflejar Ataques (Ataque a Distancia)",
+  "gnosis": 10,
+  "coste": 30,
+  "_seccion": "Poderes de Combate"
+ },
+ {
+  "nombre": "Reflejar Ataques (Ataque Cuerpo a Cuerpo)",
+  "gnosis": 15,
+  "coste": 40,
+  "_seccion": "Poderes de Combate"
+ },
+ {
+  "nombre": "Reflejar Ataques (Elección de Blanco)",
+  "gnosis": 15,
+  "coste": 20,
+  "_seccion": "Poderes de Combate"
+ },
+ {
+  "nombre": "Reflejar Ataques (Contraataque Ilimitado)",
+  "gnosis": 30,
+  "coste": 40,
+  "_seccion": "Poderes de Combate"
+ },
+ {
+  "nombre": "Arma Natural a Distancia",
+  "gnosis": 5,
+  "coste": 20,
+  "_seccion": "Poderes de Combate"
+ },
+ {
+  "nombre": "Arma Natural a Distancia (Munición Avanzada)",
+  "gnosis": 10,
+  "coste": 20,
+  "_seccion": "Poderes de Combate"
+ },
+ {
+  "nombre": "Arma Natural a Distancia (Munición Ilimitada)",
+  "gnosis": 20,
+  "coste": 40,
+  "_seccion": "Poderes de Combate"
+ },
+ {
+  "nombre": "Arma Natural a Distancia (Larga Distancia)",
+  "gnosis": 10,
+  "coste": 30,
+  "_seccion": "Poderes de Combate"
+ },
+ {
+  "nombre": "Arma Natural a Distancia (Disparo)",
+  "gnosis": 10,
+  "coste": 20,
+  "_seccion": "Poderes de Combate"
+ },
+ {
+  "nombre": "Impactos de Fuerza",
+  "gnosis": 15,
+  "coste": 50,
+  "_seccion": "Poderes de Combate"
+ },
+ {
+  "nombre": "Crítico Automático",
+  "gnosis": 30,
+  "coste": 100,
+  "_seccion": "Poderes de Combate"
+ },
+ {
+  "nombre": "Daño (Hasta 50)",
+  "gnosis": 10,
+  "coste": 10,
+  "_seccion": "Poderes de Combate"
+ },
+ {
+  "nombre": "Daño (Hasta 100)",
+  "gnosis": 20,
+  "coste": 20,
+  "_seccion": "Poderes de Combate"
+ },
+ {
+  "nombre": "Habilidad (Hasta 50)",
+  "gnosis": 15,
+  "coste": 20,
+  "_seccion": "Poderes de Combate"
+ },
+ {
+  "nombre": "Habilidad (Hasta 100)",
+  "gnosis": 25,
+  "coste": 40,
+  "_seccion": "Poderes de Combate"
+ },
+ {
+  "nombre": "Habilidad (Acumulación Rápida)",
+  "gnosis": 15,
+  "coste": 10,
+  "_seccion": "Poderes de Combate"
+ },
+ {
+  "nombre": "Habilidad (Acumulación Dual)",
+  "gnosis": 20,
+  "coste": 10,
+  "_seccion": "Poderes de Combate"
+ },
+ {
+  "nombre": "Habilidad (Acción Múltiple)",
+  "gnosis": 30,
+  "coste": 20,
+  "_seccion": "Poderes de Combate"
+ },
+ {
+  "nombre": "Ataques Adicionales Aleatorios (D5)",
+  "gnosis": 20,
+  "coste": 120,
+  "_seccion": "Poderes de Combate"
+ },
+ {
+  "nombre": "Ataques Adicionales Aleatorios (D10)",
+  "gnosis": 30,
+  "coste": 220,
+  "_seccion": "Poderes de Combate"
+ },
+ {
+  "nombre": "Ataques Adicionales Aleatorios (Habilidad -80)",
+  "gnosis": 20,
+  "coste": 30,
+  "_seccion": "Poderes de Combate"
+ },
+ {
+  "nombre": "Ataques Adicionales Aleatorios (Habilidad -60)",
+  "gnosis": 20,
+  "coste": 40,
+  "_seccion": "Poderes de Combate"
+ },
+ {
+  "nombre": "Ataques Adicionales Aleatorios (Habilidad -40)",
+  "gnosis": 20,
+  "coste": 50,
+  "_seccion": "Poderes de Combate"
+ },
+ {
+  "nombre": "Ataques Adicionales Aleatorios (Habilidad -20)",
+  "gnosis": 20,
+  "coste": 60,
+  "_seccion": "Poderes de Combate"
+ },
+ {
+  "nombre": "Ataques Adicionales Aleatorios (Habilidad Plena)",
+  "gnosis": 20,
+  "coste": 80,
+  "_seccion": "Poderes de Combate"
+ },
+ {
+  "nombre": "Carga Natural",
+  "gnosis": 0,
+  "coste": 20,
+  "_seccion": "Poderes de Combate"
+ },
+ {
+  "nombre": "Reducción de Daño (Daño -10)",
+  "gnosis": 10,
+  "coste": 30,
+  "_seccion": "Poderes de Combate"
+ },
+ {
+  "nombre": "Reducción de Daño (Daño -20)",
+  "gnosis": 20,
+  "coste": 50,
+  "_seccion": "Poderes de Combate"
+ },
+ {
+  "nombre": "Reducción de Daño (Daño -30)",
+  "gnosis": 25,
+  "coste": 80,
+  "_seccion": "Poderes de Combate"
+ },
+ {
+  "nombre": "Reducción de Daño (Daño -40)",
+  "gnosis": 30,
+  "coste": 110,
+  "_seccion": "Poderes de Combate"
+ },
+ {
+  "nombre": "Reducción de Daño (Daño -50)",
+  "gnosis": 35,
+  "coste": 140,
+  "_seccion": "Poderes de Combate"
+ },
+ {
+  "nombre": "Penalizadores (Limitado)",
+  "gnosis": 10,
+  "coste": -15,
+  "_seccion": "Poderes de Combate"
+ },
+ {
+  "nombre": "Estilo Defensivo",
+  "gnosis": 5,
+  "coste": 20,
+  "_seccion": "Poderes de Combate"
+ },
+ {
+  "nombre": "Escudo (Rodela)",
+  "gnosis": 0,
+  "coste": 10,
+  "_seccion": "Poderes de Combate"
+ },
+ {
+  "nombre": "Escudo (Escudo Medio)",
+  "gnosis": 0,
+  "coste": 20,
+  "_seccion": "Poderes de Combate"
+ },
+ {
+  "nombre": "Escudo (Escudo Corporal)",
+  "gnosis": 0,
+  "coste": 30,
+  "_seccion": "Poderes de Combate"
+ },
+ {
+  "nombre": "Escudo (Escudo Místico 500)",
+  "gnosis": 10,
+  "coste": 20,
+  "_seccion": "Poderes de Combate"
+ },
+ {
+  "nombre": "Escudo (a el    Escudo Místico 1.000)",
+  "gnosis": 15,
+  "coste": 40,
+  "_seccion": "Poderes de Combate"
+ },
+ {
+  "nombre": "Escudo (Escudo Místico 1.500)",
+  "gnosis": 20,
+  "coste": 60,
+  "_seccion": "Poderes de Combate"
+ },
+ {
+  "nombre": "Escudo (Escudo Místico 2.000)",
+  "gnosis": 25,
+  "coste": 80,
+  "_seccion": "Poderes de Combate"
+ },
+ {
+  "nombre": "Escudo (Escudo Místico Irrompible)",
+  "gnosis": 35,
+  "coste": 120,
+  "_seccion": "Poderes de Combate"
+ },
+ {
+  "nombre": "Ataque Especial Incrementado (Habilidad +10)",
+  "gnosis": 5,
+  "coste": 10,
+  "_seccion": "Poderes de Combate"
+ },
+ {
+  "nombre": "Ataque Especial Incrementado (Habilidad +20)",
+  "gnosis": 5,
+  "coste": 20,
+  "_seccion": "Poderes de Combate"
+ },
+ {
+  "nombre": "Ataque Especial Incrementado (Habilidad +30)",
+  "gnosis": 10,
+  "coste": 30,
+  "_seccion": "Poderes de Combate"
+ },
+ {
+  "nombre": "Ataque Especial Incrementado (Habilidad +40)",
+  "gnosis": 15,
+  "coste": 40,
+  "_seccion": "Poderes de Combate"
+ },
+ {
+  "nombre": "Ataque Especial Incrementado (Habilidad +50)",
+  "gnosis": 25,
+  "coste": 50,
+  "_seccion": "Poderes de Combate"
+ },
+ {
+  "nombre": "Transformación / Evolución (Transformación por Daño)",
+  "gnosis": 20,
+  "coste": 40,
+  "_seccion": "Poderes de Combate"
+ },
+ {
+  "nombre": "Transformación / Evolución (Transformación Voluntaria)",
+  "gnosis": 25,
+  "coste": 60,
+  "_seccion": "Poderes de Combate"
+ },
+ {
+  "nombre": "Transformación / Evolución (Invulnerable)",
+  "gnosis": 30,
+  "coste": 50,
+  "_seccion": "Poderes de Combate"
+ },
+ {
+  "nombre": "Penalizadores (Crisálida)",
+  "gnosis": 20,
+  "coste": -20,
+  "_seccion": "Poderes de Combate"
+ },
+ {
+  "nombre": "Penalizadores (Daño Transferido)",
+  "gnosis": 20,
+  "coste": -20,
+  "_seccion": "Poderes de Combate"
+ },
+ {
+  "nombre": "Maestría Sobrenatural (Añadido +1)",
+  "gnosis": 10,
+  "coste": 20,
+  "_seccion": "Poderes de Combate"
+ },
+ {
+  "nombre": "Maestría Sobrenatural (Añadido +2)",
+  "gnosis": 20,
+  "coste": 30,
+  "_seccion": "Poderes de Combate"
+ },
+ {
+  "nombre": "Maestría Sobrenatural (Añadido +3)",
+  "gnosis": 25,
+  "coste": 40,
+  "_seccion": "Poderes de Combate"
+ },
+ {
+  "nombre": "Maestría Sobrenatural (Añadido +4)",
+  "gnosis": 30,
+  "coste": 60,
+  "_seccion": "Poderes de Combate"
+ },
+ {
+  "nombre": "Maestría Sobrenatural (Añadido +5)",
+  "gnosis": 35,
+  "coste": 80,
+  "_seccion": "Poderes de Combate"
+ },
+ {
+  "nombre": "Penalizadores (Magia Menor)",
+  "gnosis": 10,
+  "coste": -20,
+  "_seccion": "Poderes de Combate"
+ },
+ {
+  "nombre": "Magia Natural (Conjuros de Efecto)",
+  "gnosis": 30,
+  "coste": 100,
+  "_seccion": "Poderes de Combate"
+ },
+ {
+  "nombre": "Magia Natural (Toda Clase de Conjuros)",
+  "gnosis": 35,
+  "coste": 150,
+  "_seccion": "Poderes de Combate"
+ },
+ {
+  "nombre": "Mente Sistemática",
+  "gnosis": 30,
+  "coste": 150,
+  "_seccion": "Poderes de Combate"
+ },
+ {
+  "nombre": "Inmunidad Crítica",
+  "gnosis": 35,
+  "coste": 40,
+  "_seccion": "Poderes de Combate"
+ },
+ {
+  "nombre": "Existencia Compacta (a la     Gigantesco)",
+  "gnosis": 35,
+  "coste": 40,
+  "_seccion": "Poderes de Combate"
+ },
+ {
+  "nombre": "Existencia Compacta (Colosal)",
+  "gnosis": 40,
+  "coste": 60,
+  "_seccion": "Poderes de Combate"
+ },
+ {
+  "nombre": "Espacio Cerrado (Espacio Temporal)",
+  "gnosis": 35,
+  "coste": 40,
+  "_seccion": "Poderes de Combate"
+ },
+ {
+  "nombre": "Espacio Cerrado (Espacio Continuo)",
+  "gnosis": 35,
+  "coste": 40,
+  "_seccion": "Poderes de Combate"
+ },
+ {
+  "nombre": "Espacio Cerrado (Zona Mayor)",
+  "gnosis": 40,
+  "coste": 20,
+  "_seccion": "Poderes de Combate"
+ },
+ {
+  "nombre": "Daño Existencial",
+  "gnosis": 30,
+  "coste": 40,
+  "_seccion": "Poderes de Combate"
+ }
+]

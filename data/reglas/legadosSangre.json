@@ -1,0 +1,83 @@
+[
+ {
+  "_nota": "Dominus Exxet, capítulo 6. Escrito a mano: el capítulo va a dos columnas y el texto extraído las entrelaza, así que automatizarlo obligaría a inventar. Cada Legado se compra con Puntos de Creación y da +1 al ajuste de nivel.",
+  "legado": "Sangre de Aeón: Lazo Elemental",
+  "coste": 1,
+  "efecto": "El personaje está atado a un Aeon elemental. Elige un elemento y obtiene afinidad con él: inmunidad parcial, ataques de ese carácter y desequilibrio hacia su contrario."
+ },
+ {
+  "legado": "Ojos de la Muerte",
+  "coste": 2,
+  "efecto": "Ve dónde y cómo morirá lo que mira. Permite localizar el punto vulnerable de cualquier ser u objeto y atacarlo con enormes ventajas."
+ },
+ {
+  "legado": "Ojos del Alma",
+  "coste": 1,
+  "efecto": "Ve el Ki como algo tangible. Usa Detección del Ki en lugar de Advertir y Buscar para todo control perceptivo visual, ve invisibles y entes espirituales, no puede ser deslumbrado e ignora los penalizadores por oscuridad no sobrenatural. Para aprovecharlo del todo hace falta la Habilidad del Ki Erudición."
+ },
+ {
+  "legado": "Legado de la Luna (Tsukiyomi)",
+  "coste": 1,
+  "efecto": "Sus poderes dependen de la fase lunar y sólo actúan de noche, salvo en eclipse. Luna llena +5 a toda acción; menguante +10; creciente +15; luna nueva +20, acciones Inhumanas y +2 de Regeneración; eclipse +30, acciones Zen y +8 de Regeneración."
+ },
+ {
+  "legado": "La Sangre de Uroboros",
+  "coste": 1,
+  "efecto": "Heredero de la Serpiente del Tiempo. Su relación con el tiempo es distinta a la de los demás mortales."
+ },
+ {
+  "legado": "Sangre de las Grandes Bestias",
+  "coste": "1, 2 o 3",
+  "efecto": "Recibe 40 Puntos de Desarrollo para Poderes de Criatura como si tuviera Gnosis 5, y 80 o 120 si invierte 2 o 3 Puntos de Creación. No permite elegir Habilidades Esenciales, y esos PD no suben su nivel. Los poderes físicos le cambian el aspecto."
+ },
+ {
+  "legado": "Ojos del Destino",
+  "coste": 2,
+  "efecto": "Se adapta al estilo de combate de un rival concreto y acumula bonos contra él, que se pierden si el rival mejora su ataque o su defensa. Cuesta 1 punto de Ki por asalto. No sirve contra ataques mágicos o psíquicos salvo con Ver lo Sobrenatural. Con Imitación de Técnicas, imitar cuesta 15 / 25 / 40 CM menos en vez de 10 / 20 / 30."
+ },
+ {
+  "legado": "Sangre Eterna",
+  "coste": 1,
+  "efecto": "Carece de puntos vulnerables: inmune a la muerte automática por Crítico mortal, aguanta consciente hasta veinte veces su Constitución en negativos con penalizador igual a los PV negativos, y suma +40 a los controles de Resistencia contra efectos de muerte automática."
+ },
+ {
+  "legado": "La Sangre de Orochi",
+  "coste": 1,
+  "efecto": "Puede despertar la sangre del Aeon oscuro: +20 a las habilidades de combate y al Turno, +1 a todas las Acumulaciones de Ki y +20 al ACT si tiene el Don, a cambio de 2 PV por asalto como Sacrificio. Liberarla es pasivo pero tarda un Turno entero. Arrastra la Ira desencadenada: controles de Voluntad que, si fallan, suben los bonos a +30 y +2 de Acumulación pero elevan la pérdida a 5 PV por asalto."
+ },
+ {
+  "legado": "Devorador de Existencia",
+  "coste": 2,
+  "efecto": "Consume la esencia de personas o cosas para incrementar sus propias energías."
+ },
+ {
+  "legado": "Esencia Venenosa",
+  "coste": 1,
+  "efecto": "Su sangre y su cuerpo son venenosos por naturaleza."
+ },
+ {
+  "legado": "Armas Naturales",
+  "coste": 1,
+  "efecto": "Nace con un arma en el cuerpo —garras, colmillos, púas—, que se maneja como un arma natural. Por 1 Punto de Creación más, Daño incrementado suma +25 a su Daño Base."
+ },
+ {
+  "legado": "Sangre de los Muertos",
+  "coste": 1,
+  "efecto": "Levanta a los muertos y los usa como marionetas."
+ },
+ {
+  "legado": "Sangre de Kami",
+  "coste": 1,
+  "efecto": "Desciende de un espíritu mayor de la Isla Oriental."
+ },
+ {
+  "legado": "Sangre de El Dragón",
+  "coste": 1,
+  "efecto": "Lleva en las venas la sangre de El Dragón."
+ },
+ {
+  "legado": "Sangre Latente",
+  "coste": 1,
+  "efecto": "El Legado duerme en su interior y despierta sólo en determinadas circunstancias."
+ }
+]
