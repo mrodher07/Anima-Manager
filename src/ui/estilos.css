@@ -182,6 +182,16 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 600; letter-spacing: 0.01em
 .nav button:hover { color: var(--texto); background: var(--panel); }
 .nav button[aria-current='page'] { color: var(--oro-claro); border-color: var(--borde); background: var(--panel); }
 
+/* Estado de la nube: discreto a propósito. Sólo tiene que llamar la atención cuando algo
+   va mal; el resto del tiempo es una comprobación de reojo, no un elemento de la interfaz. */
+.nav .estado-nube {
+  font-size: 0.78rem;
+  color: var(--texto-debil);
+  border-color: var(--borde-tenue, var(--borde));
+  padding: 5px 10px;
+}
+.nav .estado-nube:hover { color: var(--texto-tenue); }
+
 .contenido { flex: 1; width: 100%; max-width: 1180px; margin: 0 auto; padding: 22px 18px 64px; }
 
 /* ─────────────────────────── Piezas ─────────────────────────── */

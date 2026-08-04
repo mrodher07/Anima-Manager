@@ -16,6 +16,8 @@ import { VistaPersonalizado } from './VistaPersonalizado';
 import { VistaGaleria } from './VistaGaleria';
 import { VistaReglas } from './VistaReglas';
 import { VistaCopia } from './VistaCopia';
+import { VistaCuenta } from './VistaCuenta';
+import { useCuenta } from '../nube/cuenta';
 import { Imagen } from './Imagen';
 import { nuevoId } from './estado';
 import { SelectorTema } from './SelectorTema';
@@ -26,7 +28,7 @@ import './estilos.css';
 
 type Seccion =
   | 'personajes' | 'ficha' | 'editor' | 'mesa'
-  | 'bestiario' | 'arcana' | 'galeria' | 'propio' | 'reglas' | 'campanas' | 'copia';
+  | 'bestiario' | 'arcana' | 'galeria' | 'propio' | 'reglas' | 'campanas' | 'copia' | 'cuenta';
 
 export function App() {
   const [seccion, setSeccion] = useState<Seccion>('personajes');
@@ -44,6 +46,13 @@ export function App() {
     borrar: borrarCampana,
     recargar: recargarCampanas,
   } = useCampanas();
+
+  // Cuando la nube trae cambios de otro dispositivo, las listas tienen que releerse: si no,
+  // la ficha que acabas de editar en el móvil no aparecería aquí hasta recargar la página.
+  const cuenta = useCuenta(() => {
+    void recargar();
+    void recargarCampanas();
+  });
 
   const campana = campanas.find((c) => c.id === campanaId) ?? null;
   const { reglamento, cambiar: cambiarReglamento } = useReglamento(campana, (c) => void guardarCampana(c));
@@ -80,6 +89,7 @@ export function App() {
     { id: 'campanas', texto: 'Campañas' },
     { id: 'reglas', texto: 'Reglas' },
     { id: 'copia', texto: 'Copia de seguridad' },
+    { id: 'cuenta', texto: 'Cuenta' },
   ];
 
   const necesitaFicha = seccion === 'ficha' || seccion === 'editor' || seccion === 'mesa';
@@ -103,6 +113,19 @@ export function App() {
                 {s.texto}
               </button>
             ))}
+          {cuenta.estado === 'dentro' && (
+            <button
+              className="estado-nube"
+              onClick={() => setSeccion('cuenta')}
+              title={cuenta.usuario?.correo}
+            >
+              {cuenta.sincronizando
+                ? 'Sincronizando…'
+                : cuenta.ultima && !cuenta.ultima.ok
+                  ? 'Sin sincronizar'
+                  : 'Al día'}
+            </button>
+          )}
           <SelectorTema tema={tema} onCambiar={setTema} />
         </nav>
       </header>
@@ -200,6 +223,8 @@ export function App() {
             }}
           />
         )}
+
+        {seccion === 'cuenta' && <VistaCuenta cuenta={cuenta} />}
 
         {seccion === 'galeria' && <VistaGaleria campanaId={campanaId} />}
 

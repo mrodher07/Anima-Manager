@@ -90,9 +90,30 @@ export interface Campana {
 }
 
 const BD = 'anima-manager';
-const VERSION = 2;
+const VERSION = 3;
 const TIENDAS = ['personajes', 'campanas', 'enemigos'] as const;
-type Tienda = (typeof TIENDAS)[number];
+export type Tienda = (typeof TIENDAS)[number];
+
+/**
+ * Lápidas: qué se ha borrado aquí y cuándo.
+ *
+ * Borrar de IndexedDB y ya está funcionaba mientras la aplicación vivía en un solo
+ * dispositivo. Con nube no vale: si el borrado no deja rastro, la siguiente sincronización
+ * se encuentra una ficha que está en el servidor y no está aquí, y la única conclusión
+ * razonable que puede sacar es que es nueva. La ficha borrada resucita.
+ *
+ * La lápida guarda **cuándo** se borró, no sólo que se borró, porque hay que poder
+ * compararlo con la última edición del servidor: si allí se tocó después, gana el servidor.
+ */
+const BORRADOS = 'borrados';
+
+export interface Lapida {
+  /** `tienda:id`, para que dos tiendas puedan usar el mismo id sin pisarse. */
+  clave: string;
+  tienda: Tienda;
+  registroId: string;
+  actualizadoEn: string;
+}
 
 let promesaBD: Promise<IDBDatabase> | null = null;
 
@@ -105,6 +126,9 @@ function abrir(): Promise<IDBDatabase> {
       for (const t of TIENDAS) {
         if (!bd.objectStoreNames.contains(t)) bd.createObjectStore(t, { keyPath: 'id' });
       }
+      if (!bd.objectStoreNames.contains(BORRADOS)) {
+        bd.createObjectStore(BORRADOS, { keyPath: 'clave' });
+      }
     };
     solicitud.onsuccess = () => resolver(solicitud.result);
     solicitud.onerror = () => rechazar(solicitud.error);
@@ -113,7 +137,7 @@ function abrir(): Promise<IDBDatabase> {
 }
 
 function transaccion<T>(
-  tienda: Tienda,
+  tienda: Tienda | typeof BORRADOS,
   modo: IDBTransactionMode,
   fn: (store: IDBObjectStore) => IDBRequest<T>,
 ): Promise<T> {
@@ -132,6 +156,30 @@ function marcar<T extends { actualizadoEn: string }>(registro: T): T {
   return { ...registro, actualizadoEn: new Date().toISOString() };
 }
 
+const clave = (tienda: Tienda, id: string) => `${tienda}:${id}`;
+
+/** Deja constancia de un borrado para que la nube pueda enterarse más tarde. */
+async function ponerLapida(tienda: Tienda, registroId: string): Promise<void> {
+  const lapida: Lapida = {
+    clave: clave(tienda, registroId),
+    tienda,
+    registroId,
+    actualizadoEn: new Date().toISOString(),
+  };
+  await transaccion(BORRADOS, 'readwrite', (s) => s.put(lapida));
+}
+
+/**
+ * Quita la lápida de un registro que vuelve a existir.
+ *
+ * Pasa en dos casos legítimos: se recupera una ficha desde una copia de seguridad con el
+ * mismo id, o baja de la nube porque otro dispositivo la editó después del borrado. Si la
+ * lápida se quedara puesta, la siguiente sincronización volvería a borrarla.
+ */
+async function quitarLapida(tienda: Tienda, registroId: string): Promise<void> {
+  await transaccion(BORRADOS, 'readwrite', (s) => s.delete(clave(tienda, registroId)));
+}
+
 export const almacen = {
   async listarPersonajes(): Promise<Personaje[]> {
     const todos = await transaccion<Personaje[]>('personajes', 'readonly', (s) => s.getAll());
@@ -145,10 +193,12 @@ export const almacen = {
 
   async guardarPersonaje(p: Personaje): Promise<void> {
     await transaccion('personajes', 'readwrite', (s) => s.put(marcar(p)));
+    await quitarLapida('personajes', p.id);
   },
 
   async borrarPersonaje(id: string): Promise<void> {
     await transaccion('personajes', 'readwrite', (s) => s.delete(id));
+    await ponerLapida('personajes', id);
   },
 
   async listarCampanas(): Promise<Campana[]> {
@@ -160,10 +210,12 @@ export const almacen = {
 
   async guardarCampana(c: Campana): Promise<void> {
     await transaccion('campanas', 'readwrite', (s) => s.put(marcar(c)));
+    await quitarLapida('campanas', c.id);
   },
 
   async borrarCampana(id: string): Promise<void> {
     await transaccion('campanas', 'readwrite', (s) => s.delete(id));
+    await ponerLapida('campanas', id);
   },
 
   async listarEnemigos(campanaId: string | null): Promise<Enemigo[]> {
@@ -175,10 +227,43 @@ export const almacen = {
 
   async guardarEnemigo(e: Enemigo): Promise<void> {
     await transaccion('enemigos', 'readwrite', (s) => s.put(marcar(e)));
+    await quitarLapida('enemigos', e.id);
   },
 
   async borrarEnemigo(id: string): Promise<void> {
     await transaccion('enemigos', 'readwrite', (s) => s.delete(id));
+    await ponerLapida('enemigos', id);
+  },
+
+  // ── Lo que usa la sincronización ──────────────────────────────────────────
+  //
+  // Estos métodos existen porque la nube necesita algo que las pantallas no: escribir un
+  // registro **sin tocarle la fecha**. `guardarPersonaje` y compañía llaman a `marcar()`,
+  // que pone `actualizadoEn` a ahora mismo — es lo correcto cuando quien edita es una
+  // persona, y es exactamente lo que no se puede hacer con algo que baja del servidor: le
+  // pondría una fecha más nueva que la del servidor y la siguiente sincronización lo
+  // volvería a subir, en bucle, para siempre.
+
+  /** Escribe un registro tal cual viene, respetando su `actualizadoEn`. */
+  async guardarCrudo(tienda: Tienda, registro: { id: string } & Record<string, unknown>): Promise<void> {
+    await transaccion(tienda, 'readwrite', (s) => s.put(registro));
+    await quitarLapida(tienda, registro.id);
+  },
+
+  /** Borra sin dejar lápida: el borrado ya venía de fuera, no hay que devolvérselo. */
+  async borrarCrudo(tienda: Tienda, id: string): Promise<void> {
+    await transaccion(tienda, 'readwrite', (s) => s.delete(id));
+  },
+
+  /** Todo lo que se ha borrado aquí, para poder comunicárselo a la nube. */
+  async listarLapidas(tienda?: Tienda): Promise<Lapida[]> {
+    const todas = await transaccion<Lapida[]>(BORRADOS, 'readonly', (s) => s.getAll());
+    return tienda ? todas.filter((l) => l.tienda === tienda) : todas;
+  },
+
+  /** Una lápida ya comunicada deja de hacer falta. */
+  async olvidarLapida(tienda: Tienda, registroId: string): Promise<void> {
+    await quitarLapida(tienda, registroId);
   },
 };
 
