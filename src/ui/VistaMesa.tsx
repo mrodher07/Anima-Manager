@@ -229,7 +229,13 @@ export function VistaMesa({
 
       <section className="panel" style={{ marginBottom: 16 }}>
         <h2>Recursos</h2>
-        <div className="rejilla">
+        {/*
+          Los medidores son lo que más se toca en mitad de una partida, y a menudo desde el
+          móvil con una mano. Por eso llevan clase propia en lugar de estilos incrustados:
+          así el CSS puede reordenarlos —cifra y botones en dos filas anchas en el móvil, en
+          columna cuando hay sitio— sin tocar este archivo.
+        */}
+        <div className="medidores">
           {([
             ['Vida', 'pvActuales', pv, ficha.puntosVida.valor, 'vida'],
             ['Cansancio', 'cansancioActual', cansancio, ficha.cansancio.valor, ''],
@@ -238,17 +244,20 @@ export function VistaMesa({
               ? ([['Ki', 'kiActual', ki, ficha.ki.reserva, 'ki']] as const)
               : []),
           ] as const).map(([etiqueta, campo, actual, maximo, clase]) => (
-            <div key={campo} className={`recurso ${clase}`} style={{ border: '1px solid var(--borde)', borderRadius: 'var(--radio-s)', padding: 10 }}>
-              <div className="etiqueta">{etiqueta}</div>
-              <div className="cifra">
-                {actual}<span style={{ fontSize: '0.7rem', color: 'var(--texto-debil)' }}> / {maximo}</span>
+            <div key={campo} className={`medidor ${clase}`}>
+              <div className="lectura">
+                <span className="etiqueta">{etiqueta}</span>
+                <span className="cifra">
+                  {actual}
+                  <span className="maximo"> / {maximo}</span>
+                </span>
               </div>
-              <div style={{ display: 'flex', gap: 4, justifyContent: 'center', marginTop: 6, flexWrap: 'wrap' }}>
+              <div className="pasos">
                 {[-10, -5, -1, 1, 5, 10].map((d) => (
                   <button
                     key={d}
-                    className="accion"
-                    style={{ padding: '3px 7px', fontSize: '0.76rem' }}
+                    className="paso"
+                    aria-label={`${d > 0 ? 'Subir' : 'Bajar'} ${etiqueta} ${Math.abs(d)}`}
                     onClick={() => ajustar(campo, d, maximo)}
                   >
                     {d > 0 ? `+${d}` : d}

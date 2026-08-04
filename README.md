@@ -155,6 +155,16 @@ editarla.
 escribir sus colores. Una prueba comprueba que ningún tema se deje variables sin definir, y
 el contraste está verificado en los cuatro (texto por encima de 11:1).
 
+**En el móvil, lo que se arrastra es la tira, nunca la página.** Es la regla que ordena todo
+el diseño responsive. Once secciones no caben en la cabecera de un teléfono: antes se ponían
+en una fila que no se partía, y el resultado era que la página entera medía mil píxeles en
+una pantalla de 390 —se veía un tercio, había que arrastrar de lado para leer una frase, y
+las últimas pestañas quedaban fuera del alcance del dedo. Ahora la navegación baja a su
+propia fila y se desplaza dentro de sí misma, con un difuminado en el borde que avisa de que
+hay más. Lo mismo con las pestañas del editor y con las tablas anchas. Nada en la aplicación
+hace que la página se pueda mover a lo ancho, y hay una comprobación con navegador de verdad
+que lo verifica en cuatro tamaños (375, 390, 820 y 1440) y en las once secciones.
+
 **Los límites avisan, no bloquean.** Igual que la ficha de Excel: si te pasas de PD o de
 Puntos de Creación sale un aviso, pero el cálculo sigue. Cualquier valor derivado se puede
 sobrescribir a mano sin perder el calculado.

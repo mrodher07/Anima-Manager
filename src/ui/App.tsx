@@ -136,6 +136,14 @@ export function App() {
                 {s.texto}
               </button>
             ))}
+        </nav>
+
+        {/*
+          El tema y el estado de la nube van fuera de la tira de secciones. En el móvil esa
+          tira se arrastra de lado, y meter aquí cosas que no son secciones obligaría a
+          buscarlas arrastrando: se quedan arriba, siempre en el mismo sitio.
+        */}
+        <div className="acciones-cabecera">
           {cuenta.estado === 'dentro' && (
             <button
               className="estado-nube"
@@ -158,7 +166,7 @@ export function App() {
               void cuenta.guardarPreferencia('tema', t);
             }}
           />
-        </nav>
+        </div>
       </header>
 
       <main className="contenido">
