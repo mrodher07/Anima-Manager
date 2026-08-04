@@ -100,16 +100,27 @@ export function App() {
 
   const abrir = (id: string) => { setAbiertoId(id); setSeccion('ficha'); };
 
+  /*
+   * El orden va de dentro afuera, y en el móvil eso importa: la tira se arrastra, así que
+   * lo primero es lo que está al alcance sin mover el dedo.
+   *
+   *   1. Tu personaje: la lista y sus tres vistas.
+   *   2. La partida: la campaña, lo que os ataca, los mapas y las tablas de consulta.
+   *   3. Los ajustes: lo que se toca una vez y ya.
+   *
+   * «Campañas» estaba la novena, detrás de Galería y Contenido propio, cuando es de lo que
+   * más se abre; «Lo sobrenatural» iba la sexta siendo una tabla de consulta.
+   */
   const secciones: { id: Seccion; texto: string; requierePersonaje?: boolean }[] = [
     { id: 'personajes', texto: 'Personajes' },
     { id: 'ficha', texto: 'Ficha', requierePersonaje: true },
     { id: 'editor', texto: 'Editar', requierePersonaje: true },
     { id: 'mesa', texto: 'Mesa', requierePersonaje: true },
-    { id: 'bestiario', texto: 'Bestiario' },
-    { id: 'arcana', texto: 'Lo sobrenatural' },
-    { id: 'galeria', texto: 'Galería' },
-    { id: 'propio', texto: 'Contenido propio' },
     { id: 'campanas', texto: 'Campañas' },
+    { id: 'bestiario', texto: 'Bestiario' },
+    { id: 'galeria', texto: 'Galería' },
+    { id: 'arcana', texto: 'Lo sobrenatural' },
+    { id: 'propio', texto: 'Contenido propio' },
     { id: 'reglas', texto: 'Reglas' },
     { id: 'copia', texto: 'Copia de seguridad' },
     { id: 'cuenta', texto: 'Cuenta' },

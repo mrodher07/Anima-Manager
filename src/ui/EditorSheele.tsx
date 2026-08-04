@@ -11,6 +11,7 @@ import {
   type TipoSheele,
 } from '../motor/sheele';
 import type { EntradaTabla } from '../datos/tipos';
+import { Seccion } from './Seccion';
 
 const etiqueta = {
   fontSize: '0.68rem',
@@ -96,13 +97,18 @@ export function EditorSheele({
 
   return (
     <>
-      <section className="panel" style={{ marginBottom: 16 }}>
-        <h2>Sheele · Espíritu del Alma</h2>
-        <p style={{ color: 'var(--texto-tenue)', fontSize: '0.86rem', marginTop: 0 }}>
-          Una Sheele <strong>no se calcula como una criatura normal</strong>: no tiene PD ni
-          desarrolla habilidades, y casi todos sus valores salen de su señor. Sus PV son el
-          doble de tu presencia, su turno el tuyo desarmado, y comparte tus resistencias.
-        </p>
+      <Seccion
+        titulo="Sheele · Espíritu del Alma"
+        resumen={e.tipo || 'sin Sheele'}
+        abierta={Boolean(e.tipo)}
+        ayuda={
+          <>
+            Una Sheele <strong>no se calcula como una criatura normal</strong>: no tiene PD ni
+            desarrolla habilidades, y casi todos sus valores salen de su señor. Sus PV son el
+            doble de tu presencia, su turno el tuyo desarmado, y comparte tus resistencias.
+          </>
+        }
+      >
 
         <div className="rejilla">
           <div className="campo">
@@ -174,7 +180,7 @@ export function EditorSheele({
             )}
           </>
         )}
-      </section>
+      </Seccion>
 
       {e.tipo && (
         <>

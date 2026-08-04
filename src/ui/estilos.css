@@ -135,13 +135,31 @@ body {
   background:
     var(--velo),
     linear-gradient(180deg, var(--fondo-2), var(--fondo) 40%);
-  background-attachment: fixed;
+  /*
+   * `background-attachment: fixed` quedaba muy bien y era lo que hacía que bajar por una
+   * ficha larga fuera a tirones: obliga al navegador a repintar el degradado entero en
+   * cada fotograma del desplazamiento, y en un móvil eso se nota enseguida. Se fija por
+   * altura en su lugar, que da el mismo efecto y no cuesta nada.
+   */
+  background-repeat: no-repeat;
+  background-size: 100% 100vh;
   color: var(--texto);
   font-family: var(--sans);
   font-size: 15px;
   line-height: 1.5;
   min-height: 100vh;
   -webkit-text-size-adjust: 100%;
+}
+
+/*
+ * Los paneles que quedan fuera de la pantalla no hace falta maquetarlos hasta que se
+ * acercan. `contain-intrinsic-size` le da al navegador una altura aproximada para que la
+ * barra de desplazamiento no dé saltos mientras los va midiendo de verdad.
+ */
+.contenido > .panel,
+.contenido > * > .panel {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 400px;
 }
 
 h1, h2, h3 { font-family: var(--serif); font-weight: 600; letter-spacing: 0.01em; margin: 0; }
@@ -259,6 +277,68 @@ h3 { font-size: clamp(0.98rem, 0.9rem + 0.4vw, 1.12rem); }
   padding-bottom: 8px;
   border-bottom: 1px solid var(--borde-suave);
 }
+
+/*
+ * Panel plegable.
+ *
+ * El `<summary>` imita al `<h2>` de un panel normal para que abiertos y cerrados se vean
+ * como lo mismo: si el plegable tuviera otro aspecto, parecería otro tipo de contenido en
+ * vez de la misma caja con la tapa puesta.
+ */
+/* El hueco lo pone la clase, no un `style` en cada uso: antes cada panel del editor
+   llevaba su propio `marginBottom: 16` incrustado y el último se olvidaba. */
+.panel.plegable { padding: 0; margin-bottom: 16px; }
+.panel.plegable > summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 18px;
+  font-family: var(--serif);
+  font-size: 0.78rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--oro);
+  /* 44 px de alto: es lo que se pulsa para abrir, y se pulsa mucho. */
+  min-height: 44px;
+}
+.panel.plegable > summary::-webkit-details-marker { display: none; }
+.panel.plegable > summary::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  flex: none;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: rotate(-45deg);
+  margin-left: 2px;
+  transition: transform 0.15s;
+}
+.panel.plegable[open] > summary::before { transform: rotate(45deg); }
+.panel.plegable[open] > summary { border-bottom: 1px solid var(--borde-suave); }
+.panel.plegable > summary:hover { color: var(--oro-claro); }
+.panel.plegable > summary .titulo { flex: 1; }
+/* El resumen es lo que evita tener que abrir para saber si hay algo dentro. */
+.panel.plegable > summary .resumen {
+  font-family: var(--sans);
+  font-size: 0.76rem;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--texto-debil);
+  text-align: right;
+}
+.panel.plegable > *:not(summary) { margin-left: 18px; margin-right: 18px; }
+.panel.plegable > *:not(summary):last-child { margin-bottom: 16px; }
+.panel.plegable > .ayuda {
+  color: var(--texto-tenue);
+  font-size: 0.86rem;
+  margin-top: 14px;
+  margin-bottom: 14px;
+}
+
+/* Un panel que sólo lleva una cuenta: la de Puntos de Creación mientras eliges ventajas. */
+.panel.marcador { padding: 12px 18px; margin-bottom: 16px; }
 
 .rejilla { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
 
@@ -541,7 +621,16 @@ textarea.formula { font-family: var(--mono); font-size: 0.84rem; min-height: 62p
   .rejilla { gap: 12px; }
 
   /* La escala tipográfica del escritorio deja títulos enormes en una pantalla estrecha. */
-  .cabecera-ficha h1 { font-size: 1.5rem; }
+  /*
+   * El nombre del personaje se repite encima de Ficha, Editar y Mesa. En el escritorio es
+   * un buen titular; en un móvil son 150 px de los 844 que hay, cada vez que se cambia de
+   * pestaña, y lo que se busca —el formulario— empieza más abajo del pliegue. Aquí se
+   * queda como una línea de contexto, que es para lo que sirve: ya sabes de quién es la
+   * ficha, sólo necesitas comprobarlo de reojo.
+   */
+  .cabecera-ficha { gap: 10px; margin-bottom: 12px; }
+  .cabecera-ficha h1 { font-size: 1.15rem; margin-bottom: 0 !important; }
+  .cabecera-ficha p { font-size: 0.8rem; }
   .vacio { padding: 32px 14px; }
   .vacio h2 { font-size: 1.15rem; }
 
