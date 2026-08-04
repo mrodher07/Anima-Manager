@@ -330,11 +330,46 @@ h3 { font-size: clamp(0.98rem, 0.9rem + 0.4vw, 1.12rem); }
 }
 .panel.plegable > *:not(summary) { margin-left: 18px; margin-right: 18px; }
 .panel.plegable > *:not(summary):last-child { margin-bottom: 16px; }
-.panel.plegable > .ayuda {
+/*
+ * La explicación de una sección, plegada.
+ *
+ * Deliberadamente discreta: es una línea que se ve si se busca y se ignora si no. Los
+ * textos hacen falta —Anima tiene reglas que no se adivinan— pero se leen una vez, y
+ * delante de los controles se convierten en diez líneas que saltarse cada vez.
+ */
+.ayuda-plegable { margin: 12px 0; }
+.ayuda-plegable > summary {
+  list-style: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.78rem;
+  color: var(--texto-debil);
+  padding: 6px 0;
+  user-select: none;
+}
+.ayuda-plegable > summary::-webkit-details-marker { display: none; }
+.ayuda-plegable > summary::before {
+  content: '?';
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 17px;
+  height: 17px;
+  flex: none;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  font-size: 0.68rem;
+  line-height: 1;
+}
+.ayuda-plegable > summary:hover { color: var(--texto-tenue); }
+.ayuda-plegable > div {
   color: var(--texto-tenue);
   font-size: 0.86rem;
-  margin-top: 14px;
-  margin-bottom: 14px;
+  padding: 4px 0 4px 12px;
+  border-left: 2px solid var(--borde);
+  margin-top: 4px;
 }
 
 /* Un panel que sólo lleva una cuenta: la de Puntos de Creación mientras eliges ventajas. */
@@ -425,6 +460,79 @@ h3 { font-size: clamp(0.98rem, 0.9rem + 0.4vw, 1.12rem); }
 .medidor .paso:nth-child(-n + 3):hover { border-color: var(--sangre-claro); color: var(--sangre-claro); }
 .medidor .paso:nth-child(n + 4):hover { border-color: var(--verde); color: var(--texto); }
 .medidor .paso:active { transform: translateY(1px); }
+
+/*
+ * Editor de características.
+ *
+ * Dos columnas en un móvil, cuatro en cuanto hay sitio. El valor comprado es lo que se
+ * escribe y va grande; el total y el bono son consecuencia y van debajo, en pequeño, pero
+ * visibles: mientras repartes puntos lo que miras es el bono, no el número que tecleas.
+ */
+/*
+ * Cuatro columnas y no las que quepan: `auto-fit` metía siete en un portátil y dejaba la
+ * octava sola en la fila de abajo. Ocho características en 4×2 es como están en la ficha
+ * de Excel, y dos filas iguales se leen mejor que una y pico.
+ */
+.caracteristicas-editor {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+@media (min-width: 560px) {
+  .caracteristicas-editor { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+
+.car-editor {
+  background: var(--fondo-2);
+  border: 1px solid var(--borde-suave);
+  border-radius: var(--radio-s);
+  padding: 10px;
+}
+.car-editor > label {
+  display: block;
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--texto-debil);
+  margin-bottom: 6px;
+}
+.car-editor .mando { display: flex; align-items: stretch; gap: 6px; }
+.car-editor .mando input {
+  text-align: center;
+  font-family: var(--serif);
+  font-size: 1.3rem;
+  padding: 4px;
+  /* Las flechitas del navegador estorban: hay botones de verdad al lado. */
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+.car-editor .mando input::-webkit-outer-spin-button,
+.car-editor .mando input::-webkit-inner-spin-button { appearance: none; margin: 0; }
+.car-editor .paso {
+  flex: none;
+  width: 38px;
+  background: var(--panel-alto);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio-s);
+  color: var(--texto-tenue);
+  font: inherit;
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s, transform 0.06s;
+}
+.car-editor .paso:hover { border-color: var(--oro); color: var(--oro-claro); }
+.car-editor .paso:active { transform: translateY(1px); }
+.car-editor .derivado {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 10px;
+  margin: 8px 0 0;
+  font-size: 0.74rem;
+  color: var(--texto-debil);
+}
+.car-editor .derivado strong { color: var(--texto); font-variant-numeric: tabular-nums; }
+.car-editor .derivado .raza { color: var(--arcano-claro); }
 
 /* Características */
 .caracteristicas { display: grid; grid-template-columns: repeat(auto-fit, minmax(78px, 1fr)); gap: 8px; }
@@ -763,8 +871,11 @@ button.accion.peligro:hover { background: var(--sangre); color: #fff; }
   font-size: 0.86rem;
 }
 
-details { margin-bottom: 10px; }
-details > summary {
+/* Los `<details>` sueltos —los desplegables dentro de una tabla de habilidades, por
+   ejemplo—. Se excluyen los dos que tienen aspecto propio: si no, esta regla los pisaría
+   por venir después en el archivo, y su cabecera saldría en versalitas doradas. */
+details:not(.plegable):not(.ayuda-plegable) { margin-bottom: 10px; }
+details:not(.plegable):not(.ayuda-plegable) > summary {
   cursor: pointer;
   padding: 7px 0;
   font-size: 0.75rem;
@@ -773,7 +884,7 @@ details > summary {
   color: var(--oro);
   border-bottom: 1px solid var(--borde-suave);
 }
-details > summary:hover { color: var(--oro-claro); }
+details:not(.plegable):not(.ayuda-plegable) > summary:hover { color: var(--oro-claro); }
 
 .registro { list-style: none; margin: 0; padding: 0; display: grid; gap: 7px; }
 .registro li {

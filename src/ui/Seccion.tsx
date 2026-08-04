@@ -10,12 +10,29 @@ export function cuenta(n: number, singular: string, plural: string, vacio = 'nin
 }
 
 /**
+ * La explicación de una sección, plegada.
+ *
+ * Los textos de este editor están bien escritos y hacen falta —Anima tiene reglas que no
+ * se adivinan—, pero se leen **una vez**. Puestos delante de los controles, a partir de la
+ * segunda visita son diez líneas que hay que saltarse cada vez para llegar a lo que vienes
+ * a hacer. Aquí ocupan una línea hasta que alguien pregunta.
+ */
+export function Ayuda({ children }: { children: ReactNode }) {
+  return (
+    <details className="ayuda-plegable">
+      <summary>Cómo funciona</summary>
+      <div>{children}</div>
+    </details>
+  );
+}
+
+/**
  * Un panel que se puede plegar.
  *
  * Nace de un problema concreto: al crear un personaje nuevo, la pestaña «Poderes» pintaba
  * cinco paneles seguidos —Teorema, Sheele, Metamagia, Conjuros, Psíquicos— cada uno con su
  * párrafo de explicación, y había que recorrer más de tres mil píxeles aunque el personaje
- * no tuviera ni una gota de magia. Lo mismo en Ventajas y en Equipo.
+ * no tuviera ni una gota de magia. Lo mismo en Ventajas, en Equipo y en Ki.
  *
  * La solución es la de siempre y no hace falta inventar nada: `<details>` y `<summary>`,
  * que el navegador ya sabe abrir, cerrar y leer en voz alta. Sin estado de React, sin
@@ -36,7 +53,7 @@ export function Seccion({
   /** Lo que se lee sin abrir: «3 conjuros», «sin armadura». */
   resumen?: ReactNode;
   abierta?: boolean;
-  /** La explicación larga. Se queda dentro, para que no compita con los controles. */
+  /** La explicación larga. Va plegada, detrás de «Cómo funciona». */
   ayuda?: ReactNode;
   children: ReactNode;
 }) {
@@ -46,7 +63,7 @@ export function Seccion({
         <span className="titulo">{titulo}</span>
         {resumen !== undefined && <span className="resumen">{resumen}</span>}
       </summary>
-      {ayuda && <p className="ayuda">{ayuda}</p>}
+      {ayuda && <Ayuda>{ayuda}</Ayuda>}
       {children}
     </details>
   );
