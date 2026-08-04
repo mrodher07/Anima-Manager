@@ -33,6 +33,11 @@
 
   /* Capa decorativa del fondo; cada tema la suya. */
   --velo: radial-gradient(1200px 600px at 50% -10%, rgba(109, 91, 168, 0.13), transparent 60%);
+
+  /* Lo que mide la cabecera pegada arriba. La barra de recursos se pega justo debajo, y
+     en el móvil la cabecera crece porque la navegación baja a su propia fila: con un
+     número a mano habría que acordarse de cambiarlo en dos sitios, y no se cambiaría. */
+  --alto-cabecera: 57px;
 }
 
 /* ── Claro: pergamino, para jugar a plena luz ── */
@@ -141,6 +146,28 @@ body {
 
 h1, h2, h3 { font-family: var(--serif); font-weight: 600; letter-spacing: 0.01em; margin: 0; }
 
+/*
+ * Escala tipográfica fluida.
+ *
+ * `clamp` en vez de saltos por media query: un titular que pasa de 2 rem a 1,5 rem justo
+ * al cruzar los 760 px se nota como un salto, y entre medias —tablets, móviles apaisados,
+ * ventanas a media pantalla— siempre hay un ancho donde el tamaño elegido queda mal. Así
+ * el texto crece con la pantalla en lugar de a escalones.
+ */
+h1 { font-size: clamp(1.45rem, 1.1rem + 1.7vw, 2rem); line-height: 1.15; }
+h2 { font-size: clamp(1.1rem, 0.95rem + 0.7vw, 1.35rem); }
+h3 { font-size: clamp(0.98rem, 0.9rem + 0.4vw, 1.12rem); }
+
+/*
+ * El foco del teclado tiene que verse en los cuatro temas. `:focus-visible` y no `:focus`
+ * para que no salga el anillo al pulsar con el dedo o el ratón, que es cuando molesta.
+ */
+:where(button, a, input, select, textarea, [tabindex]):focus-visible {
+  outline: 2px solid var(--arcano-claro);
+  outline-offset: 2px;
+  border-radius: var(--radio-s);
+}
+
 /* ─────────────────────────── Estructura ─────────────────────────── */
 
 .app { display: flex; flex-direction: column; min-height: 100vh; }
@@ -151,8 +178,11 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 600; letter-spacing: 0.01em
   z-index: 20;
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 12px;
   padding: 10px 18px;
+  /* En móviles con muesca, sin esto el logo se mete debajo del sensor. */
+  padding-left: max(18px, env(safe-area-inset-left));
+  padding-right: max(18px, env(safe-area-inset-right));
   background: color-mix(in srgb, var(--fondo) 88%, transparent);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--borde);
@@ -163,20 +193,30 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 600; letter-spacing: 0.01em
   font-size: 1.15rem;
   color: var(--oro-claro);
   white-space: nowrap;
+  /* También es el botón de «volver a la lista», así que tiene que poder pulsarse. */
+  padding: 4px 0;
+  min-height: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 .marca span { color: var(--texto-tenue); font-size: 0.8rem; display: block; letter-spacing: 0.14em; text-transform: uppercase; }
 
-.nav { display: flex; gap: 4px; margin-left: auto; flex-wrap: wrap; }
+.nav { display: flex; gap: 4px; margin-left: auto; flex-wrap: wrap; align-items: center; }
+
+.acciones-cabecera { display: flex; align-items: center; gap: 6px; }
 
 .nav button {
   background: transparent;
   border: 1px solid transparent;
   color: var(--texto-tenue);
-  padding: 7px 13px;
+  /* Once secciones caben en una fila en un portátil normal con este acolchado; con dos o
+     tres píxeles más por lado se parten en dos filas desiguales y la cabecera se descuadra. */
+  padding: 7px 11px;
   border-radius: var(--radio-s);
   cursor: pointer;
   font: inherit;
-  font-size: 0.9rem;
+  font-size: 0.875rem;
   transition: color 0.15s, background 0.15s, border-color 0.15s;
 }
 .nav button:hover { color: var(--texto); background: var(--panel); }
@@ -184,13 +224,19 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 600; letter-spacing: 0.01em
 
 /* Estado de la nube: discreto a propósito. Sólo tiene que llamar la atención cuando algo
    va mal; el resto del tiempo es una comprobación de reojo, no un elemento de la interfaz. */
-.nav .estado-nube {
-  font-size: 0.78rem;
+.estado-nube {
+  background: transparent;
+  border: 1px solid var(--borde-suave);
+  border-radius: 999px;
   color: var(--texto-debil);
-  border-color: var(--borde-tenue, var(--borde));
-  padding: 5px 10px;
+  font: inherit;
+  font-size: 0.75rem;
+  padding: 5px 11px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color 0.15s, border-color 0.15s;
 }
-.nav .estado-nube:hover { color: var(--texto-tenue); }
+.estado-nube:hover { color: var(--texto-tenue); border-color: var(--borde); }
 
 .contenido { flex: 1; width: 100%; max-width: 1180px; margin: 0 auto; padding: 22px 18px 64px; }
 
@@ -219,7 +265,7 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 600; letter-spacing: 0.01em
 /* Barra de recursos siempre visible durante la partida. */
 .recursos {
   position: sticky;
-  top: 57px;
+  top: var(--alto-cabecera);
   z-index: 15;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(96px, 1fr));
@@ -242,6 +288,63 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 600; letter-spacing: 0.01em
 .recurso.vida .cifra { color: var(--sangre-claro); }
 .recurso.zeon .cifra { color: var(--arcano-claro); }
 .recurso.ki .cifra { color: var(--oro-claro); }
+
+/*
+ * Medidores de la partida (vida, cansancio, zeón, ki).
+ *
+ * Es el control que más se usa jugando y el que peor estaba en el móvil: cada recurso
+ * ocupaba una tarjeta de pantalla completa con seis botones minúsculos en medio, así que
+ * ajustar la vida después de un golpe pedía dos gestos de arrastre. Ahora la lectura va en
+ * una fila y los seis pasos en otra, ocupando todo el ancho: cabe todo sin arrastrar y cada
+ * botón es lo bastante grande para acertar con el pulgar.
+ */
+.medidores { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+
+.medidor {
+  border: 1px solid var(--borde);
+  border-radius: var(--radio-s);
+  padding: 10px 12px;
+  background: var(--fondo-2);
+}
+
+.medidor .lectura {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.medidor .etiqueta {
+  font-size: 0.66rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--texto-debil);
+}
+.medidor .cifra { font-family: var(--serif); font-size: 1.6rem; line-height: 1; color: var(--texto); }
+.medidor .maximo { font-size: 0.72rem; color: var(--texto-debil); font-family: var(--sans); }
+.medidor.vida .cifra { color: var(--sangre-claro); }
+.medidor.zeon .cifra { color: var(--arcano-claro); }
+.medidor.ki .cifra { color: var(--oro-claro); }
+
+/* Seis pasos a partes iguales: la fila entera es la zona de pulsación. */
+.medidor .pasos { display: grid; grid-template-columns: repeat(6, 1fr); gap: 4px; }
+
+.medidor .paso {
+  background: var(--panel-alto);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio-s);
+  color: var(--texto);
+  font: inherit;
+  font-size: 0.8rem;
+  font-variant-numeric: tabular-nums;
+  min-height: 36px;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s, transform 0.06s;
+}
+/* Quitar y poner se distinguen de un vistazo: en combate no da tiempo a leer el signo. */
+.medidor .paso:nth-child(-n + 3):hover { border-color: var(--sangre-claro); color: var(--sangre-claro); }
+.medidor .paso:nth-child(n + 4):hover { border-color: var(--verde); color: var(--texto); }
+.medidor .paso:active { transform: translateY(1px); }
 
 /* Características */
 .caracteristicas { display: grid; grid-template-columns: repeat(auto-fit, minmax(78px, 1fr)); gap: 8px; }
@@ -299,12 +402,22 @@ button.accion {
   cursor: pointer;
   font: inherit;
   font-size: 0.88rem;
-  transition: border-color 0.15s, color 0.15s;
+  /* Que todos midan lo mismo aunque uno lleve un icono y otro no: una fila de botones de
+     alturas distintas es lo primero que delata una interfaz mal rematada. */
+  min-height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: border-color 0.15s, color 0.15s, background 0.15s, transform 0.06s;
 }
 button.accion:hover { border-color: var(--oro); color: var(--oro-claro); }
+/* En el móvil no hay `hover`: el único aviso de que el botón ha respondido es que se
+   hunde un poco al pulsarlo. */
+button.accion:active { transform: translateY(1px); }
 button.accion.primaria { background: var(--oro); border-color: var(--oro); color: #17140a; font-weight: 600; }
 button.accion.primaria:hover { background: var(--oro-claro); color: #17140a; }
-button.accion:disabled { opacity: 0.45; cursor: not-allowed; }
+button.accion:disabled { opacity: 0.45; cursor: not-allowed; transform: none; }
 
 input, select, textarea {
   background: var(--fondo-2);
@@ -348,15 +461,150 @@ textarea.formula { font-family: var(--mono); font-size: 0.84rem; min-height: 62p
 
 .pie { text-align: center; padding: 20px; color: var(--texto-debil); font-size: 0.78rem; }
 
-@media (max-width: 620px) {
-  .cabecera { padding: 9px 12px; gap: 8px; }
-  .marca { font-size: 0.95rem; }
-  .marca span { font-size: 0.62rem; letter-spacing: 0.1em; }
-  .nav { gap: 2px; flex-wrap: nowrap; }
-  .nav button { padding: 6px 9px; font-size: 0.8rem; }
-  .contenido { padding: 16px 12px 56px; }
-  .recursos { top: 53px; }
-  .recurso .cifra { font-size: 1.28rem; }
+/* ─────────────────────────── Móvil ───────────────────────────
+ *
+ * Once secciones no caben en la cabecera de un móvil, y la versión anterior las ponía en
+ * una sola fila sin permitir que se partieran. El efecto era que **la página entera medía
+ * 1.000 px** en una pantalla de 390: se veía un tercio, había que arrastrar de lado para
+ * leer, y las últimas pestañas quedaban directamente fuera del alcance del dedo.
+ *
+ * La regla que arregla eso: la navegación baja a su propia fila, ocupa todo el ancho y
+ * **se desplaza dentro de sí misma**. Lo que se mueve es la tira de pestañas, no la
+ * página. El resto son consecuencias de tener por fin el ancho completo para el contenido.
+ */
+@media (max-width: 760px) {
+  :root { --alto-cabecera: 98px; }
+
+  .cabecera {
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px 10px;
+    padding: 8px 12px 0;
+  }
+
+  .marca { font-size: 1rem; }
+  .marca span { font-size: 0.6rem; letter-spacing: 0.1em; }
+
+  /* El selector de tema y el estado de la nube se quedan arriba, a la derecha de la marca. */
+  .acciones-cabecera { margin-left: auto; }
+
+  .nav {
+    /* `order` la baja de fila sin tocar el HTML, y `width: 100%` fuerza el salto. */
+    order: 3;
+    width: 100%;
+    margin-left: 0;
+    gap: 2px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    /* Sin esto, un hijo de flex se niega a encoger y vuelve a estirar la página. */
+    min-width: 0;
+    /* Que la tira llegue hasta el borde: da sensación de que hay más y se puede arrastrar. */
+    margin-inline: -12px;
+    padding: 2px 12px 6px;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+    /* El difuminado del borde derecho es lo que **dice** que hay más pestañas. Sin él, la
+       tira parece que se acaba justo donde se corta la pantalla y nadie la arrastra. */
+    mask-image: linear-gradient(to right, #000 calc(100% - 28px), transparent);
+  }
+  .nav::-webkit-scrollbar { display: none; }
+
+  .nav button {
+    flex: none;
+    /* 40 px de alto: por debajo de eso se falla al pulsar con el pulgar. */
+    padding: 10px 13px;
+    font-size: 0.84rem;
+    white-space: nowrap;
+    scroll-snap-align: start;
+  }
+  /* La pestaña activa se marca con una línea abajo, no sólo con el fondo: en una tira que
+     se arrastra hay que poder ver dónde estás de reojo. */
+  .nav button[aria-current='page'] {
+    background: transparent;
+    border-color: transparent;
+    box-shadow: inset 0 -2px 0 var(--oro);
+    border-radius: 0;
+  }
+
+  .contenido {
+    padding: 14px 12px 56px;
+    padding-left: max(12px, env(safe-area-inset-left));
+    padding-right: max(12px, env(safe-area-inset-right));
+    padding-bottom: calc(56px + env(safe-area-inset-bottom));
+  }
+
+  /* Menos aire lateral en los paneles: en 390 px, 18 px por lado son 36 px que le faltan
+     al texto, y se nota en cada línea que se parte antes de tiempo. */
+  .panel { padding: 14px 12px; border-radius: 10px; }
+  .rejilla { gap: 12px; }
+
+  /* La escala tipográfica del escritorio deja títulos enormes en una pantalla estrecha. */
+  .cabecera-ficha h1 { font-size: 1.5rem; }
+  .vacio { padding: 32px 14px; }
+  .vacio h2 { font-size: 1.15rem; }
+
+  .recursos { padding: 8px; gap: 6px; grid-template-columns: repeat(auto-fit, minmax(84px, 1fr)); }
+  .recurso .cifra { font-size: 1.3rem; }
+
+  /* Un medidor por fila, a todo lo ancho: los seis pasos salen de ~52 px cada uno, que es
+     lo mínimo para pulsar sin mirar. */
+  .medidores { grid-template-columns: 1fr; gap: 8px; }
+  .medidor .paso { min-height: 40px; font-size: 0.84rem; }
+
+  .caracteristicas { gap: 6px; grid-template-columns: repeat(auto-fit, minmax(70px, 1fr)); }
+  .caracteristica { padding: 7px 2px; }
+  .caracteristica .valor { font-size: 1.4rem; }
+
+  /* Botones cómodos de pulsar. No se estiran a toda la fila: un botón secundario a lo
+     ancho de la pantalla pesa más de lo que vale y compite con la acción principal. */
+  button.accion { padding: 11px 16px; font-size: 0.9rem; }
+  .acciones-regla { gap: 8px; }
+
+  /* iOS hace zoom al enfocar un campo con letra menor de 16 px, y al salir deja la página
+     descolocada. Poner justo 16 px lo evita sin tocar el diseño. */
+  input, select, textarea { font-size: 16px; padding: 10px 11px; }
+  .campo { margin-bottom: 14px; }
+
+  table { font-size: 0.84rem; }
+  th, td { padding: 7px 6px; }
+
+  .retrato-mini { width: 52px; height: 70px; }
+  .pie { padding: 16px 12px; }
+}
+
+/* Pantallas muy estrechas (iPhone SE y compañía). */
+@media (max-width: 380px) {
+  .contenido { padding: 12px 10px 48px; }
+  .panel { padding: 12px 10px; }
+  /* Las tiras que se salen del panel para llegar al borde tienen que salirse **justo** lo
+     que mide el hueco de este tamaño, o vuelven a estirar la página. */
+  .nav { margin-inline: -10px; padding-inline: 10px; }
+  .acciones-regla > button.accion { min-width: 100%; }
+}
+
+/* ── Tablas: que se arrastren ellas, no la página ──
+ *
+ * Una tabla de cinco columnas no cabe en 390 px por mucho que se aprieten las celdas. La
+ * salida honesta es dejar que se arrastre de lado, pero **dentro de su caja**: el fallo
+ * que se acaba de arreglar en la navegación es exactamente el mismo que provocaría una
+ * tabla ancha suelta en la página. */
+.panel { max-width: 100%; }
+.tabla-scroll,
+.panel > table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+/* `display: block` en la tabla rompe el reparto de columnas, así que se le devuelve por
+   dentro con una tabla de ancho mínimo el del contenedor. */
+.panel > table > thead,
+.panel > table > tbody {
+  display: table;
+  width: 100%;
+  min-width: max-content;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -387,6 +635,29 @@ button.marca {
 }
 .pestanas button:hover { color: var(--texto); }
 .pestanas button[aria-current='page'] { color: var(--oro-claro); border-bottom-color: var(--oro); }
+
+/* Las pestañas del editor, igual que la navegación principal: en tres filas se comían
+   media pantalla antes de enseñar un solo campo. Va aquí, justo detrás de la regla que
+   corrige, y no arriba con el resto del móvil: si no, la declaración `flex-wrap: wrap` de
+   más abajo ganaría por orden y esto no haría nada. */
+@media (max-width: 760px) {
+  .pestanas {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    min-width: 0;
+    margin-inline: -12px;
+    padding-inline: 12px;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+    mask-image: linear-gradient(to right, #000 calc(100% - 24px), transparent);
+  }
+  .pestanas::-webkit-scrollbar { display: none; }
+  .pestanas button { flex: none; white-space: nowrap; padding: 10px 12px; }
+}
+@media (max-width: 380px) {
+  .pestanas { margin-inline: -10px; padding-inline: 10px; }
+}
 
 .tarjeta h3 { font-size: 1.1rem; margin-bottom: 2px; }
 .tarjeta .subtitulo { color: var(--texto-tenue); font-size: 0.85rem; margin: 0 0 12px; }
@@ -546,8 +817,32 @@ input[type='checkbox'] { accent-color: var(--oro); }
 /* ─────────────────────── Selector de tema ─────────────────────── */
 
 .selector-tema { position: relative; }
+/* Cuando el nombre del tema se esconde, el botón se queda en un icono suelto de 21 px:
+   demasiado pequeño para acertar con el dedo. El mínimo le da cuerpo aunque esté vacío. */
+.selector-tema > button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 38px;
+  min-width: 38px;
+  padding: 6px 10px;
+  border-radius: var(--radio-s);
+  /* Los colores hay que declararlos aquí: este botón vivía dentro de `.nav` y heredaba su
+     estilo; al sacarlo de la tira de secciones se quedaba con el gris del navegador. */
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--texto-tenue);
+  font: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: color 0.15s, background 0.15s, border-color 0.15s;
+}
+.selector-tema > button:hover { border-color: var(--borde); background: var(--panel); color: var(--texto); }
 .selector-tema > button .nombre-tema { margin-left: 5px; }
-@media (max-width: 900px) {
+/* El nombre del tema se esconde antes de lo que parecería necesario: los ~55 px que ocupa
+   son justo los que le faltan a la fila de secciones para no partirse en dos en un portátil
+   de 1440. El icono con su `title` dice lo mismo y no descuadra la cabecera. */
+@media (max-width: 1500px) {
   .selector-tema > button .nombre-tema { display: none; }
 }
 
