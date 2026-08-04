@@ -67,7 +67,7 @@ sigue igual.
 ### Otros comandos
 
 ```bash
-npm test         # 481 pruebas del motor de reglas y la sincronización
+npm test         # 486 pruebas del motor de reglas y la sincronización
 npm run build    # compilar (incluye la comprobación de tipos)
 ```
 
@@ -78,12 +78,12 @@ npm run build    # compilar (incluye la comprobación de tipos)
 | **Personajes** | Lista de fichas, crear, exportar e importar en JSON y en Excel |
 | **Ficha** | Vista de consulta con recursos, características, resistencias, combate y secundarias |
 | **Editar** | Identidad, características, ventajas, habilidades, equipo y poderes |
-| **Mesa** | Jugar: gastar recursos, tirar iniciativa, resolver ataques, Combate de Masas |
+| **Mesa** | Jugar: gastar recursos, tirar iniciativa, resolver ataques, Combate de Masas; el registro de tiradas se guarda |
 | **Bestiario** | Fichas de enemigo con imagen; 90 criaturas importables de los manuales |
 | **Lo sobrenatural** | Invocaciones, Encarnaciones, Teoremas, Nodos, rituales y grimorios, con sus calculadoras |
 | **Contenido propio** | Las 26 colecciones del catálogo, personalizables por tu mesa |
 | **Galería** | Mapas, PNJs, enemigos y objetos en imágenes |
-| **Campañas** | Sistema de combate, reglas caseras, manuales activos y diario de sesiones |
+| **Campañas** | Crear la mesa, invitar jugadores, nivel de inicio, manuales, reglas caseras y diario |
 | **Reglas** | Reescribir o desactivar cualquier fórmula, y restablecerla |
 | **Copia de seguridad** | Guardar y restaurar **todo** lo de este dispositivo |
 | **Cuenta** | Registro y sincronización entre dispositivos, si la nube está configurada |
@@ -220,6 +220,7 @@ pestaña. Y hay un botón, por si tienes prisa.
 | Tus fichas | tú y el máster de tu campaña | sólo tú |
 | Tus campañas | tú y quienes juegan en ellas | sólo tú |
 | Tu bestiario | sólo tú | sólo tú |
+| Tus tiradas | toda la mesa de esa campaña | sólo tú |
 | Imágenes de una campaña | toda esa mesa | sólo quien las subió |
 | Imágenes sin campaña | sólo tú | sólo tú |
 | Tu nombre visible | quien comparte mesa contigo | sólo tú |
@@ -239,12 +240,29 @@ comentada en `supabase/esquema.sql` que lo cambia.
 | `invitaciones_campana` | Los códigos para unirse a una mesa |
 | `personajes` | Las fichas |
 | `enemigos` | El bestiario del máster |
+| `tiradas` | El registro de la partida. Lo ve toda la mesa; lo escribe quien tiró |
 | `imagenes` | La ficha técnica de cada imagen; el archivo va al bucket `imagenes` |
 | `preferencias` | El tema y lo que vaya haciendo falta, por usuario |
 
 Fichas, campañas y enemigos se guardan como **un jsonb entero**, no como columnas: el modelo
 crece cada vez que llega un manual nuevo, y con columnas cada suplemento sería una migración.
 Sólo se sacan a columna los campos por los que se consulta —dueño, campaña, fecha.
+
+### Montar una campaña
+
+Al crear una campaña se pregunta de una vez todo lo que se decide en una sesión cero, con
+los valores del manual básico ya puestos —si tu mesa juega estándar, con el nombre basta:
+
+| | Por defecto | Para qué |
+|---|---|---|
+| **Nivel de inicio** | 1 | Los PD de partida: 400 a nivel 0, 600 a nivel 1, +100 por nivel. Las fichas creadas en la campaña nacen con él |
+| **Puntos de Creación** | 3 | Subirlos es lo que hace una campaña más heroica |
+| **Tope por desventajas** | 3 | Evita cargarse de defectos para comprarlo todo |
+| **Sistema de combate** | Normal | Normal o Dramático |
+| **Manuales** | Core Exxet | Los paquetes de contenido activos |
+
+Estas cifras **no son decorativas**: llegan a la ficha. Si tu mesa da 5 Puntos de Creación,
+el contador de la pestaña Ventajas dice 5 y deja de avisar al cuarto.
 
 ### Unirse a una mesa
 
@@ -264,7 +282,7 @@ por defecto no da los mismos números.
 ### Montarlo
 
 1. Crea un proyecto gratuito en [supabase.com](https://supabase.com).
-2. **SQL Editor → New query**, pega entero `supabase/esquema.sql` y ejecútalo. Crea las ocho
+2. **SQL Editor → New query**, pega entero `supabase/esquema.sql` y ejecútalo. Crea las nueve
    tablas, el bucket de imágenes y —lo importante— las políticas de acceso.
 3. **Project Settings → API**: copia la *Project URL* y la clave *anon public*.
 4. `cp .env.example .env.local` y rellena esos dos valores.
@@ -282,7 +300,7 @@ quitar en **Authentication → Providers → Email**.
 - **La clave `anon` es pública.** Va dentro del JavaScript que se descarga cualquiera. Lo
   único que impide que un usuario lea los datos de otro son las políticas del paso 2. Si te
   saltas ese paso, la base de datos queda abierta. El propio archivo trae al final una
-  consulta para comprobar que Row Level Security está activo en las ocho tablas.
+  consulta para comprobar que Row Level Security está activo en las nueve tablas.
 - **Las imágenes ocupan.** El plan gratuito de Supabase da 1 GB de Storage. La aplicación ya
   reescala y convierte a WebP antes de subir (1600 px de lado para mapas, 640 para retratos),
   así que una imagen ronda las decenas de kilobytes y hacen falta muchas partidas para

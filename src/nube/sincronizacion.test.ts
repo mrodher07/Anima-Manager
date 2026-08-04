@@ -13,6 +13,7 @@ const bd = {
   personajes: new Map<string, Personaje>(),
   campanas: new Map<string, Campana>(),
   enemigos: new Map<string, Enemigo>(),
+  tiradas: new Map<string, { id: string }>(),
   lapidas: new Map<string, Lapida>(),
 };
 
@@ -23,6 +24,7 @@ vi.mock('../almacen/almacen', () => ({
     listarPersonajes: async () => [...bd.personajes.values()],
     listarCampanas: async () => [...bd.campanas.values()],
     listarEnemigos: async () => [...bd.enemigos.values()],
+    listarTiradas: async () => [...bd.tiradas.values()],
     guardarCrudo: async (t: Tienda, r: { id: string }) => {
       tiendaDe(t).set(r.id, r);
       bd.lapidas.delete(`${t}:${r.id}`);
@@ -74,6 +76,7 @@ const servidor = {
     campanas: new Map<string, FilaServidor>(),
     personajes: new Map<string, FilaServidor>(),
     enemigos: new Map<string, FilaServidor>(),
+    tiradas: new Map<string, FilaServidor>(),
   } as Record<string, Map<string, FilaServidor>>,
   /** Tablas que deben fallar, para probar que un error no tumba la sincronización. */
   falla: new Set<string>(),
@@ -168,6 +171,7 @@ beforeEach(() => {
   bd.personajes.clear();
   bd.campanas.clear();
   bd.enemigos.clear();
+  bd.tiradas.clear();
   bd.lapidas.clear();
   for (const t of Object.values(servidor.tablas)) t.clear();
   servidor.falla.clear();

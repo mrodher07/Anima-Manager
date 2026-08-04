@@ -375,6 +375,88 @@ h3 { font-size: clamp(0.98rem, 0.9rem + 0.4vw, 1.12rem); }
 /* Un panel que sólo lleva una cuenta: la de Puntos de Creación mientras eliges ventajas. */
 .panel.marcador { padding: 12px 18px; margin-bottom: 16px; }
 
+/* ─────────────────────── Campañas ─────────────────────── */
+
+/*
+ * El alta de campaña. Se enmarca porque es un formulario dentro de una pantalla que ya
+ * tiene otras cosas: sin el marco, «Nueva campaña» y la lista de las que ya hay se leerían
+ * como lo mismo.
+ */
+.alta-campana {
+  background: var(--fondo-2);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio-s);
+  padding: 14px 16px;
+  margin-bottom: 18px;
+}
+.alta-campana > h3 { margin-bottom: 4px; }
+.alta-campana .pie-nota {
+  color: var(--texto-debil);
+  font-size: 0.82rem;
+  margin: 0 0 14px;
+}
+
+/* Las tres cifras de partida, juntas: se eligen mirándolas a la vez. */
+.ajustes-creacion {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.ajustes-creacion .campo { margin-bottom: 0; }
+.ajustes-creacion small { color: var(--texto-debil); font-size: 0.74rem; }
+
+/*
+ * La lista de campañas era una tabla de tres columnas. Como tarjeta cabe lo que de verdad
+ * distingue a una mesa de otra —de qué va, con qué nivel se empieza, qué manuales usa—,
+ * que es lo que necesitas para saber cuál activar.
+ */
+.lista-campanas { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.lista-campanas > li {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 12px 14px;
+  background: var(--fondo-2);
+  border: 1px solid var(--borde-suave);
+  border-radius: var(--radio-s);
+}
+.lista-campanas > li.activa { border-color: var(--oro); }
+.lista-campanas .datos { flex: 1; min-width: 0; }
+.lista-campanas .datos > strong { font-family: var(--serif); font-size: 1.05rem; }
+.lista-campanas .desc {
+  margin: 3px 0 0;
+  font-size: 0.86rem;
+  color: var(--texto-tenue);
+}
+.lista-campanas .meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+  margin: 7px 0 0;
+  font-size: 0.74rem;
+  color: var(--texto-debil);
+}
+.lista-campanas .meta > span { white-space: nowrap; }
+/* Un punto medio separa las etiquetas sin gastar una fila en bordes. */
+.lista-campanas .meta > span + span::before { content: '· '; }
+.lista-campanas .meta .ajena { color: var(--arcano-claro); }
+.lista-campanas .acciones { display: flex; flex-direction: column; gap: 6px; flex: none; }
+.lista-campanas .marca-activa {
+  font-size: 0.74rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--oro);
+  padding: 8px 0;
+  text-align: center;
+}
+
+@media (max-width: 560px) {
+  .lista-campanas > li { flex-direction: column; }
+  .lista-campanas .acciones { flex-direction: row; width: 100%; }
+  .lista-campanas .acciones > * { flex: 1; }
+}
+
 .rejilla { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
 
 /* Barra de recursos siempre visible durante la partida. */

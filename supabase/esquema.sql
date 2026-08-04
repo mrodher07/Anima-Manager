@@ -28,6 +28,7 @@
 --    invitaciones_campana  códigos para unirse a una mesa
 --    personajes            las fichas
 --    enemigos              el bestiario del máster
+--    tiradas               el registro de la partida, visible para toda la mesa
 --    imagenes              retratos, mapas y galería (el archivo vive en Storage)
 --    preferencias          tema y ajustes de cada usuario
 -- ─────────────────────────────────────────────────────────────────────────────
@@ -153,6 +154,28 @@ create index if not exists enemigos_propietario_idx on public.enemigos (propieta
 create index if not exists enemigos_actualizado_idx on public.enemigos (actualizado_en);
 
 
+-- ── Tiradas ─────────────────────────────────────────────────────────────────
+--
+-- El registro de la partida. Hasta ahora vivía en memoria y se perdía al recargar: media
+-- sesión de tiradas desaparecía porque alguien tocó el botón de atrás.
+--
+-- A diferencia de las fichas, una tirada **la ve toda la mesa**. Es lo suyo: en una partida
+-- presencial los dados están encima del tablero y los ve todo el mundo. Escribir sólo puede
+-- quien tiró.
+
+create table if not exists public.tiradas (
+  id            text primary key,
+  propietario   uuid not null references auth.users (id) on delete cascade,
+  campana_id    text references public.campanas (id) on delete cascade,
+  datos         jsonb not null,
+  actualizado_en timestamptz not null default now(),
+  borrado       boolean not null default false
+);
+
+create index if not exists tiradas_campana_idx on public.tiradas (campana_id, actualizado_en desc);
+create index if not exists tiradas_propietario_idx on public.tiradas (propietario);
+
+
 -- ── Imágenes ────────────────────────────────────────────────────────────────
 --
 -- Aquí sólo está la ficha técnica. El archivo vive en el bucket `imagenes` de Storage, en
@@ -212,6 +235,7 @@ alter table public.miembros_campana     enable row level security;
 alter table public.invitaciones_campana enable row level security;
 alter table public.personajes           enable row level security;
 alter table public.enemigos             enable row level security;
+alter table public.tiradas              enable row level security;
 alter table public.imagenes             enable row level security;
 alter table public.preferencias         enable row level security;
 
@@ -388,6 +412,31 @@ create policy "enemigos_editar" on public.enemigos for update
 
 drop policy if exists "enemigos_borrar" on public.enemigos;
 create policy "enemigos_borrar" on public.enemigos for delete
+  using (propietario = auth.uid());
+
+-- ── Tiradas: las ve la mesa entera, las escribe quien tiró ──────────────────
+
+drop policy if exists "tiradas_leer" on public.tiradas;
+create policy "tiradas_leer" on public.tiradas for select
+  using (
+    propietario = auth.uid()
+    or (campana_id is not null
+        and (public.soy_master_de(campana_id) or public.soy_miembro_de(campana_id)))
+  );
+
+drop policy if exists "tiradas_crear" on public.tiradas;
+create policy "tiradas_crear" on public.tiradas for insert
+  with check (propietario = auth.uid());
+
+-- Una tirada no se edita: lo único que se hace con ella es marcarla borrada al vaciar el
+-- registro, y eso pasa por aquí.
+drop policy if exists "tiradas_editar" on public.tiradas;
+create policy "tiradas_editar" on public.tiradas for update
+  using (propietario = auth.uid())
+  with check (propietario = auth.uid());
+
+drop policy if exists "tiradas_borrar" on public.tiradas;
+create policy "tiradas_borrar" on public.tiradas for delete
   using (propietario = auth.uid());
 
 -- ── Imágenes ────────────────────────────────────────────────────────────────
@@ -607,13 +656,13 @@ create policy "imagenes_archivo_borrar" on storage.objects for delete
 -- ─────────────────────────────────────────────────────────────────────────────
 -- COMPROBACIÓN
 --
--- Esto debe devolver `true` en las ocho tablas. Si alguna sale `false`, esa tabla está
+-- Esto debe devolver `true` en las nueve tablas. Si alguna sale `false`, esa tabla está
 -- abierta a cualquiera que tenga la URL del proyecto — que es pública.
 -- ─────────────────────────────────────────────────────────────────────────────
 --
 -- select relname, relrowsecurity from pg_class
 -- where relname in ('perfiles', 'campanas', 'miembros_campana', 'invitaciones_campana',
---                   'personajes', 'enemigos', 'imagenes', 'preferencias')
+--                   'personajes', 'enemigos', 'tiradas', 'imagenes', 'preferencias')
 -- order by relname;
 --
 -- Y que el bucket no sea público:

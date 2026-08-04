@@ -311,6 +311,55 @@ describe('Puntos de Creación', () => {
     expect(ficha.puntosCreacion.gastados).toBe(4);
     expect(ficha.avisos.some((a) => a.gravedad === 'error' && a.mensaje.includes('Puntos de Creación'))).toBe(true);
   });
+
+  /*
+   * Las cifras de partida las pone la mesa. Se prueban porque son la diferencia entre una
+   * pantalla de configuración que hace algo y una que sólo lo parece: si el Director dice
+   * «en mi campaña se empieza con 5 PC» y la ficha sigue avisando a los 3, la campaña no
+   * configura nada.
+   */
+  it('una mesa puede dar más Puntos de Creación de partida', () => {
+    const generosa = REGLAMENTO_OFICIAL.conCreacion({ puntosCreacion: 5 });
+    const p = meirmeister();
+    p.ventajas = ['+1 a característica: AGI', '+1 a característica: CON',
+                  '+1 a característica: DES', '+1 a característica: FUE'];
+    const ficha = calcular(p, datos('Jayán', 'Paladín Oscuro (RD)'), generosa);
+    expect(ficha.puntosCreacion.disponibles).toBe(5);
+    // Cuatro gastados de cinco: ya no hay error donde antes lo había.
+    expect(ficha.avisos.some((a) => a.gravedad === 'error' && a.mensaje.includes('Puntos de Creación')))
+      .toBe(false);
+  });
+
+  it('una mesa puede subir el tope que dan las desventajas', () => {
+    const dura = REGLAMENTO_OFICIAL.conCreacion({ maximoPorDesventajas: 4 });
+    const p = meirmeister();
+    p.desventajas = ['Arma exclusiva', 'Adicción o vicio grave', 'Miopía', 'Salud enfermiza'];
+    const ficha = calcular(p, datos('Jayán', 'Paladín Oscuro (RD)'), dura);
+    expect(ficha.puntosCreacion.ganados).toBe(4);
+    expect(ficha.avisos.some((a) => a.mensaje.includes('como mucho'))).toBe(false);
+  });
+
+  it('sin tocar nada salen los números del manual', () => {
+    // La red de seguridad de todo esto: una mesa que no configura nada no nota que exista.
+    expect(REGLAMENTO_OFICIAL.creacion()).toEqual({
+      nivelInicial: 1,
+      puntosCreacion: 3,
+      maximoPorDesventajas: 3,
+    });
+    expect(REGLAMENTO_OFICIAL.creacionPersonalizada()).toBe(false);
+    expect(REGLAMENTO_OFICIAL.conCreacion({ puntosCreacion: 4 }).creacionPersonalizada()).toBe(true);
+  });
+
+  it('cambiar una cifra no arrastra a las demás', () => {
+    const r = REGLAMENTO_OFICIAL.conCreacion({ nivelInicial: 3 });
+    expect(r.creacion()).toEqual({ nivelInicial: 3, puntosCreacion: 3, maximoPorDesventajas: 3 });
+    // Y encadenar cambios los acumula en vez de pisarse.
+    expect(r.conCreacion({ puntosCreacion: 6 }).creacion()).toEqual({
+      nivelInicial: 3,
+      puntosCreacion: 6,
+      maximoPorDesventajas: 3,
+    });
+  });
 });
 
 describe('efectos de ventajas y desventajas', () => {

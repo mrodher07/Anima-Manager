@@ -15,6 +15,7 @@ import {
 import { calcular, type DatosCalculo, type Personaje } from '../motor/personaje';
 import type { Reglamento } from '../motor/reglamento';
 import { useEnemigos } from './VistaBestiario';
+import { useTiradas } from './estado';
 import { Imagen } from './Imagen';
 import { useColeccion } from './estado';
 import type { Catalogo } from '../datos/paquetes';
@@ -30,13 +31,6 @@ interface Props {
   /** El de la campaña activa. Sólo cambia cuánto dura cada asalto. */
   sistemaCombate: SistemaCombate;
   onCambiar: (p: Personaje) => void;
-}
-
-interface Registro {
-  id: number;
-  texto: string;
-  detalle: string;
-  critico?: boolean;
 }
 
 function describeTirada(t: Tirada): string {
@@ -58,8 +52,9 @@ export function VistaMesa({
   const { enemigos, guardar: guardarEnemigo } = useEnemigos(campanaId);
   const [enemigoId, setEnemigoId] = useState<string>('');
   const ficha = calcular(personaje, datos, reglamento);
-  const [registro, setRegistro] = useState<Registro[]>([]);
-  const [siguienteId, setSiguienteId] = useState(1);
+  // El registro se guarda en el almacén, no en un `useState`: antes bastaba recargar la
+  // página para perder media sesión de tiradas.
+  const { tiradas, anotar: guardarTirada, vaciar: vaciarRegistro } = useTiradas(campanaId);
 
   // Enemigo suelto, para cuando no está en el bestiario.
   const [defensa, setDefensa] = useState(60);
@@ -78,8 +73,13 @@ export function VistaMesa({
   const enemigo = enemigos.find((e) => e.id === enemigoId) ?? null;
 
   const anotar = (texto: string, detalle: string, critico = false) => {
-    setRegistro((antes) => [{ id: siguienteId, texto, detalle, critico }, ...antes].slice(0, 30));
-    setSiguienteId((n) => n + 1);
+    void guardarTirada({
+      personajeId: personaje.id,
+      autor: personaje.nombre || 'Sin nombre',
+      texto,
+      detalle,
+      critico,
+    });
   };
 
   const estado = personaje.estado;
@@ -454,17 +454,32 @@ export function VistaMesa({
 
       <section className="panel" style={{ marginTop: 16 }}>
         <h2>Registro de la partida</h2>
-        {registro.length === 0 ? (
-          <p style={{ color: 'var(--texto-debil)', margin: 0 }}>Todavía no has tirado nada.</p>
+        {tiradas.length === 0 ? (
+          <p style={{ color: 'var(--texto-debil)', margin: 0 }}>Todavía no se ha tirado nada.</p>
         ) : (
-          <ol className="registro">
-            {registro.map((r) => (
-              <li key={r.id} className={r.critico ? 'critico' : undefined}>
-                <strong>{r.texto}</strong>
-                <span>{r.detalle}</span>
-              </li>
-            ))}
-          </ol>
+          <>
+            <ol className="registro">
+              {tiradas.map((r) => (
+                <li key={r.id} className={r.critico ? 'critico' : undefined}>
+                  <strong>{r.texto}</strong>
+                  <span>{r.detalle}</span>
+                  <span className="quien">
+                    {/* Con campaña, el registro es de la mesa: hay que saber quién tiró. */}
+                    {campanaId && r.autor !== (personaje.nombre || 'Sin nombre') ? `${r.autor} · ` : ''}
+                    {new Date(r.actualizadoEn).toLocaleTimeString('es-ES', {
+                      hour: '2-digit',
+                      minute: '2-digit',
+                    })}
+                  </span>
+                </li>
+              ))}
+            </ol>
+            <div className="acciones-regla">
+              <button className="accion" onClick={() => void vaciarRegistro()}>
+                Vaciar el registro
+              </button>
+            </div>
+          </>
         )}
       </section>
     </div>

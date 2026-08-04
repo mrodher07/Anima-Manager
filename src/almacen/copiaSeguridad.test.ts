@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { personajeVacio, type Personaje } from '../motor/personaje';
-import type { Campana, Enemigo } from './almacen';
+import type { Campana, Enemigo, Tirada } from './almacen';
 import type { Imagen, ImagenInfo } from './imagenes';
 
 /** `localStorage` es del navegador; en Node hace falta uno de mentira. */
@@ -20,6 +20,7 @@ const bd = {
   personajes: new Map<string, Personaje>(),
   campanas: new Map<string, Campana>(),
   enemigos: new Map<string, Enemigo>(),
+  tiradas: new Map<string, Tirada>(),
   imagenes: new Map<string, Imagen>(),
 };
 
@@ -28,12 +29,15 @@ vi.mock('./almacen', () => ({
     listarPersonajes: async () => [...bd.personajes.values()],
     listarCampanas: async () => [...bd.campanas.values()],
     listarEnemigos: async () => [...bd.enemigos.values()],
+    listarTiradas: async () => [...bd.tiradas.values()],
     guardarPersonaje: async (p: Personaje) => void bd.personajes.set(p.id, p),
     guardarCampana: async (c: Campana) => void bd.campanas.set(c.id, c),
     guardarEnemigo: async (e: Enemigo) => void bd.enemigos.set(e.id, e),
+    guardarTirada: async (t: Tirada) => void bd.tiradas.set(t.id, t),
     borrarPersonaje: async (id: string) => void bd.personajes.delete(id),
     borrarCampana: async (id: string) => void bd.campanas.delete(id),
     borrarEnemigo: async (id: string) => void bd.enemigos.delete(id),
+    borrarTirada: async (id: string) => void bd.tiradas.delete(id),
   },
 }));
 
@@ -86,6 +90,7 @@ function poblar() {
   bd.personajes.clear();
   bd.campanas.clear();
   bd.enemigos.clear();
+  bd.tiradas.clear();
   bd.imagenes.clear();
 
   const p = personajeVacio('p1');
@@ -100,6 +105,16 @@ function poblar() {
     ataque: 60, defensa: 50, tipoDefensa: 'Esquiva', dano: 20, tipoDano: 'FIL',
     TA: { FIL: 1, CON: 1, PEN: 1, CAL: 0, ELE: 0, FRI: 0, ENE: 0 },
   } as Enemigo);
+
+  bd.tiradas.set('t1', {
+    id: 't1',
+    campanaId: 'c1',
+    personajeId: 'p1',
+    autor: 'Meirmeister',
+    actualizadoEn: '2026-08-04T20:00:00.000Z',
+    texto: 'Iniciativa: 118',
+    detalle: '75 de turno + 43',
+  });
 
   bd.imagenes.set('img-retrato', imagenDePrueba('img-retrato', 'retrato'));
   bd.imagenes.set('img-mapa', imagenDePrueba('img-mapa', 'mapa'));
@@ -137,6 +152,15 @@ describe('lo que entra en una copia', () => {
     expect(campana.notasSesion).toHaveLength(1);
     // Y el sistema de combate elegido para esa mesa.
     expect(campana.sistemaCombate).toBe('dramatico');
+  });
+
+  it('se lleva el registro de tiradas', async () => {
+    // Las tiradas son lo último que se guardó de verdad en vez de en memoria; si la copia
+    // no las cogiera, «copia de seguridad completa» dejaría de ser cierto.
+    const c = await crearCopia();
+    expect(c.tiradas).toHaveLength(1);
+    expect(c.tiradas?.[0]?.texto).toBe('Iniciativa: 118');
+    expect(resumirCopia(c).tiradas).toBe(1);
   });
 
   it('se lleva las preferencias del navegador, que no están en la base de datos', async () => {
@@ -275,6 +299,7 @@ describe('restaurar', () => {
     bd.personajes.clear();
     bd.campanas.clear();
     bd.enemigos.clear();
+    bd.tiradas.clear();
     bd.imagenes.clear();
     localStorage.clear();
 
@@ -284,6 +309,7 @@ describe('restaurar', () => {
     expect(despues.personajes).toEqual(antes.personajes);
     expect(despues.campanas).toEqual(antes.campanas);
     expect(despues.enemigos).toEqual(antes.enemigos);
+    expect(despues.tiradas).toEqual(antes.tiradas);
     expect(despues.imagenes.map((i) => i.id).sort()).toEqual(antes.imagenes.map((i) => i.id).sort());
     expect(despues.preferencias).toEqual(antes.preferencias);
   });

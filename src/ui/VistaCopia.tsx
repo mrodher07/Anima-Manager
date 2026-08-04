@@ -27,6 +27,7 @@ function Resumen({ r }: { r: ResumenCopia }) {
       <Cuenta titulo="Fichas" valor={r.personajes} />
       <Cuenta titulo="Campañas" valor={r.campanas} />
       <Cuenta titulo="Enemigos" valor={r.enemigos} />
+      <Cuenta titulo="Tiradas" valor={r.tiradas} />
       <Cuenta titulo="Imágenes" valor={r.imagenes} />
       <Cuenta titulo="Preferencias" valor={r.preferencias} />
       <Cuenta titulo="Tamaño" valor={formatearBytes(r.bytes)} sufijo="aproximado" />

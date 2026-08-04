@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Catalogo } from '../datos/paquetes';
 import type { Colecciones, NombreColeccion } from '../datos/tipos';
-import { almacen, type Campana } from '../almacen/almacen';
+import { almacen, type Campana, type Tirada } from '../almacen/almacen';
 import { PERSONALIZADOS_VACIOS } from '../datos/paquetes';
 import { cargarDatosCalculo, personajeVacio, type DatosCalculo, type Personaje } from '../motor/personaje';
 import { REGLAMENTO_OFICIAL, Reglamento } from '../motor/reglamento';
@@ -66,9 +66,17 @@ export function usePersonajes() {
     pendientes.current.set(p.id, setTimeout(() => { void almacen.guardarPersonaje(p); }, 400));
   }, []);
 
-  const crear = useCallback((): Personaje => {
+  /**
+   * Ficha nueva. Si hay campaña activa nace dentro de ella y **con el nivel que la mesa ha
+   * dicho**, que es lo que hace que ese ajuste sirva para algo: si no, el Director acuerda
+   * empezar a nivel 3 y cada jugador tiene que acordarse de cambiarlo a mano.
+   */
+  const crear = useCallback((campanaId: string | null = null, nivelInicial = 1): Personaje => {
     const p = personajeVacio(nuevoId());
     p.nombre = 'Personaje sin nombre';
+    p.campanaId = campanaId;
+    // Nivel 0 es legítimo en Anima, así que se respeta el 0; sólo se descartan los negativos.
+    p.categorias = [{ categoria: '', nivel: Math.max(0, nivelInicial) }];
     void almacen.guardarPersonaje(p);
     setPersonajes((antes) => [...antes, p]);
     return p;
@@ -82,6 +90,46 @@ export function usePersonajes() {
   return { personajes, cargando, guardar, crear, borrar, recargar };
 }
 
+/**
+ * El registro de tiradas de una campaña.
+ *
+ * Se guarda de verdad, no en memoria: antes bastaba recargar la página para perder media
+ * sesión de tiradas. Y como se guarda con el resto, se sincroniza con el resto — en una
+ * mesa con cuentas, el Director ve lo que han sacado sus jugadores sin que se lo canten.
+ */
+export function useTiradas(campanaId: string | null) {
+  const [tiradas, setTiradas] = useState<Tirada[]>([]);
+
+  const recargar = useCallback(async () => {
+    setTiradas(await almacen.listarTiradas(campanaId));
+  }, [campanaId]);
+  useEffect(() => { void recargar(); }, [recargar]);
+
+  const anotar = useCallback(
+    async (t: Omit<Tirada, 'id' | 'actualizadoEn' | 'campanaId'>) => {
+      const tirada: Tirada = {
+        ...t,
+        id: nuevoId(),
+        campanaId,
+        actualizadoEn: new Date().toISOString(),
+      };
+      // Se pinta antes de guardar: una tirada tiene que aparecer en cuanto se pulsa, y
+      // esperar a IndexedDB para enseñarla se nota en la mesa.
+      setTiradas((antes) => [tirada, ...antes]);
+      await almacen.guardarTirada(tirada);
+      await recargar();
+    },
+    [campanaId, recargar],
+  );
+
+  const vaciar = useCallback(async () => {
+    await almacen.vaciarTiradas(campanaId);
+    await recargar();
+  }, [campanaId, recargar]);
+
+  return { tiradas, anotar, vaciar, recargar };
+}
+
 export function useCampanas() {
   const [campanas, setCampanas] = useState<Campana[]>([]);
 
@@ -93,17 +141,19 @@ export function useCampanas() {
     await recargar();
   }, [recargar]);
 
-  const crear = useCallback(async (nombre: string) => {
+  /**
+   * Crea una campaña con lo que traiga el formulario. Recibe la campaña entera menos lo
+   * que pone la propia aplicación —id, dueño y fecha— en vez de sólo el nombre: las
+   * decisiones de una sesión cero se toman juntas, y con un `nombre` suelto había que
+   * guardar primero y editar después.
+   */
+  const crear = useCallback(async (datos: Omit<Campana, 'id' | 'propietario' | 'actualizadoEn'>) => {
     const c: Campana = {
       id: nuevoId(),
       propietario: null,
       actualizadoEn: new Date().toISOString(),
-      nombre,
-      paquetes: ['core-exxet'],
-      sistemaCombate: 'normal',
-      ajustes: {},
-      notasSesion: [],
       personalizados: PERSONALIZADOS_VACIOS,
+      ...datos,
     };
     await almacen.guardarCampana(c);
     await recargar();
