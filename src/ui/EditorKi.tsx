@@ -10,6 +10,7 @@ import {
   type HabilidadKi,
 } from '../motor/ki';
 import { Selector } from './Selector';
+import { Ayuda, Seccion, cuenta } from './Seccion';
 import { CreadorTecnicas } from './CreadorTecnicas';
 import {
   CATALOGO_SELLOS,
@@ -120,15 +121,14 @@ export function EditorKi({ personaje, ficha, datos, catalogo, onCambiar }: Props
 
   return (
     <>
-      <section className="panel" style={{ marginBottom: 16 }}>
-        <h2>Dominios del Ki</h2>
-        <p style={{ color: 'var(--texto-tenue)', fontSize: '0.86rem', marginTop: 0 }}>
+      <Seccion titulo="Dominios del Ki">
+        <Ayuda>
           El Ki sale de las seis características físicas y anímicas: cada punto hasta 10 da uno
           de Ki y cada punto por encima da dos. La <strong>Acumulación</strong> es lo que puedes
           reunir en un asalto; se reduce a la mitad (redondeando hacia arriba) si además haces
           cualquier otra cosa. Cuándo acumular y cuándo descargar lo decides tú en la mesa, no
           la aplicación.
-        </p>
+        </Ayuda>
 
         <div className="recursos tira">
           <div className="recurso ki">
@@ -173,10 +173,15 @@ export function EditorKi({ personaje, ficha, datos, catalogo, onCambiar }: Props
             </em>
           </span>
         </label>
-      </section>
+      </Seccion>
 
-      <section className="panel" style={{ marginBottom: 16 }}>
-        <h2>Puntos de Ki y Acumulación</h2>
+      {/* La tabla de compra son ocho columnas por seis características: mucho sitio para
+          alguien que todavía no tiene Ki. Se abre en cuanto lo tiene. */}
+      <Seccion
+        titulo="Puntos de Ki y Acumulación"
+        resumen={`${ki.reserva} Ki · acum. ${ki.acumulacionTotal}`}
+        abierta={ki.reserva > 0}
+      >
         {costeKi === 0 && costeAcum === 0 && (
           <p className="aviso">
             Tu categoría no permite comprar Ki ni Acumulación con PD. Lo que tengas viene de tus
@@ -254,14 +259,13 @@ export function EditorKi({ personaje, ficha, datos, catalogo, onCambiar }: Props
           Coste de la categoría: {costeKi || '—'} PD por punto de Ki, {costeAcum || '—'} PD por
           punto de Acumulación.
         </p>
-      </section>
+      </Seccion>
 
-      <section className="panel" style={{ marginBottom: 16 }}>
-        <h2>Conocimiento Marcial</h2>
-        <p style={{ color: 'var(--texto-tenue)', fontSize: '0.86rem', marginTop: 0 }}>
+      <Seccion titulo="Conocimiento Marcial" resumen={`${cm.disponible} libre de ${cm.total}`}>
+        <Ayuda>
           El CM sólo sirve para los Dominios del Ki: habilidades, Límites y Técnicas. No se puede
           usar para comprar puntos de Ki ni Acumulaciones.
-        </p>
+        </Ayuda>
         <div className="rejilla">
           <div className="campo">
             <label htmlFor="pd-cm">PD invertidos en CM</label>
@@ -287,15 +291,18 @@ export function EditorKi({ personaje, ficha, datos, catalogo, onCambiar }: Props
           {Number.isFinite(cm.limitePD) ? cm.limitePD : '—'} PD (una décima parte de los tuyos).
           Ese gasto entra además dentro del límite de habilidades de combate.
         </p>
-      </section>
+      </Seccion>
 
-      <section className="panel" style={{ marginBottom: 16 }}>
-        <h2>Habilidades del Ki y del Némesis</h2>
-        <p style={{ color: 'var(--texto-tenue)', fontSize: '0.86rem', marginTop: 0 }}>
+      <Seccion
+        titulo="Habilidades del Ki y del Némesis"
+        resumen={cuenta(elecciones.habilidades.length, 'dominada', 'dominadas', 'ninguna')}
+        abierta={elecciones.habilidades.length > 0}
+      >
+        <Ayuda>
           Cada una cuelga de otra. Puedes marcar la que quieras aunque te falte el requisito —el
           manual deja el aprendizaje en manos del Director—, pero la ficha te avisará. Al
           desmarcar una se quitan también las que dependían de ella.
-        </p>
+        </Ayuda>
         {(['Ki', 'Némesis'] as const).map((dominio) => (
           <div key={dominio} style={{ marginBottom: 14 }}>
             <p
@@ -341,15 +348,18 @@ export function EditorKi({ personaje, ficha, datos, catalogo, onCambiar }: Props
             </div>
           </div>
         ))}
-      </section>
+      </Seccion>
 
-      <section className="panel" style={{ marginBottom: 16 }}>
-        <h2>Límite</h2>
-        <p style={{ color: 'var(--texto-tenue)', fontSize: '0.86rem', marginTop: 0 }}>
+      <Seccion
+        titulo="Límite"
+        resumen={elecciones.limites.length ? elecciones.limites.join(', ') : 'ninguno'}
+        abierta={elecciones.limites.length > 0}
+      >
+        <Ayuda>
           Un Límite devuelve Ki en una circunstancia concreta. Se elige uno solo y no se puede
           cambiar después; con la ventaja Límite dual, dos. Piden Natura 10 o más, así que las
           entidades Entre Mundos y los Espíritus se quedan sin.
-        </p>
+        </Ayuda>
         <div className="lista-seleccion">
           {limites.map((l) => {
             const elegido = elecciones.limites.includes(l.limite);
@@ -376,15 +386,18 @@ export function EditorKi({ personaje, ficha, datos, catalogo, onCambiar }: Props
             );
           })}
         </div>
-      </section>
+      </Seccion>
 
-      <section className="panel" style={{ marginBottom: 16 }}>
-        <h2>Artes marciales</h2>
-        <p style={{ color: 'var(--texto-tenue)', fontSize: '0.86rem', marginTop: 0 }}>
+      <Seccion
+        titulo="Artes marciales"
+        resumen={cuenta(elecciones.artesMarciales.length, 'grado', 'grados', 'ninguna')}
+        abierta={elecciones.artesMarciales.length > 0}
+      >
+        <Ayuda>
           Dominar un grado de arte marcial <strong>da</strong> CM, no lo gasta. Las básicas tienen
           tres grados (Base, Avanzado y Supremo) y las avanzadas dos (Base y Arcano); siempre hace
           falta el grado anterior. El coste en PD se paga aparte, en Habilidades.
-        </p>
+        </Ayuda>
         <Selector
           opciones={artesMarciales}
           claveDe={(a) => String(a.arte ?? '')}
@@ -394,11 +407,14 @@ export function EditorKi({ personaje, ficha, datos, catalogo, onCambiar }: Props
           onCambiar={(v) => setKi({ artesMarciales: v })}
           etiquetaBusqueda="Buscar arte marcial"
         />
-      </section>
+      </Seccion>
 
-      <section className="panel" style={{ marginBottom: 16 }}>
-        <h2>Sellos de Invocación</h2>
-        <p style={{ color: 'var(--texto-tenue)', fontSize: '0.86rem', marginTop: 0 }}>
+      <Seccion
+        titulo="Sellos de Invocación"
+        resumen={cuenta((elecciones.sellos ?? []).length, 'sello', 'sellos')}
+        abierta={(elecciones.sellos ?? []).length > 0}
+      >
+        <Ayuda>
           Convocar criaturas con Ki, sin tocar Convocar ni Dominación. Dominar un Sello cuesta
           CM; ejecutarlo, puntos de Ki. Un Sello <strong>Mayor</strong> vale por{' '}
           {MENORES_POR_MAYOR} Menores de su elemento a la hora de llamar a un ser, pero sale
@@ -409,7 +425,7 @@ export function EditorKi({ personaje, ficha, datos, catalogo, onCambiar }: Props
               Llevas <strong className="destacado">{ki.cmSellos}</strong> CM en Sellos.
             </>
           )}
-        </p>
+        </Ayuda>
         <div className="lista-seleccion">
           {CATALOGO_SELLOS.map((s) => {
             const nombre = claveSello(s);
@@ -447,16 +463,19 @@ export function EditorKi({ personaje, ficha, datos, catalogo, onCambiar }: Props
           <strong>Pacto de Sangre</strong> con la criatura antes de poder llamarla a voluntad —
           si acepta o no, lo decidís en la mesa.
         </p>
-      </section>
+      </Seccion>
 
-      <section className="panel" style={{ marginBottom: 16 }}>
-        <h2>Ars Magnus</h2>
-        <p style={{ color: 'var(--texto-tenue)', fontSize: '0.86rem', marginTop: 0 }}>
+      <Seccion
+        titulo="Ars Magnus"
+        resumen={cuenta((elecciones.arsMagnus ?? []).length, 'adquirido', 'adquiridos')}
+        abierta={(elecciones.arsMagnus ?? []).length > 0}
+      >
+        <Ayuda>
           Capacidades únicas de luchador: desde entrar en frenesí hasta manejar armas
           imposibles. Se pagan <strong>dos veces</strong>, en CM y en PD, y los PD cuentan
           dentro del límite de habilidades de combate. Ahora mismo llevas{' '}
           <strong className="destacado">{ki.pdArsMagnus}</strong> PD en Ars Magnus.
-        </p>
+        </Ayuda>
         <Selector
           opciones={arsMagnus}
           claveDe={(a) => String(a.nombre ?? '')}
@@ -488,15 +507,18 @@ export function EditorKi({ personaje, ficha, datos, catalogo, onCambiar }: Props
             })}
           </div>
         )}
-      </section>
+      </Seccion>
 
-      <section className="panel">
-        <h2>Técnicas de Dominio</h2>
-        <p style={{ color: 'var(--texto-tenue)', fontSize: '0.86rem', marginTop: 0 }}>
+      <Seccion
+        titulo="Técnicas de Dominio"
+        resumen={cuenta(elecciones.tecnicas.length, 'técnica', 'técnicas')}
+        abierta={elecciones.tecnicas.length > 0}
+      >
+        <Ayuda>
           Las Técnicas del compendio del Dominus Exxet, con su coste en CM ya calculado. Cada
           árbol va por niveles: normalmente hace falta una del nivel anterior para aprender la
           siguiente, salvo con la ventaja Técnicas desvinculadas.
-        </p>
+        </Ayuda>
         <Selector
           opciones={compendio}
           claveDe={(t) => t.tecnica}
@@ -532,7 +554,7 @@ export function EditorKi({ personaje, ficha, datos, catalogo, onCambiar }: Props
             })}
           </div>
         )}
-      </section>
+      </Seccion>
 
       <div style={{ marginTop: 16 }}>
         <CreadorTecnicas

@@ -11,7 +11,7 @@ import {
   type TipoSheele,
 } from '../motor/sheele';
 import type { EntradaTabla } from '../datos/tipos';
-import { Seccion } from './Seccion';
+import { Ayuda, Seccion } from './Seccion';
 
 const etiqueta = {
   fontSize: '0.68rem',
@@ -186,10 +186,10 @@ export function EditorSheele({
         <>
           <section className="panel" style={{ marginBottom: 16 }}>
             <h3 style={{ marginTop: 0 }}>Características</h3>
-            <p style={{ color: 'var(--texto-tenue)', fontSize: '0.86rem', marginTop: 0 }}>
+            <Ayuda>
               Las de su elemento. Cada vez que <em>tú</em> subes de nivel puedes sumarle +1 a
               una: una por nivel, no una cada dos.
-            </p>
+            </Ayuda>
             <div className="desplazable">
               <table>
                 <tbody>
@@ -221,10 +221,10 @@ export function EditorSheele({
 
           <section className="panel" style={{ marginBottom: 16 }}>
             <h3 style={{ marginTop: 0 }}>Habilidades secundarias</h3>
-            <p style={{ color: 'var(--texto-tenue)', fontSize: '0.86rem', marginTop: 0 }}>
+            <Ayuda>
               Nunca suman el bono de característica, y ninguna basada en el conocimiento puede
               pasar de lo que tú sepas en esa misma habilidad.
-            </p>
+            </Ayuda>
             <div className="desplazable">
               <table>
                 <tbody>
@@ -256,11 +256,11 @@ export function EditorSheele({
 
           <section className="panel" style={{ marginBottom: 16 }}>
             <h3 style={{ marginTop: 0 }}>Mejoras</h3>
-            <p style={{ color: 'var(--texto-tenue)', fontSize: '0.86rem', marginTop: 0 }}>
+            <Ayuda>
               Las de Esotéricas, Forma de Alma, Magia y Potenciación valen para cualquier
               Sheele; las demás sólo para las de su elemento. {disponibles.length} disponibles
               para una de {e.tipo}.
-            </p>
+            </Ayuda>
             <div style={{ display: 'grid', gap: 2 }}>
               {disponibles.map((m) => {
                 const nombre = String(m.mejora ?? '');

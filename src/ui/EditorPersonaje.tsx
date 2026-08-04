@@ -16,7 +16,7 @@ import {
 import type { Reglamento } from '../motor/reglamento';
 import type { EscalaArma } from '../motor/combate';
 import { Selector } from './Selector';
-import { Seccion, cuenta } from './Seccion';
+import { Ayuda, Seccion, cuenta } from './Seccion';
 import { Imagen } from './Imagen';
 import { ErrorImagen, borrarImagen, guardarImagen } from '../almacen/imagenes';
 import { EFECTOS } from '../motor/efectos';
@@ -347,33 +347,71 @@ export function EditorPersonaje({ personaje, datos, catalogo, reglamento, onCamb
       {pestana === 'caracteristicas' && (
         <section className="panel">
           <h2>Características</h2>
-          <p style={{ color: 'var(--texto-tenue)', fontSize: '0.86rem', marginTop: 0 }}>
+          <Ayuda>
             Escribe el valor <strong>comprado</strong>. Los modificadores raciales se aplican solos.
-          </p>
-          <div className="rejilla">
+          </Ayuda>
+          {/*
+            Ocho campos apilados a lo ancho eran más de dos mil píxeles de recorrido para
+            escribir ocho números —lo primero que se hace al crear un personaje—. En rejilla
+            se ven los ocho a la vez, que además es como están en la ficha de Excel: puestos
+            juntos se comparan entre sí, y de eso va repartir características.
+          */}
+          <div className="caracteristicas-editor">
             {CARACTERISTICAS.map((c) => {
               const v = ficha.caracteristicas[c as Caracteristica];
+              const poner = (n: number) =>
+                set({
+                  caracteristicas: {
+                    ...personaje.caracteristicas,
+                    [c]: Math.min(20, Math.max(0, n || 0)),
+                  },
+                });
               return (
-                <div className="campo" key={c}>
-                  <label htmlFor={`car-${c}`}>
-                    {c} — total {v.total}, bono {v.bono >= 0 ? `+${v.bono}` : v.bono}
-                    {v.raza !== 0 && ` (${v.raza > 0 ? '+' : ''}${v.raza} raza)`}
-                  </label>
-                  <input
-                    id={`car-${c}`}
-                    type="number"
-                    min={0}
-                    max={20}
-                    value={personaje.caracteristicas[c]}
-                    onChange={(e) =>
-                      set({
-                        caracteristicas: {
-                          ...personaje.caracteristicas,
-                          [c]: Math.min(20, Math.max(0, Number(e.target.value) || 0)),
-                        },
-                      })
-                    }
-                  />
+                <div className="car-editor" key={c}>
+                  <label htmlFor={`car-${c}`}>{c}</label>
+                  <div className="mando">
+                    {/* Los botones son para el móvil: escribir en un campo numérico obliga
+                        a sacar el teclado y apuntar, y aquí se sube de uno en uno. */}
+                    <button
+                      type="button"
+                      className="paso"
+                      aria-label={`Bajar ${c}`}
+                      onClick={() => poner(personaje.caracteristicas[c] - 1)}
+                    >
+                      −
+                    </button>
+                    <input
+                      id={`car-${c}`}
+                      type="number"
+                      inputMode="numeric"
+                      min={0}
+                      max={20}
+                      value={personaje.caracteristicas[c]}
+                      onChange={(e) => poner(Number(e.target.value))}
+                    />
+                    <button
+                      type="button"
+                      className="paso"
+                      aria-label={`Subir ${c}`}
+                      onClick={() => poner(personaje.caracteristicas[c] + 1)}
+                    >
+                      +
+                    </button>
+                  </div>
+                  <p className="derivado">
+                    <span>
+                      Total <strong>{v.total}</strong>
+                    </span>
+                    <span>
+                      Bono <strong>{v.bono >= 0 ? `+${v.bono}` : v.bono}</strong>
+                    </span>
+                    {v.raza !== 0 && (
+                      <span className="raza">
+                        {v.raza > 0 ? '+' : ''}
+                        {v.raza} raza
+                      </span>
+                    )}
+                  </p>
                 </div>
               );
             })}
