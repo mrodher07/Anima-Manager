@@ -1,12 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { Cuenta } from '../nube/cuenta';
-import { SIN_NUBE } from '../nube/supabase';
-
-const NOMBRES: Record<string, string> = {
-  campanas: 'Campañas',
-  personajes: 'Fichas',
-  enemigos: 'Bestiario',
-};
+import { NOMBRE_COLECCION } from '../nube/sincronizacion';
+import { cliente, SIN_NUBE } from '../nube/supabase';
+import { unirseACampana } from '../nube/mesa';
 
 /**
  * La pantalla de la cuenta.
@@ -16,11 +12,18 @@ const NOMBRES: Record<string, string> = {
  * gente confía en una herramienta cuando sabe qué pasa con lo suyo, y en una campaña de rol
  * lo que hay dentro son años de partidas.
  */
-export function VistaCuenta({ cuenta }: { cuenta: Cuenta }) {
+export function VistaCuenta({ cuenta, onRecargar }: { cuenta: Cuenta; onRecargar?: () => void }) {
   const [correo, setCorreo] = useState('');
   const [clave, setClave] = useState('');
   const [modo, setModo] = useState<'entrar' | 'registrar'>('entrar');
   const [ocupado, setOcupado] = useState(false);
+  const [nombre, setNombre] = useState(cuenta.nombre);
+  const [codigo, setCodigo] = useState('');
+  const [avisoMesa, setAvisoMesa] = useState('');
+
+  // El nombre llega del servidor después de pintar. Se copia al campo cuando llega, no
+  // antes: si no, el campo saldría vacío y parecería que no hay nombre puesto.
+  useEffect(() => setNombre(cuenta.nombre), [cuenta.nombre]);
 
   if (cuenta.estado === 'sin-configurar') {
     return (
@@ -67,6 +70,23 @@ export function VistaCuenta({ cuenta }: { cuenta: Cuenta }) {
           es por si tienes prisa.
         </p>
 
+        <div className="campo" style={{ maxWidth: 380 }}>
+          <label htmlFor="cuenta-nombre">Cómo te ve el resto de la mesa</label>
+          <input
+            id="cuenta-nombre"
+            value={nombre}
+            maxLength={60}
+            placeholder="Tu nombre"
+            onChange={(e) => setNombre(e.target.value)}
+            onBlur={() => {
+              if (nombre.trim() !== cuenta.nombre) void cuenta.ponerNombre(nombre);
+            }}
+          />
+          <small style={{ color: 'var(--texto-debil)' }}>
+            Tu correo no lo ve nadie más. Esto es lo único que aparece junto a tus fichas.
+          </small>
+        </div>
+
         <div className="acciones-regla" style={{ marginTop: 0 }}>
           <button
             className="accion primaria"
@@ -108,7 +128,7 @@ export function VistaCuenta({ cuenta }: { cuenta: Cuenta }) {
                 {cuenta.ultima.tiendas.map((t) => (
                   <tr key={t.tienda}>
                     <td>
-                      {NOMBRES[t.tienda] ?? t.tienda}
+                      {NOMBRE_COLECCION[t.tienda] ?? t.tienda}
                       {t.error && (
                         <small style={{ display: 'block', color: 'var(--peligro, #c33)' }}>
                           {t.error}
@@ -125,21 +145,88 @@ export function VistaCuenta({ cuenta }: { cuenta: Cuenta }) {
           </>
         )}
 
+        <h3 style={{ marginTop: 22 }}>Unirte a una mesa</h3>
+        <p style={{ color: 'var(--texto-tenue)', fontSize: '0.9rem', marginTop: 0 }}>
+          Pídele el código a tu máster: lo genera en la pestaña Campañas. Al canjearlo verás
+          las reglas caseras y los manuales de esa mesa, y tu máster podrá ver tus fichas de
+          esa campaña.
+        </p>
+        <form
+          className="acciones-regla"
+          style={{ marginTop: 0, alignItems: 'flex-end' }}
+          onSubmit={(e) => {
+            e.preventDefault();
+            void enviar(async () => {
+              const supa = cliente();
+              if (!supa) return;
+              const r = await unirseACampana(supa, codigo.trim().toUpperCase());
+              if (!r.ok) {
+                setAvisoMesa(r.error ?? 'No se ha podido canjear el código.');
+                return;
+              }
+              setAvisoMesa(
+                r.yaEstaba
+                  ? `Ya jugabas en «${r.nombre}».`
+                  : `Te has unido a «${r.nombre}».`,
+              );
+              setCodigo('');
+              await cuenta.sincronizarAhora();
+              onRecargar?.();
+            });
+          }}
+        >
+          <div className="campo" style={{ marginBottom: 0, maxWidth: 200 }}>
+            <label htmlFor="codigo-mesa">Código de invitación</label>
+            <input
+              id="codigo-mesa"
+              value={codigo}
+              maxLength={6}
+              placeholder="ABC234"
+              style={{ textTransform: 'uppercase', letterSpacing: '0.15em' }}
+              onChange={(e) => setCodigo(e.target.value)}
+            />
+          </div>
+          <button className="accion primaria" type="submit" disabled={!codigo.trim() || ocupado}>
+            Unirme
+          </button>
+        </form>
+        {avisoMesa && <div className="aviso" style={{ marginTop: 12 }}>{avisoMesa}</div>}
+
+        {cuenta.campanasAjenas.length > 0 && (
+          <>
+            <h3 style={{ marginTop: 22 }}>Mesas en las que juegas</h3>
+            <ul style={{ color: 'var(--texto-tenue)', fontSize: '0.9rem', lineHeight: 1.6 }}>
+              {cuenta.campanasAjenas.map((c) => (
+                <li key={c.id}>
+                  <strong>{c.nombre}</strong>
+                  {c.descripcion ? ` — ${c.descripcion}` : ''}
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
+
         <h3 style={{ marginTop: 22 }}>Qué se sube y qué no</h3>
         <ul style={{ color: 'var(--texto-tenue)', fontSize: '0.9rem', lineHeight: 1.6 }}>
-          <li>Se suben tus <strong>fichas, campañas y bestiario</strong>.</li>
           <li>
-            <strong>Las imágenes todavía no.</strong> Ocupan mucho y van por otro camino;
-            hasta que se haga, los retratos y mapas viven sólo en este dispositivo — sácalos
-            con la Copia de seguridad si vas a cambiar de equipo.
+            Se suben tus <strong>fichas, campañas, bestiario e imágenes</strong>, y el tema
+            que tengas puesto.
           </li>
           <li>
             El máster de tu campaña puede <strong>ver</strong> tus fichas, pero no
             cambiarlas. Tu ficha es tuya.
           </li>
           <li>
+            Los <strong>mapas de una campaña</strong> los ve toda la mesa. Las imágenes sin
+            campaña son sólo tuyas.
+          </li>
+          <li>
             Gana siempre <strong>la última versión guardada</strong>. Si editas la misma
             ficha en dos sitios sin conexión, la que sincronice después se queda.
+          </li>
+          <li>
+            La nube <strong>no sustituye a la copia de seguridad</strong>: el borrado también
+            se sincroniza, así que si borras algo por error se borra en todas partes.
           </li>
         </ul>
       </section>

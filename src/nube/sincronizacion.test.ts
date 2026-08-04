@@ -34,6 +34,21 @@ vi.mock('../almacen/almacen', () => ({
   },
 }));
 
+/**
+ * Las imágenes se prueban aparte, en `imagenesNube.test.ts`: llevan archivo además de
+ * fila y tienen su propia lógica. Aquí se sustituyen para poder comprobar una cosa
+ * concreta —que un fallo suyo no se lleva por delante a las fichas— sin arrastrar Storage.
+ */
+const imagenes = { subidas: 0, bajadas: 0, borradasAqui: 0, lapidasEnviadas: 0, fallos: [] as string[] };
+let imagenesLanza: string | null = null;
+
+vi.mock('./imagenesNube', () => ({
+  sincronizarImagenes: async () => {
+    if (imagenesLanza) throw new Error(imagenesLanza);
+    return imagenes;
+  },
+}));
+
 const { sincronizar, fichasDeCampana, resumir } = await import('./sincronizacion');
 
 const YO = 'usuario-1';
@@ -157,6 +172,8 @@ beforeEach(() => {
   for (const t of Object.values(servidor.tablas)) t.clear();
   servidor.falla.clear();
   servidor.escrituras = [];
+  Object.assign(imagenes, { subidas: 0, bajadas: 0, borradasAqui: 0, lapidasEnviadas: 0, fallos: [] });
+  imagenesLanza = null;
 });
 
 // ── Pruebas ───────────────────────────────────────────────────────────────────
@@ -331,6 +348,25 @@ describe('sincronizar', () => {
     expect(servidor.tablas.personajes.has('a')).toBe(true);
     expect(resultado.tiendas.find((t) => t.tienda === 'enemigos')?.error).toBeTruthy();
     expect(resumir(resultado)).toContain('Error al sincronizar');
+  });
+
+  it('sube las fichas aunque las imágenes fallen', async () => {
+    // Un mapa que no sube no puede impedir que la ficha esté a salvo. Por eso las
+    // imágenes van al final y en su propio try.
+    imagenesLanza = 'Storage no responde';
+    bd.personajes.set('a', ficha('a', HOY));
+
+    const resultado = await sincronizar(clienteFalso(), YO);
+
+    expect(servidor.tablas.personajes.has('a')).toBe(true);
+    expect(resultado.ok).toBe(false);
+    expect(resultado.tiendas.find((t) => t.tienda === 'imagenes')?.error).toBe('Storage no responde');
+  });
+
+  it('cuenta las imágenes en el resumen', async () => {
+    Object.assign(imagenes, { subidas: 2, bajadas: 1 });
+    const resultado = await sincronizar(clienteFalso(), YO);
+    expect(resumir(resultado)).toBe('2 enviados, 1 recibidos');
   });
 
   it('no toca nada si no hay nada que hacer', async () => {

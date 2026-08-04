@@ -16,6 +16,7 @@ import type { SupabaseClient } from '@supabase/supabase-js';
 import { almacen, type Campana, type Enemigo, type Tienda } from '../almacen/almacen';
 import { migrarPersonaje, type Personaje } from '../motor/personaje';
 import { planificar, lapidasPendientes, type FilaRemota, type Sincronizable } from './fusion';
+import { sincronizarImagenes } from './imagenesNube';
 
 /** Cada tienda local se corresponde con una tabla que se llama igual. */
 const TABLAS: Record<Tienda, string> = {
@@ -25,7 +26,7 @@ const TABLAS: Record<Tienda, string> = {
 };
 
 export interface ResultadoTienda {
-  tienda: Tienda;
+  tienda: Tienda | 'imagenes';
   subidos: number;
   bajados: number;
   borradosAqui: number;
@@ -40,6 +41,14 @@ export interface Resultado {
   /** El primer error que impidió terminar, si lo hubo. */
   error?: string;
 }
+
+/** Nombres para enseñar; `imagenes` no es una tienda de IndexedDB pero cuenta igual. */
+export const NOMBRE_COLECCION: Record<string, string> = {
+  campanas: 'Campañas',
+  personajes: 'Fichas',
+  enemigos: 'Bestiario',
+  imagenes: 'Imágenes',
+};
 
 /** Las columnas que se sacan del jsonb. El resto del registro vive dentro de `datos`. */
 interface FilaEscribible {
@@ -93,7 +102,38 @@ export async function sincronizar(supa: SupabaseClient, usuario: string): Promis
     }
   }
 
+  // Las imágenes al final, y por su cuenta: son las únicas que además del registro tienen
+  // un archivo, y las únicas que pueden tardar de verdad. Que un mapa de 300 kB falle no
+  // puede impedir que las fichas —lo que importa— ya estén subidas.
+  try {
+    const r = await sincronizarImagenes(supa, usuario);
+    tiendas.push({
+      tienda: 'imagenes',
+      subidos: r.subidas,
+      bajados: r.bajadas,
+      borradosAqui: r.borradasAqui,
+      lapidasEnviadas: r.lapidasEnviadas,
+      error: r.fallos.length ? r.fallos.join('; ') : undefined,
+    });
+    if (r.fallos.length) error ??= r.fallos[0];
+  } catch (e) {
+    const m = mensajeDe(e);
+    tiendas.push({
+      tienda: 'imagenes',
+      subidos: 0,
+      bajados: 0,
+      borradosAqui: 0,
+      lapidasEnviadas: 0,
+      error: m,
+    });
+    error ??= m;
+  }
+
   return { ok: !error, cuando: new Date().toISOString(), tiendas, error };
+}
+
+function mensajeDe(e: unknown): string {
+  return e instanceof Error ? e.message : String(e);
 }
 
 async function idsDeCampanas(supa: SupabaseClient): Promise<Set<string>> {

@@ -11,6 +11,15 @@ import { migrarPersonaje, type Personaje } from '../motor/personaje';
 import type { AjustesMesa } from '../motor/reglamento';
 import type { SistemaCombate } from '../motor/combateAlternativo';
 import { obtenerImagen, type Imagen, type ImagenInfo } from './imagenes';
+import {
+  listarLapidas,
+  ponerLapida,
+  quitarLapida,
+  transaccion,
+  type Coleccion,
+  type Lapida,
+  type Tienda,
+} from './bd';
 import type { TipoDano } from '../motor/combate';
 import { PERSONALIZADOS_VACIOS, type Personalizados } from '../datos/paquetes';
 
@@ -89,95 +98,8 @@ export interface Campana {
   personalizados?: Personalizados;
 }
 
-const BD = 'anima-manager';
-const VERSION = 3;
-const TIENDAS = ['personajes', 'campanas', 'enemigos'] as const;
-export type Tienda = (typeof TIENDAS)[number];
-
-/**
- * Lápidas: qué se ha borrado aquí y cuándo.
- *
- * Borrar de IndexedDB y ya está funcionaba mientras la aplicación vivía en un solo
- * dispositivo. Con nube no vale: si el borrado no deja rastro, la siguiente sincronización
- * se encuentra una ficha que está en el servidor y no está aquí, y la única conclusión
- * razonable que puede sacar es que es nueva. La ficha borrada resucita.
- *
- * La lápida guarda **cuándo** se borró, no sólo que se borró, porque hay que poder
- * compararlo con la última edición del servidor: si allí se tocó después, gana el servidor.
- */
-const BORRADOS = 'borrados';
-
-export interface Lapida {
-  /** `tienda:id`, para que dos tiendas puedan usar el mismo id sin pisarse. */
-  clave: string;
-  tienda: Tienda;
-  registroId: string;
-  actualizadoEn: string;
-}
-
-let promesaBD: Promise<IDBDatabase> | null = null;
-
-function abrir(): Promise<IDBDatabase> {
-  if (promesaBD) return promesaBD;
-  promesaBD = new Promise((resolver, rechazar) => {
-    const solicitud = indexedDB.open(BD, VERSION);
-    solicitud.onupgradeneeded = () => {
-      const bd = solicitud.result;
-      for (const t of TIENDAS) {
-        if (!bd.objectStoreNames.contains(t)) bd.createObjectStore(t, { keyPath: 'id' });
-      }
-      if (!bd.objectStoreNames.contains(BORRADOS)) {
-        bd.createObjectStore(BORRADOS, { keyPath: 'clave' });
-      }
-    };
-    solicitud.onsuccess = () => resolver(solicitud.result);
-    solicitud.onerror = () => rechazar(solicitud.error);
-  });
-  return promesaBD;
-}
-
-function transaccion<T>(
-  tienda: Tienda | typeof BORRADOS,
-  modo: IDBTransactionMode,
-  fn: (store: IDBObjectStore) => IDBRequest<T>,
-): Promise<T> {
-  return abrir().then(
-    (bd) =>
-      new Promise<T>((resolver, rechazar) => {
-        const tx = bd.transaction(tienda, modo);
-        const solicitud = fn(tx.objectStore(tienda));
-        solicitud.onsuccess = () => resolver(solicitud.result);
-        solicitud.onerror = () => rechazar(solicitud.error);
-      }),
-  );
-}
-
 function marcar<T extends { actualizadoEn: string }>(registro: T): T {
   return { ...registro, actualizadoEn: new Date().toISOString() };
-}
-
-const clave = (tienda: Tienda, id: string) => `${tienda}:${id}`;
-
-/** Deja constancia de un borrado para que la nube pueda enterarse más tarde. */
-async function ponerLapida(tienda: Tienda, registroId: string): Promise<void> {
-  const lapida: Lapida = {
-    clave: clave(tienda, registroId),
-    tienda,
-    registroId,
-    actualizadoEn: new Date().toISOString(),
-  };
-  await transaccion(BORRADOS, 'readwrite', (s) => s.put(lapida));
-}
-
-/**
- * Quita la lápida de un registro que vuelve a existir.
- *
- * Pasa en dos casos legítimos: se recupera una ficha desde una copia de seguridad con el
- * mismo id, o baja de la nube porque otro dispositivo la editó después del borrado. Si la
- * lápida se quedara puesta, la siguiente sincronización volvería a borrarla.
- */
-async function quitarLapida(tienda: Tienda, registroId: string): Promise<void> {
-  await transaccion(BORRADOS, 'readwrite', (s) => s.delete(clave(tienda, registroId)));
 }
 
 export const almacen = {
@@ -256,16 +178,17 @@ export const almacen = {
   },
 
   /** Todo lo que se ha borrado aquí, para poder comunicárselo a la nube. */
-  async listarLapidas(tienda?: Tienda): Promise<Lapida[]> {
-    const todas = await transaccion<Lapida[]>(BORRADOS, 'readonly', (s) => s.getAll());
-    return tienda ? todas.filter((l) => l.tienda === tienda) : todas;
+  async listarLapidas(coleccion?: Coleccion): Promise<Lapida[]> {
+    return listarLapidas(coleccion);
   },
 
   /** Una lápida ya comunicada deja de hacer falta. */
-  async olvidarLapida(tienda: Tienda, registroId: string): Promise<void> {
-    await quitarLapida(tienda, registroId);
+  async olvidarLapida(coleccion: Coleccion, registroId: string): Promise<void> {
+    await quitarLapida(coleccion, registroId);
   },
 };
+
+export type { Coleccion, Lapida, Tienda };
 
 // ─────────────────── Exportar / importar (compartir sin nube) ───────────────────
 
