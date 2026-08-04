@@ -18,7 +18,7 @@
  */
 
 import { migrarPersonaje, type Personaje } from '../motor/personaje';
-import { almacen, type Campana, type Enemigo } from './almacen';
+import { almacen, type Campana, type Enemigo, type Tirada } from './almacen';
 import {
   guardarImagenCruda,
   listarImagenes,
@@ -47,6 +47,8 @@ export interface CopiaSeguridad {
   personajes: Personaje[];
   campanas: Campana[];
   enemigos: Enemigo[];
+  /** El registro de tiradas. Opcional: las copias anteriores a v4 no lo traen. */
+  tiradas?: Tirada[];
   /** **Todas** las imágenes, no sólo los retratos: mapas, PNJs, objetos… */
   imagenes: ImagenEnCopia[];
   /** Tema elegido y cualquier otra preferencia del navegador. */
@@ -57,6 +59,7 @@ export interface ResumenCopia {
   personajes: number;
   campanas: number;
   enemigos: number;
+  tiradas: number;
   imagenes: number;
   preferencias: number;
   /** Tamaño aproximado del archivo, para poder avisar antes de descargarlo. */
@@ -135,11 +138,12 @@ async function recogerImagenes(): Promise<ImagenEnCopia[]> {
 }
 
 export async function crearCopia(): Promise<CopiaSeguridad> {
-  const [personajes, campanas, enemigos, imagenes] = await Promise.all([
+  const [personajes, campanas, enemigos, tiradas, imagenes] = await Promise.all([
     almacen.listarPersonajes(),
     almacen.listarCampanas(),
     // `null` trae los de todas las campañas, no sólo los de la activa.
     almacen.listarEnemigos(null),
+    almacen.listarTiradas(null),
     recogerImagenes(),
   ]);
 
@@ -150,6 +154,7 @@ export async function crearCopia(): Promise<CopiaSeguridad> {
     personajes,
     campanas,
     enemigos,
+    tiradas,
     imagenes,
     preferencias: leerPreferencias(),
   };
@@ -160,6 +165,7 @@ export function resumirCopia(c: CopiaSeguridad): ResumenCopia {
     personajes: c.personajes.length,
     campanas: c.campanas.length,
     enemigos: c.enemigos.length,
+    tiradas: (c.tiradas ?? []).length,
     imagenes: c.imagenes.length,
     preferencias: Object.keys(c.preferencias).length,
     // Una data URI en base64 ocupa cuatro tercios de lo que ocupan sus bytes.
@@ -208,6 +214,7 @@ export function analizarCopia(
     personajes: Array.isArray(c.personajes) ? c.personajes : [],
     campanas: Array.isArray(c.campanas) ? c.campanas : [],
     enemigos: Array.isArray(c.enemigos) ? c.enemigos : [],
+    tiradas: Array.isArray(c.tiradas) ? c.tiradas : [],
     imagenes: Array.isArray(c.imagenes) ? c.imagenes : [],
     preferencias:
       typeof c.preferencias === 'object' && c.preferencias !== null ? c.preferencias : {},
@@ -248,17 +255,20 @@ export async function restaurarCopia(
   let borrados = 0;
 
   if (modo === 'reemplazar') {
-    const [personajes, campanas, enemigos, imagenes] = await Promise.all([
+    const [personajes, campanas, enemigos, tiradas, imagenes] = await Promise.all([
       almacen.listarPersonajes(),
       almacen.listarCampanas(),
       almacen.listarEnemigos(null),
+      almacen.listarTiradas(null),
       listarImagenes(null),
     ]);
     for (const p of personajes) await almacen.borrarPersonaje(p.id);
     for (const c of campanas) await almacen.borrarCampana(c.id);
     for (const e of enemigos) await almacen.borrarEnemigo(e.id);
+    for (const t of tiradas) await almacen.borrarTirada(t.id);
     for (const i of imagenes) await borrarImagen(i.id);
-    borrados = personajes.length + campanas.length + enemigos.length + imagenes.length;
+    borrados =
+      personajes.length + campanas.length + enemigos.length + tiradas.length + imagenes.length;
   }
 
   for (const bruto of copia.personajes) {
@@ -280,6 +290,14 @@ export async function restaurarCopia(
       await almacen.guardarEnemigo(e);
     } catch {
       fallos.push(`No he podido restaurar el enemigo «${e?.nombre ?? e?.id}».`);
+    }
+  }
+  // Las copias anteriores a la v4 no traen tiradas; `?? []` es lo que las hace restaurables.
+  for (const t of copia.tiradas ?? []) {
+    try {
+      await almacen.guardarTirada(t);
+    } catch {
+      fallos.push(`No he podido restaurar una tirada de «${t?.autor ?? 'alguien'}».`);
     }
   }
 

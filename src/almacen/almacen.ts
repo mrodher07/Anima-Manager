@@ -75,6 +75,38 @@ export function enemigoVacio(id: string, campanaId: string | null): Enemigo {
   };
 }
 
+/**
+ * Una tirada del registro de partida.
+ *
+ * Hasta ahora el registro vivía en un `useState` y desaparecía al recargar o al cambiar de
+ * pestaña: en mitad de una sesión, media hora de tiradas se iba porque alguien tocó el
+ * botón de atrás. Guardarlas cuesta poco y tiene dos ventajas más: la partida se puede
+ * repasar después, y con nube el Director ve lo que han sacado sus jugadores sin que se lo
+ * canten.
+ *
+ * `actualizadoEn` hace también de fecha de la tirada. No es un atajo perezoso: una tirada
+ * no se edita nunca, así que las dos fechas serían siempre la misma, y la sincronización
+ * necesita ese campo con ese nombre.
+ */
+export interface Tirada {
+  id: string;
+  campanaId: string | null;
+  personajeId: string | null;
+  /** Quién tiró, en texto, para poder leer el registro sin ir a buscar la ficha. */
+  autor: string;
+  actualizadoEn: string;
+  texto: string;
+  detalle: string;
+  critico?: boolean;
+}
+
+/**
+ * Cuántas tiradas se guardan por campaña. Una sesión larga son unas decenas; doscientas
+ * cubren varias sesiones y evitan que el registro crezca sin fin en un dispositivo que
+ * nadie limpia nunca.
+ */
+export const TIRADAS_GUARDADAS = 200;
+
 export interface Campana {
   id: string;
   propietario: string | null;
@@ -155,6 +187,44 @@ export const almacen = {
   async borrarEnemigo(id: string): Promise<void> {
     await transaccion('enemigos', 'readwrite', (s) => s.delete(id));
     await ponerLapida('enemigos', id);
+  },
+
+  /** Las tiradas de una campaña, de la más reciente a la más antigua. */
+  async listarTiradas(campanaId: string | null): Promise<Tirada[]> {
+    const todas = await transaccion<Tirada[]>('tiradas', 'readonly', (s) => s.getAll());
+    return todas
+      .filter((t) => campanaId === null || t.campanaId === campanaId)
+      .sort((a, b) => b.actualizadoEn.localeCompare(a.actualizadoEn));
+  },
+
+  /**
+   * Apunta una tirada y poda las viejas de esa campaña.
+   *
+   * La poda deja lápida, igual que un borrado a mano: si no, las tiradas podadas aquí
+   * volverían del servidor en la siguiente sincronización y el registro no adelgazaría
+   * nunca.
+   */
+  async guardarTirada(t: Tirada): Promise<void> {
+    await transaccion('tiradas', 'readwrite', (s) => s.put(t));
+    await quitarLapida('tiradas', t.id);
+
+    const suyas = await this.listarTiradas(t.campanaId);
+    for (const vieja of suyas.slice(TIRADAS_GUARDADAS)) {
+      await transaccion('tiradas', 'readwrite', (s) => s.delete(vieja.id));
+      await ponerLapida('tiradas', vieja.id);
+    }
+  },
+
+  async borrarTirada(id: string): Promise<void> {
+    await transaccion('tiradas', 'readwrite', (s) => s.delete(id));
+    await ponerLapida('tiradas', id);
+  },
+
+  /** Vaciar el registro de una campaña. Lo pide el Director cuando acaba una sesión. */
+  async vaciarTiradas(campanaId: string | null): Promise<number> {
+    const suyas = await this.listarTiradas(campanaId);
+    for (const t of suyas) await this.borrarTirada(t.id);
+    return suyas.length;
   },
 
   // ── Lo que usa la sincronización ──────────────────────────────────────────

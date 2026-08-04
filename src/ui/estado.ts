@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Catalogo } from '../datos/paquetes';
 import type { Colecciones, NombreColeccion } from '../datos/tipos';
-import { almacen, type Campana } from '../almacen/almacen';
+import { almacen, type Campana, type Tirada } from '../almacen/almacen';
 import { PERSONALIZADOS_VACIOS } from '../datos/paquetes';
 import { cargarDatosCalculo, personajeVacio, type DatosCalculo, type Personaje } from '../motor/personaje';
 import { REGLAMENTO_OFICIAL, Reglamento } from '../motor/reglamento';
@@ -88,6 +88,46 @@ export function usePersonajes() {
   }, []);
 
   return { personajes, cargando, guardar, crear, borrar, recargar };
+}
+
+/**
+ * El registro de tiradas de una campaña.
+ *
+ * Se guarda de verdad, no en memoria: antes bastaba recargar la página para perder media
+ * sesión de tiradas. Y como se guarda con el resto, se sincroniza con el resto — en una
+ * mesa con cuentas, el Director ve lo que han sacado sus jugadores sin que se lo canten.
+ */
+export function useTiradas(campanaId: string | null) {
+  const [tiradas, setTiradas] = useState<Tirada[]>([]);
+
+  const recargar = useCallback(async () => {
+    setTiradas(await almacen.listarTiradas(campanaId));
+  }, [campanaId]);
+  useEffect(() => { void recargar(); }, [recargar]);
+
+  const anotar = useCallback(
+    async (t: Omit<Tirada, 'id' | 'actualizadoEn' | 'campanaId'>) => {
+      const tirada: Tirada = {
+        ...t,
+        id: nuevoId(),
+        campanaId,
+        actualizadoEn: new Date().toISOString(),
+      };
+      // Se pinta antes de guardar: una tirada tiene que aparecer en cuanto se pulsa, y
+      // esperar a IndexedDB para enseñarla se nota en la mesa.
+      setTiradas((antes) => [tirada, ...antes]);
+      await almacen.guardarTirada(tirada);
+      await recargar();
+    },
+    [campanaId, recargar],
+  );
+
+  const vaciar = useCallback(async () => {
+    await almacen.vaciarTiradas(campanaId);
+    await recargar();
+  }, [campanaId, recargar]);
+
+  return { tiradas, anotar, vaciar, recargar };
 }
 
 export function useCampanas() {

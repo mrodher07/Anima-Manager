@@ -67,7 +67,7 @@ sigue igual.
 ### Otros comandos
 
 ```bash
-npm test         # 485 pruebas del motor de reglas y la sincronización
+npm test         # 486 pruebas del motor de reglas y la sincronización
 npm run build    # compilar (incluye la comprobación de tipos)
 ```
 
@@ -78,7 +78,7 @@ npm run build    # compilar (incluye la comprobación de tipos)
 | **Personajes** | Lista de fichas, crear, exportar e importar en JSON y en Excel |
 | **Ficha** | Vista de consulta con recursos, características, resistencias, combate y secundarias |
 | **Editar** | Identidad, características, ventajas, habilidades, equipo y poderes |
-| **Mesa** | Jugar: gastar recursos, tirar iniciativa, resolver ataques, Combate de Masas |
+| **Mesa** | Jugar: gastar recursos, tirar iniciativa, resolver ataques, Combate de Masas; el registro de tiradas se guarda |
 | **Bestiario** | Fichas de enemigo con imagen; 90 criaturas importables de los manuales |
 | **Lo sobrenatural** | Invocaciones, Encarnaciones, Teoremas, Nodos, rituales y grimorios, con sus calculadoras |
 | **Contenido propio** | Las 26 colecciones del catálogo, personalizables por tu mesa |
@@ -220,6 +220,7 @@ pestaña. Y hay un botón, por si tienes prisa.
 | Tus fichas | tú y el máster de tu campaña | sólo tú |
 | Tus campañas | tú y quienes juegan en ellas | sólo tú |
 | Tu bestiario | sólo tú | sólo tú |
+| Tus tiradas | toda la mesa de esa campaña | sólo tú |
 | Imágenes de una campaña | toda esa mesa | sólo quien las subió |
 | Imágenes sin campaña | sólo tú | sólo tú |
 | Tu nombre visible | quien comparte mesa contigo | sólo tú |
@@ -239,6 +240,7 @@ comentada en `supabase/esquema.sql` que lo cambia.
 | `invitaciones_campana` | Los códigos para unirse a una mesa |
 | `personajes` | Las fichas |
 | `enemigos` | El bestiario del máster |
+| `tiradas` | El registro de la partida. Lo ve toda la mesa; lo escribe quien tiró |
 | `imagenes` | La ficha técnica de cada imagen; el archivo va al bucket `imagenes` |
 | `preferencias` | El tema y lo que vaya haciendo falta, por usuario |
 
@@ -280,7 +282,7 @@ por defecto no da los mismos números.
 ### Montarlo
 
 1. Crea un proyecto gratuito en [supabase.com](https://supabase.com).
-2. **SQL Editor → New query**, pega entero `supabase/esquema.sql` y ejecútalo. Crea las ocho
+2. **SQL Editor → New query**, pega entero `supabase/esquema.sql` y ejecútalo. Crea las nueve
    tablas, el bucket de imágenes y —lo importante— las políticas de acceso.
 3. **Project Settings → API**: copia la *Project URL* y la clave *anon public*.
 4. `cp .env.example .env.local` y rellena esos dos valores.
@@ -298,7 +300,7 @@ quitar en **Authentication → Providers → Email**.
 - **La clave `anon` es pública.** Va dentro del JavaScript que se descarga cualquiera. Lo
   único que impide que un usuario lea los datos de otro son las políticas del paso 2. Si te
   saltas ese paso, la base de datos queda abierta. El propio archivo trae al final una
-  consulta para comprobar que Row Level Security está activo en las ocho tablas.
+  consulta para comprobar que Row Level Security está activo en las nueve tablas.
 - **Las imágenes ocupan.** El plan gratuito de Supabase da 1 GB de Storage. La aplicación ya
   reescala y convierte a WebP antes de subir (1600 px de lado para mapas, 640 para retratos),
   así que una imagen ronda las decenas de kilobytes y hacen falta muchas partidas para
