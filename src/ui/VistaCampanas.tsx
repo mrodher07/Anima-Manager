@@ -5,8 +5,12 @@ import { pdPorNivel } from '../motor/multiclase';
 import type { Campana } from '../almacen/almacen';
 import type { Cuenta } from '../nube/cuenta';
 import { PanelMesa } from './PanelMesa';
+import { VistaReglas } from './VistaReglas';
+import { VistaPersonalizado } from './VistaPersonalizado';
 import { Ayuda, Seccion, cuenta as contar } from './Seccion';
 import { nuevoId } from './estado';
+import type { Reglamento } from '../motor/reglamento';
+import { PERSONALIZADOS_VACIOS, type Personalizados } from '../datos/paquetes';
 
 interface Props {
   /** Las mías, las que puedo editar y borrar. */
@@ -19,7 +23,25 @@ interface Props {
   onGuardar: (c: Campana) => void;
   onCrear: (c: Omit<Campana, 'id' | 'propietario' | 'actualizadoEn'>) => Promise<Campana>;
   onBorrar: (id: string) => void;
+  /** El reglamento vigente y cómo cambiarlo: las reglas caseras son de la campaña. */
+  reglamento: Reglamento;
+  onCambiarReglamento: (r: Reglamento) => void;
 }
+
+/**
+ * Las secciones de una campaña activa. Reglas y Contenido propio estaban sueltas en la
+ * barra de arriba, y las dos son **de una campaña**: sin campaña, Contenido propio no
+ * podía hacer nada y sólo enseñaba un aviso. Aquí dentro se explican solas.
+ */
+type Panel = 'jugadores' | 'ajustes' | 'reglas' | 'propio' | 'diario';
+
+const PANELES: { id: Panel; texto: string }[] = [
+  { id: 'jugadores', texto: 'Jugadores' },
+  { id: 'ajustes', texto: 'Ajustes' },
+  { id: 'reglas', texto: 'Reglas' },
+  { id: 'propio', texto: 'Contenido propio' },
+  { id: 'diario', texto: 'Diario' },
+];
 
 interface Borrador {
   nombre: string;
@@ -57,8 +79,11 @@ export function VistaCampanas({
   onGuardar,
   onCrear,
   onBorrar,
+  reglamento,
+  onCambiarReglamento,
 }: Props) {
   const [creando, setCreando] = useState(false);
+  const [panel, setPanel] = useState<Panel>('jugadores');
   const [borrador, setBorrador] = useState({ ...NUEVA });
   const [tituloNota, setTituloNota] = useState('');
   const [textoNota, setTextoNota] = useState('');
@@ -226,22 +251,42 @@ export function VistaCampanas({
         )}
       </section>
 
-      {activa && cuenta.estado === 'dentro' && (
+      {activa && (
+        <>
+          {/*
+            Las secciones de la campaña activa. Antes se pintaban todas seguidas —la mesa,
+            los ajustes y el diario, una debajo de otra— y había que recorrer la pantalla
+            entera para llegar al diario. Con pestañas se ve una cosa cada vez, y caben
+            aquí dentro Reglas y Contenido propio, que estaban sueltas arriba.
+          */}
+          <nav className="pestanas" style={{ marginTop: 18 }}>
+            {PANELES.map((s) => (
+              <button
+                key={s.id}
+                onClick={() => setPanel(s.id)}
+                aria-current={panel === s.id ? 'page' : undefined}
+              >
+                {s.texto}
+              </button>
+            ))}
+          </nav>
+
+      {panel === 'jugadores' && activa && cuenta.estado === 'dentro' && (
         <section className="panel" style={{ marginTop: 16 }}>
           <h2>La mesa de «{activa.nombre}»</h2>
           <PanelMesa campanaId={activa.id} soyElMaster={soyElMaster} />
         </section>
       )}
 
-      {activa && cuenta.estado !== 'dentro' && (
+      {panel === 'jugadores' && activa && cuenta.estado !== 'dentro' && (
         <div className="aviso" style={{ marginTop: 16 }}>
           Para invitar a tus jugadores hace falta una cuenta: es lo que permite que sus fichas
-          lleguen a tu pantalla. Se crea en la pestaña <strong>Cuenta</strong>. Sin ella la
+          lleguen a tu pantalla. Se crea en <strong>Ajustes → Cuenta</strong>. Sin ella la
           campaña funciona igual, sólo que en este dispositivo.
         </div>
       )}
 
-      {editable && (
+      {panel === 'ajustes' && editable && (
         <section className="panel" style={{ marginTop: 16 }}>
           <h2>Ajustes de «{editable.nombre}»</h2>
 
@@ -304,7 +349,7 @@ export function VistaCampanas({
         </section>
       )}
 
-      {activa && !soyElMaster && (
+      {panel === 'ajustes' && activa && !soyElMaster && (
         <section className="panel" style={{ marginTop: 16 }}>
           <h2>Cómo juega esta mesa</h2>
           <p style={{ color: 'var(--texto-tenue)', fontSize: '0.9rem', marginTop: 0 }}>
@@ -314,7 +359,7 @@ export function VistaCampanas({
         </section>
       )}
 
-      {editable && (
+      {panel === 'diario' && editable && (
         <section className="panel" style={{ marginTop: 16 }}>
           <h2>Diario de «{editable.nombre}»</h2>
           <p style={{ color: 'var(--texto-tenue)', fontSize: '0.88rem', marginTop: 0 }}>
@@ -381,6 +426,36 @@ export function VistaCampanas({
             </div>
           )}
         </section>
+      )}
+
+          {panel === 'reglas' && (
+            <>
+              {!editable && (
+                <div className="aviso" style={{ marginBottom: 16 }}>
+                  Las reglas caseras las decide el máster de «{activa.nombre}». Aquí las ves,
+                  y tu ficha ya se calcula con ellas.
+                </div>
+              )}
+              <VistaReglas reglamento={reglamento} onCambiar={onCambiarReglamento} />
+            </>
+          )}
+
+          {panel === 'propio' && (
+            editable ? (
+              <VistaPersonalizado
+                personalizados={editable.personalizados ?? PERSONALIZADOS_VACIOS}
+                onCambiar={(pers: Personalizados) =>
+                  onGuardar({ ...editable, personalizados: pers })
+                }
+              />
+            ) : (
+              <div className="aviso">
+                El contenido propio de «{activa.nombre}» lo lleva su máster. Lo tienes
+                disponible al crear tu ficha.
+              </div>
+            )
+          )}
+        </>
       )}
     </>
   );
@@ -492,7 +567,7 @@ function SistemaDeCombate({
         de cada asalto para que un duelo entre leyendas se sienta épico. Se elige aquí y no en
         mitad de la partida porque el manual pide que todos lo sepan desde el principio del
         combate. El <strong>Combate de Masas</strong> no hace falta activarlo: está siempre
-        disponible en la pestaña Mesa.
+        disponible en la pestaña Mesa de cada personaje.
       </Ayuda>
       <div className="lista-seleccion">
         {(

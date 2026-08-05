@@ -73,20 +73,35 @@ npm run build    # compilar (incluye la comprobación de tipos)
 
 ## Qué hace
 
+Seis secciones, y **no cambian nunca**: lo que hay dentro de un personaje o de una campaña
+cuelga de ellos, no de la barra de arriba.
+
 | Sección | Para qué |
 |---|---|
-| **Personajes** | Lista de fichas, crear, exportar e importar en JSON y en Excel |
-| **Ficha** | Vista de consulta con recursos, características, resistencias, combate y secundarias |
-| **Editar** | Identidad, características, ventajas, habilidades, equipo y poderes |
-| **Mesa** | Jugar: gastar recursos, tirar iniciativa, resolver ataques, Combate de Masas; el registro de tiradas se guarda |
+| **Personajes** | La lista, crear, exportar e importar en JSON y en Excel |
+| **Campañas** | Crear la mesa y configurarla |
 | **Bestiario** | Fichas de enemigo con imagen; 90 criaturas importables de los manuales |
-| **Lo sobrenatural** | Invocaciones, Encarnaciones, Teoremas, Nodos, rituales y grimorios, con sus calculadoras |
-| **Contenido propio** | Las 26 colecciones del catálogo, personalizables por tu mesa |
 | **Galería** | Mapas, PNJs, enemigos y objetos en imágenes |
-| **Campañas** | Crear la mesa, invitar jugadores, nivel de inicio, manuales, reglas caseras y diario |
+| **Lo sobrenatural** | Invocaciones, Encarnaciones, Teoremas, Nodos, rituales y grimorios, con sus calculadoras |
+| **Ajustes** | Cuenta y copia de seguridad |
+
+Al **abrir un personaje** entras en él, con tres vistas dentro:
+
+| | Para qué |
+|---|---|
+| **Ficha** | Consulta: recursos, características, resistencias, combate y secundarias |
+| **Editar** | Identidad, características, ventajas, habilidades, equipo, Ki, poderes y trasfondo |
+| **Mesa** | Jugar: gastar recursos, tirar iniciativa, resolver ataques, Combate de Masas. El registro de tiradas se guarda |
+
+Y una **campaña activa** tiene las suyas:
+
+| | Para qué |
+|---|---|
+| **Jugadores** | Quién juega e invitaciones por código |
+| **Ajustes** | Nivel de inicio, Puntos de Creación, sistema de combate y manuales |
 | **Reglas** | Reescribir o desactivar cualquier fórmula, y restablecerla |
-| **Copia de seguridad** | Guardar y restaurar **todo** lo de este dispositivo |
-| **Cuenta** | Registro y sincronización entre dispositivos, si la nube está configurada |
+| **Contenido propio** | Las 26 colecciones del catálogo, personalizables por tu mesa |
+| **Diario** | Lo que pasó en cada sesión |
 
 ## Cómo está montado
 

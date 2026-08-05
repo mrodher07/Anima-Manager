@@ -714,7 +714,7 @@ export function EditorPersonaje({ personaje, datos, catalogo, reglamento, onCamb
               <>
                 Cómo formula tu personaje la magia. Sólo se puede <strong>usar</strong> uno:
                 puede conocer los demás, pero no beneficiarse de sus reglas especiales. Las
-                cuentas de cada Teorema están en la pestaña «Lo sobrenatural».
+                cuentas de cada Teorema están en «Lo sobrenatural».
               </>
             }
           >
