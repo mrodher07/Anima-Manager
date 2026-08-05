@@ -100,7 +100,7 @@ Y una **campaña activa** tiene las suyas:
 | **Jugadores** | Quién juega e invitaciones por código |
 | **Ajustes** | Nivel de inicio, Puntos de Creación, sistema de combate y manuales |
 | **Reglas** | Reescribir o desactivar cualquier fórmula, y restablecerla |
-| **Contenido propio** | Las 26 colecciones del catálogo, personalizables por tu mesa |
+| **Contenido propio** | Las 27 colecciones del catálogo, personalizables por tu mesa |
 | **Diario** | Lo que pasó en cada sesión |
 
 ## Cómo está montado
@@ -372,9 +372,9 @@ derivadas). De ahí se traen:
 - La identidad: nombre, raza, sexo, categoría y nivel.
 - Las ocho características **compradas** (no las que ya llevan el modificador racial: ese lo
   aplica la aplicación).
-- Los **PD invertidos** en cada habilidad de combate, secundaria, mística y de Ki, sumando
-  los tramos de nivel en que la hoja los reparte. El Ki tiene dos bloques con las mismas
-  siglas —Puntos y Acumulación— que se distinguen por el rótulo de su grupo.
+- Los **PD invertidos** en cada habilidad de combate, secundaria, mística, de invocación y
+  de Ki, sumando los tramos de nivel en que la hoja los reparte. El Ki tiene dos bloques con
+  las mismas siglas —Puntos y Acumulación— que se distinguen por el rótulo de su grupo.
 
 Todo se busca **por etiqueta**, nunca por dirección de celda, para que aguante las distintas
 versiones que circulan: de las cuatro fichas reales con las que está probado, ninguna coloca
@@ -445,4 +445,11 @@ dispositivos sin conexión se pisarían.
 pip install openpyxl
 cp Meirmeister.xlsm tools/ficha.xlsm
 python3 tools/extraer-tablas.py
+```
+
+La tabla de precios del equipamiento no está en el Excel, sino en el capítulo VIII del
+Core Exxet, así que sale de otro sitio:
+
+```bash
+python3 tools/extraer-equipamiento.py CORE_EXXET51100.pdf   # necesita pdftotext
 ```

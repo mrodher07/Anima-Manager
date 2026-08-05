@@ -128,6 +128,18 @@ function hojasLegibles(p: Personaje, ficha?: FichaCalculada | null): Hoja[] {
     ['Pieza', 'Calidad'],
     ...p.equipo.armadura.map((a): Celda[] => [a.armadura, a.calidad ?? 0]),
     [],
+    ['Inventario'],
+    ['Objeto', 'Cantidad', 'Peso', 'Coste', 'Nota'],
+    ...(p.equipo.objetos ?? []).map((o, i): Celda[] => {
+      const linea = ficha?.inventario?.lineas?.[i];
+      return [o.objeto, o.cantidad ?? 1, linea?.peso ?? '', linea?.coste ?? '', o.nota ?? ''];
+    }),
+    [],
+    ['Bolsa'],
+    ['Monedas de oro', p.equipo.dinero?.MO ?? 0],
+    ['Monedas de plata', p.equipo.dinero?.MP ?? 0],
+    ['Monedas de cobre', p.equipo.dinero?.MC ?? 0],
+    [],
     ['Dinero', p.trasfondo?.dinero ?? ''],
     ['Otro equipo', p.trasfondo?.equipoLibre ?? ''],
   ];
@@ -300,6 +312,22 @@ function deHojasLegibles(hojas: Hoja[], id: string): ResultadoImportacion {
     p.equipo.armadura = bloque(hojaEquipo, 'Pieza')
       .map((f) => ({ armadura: texto(f[0]), calidad: numero(f[1]) }))
       .filter((a) => a.armadura);
+    // El peso y el coste no se leen: salen del catálogo, así que traerlos de la hoja sólo
+    // serviría para que se contradijeran si alguien los tocó a mano.
+    const objetos = bloque(hojaEquipo, 'Objeto')
+      .map((f) => ({
+        objeto: texto(f[0]),
+        cantidad: numero(f[1]) || 1,
+        nota: texto(f[4]) || undefined,
+      }))
+      .filter((o) => o.objeto);
+    if (objetos.length > 0) p.equipo.objetos = objetos;
+    const bolsa = {
+      MO: numero(valorDe(hojaEquipo, 'Monedas de oro')),
+      MP: numero(valorDe(hojaEquipo, 'Monedas de plata')),
+      MC: numero(valorDe(hojaEquipo, 'Monedas de cobre')),
+    };
+    if (bolsa.MO || bolsa.MP || bolsa.MC) p.equipo.dinero = bolsa;
   }
 
   const hojaTras = buscarHoja(hojas, 'Trasfondo');
@@ -441,7 +469,7 @@ function caracteristicasDe(hojas: Hoja[]): Partial<Record<Caracteristica, number
  * importador: las cuatro fichas reales que hay para probar no colocan las tablas en las
  * mismas filas, y una de ellas ni siquiera tiene las mismas pestañas.
  */
-function pdInvertidosDe(hojas: Hoja[]): { pd: Record<string, number>; sinReconocer: string[] } {
+export function pdInvertidosDe(hojas: Hoja[]): { pd: Record<string, number>; sinReconocer: string[] } {
   const pd: Record<string, number> = {};
   const sinReconocer: string[] = [];
   const hoja = buscarHoja(hojas, 'PDs');
@@ -549,6 +577,12 @@ const CLAVE_DESDE_HOJA: Record<string, string> = {
   'nivel de magia': 'NivelMagia',
   'proyección psíquica': 'ProyeccionPsiquica',
   cv: 'CV',
+  // Las cuatro de invocación. La hoja llama «Controlar» a lo que el manual llama Dominar.
+  convocar: 'Convocar',
+  controlar: 'Controlar',
+  dominar: 'Controlar',
+  atar: 'Atar',
+  desconvocar: 'Desconvocar',
 };
 
 export function esFichaDeLaComunidad(hojas: Hoja[]): boolean {

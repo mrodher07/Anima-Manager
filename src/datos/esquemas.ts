@@ -216,6 +216,26 @@ export const ESQUEMAS: EsquemaColeccion[] = [
     ],
   },
   {
+    coleccion: 'objetos',
+    singular: 'objeto',
+    plural: 'Equipamiento',
+    clave: 'objeto',
+    ayuda:
+      'La lista de precios del manual. El coste se escribe como allí: «5 MP», «2 MO», o ' +
+      '«x10» en los bloques de multiplicador por calidad. 1 MP son 10 MC y 1 MO son 100 MP. ' +
+      'La disponibilidad va vacía si es común, «B» si es raro y «A» si es muy raro.',
+    campos: [
+      txt('objeto', 'Nombre'),
+      txt('seccion', 'Sección', 'VESTIMENTA, ÚTILES VARIOS, VENENOS…'),
+      txt('grupo', 'Tabla', 'Calzado, Orfebrería, Dosis…'),
+      txt('coste', 'Coste', '5 MP'),
+      num('costeMC', 'Coste en cobre', 'Cálculo', 120),
+      num('peso', 'Peso (kg)', 'Cálculo', 96),
+      { clave: 'disponibilidad', etiqueta: 'Disponibilidad', tipo: 'opcion',
+        opciones: ['', 'B', 'A'] },
+    ],
+  },
+  {
     coleccion: 'artesMarciales',
     singular: 'arte marcial',
     plural: 'Artes marciales',

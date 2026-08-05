@@ -12,6 +12,10 @@ import {
   type DatosCalculo,
   type Personaje,
   COSTE_NIVEL_MAGIA,
+  INVOCACION,
+  enMonedas,
+  type ClaveInvocacion,
+  type ObjetoLlevado,
 } from '../motor/personaje';
 import type { Reglamento } from '../motor/reglamento';
 import type { EscalaArma } from '../motor/combate';
@@ -78,7 +82,22 @@ const PRIMARIAS_MISTICAS: Primaria[] = [
   // El Nivel de Magia cuesta 5 PD en todas las categorías: la tabla no trae columna
   // propia para él, así que se pasa fijo.
   { clave: 'NivelMagia', nombre: 'Nivel de Magia', coste: 'costeNivelMagia', costeFijo: COSTE_NIVEL_MAGIA },
+  // Las cuatro de invocación. No son secundarias: no llevan el −30 de no desarrollada,
+  // así que ya salen con el bono de POD (o de VOL en Controlar) aunque no gastes nada.
+  ...INVOCACION.map((i) => ({ clave: i.clave, nombre: i.nombre, coste: i.coste })),
 ];
+
+const NOMBRE_MONEDA = {
+  MO: 'Monedas de oro (MO)',
+  MP: 'Monedas de plata (MP)',
+  MC: 'Monedas de cobre (MC)',
+} as const;
+
+/** Habilidades cuyo valor sale ya calculado de la ficha, sin dividir PD entre coste. */
+const VALOR_PROPIO = new Set<string>([
+  'HAtaque', 'HParada', 'HEsquiva', 'LlevarArmadura', 'Zeon', 'ACT', 'NivelMagia',
+  ...INVOCACION.map((i) => i.clave),
+]);
 
 const PRIMARIAS_PSIQUICAS: Primaria[] = [
   { clave: 'CV', nombre: 'Cargas Vitales (CV)', coste: 'costeCV' },
@@ -107,6 +126,8 @@ export function EditorPersonaje({ personaje, datos, catalogo, reglamento, onCamb
   const categorias = useColeccion(catalogo, 'categorias');
   const armas = useColeccion(catalogo, 'armas');
   const armaduras = useColeccion(catalogo, 'armaduras');
+  const yelmos = useColeccion(catalogo, 'yelmos');
+  const objetos = useColeccion(catalogo, 'objetos');
   const ventajas = useColeccion(catalogo, 'ventajas');
   const legados = useColeccion(catalogo, 'legadosSangre');
   const metamagia = useColeccion(catalogo, 'metamagia');
@@ -121,6 +142,13 @@ export function EditorPersonaje({ personaje, datos, catalogo, reglamento, onCamb
     set({ bonosEspeciales: { ...personaje.bonosEspeciales, [clave]: valor || 0 } });
   const setTrasfondo = (clave: keyof Personaje['trasfondo'], texto: string) =>
     set({ trasfondo: { ...personaje.trasfondo, [clave]: texto } });
+
+  const inventario = personaje.equipo.objetos ?? [];
+  const cambiarObjeto = (i: number, cambios: Partial<ObjetoLlevado>) => {
+    const nuevos = [...inventario];
+    nuevos[i] = { ...nuevos[i], ...cambios };
+    set({ equipo: { ...personaje.equipo, objetos: nuevos } });
+  };
 
   const subirRetrato = async (f: File) => {
     try {
@@ -459,7 +487,9 @@ export function EditorPersonaje({ personaje, datos, catalogo, reglamento, onCamb
                           {h.clave === 'Zeon' && ficha.zeon.valor}
                           {h.clave === 'ACT' && ficha.act.valor}
                           {h.clave === 'NivelMagia' && ficha.nivelMagia.valor}
-                          {!['HAtaque', 'HParada', 'HEsquiva', 'LlevarArmadura', 'Zeon', 'ACT', 'NivelMagia'].includes(h.clave) &&
+                          {h.clave in ficha.invocacion &&
+                            ficha.invocacion[h.clave as ClaveInvocacion].valor}
+                          {!VALOR_PROPIO.has(h.clave) &&
                             (disponible ? Math.trunc((personaje.pdInvertidos[h.clave] ?? 0) / coste) : '—')}
                         </td>
                       </tr>
@@ -791,7 +821,7 @@ export function EditorPersonaje({ personaje, datos, catalogo, reglamento, onCamb
                 Object.entries(ficha.resistencias).map(([k, v]) => [k, v.valor]),
               ),
               nivel: ficha.nivel,
-              controlar: ficha.secundarias.Controlar?.valor ?? 0,
+              controlar: ficha.invocacion.Controlar.valor,
             }}
             tipos={(datos.tablas.tiposSheele ?? []) as unknown as TipoSheele[]}
             habilidadesDelSenor={Object.fromEntries(
@@ -830,6 +860,14 @@ export function EditorPersonaje({ personaje, datos, catalogo, reglamento, onCamb
                       {a.armadura} · req. {a.requerimiento ?? 0}
                     </option>
                   ))}
+                  {/* Los yelmos son otra tabla del Excel, pero protegen igual. */}
+                  <optgroup label="Yelmos">
+                    {yelmos.map((y) => (
+                      <option key={y.yelmo} value={y.yelmo}>
+                        {y.yelmo} · req. {y.requerimiento ?? 0}
+                      </option>
+                    ))}
+                  </optgroup>
                 </select>
                 <button
                   className="accion"
@@ -984,6 +1022,137 @@ export function EditorPersonaje({ personaje, datos, catalogo, reglamento, onCamb
             >
               Añadir arma
             </button>
+          </Seccion>
+
+          <Seccion
+            titulo="Inventario"
+            resumen={cuenta(inventario.length, 'objeto', 'objetos', 'la mochila está vacía')}
+            abierta={inventario.length > 0}
+          >
+            <Ayuda>
+              <p>
+                Es la lista de precios del manual (Core Exxet, cap. VIII). Se suma el peso y
+                lo que vale todo, pero <strong>no impone nada</strong>: Ánima no pone tope de
+                carga, así que llevar mucho o poco lo decidís en la mesa.
+              </p>
+              <p style={{ marginBottom: 0 }}>
+                Una <strong>B</strong> quiere decir que el objeto es raro y sólo se encuentra
+                en grandes capitales; una <strong>A</strong>, que es casi imposible de
+                conseguir. 1 MO son 100 MP, y 1 MP son 10 MC.
+              </p>
+            </Ayuda>
+
+            <div className="rejilla" style={{ marginBottom: 14 }}>
+              {(['MO', 'MP', 'MC'] as const).map((moneda) => (
+                <div className="campo" key={moneda}>
+                  <label>{NOMBRE_MONEDA[moneda]}</label>
+                  <input
+                    type="number"
+                    min={0}
+                    aria-label={NOMBRE_MONEDA[moneda]}
+                    value={personaje.equipo.dinero?.[moneda] ?? 0}
+                    onChange={(e) =>
+                      set({
+                        equipo: {
+                          ...personaje.equipo,
+                          dinero: {
+                            ...personaje.equipo.dinero,
+                            [moneda]: Math.max(0, Number(e.target.value) || 0),
+                          },
+                        },
+                      })
+                    }
+                  />
+                </div>
+              ))}
+            </div>
+
+            <Selector
+              opciones={objetos}
+              claveDe={(o) => o.objeto}
+              grupoDe={(o) => o.seccion ?? ''}
+              detalleDe={(o) =>
+                [o.coste, o.peso ? `${o.peso} kg` : '', o.disponibilidad]
+                  .filter(Boolean)
+                  .join(' · ')
+              }
+              seleccionadas={inventario.map((o) => o.objeto)}
+              onCambiar={(nombres) =>
+                set({
+                  equipo: {
+                    ...personaje.equipo,
+                    // Se conservan cantidades y notas de lo que ya estaba en la mochila.
+                    objetos: nombres.map(
+                      (nombre) =>
+                        inventario.find((o) => o.objeto === nombre) ?? { objeto: nombre, cantidad: 1 },
+                    ),
+                  },
+                })
+              }
+              etiquetaBusqueda="Buscar equipamiento"
+              vacio="No hay ningún objeto en el catálogo."
+            />
+
+            {inventario.length > 0 && (
+              <div className="desplazable" style={{ marginTop: 14 }}>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Objeto</th>
+                      <th className="num">Cantidad</th>
+                      <th className="num">Peso</th>
+                      <th className="num">Coste</th>
+                      <th>Nota</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {ficha.inventario.lineas.map((linea, i) => (
+                      <tr key={linea.objeto}>
+                        <td>
+                          {linea.objeto}
+                          {linea.disponibilidad && (
+                            <span style={{ color: 'var(--texto-tenue)' }}> · {linea.disponibilidad}</span>
+                          )}
+                          {linea.desconocido && (
+                            <span style={{ color: 'var(--aviso)' }}> · fuera del catálogo</span>
+                          )}
+                        </td>
+                        <td className="num" style={{ width: 100 }}>
+                          <input
+                            type="number"
+                            min={1}
+                            value={linea.cantidad}
+                            aria-label={`Cantidad de ${linea.objeto}`}
+                            onChange={(e) => cambiarObjeto(i, { cantidad: Math.max(1, Number(e.target.value) || 1) })}
+                          />
+                        </td>
+                        <td className="num">{linea.peso ? `${linea.peso} kg` : '—'}</td>
+                        <td className="num">{linea.cobre ? enMonedas(linea.cobre) : '—'}</td>
+                        <td>
+                          <input
+                            type="text"
+                            value={linea.nota ?? ''}
+                            aria-label={`Nota de ${linea.objeto}`}
+                            placeholder="Dónde lo lleva, para qué…"
+                            onChange={(e) => cambiarObjeto(i, { nota: e.target.value })}
+                          />
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <td colSpan={2}>Total</td>
+                      <td className="num destacado">{ficha.inventario.peso} kg</td>
+                      <td className="num destacado">{enMonedas(ficha.inventario.valor)}</td>
+                      <td style={{ color: 'var(--texto-tenue)' }}>
+                        En la bolsa: {enMonedas(ficha.inventario.dinero)}
+                      </td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+            )}
           </Seccion>
         </>
       )}

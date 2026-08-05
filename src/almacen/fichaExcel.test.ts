@@ -28,6 +28,11 @@ function fichaDePrueba(): Personaje {
   p.equipo = {
     armas: [{ arma: 'Espada larga', calidad: 5 }],
     armadura: [{ armadura: 'Cota de malla', calidad: 0 }],
+    objetos: [
+      { objeto: 'Mochila' },
+      { objeto: 'Antorcha', cantidad: 4, nota: 'En el cinto' },
+    ],
+    dinero: { MO: 2, MP: 5, MC: 0 },
   };
   p.manuales = { puntosVida: 999 };
   p.estado = { pvActuales: 40, zeonActual: 10 };
@@ -144,6 +149,12 @@ describe('reconstruir desde las hojas legibles', () => {
     expect(personaje.conjuros).toEqual(['Bola de Fuego']);
     expect(personaje.equipo.armas).toEqual([{ arma: 'Espada larga', calidad: 5 }]);
     expect(personaje.pdInvertidos.HAtaque).toBe(60);
+    // El inventario y la bolsa también sobreviven a la reconstrucción.
+    expect(personaje.equipo.objetos).toEqual([
+      { objeto: 'Mochila', cantidad: 1, nota: undefined },
+      { objeto: 'Antorcha', cantidad: 4, nota: 'En el cinto' },
+    ]);
+    expect(personaje.equipo.dinero).toEqual({ MO: 2, MP: 5, MC: 0 });
   });
 
   it('avisa de que es una reconstrucción, no una copia fiel', async () => {
