@@ -18,6 +18,7 @@
 import { crearLibro, leerLibro, ErrorExcel, type Celda, type Hoja } from './xlsx';
 import {
   CARACTERISTICAS,
+  SECUNDARIAS,
   personajeVacio,
   migrarPersonaje,
   type Caracteristica,
@@ -426,6 +427,130 @@ function caracteristicasDe(hojas: Hoja[]): Partial<Record<Caracteristica, number
   return salida;
 }
 
+/**
+ * Los PD que la hoja de la comunidad tiene invertidos en cada habilidad.
+ *
+ * Durante mucho tiempo esto se dio por imposible —«viven dentro de fórmulas»— y sólo se
+ * traían identidad y características. No era cierto: la pestaña **PDs** tiene dos tablas,
+ * una de combate y otra de secundarias, y las dos están montadas igual. Una fila de
+ * cabecera con «Habilidad» y varias columnas «PDs», y debajo una fila por habilidad con su
+ * nombre escrito en claro. Los PD se reparten en varias columnas porque la hoja los anota
+ * por tramos de nivel; el total es la suma.
+ *
+ * Se busca **por etiqueta, nunca por dirección de celda**, igual que el resto del
+ * importador: las cuatro fichas reales que hay para probar no colocan las tablas en las
+ * mismas filas, y una de ellas ni siquiera tiene las mismas pestañas.
+ */
+function pdInvertidosDe(hojas: Hoja[]): { pd: Record<string, number>; sinReconocer: string[] } {
+  const pd: Record<string, number> = {};
+  const sinReconocer: string[] = [];
+  const hoja = buscarHoja(hojas, 'PDs');
+  if (!hoja) return { pd, sinReconocer };
+
+  const secundarias = new Set(SECUNDARIAS.map((s) => s.nombre.toLowerCase()));
+  const porNombre = new Map(SECUNDARIAS.map((s) => [s.nombre.toLowerCase(), s.nombre]));
+
+  for (let i = 0; i < hoja.filas.length; i++) {
+    const fila = hoja.filas[i];
+    if (!fila) continue;
+
+    // ¿Es la cabecera de una de las dos tablas?
+    const colNombre = fila.findIndex(
+      (v) => typeof v === 'string' && v.trim().toLowerCase() === 'habilidad',
+    );
+    if (colNombre < 0) continue;
+    const colsPD = fila
+      .map((v, j) => (typeof v === 'string' && v.trim().toLowerCase() === 'pds' ? j : -1))
+      .filter((j) => j >= 0);
+    if (colsPD.length === 0) continue;
+
+    // El Ki tiene dos bloques con las **mismas** etiquetas —AGI, CON, DES…— uno de Puntos
+    // y otro de Acumulación. Lo que los distingue es el rótulo del grupo, que la hoja pone
+    // en la columna anterior y sólo en la primera fila de cada bloque.
+    let grupo = '';
+
+    for (let k = i + 1; k < hoja.filas.length; k++) {
+      const f = hoja.filas[k];
+      if (!f) continue;
+      const rotulo = texto(f[colNombre - 1]).trim();
+      if (rotulo) grupo = rotulo.toLowerCase();
+
+      const nombre = texto(f[colNombre]).trim();
+      // Un hueco no corta la tabla —la hoja deja filas en blanco entre grupos— pero tres
+      // seguidos sí: a partir de ahí ya es otra cosa.
+      if (!nombre) {
+        const siguientes = [1, 2].every((d) => !texto(hoja.filas[k + d]?.[colNombre]).trim());
+        if (siguientes) break;
+        continue;
+      }
+      const puntos = colsPD.reduce(
+        (t, j) => t + (typeof f[j] === 'number' ? (f[j] as number) : 0),
+        0,
+      );
+      if (puntos <= 0) continue;
+
+      const clave = claveDe(nombre, grupo, secundarias, porNombre);
+      if (clave) pd[clave] = (pd[clave] ?? 0) + puntos;
+      else if (!sinReconocer.includes(nombre)) sinReconocer.push(nombre);
+    }
+  }
+  return { pd, sinReconocer };
+}
+
+/**
+ * De cómo se llama una fila en la hoja a la clave que usa la aplicación, o `null` si esa
+ * fila no le corresponde a nada. Devolver `null` en vez de guardar el nombre tal cual es
+ * deliberado: una clave que el motor no lee no haría nada, pero sí saldría en la cuenta de
+ * «se han traído N habilidades» y daría por importado algo que no lo está.
+ */
+function claveDe(
+  nombre: string,
+  grupo: string,
+  secundarias: Set<string>,
+  porNombre: Map<string, string>,
+): string | null {
+  const n = nombre.toLowerCase();
+  if (secundarias.has(n)) return porNombre.get(n) ?? nombre;
+
+  const directa = CLAVE_DESDE_HOJA[n];
+  if (directa) return directa;
+
+  // Las seis características del Ki, que sólo se distinguen por el rótulo de su bloque.
+  if (ABREVIATURAS.includes(nombre.toUpperCase() as (typeof ABREVIATURAS)[number])) {
+    if (grupo.includes('acumulaci')) return `AcumKi${nombre.toUpperCase()}`;
+    if (grupo.includes('ki')) return `Ki${nombre.toUpperCase()}`;
+    return null;
+  }
+  return null;
+}
+
+/**
+ * Traduce los nombres de la hoja a las claves que usa la aplicación. Sólo hacen falta para
+ * las de combate: las secundarias se llaman igual en los dos sitios.
+ */
+const CLAVE_DESDE_HOJA: Record<string, string> = {
+  // Secundarias que la hoja abrevia o escribe sin tilde. Todas son inequívocas: no hay
+  // ninguna otra habilidad del manual que empiece igual.
+  'p. fuerza': 'Proezas de Fuerza',
+  'res. dolor': 'Resistencia al Dolor',
+  'v. mágica': 'Valoración Mágica',
+  't. manos': 'Trucos de Manos',
+  tactica: 'Táctica',
+  // Combate, Ki y místicas.
+  'h. ataque': 'HAtaque',
+  'h. parada': 'HParada',
+  'h. esquiva': 'HEsquiva',
+  'llevar armadura': 'LlevarArmadura',
+  'conocimiento marcial': 'CM',
+  zeón: 'Zeon',
+  zeon: 'Zeon',
+  act: 'ACT',
+  'proyección mágica': 'ProyeccionMagica',
+  'nivel de magia': 'NivelMagia',
+  'proyección psíquica': 'ProyeccionPsiquica',
+  cv: 'CV',
+};
+
 export function esFichaDeLaComunidad(hojas: Hoja[]): boolean {
   const nombres = hojas.map((h) => h.nombre.toLowerCase());
   // La combinación de estas tres pestañas es característica de esa hoja de cálculo.
@@ -456,11 +581,32 @@ export function deFichaComunidad(hojas: Hoja[], id: string): ResultadoImportacio
   for (const [k, v] of Object.entries(car)) p.caracteristicas[k as Caracteristica] = v;
   if (faltan.length > 0) avisos.push(`No he podido leer estas características: ${faltan.join(', ')}.`);
 
+  // Los PD invertidos, de las tablas de la pestaña PDs.
+  const { pd, sinReconocer } = pdInvertidosDe(hojas);
+  const claves = Object.keys(pd);
+  if (claves.length > 0) {
+    p.pdInvertidos = { ...p.pdInvertidos, ...pd };
+    const total = Object.values(pd).reduce((t, n) => t + n, 0);
+    avisos.push(
+      `Se han traído los PD de ${claves.length} habilidades, ${total} PD en total. ` +
+        'Los valores finales **no van a coincidir todavía** con los de tu hoja, y no es un ' +
+        'error: en esa columna la hoja suma además la armadura que llevas, las ventajas, ' +
+        'las Habilidades Naturales y los bonos de tu raza. Nada de eso se puede leer de ahí, ' +
+        'así que hay que ponerlo a mano; en cuanto esté, los números cuadran.',
+    );
+  }
+  if (sinReconocer.length > 0) {
+    avisos.push(
+      `Estas filas de la pestaña PDs tenían puntos pero no corresponden a nada que la ` +
+        `aplicación calcule, así que se han dejado fuera: ${sinReconocer.join(', ')}.`,
+    );
+  }
+
   avisos.push(
-    'Ficha de la hoja de cálculo de la comunidad: se han traído la identidad, la categoría ' +
-      'y las características compradas. Las habilidades, ventajas, equipo y poderes hay que ' +
-      'repasarlos a mano, porque en esa hoja viven dentro de fórmulas y no se pueden ' +
-      'identificar sin riesgo de inventarse datos.',
+    'Ficha de la hoja de cálculo de la comunidad: se han traído la identidad, la categoría, ' +
+      'las características compradas y los PD invertidos. Las ventajas, el equipo y los ' +
+      'poderes hay que elegirlos a mano: en esa hoja se escriben en texto libre y no se ' +
+      'pueden emparejar con el catálogo sin riesgo de inventarse datos.',
   );
 
   return { personaje: p, origen: 'comunidad', avisos };
