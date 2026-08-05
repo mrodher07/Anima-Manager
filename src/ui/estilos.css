@@ -375,6 +375,36 @@ h3 { font-size: clamp(0.98rem, 0.9rem + 0.4vw, 1.12rem); }
 /* Un panel que sólo lleva una cuenta: la de Puntos de Creación mientras eliges ventajas. */
 .panel.marcador { padding: 12px 18px; margin-bottom: 16px; }
 
+/*
+ * Migas de pan. Aparecen al entrar en algo —de momento, un personaje— y son el camino de
+ * vuelta. Hacen falta desde que la barra de arriba dejó de cambiar: si «Personajes» ya no
+ * se ilumina mientras tienes una ficha abierta, algo tiene que decir dónde estás.
+ */
+.migas {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  font-size: 0.84rem;
+  color: var(--texto-debil);
+}
+.migas > span { color: var(--borde); }
+.migas > strong { color: var(--texto-tenue); font-weight: 500; }
+.migas .volver {
+  background: none;
+  border: none;
+  padding: 6px 0;
+  font: inherit;
+  font-size: 0.84rem;
+  color: var(--texto-tenue);
+  cursor: pointer;
+  /* Se subraya porque es lo único pulsable de la fila y no lleva aspecto de botón. */
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--borde);
+}
+.migas .volver:hover { color: var(--oro-claro); text-decoration-color: var(--oro); }
+
 /* ─────────────────────── Campañas ─────────────────────── */
 
 /*

@@ -331,7 +331,7 @@ export function VistaArcana({ catalogo }: { catalogo: Catalogo }) {
         <p>
           Las Invocaciones, las Encarnaciones y los Teoremas de Magia vienen en el paquete{' '}
           <strong>Arcana Exxet</strong>.
-          Actívalo en la pestaña Campañas para verlas aquí.
+          Actívalo en Campañas → Ajustes → Manuales para verlas aquí.
         </p>
       </div>
     );

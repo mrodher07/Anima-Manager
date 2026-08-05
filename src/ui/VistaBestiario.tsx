@@ -236,7 +236,7 @@ export function VistaBestiario({
         <h2>Bestiario</h2>
         <p style={{ color: 'var(--texto-tenue)', fontSize: '0.9rem', marginTop: 0 }}>
           Fichas reducidas de enemigos y PNJ: sólo lo que hace falta para resolver un combate.
-          Desde la pestaña Mesa puedes atacarlos y llevarles la cuenta de PV.
+          Al abrir un personaje, desde su pestaña Mesa puedes atacarlos y llevarles la cuenta de PV.
         </p>
 
         {manual.length > 0 && (

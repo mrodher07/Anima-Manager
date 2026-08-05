@@ -147,7 +147,7 @@ export function VistaCuenta({ cuenta, onRecargar }: { cuenta: Cuenta; onRecargar
 
         <h3 style={{ marginTop: 22 }}>Unirte a una mesa</h3>
         <p style={{ color: 'var(--texto-tenue)', fontSize: '0.9rem', marginTop: 0 }}>
-          Pídele el código a tu máster: lo genera en la pestaña Campañas. Al canjearlo verás
+          Pídele el código a tu máster: lo genera en Campañas → Jugadores. Al canjearlo verás
           las reglas caseras y los manuales de esa mesa, y tu máster podrá ver tus fichas de
           esa campaña.
         </p>

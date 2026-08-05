@@ -363,7 +363,7 @@ export function VistaMesa({
           <h2>Resolver un ataque</h2>
           {ficha.combate.armas.length === 0 ? (
             <p style={{ color: 'var(--texto-tenue)' }}>
-              Este personaje no tiene armas equipadas. Añádelas en la pestaña Equipo.
+              Este personaje no tiene armas equipadas. Añádelas en Editar → Equipo.
             </p>
           ) : (
             <>
