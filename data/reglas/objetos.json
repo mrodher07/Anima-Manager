@@ -1,0 +1,2650 @@
+[
+ {
+  "objeto": "Pantalón",
+  "seccion": "VESTIMENTA",
+  "grupo": "Vestimenta",
+  "coste": "1 MP",
+  "costeMC": 10
+ },
+ {
+  "objeto": "Camisa",
+  "seccion": "VESTIMENTA",
+  "grupo": "Vestimenta",
+  "coste": "2 MP",
+  "costeMC": 20
+ },
+ {
+  "objeto": "Chaleco",
+  "seccion": "VESTIMENTA",
+  "grupo": "Vestimenta",
+  "coste": "1 MP",
+  "costeMC": 10
+ },
+ {
+  "objeto": "Túnica",
+  "seccion": "VESTIMENTA",
+  "grupo": "Vestimenta",
+  "coste": "3 MP",
+  "costeMC": 30
+ },
+ {
+  "objeto": "Capa",
+  "seccion": "VESTIMENTA",
+  "grupo": "Vestimenta",
+  "coste": "2 MP",
+  "costeMC": 20
+ },
+ {
+  "objeto": "Chaqueta",
+  "seccion": "VESTIMENTA",
+  "grupo": "Vestimenta",
+  "coste": "2 MP",
+  "costeMC": 20
+ },
+ {
+  "objeto": "Abrigo",
+  "seccion": "VESTIMENTA",
+  "grupo": "Vestimenta",
+  "coste": "5 MP",
+  "costeMC": 50
+ },
+ {
+  "objeto": "Vestido",
+  "seccion": "VESTIMENTA",
+  "grupo": "Vestimenta",
+  "coste": "5 MP",
+  "costeMC": 50
+ },
+ {
+  "objeto": "Bufanda",
+  "seccion": "VESTIMENTA",
+  "grupo": "Vestimenta",
+  "coste": "1 MP",
+  "costeMC": 10
+ },
+ {
+  "objeto": "Guantes",
+  "seccion": "VESTIMENTA",
+  "grupo": "Vestimenta",
+  "coste": "2 MP",
+  "costeMC": 20
+ },
+ {
+  "objeto": "Sombrero",
+  "seccion": "VESTIMENTA",
+  "grupo": "Vestimenta",
+  "coste": "2 MP",
+  "costeMC": 20
+ },
+ {
+  "objeto": "Mitones",
+  "seccion": "VESTIMENTA",
+  "grupo": "Vestimenta",
+  "coste": "1 MP",
+  "costeMC": 10
+ },
+ {
+  "objeto": "Calzoncillos",
+  "seccion": "VESTIMENTA",
+  "grupo": "Vestimenta",
+  "coste": "1 MP",
+  "costeMC": 10
+ },
+ {
+  "objeto": "Ropa interior femenina",
+  "seccion": "VESTIMENTA",
+  "grupo": "Vestimenta",
+  "coste": "2 MP",
+  "costeMC": 20
+ },
+ {
+  "objeto": "Lencería",
+  "seccion": "VESTIMENTA",
+  "grupo": "Vestimenta",
+  "coste": "5 MP",
+  "costeMC": 50,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Cinturón",
+  "seccion": "VESTIMENTA",
+  "grupo": "Vestimenta",
+  "coste": "1 MP",
+  "costeMC": 10
+ },
+ {
+  "objeto": "Pañuelo",
+  "seccion": "VESTIMENTA",
+  "grupo": "Vestimenta",
+  "coste": "1 MP",
+  "costeMC": 10
+ },
+ {
+  "objeto": "Vestido de gala (mujer)",
+  "seccion": "VESTIMENTA",
+  "grupo": "Vestimenta",
+  "coste": "5 MO",
+  "costeMC": 5000,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Traje de gala (hombre)",
+  "seccion": "VESTIMENTA",
+  "grupo": "Vestimenta",
+  "coste": "2 MO",
+  "costeMC": 2000,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Kimono de hombre",
+  "seccion": "VESTIMENTA",
+  "grupo": "Vestimenta",
+  "coste": "15 MP",
+  "costeMC": 150,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Kimono de mujer",
+  "seccion": "VESTIMENTA",
+  "grupo": "Vestimenta",
+  "coste": "20 MP",
+  "costeMC": 200,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Zuecos",
+  "seccion": "VESTIMENTA",
+  "grupo": "Calzado",
+  "coste": "5 MC",
+  "costeMC": 5
+ },
+ {
+  "objeto": "Botas de viaje",
+  "seccion": "VESTIMENTA",
+  "grupo": "Calzado",
+  "coste": "5 MP",
+  "costeMC": 50
+ },
+ {
+  "objeto": "Zapatos",
+  "seccion": "VESTIMENTA",
+  "grupo": "Calzado",
+  "coste": "1 MP",
+  "costeMC": 10
+ },
+ {
+  "objeto": "Calidad mediocre",
+  "seccion": "VESTIMENTA",
+  "grupo": "Precio por calidad",
+  "coste": "1/2"
+ },
+ {
+  "objeto": "Calidad normal",
+  "seccion": "VESTIMENTA",
+  "grupo": "Precio por calidad",
+  "coste": "x1"
+ },
+ {
+  "objeto": "Calidad buena",
+  "seccion": "VESTIMENTA",
+  "grupo": "Precio por calidad",
+  "coste": "x10"
+ },
+ {
+  "objeto": "Lujosas o diseñadas",
+  "seccion": "VESTIMENTA",
+  "grupo": "Precio por calidad",
+  "coste": "x100"
+ },
+ {
+  "objeto": "Travesía breve (2-5 horas)",
+  "seccion": "VIAJES",
+  "grupo": "Por mar",
+  "coste": "5 MP",
+  "costeMC": 50
+ },
+ {
+  "objeto": "Travesía corta (1 día)",
+  "seccion": "VIAJES",
+  "grupo": "Por mar",
+  "coste": "10 MP",
+  "costeMC": 100
+ },
+ {
+  "objeto": "Travesía media (2-5 días)",
+  "seccion": "VIAJES",
+  "grupo": "Por mar",
+  "coste": "1 MO",
+  "costeMC": 1000
+ },
+ {
+  "objeto": "Larga travesía (+1 semana)",
+  "seccion": "VIAJES",
+  "grupo": "Por mar",
+  "coste": "5 MO",
+  "costeMC": 5000
+ },
+ {
+  "objeto": "Caravana breve (1 día)",
+  "seccion": "VIAJES",
+  "grupo": "Por tierra",
+  "coste": "2 MP",
+  "costeMC": 20
+ },
+ {
+  "objeto": "Caravana corta (2-5 días)",
+  "seccion": "VIAJES",
+  "grupo": "Por tierra",
+  "coste": "50 MP",
+  "costeMC": 500
+ },
+ {
+  "objeto": "Caravana media (1-2 semanas)",
+  "seccion": "VIAJES",
+  "grupo": "Por tierra",
+  "coste": "1 MO",
+  "costeMC": 1000
+ },
+ {
+  "objeto": "Largo viaje (+1 mes)",
+  "seccion": "VIAJES",
+  "grupo": "Por tierra",
+  "coste": "5 MO",
+  "costeMC": 5000
+ },
+ {
+  "objeto": "Calidad mediocre (viajes)",
+  "seccion": "VIAJES",
+  "grupo": "Precio por calidad",
+  "coste": "1/2"
+ },
+ {
+  "objeto": "Calidad normal (viajes)",
+  "seccion": "VIAJES",
+  "grupo": "Precio por calidad",
+  "coste": "x1"
+ },
+ {
+  "objeto": "Calidad buena (viajes)",
+  "seccion": "VIAJES",
+  "grupo": "Precio por calidad",
+  "coste": "x5"
+ },
+ {
+  "objeto": "Calidad lujosa",
+  "seccion": "VIAJES",
+  "grupo": "Precio por calidad",
+  "coste": "x100"
+ },
+ {
+  "objeto": "Viaje peligroso",
+  "seccion": "VIAJES",
+  "grupo": "Precio por calidad",
+  "coste": "x10"
+ },
+ {
+  "objeto": "Mula de carga",
+  "seccion": "TRANSPORTE",
+  "grupo": "Animales",
+  "coste": "1 MO",
+  "costeMC": 1000
+ },
+ {
+  "objeto": "Caballo",
+  "seccion": "TRANSPORTE",
+  "grupo": "Animales",
+  "coste": "5 MO",
+  "costeMC": 5000
+ },
+ {
+  "objeto": "Pura sangre",
+  "seccion": "TRANSPORTE",
+  "grupo": "Animales",
+  "coste": "50 MO",
+  "costeMC": 50000,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Caballo de guerra",
+  "seccion": "TRANSPORTE",
+  "grupo": "Animales",
+  "coste": "250 MO",
+  "costeMC": 250000,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Buey de carga",
+  "seccion": "TRANSPORTE",
+  "grupo": "Animales",
+  "coste": "2 MO",
+  "costeMC": 2000
+ },
+ {
+  "objeto": "Toro de carga",
+  "seccion": "TRANSPORTE",
+  "grupo": "Animales",
+  "coste": "2 MO",
+  "costeMC": 2000
+ },
+ {
+  "objeto": "Toro de monta",
+  "seccion": "TRANSPORTE",
+  "grupo": "Animales",
+  "coste": "3 MO",
+  "costeMC": 3000
+ },
+ {
+  "objeto": "San Bernardo",
+  "seccion": "TRANSPORTE",
+  "grupo": "Animales",
+  "coste": "15 MO",
+  "costeMC": 15000,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Carreta",
+  "seccion": "TRANSPORTE",
+  "grupo": "Transportes",
+  "coste": "1 MO",
+  "costeMC": 1000
+ },
+ {
+  "objeto": "Carromato de tela",
+  "seccion": "TRANSPORTE",
+  "grupo": "Transportes",
+  "coste": "5 MO",
+  "costeMC": 5000
+ },
+ {
+  "objeto": "Carromato vivienda de madera",
+  "seccion": "TRANSPORTE",
+  "grupo": "Transportes",
+  "coste": "30 MO",
+  "costeMC": 30000
+ },
+ {
+  "objeto": "Carruaje normal",
+  "seccion": "TRANSPORTE",
+  "grupo": "Transportes",
+  "coste": "60 MO",
+  "costeMC": 60000
+ },
+ {
+  "objeto": "Carruaje lujoso",
+  "seccion": "TRANSPORTE",
+  "grupo": "Transportes",
+  "coste": "150 MO",
+  "costeMC": 150000,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Trineo",
+  "seccion": "TRANSPORTE",
+  "grupo": "Transportes",
+  "coste": "2 MO",
+  "costeMC": 2000,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Barca",
+  "seccion": "TRANSPORTE",
+  "grupo": "Embarcaciones",
+  "coste": "20 MO",
+  "costeMC": 20000
+ },
+ {
+  "objeto": "Velero de un palo",
+  "seccion": "TRANSPORTE",
+  "grupo": "Embarcaciones",
+  "coste": "150 MO",
+  "costeMC": 150000
+ },
+ {
+  "objeto": "Velero de dos palos",
+  "seccion": "TRANSPORTE",
+  "grupo": "Embarcaciones",
+  "coste": "450 MO",
+  "costeMC": 450000
+ },
+ {
+  "objeto": "Velero de tres palos",
+  "seccion": "TRANSPORTE",
+  "grupo": "Embarcaciones",
+  "coste": "1.200 MO",
+  "costeMC": 1200000
+ },
+ {
+  "objeto": "Crucero pequeño",
+  "seccion": "TRANSPORTE",
+  "grupo": "Embarcaciones",
+  "coste": "3.500 MO",
+  "costeMC": 3500000,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Crucero",
+  "seccion": "TRANSPORTE",
+  "grupo": "Embarcaciones",
+  "coste": "8.000 MO",
+  "costeMC": 8000000,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Barco de guerra",
+  "seccion": "TRANSPORTE",
+  "grupo": "Embarcaciones",
+  "coste": "15.000 MO",
+  "costeMC": 15000000,
+  "disponibilidad": "A"
+ },
+ {
+  "objeto": "Cerveza normal",
+  "seccion": "COMIDA Y BEBIDA",
+  "grupo": "Bebidas",
+  "coste": "1 MC",
+  "costeMC": 1
+ },
+ {
+  "objeto": "Cerveza buena",
+  "seccion": "COMIDA Y BEBIDA",
+  "grupo": "Bebidas",
+  "coste": "3 MC",
+  "costeMC": 3
+ },
+ {
+  "objeto": "Vino normal",
+  "seccion": "COMIDA Y BEBIDA",
+  "grupo": "Bebidas",
+  "coste": "2 MC",
+  "costeMC": 2
+ },
+ {
+  "objeto": "Vino bueno",
+  "seccion": "COMIDA Y BEBIDA",
+  "grupo": "Bebidas",
+  "coste": "5 MC",
+  "costeMC": 5
+ },
+ {
+  "objeto": "Vino excelente",
+  "seccion": "COMIDA Y BEBIDA",
+  "grupo": "Bebidas",
+  "coste": "3 MP",
+  "costeMC": 30,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Leche",
+  "seccion": "COMIDA Y BEBIDA",
+  "grupo": "Bebidas",
+  "coste": "1 MC",
+  "costeMC": 1
+ },
+ {
+  "objeto": "Zumos",
+  "seccion": "COMIDA Y BEBIDA",
+  "grupo": "Bebidas",
+  "coste": "5 MC",
+  "costeMC": 5
+ },
+ {
+  "objeto": "Exóticas",
+  "seccion": "COMIDA Y BEBIDA",
+  "grupo": "Bebidas",
+  "coste": "1 MO",
+  "costeMC": 1000,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Comida mediocre",
+  "seccion": "COMIDA Y BEBIDA",
+  "grupo": "Comida",
+  "coste": "4 MC",
+  "costeMC": 4
+ },
+ {
+  "objeto": "Comida normal",
+  "seccion": "COMIDA Y BEBIDA",
+  "grupo": "Comida",
+  "coste": "6 MC",
+  "costeMC": 6
+ },
+ {
+  "objeto": "Comida buena",
+  "seccion": "COMIDA Y BEBIDA",
+  "grupo": "Comida",
+  "coste": "5 MP",
+  "costeMC": 50
+ },
+ {
+  "objeto": "Comida excelente",
+  "seccion": "COMIDA Y BEBIDA",
+  "grupo": "Comida",
+  "coste": "5 MO",
+  "costeMC": 5000,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Raciones de viaje mediocres",
+  "seccion": "COMIDA Y BEBIDA",
+  "grupo": "Raciones (por semana)",
+  "coste": "2 MC",
+  "costeMC": 2,
+  "peso": 5.0
+ },
+ {
+  "objeto": "Raciones de viaje normales",
+  "seccion": "COMIDA Y BEBIDA",
+  "grupo": "Raciones (por semana)",
+  "coste": "5 MC",
+  "costeMC": 5,
+  "peso": 7.0
+ },
+ {
+  "objeto": "Raciones de viaje buenas",
+  "seccion": "COMIDA Y BEBIDA",
+  "grupo": "Raciones (por semana)",
+  "coste": "5 MP",
+  "costeMC": 50,
+  "peso": 10.0
+ },
+ {
+  "objeto": "Raciones de viaje excelentes",
+  "seccion": "COMIDA Y BEBIDA",
+  "grupo": "Raciones (por semana)",
+  "coste": "30 MP",
+  "costeMC": 300,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Posada mediocre",
+  "seccion": "ESTANCIA",
+  "grupo": "Estancias",
+  "coste": "5 MC",
+  "costeMC": 5
+ },
+ {
+  "objeto": "Posada normal",
+  "seccion": "ESTANCIA",
+  "grupo": "Estancias",
+  "coste": "1 MP",
+  "costeMC": 10
+ },
+ {
+  "objeto": "Posada buena",
+  "seccion": "ESTANCIA",
+  "grupo": "Estancias",
+  "coste": "25 MP",
+  "costeMC": 250,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Posada de lujo",
+  "seccion": "ESTANCIA",
+  "grupo": "Estancias",
+  "coste": "5 MO",
+  "costeMC": 5000,
+  "disponibilidad": "A"
+ },
+ {
+  "objeto": "Chabola",
+  "seccion": "VIVIENDA",
+  "grupo": "Viviendas",
+  "coste": "15 MO",
+  "costeMC": 15000
+ },
+ {
+  "objeto": "Casa",
+  "seccion": "VIVIENDA",
+  "grupo": "Viviendas",
+  "coste": "60 MO",
+  "costeMC": 60000
+ },
+ {
+  "objeto": "Caserón",
+  "seccion": "VIVIENDA",
+  "grupo": "Viviendas",
+  "coste": "150 MO",
+  "costeMC": 150000
+ },
+ {
+  "objeto": "Mansión",
+  "seccion": "VIVIENDA",
+  "grupo": "Viviendas",
+  "coste": "800 MO",
+  "costeMC": 800000
+ },
+ {
+  "objeto": "Palacio",
+  "seccion": "VIVIENDA",
+  "grupo": "Viviendas",
+  "coste": "2.000 MO",
+  "costeMC": 2000000,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Castillo",
+  "seccion": "VIVIENDA",
+  "grupo": "Viviendas",
+  "coste": "30.000 MO",
+  "costeMC": 30000000,
+  "disponibilidad": "A"
+ },
+ {
+  "objeto": "Calidad mediocre (vivienda)",
+  "seccion": "VIVIENDA",
+  "grupo": "Precio por calidad",
+  "coste": "1/2"
+ },
+ {
+  "objeto": "Calidad normal (vivienda)",
+  "seccion": "VIVIENDA",
+  "grupo": "Precio por calidad",
+  "coste": "x1"
+ },
+ {
+  "objeto": "Calidad buena (vivienda)",
+  "seccion": "VIVIENDA",
+  "grupo": "Precio por calidad",
+  "coste": "x2"
+ },
+ {
+  "objeto": "Calidad lujosa (vivienda)",
+  "seccion": "VIVIENDA",
+  "grupo": "Precio por calidad",
+  "coste": "x10"
+ },
+ {
+  "objeto": "Área metropolitana",
+  "seccion": "VIVIENDA",
+  "grupo": "Precio por calidad",
+  "coste": "x2"
+ },
+ {
+  "objeto": "Artesano",
+  "seccion": "SERVICIOS Y CONTRATAS",
+  "grupo": "Por día de trabajo",
+  "coste": "10 MP",
+  "costeMC": 100
+ },
+ {
+  "objeto": "Asesino",
+  "seccion": "SERVICIOS Y CONTRATAS",
+  "grupo": "Por día de trabajo",
+  "coste": "5 MO",
+  "costeMC": 5000,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Guía",
+  "seccion": "SERVICIOS Y CONTRATAS",
+  "grupo": "Por día de trabajo",
+  "coste": "20 MP",
+  "costeMC": 200
+ },
+ {
+  "objeto": "Herrero",
+  "seccion": "SERVICIOS Y CONTRATAS",
+  "grupo": "Por día de trabajo",
+  "coste": "25 MP",
+  "costeMC": 250
+ },
+ {
+  "objeto": "Instructor / Maestro",
+  "seccion": "SERVICIOS Y CONTRATAS",
+  "grupo": "Por día de trabajo",
+  "coste": "1 MO",
+  "costeMC": 1000
+ },
+ {
+  "objeto": "Médico / Curandero",
+  "seccion": "SERVICIOS Y CONTRATAS",
+  "grupo": "Por día de trabajo",
+  "coste": "1 MO",
+  "costeMC": 1000
+ },
+ {
+  "objeto": "Mensajero",
+  "seccion": "SERVICIOS Y CONTRATAS",
+  "grupo": "Por día de trabajo",
+  "coste": "5 MP",
+  "costeMC": 50
+ },
+ {
+  "objeto": "Mercenario",
+  "seccion": "SERVICIOS Y CONTRATAS",
+  "grupo": "Por día de trabajo",
+  "coste": "50 MP",
+  "costeMC": 500
+ },
+ {
+  "objeto": "Lacayo",
+  "seccion": "SERVICIOS Y CONTRATAS",
+  "grupo": "Por día de trabajo",
+  "coste": "1 MP",
+  "costeMC": 10
+ },
+ {
+  "objeto": "Ladrón",
+  "seccion": "SERVICIOS Y CONTRATAS",
+  "grupo": "Por día de trabajo",
+  "coste": "1 MO",
+  "costeMC": 1000
+ },
+ {
+  "objeto": "Trovador",
+  "seccion": "SERVICIOS Y CONTRATAS",
+  "grupo": "Por día de trabajo",
+  "coste": "5 MP",
+  "costeMC": 50
+ },
+ {
+  "objeto": "Mediocre (nivel 0)",
+  "seccion": "SERVICIOS Y CONTRATAS",
+  "grupo": "Precio por calidad",
+  "coste": "x1"
+ },
+ {
+  "objeto": "Normal (nivel 1)",
+  "seccion": "SERVICIOS Y CONTRATAS",
+  "grupo": "Precio por calidad",
+  "coste": "x2"
+ },
+ {
+  "objeto": "Profesional (nivel 3)",
+  "seccion": "SERVICIOS Y CONTRATAS",
+  "grupo": "Precio por calidad",
+  "coste": "x10",
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Célebre (nivel 5)",
+  "seccion": "SERVICIOS Y CONTRATAS",
+  "grupo": "Precio por calidad",
+  "coste": "x100",
+  "disponibilidad": "A"
+ },
+ {
+  "objeto": "Candelabros",
+  "seccion": "ARTE Y DECORACIÓN",
+  "grupo": "Decoración",
+  "coste": "2 MO",
+  "costeMC": 2000
+ },
+ {
+  "objeto": "Cristalera",
+  "seccion": "ARTE Y DECORACIÓN",
+  "grupo": "Decoración",
+  "coste": "65 MO",
+  "costeMC": 65000,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Escudo de armas",
+  "seccion": "ARTE Y DECORACIÓN",
+  "grupo": "Decoración",
+  "coste": "20 MO",
+  "costeMC": 20000,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Alfombra",
+  "seccion": "ARTE Y DECORACIÓN",
+  "grupo": "Decoración",
+  "coste": "5 MO",
+  "costeMC": 5000
+ },
+ {
+  "objeto": "Tapices",
+  "seccion": "ARTE Y DECORACIÓN",
+  "grupo": "Decoración",
+  "coste": "4 MO",
+  "costeMC": 4000
+ },
+ {
+  "objeto": "Anillo",
+  "seccion": "ARTE Y DECORACIÓN",
+  "grupo": "Orfebrería",
+  "coste": "2 MO",
+  "costeMC": 2000,
+  "peso": 0.5
+ },
+ {
+  "objeto": "Abanico",
+  "seccion": "ARTE Y DECORACIÓN",
+  "grupo": "Orfebrería",
+  "coste": "1 MO",
+  "costeMC": 1000,
+  "peso": 0.25
+ },
+ {
+  "objeto": "Bastón artístico",
+  "seccion": "ARTE Y DECORACIÓN",
+  "grupo": "Orfebrería",
+  "coste": "3 MO",
+  "costeMC": 3000,
+  "peso": 2.0
+ },
+ {
+  "objeto": "Broche",
+  "seccion": "ARTE Y DECORACIÓN",
+  "grupo": "Orfebrería",
+  "coste": "10 MO",
+  "costeMC": 10000,
+  "peso": 0.25
+ },
+ {
+  "objeto": "Cetro",
+  "seccion": "ARTE Y DECORACIÓN",
+  "grupo": "Orfebrería",
+  "coste": "15 MO",
+  "costeMC": 15000,
+  "peso": 3.0,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Collar",
+  "seccion": "ARTE Y DECORACIÓN",
+  "grupo": "Orfebrería",
+  "coste": "4 MO",
+  "costeMC": 4000,
+  "peso": 1.0
+ },
+ {
+  "objeto": "Corona",
+  "seccion": "ARTE Y DECORACIÓN",
+  "grupo": "Orfebrería",
+  "coste": "10 MO",
+  "costeMC": 10000,
+  "peso": 5.0,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Diadema",
+  "seccion": "ARTE Y DECORACIÓN",
+  "grupo": "Orfebrería",
+  "coste": "5 MO",
+  "costeMC": 5000,
+  "peso": 1.0,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Hebilla",
+  "seccion": "ARTE Y DECORACIÓN",
+  "grupo": "Orfebrería",
+  "coste": "50 MP",
+  "costeMC": 500,
+  "peso": 0.25
+ },
+ {
+  "objeto": "Pasador",
+  "seccion": "ARTE Y DECORACIÓN",
+  "grupo": "Orfebrería",
+  "coste": "2 MO",
+  "costeMC": 2000,
+  "peso": 0.5
+ },
+ {
+  "objeto": "Peineta",
+  "seccion": "ARTE Y DECORACIÓN",
+  "grupo": "Orfebrería",
+  "coste": "3 MO",
+  "costeMC": 3000,
+  "peso": 0.25
+ },
+ {
+  "objeto": "Pendientes",
+  "seccion": "ARTE Y DECORACIÓN",
+  "grupo": "Orfebrería",
+  "coste": "2 MO",
+  "costeMC": 2000,
+  "peso": 0.25
+ },
+ {
+  "objeto": "Pulsera",
+  "seccion": "ARTE Y DECORACIÓN",
+  "grupo": "Orfebrería",
+  "coste": "2 MO",
+  "costeMC": 2000,
+  "peso": 0.5
+ },
+ {
+  "objeto": "Rosario",
+  "seccion": "ARTE Y DECORACIÓN",
+  "grupo": "Orfebrería",
+  "coste": "3 MO",
+  "costeMC": 3000,
+  "peso": 0.25
+ },
+ {
+  "objeto": "Calidad mediocre (arte y decoración)",
+  "seccion": "ARTE Y DECORACIÓN",
+  "grupo": "Precio por calidad",
+  "coste": "1/2"
+ },
+ {
+  "objeto": "Calidad normal (arte y decoración)",
+  "seccion": "ARTE Y DECORACIÓN",
+  "grupo": "Precio por calidad",
+  "coste": "x1"
+ },
+ {
+  "objeto": "Calidad buena (arte y decoración)",
+  "seccion": "ARTE Y DECORACIÓN",
+  "grupo": "Precio por calidad",
+  "coste": "x2"
+ },
+ {
+  "objeto": "Calidad excelente",
+  "seccion": "ARTE Y DECORACIÓN",
+  "grupo": "Precio por calidad",
+  "coste": "x10"
+ },
+ {
+  "objeto": "Lujosas o diseñadas (arte y decoración)",
+  "seccion": "ARTE Y DECORACIÓN",
+  "grupo": "Precio por calidad",
+  "coste": "x100"
+ },
+ {
+  "objeto": "Circonio",
+  "seccion": "ARTE Y DECORACIÓN",
+  "grupo": "Gemas",
+  "coste": "5/50 MO",
+  "costeMC": 5000,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Gemas varias",
+  "seccion": "ARTE Y DECORACIÓN",
+  "grupo": "Gemas",
+  "coste": "20/100 MO",
+  "costeMC": 20000,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Perla",
+  "seccion": "ARTE Y DECORACIÓN",
+  "grupo": "Gemas",
+  "coste": "50/150 MO",
+  "costeMC": 50000,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Zafiro",
+  "seccion": "ARTE Y DECORACIÓN",
+  "grupo": "Gemas",
+  "coste": "50/200 MO",
+  "costeMC": 50000,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Rubí",
+  "seccion": "ARTE Y DECORACIÓN",
+  "grupo": "Gemas",
+  "coste": "100/300 MO",
+  "costeMC": 100000,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Diamante",
+  "seccion": "ARTE Y DECORACIÓN",
+  "grupo": "Gemas",
+  "coste": "100/320 MO",
+  "costeMC": 100000,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Esmeralda",
+  "seccion": "ARTE Y DECORACIÓN",
+  "grupo": "Gemas",
+  "coste": "150/440 MO",
+  "costeMC": 150000,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Ópalo negro",
+  "seccion": "ARTE Y DECORACIÓN",
+  "grupo": "Gemas",
+  "coste": "500 MO",
+  "costeMC": 500000,
+  "disponibilidad": "A"
+ },
+ {
+  "objeto": "Perla negra",
+  "seccion": "ARTE Y DECORACIÓN",
+  "grupo": "Gemas",
+  "coste": "650 MO",
+  "costeMC": 650000,
+  "disponibilidad": "A"
+ },
+ {
+  "objeto": "Cuadro normal",
+  "seccion": "ARTE Y DECORACIÓN",
+  "grupo": "Cuadros",
+  "coste": "25 MO",
+  "costeMC": 25000
+ },
+ {
+  "objeto": "Cuadro bueno",
+  "seccion": "ARTE Y DECORACIÓN",
+  "grupo": "Cuadros",
+  "coste": "80 MO",
+  "costeMC": 80000
+ },
+ {
+  "objeto": "Cuadro excelente",
+  "seccion": "ARTE Y DECORACIÓN",
+  "grupo": "Cuadros",
+  "coste": "125 MO",
+  "costeMC": 125000,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Autor conocido",
+  "seccion": "ARTE Y DECORACIÓN",
+  "grupo": "Precio por calidad",
+  "coste": "x2"
+ },
+ {
+  "objeto": "Autor prestigioso",
+  "seccion": "ARTE Y DECORACIÓN",
+  "grupo": "Precio por calidad",
+  "coste": "x4",
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Autor legendario",
+  "seccion": "ARTE Y DECORACIÓN",
+  "grupo": "Precio por calidad",
+  "coste": "x10",
+  "disponibilidad": "A"
+ },
+ {
+  "objeto": "Acqua Toffana",
+  "seccion": "VENENOS",
+  "grupo": "Dosis",
+  "coste": "25 MO",
+  "costeMC": 25000,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Al-Baladín",
+  "seccion": "VENENOS",
+  "grupo": "Dosis",
+  "coste": "80 MO",
+  "costeMC": 80000,
+  "disponibilidad": "A"
+ },
+ {
+  "objeto": "Arsénico real",
+  "seccion": "VENENOS",
+  "grupo": "Dosis",
+  "coste": "280 MO",
+  "costeMC": 280000,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Atropina",
+  "seccion": "VENENOS",
+  "grupo": "Dosis",
+  "coste": "2 MO",
+  "costeMC": 2000,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Belladona",
+  "seccion": "VENENOS",
+  "grupo": "Dosis",
+  "coste": "15 MO",
+  "costeMC": 15000,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Cantaridina",
+  "seccion": "VENENOS",
+  "grupo": "Dosis",
+  "coste": "2 MO",
+  "costeMC": 2000,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Cianuro",
+  "seccion": "VENENOS",
+  "grupo": "Dosis",
+  "coste": "80 MO",
+  "costeMC": 80000,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Curare",
+  "seccion": "VENENOS",
+  "grupo": "Dosis",
+  "coste": "100 MO",
+  "costeMC": 100000,
+  "disponibilidad": "A"
+ },
+ {
+  "objeto": "Muscarina",
+  "seccion": "VENENOS",
+  "grupo": "Dosis",
+  "coste": "1 MO",
+  "costeMC": 1000,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Savia de Ramalen",
+  "seccion": "VENENOS",
+  "grupo": "Dosis",
+  "coste": "800 MO",
+  "costeMC": 800000,
+  "disponibilidad": "A"
+ },
+ {
+  "objeto": "Talio",
+  "seccion": "VENENOS",
+  "grupo": "Dosis",
+  "coste": "20 MP",
+  "costeMC": 200,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Veneno de cobra blanca",
+  "seccion": "VENENOS",
+  "grupo": "Dosis",
+  "coste": "500 MO",
+  "costeMC": 500000,
+  "disponibilidad": "A"
+ },
+ {
+  "objeto": "Veneno de serpiente",
+  "seccion": "VENENOS",
+  "grupo": "Dosis",
+  "coste": "5 MO",
+  "costeMC": 5000,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Vinagre de Saturno",
+  "seccion": "VENENOS",
+  "grupo": "Dosis",
+  "coste": "3 MO",
+  "costeMC": 3000,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Aceite",
+  "seccion": "ÚTILES VARIOS",
+  "grupo": "Útiles",
+  "coste": "5 MC",
+  "costeMC": 5,
+  "peso": 1.0
+ },
+ {
+  "objeto": "Antorcha",
+  "seccion": "ÚTILES VARIOS",
+  "grupo": "Útiles",
+  "coste": "2 MC",
+  "costeMC": 2,
+  "peso": 1.0
+ },
+ {
+  "objeto": "Arcón pequeño",
+  "seccion": "ÚTILES VARIOS",
+  "grupo": "Útiles",
+  "coste": "15 MP",
+  "costeMC": 150,
+  "peso": 2.0
+ },
+ {
+  "objeto": "Arcón grande",
+  "seccion": "ÚTILES VARIOS",
+  "grupo": "Útiles",
+  "coste": "25 MP",
+  "costeMC": 250,
+  "peso": 10.0
+ },
+ {
+  "objeto": "Arpón",
+  "seccion": "ÚTILES VARIOS",
+  "grupo": "Útiles",
+  "coste": "50 MP",
+  "costeMC": 500,
+  "peso": 3.0
+ },
+ {
+  "objeto": "Barril",
+  "seccion": "ÚTILES VARIOS",
+  "grupo": "Útiles",
+  "coste": "10 MP",
+  "costeMC": 100,
+  "peso": 2.0
+ },
+ {
+  "objeto": "Bastón normal",
+  "seccion": "ÚTILES VARIOS",
+  "grupo": "Útiles",
+  "coste": "2 MC",
+  "costeMC": 2,
+  "peso": 3.0
+ },
+ {
+  "objeto": "Bolsa pequeña",
+  "seccion": "ÚTILES VARIOS",
+  "grupo": "Útiles",
+  "coste": "2 MP",
+  "costeMC": 20,
+  "peso": 0.25
+ },
+ {
+  "objeto": "Bolsa grande",
+  "seccion": "ÚTILES VARIOS",
+  "grupo": "Útiles",
+  "coste": "5 MP",
+  "costeMC": 50,
+  "peso": 1.0
+ },
+ {
+  "objeto": "Botella de cristal pequeña",
+  "seccion": "ÚTILES VARIOS",
+  "grupo": "Útiles",
+  "coste": "20 MO",
+  "costeMC": 20000,
+  "peso": 1.0,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Botella de cristal grande",
+  "seccion": "ÚTILES VARIOS",
+  "grupo": "Útiles",
+  "coste": "50 MO",
+  "costeMC": 50000,
+  "peso": 3.0,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Cadena ligera (1 metro)",
+  "seccion": "ÚTILES VARIOS",
+  "grupo": "Útiles",
+  "coste": "1 MO",
+  "costeMC": 1000,
+  "peso": 1.0
+ },
+ {
+  "objeto": "Cadena pesada (1 metro)",
+  "seccion": "ÚTILES VARIOS",
+  "grupo": "Útiles",
+  "coste": "2 MO",
+  "costeMC": 2000,
+  "peso": 3.0
+ },
+ {
+  "objeto": "Carcaj de flechas",
+  "seccion": "ÚTILES VARIOS",
+  "grupo": "Útiles",
+  "coste": "20 MP",
+  "costeMC": 200,
+  "peso": 1.0
+ },
+ {
+  "objeto": "Caja",
+  "seccion": "ÚTILES VARIOS",
+  "grupo": "Útiles",
+  "coste": "5 MP",
+  "costeMC": 50,
+  "peso": 1.0
+ },
+ {
+  "objeto": "Campana",
+  "seccion": "ÚTILES VARIOS",
+  "grupo": "Útiles",
+  "coste": "25 MP",
+  "costeMC": 250,
+  "peso": 1.0
+ },
+ {
+  "objeto": "Catalejo",
+  "seccion": "ÚTILES VARIOS",
+  "grupo": "Útiles",
+  "coste": "150 MO",
+  "costeMC": 150000,
+  "peso": 0.5,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Cepo pequeño",
+  "seccion": "ÚTILES VARIOS",
+  "grupo": "Útiles",
+  "coste": "50 MP",
+  "costeMC": 500,
+  "peso": 3.0
+ },
+ {
+  "objeto": "Cepo grande",
+  "seccion": "ÚTILES VARIOS",
+  "grupo": "Útiles",
+  "coste": "1 MO",
+  "costeMC": 1000,
+  "peso": 5.0
+ },
+ {
+  "objeto": "Cerradura normal",
+  "seccion": "ÚTILES VARIOS",
+  "grupo": "Útiles",
+  "coste": "10 MP",
+  "costeMC": 100,
+  "peso": 1.0
+ },
+ {
+  "objeto": "Cerradura buena",
+  "seccion": "ÚTILES VARIOS",
+  "grupo": "Útiles",
+  "coste": "5 MO",
+  "costeMC": 5000,
+  "peso": 0.5,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Cerradura excelente",
+  "seccion": "ÚTILES VARIOS",
+  "grupo": "Útiles",
+  "coste": "80 MO",
+  "costeMC": 80000,
+  "peso": 0.5,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Cesto pequeño",
+  "seccion": "ÚTILES VARIOS",
+  "grupo": "Útiles",
+  "coste": "5 MC",
+  "costeMC": 5,
+  "peso": 0.5
+ },
+ {
+  "objeto": "Cesto grande",
+  "seccion": "ÚTILES VARIOS",
+  "grupo": "Útiles",
+  "coste": "1 MP",
+  "costeMC": 10,
+  "peso": 1.0
+ },
+ {
+  "objeto": "Cruz",
+  "seccion": "ÚTILES VARIOS",
+  "grupo": "Útiles",
+  "coste": "1 MP",
+  "costeMC": 10,
+  "peso": 0.2
+ },
+ {
+  "objeto": "Cubo",
+  "seccion": "ÚTILES VARIOS",
+  "grupo": "Útiles",
+  "coste": "1 MP",
+  "costeMC": 10,
+  "peso": 1.0
+ },
+ {
+  "objeto": "Cuerda normal (10 m)",
+  "seccion": "ÚTILES VARIOS",
+  "grupo": "Útiles",
+  "coste": "5 MP",
+  "costeMC": 50,
+  "peso": 2.0
+ },
+ {
+  "objeto": "Cuerda buena (10 m)",
+  "seccion": "ÚTILES VARIOS",
+  "grupo": "Útiles",
+  "coste": "25 MP",
+  "costeMC": 250,
+  "peso": 2.0
+ },
+ {
+  "objeto": "Cuerda excelente (10 m)",
+  "seccion": "ÚTILES VARIOS",
+  "grupo": "Útiles",
+  "coste": "5 MO",
+  "costeMC": 5000,
+  "peso": 6.0
+ },
+ {
+  "objeto": "Escalera de cuerda (10 m)",
+  "seccion": "ÚTILES VARIOS",
+  "grupo": "Útiles",
+  "coste": "20 MP",
+  "costeMC": 200,
+  "peso": 6.0
+ },
+ {
+  "objeto": "Espejo pequeño de metal",
+  "seccion": "ÚTILES VARIOS",
+  "grupo": "Útiles",
+  "coste": "1 MO",
+  "costeMC": 1000,
+  "peso": 1.0
+ },
+ {
+  "objeto": "Espejo pequeño de cristal",
+  "seccion": "ÚTILES VARIOS",
+  "grupo": "Útiles",
+  "coste": "200 MO",
+  "costeMC": 200000,
+  "peso": 0.5,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Gafas",
+  "seccion": "ÚTILES VARIOS",
+  "grupo": "Útiles",
+  "coste": "180 MO",
+  "costeMC": 180000,
+  "peso": 0.1
+ },
+ {
+  "objeto": "Ganzúas",
+  "seccion": "ÚTILES VARIOS",
+  "grupo": "Útiles",
+  "coste": "1 MO",
+  "costeMC": 1000,
+  "peso": 0.5
+ },
+ {
+  "objeto": "Garfio",
+  "seccion": "ÚTILES VARIOS",
+  "grupo": "Útiles",
+  "coste": "15 MP",
+  "costeMC": 150,
+  "peso": 0.5
+ },
+ {
+  "objeto": "Jabón",
+  "seccion": "ÚTILES VARIOS",
+  "grupo": "Útiles",
+  "coste": "1 MP",
+  "costeMC": 10,
+  "peso": 0.5
+ },
+ {
+  "objeto": "Libro en blanco pequeño",
+  "seccion": "ÚTILES VARIOS",
+  "grupo": "Útiles",
+  "coste": "20 MP",
+  "costeMC": 200,
+  "peso": 1.0,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Libro en blanco grande",
+  "seccion": "ÚTILES VARIOS",
+  "grupo": "Útiles",
+  "coste": "1 MO",
+  "costeMC": 1000,
+  "peso": 2.0,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Liga de caza",
+  "seccion": "ÚTILES VARIOS",
+  "grupo": "Útiles",
+  "coste": "25 MP",
+  "costeMC": 250,
+  "peso": 1.0
+ },
+ {
+  "objeto": "Linterna de velas",
+  "seccion": "ÚTILES VARIOS",
+  "grupo": "Útiles",
+  "coste": "50 MP",
+  "costeMC": 500,
+  "peso": 0.25
+ },
+ {
+  "objeto": "Linterna de aceite",
+  "seccion": "ÚTILES VARIOS",
+  "grupo": "Útiles",
+  "coste": "20 MP",
+  "costeMC": 200,
+  "peso": 2.0,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Lona (1 m cuadrado)",
+  "seccion": "ÚTILES VARIOS",
+  "grupo": "Útiles",
+  "coste": "20 MP",
+  "costeMC": 200,
+  "peso": 1.0
+ },
+ {
+  "objeto": "Manta",
+  "seccion": "ÚTILES VARIOS",
+  "grupo": "Útiles",
+  "coste": "1 MP",
+  "costeMC": 10,
+  "peso": 0.2
+ },
+ {
+  "objeto": "Mochila",
+  "seccion": "ÚTILES VARIOS",
+  "grupo": "Útiles",
+  "coste": "30 MP",
+  "costeMC": 300,
+  "peso": 1.0
+ },
+ {
+  "objeto": "Monóculo",
+  "seccion": "ÚTILES VARIOS",
+  "grupo": "Útiles",
+  "coste": "200 MO",
+  "costeMC": 200000,
+  "peso": 0.1
+ },
+ {
+  "objeto": "Odre",
+  "seccion": "ÚTILES VARIOS",
+  "grupo": "Útiles",
+  "coste": "2 MP",
+  "costeMC": 20,
+  "peso": 0.2
+ },
+ {
+  "objeto": "Papel",
+  "seccion": "ÚTILES VARIOS",
+  "grupo": "Útiles",
+  "coste": "1 MO",
+  "costeMC": 1000,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Papiro",
+  "seccion": "ÚTILES VARIOS",
+  "grupo": "Útiles",
+  "coste": "20 MP",
+  "costeMC": 200
+ },
+ {
+  "objeto": "Perfume normal",
+  "seccion": "ÚTILES VARIOS",
+  "grupo": "Útiles",
+  "coste": "35 MP",
+  "costeMC": 350,
+  "peso": 0.2
+ },
+ {
+  "objeto": "Perfume bueno",
+  "seccion": "ÚTILES VARIOS",
+  "grupo": "Útiles",
+  "coste": "2 MO",
+  "costeMC": 2000,
+  "peso": 0.2
+ },
+ {
+  "objeto": "Perfume excelente",
+  "seccion": "ÚTILES VARIOS",
+  "grupo": "Útiles",
+  "coste": "100 MO",
+  "costeMC": 100000,
+  "peso": 0.5,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Pergamino",
+  "seccion": "ÚTILES VARIOS",
+  "grupo": "Útiles",
+  "coste": "50 MP",
+  "costeMC": 500
+ },
+ {
+  "objeto": "Piedra de afilar",
+  "seccion": "ÚTILES VARIOS",
+  "grupo": "Útiles",
+  "coste": "5 MC",
+  "costeMC": 5,
+  "peso": 0.3
+ },
+ {
+  "objeto": "Red de pesca (1 m)",
+  "seccion": "ÚTILES VARIOS",
+  "grupo": "Útiles",
+  "coste": "10 MP",
+  "costeMC": 100,
+  "peso": 0.5
+ },
+ {
+  "objeto": "Reloj de arena",
+  "seccion": "ÚTILES VARIOS",
+  "grupo": "Útiles",
+  "coste": "2 MO",
+  "costeMC": 2000,
+  "peso": 0.5,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Reloj de engranaje",
+  "seccion": "ÚTILES VARIOS",
+  "grupo": "Útiles",
+  "coste": "300 MO",
+  "costeMC": 300000,
+  "peso": 20.0,
+  "disponibilidad": "A"
+ },
+ {
+  "objeto": "Saco grande",
+  "seccion": "ÚTILES VARIOS",
+  "grupo": "Útiles",
+  "coste": "1 MP",
+  "costeMC": 10,
+  "peso": 0.4
+ },
+ {
+  "objeto": "Saco pequeño",
+  "seccion": "ÚTILES VARIOS",
+  "grupo": "Útiles",
+  "coste": "2 MC",
+  "costeMC": 2,
+  "peso": 0.2
+ },
+ {
+  "objeto": "Silbato",
+  "seccion": "ÚTILES VARIOS",
+  "grupo": "Útiles",
+  "coste": "10 MP",
+  "costeMC": 100,
+  "peso": 0.1
+ },
+ {
+  "objeto": "Tienda de lujo",
+  "seccion": "ÚTILES VARIOS",
+  "grupo": "Útiles",
+  "coste": "200 MO",
+  "costeMC": 200000,
+  "peso": 4.0,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Tienda grande",
+  "seccion": "ÚTILES VARIOS",
+  "grupo": "Útiles",
+  "coste": "20 MO",
+  "costeMC": 20000,
+  "peso": 6.0
+ },
+ {
+  "objeto": "Tienda pabellón",
+  "seccion": "ÚTILES VARIOS",
+  "grupo": "Útiles",
+  "coste": "150 MO",
+  "costeMC": 150000,
+  "peso": 14.0
+ },
+ {
+  "objeto": "Tienda pequeña",
+  "seccion": "ÚTILES VARIOS",
+  "grupo": "Útiles",
+  "coste": "1 MO",
+  "costeMC": 1000,
+  "peso": 1.0
+ },
+ {
+  "objeto": "Tinta de escribir",
+  "seccion": "ÚTILES VARIOS",
+  "grupo": "Útiles",
+  "coste": "1 MO",
+  "costeMC": 1000,
+  "peso": 0.3
+ },
+ {
+  "objeto": "Tiza",
+  "seccion": "ÚTILES VARIOS",
+  "grupo": "Útiles",
+  "coste": "5 MC",
+  "costeMC": 5,
+  "peso": 0.2
+ },
+ {
+  "objeto": "Yesca y pedernal",
+  "seccion": "ÚTILES VARIOS",
+  "grupo": "Útiles",
+  "coste": "1 MP",
+  "costeMC": 10,
+  "peso": 0.3
+ },
+ {
+  "objeto": "Alabarda",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Arma",
+  "coste": "12 MO",
+  "costeMC": 12000,
+  "peso": 3.0
+ },
+ {
+  "objeto": "Arpón (armas y escudos)",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Arma",
+  "coste": "50 MP",
+  "costeMC": 500,
+  "peso": 2.0
+ },
+ {
+  "objeto": "Cadena",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Arma",
+  "coste": "50 MP",
+  "costeMC": 500,
+  "peso": 2.0
+ },
+ {
+  "objeto": "Cestus",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Arma",
+  "coste": "3 MO",
+  "costeMC": 3000,
+  "peso": 0.5
+ },
+ {
+  "objeto": "Cimitarra",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Arma",
+  "coste": "10 MO",
+  "costeMC": 10000,
+  "peso": 1.0,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Daga",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Arma",
+  "coste": "50 MP",
+  "costeMC": 500,
+  "peso": 0.5
+ },
+ {
+  "objeto": "Daga de parada",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Arma",
+  "coste": "10 MO",
+  "costeMC": 10000,
+  "peso": 0.6,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Espada ancha",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Arma",
+  "coste": "4 MO",
+  "costeMC": 4000,
+  "peso": 1.5
+ },
+ {
+  "objeto": "Espada bastarda",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Arma",
+  "coste": "20 MO",
+  "costeMC": 20000,
+  "peso": 2.0,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Espada corta",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Arma",
+  "coste": "2 MO",
+  "costeMC": 2000,
+  "peso": 0.8
+ },
+ {
+  "objeto": "Espada larga",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Arma",
+  "coste": "5 MO",
+  "costeMC": 5000,
+  "peso": 1.4
+ },
+ {
+  "objeto": "Estilete",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Arma",
+  "coste": "60 MP",
+  "costeMC": 600,
+  "peso": 0.4
+ },
+ {
+  "objeto": "Estoque",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Arma",
+  "coste": "25 MO",
+  "costeMC": 25000,
+  "peso": 1.2,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Flagelo",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Arma",
+  "coste": "3 MO",
+  "costeMC": 3000,
+  "peso": 2.0
+ },
+ {
+  "objeto": "Florete",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Arma",
+  "coste": "15 MO",
+  "costeMC": 15000,
+  "peso": 1.0,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Garfio (armas y escudos)",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Arma",
+  "coste": "1 MO",
+  "costeMC": 1000,
+  "peso": 0.5
+ },
+ {
+  "objeto": "Garrote",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Arma",
+  "coste": "50 MP",
+  "costeMC": 500,
+  "peso": 1.5
+ },
+ {
+  "objeto": "Gran martillo de guerra",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Arma",
+  "coste": "15 MO",
+  "costeMC": 15000,
+  "peso": 5.0
+ },
+ {
+  "objeto": "Guadaña",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Arma",
+  "coste": "20 MP",
+  "costeMC": 200,
+  "peso": 2.5
+ },
+ {
+  "objeto": "Hacha a dos manos",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Arma",
+  "coste": "40 MO",
+  "costeMC": 40000,
+  "peso": 5.0
+ },
+ {
+  "objeto": "Hacha de guerra",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Arma",
+  "coste": "15 MO",
+  "costeMC": 15000,
+  "peso": 1.5,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Hacha de mano",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Arma",
+  "coste": "2 MO",
+  "costeMC": 2000,
+  "peso": 1.0
+ },
+ {
+  "objeto": "Jabalina",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Arma",
+  "coste": "2 MO",
+  "costeMC": 2000,
+  "peso": 1.0
+ },
+ {
+  "objeto": "Lanza",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Arma",
+  "coste": "4 MO",
+  "costeMC": 4000,
+  "peso": 3.0
+ },
+ {
+  "objeto": "Lanza de caballería",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Arma",
+  "coste": "20 MO",
+  "costeMC": 20000,
+  "peso": 2.0,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Látigo",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Arma",
+  "coste": "5 MO",
+  "costeMC": 5000,
+  "peso": 1.0
+ },
+ {
+  "objeto": "Lazo",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Arma",
+  "coste": "20 MP",
+  "costeMC": 200,
+  "peso": 0.3
+ },
+ {
+  "objeto": "Mandoble",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Arma",
+  "coste": "50 MO",
+  "costeMC": 50000,
+  "peso": 2.5,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Mangual",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Arma",
+  "coste": "15 MO",
+  "costeMC": 15000,
+  "peso": 1.0
+ },
+ {
+  "objeto": "Martillo de guerra",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Arma",
+  "coste": "4 MO",
+  "costeMC": 4000,
+  "peso": 1.2
+ },
+ {
+  "objeto": "Mayal",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Arma",
+  "coste": "12 MO",
+  "costeMC": 12000,
+  "peso": 1.2
+ },
+ {
+  "objeto": "Maza",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Arma",
+  "coste": "2 MO",
+  "costeMC": 2000,
+  "peso": 1.8
+ },
+ {
+  "objeto": "Maza pesada",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Arma",
+  "coste": "15 MO",
+  "costeMC": 15000,
+  "peso": 2.5
+ },
+ {
+  "objeto": "Red de gladiador",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Arma",
+  "coste": "1 MO",
+  "costeMC": 1000,
+  "peso": 0.5
+ },
+ {
+  "objeto": "Sable",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Arma",
+  "coste": "20 MO",
+  "costeMC": 20000,
+  "peso": 1.0,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Tridente",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Arma",
+  "coste": "3 MO",
+  "costeMC": 3000,
+  "peso": 2.0
+ },
+ {
+  "objeto": "Vara",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Arma",
+  "coste": "40 MP",
+  "costeMC": 400,
+  "peso": 1.0
+ },
+ {
+  "objeto": "Escudo",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Escudos",
+  "coste": "20 MO",
+  "costeMC": 20000,
+  "peso": 2.0
+ },
+ {
+  "objeto": "Escudo corporal",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Escudos",
+  "coste": "50 MO",
+  "costeMC": 50000,
+  "peso": 6.0
+ },
+ {
+  "objeto": "Rodela",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Escudos",
+  "coste": "5 MO",
+  "costeMC": 5000,
+  "peso": 1.0
+ },
+ {
+  "objeto": "Abanico de combate",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Orientales",
+  "coste": "5 MO",
+  "costeMC": 5000,
+  "peso": 0.2,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Anciano de primavera",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Orientales",
+  "coste": "15 MO",
+  "costeMC": 15000,
+  "peso": 3.0,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Cuervo",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Orientales",
+  "coste": "5 MO",
+  "costeMC": 5000,
+  "peso": 0.5,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Katana",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Orientales",
+  "coste": "50 MO",
+  "costeMC": 50000,
+  "peso": 1.0,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Katana de doble hoja",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Orientales",
+  "coste": "75 MO",
+  "costeMC": 75000,
+  "peso": 2.0,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Kusari-Gama",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Orientales",
+  "coste": "10 MO",
+  "costeMC": 10000,
+  "peso": 1.0,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "No-Dachi",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Orientales",
+  "coste": "70 MO",
+  "costeMC": 70000,
+  "peso": 1.5,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Nunchaku",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Orientales",
+  "coste": "2 MO",
+  "costeMC": 2000,
+  "peso": 0.6,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Sai",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Orientales",
+  "coste": "1 MO",
+  "costeMC": 1000,
+  "peso": 0.4,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Shuriken",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Orientales",
+  "coste": "50 MP",
+  "costeMC": 500,
+  "peso": 0.1,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Shuko",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Orientales",
+  "coste": "3 MO",
+  "costeMC": 3000,
+  "peso": 0.3,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Tanto",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Orientales",
+  "coste": "20 MO",
+  "costeMC": 20000,
+  "peso": 0.5,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Tonfa",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Orientales",
+  "coste": "1 MO",
+  "costeMC": 1000,
+  "peso": 0.3,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Bumerán",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Exóticas",
+  "coste": "3 MO",
+  "costeMC": 3000,
+  "peso": 0.6,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Garras",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Exóticas",
+  "coste": "3 MO",
+  "costeMC": 3000,
+  "peso": 0.5,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Quebradora",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Exóticas",
+  "coste": "30 MO",
+  "costeMC": 30000,
+  "peso": 1.0,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Katar",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Exóticas",
+  "coste": "40 MO",
+  "costeMC": 40000,
+  "peso": 0.6,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Arcabuz",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Proyectiles",
+  "coste": "500 MO",
+  "costeMC": 500000,
+  "peso": 4.5,
+  "disponibilidad": "A"
+ },
+ {
+  "objeto": "Arco corto",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Proyectiles",
+  "coste": "5 MO",
+  "costeMC": 5000,
+  "peso": 0.8
+ },
+ {
+  "objeto": "Arco largo",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Proyectiles",
+  "coste": "20 MO",
+  "costeMC": 20000,
+  "peso": 1.4
+ },
+ {
+  "objeto": "Arco largo compuesto",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Proyectiles",
+  "coste": "80 MO",
+  "costeMC": 80000,
+  "peso": 1.8,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Bala",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Proyectiles",
+  "coste": "20 MP",
+  "costeMC": 200,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Bala de cañón",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Proyectiles",
+  "coste": "10 MO",
+  "costeMC": 10000,
+  "peso": 15.0,
+  "disponibilidad": "A"
+ },
+ {
+  "objeto": "Balista ligera",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Proyectiles",
+  "coste": "100 MO",
+  "costeMC": 100000,
+  "peso": 180.0
+ },
+ {
+  "objeto": "Balista pesada",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Proyectiles",
+  "coste": "250 MO",
+  "costeMC": 250000,
+  "peso": 350.0,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Ballesta",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Proyectiles",
+  "coste": "50 MO",
+  "costeMC": 50000,
+  "peso": 2.5,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Ballesta de mano",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Proyectiles",
+  "coste": "250 MO",
+  "costeMC": 250000,
+  "peso": 1.5,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Ballesta de repetición",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Proyectiles",
+  "coste": "200 MO",
+  "costeMC": 200000,
+  "peso": 4.0,
+  "disponibilidad": "A"
+ },
+ {
+  "objeto": "Ballesta pesada",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Proyectiles",
+  "coste": "70 MO",
+  "costeMC": 70000,
+  "peso": 3.0,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Bolas",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Proyectiles",
+  "coste": "1 MO",
+  "costeMC": 1000,
+  "peso": 0.2
+ },
+ {
+  "objeto": "Boleadoras",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Proyectiles",
+  "coste": "2 MO",
+  "costeMC": 2000,
+  "peso": 1.0
+ },
+ {
+  "objeto": "Cañón",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Proyectiles",
+  "coste": "5.000 MO",
+  "costeMC": 5000000,
+  "peso": 400.0,
+  "disponibilidad": "A"
+ },
+ {
+  "objeto": "Cerbatana",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Proyectiles",
+  "coste": "1 MO",
+  "costeMC": 1000,
+  "peso": 0.4
+ },
+ {
+  "objeto": "Dardo de cerbatana",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Proyectiles",
+  "coste": "20 MP",
+  "costeMC": 200,
+  "peso": 0.1
+ },
+ {
+  "objeto": "Dardos de mano",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Proyectiles",
+  "coste": "50 MP",
+  "costeMC": 500,
+  "peso": 0.1
+ },
+ {
+  "objeto": "Flecha de descarga",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Proyectiles",
+  "coste": "2 MP",
+  "costeMC": 20,
+  "peso": 0.1
+ },
+ {
+  "objeto": "Flecha de fajo",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Proyectiles",
+  "coste": "1 MP",
+  "costeMC": 10,
+  "peso": 0.1
+ },
+ {
+  "objeto": "Flecha de mella",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Proyectiles",
+  "coste": "50 MP",
+  "costeMC": 500,
+  "peso": 0.1
+ },
+ {
+  "objeto": "Pistola de mecha",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Proyectiles",
+  "coste": "600 MO",
+  "costeMC": 600000,
+  "peso": 2.0,
+  "disponibilidad": "A"
+ },
+ {
+  "objeto": "Pólvora (2 disparos)",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Proyectiles",
+  "coste": "10 MO",
+  "costeMC": 10000,
+  "peso": 0.1,
+  "disponibilidad": "A"
+ },
+ {
+  "objeto": "Pólvora (10 disparos)",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Proyectiles",
+  "coste": "100 MO",
+  "costeMC": 100000,
+  "peso": 0.5,
+  "disponibilidad": "A"
+ },
+ {
+  "objeto": "Saeta",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Proyectiles",
+  "coste": "1 MP",
+  "costeMC": 10,
+  "peso": 0.1,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Saeta ligera",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Proyectiles",
+  "coste": "2 MP",
+  "costeMC": 20,
+  "peso": 0.1,
+  "disponibilidad": "A"
+ },
+ {
+  "objeto": "Saeta pesada",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Proyectiles",
+  "coste": "1 MP",
+  "costeMC": 10,
+  "peso": 0.2,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Turcus",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Proyectiles",
+  "coste": "5 MO",
+  "costeMC": 5000,
+  "peso": 0.8,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Virote ligero",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Proyectiles",
+  "coste": "10 MP",
+  "costeMC": 100,
+  "peso": 2.0
+ },
+ {
+  "objeto": "Virote pesado",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Proyectiles",
+  "coste": "50 MP",
+  "costeMC": 500,
+  "peso": 5.0,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Arma -5",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Precio por calidad",
+  "coste": "1/2"
+ },
+ {
+  "objeto": "Arma +0",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Precio por calidad",
+  "coste": "x1"
+ },
+ {
+  "objeto": "Arma +5",
+  "seccion": "ARMAS Y ESCUDOS",
+  "grupo": "Precio por calidad",
+  "coste": "x20",
+  "disponibilidad": "A"
+ },
+ {
+  "objeto": "Acolchada",
+  "seccion": "ARMADURAS",
+  "grupo": "Armaduras",
+  "coste": "1 MO",
+  "costeMC": 1000,
+  "peso": 3.0
+ },
+ {
+  "objeto": "Anillas",
+  "seccion": "ARMADURAS",
+  "grupo": "Armaduras",
+  "coste": "50 MO",
+  "costeMC": 50000,
+  "peso": 9.0
+ },
+ {
+  "objeto": "Completa",
+  "seccion": "ARMADURAS",
+  "grupo": "Armaduras",
+  "coste": "400 MO",
+  "costeMC": 400000,
+  "peso": 20.0,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Completa de cuero",
+  "seccion": "ARMADURAS",
+  "grupo": "Armaduras",
+  "coste": "5 MO",
+  "costeMC": 5000,
+  "peso": 7.0
+ },
+ {
+  "objeto": "Completa de campaña",
+  "seccion": "ARMADURAS",
+  "grupo": "Armaduras",
+  "coste": "800 MO",
+  "costeMC": 800000,
+  "peso": 25.0,
+  "disponibilidad": "A"
+ },
+ {
+  "objeto": "Completa pesada",
+  "seccion": "ARMADURAS",
+  "grupo": "Armaduras",
+  "coste": "700 MO",
+  "costeMC": 700000,
+  "peso": 30.0,
+  "disponibilidad": "A"
+ },
+ {
+  "objeto": "Cota de cuero",
+  "seccion": "ARMADURAS",
+  "grupo": "Armaduras",
+  "coste": "1 MO",
+  "costeMC": 1000,
+  "peso": 3.0
+ },
+ {
+  "objeto": "Cuero endurecido",
+  "seccion": "ARMADURAS",
+  "grupo": "Armaduras",
+  "coste": "15 MO",
+  "costeMC": 15000,
+  "peso": 4.0
+ },
+ {
+  "objeto": "Cuero tachonado",
+  "seccion": "ARMADURAS",
+  "grupo": "Armaduras",
+  "coste": "25 MO",
+  "costeMC": 25000,
+  "peso": 4.5
+ },
+ {
+  "objeto": "Escamas",
+  "seccion": "ARMADURAS",
+  "grupo": "Armaduras",
+  "coste": "120 MO",
+  "costeMC": 120000,
+  "peso": 9.0,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Gabardina",
+  "seccion": "ARMADURAS",
+  "grupo": "Armaduras",
+  "coste": "5 MP",
+  "costeMC": 50,
+  "peso": 1.5,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Mallas",
+  "seccion": "ARMADURAS",
+  "grupo": "Armaduras",
+  "coste": "70 MO",
+  "costeMC": 70000,
+  "peso": 13.0
+ },
+ {
+  "objeto": "Peto",
+  "seccion": "ARMADURAS",
+  "grupo": "Armaduras",
+  "coste": "40 MO",
+  "costeMC": 40000,
+  "peso": 4.0,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Piel",
+  "seccion": "ARMADURAS",
+  "grupo": "Armaduras",
+  "coste": "5 MO",
+  "costeMC": 5000,
+  "peso": 2.0
+ },
+ {
+  "objeto": "Piezas",
+  "seccion": "ARMADURAS",
+  "grupo": "Armaduras",
+  "coste": "40 MO",
+  "costeMC": 40000,
+  "peso": 6.0,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Placas",
+  "seccion": "ARMADURAS",
+  "grupo": "Armaduras",
+  "coste": "300 MO",
+  "costeMC": 300000,
+  "peso": 18.0
+ },
+ {
+  "objeto": "Semicompleta",
+  "seccion": "ARMADURAS",
+  "grupo": "Armaduras",
+  "coste": "100 MO",
+  "costeMC": 100000,
+  "peso": 13.0
+ },
+ {
+  "objeto": "Barda ligera",
+  "seccion": "ARMADURAS",
+  "grupo": "Para animales",
+  "coste": "20 MO",
+  "costeMC": 20000,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Barda pesada",
+  "seccion": "ARMADURAS",
+  "grupo": "Para animales",
+  "coste": "150 MO",
+  "costeMC": 150000,
+  "disponibilidad": "B"
+ },
+ {
+  "objeto": "Armadura -5",
+  "seccion": "ARMADURAS",
+  "grupo": "Precio por calidad",
+  "coste": "1/2"
+ },
+ {
+  "objeto": "Armadura +0",
+  "seccion": "ARMADURAS",
+  "grupo": "Precio por calidad",
+  "coste": "x1"
+ },
+ {
+  "objeto": "Armadura +5",
+  "seccion": "ARMADURAS",
+  "grupo": "Precio por calidad",
+  "coste": "x20",
+  "disponibilidad": "A"
+ }
+]

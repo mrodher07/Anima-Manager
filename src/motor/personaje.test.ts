@@ -1,11 +1,20 @@
 import { describe, it, expect } from 'vitest';
-import { calcular, personajeVacio, type DatosCalculo, type Personaje } from './personaje';
+import {
+  bolsaEnCobre,
+  calcular,
+  enMonedas,
+  personajeVacio,
+  type DatosCalculo,
+  type Personaje,
+} from './personaje';
 import { REGLAMENTO_OFICIAL } from './reglamento';
 import razas from '../../data/reglas/razas.json';
 import categorias from '../../data/reglas/categorias.json';
 import tablasBase from '../../data/reglas/tablasBase.json';
 import armasJson from '../../data/reglas/armas.json';
 import armadurasJson from '../../data/reglas/armaduras.json';
+import objetosJson from '../../data/reglas/objetos.json';
+import yelmosJson from '../../data/reglas/yelmos.json';
 import ventajasJson from '../../data/reglas/ventajas.json';
 import habilidadesKiJson from '../../data/reglas/habilidadesKi.json';
 import artesMarcialesJson from '../../data/reglas/artesMarciales.json';
@@ -23,7 +32,9 @@ import type {
   EsferaMetamagica,
   HabilidadKiCatalogo,
   LegadoSangre,
+  Objeto,
   Raza,
+  Yelmo,
   TablasBase,
   TipoEfectoTecnica,
   Ventaja,
@@ -40,6 +51,7 @@ const datos = (nombreRaza: string, nombreCategoria: string): DatosCalculo => ({
   tablas: tablasBase as unknown as TablasBase,
   armas: armasJson as Arma[],
   armaduras: armadurasJson as Armadura[],
+  objetos: objetosJson as Objeto[],
   ventajas: ventajasJson as Ventaja[],
   habilidadesKi: habilidadesKiJson as HabilidadKiCatalogo[],
   artesMarciales: artesMarcialesJson as EntradaTabla[],
@@ -541,6 +553,32 @@ describe('otras fichas reales', () => {
     expect(f.ajusteNivel).toBe(1);
     // Zeón: 135 de base por POD 10 + 100 por nivel que da el Hechicero.
     expect(f.zeon.valor).toBe(235);
+
+    // Invocación, hoja «PDs» filas 98–101: sin gastar un solo PD ya tiene el bono de la
+    // característica, porque no son secundarias y no llevan el −30 de no desarrollada.
+    expect(f.invocacion.Convocar.valor).toBe(15); // bono de POD 10
+    expect(f.invocacion.Controlar.valor).toBe(5); // bono de VOL 6
+    expect(f.invocacion.Atar.valor).toBe(15);
+    expect(f.invocacion.Desconvocar.valor).toBe(15);
+  });
+
+  it('las habilidades de invocación suman PD, bono de categoría y bono especial', () => {
+    const p = personajeVacio('conjurador');
+    p.raza = 'Humano';
+    p.categorias = [{ categoria: 'Conjurador', nivel: 1 }];
+    p.caracteristicas = { AGI: 5, CON: 5, DES: 5, FUE: 5, INT: 5, PER: 5, POD: 10, VOL: 10 };
+    // El Conjurador cuesta 1 PD por punto en las cuatro y regala +10 en cada una.
+    p.pdInvertidos = { Convocar: 30, Controlar: 30 };
+    p.bonosEspeciales = { Atar: 25 };
+    const f = calcular(p, datos('Humano', 'Conjurador'));
+
+    expect(f.invocacion.Convocar.valor).toBe(55); // 30 PD / 1 + 15 (POD) + 10 de categoría
+    expect(f.invocacion.Controlar.valor).toBe(55); // igual, pero por VOL 10
+    expect(f.invocacion.Atar.valor).toBe(50); // 15 + 10 + 25 anotados en «Esp.»
+    expect(f.invocacion.Desconvocar.valor).toBe(25); // 15 + 10, sin gastar nada
+
+    // Y lo gastado cuenta dentro del límite de habilidades místicas.
+    expect(f.pdGastados.misticas).toBe(60);
   });
 
   it('el nivel 0 es válido y no rompe nada', () => {
@@ -554,5 +592,72 @@ describe('otras fichas reales', () => {
     expect(f.presencia.valor).toBe(20); // 400 / 20
     expect(f.puntosVida.valor).toBe(70); // 20 + 50 + 0, sin PV de categoría
     expect(f.zeon.valor).toBe(135); // sólo la base por POD
+  });
+});
+
+describe('inventario y dinero', () => {
+  it('escribe una cantidad de cobre como monedas del manual', () => {
+    // 1 MO = 100 MP = 1000 MC (Core Exxet, cap. VIII).
+    expect(enMonedas(0)).toBe('0 MC');
+    expect(enMonedas(7)).toBe('7 MC');
+    expect(enMonedas(10)).toBe('1 MP');
+    expect(enMonedas(1000)).toBe('1 MO');
+    expect(enMonedas(2053)).toBe('2 MO 5 MP 3 MC');
+    expect(enMonedas(-10)).toBe('−1 MP');
+  });
+
+  it('pasa la bolsa a cobre', () => {
+    expect(bolsaEnCobre(undefined)).toBe(0);
+    expect(bolsaEnCobre({ MO: 1, MP: 2, MC: 3 })).toBe(1023);
+  });
+
+  it('suma peso y valor de lo que lleva encima', () => {
+    const p = personajeVacio('con-mochila');
+    p.categorias = [{ categoria: 'Guerrero', nivel: 1 }];
+    p.equipo.objetos = [
+      // Mochila: 30 MP y 1 kg. Antorcha: 2 MC y 1 kg. Cuerda normal (10 m): 5 MP y 2 kg.
+      { objeto: 'Mochila' },
+      { objeto: 'Antorcha', cantidad: 4 },
+      { objeto: 'Cuerda normal (10 m)', cantidad: 2 },
+    ];
+    p.equipo.dinero = { MO: 2, MP: 5 };
+    const f = calcular(p, datos('', 'Guerrero'));
+
+    expect(f.inventario.peso).toBe(9); // 1 + 4×1 + 2×2
+    expect(f.inventario.valor).toBe(408); // 300 + 4×2 + 2×50
+    // 408 MC no llega a una moneda de oro, que son 1000.
+    expect(enMonedas(f.inventario.valor)).toBe('40 MP 8 MC');
+    expect(f.inventario.dinero).toBe(2050);
+  });
+
+  it('un objeto que ya no está en el catálogo se marca, no se pierde', () => {
+    const p = personajeVacio('con-reliquia');
+    p.categorias = [{ categoria: 'Guerrero', nivel: 1 }];
+    p.equipo.objetos = [{ objeto: 'Anillo del Nigromante', nota: 'De la partida pasada' }];
+    const f = calcular(p, datos('', 'Guerrero'));
+
+    expect(f.inventario.lineas).toHaveLength(1);
+    expect(f.inventario.lineas[0].desconocido).toBe(true);
+    expect(f.inventario.lineas[0].nota).toBe('De la partida pasada');
+    expect(f.inventario.peso).toBe(0);
+  });
+
+  it('los yelmos protegen como una pieza de armadura más', () => {
+    const p = personajeVacio('con-yelmo');
+    p.categorias = [{ categoria: 'Guerrero', nivel: 1 }];
+    p.equipo.armadura = [{ armadura: 'Yelmo Cerrado' }];
+    const conYelmos: DatosCalculo = {
+      ...datos('', 'Guerrero'),
+      armaduras: [
+        ...(armadurasJson as Armadura[]),
+        ...(yelmosJson as Yelmo[]).map(({ yelmo, ...resto }) => ({ ...resto, armadura: yelmo })),
+      ],
+    };
+    const f = calcular(p, conYelmos);
+
+    // Tabla de yelmos del Excel: FIL 5, CON 5, ENE 2, requerimiento 10.
+    expect(f.combate.proteccion.TA.FIL).toBe(5);
+    expect(f.combate.proteccion.TA.ENE).toBe(2);
+    expect(f.combate.proteccion.requisito).toBe(10);
   });
 });

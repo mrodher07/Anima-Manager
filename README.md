@@ -67,7 +67,7 @@ sigue igual.
 ### Otros comandos
 
 ```bash
-npm test         # 486 pruebas del motor de reglas y la sincronización
+npm test         # 491 pruebas del motor de reglas y la sincronización
 npm run build    # compilar (incluye la comprobación de tipos)
 ```
 
@@ -100,7 +100,7 @@ Y una **campaña activa** tiene las suyas:
 | **Jugadores** | Quién juega e invitaciones por código |
 | **Ajustes** | Nivel de inicio, Puntos de Creación, sistema de combate y manuales |
 | **Reglas** | Reescribir o desactivar cualquier fórmula, y restablecerla |
-| **Contenido propio** | Las 26 colecciones del catálogo, personalizables por tu mesa |
+| **Contenido propio** | Las 27 colecciones del catálogo, personalizables por tu mesa |
 | **Diario** | Lo que pasó en cada sesión |
 
 ## Cómo está montado
@@ -367,10 +367,28 @@ la vez, y es a propósito:
   las hojas legibles avisando de qué se ha quedado fuera.
 
 También se puede importar **la hoja de cálculo que ya usa la comunidad** (Meirmeister y sus
-derivadas). De ahí se traen la identidad, la categoría, el nivel y las ocho características
-compradas; el resto hay que repasarlo a mano, porque en esa hoja vive dentro de fórmulas y
-no se puede identificar sin riesgo de inventarse datos. Se busca **por etiqueta**, no por
-dirección de celda, para que aguante las distintas versiones que circulan.
+derivadas). De ahí se traen:
+
+- La identidad: nombre, raza, sexo, categoría y nivel.
+- Las ocho características **compradas** (no las que ya llevan el modificador racial: ese lo
+  aplica la aplicación).
+- Los **PD invertidos** en cada habilidad de combate, secundaria, mística, de invocación y
+  de Ki, sumando los tramos de nivel en que la hoja los reparte. El Ki tiene dos bloques con
+  las mismas siglas —Puntos y Acumulación— que se distinguen por el rótulo de su grupo.
+
+Todo se busca **por etiqueta**, nunca por dirección de celda, para que aguante las distintas
+versiones que circulan: de las cuatro fichas reales con las que está probado, ninguna coloca
+las tablas en las mismas filas y una ni siquiera tiene las mismas pestañas.
+
+Lo que **no** se trae, y hay que poner a mano: ventajas, equipo, conjuros y poderes. En esa
+hoja se escriben en texto libre y no se pueden emparejar con el catálogo sin riesgo de
+inventarse datos.
+
+Por eso **los valores finales no coinciden nada más importar**, y el aviso lo dice: la
+columna «Total» de la hoja suma además la armadura que llevas, las ventajas, las Habilidades
+Naturales y los bonos de tu raza. En cuanto se ponen esas cuatro cosas, los números cuadran.
+Que la lectura de PD es exacta se comprueba solo: en dos de las cuatro fichas de prueba la
+suma cae en 600 PD clavados, que es el presupuesto de nivel 1.
 
 Leer y escribir .xlsx está hecho **sin dependencias**: un .xlsx es un ZIP con XML, y hacen
 falta un CRC32, un ZIP sin comprimir y `DecompressionStream`, que ya traen el navegador y
@@ -427,4 +445,11 @@ dispositivos sin conexión se pisarían.
 pip install openpyxl
 cp Meirmeister.xlsm tools/ficha.xlsm
 python3 tools/extraer-tablas.py
+```
+
+La tabla de precios del equipamiento no está en el Excel, sino en el capítulo VIII del
+Core Exxet, así que sale de otro sitio:
+
+```bash
+python3 tools/extraer-equipamiento.py CORE_EXXET51100.pdf   # necesita pdftotext
 ```

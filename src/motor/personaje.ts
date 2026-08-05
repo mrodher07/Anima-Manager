@@ -41,6 +41,7 @@ import type {
   HabilidadKiCatalogo,
   EsferaMetamagica,
   LegadoSangre,
+  Objeto,
   Raza,
   TipoEfectoTecnica,
   TablasBase,
@@ -196,6 +197,10 @@ export interface Personaje {
   equipo: {
     armadura: PiezaEquipada[];
     armas: ArmaEquipada[];
+    /** Mochila: lo que lleva encima y no da números de combate. */
+    objetos?: ObjetoLlevado[];
+    /** Bolsa. Se guarda por tipo de moneda, como en el manual. */
+    dinero?: Bolsa;
   };
 
   /** Estado de juego, lo que cambia durante la partida. */
@@ -255,6 +260,45 @@ export function nivelTotalDe(p: Personaje): number {
   return p.categorias.reduce((t, c) => t + (c.nivel > 0 ? c.nivel : 0), 0);
 }
 
+/** Una línea del inventario: qué objeto del catálogo, cuántos y qué anota el jugador. */
+export interface ObjetoLlevado {
+  objeto: string;
+  cantidad?: number;
+  nota?: string;
+}
+
+/** Monedas de oro, plata y cobre. Core Exxet, cap. VIII: 1 MO = 100 MP = 1000 MC. */
+export interface Bolsa {
+  MO?: number;
+  MP?: number;
+  MC?: number;
+}
+
+export const MC_POR_MONEDA: Record<keyof Bolsa, number> = { MO: 1000, MP: 10, MC: 1 };
+
+/** Pasa una bolsa a monedas de cobre, que es la unidad con la que se suma todo. */
+export function bolsaEnCobre(bolsa: Bolsa | undefined): number {
+  if (!bolsa) return 0;
+  return (bolsa.MO ?? 0) * 1000 + (bolsa.MP ?? 0) * 10 + (bolsa.MC ?? 0);
+}
+
+/**
+ * Escribe una cantidad de cobre como la escribiría el manual: «2 MO 5 MP 3 MC».
+ * Se omiten las monedas que no hacen falta, y 0 se muestra como «0 MC».
+ */
+export function enMonedas(cobre: number): string {
+  const signo = cobre < 0 ? '−' : '';
+  let resto = Math.abs(Math.round(cobre));
+  const partes: string[] = [];
+  for (const moneda of ['MO', 'MP', 'MC'] as const) {
+    const valor = MC_POR_MONEDA[moneda];
+    const n = Math.trunc(resto / valor);
+    if (n > 0) partes.push(`${n} ${moneda}`);
+    resto -= n * valor;
+  }
+  return signo + (partes.length > 0 ? partes.join(' ') : '0 MC');
+}
+
 export function personajeVacio(id: string): Personaje {
   return {
     id,
@@ -299,6 +343,33 @@ export interface Aviso {
   mensaje: string;
 }
 
+/**
+ * Lo que lleva encima, ya sumado. **No** entra en ningún cálculo de reglas: el manual no
+ * pone tope de carga, así que esto es una ayuda de mesa, no un límite que imponga la
+ * aplicación. El peso de la armadura y las armas equipadas no se cuenta aquí, porque esas
+ * tablas no traen peso.
+ */
+export interface ResumenInventario {
+  lineas: {
+    objeto: string;
+    cantidad: number;
+    nota?: string;
+    /** Lo que dice el manual, «5 MP». Vacío si el objeto no está en el catálogo. */
+    coste: string;
+    /** Coste de la línea entera en monedas de cobre, ya multiplicado por la cantidad. */
+    cobre: number;
+    peso: number;
+    disponibilidad: string;
+    /** true si el objeto ya no existe en el catálogo: se avisa en vez de perderlo. */
+    desconocido: boolean;
+  }[];
+  peso: number;
+  /** Valor del inventario en monedas de cobre. */
+  valor: number;
+  /** Dinero en la bolsa, en monedas de cobre. */
+  dinero: number;
+}
+
 export interface FichaCalculada {
   /** Nivel real del personaje. Es el que da los bonos de categoría. */
   nivel: number;
@@ -322,6 +393,9 @@ export interface FichaCalculada {
   /** Esferas del Arcana Shepirah y lo que consumen del Nivel de Magia. */
   metamagia: { esferas: string[]; gastado: number; disponible: number };
   ki: FichaKi;
+  /** Convocar, Controlar, Atar y Desconvocar: las cuatro habilidades de invocación. */
+  invocacion: Record<ClaveInvocacion, ValorDerivado>;
+  inventario: ResumenInventario;
   secundarias: Record<string, ValorDerivado>;
   /** Lo que aportan las ventajas y desventajas elegidas. */
   efectos: EfectosAplicados;
@@ -374,6 +448,24 @@ const CLAVES_COMBATE = [
   ...CARACTERISTICAS_KI.map((c) => `AcumKi${c}`),
 ];
 const CLAVES_MISTICAS = ['Zeon', 'ACT', 'ProyeccionMagica', 'NivelMagia', 'Convocar', 'Controlar', 'Atar', 'Desconvocar'];
+
+/**
+ * Las cuatro habilidades de invocación. Core Exxet, cap. 4: Convocar, Atar y Desconvocar
+ * dependen del Poder; Dominar —«Controlar» en la ficha de la comunidad— de la Voluntad.
+ */
+export const INVOCACION = [
+  { clave: 'Convocar', nombre: 'Convocar', coste: 'costeConvocar', caracteristica: 'POD' },
+  { clave: 'Controlar', nombre: 'Controlar', coste: 'costeControlar', caracteristica: 'VOL' },
+  { clave: 'Atar', nombre: 'Atar', coste: 'costeAtar', caracteristica: 'POD' },
+  { clave: 'Desconvocar', nombre: 'Desconvocar', coste: 'costeDesconvocar', caracteristica: 'POD' },
+] as const satisfies readonly {
+  clave: string;
+  nombre: string;
+  coste: string;
+  caracteristica: Caracteristica;
+}[];
+
+export type ClaveInvocacion = (typeof INVOCACION)[number]['clave'];
 const CLAVES_PSIQUICAS = ['CV', 'ProyeccionPsiquica'];
 
 /** Contexto de datos que necesita el cálculo. Se carga una vez y se reutiliza. */
@@ -386,6 +478,8 @@ export interface DatosCalculo {
   tablas: TablasBase;
   armas: Arma[];
   armaduras: Armadura[];
+  /** Lista de precios del manual, para el inventario. */
+  objetos: Objeto[];
   ventajas: Ventaja[];
   habilidadesKi: HabilidadKiCatalogo[];
   artesMarciales: EntradaTabla[];
@@ -420,6 +514,8 @@ export async function cargarDatosCalculo(
     tablas,
     armas,
     armaduras,
+    yelmos,
+    objetos,
     ventajas,
     habilidadesKi,
     artesMarciales,
@@ -434,6 +530,8 @@ export async function cargarDatosCalculo(
     catalogo.tablasBase(),
     catalogo.obtener('armas'),
     catalogo.obtener('armaduras'),
+    catalogo.obtener('yelmos'),
+    catalogo.obtener('objetos'),
     catalogo.obtener('ventajas'),
     catalogo.obtener('habilidadesKi'),
     catalogo.obtener('artesMarciales'),
@@ -450,7 +548,10 @@ export async function cargarDatosCalculo(
     categorias,
     tablas,
     armas,
-    armaduras,
+    // Los yelmos son piezas de armadura como las demás, sólo que en otra tabla del
+    // Excel. Se juntan aquí para que el selector de armadura los ofrezca igual.
+    armaduras: [...armaduras, ...yelmos.map(({ yelmo, ...resto }) => ({ ...resto, armadura: yelmo }))],
+    objetos,
     ventajas,
     habilidadesKi,
     artesMarciales,
@@ -459,6 +560,39 @@ export async function cargarDatosCalculo(
     metamagia,
     efectosTecnica,
     tiposEfectoTecnica,
+  };
+}
+
+/**
+ * Suma la mochila. Un objeto que ya no esté en el catálogo —porque la mesa desactivó el
+ * paquete que lo traía— **no se borra**: se marca como desconocido y se sigue viendo.
+ */
+export function resumirInventario(
+  personaje: Personaje,
+  catalogo: Objeto[],
+): ResumenInventario {
+  const porNombre = new Map(catalogo.map((o) => [o.objeto, o]));
+  const lineas = (personaje.equipo.objetos ?? []).map((llevado) => {
+    const datos = porNombre.get(llevado.objeto);
+    const cantidad = Math.max(0, llevado.cantidad ?? 1);
+    return {
+      objeto: llevado.objeto,
+      cantidad,
+      nota: llevado.nota,
+      coste: datos?.coste ?? '',
+      cobre: (datos?.costeMC ?? 0) * cantidad,
+      peso: (datos?.peso ?? 0) * cantidad,
+      disponibilidad: datos?.disponibilidad ?? '',
+      desconocido: datos === undefined,
+    };
+  });
+  return {
+    lineas,
+    // Los pesos del manual llevan un decimal («0,25 kg»), así que se redondea al sumar
+    // para no arrastrar el error del coma flotante.
+    peso: Math.round(lineas.reduce((t, l) => t + l.peso, 0) * 100) / 100,
+    valor: lineas.reduce((t, l) => t + l.cobre, 0),
+    dinero: bolsaEnCobre(personaje.equipo.dinero),
   };
 }
 
@@ -604,6 +738,26 @@ export function calcular(
       ? aplicar('act', { actBasePorPOD: base, pd: personaje.pdInvertidos['ACT'] ?? 0, coste: costeACT })
       : base,
   );
+
+  // Convocar, Controlar, Atar y Desconvocar. Son místicas, así que no llevan el −30 de
+  // habilidad sin desarrollar: con 0 PD ya valen el bono de la característica.
+  const invocacion = {} as Record<ClaveInvocacion, ValorDerivado>;
+  for (const def of INVOCACION) {
+    // Coste 0 significa que la categoría no permite desarrollarla: los PD no compran nada,
+    // pero el bono de la característica se tiene igual.
+    const coste = Number(categoria?.[def.coste] ?? 0);
+    invocacion[def.clave] = derivar(
+      def.clave,
+      aplicar('habilidadInvocacion', {
+        pd: coste > 0 ? personaje.pdInvertidos[def.clave] ?? 0 : 0,
+        coste: coste || 1,
+        bonoCaracteristica: caracteristicas[def.caracteristica].bono,
+        bonoCategoria: Number(categoria?.[`bon${def.clave}`] ?? 0),
+      }) + (personaje.bonosEspeciales[def.clave] ?? 0),
+    );
+  }
+
+  const inventario = resumirInventario(personaje, datos.objetos);
 
   // ── Combate: armadura primero, porque su penalizador afecta a casi todo ──
   const especial = (clave: string) => personaje.bonosEspeciales[clave] ?? 0;
@@ -947,6 +1101,8 @@ export function calcular(
     nivelMagia,
     metamagia,
     ki,
+    invocacion,
+    inventario,
     secundarias,
     efectos,
     puntosCreacion,

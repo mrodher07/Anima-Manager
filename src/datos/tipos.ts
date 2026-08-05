@@ -60,6 +60,28 @@ export interface Arma {
   _seccion?: string;
 }
 
+/**
+ * Una línea de la tabla de equipamiento del Core Exxet (cap. VIII, págs. 68–72).
+ *
+ * El precio se guarda tal cual lo escribe el manual («5 MP», «5/50 MO» para las gemas,
+ * «x10» en los bloques de multiplicador por calidad) porque no todo es un número, y
+ * aparte en `costeMC` pasado a monedas de cobre para poder sumar y ordenar.
+ * 1 MP = 10 MC y 1 MO = 100 MP, así que 1 MO = 1000 MC.
+ */
+export interface Objeto {
+  objeto: string;
+  /** Rótulo en mayúsculas del manual: VESTIMENTA, ÚTILES VARIOS, VENENOS… */
+  seccion?: string;
+  /** Tabla concreta dentro de la sección: Calzado, Orfebrería, Dosis… */
+  grupo?: string;
+  coste?: string;
+  costeMC?: number;
+  /** En kilogramos. Los objetos sin peso apreciable no lo traen. */
+  peso?: number;
+  /** Vacío si es común, «B» si es raro y «A» si es muy raro. */
+  disponibilidad?: string;
+}
+
 export interface Armadura {
   armadura: string;
   requerimiento?: number;
@@ -72,6 +94,11 @@ export interface Armadura {
   FIL?: number; CON?: number; PEN?: number;
   CAL?: number; ELE?: number; FRI?: number; ENE?: number;
   _seccion?: string;
+}
+
+/** Un yelmo protege igual que una pieza de armadura; el Excel sólo lo pone en otra tabla. */
+export interface Yelmo extends Omit<Armadura, 'armadura'> {
+  yelmo: string;
 }
 
 export interface Conjuro {
@@ -368,7 +395,8 @@ export interface Colecciones {
   poderesCriatura: HabilidadEsencial;
   armas: Arma;
   armaduras: Armadura;
-  yelmos: EntradaTabla;
+  yelmos: Yelmo;
+  objetos: Objeto;
   artesMarciales: EntradaTabla;
   arsMagnus: EntradaTabla;
   habilidadesKi: HabilidadKiCatalogo;
@@ -403,6 +431,7 @@ export const CLAVE_DE: Record<NombreColeccion, string> = {
   armas: 'arma',
   armaduras: 'armadura',
   yelmos: 'yelmo',
+  objetos: 'objeto',
   artesMarciales: 'arte',
   arsMagnus: 'nombre',
   habilidadesKi: 'habilidad',

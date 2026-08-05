@@ -7,7 +7,7 @@
   "habilidadesEsenciales": 198,
   "armas": 170,
   "armaduras": 48,
-  "yelmos": 9,
+  "yelmos": 7,
   "artesMarciales": 88,
   "arsMagnus": 57,
   "habilidadesKi": 75,
@@ -21,6 +21,7 @@
   "disciplinasPsiquicas": 13,
   "poderesCriatura": 494,
   "elan": 185,
-  "tablasBase": 17
+  "tablasBase": 17,
+  "objetos": 339
  }
 }

@@ -2,9 +2,11 @@ import { useMemo } from 'react';
 import {
   CARACTERISTICAS,
   GRUPOS_SECUNDARIAS,
+  INVOCACION,
   RESISTENCIAS,
   SECUNDARIAS,
   calcular,
+  enMonedas,
   type DatosCalculo,
   type Personaje,
 } from '../motor/personaje';
@@ -178,6 +180,71 @@ export function VistaFicha({ personaje, datos, reglamento }: Props) {
           </table>
         </section>
       </div>
+
+      <section className="panel" style={{ marginTop: 16 }}>
+        <h2>Invocación</h2>
+        <p style={{ color: 'var(--texto-debil)', fontSize: '0.85rem', marginTop: 0 }}>
+          Convocar, Atar y Desconvocar salen del Poder; Controlar, de la Voluntad. No son
+          secundarias, así que no llevan el −30 de habilidad sin desarrollar.
+        </p>
+        <table>
+          <tbody>
+            {INVOCACION.map((i) => {
+              const v = ficha.invocacion[i.clave];
+              return (
+                <tr key={i.clave}>
+                  <td>
+                    {i.nombre}{' '}
+                    <span style={{ color: 'var(--texto-debil)', fontSize: '0.72rem' }}>
+                      {i.caracteristica}
+                    </span>
+                  </td>
+                  <td className={`num ${v.valor < 0 ? 'negativo' : ''}`}>
+                    {v.valor > 0 ? `+${v.valor}` : v.valor}
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </section>
+
+      {ficha.inventario.lineas.length > 0 && (
+        <section className="panel" style={{ marginTop: 16 }}>
+          <h2>Inventario</h2>
+          <div className="desplazable">
+            <table>
+              <thead>
+                <tr>
+                  <th>Objeto</th><th className="num">Cantidad</th>
+                  <th className="num">Peso</th><th className="num">Coste</th><th>Nota</th>
+                </tr>
+              </thead>
+              <tbody>
+                {ficha.inventario.lineas.map((l) => (
+                  <tr key={l.objeto}>
+                    <td className="destacado">{l.objeto}</td>
+                    <td className="num">{l.cantidad}</td>
+                    <td className="num">{l.peso ? `${l.peso} kg` : '—'}</td>
+                    <td className="num">{l.cobre ? enMonedas(l.cobre) : '—'}</td>
+                    <td>{l.nota ?? ''}</td>
+                  </tr>
+                ))}
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td colSpan={2}>Total</td>
+                  <td className="num destacado">{ficha.inventario.peso} kg</td>
+                  <td className="num destacado">{enMonedas(ficha.inventario.valor)}</td>
+                  <td style={{ color: 'var(--texto-tenue)' }}>
+                    En la bolsa: {enMonedas(ficha.inventario.dinero)}
+                  </td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </section>
+      )}
 
       {(personaje.metamagia ?? []).length > 0 && (
         <section className="panel" style={{ marginTop: 16 }}>

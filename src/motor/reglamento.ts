@@ -19,6 +19,7 @@ export type ClaveRegla =
   | 'resistencia'
   | 'turno'
   | 'habilidadSecundaria'
+  | 'habilidadInvocacion'
   | 'danoArma'
   | 'absorcion'
   | 'porcentajeDano'
@@ -178,6 +179,26 @@ export const REGLAS: readonly DefinicionRegla[] = [
       coste: 'Coste de desarrollo del ACT',
     },
     referencia: 'Ficha, PDs!V94 y W94.',
+    desactivable: false,
+  },
+  {
+    clave: 'habilidadInvocacion',
+    nombre: 'Habilidad de invocación',
+    grupo: 'Desarrollo',
+    formula: 'truncar(pd / coste) + bonoCaracteristica + bonoCategoria',
+    variables: {
+      pd: 'PD invertidos en la habilidad',
+      coste: 'Coste de desarrollo según la categoría',
+      bonoCaracteristica: 'Bono de POD, o de VOL en el caso de Controlar',
+      bonoCategoria: 'Lo que regala la categoría: el Conjurador da +10 a las cuatro',
+    },
+    /*
+     * Convocar, Dominar, Atar y Desconvocar son **místicas**, no secundarias, y por eso no
+     * llevan el −30 de habilidad no desarrollada: un personaje con 0 PD y POD 10 tiene
+     * Convocar 15, no −15. Verificado contra la hoja de la comunidad, que es la referencia
+     * de todo el motor: Mogunbun, POD 10 y VOL 6, sale Convocar 15 y Controlar 5.
+     */
+    referencia: 'Core Exxet, cap. 4 (habilidades mágicas). Verificado: 0 PD + POD 10 = 15.',
     desactivable: false,
   },
   {

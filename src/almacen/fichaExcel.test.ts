@@ -28,6 +28,11 @@ function fichaDePrueba(): Personaje {
   p.equipo = {
     armas: [{ arma: 'Espada larga', calidad: 5 }],
     armadura: [{ armadura: 'Cota de malla', calidad: 0 }],
+    objetos: [
+      { objeto: 'Mochila' },
+      { objeto: 'Antorcha', cantidad: 4, nota: 'En el cinto' },
+    ],
+    dinero: { MO: 2, MP: 5, MC: 0 },
   };
   p.manuales = { puntosVida: 999 };
   p.estado = { pvActuales: 40, zeonActual: 10 };
@@ -144,6 +149,12 @@ describe('reconstruir desde las hojas legibles', () => {
     expect(personaje.conjuros).toEqual(['Bola de Fuego']);
     expect(personaje.equipo.armas).toEqual([{ arma: 'Espada larga', calidad: 5 }]);
     expect(personaje.pdInvertidos.HAtaque).toBe(60);
+    // El inventario y la bolsa también sobreviven a la reconstrucción.
+    expect(personaje.equipo.objetos).toEqual([
+      { objeto: 'Mochila', cantidad: 1, nota: undefined },
+      { objeto: 'Antorcha', cantidad: 4, nota: 'En el cinto' },
+    ]);
+    expect(personaje.equipo.dinero).toEqual({ MO: 2, MP: 5, MC: 0 });
   });
 
   it('avisa de que es una reconstrucción, no una copia fiel', async () => {
@@ -191,7 +202,38 @@ describe('la hoja de cálculo de la comunidad', () => {
           [null, null, null, 'VOL', 6, null, 6],
         ],
       },
-      { nombre: 'PDs', filas: [[]] },
+      /*
+       * La pestaña PDs, con las dos tablas que trae la hoja real: la de combate —donde el
+       * Ki mete dos bloques con las **mismas** siglas, distinguidos sólo por el rótulo de
+       * la columna anterior— y la de secundarias. Los PD se reparten en varias columnas
+       * «PDs» porque la hoja los anota por tramos de nivel.
+       */
+      {
+        nombre: 'PDs',
+        filas: [
+          [],
+          [null, null, 'Habilidades de Combate', 'Tipo', 'Habilidad', null, null, null, null,
+           null, null, 'Coste', 'PDs', 'Coste', 'PDs'],
+          [null, null, null, 'Base', 'H. Ataque', null, null, null, null, null, null, 2, 100, 2, 50],
+          [null, null, null, null, 'H. Parada', null, null, null, null, null, null, 2, 110],
+          [],
+          [null, null, null, 'Puntos de KI', 'AGI', null, null, null, null, null, null, 1, 15],
+          [null, null, null, null, 'CON', null, null, null, null, null, null, 1, 5],
+          [null, null, null, 'Acumulación de KI', 'AGI', null, null, null, null, null, null, 10, 20],
+          [null, null, null, 'CM', 'Conocimiento Marcial', null, null, null, null, null, null, 5, 25],
+          [],
+          [],
+          [],
+          [null, null, 'Habilidades Secundarias', 'Tipo', 'Habilidad', null, null, null, null,
+           'Coste', 'PDs', 'Coste', 'PDs'],
+          [null, 'Atléticas', 'Atléticas', null, 'Acrobacias', null, null, null, null, 2, 30],
+          [null, 'Atléticas', null, null, 'Atletismo', null, null, null, null, 2, 20],
+          [null, 'Vigor', null, null, 'P. Fuerza', null, null, null, null, 2, 40],
+          [null, 'Vigor', null, null, 'Res. Dolor', null, null, null, null, 2, 10],
+          [null, null, null, null, 'Perspicacia', null, null, null, null, 2, 60],
+          [null, null, null, null, 'Advertir', null, null, null, null, 2, 60, 2, 60],
+        ],
+      },
       { nombre: 'Combate', filas: [[]] },
     ];
   }
@@ -225,6 +267,56 @@ describe('la hoja de cálculo de la comunidad', () => {
     const { avisos, origen } = deFichaComunidad(libroComunidad(), 'x');
     expect(origen).toBe('comunidad');
     expect(avisos.join(' ')).toMatch(/a mano/);
+  });
+
+  /*
+   * Los PD se daban por imposibles —«viven dentro de fórmulas»— y sólo se traían identidad
+   * y características. Sí se pueden leer: la pestaña PDs los tiene en claro, con el nombre
+   * de la habilidad al lado. Verificado contra las cuatro fichas reales que hay: en dos de
+   * ellas la suma cae exactamente en 600 PD, que es el presupuesto de nivel 1.
+   */
+  describe('PD invertidos', () => {
+    it('suma las columnas de PD de cada habilidad', () => {
+      const { personaje } = deFichaComunidad(libroComunidad(), 'x');
+      // H. Ataque tiene dos tramos anotados, 100 y 50.
+      expect(personaje.pdInvertidos.HAtaque).toBe(150);
+      expect(personaje.pdInvertidos.HParada).toBe(110);
+      expect(personaje.pdInvertidos.Acrobacias).toBe(30);
+      expect(personaje.pdInvertidos.Atletismo).toBe(20);
+      expect(personaje.pdInvertidos.Advertir).toBe(120);
+    });
+
+    it('separa los dos bloques del Ki, que se llaman igual', () => {
+      // Sin mirar el rótulo del grupo, los dos «AGI» se sumarían en una sola clave y el
+      // motor no leería ninguna de las dos.
+      const { personaje } = deFichaComunidad(libroComunidad(), 'x');
+      expect(personaje.pdInvertidos.KiAGI).toBe(15);
+      expect(personaje.pdInvertidos.KiCON).toBe(5);
+      expect(personaje.pdInvertidos.AcumKiAGI).toBe(20);
+      expect(personaje.pdInvertidos.CM).toBe(25);
+    });
+
+    it('traduce las abreviaturas de la hoja al nombre del manual', () => {
+      const { personaje } = deFichaComunidad(libroComunidad(), 'x');
+      expect(personaje.pdInvertidos['Proezas de Fuerza']).toBe(40);
+      expect(personaje.pdInvertidos['Resistencia al Dolor']).toBe(10);
+    });
+
+    it('deja fuera lo que la aplicación no calcula, y lo dice', () => {
+      // «Perspicacia» no es una secundaria del manual: alguna mesa se la inventa. Guardarla
+      // no haría nada —el motor no la lee— pero sí la daría por importada.
+      const { personaje, avisos } = deFichaComunidad(libroComunidad(), 'x');
+      expect(personaje.pdInvertidos.Perspicacia).toBeUndefined();
+      expect(avisos.join(' ')).toMatch(/Perspicacia/);
+    });
+
+    it('avisa de que los totales no van a cuadrar todavía', () => {
+      // Es la parte honesta: la hoja suma armadura, ventajas, Naturales y bonos de raza en
+      // la misma columna, y nada de eso se puede leer de ahí.
+      const { avisos } = deFichaComunidad(libroComunidad(), 'x');
+      expect(avisos.join(' ')).toMatch(/no van a coincidir/);
+      expect(avisos.join(' ')).toMatch(/armadura/);
+    });
   });
 
   it('si falta una etiqueta lo dice en vez de callarse', () => {
