@@ -130,6 +130,7 @@ src/nube/        Sincronización con Supabase, toda opcional
   mesa.ts          Perfiles, preferencias, invitaciones y campañas compartidas
   cuenta.ts        Registro, sesión y sincronización periódica
 src/ui/          Interfaz React
+public/          Iconos y manifiesto: se copian tal cual a la raíz al compilar
 supabase/        El SQL que hay que ejecutar en el proyecto de Supabase
 tools/           Extractores: el .xlsm original y los PDF de cada suplemento
 ```

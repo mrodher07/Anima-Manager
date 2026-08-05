@@ -1,0 +1,14 @@
+{
+  "name": "Anima Manager",
+  "short_name": "Anima",
+  "description": "Gestor de partidas y personajes para Anima Beyond Fantasy.",
+  "lang": "es",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0d0c0f",
+  "theme_color": "#0d0c0f",
+  "icons": [
+    { "src": "/icono-192.png", "type": "image/png", "sizes": "192x192" },
+    { "src": "/icono-512.png", "type": "image/png", "sizes": "512x512" }
+  ]
+}

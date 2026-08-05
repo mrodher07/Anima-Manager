@@ -4,10 +4,17 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="color-scheme" content="dark light" />
-    <link
-      rel="icon"
-      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230d0c0f'/%3E%3Cpath d='M16 5l8 22h-4l-1.6-4.6h-4.8L12 27H8L16 5zm0 7.5l-1.6 6h3.2L16 12.5z' fill='%23c9a227'/%3E%3C/svg%3E"
-    />
+    <!--
+      El icono. El .ico va primero por los navegadores que sólo miran ese; el PNG de 32 es
+      el que acaban usando los modernos en la pestaña, y el de 180 el que coge iOS cuando
+      alguien se guarda la aplicación en la pantalla de inicio, que es como se abre en una
+      partida.
+    -->
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="icon" href="/icono-32.png" type="image/png" sizes="32x32" />
+    <link rel="apple-touch-icon" href="/icono-180.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <meta name="theme-color" content="#0d0c0f" />
     <title>Anima Manager</title>
     <meta name="description" content="Gestor de partidas y personajes para Anima Beyond Fantasy." />
   </head>
