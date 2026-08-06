@@ -3,9 +3,22 @@ import { nivelTotalDe, type Personaje } from '../motor/personaje';
 import { almacen, analizarImportacion, exportarPersonaje, exportarTodo, importar } from '../almacen/almacen';
 import { exportarAExcel, importarDeExcel } from '../almacen/fichaExcel';
 import { ErrorExcel } from '../almacen/xlsx';
+import type { Catalogo } from '../datos/paquetes';
+
+/**
+ * Un aviso de la interfaz. Los puntos van sueltos y no pegados en un párrafo: importar una
+ * ficha de la comunidad genera cuatro o cinco, y todos juntos eran un muro ilegible.
+ */
+interface Mensaje {
+  tipo: 'error' | 'aviso';
+  texto: string;
+  puntos?: string[];
+}
 
 interface Props {
   personajes: Personaje[];
+  /** Hace falta para emparejar lo que la hoja de la comunidad elige de un desplegable. */
+  catalogo: Catalogo;
   /** Para poder generar un id nuevo al importar una ficha como copia. */
   nuevoId: () => string;
   cargando: boolean;
@@ -38,6 +51,7 @@ function nombreArchivo(p: Personaje, extension: string): string {
 
 export function VistaPersonajes({
   personajes,
+  catalogo,
   cargando,
   nuevoId,
   onAbrir,
@@ -47,7 +61,7 @@ export function VistaPersonajes({
 }: Props) {
   const archivo = useRef<HTMLInputElement>(null);
   const excel = useRef<HTMLInputElement>(null);
-  const [mensaje, setMensaje] = useState<{ tipo: 'error' | 'aviso'; texto: string } | null>(null);
+  const [mensaje, setMensaje] = useState<Mensaje | null>(null);
   const [confirmar, setConfirmar] = useState<string | null>(null);
 
   const importarArchivo = async (f: File) => {
@@ -78,7 +92,7 @@ export function VistaPersonajes({
 
   const importarExcel = async (f: File) => {
     try {
-      const r = await importarDeExcel(await f.arrayBuffer(), nuevoId());
+      const r = await importarDeExcel(await f.arrayBuffer(), nuevoId(), catalogo);
       await almacen.guardarPersonaje(r.personaje);
       onRecargar();
       // Cuando viene de la hoja técnica no hay nada que explicar; en los otros casos los
@@ -87,7 +101,7 @@ export function VistaPersonajes({
         r.origen === 'datos'
           ? `Importada «${r.personaje.nombre}»: ficha completa, tal cual se exportó.`
           : `Importada «${r.personaje.nombre}».`;
-      setMensaje({ tipo: 'aviso', texto: [cabecera, ...r.avisos].join(' ') });
+      setMensaje({ tipo: 'aviso', texto: cabecera, puntos: r.avisos });
     } catch (e) {
       setMensaje({
         tipo: 'error',
@@ -145,7 +159,14 @@ export function VistaPersonajes({
           />
         </div>
         {mensaje && (
-          <div className={`aviso ${mensaje.tipo}`} style={{ marginTop: 12 }}>{mensaje.texto}</div>
+          <div className={`aviso ${mensaje.tipo}`} style={{ marginTop: 12 }}>
+            {mensaje.texto}
+            {mensaje.puntos && mensaje.puntos.length > 0 && (
+              <ul className="lista-simple" style={{ marginBottom: 0 }}>
+                {mensaje.puntos.map((punto, i) => <li key={i}>{punto}</li>)}
+              </ul>
+            )}
+          </div>
         )}
       </section>
 

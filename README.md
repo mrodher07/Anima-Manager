@@ -380,9 +380,33 @@ Todo se busca **por etiqueta**, nunca por dirección de celda, para que aguante 
 versiones que circulan: de las cuatro fichas reales con las que está probado, ninguna coloca
 las tablas en las mismas filas y una ni siquiera tiene las mismas pestañas.
 
-Lo que **no** se trae, y hay que poner a mano: ventajas, equipo, conjuros y poderes. En esa
-hoja se escriben en texto libre y no se pueden emparejar con el catálogo sin riesgo de
-inventarse datos.
+- Las **ventajas, desventajas y Legados de Sangre**, las **Habilidades Esenciales**, los
+  **conjuros**, los **poderes psíquicos** y las **Habilidades del Ki**.
+- El **equipo de combate**: cada arma con su empuñadura, conocimiento, tamaño y calidad, y
+  la armadura por piezas, yelmo incluido.
+- El **trasfondo entero** —historia, personalidad, sueños, apariencia, edad, contactos— y
+  el **dinero**, que se reparte en monedas de oro, plata y cobre.
+
+Todo eso se empareja **contra el catálogo**: si una celda dice exactamente «Obligación
+somática» y eso es una desventaja del manual, es una desventaja del manual. Funciona porque
+el catálogo salió de esa misma hoja, así que los nombres coinciden carácter a carácter. Lo
+que no case se dice en un aviso en vez de descartarse en silencio, porque puede ser algo
+que esa mesa se haya inventado; si es el caso, se añade en «Contenido propio» y se vuelve a
+importar.
+
+Y es seguro por un detalle que regala la propia hoja: cada pestaña marca en su primera fila
+dónde empieza la «Zona de tablas auxiliares», que es donde viven las listas de consulta con
+*todos* los conjuros y *todas* las ventajas. Sin ese corte, buscar por catálogo importaría
+el manual entero en vez del personaje. Por lo mismo, las listas se leen de la pestaña
+**Resumen** —que es el resumen impreso de ese personaje— y no de las demás: la pestaña de
+Ki dibuja el árbol de habilidades completo tenga las que tenga, y el Grimorio de Vía lista
+todos los conjuros de la vía. Cuando el resumen se queda corto —corta a las veinte con un
+«+ …»— se completa con la tabla de selección de su pestaña: así la ficha de prueba con 27
+poderes psíquicos trae los 27, no 20.
+
+Lo que **no** se trae, y hay que rehacer a mano: las **Técnicas de Ki**, la **Metamagia** y
+el **Sheele**. Y las Habilidades del Ki sólo salen si la hoja las resume: el árbol de la
+pestaña Ki marca las adquiridas **con formato**, no con un valor, y el formato no se lee.
 
 Por eso **los valores finales no coinciden nada más importar**, y el aviso lo dice: la
 columna «Total» de la hoja suma además la armadura que llevas, las ventajas, las Habilidades

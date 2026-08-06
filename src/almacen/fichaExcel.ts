@@ -17,6 +17,13 @@
 
 import { crearLibro, leerLibro, ErrorExcel, type Celda, type Hoja } from './xlsx';
 import {
+  bolsaDe,
+  eleccionesDe,
+  fichaCivilDe,
+  trasfondoDe,
+} from './fichaComunidad';
+import type { Catalogo } from '../datos/paquetes';
+import {
   CARACTERISTICAS,
   SECUNDARIAS,
   personajeVacio,
@@ -362,6 +369,12 @@ function deHojasLegibles(hojas: Hoja[], id: string): ResultadoImportacion {
 export async function importarDeExcel(
   buffer: ArrayBuffer,
   nuevoId?: string,
+  /**
+   * Catálogo con el que emparejar lo que la hoja de la comunidad elige de un desplegable:
+   * ventajas, conjuros, poderes, equipo… Sin él la importación sigue funcionando, pero
+   * esas listas se quedan vacías, porque adivinarlas sería inventárselas.
+   */
+  catalogo?: Catalogo,
 ): Promise<ResultadoImportacion> {
   const hojas = await leerLibro(buffer);
   const datos = buscarHoja(hojas, HOJA_DATOS);
@@ -387,7 +400,9 @@ export async function importarDeExcel(
     }
   }
 
-  if (esFichaDeLaComunidad(hojas)) return deFichaComunidad(hojas, nuevoId ?? crypto.randomUUID());
+  if (esFichaDeLaComunidad(hojas)) {
+    return deFichaComunidad(hojas, nuevoId ?? crypto.randomUUID(), catalogo);
+  }
   return deHojasLegibles(hojas, nuevoId ?? crypto.randomUUID());
 }
 
@@ -591,7 +606,11 @@ export function esFichaDeLaComunidad(hojas: Hoja[]): boolean {
   return ['principal', 'pds', 'combate'].every((n) => nombres.includes(n));
 }
 
-export function deFichaComunidad(hojas: Hoja[], id: string): ResultadoImportacion {
+export async function deFichaComunidad(
+  hojas: Hoja[],
+  id: string,
+  catalogo?: Catalogo,
+): Promise<ResultadoImportacion> {
   const avisos: string[] = [];
   const p = personajeVacio(id);
 
@@ -623,7 +642,7 @@ export function deFichaComunidad(hojas: Hoja[], id: string): ResultadoImportacio
     const total = Object.values(pd).reduce((t, n) => t + n, 0);
     avisos.push(
       `Se han traído los PD de ${claves.length} habilidades, ${total} PD en total. ` +
-        'Los valores finales **no van a coincidir todavía** con los de tu hoja, y no es un ' +
+        'Los valores finales no van a coincidir todavía con los de tu hoja, y no es un ' +
         'error: en esa columna la hoja suma además la armadura que llevas, las ventajas, ' +
         'las Habilidades Naturales y los bonos de tu raza. Nada de eso se puede leer de ahí, ' +
         'así que hay que ponerlo a mano; en cuanto esté, los números cuadran.',
@@ -636,11 +655,63 @@ export function deFichaComunidad(hojas: Hoja[], id: string): ResultadoImportacio
     );
   }
 
+  // Trasfondo y bolsa: texto libre y tres números, nada que pueda estropear el cálculo.
+  const trasfondo = trasfondoDe(hojas);
+  const civil = fichaCivilDe(hojas);
+  if (civil) trasfondo.apariencia = [civil, trasfondo.apariencia].filter(Boolean).join(' · ');
+  if (Object.keys(trasfondo).length > 0) p.trasfondo = { ...p.trasfondo, ...trasfondo };
+
+  const bolsa = bolsaDe(hojas);
+  if (bolsa) p.equipo.dinero = bolsa;
+
+  // Y todo lo que en la hoja se elige de un desplegable, que se empareja con el catálogo.
+  if (catalogo) {
+    const e = await eleccionesDe(hojas, catalogo);
+    p.ventajas = e.ventajas;
+    p.desventajas = e.desventajas;
+    if (e.legados.length > 0) p.legados = e.legados;
+    if (e.habilidadesEsenciales.length > 0) p.habilidadesEsenciales = e.habilidadesEsenciales;
+    p.conjuros = e.conjuros;
+    p.poderesPsiquicos = e.poderesPsiquicos;
+    if (e.habilidadesKi.length > 0) p.ki = { ...p.ki, habilidades: e.habilidadesKi };
+    p.equipo.armas = e.armas;
+    p.equipo.armadura = e.armadura;
+
+    const traido = [
+      [e.ventajas.length, 'ventaja', 'ventajas'],
+      [e.desventajas.length, 'desventaja', 'desventajas'],
+      [e.legados.length, 'Legado de Sangre', 'Legados de Sangre'],
+      [e.habilidadesEsenciales.length, 'Habilidad Esencial', 'Habilidades Esenciales'],
+      [e.conjuros.length, 'conjuro', 'conjuros'],
+      [e.poderesPsiquicos.length, 'poder psíquico', 'poderes psíquicos'],
+      [e.habilidadesKi.length, 'Habilidad del Ki', 'Habilidades del Ki'],
+      [e.armas.length, 'arma', 'armas'],
+      [e.armadura.length, 'pieza de armadura', 'piezas de armadura'],
+    ] as const;
+    const resumen = traido
+      .filter(([n]) => n > 0)
+      .map(([n, singular, plural]) => `${n} ${n === 1 ? singular : plural}`);
+    if (resumen.length > 0) {
+      avisos.push(`Elegido del catálogo: ${resumen.join(', ')}.`);
+    }
+    if (e.sinCasar.length > 0) {
+      avisos.push(
+        'Tu hoja nombra esto, pero no está en el catálogo que tienes cargado, así que no ' +
+          `se ha traído: ${e.sinCasar.join(', ')}. Si es de tu mesa, añádelo en «Contenido ` +
+          'propio» y vuelve a importar.',
+      );
+    }
+  } else {
+    avisos.push(
+      'Las ventajas, los poderes y el equipo no se han traído porque no había catálogo ' +
+        'cargado. Vuelve a importar desde la lista de personajes y sí saldrán.',
+    );
+  }
+
   avisos.push(
-    'Ficha de la hoja de cálculo de la comunidad: se han traído la identidad, la categoría, ' +
-      'las características compradas y los PD invertidos. Las ventajas, el equipo y los ' +
-      'poderes hay que elegirlos a mano: en esa hoja se escriben en texto libre y no se ' +
-      'pueden emparejar con el catálogo sin riesgo de inventarse datos.',
+    'Lo que la hoja calcula por su cuenta no se copia: la aplicación lo recalcula. Y hay ' +
+      'cosas que esa hoja no guarda de forma que se puedan leer —las Técnicas de Ki, la ' +
+      'Metamagia y el Sheele—, así que ésas sí hay que rehacerlas a mano.',
   );
 
   return { personaje: p, origen: 'comunidad', avisos };
