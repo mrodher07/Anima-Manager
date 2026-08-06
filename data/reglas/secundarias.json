@@ -1,0 +1,241 @@
+[
+ {
+  "secundaria": "Acrobacias",
+  "grupo": "Atléticas",
+  "caracteristica": "AGI",
+  "fisica": true
+ },
+ {
+  "secundaria": "Atletismo",
+  "grupo": "Atléticas",
+  "caracteristica": "AGI",
+  "fisica": true
+ },
+ {
+  "secundaria": "Montar",
+  "grupo": "Atléticas",
+  "caracteristica": "AGI"
+ },
+ {
+  "secundaria": "Nadar",
+  "grupo": "Atléticas",
+  "caracteristica": "AGI",
+  "fisica": true
+ },
+ {
+  "secundaria": "Trepar",
+  "grupo": "Atléticas",
+  "caracteristica": "AGI",
+  "fisica": true
+ },
+ {
+  "secundaria": "Saltar",
+  "grupo": "Atléticas",
+  "caracteristica": "FUE",
+  "fisica": true
+ },
+ {
+  "secundaria": "Pilotar",
+  "grupo": "Atléticas",
+  "caracteristica": "DES"
+ },
+ {
+  "secundaria": "Estilo",
+  "grupo": "Sociales",
+  "caracteristica": "POD"
+ },
+ {
+  "secundaria": "Intimidar",
+  "grupo": "Sociales",
+  "caracteristica": "VOL"
+ },
+ {
+  "secundaria": "Liderazgo",
+  "grupo": "Sociales",
+  "caracteristica": "POD"
+ },
+ {
+  "secundaria": "Persuasión",
+  "grupo": "Sociales",
+  "caracteristica": "INT"
+ },
+ {
+  "secundaria": "Comercio",
+  "grupo": "Sociales",
+  "caracteristica": "INT"
+ },
+ {
+  "secundaria": "Callejeo",
+  "grupo": "Sociales",
+  "caracteristica": "INT"
+ },
+ {
+  "secundaria": "Etiqueta",
+  "grupo": "Sociales",
+  "caracteristica": "INT"
+ },
+ {
+  "secundaria": "Advertir",
+  "grupo": "Perceptivas",
+  "caracteristica": "PER"
+ },
+ {
+  "secundaria": "Buscar",
+  "grupo": "Perceptivas",
+  "caracteristica": "PER"
+ },
+ {
+  "secundaria": "Rastrear",
+  "grupo": "Perceptivas",
+  "caracteristica": "PER"
+ },
+ {
+  "secundaria": "Animales",
+  "grupo": "Intelectuales",
+  "caracteristica": "INT"
+ },
+ {
+  "secundaria": "Ciencia",
+  "grupo": "Intelectuales",
+  "caracteristica": "INT"
+ },
+ {
+  "secundaria": "Herbolaria",
+  "grupo": "Intelectuales",
+  "caracteristica": "INT"
+ },
+ {
+  "secundaria": "Historia",
+  "grupo": "Intelectuales",
+  "caracteristica": "INT"
+ },
+ {
+  "secundaria": "Medicina",
+  "grupo": "Intelectuales",
+  "caracteristica": "INT"
+ },
+ {
+  "secundaria": "Memorizar",
+  "grupo": "Intelectuales",
+  "caracteristica": "INT"
+ },
+ {
+  "secundaria": "Navegación",
+  "grupo": "Intelectuales",
+  "caracteristica": "INT"
+ },
+ {
+  "secundaria": "Ocultismo",
+  "grupo": "Intelectuales",
+  "caracteristica": "INT"
+ },
+ {
+  "secundaria": "Tasación",
+  "grupo": "Intelectuales",
+  "caracteristica": "INT"
+ },
+ {
+  "secundaria": "Táctica",
+  "grupo": "Intelectuales",
+  "caracteristica": "INT"
+ },
+ {
+  "secundaria": "Valoración Mágica",
+  "grupo": "Intelectuales",
+  "caracteristica": "INT"
+ },
+ {
+  "secundaria": "Frialdad",
+  "grupo": "Vigor",
+  "caracteristica": "VOL"
+ },
+ {
+  "secundaria": "Proezas de Fuerza",
+  "grupo": "Vigor",
+  "caracteristica": "FUE",
+  "fisica": true
+ },
+ {
+  "secundaria": "Resistencia al Dolor",
+  "grupo": "Vigor",
+  "caracteristica": "CON"
+ },
+ {
+  "secundaria": "Cerrajería",
+  "grupo": "Subterfugio",
+  "caracteristica": "DES"
+ },
+ {
+  "secundaria": "Disfraz",
+  "grupo": "Subterfugio",
+  "caracteristica": "DES"
+ },
+ {
+  "secundaria": "Ocultarse",
+  "grupo": "Subterfugio",
+  "caracteristica": "PER",
+  "fisica": true
+ },
+ {
+  "secundaria": "Robo",
+  "grupo": "Subterfugio",
+  "caracteristica": "DES"
+ },
+ {
+  "secundaria": "Sigilo",
+  "grupo": "Subterfugio",
+  "caracteristica": "AGI",
+  "fisica": true
+ },
+ {
+  "secundaria": "Trampería",
+  "grupo": "Subterfugio",
+  "caracteristica": "DES"
+ },
+ {
+  "secundaria": "Venenos",
+  "grupo": "Subterfugio",
+  "caracteristica": "INT"
+ },
+ {
+  "secundaria": "Arte",
+  "grupo": "Creativas",
+  "caracteristica": "POD"
+ },
+ {
+  "secundaria": "Baile",
+  "grupo": "Creativas",
+  "caracteristica": "AGI",
+  "fisica": true
+ },
+ {
+  "secundaria": "Forja",
+  "grupo": "Creativas",
+  "caracteristica": "DES"
+ },
+ {
+  "secundaria": "Runas",
+  "grupo": "Creativas",
+  "caracteristica": "DES"
+ },
+ {
+  "secundaria": "Alquimia",
+  "grupo": "Creativas",
+  "caracteristica": "INT"
+ },
+ {
+  "secundaria": "Animismo",
+  "grupo": "Creativas",
+  "caracteristica": "POD"
+ },
+ {
+  "secundaria": "Música",
+  "grupo": "Creativas",
+  "caracteristica": "POD"
+ },
+ {
+  "secundaria": "Trucos de Manos",
+  "grupo": "Creativas",
+  "caracteristica": "DES"
+ }
+]

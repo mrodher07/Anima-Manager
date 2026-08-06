@@ -26,6 +26,7 @@ import type { Catalogo } from '../datos/paquetes';
 import {
   CARACTERISTICAS,
   SECUNDARIAS,
+  secundariaDeCatalogo,
   personajeVacio,
   migrarPersonaje,
   type Caracteristica,
@@ -484,14 +485,22 @@ function caracteristicasDe(hojas: Hoja[]): Partial<Record<Caracteristica, number
  * importador: las cuatro fichas reales que hay para probar no colocan las tablas en las
  * mismas filas, y una de ellas ni siquiera tiene las mismas pestañas.
  */
-export function pdInvertidosDe(hojas: Hoja[]): { pd: Record<string, number>; sinReconocer: string[] } {
+export function pdInvertidosDe(
+  hojas: Hoja[],
+  /**
+   * Las secundarias vigentes en la mesa. Si una mesa ha añadido las suyas —Perspicacia,
+   * Caza, Cocina— aquí llegan y sus PD se traen como los demás. Sin lista se usan las del
+   * manual.
+   */
+  lista: readonly { nombre: string }[] = SECUNDARIAS,
+): { pd: Record<string, number>; sinReconocer: string[] } {
   const pd: Record<string, number> = {};
   const sinReconocer: string[] = [];
   const hoja = buscarHoja(hojas, 'PDs');
   if (!hoja) return { pd, sinReconocer };
 
-  const secundarias = new Set(SECUNDARIAS.map((s) => s.nombre.toLowerCase()));
-  const porNombre = new Map(SECUNDARIAS.map((s) => [s.nombre.toLowerCase(), s.nombre]));
+  const secundarias = new Set(lista.map((s) => s.nombre.toLowerCase()));
+  const porNombre = new Map(lista.map((s) => [s.nombre.toLowerCase(), s.nombre]));
 
   for (let i = 0; i < hoja.filas.length; i++) {
     const fila = hoja.filas[i];
@@ -634,8 +643,15 @@ export async function deFichaComunidad(
   for (const [k, v] of Object.entries(car)) p.caracteristicas[k as Caracteristica] = v;
   if (faltan.length > 0) avisos.push(`No he podido leer estas características: ${faltan.join(', ')}.`);
 
-  // Los PD invertidos, de las tablas de la pestaña PDs.
-  const { pd, sinReconocer } = pdInvertidosDe(hojas);
+  // Los PD invertidos, de las tablas de la pestaña PDs. Se leen con las secundarias de la
+  // mesa, no con las del manual: así las de la casa entran igual que las oficiales.
+  const secundariasMesa = catalogo
+    ? (await catalogo.obtener('secundarias')).map(secundariaDeCatalogo)
+    : SECUNDARIAS;
+  const { pd, sinReconocer } = pdInvertidosDe(
+    hojas,
+    secundariasMesa.length > 0 ? secundariasMesa : SECUNDARIAS,
+  );
   const claves = Object.keys(pd);
   if (claves.length > 0) {
     p.pdInvertidos = { ...p.pdInvertidos, ...pd };

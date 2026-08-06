@@ -135,6 +135,9 @@ export function EditorPersonaje({ personaje, datos, catalogo, reglamento, onCamb
   const conjuros = useColeccion(catalogo, 'conjuros');
   const poderes = useColeccion(catalogo, 'poderesPsiquicos');
   const ficha = calcular(personaje, datos, reglamento);
+  // Las de la mesa, que pueden incluir las de la casa. Si el catálogo aún no ha cargado se
+  // usan las del manual, para que la pestaña no salga vacía un instante.
+  const secundarias = datos.secundarias.length > 0 ? datos.secundarias : SECUNDARIAS;
 
   const set = (cambios: Partial<Personaje>) => onCambiar({ ...personaje, ...cambios });
   const setPD = (clave: string, pd: number) =>
@@ -523,7 +526,7 @@ export function EditorPersonaje({ personaje, datos, catalogo, reglamento, onCamb
                       </tr>
                     </thead>
                     <tbody>
-                      {SECUNDARIAS.filter((s) => s.grupo === grupo).map((s) => {
+                      {secundarias.filter((s) => s.grupo === grupo).map((s) => {
                         const v = ficha.secundarias[s.nombre];
                         const esNatural = personaje.habilidadesNaturales.includes(s.nombre);
                         return (

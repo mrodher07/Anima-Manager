@@ -43,6 +43,7 @@ import type {
   LegadoSangre,
   Objeto,
   Raza,
+  Secundaria,
   TipoEfectoTecnica,
   TablasBase,
   Ventaja,
@@ -61,8 +62,27 @@ export interface DefinicionSecundaria {
   nombre: string;
   grupo: GrupoSecundarias;
   caracteristica: Caracteristica;
+  /** Si sufre el penalizador natural de la armadura. */
+  fisica?: boolean;
 }
 
+/**
+ * Traduce una fila del catálogo a la definición que usa el motor. Un grupo o una
+ * característica que no existan se cambian por los primeros de la lista en vez de romper
+ * el cálculo: la mesa verá la habilidad en un sitio raro y lo corregirá, que es mejor que
+ * una ficha en blanco.
+ */
+export function secundariaDeCatalogo(s: Secundaria): DefinicionSecundaria {
+  const grupo = GRUPOS_SECUNDARIAS.find((g) => g === s.grupo) ?? GRUPOS_SECUNDARIAS[0];
+  const caracteristica = CARACTERISTICAS.find((c) => c === s.caracteristica) ?? 'AGI';
+  return { nombre: s.secundaria, grupo, caracteristica, fisica: s.fisica };
+}
+
+/**
+ * Las 46 del Core Exxet. Son el **valor por defecto**: la lista que manda es la del
+ * catálogo (`datos.secundarias`), para que una mesa pueda añadir las suyas. Ésta se usa
+ * cuando no hay catálogo cargado, y es de donde salió `data/reglas/secundarias.json`.
+ */
 export const SECUNDARIAS: readonly DefinicionSecundaria[] = [
   { nombre: 'Acrobacias', grupo: 'Atléticas', caracteristica: 'AGI' },
   { nombre: 'Atletismo', grupo: 'Atléticas', caracteristica: 'AGI' },
@@ -432,12 +452,6 @@ const CAMPO_COSTE: Record<GrupoSecundarias, string> = {
   'Creativas': 'costeCreativas',
 };
 
-/** Secundarias que sufren el penalizador natural de la armadura. */
-const SECUNDARIAS_FISICAS = new Set([
-  'Acrobacias', 'Atletismo', 'Nadar', 'Trepar', 'Saltar', 'Sigilo', 'Ocultarse', 'Baile',
-  'Proezas de Fuerza',
-]);
-
 /** Puntos comprados con PD: el coste 0 significa que la categoría no permite la habilidad. */
 function truncarPD(pd: number, coste: number): number {
   return coste > 0 ? Math.trunc(pd / coste) : 0;
@@ -484,6 +498,8 @@ export interface DatosCalculo {
   tablas: TablasBase;
   armas: Arma[];
   armaduras: Armadura[];
+  /** Las habilidades secundarias vigentes en esta mesa, con las de la casa si las hay. */
+  secundarias: DefinicionSecundaria[];
   /** Lista de precios del manual, para el inventario. */
   objetos: Objeto[];
   ventajas: Ventaja[];
@@ -522,6 +538,7 @@ export async function cargarDatosCalculo(
     armaduras,
     yelmos,
     objetos,
+    secundarias,
     ventajas,
     habilidadesKi,
     artesMarciales,
@@ -538,6 +555,7 @@ export async function cargarDatosCalculo(
     catalogo.obtener('armaduras'),
     catalogo.obtener('yelmos'),
     catalogo.obtener('objetos'),
+    catalogo.obtener('secundarias'),
     catalogo.obtener('ventajas'),
     catalogo.obtener('habilidadesKi'),
     catalogo.obtener('artesMarciales'),
@@ -558,6 +576,7 @@ export async function cargarDatosCalculo(
     // Excel. Se juntan aquí para que el selector de armadura los ofrezca igual.
     armaduras: [...armaduras, ...yelmos.map(({ yelmo, ...resto }) => ({ ...resto, armadura: yelmo }))],
     objetos,
+    secundarias: secundarias.map(secundariaDeCatalogo),
     ventajas,
     habilidadesKi,
     artesMarciales,
@@ -629,6 +648,9 @@ export function calcular(
 ): FichaCalculada {
   const { raza, categoria, tablas } = datos;
   const avisos: Aviso[] = [];
+  // Una mesa puede añadir secundarias propias, así que la lista buena es la del catálogo.
+  // Si viene vacía —catálogo sin cargar— se usan las del manual para no dejar la ficha coja.
+  const secundarias_ = datos.secundarias.length > 0 ? datos.secundarias : [...SECUNDARIAS];
 
   if (!raza) avisos.push({ gravedad: 'error', mensaje: `Raza desconocida: "${personaje.raza}".` });
   if (!categoria)
@@ -788,7 +810,7 @@ export function calcular(
 
   // Habilidades secundarias.
   const secundarias: Record<string, ValorDerivado> = {};
-  for (const def of SECUNDARIAS) {
+  for (const def of secundarias_) {
     const pd = personaje.pdInvertidos[def.nombre] ?? 0;
     const coste = Number(categoria?.[CAMPO_COSTE[def.grupo]] ?? 2);
     const bonoCategoria = Number(categoria?.[`bon${def.nombre.replace(/\s/g, '')}`] ?? 0);
@@ -810,7 +832,7 @@ export function calcular(
         mejoraNatural * efectos.factorMejoraNatural + (personaje.bonosEspeciales[def.nombre] ?? 0),
         penalizadorNoDesarrollada: -30,
         // Sólo las habilidades físicas sufren el penalizador de la armadura.
-        penalizadorNatural: SECUNDARIAS_FISICAS.has(def.nombre) ? penalizadorArmadura : 0,
+        penalizadorNatural: def.fisica ? penalizadorArmadura : 0,
       }),
     );
   }
@@ -1036,7 +1058,7 @@ export function calcular(
   // Reparto de PD y límites.
   const sumar = (claves: string[]) =>
     claves.reduce((t, k) => t + (personaje.pdInvertidos[k] ?? 0), 0);
-  const pdSecundarias = SECUNDARIAS.reduce((t, d) => t + (personaje.pdInvertidos[d.nombre] ?? 0), 0);
+  const pdSecundarias = secundarias_.reduce((t, d) => t + (personaje.pdInvertidos[d.nombre] ?? 0), 0);
   const pdGastados = {
     // Los Ars Magnus se pagan en PD además de en CM, y son habilidades de combate.
     combate: sumar(CLAVES_COMBATE) + ki.pdArsMagnus,

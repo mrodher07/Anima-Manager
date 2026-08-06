@@ -36,6 +36,9 @@ export interface EsquemaColeccion {
 }
 
 const CARACTERISTICAS = ['AGI', 'CON', 'DES', 'FUE', 'INT', 'PER', 'POD', 'VOL'];
+const GRUPOS_SECUNDARIAS = [
+  'Atléticas', 'Sociales', 'Perceptivas', 'Intelectuales', 'Vigor', 'Subterfugio', 'Creativas',
+];
 const RESISTENCIAS = ['RF', 'RE', 'RV', 'RM', 'RP'];
 const TIPOS_DANO = ['FIL', 'CON', 'PEN', 'CAL', 'ELE', 'FRI', 'ENE'];
 
@@ -213,6 +216,24 @@ export const ESQUEMAS: EsquemaColeccion[] = [
       num('entereza', 'Entereza', 'Valores', 84),
       num('presencia', 'Presencia', 'Valores', 84),
       ...TIPOS_DANO.map((t) => num(t, t, 'Tipo de Armadura', 58)),
+    ],
+  },
+  {
+    coleccion: 'secundarias',
+    singular: 'habilidad secundaria',
+    plural: 'Habilidades secundarias',
+    clave: 'secundaria',
+    ayuda:
+      'Las 46 del manual vienen puestas, y aquí podéis añadir las vuestras. El grupo dice ' +
+      'de qué columna de coste de la categoría tira, y la característica, qué bono suma. ' +
+      'Marca «física» si tiene que sufrir el penalizador de la armadura, como Trepar o Sigilo.',
+    campos: [
+      txt('secundaria', 'Nombre'),
+      { clave: 'grupo', etiqueta: 'Grupo', tipo: 'opcion', opciones: [...GRUPOS_SECUNDARIAS] },
+      { clave: 'caracteristica', etiqueta: 'Característica', tipo: 'opcion',
+        opciones: [...CARACTERISTICAS] },
+      { clave: 'fisica', etiqueta: 'Física (sufre la armadura)', tipo: 'opcion',
+        opciones: ['', 'Sí'] },
     ],
   },
   {
