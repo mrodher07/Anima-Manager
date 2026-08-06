@@ -1,7 +1,13 @@
 import { describe, it, expect } from 'vitest';
-import { deFichaComunidad, esFichaDeLaComunidad, exportarAExcel, importarDeExcel } from './fichaExcel';
+import {
+  deFichaComunidad,
+  esFichaDeLaComunidad,
+  exportarAExcel,
+  importarDeExcel,
+  pdInvertidosDe,
+} from './fichaExcel';
 import { leerLibro } from './xlsx';
-import { personajeVacio, type Personaje } from '../motor/personaje';
+import { SECUNDARIAS, personajeVacio, type Personaje } from '../motor/personaje';
 
 /** Una ficha con algo en cada rincón, para que el ida y vuelta signifique algo. */
 function fichaDePrueba(): Personaje {
@@ -338,6 +344,19 @@ describe('la hoja de cálculo de la comunidad', () => {
       const { personaje, avisos } = await deFichaComunidad(libroComunidad(), 'x');
       expect(personaje.pdInvertidos.Perspicacia).toBeUndefined();
       expect(avisos.join(' ')).toMatch(/Perspicacia/);
+    });
+
+    it('una secundaria de la casa se trae si la mesa la ha añadido al catálogo', async () => {
+      // «Perspicacia» no está en ningún manual, pero esa mesa la usa. Sin ella en el
+      // catálogo se queda fuera y se avisa; con ella, entra como cualquier otra.
+      const { pd } = pdInvertidosDe(libroComunidad(), [
+        ...SECUNDARIAS,
+        { nombre: 'Perspicacia' },
+      ]);
+      expect(pd.Perspicacia).toBe(60);
+
+      const { sinReconocer } = pdInvertidosDe(libroComunidad());
+      expect(sinReconocer).toContain('Perspicacia');
     });
 
     it('avisa de que los totales no van a cuadrar todavía', async () => {

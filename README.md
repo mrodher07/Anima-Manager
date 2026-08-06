@@ -100,7 +100,7 @@ Y una **campaña activa** tiene las suyas:
 | **Jugadores** | Quién juega e invitaciones por código |
 | **Ajustes** | Nivel de inicio, Puntos de Creación, sistema de combate y manuales |
 | **Reglas** | Reescribir o desactivar cualquier fórmula, y restablecerla |
-| **Contenido propio** | Las 27 colecciones del catálogo, personalizables por tu mesa |
+| **Contenido propio** | Las 28 colecciones del catálogo, personalizables por tu mesa |
 | **Diario** | Lo que pasó en cada sesión |
 
 ## Cómo está montado
@@ -403,6 +403,11 @@ Ki dibuja el árbol de habilidades completo tenga las que tenga, y el Grimorio d
 todos los conjuros de la vía. Cuando el resumen se queda corto —corta a las veinte con un
 «+ …»— se completa con la tabla de selección de su pestaña: así la ficha de prueba con 27
 poderes psíquicos trae los 27, no 20.
+
+Si tu mesa usa **habilidades secundarias propias** —esa hoja trae unas cuantas de la casa,
+como Perspicacia, Caza o Cocina— añádelas en «Contenido propio» y sus PD se importarán como
+los de cualquier otra. Mientras no estén, se avisa de que se han quedado fuera en vez de
+darlas por importadas.
 
 Lo que **no** se trae, y hay que rehacer a mano: las **Técnicas de Ki**, la **Metamagia** y
 el **Sheele**. Y las Habilidades del Ki sólo salen si la hoja las resume: el árbol de la

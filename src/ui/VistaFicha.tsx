@@ -45,6 +45,7 @@ export function VistaFicha({ personaje, datos, reglamento }: Props) {
   );
 
   const estado = personaje.estado;
+  const secundarias = datos.secundarias.length > 0 ? datos.secundarias : SECUNDARIAS;
 
   // Desde aquí la exportación a Excel puede llevar los valores ya calculados; desde la
   // lista de personajes no, porque allí no está cargado el catálogo de cada ficha.
@@ -525,7 +526,7 @@ export function VistaFicha({ personaje, datos, reglamento }: Props) {
               <h3 style={{ fontSize: '0.82rem', color: 'var(--texto-tenue)', marginBottom: 6 }}>{grupo}</h3>
               <table>
                 <tbody>
-                  {SECUNDARIAS.filter((s) => s.grupo === grupo).map((s) => {
+                  {secundarias.filter((s) => s.grupo === grupo).map((s) => {
                     const v = ficha.secundarias[s.nombre];
                     return (
                       <tr key={s.nombre}>

@@ -2,6 +2,7 @@ import { describe, it, expect } from 'vitest';
 import {
   bolsaEnCobre,
   calcular,
+  secundariaDeCatalogo,
   enMonedas,
   personajeVacio,
   type DatosCalculo,
@@ -14,6 +15,7 @@ import tablasBase from '../../data/reglas/tablasBase.json';
 import armasJson from '../../data/reglas/armas.json';
 import armadurasJson from '../../data/reglas/armaduras.json';
 import objetosJson from '../../data/reglas/objetos.json';
+import secundariasJson from '../../data/reglas/secundarias.json';
 import yelmosJson from '../../data/reglas/yelmos.json';
 import ventajasJson from '../../data/reglas/ventajas.json';
 import habilidadesKiJson from '../../data/reglas/habilidadesKi.json';
@@ -34,6 +36,7 @@ import type {
   LegadoSangre,
   Objeto,
   Raza,
+  Secundaria,
   Yelmo,
   TablasBase,
   TipoEfectoTecnica,
@@ -52,6 +55,7 @@ const datos = (nombreRaza: string, nombreCategoria: string): DatosCalculo => ({
   armas: armasJson as Arma[],
   armaduras: armadurasJson as Armadura[],
   objetos: objetosJson as Objeto[],
+  secundarias: (secundariasJson as Secundaria[]).map(secundariaDeCatalogo),
   ventajas: ventajasJson as Ventaja[],
   habilidadesKi: habilidadesKiJson as HabilidadKiCatalogo[],
   artesMarciales: artesMarcialesJson as EntradaTabla[],
@@ -659,5 +663,80 @@ describe('inventario y dinero', () => {
     expect(f.combate.proteccion.TA.FIL).toBe(5);
     expect(f.combate.proteccion.TA.ENE).toBe(2);
     expect(f.combate.proteccion.requisito).toBe(10);
+  });
+});
+
+describe('habilidades secundarias de la casa', () => {
+  /** «Perspicacia» no está en ningún manual, pero la hoja de esa mesa la tiene. */
+  const perspicacia: Secundaria = {
+    secundaria: 'Perspicacia',
+    grupo: 'Subterfugio',
+    caracteristica: 'PER',
+  };
+
+  const conPerspicacia = (): DatosCalculo => {
+    const base = datos('Humano', 'Guerrero');
+    return {
+      ...base,
+      secundarias: [...base.secundarias, secundariaDeCatalogo(perspicacia)],
+    };
+  };
+
+  it('una secundaria añadida se calcula como cualquier otra', () => {
+    const p = personajeVacio('con-perspicacia');
+    p.raza = 'Humano';
+    p.categorias = [{ categoria: 'Guerrero', nivel: 1 }];
+    p.caracteristicas = { AGI: 5, CON: 5, DES: 5, FUE: 5, INT: 5, PER: 10, POD: 5, VOL: 5 };
+    p.pdInvertidos = { Perspicacia: 60 };
+    const f = calcular(p, conPerspicacia());
+
+    // 60 PD ÷ 3 (coste de Subterfugio del Guerrero) + 15 del bono de PER 10.
+    const coste = Number(conPerspicacia().categoria?.costeSubterfugio ?? 0);
+    expect(f.secundarias['Perspicacia'].valor).toBe(Math.trunc(60 / coste) + 15);
+    // Y sus PD cuentan en el reparto, que si no el total no cuadraría.
+    expect(f.pdGastados.secundarias).toBe(60);
+  });
+
+  it('sin desarrollar lleva el −30 igual que las del manual', () => {
+    const p = personajeVacio('sin-desarrollar');
+    p.raza = 'Humano';
+    p.categorias = [{ categoria: 'Guerrero', nivel: 1 }];
+    p.caracteristicas = { AGI: 5, CON: 5, DES: 5, FUE: 5, INT: 5, PER: 10, POD: 5, VOL: 5 };
+    const f = calcular(p, conPerspicacia());
+    expect(f.secundarias['Perspicacia'].valor).toBe(15 - 30);
+  });
+
+  it('marcarla como física la hace sufrir el penalizador de la armadura', () => {
+    const p = personajeVacio('con-armadura');
+    p.raza = 'Humano';
+    p.categorias = [{ categoria: 'Guerrero', nivel: 1 }];
+    p.caracteristicas = { AGI: 5, CON: 5, DES: 5, FUE: 5, INT: 5, PER: 10, POD: 5, VOL: 5 };
+    p.equipo.armadura = [{ armadura: 'Completa' }];
+
+    const base = datos('Humano', 'Guerrero');
+    const fisica: DatosCalculo = {
+      ...base,
+      secundarias: [
+        ...base.secundarias,
+        secundariaDeCatalogo({ ...perspicacia, fisica: true }),
+      ],
+    };
+    const sinMarcar = calcular(p, conPerspicacia());
+    const marcada = calcular(p, fisica);
+    const penalizador = marcada.combate.proteccion.penalizadorNatural;
+
+    expect(penalizador).toBeLessThan(0);
+    expect(marcada.secundarias['Perspicacia'].valor).toBe(
+      sinMarcar.secundarias['Perspicacia'].valor + penalizador,
+    );
+  });
+
+  it('si el catálogo viene vacío se usan las 46 del manual', () => {
+    const p = personajeVacio('sin-catalogo');
+    p.raza = 'Humano';
+    p.categorias = [{ categoria: 'Guerrero', nivel: 1 }];
+    const f = calcular(p, { ...datos('Humano', 'Guerrero'), secundarias: [] });
+    expect(Object.keys(f.secundarias)).toHaveLength(46);
+    expect(f.secundarias['Acrobacias']).toBeDefined();
   });
 });

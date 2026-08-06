@@ -82,6 +82,21 @@ export interface Objeto {
   disponibilidad?: string;
 }
 
+/**
+ * Una habilidad secundaria. Viene del catálogo y no del código para que una mesa pueda
+ * añadir las suyas: la hoja de la comunidad trae unas cuantas de la casa —Perspicacia,
+ * Caza, Cocina— que no están en ningún manual.
+ */
+export interface Secundaria {
+  secundaria: string;
+  /** De qué columna de coste de la categoría tira: Atléticas, Sociales, Vigor… */
+  grupo: string;
+  /** Bono de característica que suma. */
+  caracteristica: string;
+  /** Si sufre el penalizador natural de la armadura. */
+  fisica?: boolean;
+}
+
 export interface Armadura {
   armadura: string;
   requerimiento?: number;
@@ -397,6 +412,7 @@ export interface Colecciones {
   armaduras: Armadura;
   yelmos: Yelmo;
   objetos: Objeto;
+  secundarias: Secundaria;
   artesMarciales: EntradaTabla;
   arsMagnus: EntradaTabla;
   habilidadesKi: HabilidadKiCatalogo;
@@ -432,6 +448,7 @@ export const CLAVE_DE: Record<NombreColeccion, string> = {
   armaduras: 'armadura',
   yelmos: 'yelmo',
   objetos: 'objeto',
+  secundarias: 'secundaria',
   artesMarciales: 'arte',
   arsMagnus: 'nombre',
   habilidadesKi: 'habilidad',
