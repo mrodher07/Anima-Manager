@@ -128,6 +128,7 @@ export function EditorPersonaje({ personaje, datos, catalogo, reglamento, onCamb
   const armaduras = useColeccion(catalogo, 'armaduras');
   const yelmos = useColeccion(catalogo, 'yelmos');
   const objetos = useColeccion(catalogo, 'objetos');
+  const esenciales = useColeccion(catalogo, 'habilidadesEsenciales');
   const ventajas = useColeccion(catalogo, 'ventajas');
   const legados = useColeccion(catalogo, 'legadosSangre');
   const metamagia = useColeccion(catalogo, 'metamagia');
@@ -733,6 +734,32 @@ export function EditorPersonaje({ personaje, datos, catalogo, reglamento, onCamb
               seleccionadas={personaje.poderesPsiquicos}
               onCambiar={(v) => set({ poderesPsiquicos: v })}
               etiquetaBusqueda="Buscar poder"
+            />
+          </Seccion>
+
+          <Seccion
+            titulo="Habilidades Esenciales"
+            resumen={cuenta((personaje.habilidadesEsenciales ?? []).length, 'elegida', 'elegidas')}
+            abierta={(personaje.habilidadesEsenciales ?? []).length > 0}
+            ayuda={
+              <>
+                Se compran con PD y algunas piden un mínimo de Gnosis. Su efecto lo aplicáis
+                vosotros: la aplicación las anota, no las calcula.
+              </>
+            }
+          >
+            <Selector
+              opciones={esenciales}
+              claveDe={(h) => h.nombre}
+              detalleDe={(h) =>
+                [h.coste ? `${h.coste} PD` : '', h.gnosis ? `Gnosis ${h.gnosis}` : '']
+                  .filter(Boolean)
+                  .join(' · ')
+              }
+              grupoDe={(h) => h._seccion ?? ''}
+              seleccionadas={personaje.habilidadesEsenciales ?? []}
+              onCambiar={(v) => set({ habilidadesEsenciales: v })}
+              etiquetaBusqueda="Buscar habilidad esencial"
             />
           </Seccion>
 

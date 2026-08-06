@@ -175,7 +175,22 @@ describe('la hoja de cálculo de la comunidad', () => {
   /** Un esqueleto con las pestañas y las etiquetas que usa esa hoja. */
   function libroComunidad() {
     return [
-      { nombre: 'Resumen', filas: [[]] },
+      {
+        nombre: 'Resumen',
+        filas: [
+          // La marca de la zona auxiliar va lejos, para que nada útil quede fuera.
+          Array(40).fill(null).concat(['Zona de tablas auxiliares']),
+          [],
+          [null, null, null, 'Ventajas y desventajas:'],
+          [null, null, null, 'Sentido del peligro, Inquietante, Obligación somática'],
+          [],
+          // Aquí el valor va en la misma fila que el rótulo, como en algunas versiones.
+          [null, null, null, 'Habilidades de Ki:', null, null, 'Uso del Ki, Control del Ki'],
+          [],
+          [null, null, null, 'Habilidades esenciales:'],
+          [null, null, null, 'Don, Esto no existe en ningún manual, + ...'],
+        ],
+      },
       {
         nombre: 'General',
         filas: [
@@ -234,7 +249,22 @@ describe('la hoja de cálculo de la comunidad', () => {
           [null, null, null, null, 'Advertir', null, null, null, null, 2, 60, 2, 60],
         ],
       },
-      { nombre: 'Combate', filas: [[]] },
+      {
+        nombre: 'Combate',
+        filas: [
+          Array(40).fill(null).concat(['Zona de tablas auxiliares']),
+          [],
+          [null, null, 'Armadura'],
+          [null, null, 'Armadura', null, 'Localización', null, 'Calidad', 'FIL'],
+          [null, null, 'Piezas', null, 'Completa', null, 5, 4],
+          [null, null, 'Capucha de Malla', null, 'Cabeza', null, 0, 4],
+          [null, null, 'Restricción Movimiento', 2],
+          [],
+          [null, null, '1.', 'Hacha a dos manos', null, null, null, null, '2.', 'Daga'],
+          [null, null, 'A dos manos', null, 'Hacha a dos manos', null, null, null, 'A una mano'],
+          [null, null, 'Conocida', null, 'Tam:', 'Enorme', null, null, 'Distinta', null, 'Tam:', 'Normal'],
+        ],
+      },
     ];
   }
 
@@ -243,28 +273,28 @@ describe('la hoja de cálculo de la comunidad', () => {
     expect(esFichaDeLaComunidad([{ nombre: 'Hoja1', filas: [] }])).toBe(false);
   });
 
-  it('lee la identidad buscando por etiqueta, no por dirección de celda', () => {
-    const { personaje } = deFichaComunidad(libroComunidad(), 'x');
+  it('lee la identidad buscando por etiqueta, no por dirección de celda', async () => {
+    const { personaje } = await deFichaComunidad(libroComunidad(), 'x');
     expect(personaje.nombre).toBe('Meirmeister');
     expect(personaje.raza).toBe('Jayán');
     expect(personaje.sexo).toBe('Hombre');
   });
 
-  it('del nivel «1 + 1» toma el 1: el otro es el ajuste racial', () => {
-    const { personaje } = deFichaComunidad(libroComunidad(), 'x');
+  it('del nivel «1 + 1» toma el 1: el otro es el ajuste racial', async () => {
+    const { personaje } = await deFichaComunidad(libroComunidad(), 'x');
     expect(personaje.categorias).toEqual([{ categoria: 'Paladín Oscuro (RD)', nivel: 1 }]);
   });
 
-  it('toma las características **compradas**, no las ya modificadas por la raza', () => {
-    const { personaje } = deFichaComunidad(libroComunidad(), 'x');
+  it('toma las características **compradas**, no las ya modificadas por la raza', async () => {
+    const { personaje } = await deFichaComunidad(libroComunidad(), 'x');
     // FUE comprada 10; en la hoja el 12 de al lado es la de después del +2 de Jayán.
     expect(personaje.caracteristicas.FUE).toBe(10);
     expect(personaje.caracteristicas.CON).toBe(8);
     expect(personaje.caracteristicas.VOL).toBe(6);
   });
 
-  it('deja claro que es una ayuda, no una conversión completa', () => {
-    const { avisos, origen } = deFichaComunidad(libroComunidad(), 'x');
+  it('deja claro que es una ayuda, no una conversión completa', async () => {
+    const { avisos, origen } = await deFichaComunidad(libroComunidad(), 'x');
     expect(origen).toBe('comunidad');
     expect(avisos.join(' ')).toMatch(/a mano/);
   });
@@ -276,8 +306,8 @@ describe('la hoja de cálculo de la comunidad', () => {
    * ellas la suma cae exactamente en 600 PD, que es el presupuesto de nivel 1.
    */
   describe('PD invertidos', () => {
-    it('suma las columnas de PD de cada habilidad', () => {
-      const { personaje } = deFichaComunidad(libroComunidad(), 'x');
+    it('suma las columnas de PD de cada habilidad', async () => {
+      const { personaje } = await deFichaComunidad(libroComunidad(), 'x');
       // H. Ataque tiene dos tramos anotados, 100 y 50.
       expect(personaje.pdInvertidos.HAtaque).toBe(150);
       expect(personaje.pdInvertidos.HParada).toBe(110);
@@ -286,43 +316,116 @@ describe('la hoja de cálculo de la comunidad', () => {
       expect(personaje.pdInvertidos.Advertir).toBe(120);
     });
 
-    it('separa los dos bloques del Ki, que se llaman igual', () => {
+    it('separa los dos bloques del Ki, que se llaman igual', async () => {
       // Sin mirar el rótulo del grupo, los dos «AGI» se sumarían en una sola clave y el
       // motor no leería ninguna de las dos.
-      const { personaje } = deFichaComunidad(libroComunidad(), 'x');
+      const { personaje } = await deFichaComunidad(libroComunidad(), 'x');
       expect(personaje.pdInvertidos.KiAGI).toBe(15);
       expect(personaje.pdInvertidos.KiCON).toBe(5);
       expect(personaje.pdInvertidos.AcumKiAGI).toBe(20);
       expect(personaje.pdInvertidos.CM).toBe(25);
     });
 
-    it('traduce las abreviaturas de la hoja al nombre del manual', () => {
-      const { personaje } = deFichaComunidad(libroComunidad(), 'x');
+    it('traduce las abreviaturas de la hoja al nombre del manual', async () => {
+      const { personaje } = await deFichaComunidad(libroComunidad(), 'x');
       expect(personaje.pdInvertidos['Proezas de Fuerza']).toBe(40);
       expect(personaje.pdInvertidos['Resistencia al Dolor']).toBe(10);
     });
 
-    it('deja fuera lo que la aplicación no calcula, y lo dice', () => {
+    it('deja fuera lo que la aplicación no calcula, y lo dice', async () => {
       // «Perspicacia» no es una secundaria del manual: alguna mesa se la inventa. Guardarla
       // no haría nada —el motor no la lee— pero sí la daría por importada.
-      const { personaje, avisos } = deFichaComunidad(libroComunidad(), 'x');
+      const { personaje, avisos } = await deFichaComunidad(libroComunidad(), 'x');
       expect(personaje.pdInvertidos.Perspicacia).toBeUndefined();
       expect(avisos.join(' ')).toMatch(/Perspicacia/);
     });
 
-    it('avisa de que los totales no van a cuadrar todavía', () => {
+    it('avisa de que los totales no van a cuadrar todavía', async () => {
       // Es la parte honesta: la hoja suma armadura, ventajas, Naturales y bonos de raza en
       // la misma columna, y nada de eso se puede leer de ahí.
-      const { avisos } = deFichaComunidad(libroComunidad(), 'x');
+      const { avisos } = await deFichaComunidad(libroComunidad(), 'x');
       expect(avisos.join(' ')).toMatch(/no van a coincidir/);
       expect(avisos.join(' ')).toMatch(/armadura/);
     });
   });
 
-  it('si falta una etiqueta lo dice en vez de callarse', () => {
+  describe('lo que se elige de una lista', () => {
+    /** Un catálogo de mentira, con lo justo para que el emparejamiento tenga contra qué. */
+    const catalogo = {
+      async obtener(coleccion: string) {
+        const tablas: Record<string, unknown[]> = {
+          ventajas: [
+            { nombre: 'Sentido del peligro', esDesventaja: false },
+            { nombre: 'Inquietante', esDesventaja: false },
+            { nombre: 'Obligación somática', esDesventaja: true },
+            { nombre: 'Apto en una materia (1)', esDesventaja: false },
+          ],
+          legadosSangre: [{ legado: 'Ojos del Alma' }],
+          habilidadesEsenciales: [{ nombre: 'Don' }],
+          conjuros: [{ conjuro: 'Crear luz' }],
+          poderesPsiquicos: [{ poder: 'Telequinesis' }],
+          habilidadesKi: [{ habilidad: 'Uso del Ki' }, { habilidad: 'Control del Ki' }],
+          armas: [{ arma: 'Hacha a dos manos' }, { arma: 'Daga' }, { arma: 'Desarmado' }],
+          armaduras: [{ armadura: 'Piezas' }],
+          yelmos: [{ yelmo: 'Capucha de Malla' }],
+        };
+        return tablas[coleccion] ?? [];
+      },
+    } as unknown as Parameters<typeof deFichaComunidad>[2];
+
+    it('separa ventajas de desventajas usando el catálogo, no el orden', async () => {
+      const { personaje } = await deFichaComunidad(libroComunidad(), 'x', catalogo);
+      expect(personaje.ventajas).toEqual(['Sentido del peligro', 'Inquietante']);
+      expect(personaje.desventajas).toEqual(['Obligación somática']);
+    });
+
+    it('lee la lista aunque el valor esté en la misma fila que el rótulo', async () => {
+      // Unas versiones la ponen debajo y otras a la derecha; las dos tienen que valer.
+      const { personaje } = await deFichaComunidad(libroComunidad(), 'x', catalogo);
+      expect(personaje.ki?.habilidades).toEqual(['Uso del Ki', 'Control del Ki']);
+    });
+
+    it('ignora el «+ …» con el que la hoja corta sus propias listas', async () => {
+      const { personaje, avisos } = await deFichaComunidad(libroComunidad(), 'x', catalogo);
+      expect(personaje.habilidadesEsenciales).toEqual(['Don']);
+      expect(avisos.join(' ')).not.toMatch(/\+ \.\.\./);
+    });
+
+    it('lo que no está en el catálogo se dice, no se descarta en silencio', async () => {
+      const { avisos } = await deFichaComunidad(libroComunidad(), 'x', catalogo);
+      expect(avisos.join(' ')).toMatch(/Esto no existe en ningún manual/);
+    });
+
+    it('trae la armadura con su calidad y el yelmo como una pieza más', async () => {
+      const { personaje } = await deFichaComunidad(libroComunidad(), 'x', catalogo);
+      expect(personaje.equipo.armadura).toEqual([
+        { armadura: 'Piezas', calidad: 5 },
+        { armadura: 'Capucha de Malla', calidad: undefined },
+      ]);
+    });
+
+    it('cada arma se queda con su propio tamaño, no con el de la de al lado', async () => {
+      // Los bloques van en paralelo en las mismas filas: el «Tam:» de la segunda pisaba
+      // al de la primera y todo salía Normal.
+      const { personaje } = await deFichaComunidad(libroComunidad(), 'x', catalogo);
+      expect(personaje.equipo.armas).toEqual([
+        { arma: 'Hacha a dos manos', aDosManos: true, conocimiento: 'Conocida', escala: 'Enorme' },
+        { arma: 'Daga', aDosManos: undefined, conocimiento: 'Distinta', escala: 'Normal' },
+      ]);
+    });
+
+    it('sin catálogo no se inventa nada, y lo avisa', async () => {
+      const { personaje, avisos } = await deFichaComunidad(libroComunidad(), 'x');
+      expect(personaje.ventajas).toEqual([]);
+      expect(personaje.equipo.armas).toEqual([]);
+      expect(avisos.join(' ')).toMatch(/no había catálogo/);
+    });
+  });
+
+  it('si falta una etiqueta lo dice en vez de callarse', async () => {
     const libro = libroComunidad().filter((h) => h.nombre !== 'General');
     libro.push({ nombre: 'General', filas: [[]] });
-    const { avisos } = deFichaComunidad(libro, 'x');
+    const { avisos } = await deFichaComunidad(libro, 'x');
     expect(avisos.join(' ')).toMatch(/nombre/i);
     expect(avisos.join(' ')).toMatch(/categoría/i);
   });

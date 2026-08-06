@@ -178,6 +178,12 @@ export interface Personaje {
    */
   sheele?: EleccionesSheele;
 
+  /**
+   * Habilidades Esenciales (Core Exxet, cap. 6). Se compran con PD y algunas exigen un
+   * mínimo de Gnosis; su efecto lo aplicáis vosotros, como con las ventajas.
+   */
+  habilidadesEsenciales?: string[];
+
   /** Conjuros aprendidos, por nombre. */
   conjuros: string[];
   /** Poderes psíquicos dominados, por nombre. */

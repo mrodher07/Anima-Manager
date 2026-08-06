@@ -189,6 +189,7 @@ export function App() {
             {seccion === 'personajes' && (
               <VistaPersonajes
                 personajes={personajes}
+                catalogo={catalogo}
                 cargando={cargando}
                 nuevoId={nuevoId}
                 onAbrir={abrir}
