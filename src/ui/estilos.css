@@ -42,15 +42,25 @@
 
 /* ── Claro: pergamino, para jugar a plena luz ── */
 :root[data-tema='claro'] {
-  --fondo: #efeae0;
-  --fondo-2: #e5dfd2;
-  --panel: #faf7f1;
-  --panel-alto: #fffdf8;
-  --borde: #cec5b4;
-  --borde-suave: #ded6c6;
-  --texto: #221f1a;
-  --texto-tenue: #5d564a;
-  --texto-debil: #857d6e;
+  /*
+   * Pergamino, no folio recién sacado de la impresora.
+   *
+   * La primera versión tenía el panel más claro en L*99 —blanco puro— y el texto casi
+   * negro encima, lo que daba 16:1 de contraste: más del triple del mínimo de la WCAG.
+   * Cumplir el mínimo no basta, porque pasarse también cansa: una superficie grande a
+   * pleno brillo con texto muy oscuro encima deslumbra, sobre todo de noche. Ahora la
+   * superficie más clara está en L*94 y el texto da 9,4:1, que sigue siendo el doble de
+   * lo exigido y se lee igual de bien sin quemar.
+   */
+  --fondo: #e1dcd3;
+  --fondo-2: #d7d1c5;
+  --panel: #ebe8e2;
+  --panel-alto: #f1efea;
+  --borde: #bbb2a3;
+  --borde-suave: #d0c8b9;
+  --texto: #423d35;
+  --texto-tenue: #686053;
+  --texto-debil: #7e7668;
   --oro: #8a6d10;
   /* En un tema claro, «claro» significa más énfasis: sobre pergamino eso es más oscuro. */
   --oro-claro: #6b5409;
@@ -93,16 +103,17 @@
 
 /* ── Medieval: pergamino, tinta ferrogálica y bermellón ── */
 :root[data-tema='medieval'] {
-  --fondo: #e6d9ba;
-  --fondo-2: #dccbA6;
-  --fondo-2: #dccba6;
-  --panel: #f3e9d2;
-  --panel-alto: #faf2df;
-  --borde: #b9a377;
-  --borde-suave: #cdb992;
-  --texto: #2b2113;
-  --texto-tenue: #5f4d33;
-  --texto-debil: #8a7452;
+  /* Mismo criterio que el tema claro: pergamino leído a la luz de una vela, no a pleno
+     sol. La superficie más clara baja de L*96 a L*92 y el texto de 14:1 a 8,5:1. */
+  --fondo: #ddd1b3;
+  --fondo-2: #d5c5a1;
+  --panel: #e8dfc9;
+  --panel-alto: #efe8d5;
+  --borde: #b39e73;
+  --borde-suave: #cab790;
+  --texto: #4d3d27;
+  --texto-tenue: #705b3d;
+  --texto-debil: #846f4e;
   --oro: #96702a;
   /* Más oscuro que el base: sobre pergamino, oscurecer es destacar. */
   --oro-claro: #6f5017;
@@ -1283,10 +1294,17 @@ input[type='checkbox'] { accent-color: var(--oro); }
 }
 
 /* Los paneles, como hojas de pergamino con doble filete. */
+/*
+ * Los realces del pergamino van en un crema (244, 238, 222) y no en blanco. Cuando el
+ * tema era más luminoso daba igual, pero al bajar el brillo de la paleta un realce blanco
+ * se convertía en el punto más claro de la pantalla —L*97 frente al L*92 del panel— y
+ * volvía a deslumbrar justo donde se había quitado el problema. Ningún realce debe pasar
+ * de la superficie más clara del tema.
+ */
 :root[data-tema='medieval'] .panel {
   position: relative;
   border: 1px solid var(--borde);
-  box-shadow: var(--sombra), inset 0 0 0 1px rgba(255, 253, 245, 0.55);
+  box-shadow: var(--sombra), inset 0 0 0 1px rgba(244, 238, 222, 0.55);
   background:
     radial-gradient(ellipse 220px 90px at 85% 8%, rgba(150, 112, 42, 0.07), transparent 70%),
     linear-gradient(180deg, var(--panel-alto), var(--panel));
@@ -1328,8 +1346,8 @@ input[type='checkbox'] { accent-color: var(--oro); }
 }
 
 :root[data-tema='medieval'] .caracteristica {
-  background: linear-gradient(180deg, rgba(255, 253, 245, 0.7), transparent 70%), var(--fondo-2);
-  box-shadow: inset 0 0 0 1px rgba(255, 253, 245, 0.6);
+  background: linear-gradient(180deg, rgba(244, 238, 222, 0.7), transparent 70%), var(--fondo-2);
+  box-shadow: inset 0 0 0 1px rgba(244, 238, 222, 0.6);
 }
 :root[data-tema='medieval'] .caracteristica .valor { color: var(--sangre); }
 
@@ -1378,18 +1396,18 @@ input[type='checkbox'] { accent-color: var(--oro); }
 
 /* Avisos y cintas en tono pergamino, no gris. */
 :root[data-tema='medieval'] .cinta-campana {
-  background: linear-gradient(180deg, rgba(255, 253, 245, 0.75), rgba(150, 112, 42, 0.10));
+  background: linear-gradient(180deg, rgba(244, 238, 222, 0.75), rgba(150, 112, 42, 0.10));
   border-left: 3px solid var(--sangre);
-  box-shadow: inset 0 0 0 1px rgba(255, 253, 245, 0.6);
+  box-shadow: inset 0 0 0 1px rgba(244, 238, 222, 0.6);
 }
 :root[data-tema='medieval'] .aviso {
-  box-shadow: inset 0 0 0 1px rgba(255, 253, 245, 0.55);
+  box-shadow: inset 0 0 0 1px rgba(244, 238, 222, 0.55);
 }
 
 /* La barra de recursos, como el encabezamiento de un códice. */
 :root[data-tema='medieval'] .recursos {
   border: 1px solid var(--borde);
-  box-shadow: var(--sombra), inset 0 0 0 1px rgba(255, 253, 245, 0.6);
+  box-shadow: var(--sombra), inset 0 0 0 1px rgba(244, 238, 222, 0.6);
   background:
     radial-gradient(ellipse 240px 70px at 20% 0%, rgba(150, 112, 42, 0.09), transparent 70%),
     color-mix(in srgb, var(--panel-alto) 94%, transparent);

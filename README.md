@@ -169,7 +169,15 @@ editarla.
 **Los temas son datos.** Cada uno es un bloque de variables CSS más una entrada en
 `src/ui/temas.ts`; no hay condicionales por tema repartidos por el código. Añadir uno es
 escribir sus colores. Una prueba comprueba que ningún tema se deje variables sin definir, y
-el contraste está verificado en los cuatro (texto por encima de 11:1).
+`tools/contraste.mjs` mide el contraste de los cuatro sobre la aplicación ya compilada.
+
+**Cumplir el contraste mínimo no basta: pasarse también cansa.** Los dos temas claros
+nacieron con la superficie más luminosa en blanco puro (L\*99) y texto casi negro encima,
+lo que daba 16:1 —más del triple del mínimo de la WCAG— y deslumbraba, sobre todo de noche.
+Ahora ninguna superficie pasa de L\*94 y el texto se queda entre 7:1 y 9:1: sigue siendo el
+doble de lo exigido y se lee igual, pero sin quemar. Por lo mismo, en el tema medieval los
+realces del pergamino son crema y no blanco; siendo blancos se convertían en el punto más
+claro de la pantalla y devolvían el brillo justo donde se acababa de quitar.
 
 **En el móvil, lo que se arrastra es la tira, nunca la página.** Es la regla que ordena todo
 el diseño responsive. Once secciones no caben en la cabecera de un teléfono: antes se ponían
