@@ -103,26 +103,44 @@
 
 /* ── Medieval: pergamino, tinta ferrogálica y bermellón ── */
 :root[data-tema='medieval'] {
-  /* Mismo criterio que el tema claro: pergamino leído a la luz de una vela, no a pleno
-     sol. La superficie más clara baja de L*96 a L*92 y el texto de 14:1 a 8,5:1. */
-  --fondo: #ddd1b3;
-  --fondo-2: #d5c5a1;
-  --panel: #e8dfc9;
-  --panel-alto: #efe8d5;
-  --borde: #b39e73;
-  --borde-suave: #cab790;
-  --texto: #4d3d27;
-  --texto-tenue: #705b3d;
-  --texto-debil: #846f4e;
-  --oro: #96702a;
+  /*
+   * Los pigmentos de un manuscrito iluminado, no un sepia genérico.
+   *
+   * La primera versión tenía seis de sus nueve colores entre 35° y 43° de tono: todo
+   * teñido del mismo ocre, que es lo que la hacía parecer una foto antigua en vez de una
+   * página. Un códice tiene una paleta muy concreta y bastante viva, y son pigmentos
+   * distintos con historias distintas:
+   *
+   *   · Vitela — hueso pálido y poco saturado, no papel manchado de té. Se le baja la
+   *     saturación de 38 % a 27 %, que además descansa más la vista.
+   *   · Tinta ferrogálica — se oxida con los siglos a un sepia **rojizo**. Estaba en
+   *     verde oliva (35°), y va a 24°.
+   *   · Ultramar de lapislázuli — el pigmento más caro de Europa y la firma de una página
+   *     iluminada. Estaba en un azul pizarra apagado; ahora es lapislázuli de verdad.
+   *   · Bermellón — el cinabrio de rúbricas y capitulares es un rojo anaranjado y vivo,
+   *     no el ladrillo oscuro que había.
+   *   · Cardenillo — el verde medieval es azulado, de cobre oxidado, no verde hierba.
+   *
+   * Lo vivo está sólo en los acentos, que ocupan poca superficie. El pergamino, que es lo
+   * que se mira durante horas, sigue calmado: ninguna superficie pasa de L*92.
+   */
+  --fondo: #dad1be;
+  --fondo-2: #d2c5ad;
+  --panel: #e5dfd1;
+  --panel-alto: #ece8de;
+  --borde: #b29e7c;
+  --borde-suave: #c5b79e;
+  --texto: #543a29;
+  --texto-tenue: #765842;
+  --texto-debil: #876d56;
+  --oro: #856623;
   /* Más oscuro que el base: sobre pergamino, oscurecer es destacar. */
-  --oro-claro: #6f5017;
-  /* El bermellón de las capitulares. */
-  --sangre: #9c2b1d;
-  --sangre-claro: #b83525;
-  --arcano: #3f5c86;
-  --arcano-claro: #4f70a0;
-  --verde: #4a6b3a;
+  --oro-claro: #684b18;
+  --sangre: #a8381b;
+  --sangre-claro: #c0431d;
+  --arcano: #3354af;
+  --arcano-claro: #466cc5;
+  --verde: #265443;
   --sombra: 0 5px 16px rgba(90, 70, 35, 0.22);
   --radio: 3px;
   --radio-s: 2px;
@@ -1304,7 +1322,7 @@ input[type='checkbox'] { accent-color: var(--oro); }
 :root[data-tema='medieval'] .panel {
   position: relative;
   border: 1px solid var(--borde);
-  box-shadow: var(--sombra), inset 0 0 0 1px rgba(244, 238, 222, 0.55);
+  box-shadow: var(--sombra), inset 0 0 0 1px rgba(243, 239, 230, 0.55);
   background:
     radial-gradient(ellipse 220px 90px at 85% 8%, rgba(150, 112, 42, 0.07), transparent 70%),
     linear-gradient(180deg, var(--panel-alto), var(--panel));
@@ -1346,8 +1364,8 @@ input[type='checkbox'] { accent-color: var(--oro); }
 }
 
 :root[data-tema='medieval'] .caracteristica {
-  background: linear-gradient(180deg, rgba(244, 238, 222, 0.7), transparent 70%), var(--fondo-2);
-  box-shadow: inset 0 0 0 1px rgba(244, 238, 222, 0.6);
+  background: linear-gradient(180deg, rgba(243, 239, 230, 0.7), transparent 70%), var(--fondo-2);
+  box-shadow: inset 0 0 0 1px rgba(243, 239, 230, 0.6);
 }
 :root[data-tema='medieval'] .caracteristica .valor { color: var(--sangre); }
 
@@ -1396,18 +1414,18 @@ input[type='checkbox'] { accent-color: var(--oro); }
 
 /* Avisos y cintas en tono pergamino, no gris. */
 :root[data-tema='medieval'] .cinta-campana {
-  background: linear-gradient(180deg, rgba(244, 238, 222, 0.75), rgba(150, 112, 42, 0.10));
+  background: linear-gradient(180deg, rgba(243, 239, 230, 0.75), rgba(150, 112, 42, 0.10));
   border-left: 3px solid var(--sangre);
-  box-shadow: inset 0 0 0 1px rgba(244, 238, 222, 0.6);
+  box-shadow: inset 0 0 0 1px rgba(243, 239, 230, 0.6);
 }
 :root[data-tema='medieval'] .aviso {
-  box-shadow: inset 0 0 0 1px rgba(244, 238, 222, 0.55);
+  box-shadow: inset 0 0 0 1px rgba(243, 239, 230, 0.55);
 }
 
 /* La barra de recursos, como el encabezamiento de un códice. */
 :root[data-tema='medieval'] .recursos {
   border: 1px solid var(--borde);
-  box-shadow: var(--sombra), inset 0 0 0 1px rgba(244, 238, 222, 0.6);
+  box-shadow: var(--sombra), inset 0 0 0 1px rgba(243, 239, 230, 0.6);
   background:
     radial-gradient(ellipse 240px 70px at 20% 0%, rgba(150, 112, 42, 0.09), transparent 70%),
     color-mix(in srgb, var(--panel-alto) 94%, transparent);
