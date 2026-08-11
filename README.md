@@ -328,6 +328,43 @@ Si lo despliegas en Vercel, las mismas dos variables van en **Settings → Envir
 Variables** (y hay que volver a desplegar: Vite las incrusta al compilar, no las lee en
 tiempo de ejecución).
 
+### Que las tablas se actualicen solas
+
+Para no tener que volver a pegar el esquema cada vez que cambia, hay un workflow que lo
+aplica al fusionar a `main`: `.github/workflows/base-de-datos.yml`. Pide **un secreto**:
+
+| | |
+|---|---|
+| Dónde | **Settings → Secrets and variables → Actions → New repository secret** |
+| Nombre | `SUPABASE_DB_URL` |
+| Valor | La cadena de **Project Settings → Database → Connection string → URI**, con tu contraseña |
+
+Usa la conexión **directa** (puerto 5432), no el pooler de transacciones (6543): el esquema
+se aplica dentro de una transacción y el pooler no lo lleva bien.
+
+Ese secreto lleva la contraseña de la base de datos. GitHub lo guarda cifrado y lo tapa en
+los registros; si alguna vez se filtra, se cambia en **Project Settings → Database → Reset
+database password** y se actualiza el secreto.
+
+El workflow hace cuatro cosas, y las cuatro importan:
+
+1. **Aplica `esquema.sql`** con `--single-transaction`: o entra todo o no entra nada, así
+   que un fallo no te deja la base a medio migrar.
+2. **Siembra el catálogo** sólo si `catalogo-oficial.sql` ha cambiado, o si se lo pides a
+   mano desde la pestaña *Actions* — son 1,8 MB y sólo cambian al extraer un manual nuevo.
+3. **Comprueba que ninguna tabla se ha quedado sin Row Level Security**, que es lo único
+   que separa tus datos de los de otro usuario.
+4. **Comprueba que el contenido de los manuales sigue siendo de sólo lectura**, por si
+   alguna vez se cuela una política de escritura sobre el catálogo oficial.
+
+Los cuatro pasos fallan ruidosamente en vez de seguir adelante.
+
+Un detalle que conviene conocer: `create table if not exists` **no añade columnas nuevas**
+a una tabla que ya existe —se ejecuta sin error y sin hacer nada. Por eso `esquema.sql`
+tiene una sección **EVOLUCIÓN DEL ESQUEMA** donde cada columna añadida después de la
+primera versión se repite con `add column if not exists`, y un guardián que aborta si
+alguien añade una columna arriba y se olvida de repetirla ahí.
+
 Por defecto Supabase pide confirmar el correo antes de dejar entrar. Para pruebas se puede
 quitar en **Authentication → Providers → Email**.
 

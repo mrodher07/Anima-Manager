@@ -380,6 +380,55 @@ create index if not exists diario_campana_idx on public.diario_campana (campana_
 
 
 -- ─────────────────────────────────────────────────────────────────────────────
+-- EVOLUCIÓN DEL ESQUEMA
+--
+-- Este archivo se vuelve a ejecutar entero cada vez que cambia, así que tiene que poder
+-- aplicarse sobre una base de datos que ya existe. Y ahí hay una trampa: `create table
+-- if not exists` **no añade columnas nuevas** a una tabla que ya está creada. Se ejecuta
+-- sin error y sin hacer nada, que es la peor combinación posible.
+--
+-- Por eso toda columna que se añada después de la primera versión se repite aquí con
+-- `add column if not exists`. La definición de arriba es la de referencia —lo que verías
+-- si crearas la base desde cero— y esto es lo que la aplica a las que ya existían.
+--
+-- Al añadir una columna nueva: se pone en su `create table` de arriba **y** una línea
+-- aquí. Las dos cosas, siempre.
+-- ─────────────────────────────────────────────────────────────────────────────
+
+-- (De momento no hay ninguna: todas las tablas se crearon con sus columnas actuales.
+-- Cuando haga falta, el patrón es este:)
+--
+--   alter table public.perfiles add column if not exists avatar_url text;
+
+-- Un aviso si alguien añade una columna arriba y se olvida de repetirla aquí. No puede
+-- comprobarlo todo, pero sí las tablas que más se tocan.
+do $$
+declare
+  falta text;
+begin
+  select string_agg(esperada, ', ') into falta
+  from (
+    values
+      ('perfiles', 'nombre'),
+      ('paquetes', 'oficial'),
+      ('catalogo', 'datos'),
+      ('ajustes_campana', 'sistema_combate'),
+      ('reglas_campana', 'formula'),
+      ('diario_campana', 'texto')
+  ) as v(tabla, columna),
+  lateral (select v.tabla || '.' || v.columna as esperada) e
+  where not exists (
+    select 1 from information_schema.columns c
+    where c.table_schema = 'public' and c.table_name = v.tabla and c.column_name = v.columna
+  );
+
+  if falta is not null then
+    raise exception 'Faltan columnas en la base de datos: %. Añádelas en la sección EVOLUCIÓN DEL ESQUEMA.', falta;
+  end if;
+end $$;
+
+
+-- ─────────────────────────────────────────────────────────────────────────────
 -- PERMISOS
 --
 -- Esto es lo importante. La clave `anon` que usa el navegador es **pública por diseño**:
