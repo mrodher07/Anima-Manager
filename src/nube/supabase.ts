@@ -48,7 +48,18 @@ export function cliente(): SupabaseClient | null {
   return instancia;
 }
 
-/** Mensaje para la interfaz cuando alguien intenta usar la nube sin haberla configurado. */
+/**
+ * Mensaje para la interfaz cuando alguien intenta usar la nube sin haberla configurado.
+ *
+ * Antes sólo nombraba las dos variables, lo cual está bien en tu propio ordenador y no
+ * sirve de nada en un sitio ya publicado: quien lo lee ahí no sabe dónde se ponen. Y hay
+ * un detalle que despista a todo el mundo la primera vez —Vite incrusta las variables al
+ * compilar, no las lee al abrir la página—, así que guardarlas no basta: hay que volver a
+ * desplegar. Por eso el mensaje lo dice.
+ */
 export const SIN_NUBE =
   'Esta copia de Anima Manager no tiene nube configurada, así que funciona sólo en este ' +
-  'dispositivo. Para activarla hacen falta VITE_SUPABASE_URL y VITE_SUPABASE_ANON_KEY.';
+  'dispositivo. Para activarla hay que definir VITE_SUPABASE_URL y VITE_SUPABASE_ANON_KEY ' +
+  '—en el archivo .env.local si es tu ordenador, o en las variables de entorno de tu ' +
+  'proveedor si está publicada— y volver a desplegar: esos valores se incrustan al ' +
+  'compilar, así que guardarlos no basta.';
