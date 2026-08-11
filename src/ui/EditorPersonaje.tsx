@@ -87,11 +87,16 @@ const PRIMARIAS_MISTICAS: Primaria[] = [
   ...INVOCACION.map((i) => ({ clave: i.clave, nombre: i.nombre, coste: i.coste })),
 ];
 
-const NOMBRE_MONEDA = {
-  MO: 'Monedas de oro (MO)',
-  MP: 'Monedas de plata (MP)',
-  MC: 'Monedas de cobre (MC)',
-} as const;
+/**
+ * Las tres monedas del manual, con nombre corto para la etiqueta y largo para quien lo lee
+ * en voz alta. Puestas en fila hacen falta las dos: «Oro» cabe donde no cabe «Monedas de
+ * oro (MO)», pero «Oro» a secas no dice nada fuera de contexto.
+ */
+const MONEDAS = [
+  { clave: 'MO', corto: 'Oro', largo: 'Monedas de oro (MO)' },
+  { clave: 'MP', corto: 'Plata', largo: 'Monedas de plata (MP)' },
+  { clave: 'MC', corto: 'Cobre', largo: 'Monedas de cobre (MC)' },
+] as const;
 
 /** Habilidades cuyo valor sale ya calculado de la ficha, sin dividir PD entre coste. */
 const VALOR_PROPIO = new Set<string>([
@@ -148,6 +153,13 @@ export function EditorPersonaje({ personaje, datos, catalogo, reglamento, onCamb
     set({ trasfondo: { ...personaje.trasfondo, [clave]: texto } });
 
   const inventario = personaje.equipo.objetos ?? [];
+  /*
+   * Si el catálogo se abriera con `open={inventario.length === 0}` a secas, React le
+   * cambiaría el atributo en cuanto entrase el primer objeto y la lista se cerraría de
+   * golpe justo mientras se está eligiendo. Con estado inicial se decide una sola vez, al
+   * entrar en la pestaña, y a partir de ahí manda quien lo abre y lo cierra.
+   */
+  const [catalogoAbierto] = useState(inventario.length === 0);
   const cambiarObjeto = (i: number, cambios: Partial<ObjetoLlevado>) => {
     const nuevos = [...inventario];
     nuevos[i] = { ...nuevos[i], ...cambios };
@@ -866,193 +878,249 @@ export function EditorPersonaje({ personaje, datos, catalogo, reglamento, onCamb
 
       {pestana === 'equipo' && (
         <>
-          <Seccion
-            titulo="Armadura"
-            resumen={
-              cuenta(personaje.equipo.armadura.length, 'pieza', 'piezas', 'sin armadura')
-            }
-            abierta={personaje.equipo.armadura.length > 0}
-          >
-            {personaje.equipo.armadura.map((pieza, i) => (
-              <div key={i} style={{ display: 'flex', gap: 8, marginBottom: 8, alignItems: 'center' }}>
-                <select
-                  value={pieza.armadura}
-                  aria-label={`Pieza de armadura ${i + 1}`}
-                  onChange={(e) => {
-                    const nuevas = [...personaje.equipo.armadura];
-                    nuevas[i] = { ...pieza, armadura: e.target.value };
-                    set({ equipo: { ...personaje.equipo, armadura: nuevas } });
-                  }}
-                >
-                  <option value="">—</option>
-                  {armaduras.map((a) => (
-                    <option key={a.armadura} value={a.armadura}>
-                      {a.armadura} · req. {a.requerimiento ?? 0}
-                    </option>
-                  ))}
-                  {/* Los yelmos son otra tabla del Excel, pero protegen igual. */}
-                  <optgroup label="Yelmos">
-                    {yelmos.map((y) => (
-                      <option key={y.yelmo} value={y.yelmo}>
-                        {y.yelmo} · req. {y.requerimiento ?? 0}
+          {/*
+            * La bolsa arriba del todo y siempre a la vista.
+            *
+            * Estaba dentro de «Inventario», entre la explicación y el buscador de objetos, y
+            * es justo el dato que se mira y se cambia más veces por partida: se compra algo,
+            * se cobra un trabajo, se paga la posada. Aquí son tres campos en una fila y el
+            * total al lado, sin abrir nada.
+            */}
+          <div className="panel bolsa">
+            <div className="bolsa-monedas">
+              {MONEDAS.map(({ clave, corto, largo }) => (
+                <div className="campo" key={clave}>
+                  <label htmlFor={`moneda-${clave}`}>
+                    {corto} <span className="sigla">{clave}</span>
+                  </label>
+                  <input
+                    id={`moneda-${clave}`}
+                    type="number"
+                    min={0}
+                    aria-label={largo}
+                    value={personaje.equipo.dinero?.[clave] ?? 0}
+                    onChange={(e) =>
+                      set({
+                        equipo: {
+                          ...personaje.equipo,
+                          dinero: {
+                            ...personaje.equipo.dinero,
+                            [clave]: Math.max(0, Number(e.target.value) || 0),
+                          },
+                        },
+                      })
+                    }
+                  />
+                </div>
+              ))}
+            </div>
+            <dl className="bolsa-cuentas">
+              <div>
+                <dt>En la bolsa</dt>
+                <dd className="destacado">{enMonedas(ficha.inventario.dinero) || '0 MC'}</dd>
+              </div>
+              <div>
+                <dt>Carga</dt>
+                <dd>{ficha.inventario.peso} kg</dd>
+              </div>
+              <div>
+                <dt>Valor de lo que lleva</dt>
+                <dd>{enMonedas(ficha.inventario.valor) || '0 MC'}</dd>
+              </div>
+            </dl>
+          </div>
+
+          {/* El equipo de combate a dos columnas y la mochila debajo, a todo el ancho:
+              es la que necesita sitio para su tabla. */}
+          <div className="equipo-combate">
+            <Seccion
+              titulo="Armadura"
+              resumen={
+                cuenta(personaje.equipo.armadura.length, 'pieza', 'piezas', 'sin armadura')
+              }
+              abierta={personaje.equipo.armadura.length > 0}
+            >
+              {personaje.equipo.armadura.map((pieza, i) => (
+                <div key={i} style={{ display: 'flex', gap: 8, marginBottom: 8, alignItems: 'center' }}>
+                  <select
+                    value={pieza.armadura}
+                    aria-label={`Pieza de armadura ${i + 1}`}
+                    onChange={(e) => {
+                      const nuevas = [...personaje.equipo.armadura];
+                      nuevas[i] = { ...pieza, armadura: e.target.value };
+                      set({ equipo: { ...personaje.equipo, armadura: nuevas } });
+                    }}
+                  >
+                    <option value="">—</option>
+                    {armaduras.map((a) => (
+                      <option key={a.armadura} value={a.armadura}>
+                        {a.armadura} · req. {a.requerimiento ?? 0}
                       </option>
                     ))}
-                  </optgroup>
-                </select>
-                <button
-                  className="accion"
-                  onClick={() =>
-                    set({
-                      equipo: {
-                        ...personaje.equipo,
-                        armadura: personaje.equipo.armadura.filter((_, j) => j !== i),
-                      },
-                    })
-                  }
-                >
-                  Quitar
-                </button>
-              </div>
-            ))}
-            <button
-              className="accion"
-              onClick={() =>
-                set({
-                  equipo: {
-                    ...personaje.equipo,
-                    armadura: [...personaje.equipo.armadura, { armadura: '' }],
-                  },
-                })
-              }
-              disabled={armaduras.length === 0}
-            >
-              Añadir pieza
-            </button>
-
-            <table style={{ marginTop: 14 }}>
-              <thead>
-                <tr>
-                  <th>TA</th>
-                  {Object.keys(ficha.combate.proteccion.TA).map((t) => <th key={t} className="num">{t}</th>)}
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Total</td>
-                  {Object.values(ficha.combate.proteccion.TA).map((v, i) => (
-                    <td key={i} className="num destacado">{v}</td>
-                  ))}
-                </tr>
-              </tbody>
-            </table>
-            <p style={{ color: 'var(--texto-tenue)', fontSize: '0.84rem', marginBottom: 0 }}>
-              Requerimiento {ficha.combate.proteccion.requisito} · Penalizador natural{' '}
-              {ficha.combate.proteccion.penalizadorNatural} · Restricción de movimiento{' '}
-              {ficha.combate.proteccion.restriccionMovimiento}
-              {ficha.combate.proteccion.penalizadorAccionFisica < 0 &&
-                ` · ${ficha.combate.proteccion.penalizadorAccionFisica} a toda acción física`}
-            </p>
-          </Seccion>
-
-          <Seccion
-            titulo="Armas"
-            resumen={cuenta(personaje.equipo.armas.length, 'equipada', 'equipadas', 'ninguna')}
-            abierta={personaje.equipo.armas.length > 0}
-          >
-            {personaje.equipo.armas.map((a, i) => {
-              const cambiar = (cambios: Partial<typeof a>) => {
-                const nuevas = [...personaje.equipo.armas];
-                nuevas[i] = { ...a, ...cambios };
-                set({ equipo: { ...personaje.equipo, armas: nuevas } });
-              };
-              const calc = ficha.combate.armas[i];
-              return (
-                <div key={i} className="regla">
-                  <div className="rejilla">
-                    <div className="campo">
-                      <label>Arma</label>
-                      <select value={a.arma} onChange={(e) => cambiar({ arma: e.target.value })}>
-                        {armas.map((w) => <option key={w.arma} value={w.arma}>{w.arma}</option>)}
-                      </select>
-                    </div>
-                    <div className="campo">
-                      <label>Escala</label>
-                      <select
-                        value={a.escala ?? 'Normal'}
-                        onChange={(e) => cambiar({ escala: e.target.value as EscalaArma })}
-                      >
-                        <option>Normal</option><option>Enorme</option><option>Gigante</option>
-                      </select>
-                    </div>
-                    <div className="campo">
-                      <label>Conocimiento</label>
-                      <select
-                        value={a.conocimiento ?? 'Conocida'}
-                        onChange={(e) => cambiar({ conocimiento: e.target.value as typeof a.conocimiento })}
-                      >
-                        <option>Conocida</option><option>Similar</option>
-                        <option>Mixta</option><option>Distinta</option>
-                      </select>
-                    </div>
-                    <div className="campo">
-                      <label>Calidad</label>
-                      <input
-                        type="number" min={-5} max={15} step={5}
-                        value={a.calidad ?? 0}
-                        onChange={(e) => cambiar({ calidad: Number(e.target.value) })}
-                      />
-                    </div>
-                  </div>
-                  <label style={{ fontSize: '0.86rem', display: 'block', marginBottom: 10 }}>
-                    <input
-                      type="checkbox" style={{ width: 'auto', marginRight: 6 }}
-                      checked={a.aDosManos ?? false}
-                      onChange={(e) => cambiar({ aDosManos: e.target.checked })}
-                    />
-                    Empuñada a dos manos
-                  </label>
-                  {calc && (
-                    <p style={{ margin: 0, fontSize: '0.9rem' }}>
-                      Turno <strong className="destacado">{calc.turno}</strong> · Ataque{' '}
-                      <strong className="destacado">{calc.ataque}</strong> · Parada{' '}
-                      <strong className="destacado">{calc.parada}</strong> · Daño{' '}
-                      <strong className="destacado">{calc.dano}</strong>
-                      {calc.criticos.length > 0 && ` · Críticos ${calc.criticos.join(' / ')}`}
-                    </p>
-                  )}
-                  <div className="acciones-regla">
-                    <button
-                      className="accion"
-                      onClick={() =>
-                        set({
-                          equipo: {
-                            ...personaje.equipo,
-                            armas: personaje.equipo.armas.filter((_, j) => j !== i),
-                          },
-                        })
-                      }
-                    >
-                      Quitar arma
-                    </button>
-                  </div>
+                    {/* Los yelmos son otra tabla del Excel, pero protegen igual. */}
+                    <optgroup label="Yelmos">
+                      {yelmos.map((y) => (
+                        <option key={y.yelmo} value={y.yelmo}>
+                          {y.yelmo} · req. {y.requerimiento ?? 0}
+                        </option>
+                      ))}
+                    </optgroup>
+                  </select>
+                  <button
+                    className="accion"
+                    onClick={() =>
+                      set({
+                        equipo: {
+                          ...personaje.equipo,
+                          armadura: personaje.equipo.armadura.filter((_, j) => j !== i),
+                        },
+                      })
+                    }
+                  >
+                    Quitar
+                  </button>
                 </div>
-              );
-            })}
-            <button
-              className="accion"
-              disabled={armas.length === 0}
-              onClick={() =>
-                set({
-                  equipo: {
-                    ...personaje.equipo,
-                    armas: [...personaje.equipo.armas, { arma: armas[0]?.arma ?? '' }],
-                  },
-                })
-              }
+              ))}
+              <button
+                className="accion"
+                onClick={() =>
+                  set({
+                    equipo: {
+                      ...personaje.equipo,
+                      armadura: [...personaje.equipo.armadura, { armadura: '' }],
+                    },
+                  })
+                }
+                disabled={armaduras.length === 0}
+              >
+                Añadir pieza
+              </button>
+
+              {/*
+                * El TA en fichas y no en tabla.
+                *
+                * Eran siete columnas de dos cifras estiradas a todo el ancho del panel: 140 px
+                * por número, y la última —Energía— se salía. Como cada tipo de daño se consulta
+                * suelto («¿cuánto me protege esto del fuego?»), la tabla no aportaba nada que no
+                * aporte una rejilla que se reparte sola por el hueco que haya.
+                */}
+              <ul className="tabla-ta" aria-label="Tipo de armadura por tipo de daño">
+                {Object.entries(ficha.combate.proteccion.TA).map(([tipo, valor]) => (
+                  <li key={tipo}>
+                    <span className="tipo">{tipo}</span>
+                    <span className="valor">{valor}</span>
+                  </li>
+                ))}
+              </ul>
+              <p style={{ color: 'var(--texto-tenue)', fontSize: '0.84rem', marginBottom: 0 }}>
+                Requerimiento {ficha.combate.proteccion.requisito} · Penalizador natural{' '}
+                {ficha.combate.proteccion.penalizadorNatural} · Restricción de movimiento{' '}
+                {ficha.combate.proteccion.restriccionMovimiento}
+                {ficha.combate.proteccion.penalizadorAccionFisica < 0 &&
+                  ` · ${ficha.combate.proteccion.penalizadorAccionFisica} a toda acción física`}
+              </p>
+            </Seccion>
+
+            <Seccion
+              titulo="Armas"
+              resumen={cuenta(personaje.equipo.armas.length, 'equipada', 'equipadas', 'ninguna')}
+              abierta={personaje.equipo.armas.length > 0}
             >
-              Añadir arma
-            </button>
-          </Seccion>
+              {personaje.equipo.armas.map((a, i) => {
+                const cambiar = (cambios: Partial<typeof a>) => {
+                  const nuevas = [...personaje.equipo.armas];
+                  nuevas[i] = { ...a, ...cambios };
+                  set({ equipo: { ...personaje.equipo, armas: nuevas } });
+                };
+                const calc = ficha.combate.armas[i];
+                return (
+                  <div key={i} className="regla">
+                    <div className="rejilla campos-arma">
+                      <div className="campo">
+                        <label>Arma</label>
+                        <select value={a.arma} onChange={(e) => cambiar({ arma: e.target.value })}>
+                          {armas.map((w) => <option key={w.arma} value={w.arma}>{w.arma}</option>)}
+                        </select>
+                      </div>
+                      <div className="campo">
+                        <label>Escala</label>
+                        <select
+                          value={a.escala ?? 'Normal'}
+                          onChange={(e) => cambiar({ escala: e.target.value as EscalaArma })}
+                        >
+                          <option>Normal</option><option>Enorme</option><option>Gigante</option>
+                        </select>
+                      </div>
+                      <div className="campo">
+                        <label>Conocimiento</label>
+                        <select
+                          value={a.conocimiento ?? 'Conocida'}
+                          onChange={(e) => cambiar({ conocimiento: e.target.value as typeof a.conocimiento })}
+                        >
+                          <option>Conocida</option><option>Similar</option>
+                          <option>Mixta</option><option>Distinta</option>
+                        </select>
+                      </div>
+                      <div className="campo">
+                        <label>Calidad</label>
+                        <input
+                          type="number" min={-5} max={15} step={5}
+                          value={a.calidad ?? 0}
+                          onChange={(e) => cambiar({ calidad: Number(e.target.value) })}
+                        />
+                      </div>
+                    </div>
+                    <label style={{ fontSize: '0.86rem', display: 'block', marginBottom: 10 }}>
+                      <input
+                        type="checkbox" style={{ width: 'auto', marginRight: 6 }}
+                        checked={a.aDosManos ?? false}
+                        onChange={(e) => cambiar({ aDosManos: e.target.checked })}
+                      />
+                      Empuñada a dos manos
+                    </label>
+                    {calc && (
+                      <p style={{ margin: 0, fontSize: '0.9rem' }}>
+                        Turno <strong className="destacado">{calc.turno}</strong> · Ataque{' '}
+                        <strong className="destacado">{calc.ataque}</strong> · Parada{' '}
+                        <strong className="destacado">{calc.parada}</strong> · Daño{' '}
+                        <strong className="destacado">{calc.dano}</strong>
+                        {calc.criticos.length > 0 && ` · Críticos ${calc.criticos.join(' / ')}`}
+                      </p>
+                    )}
+                    <div className="acciones-regla">
+                      <button
+                        className="accion"
+                        onClick={() =>
+                          set({
+                            equipo: {
+                              ...personaje.equipo,
+                              armas: personaje.equipo.armas.filter((_, j) => j !== i),
+                            },
+                          })
+                        }
+                      >
+                        Quitar arma
+                      </button>
+                    </div>
+                  </div>
+                );
+              })}
+              <button
+                className="accion"
+                disabled={armas.length === 0}
+                onClick={() =>
+                  set({
+                    equipo: {
+                      ...personaje.equipo,
+                      armas: [...personaje.equipo.armas, { arma: armas[0]?.arma ?? '' }],
+                    },
+                  })
+                }
+              >
+                Añadir arma
+              </button>
+            </Seccion>
+          </div>
 
           <Seccion
             titulo="Inventario"
@@ -1072,56 +1140,35 @@ export function EditorPersonaje({ personaje, datos, catalogo, reglamento, onCamb
               </p>
             </Ayuda>
 
-            <div className="rejilla" style={{ marginBottom: 14 }}>
-              {(['MO', 'MP', 'MC'] as const).map((moneda) => (
-                <div className="campo" key={moneda}>
-                  <label>{NOMBRE_MONEDA[moneda]}</label>
-                  <input
-                    type="number"
-                    min={0}
-                    aria-label={NOMBRE_MONEDA[moneda]}
-                    value={personaje.equipo.dinero?.[moneda] ?? 0}
-                    onChange={(e) =>
-                      set({
-                        equipo: {
-                          ...personaje.equipo,
-                          dinero: {
-                            ...personaje.equipo.dinero,
-                            [moneda]: Math.max(0, Number(e.target.value) || 0),
-                          },
-                        },
-                      })
-                    }
-                  />
-                </div>
-              ))}
-            </div>
-
-            <Selector
-              opciones={objetos}
-              claveDe={(o) => o.objeto}
-              grupoDe={(o) => o.seccion ?? ''}
-              detalleDe={(o) =>
-                [o.coste, o.peso ? `${o.peso} kg` : '', o.disponibilidad]
-                  .filter(Boolean)
-                  .join(' · ')
-              }
-              seleccionadas={inventario.map((o) => o.objeto)}
-              onCambiar={(nombres) =>
-                set({
-                  equipo: {
-                    ...personaje.equipo,
-                    // Se conservan cantidades y notas de lo que ya estaba en la mochila.
-                    objetos: nombres.map(
-                      (nombre) =>
-                        inventario.find((o) => o.objeto === nombre) ?? { objeto: nombre, cantidad: 1 },
-                    ),
-                  },
-                })
-              }
-              etiquetaBusqueda="Buscar equipamiento"
-              vacio="No hay ningún objeto en el catálogo."
-            />
+            {/* Abierto sólo con la mochila vacía: es entonces cuando lo que toca es añadir. */}
+            <details className="anadir-catalogo" open={catalogoAbierto}>
+              <summary>Añadir objetos del catálogo</summary>
+              <Selector
+                opciones={objetos}
+                claveDe={(o) => o.objeto}
+                grupoDe={(o) => o.seccion ?? ''}
+                detalleDe={(o) =>
+                  [o.coste, o.peso ? `${o.peso} kg` : '', o.disponibilidad]
+                    .filter(Boolean)
+                    .join(' · ')
+                }
+                seleccionadas={inventario.map((o) => o.objeto)}
+                onCambiar={(nombres) =>
+                  set({
+                    equipo: {
+                      ...personaje.equipo,
+                      // Se conservan cantidades y notas de lo que ya estaba en la mochila.
+                      objetos: nombres.map(
+                        (nombre) =>
+                          inventario.find((o) => o.objeto === nombre) ?? { objeto: nombre, cantidad: 1 },
+                      ),
+                    },
+                  })
+                }
+                etiquetaBusqueda="Buscar equipamiento"
+                vacio="No hay ningún objeto en el catálogo."
+              />
+            </details>
 
             {inventario.length > 0 && (
               <div className="desplazable" style={{ marginTop: 14 }}>
@@ -1175,9 +1222,9 @@ export function EditorPersonaje({ personaje, datos, catalogo, reglamento, onCamb
                       <td colSpan={2}>Total</td>
                       <td className="num destacado">{ficha.inventario.peso} kg</td>
                       <td className="num destacado">{enMonedas(ficha.inventario.valor)}</td>
-                      <td style={{ color: 'var(--texto-tenue)' }}>
-                        En la bolsa: {enMonedas(ficha.inventario.dinero)}
-                      </td>
+                      {/* El dinero ya está arriba, en la bolsa: repetirlo aquí sólo confunde
+                          sobre cuál de los dos manda. */}
+                      <td />
                     </tr>
                   </tfoot>
                 </table>
