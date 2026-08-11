@@ -31,6 +31,20 @@
 --    tiradas               el registro de la partida, visible para toda la mesa
 --    imagenes              retratos, mapas y galería (el archivo vive en Storage)
 --    preferencias          tema y ajustes de cada usuario
+--
+--    paquetes              los manuales y los paquetes de contenido de cada mesa
+--    catalogo              cada entrada del catálogo: razas, ventajas, conjuros, armas…
+--    manuales_campana      qué paquetes tiene activos una campaña
+--    ajustes_campana       nivel de inicio, Puntos de Creación y sistema de combate
+--    reglas_campana        cada fórmula reescrita o desactivada por la mesa
+--    diario_campana        las notas de sesión, una fila por sesión
+--
+-- 4. **El login no está aquí, y es a propósito.** De las cuentas se encarga Supabase Auth
+--    en el esquema `auth`: correos, contraseñas cifradas, tokens y sesiones. Escribir
+--    nuestra propia tabla de usuarios con contraseñas sería rehacer peor lo que ya está
+--    hecho y auditado, así que lo que hay aquí es lo que **rodea** a la cuenta y sí nos
+--    pertenece: el perfil visible, las preferencias y quién juega en qué mesa. Todo
+--    cuelga de `auth.users` con `on delete cascade`: al borrar la cuenta desaparece todo.
 -- ─────────────────────────────────────────────────────────────────────────────
 
 
@@ -221,6 +235,151 @@ create table if not exists public.preferencias (
 
 
 -- ─────────────────────────────────────────────────────────────────────────────
+-- EL CATÁLOGO
+--
+-- Hasta aquí el catálogo —las 3.400 y pico entradas de los manuales— vivía sólo en los
+-- JSON que se sirven con la aplicación, y el contenido propio de cada mesa, dentro del
+-- jsonb de su campaña. Estas dos tablas lo ponen todo en la base de datos con la misma
+-- forma, de modo que una raza del Core y una raza que se ha inventado tu mesa son la
+-- misma clase de fila y se consultan igual.
+--
+-- **Lo de los manuales no se borra.** Las entradas oficiales se marcan con `oficial` y
+-- más abajo **no se les escribe ninguna política de update ni de delete**: con Row Level
+-- Security activo, lo que no tiene política está prohibido. Nadie que entre con la clave
+-- pública puede tocarlas, ni por error ni queriendo. Una mesa que quiera cambiar una raza
+-- del manual no la modifica: crea la suya con el mismo nombre en su propio paquete, que
+-- es como ha funcionado siempre el sistema de paquetes.
+-- ─────────────────────────────────────────────────────────────────────────────
+
+-- ── Paquetes de contenido ───────────────────────────────────────────────────
+--
+-- Un manual es un paquete y el contenido propio de una mesa es otro. La `prioridad`
+-- decide quién gana cuando dos paquetes traen una entrada con el mismo nombre: el número
+-- más alto manda, y el contenido de la mesa va por encima de todos.
+
+create table if not exists public.paquetes (
+  id            text primary key,
+  nombre        text not null,
+  descripcion   text not null default '',
+  -- Las dos o tres letras que la interfaz pone junto a cada entrada: CE, AE, LQC.
+  sigla         text not null default '',
+  prioridad     integer not null default 0,
+  -- true = viene de un manual. Esas filas son de sólo lectura para todo el mundo.
+  oficial       boolean not null default false,
+  -- Null en los oficiales; en los de mesa, quién los creó.
+  propietario   uuid references auth.users (id) on delete cascade,
+  -- Un paquete de mesa puede colgar de su campaña, y entonces lo ve toda la mesa.
+  campana_id    text references public.campanas (id) on delete cascade,
+  actualizado_en timestamptz not null default now(),
+  borrado       boolean not null default false,
+  -- Un paquete es de un manual o de alguien, nunca las dos cosas ni ninguna.
+  constraint paquete_con_dueno check (oficial or propietario is not null)
+);
+
+create index if not exists paquetes_propietario_idx on public.paquetes (propietario);
+create index if not exists paquetes_campana_idx on public.paquetes (campana_id);
+create index if not exists paquetes_oficial_idx on public.paquetes (oficial) where oficial;
+
+
+-- ── Las entradas del catálogo ───────────────────────────────────────────────
+--
+-- Una fila por entrada: una raza, una ventaja, un conjuro, una habilidad secundaria de la
+-- casa. `coleccion` dice de qué tabla del manual es y `clave` es el nombre que la
+-- identifica —lo mismo que usa la aplicación para decidir que una entrada sustituye a
+-- otra. El contenido va en `datos` por lo mismo que las fichas: cada colección tiene sus
+-- campos y llegan más con cada suplemento.
+
+create table if not exists public.catalogo (
+  paquete_id    text not null references public.paquetes (id) on delete cascade,
+  -- 'razas', 'ventajas', 'conjuros', 'secundarias'… el nombre que usa la aplicación.
+  coleccion     text not null,
+  clave         text not null,
+  datos         jsonb not null,
+  actualizado_en timestamptz not null default now(),
+  borrado       boolean not null default false,
+  primary key (paquete_id, coleccion, clave)
+);
+
+create index if not exists catalogo_coleccion_idx on public.catalogo (coleccion);
+create index if not exists catalogo_paquete_idx on public.catalogo (paquete_id, coleccion);
+create index if not exists catalogo_actualizado_idx on public.catalogo (actualizado_en);
+
+
+-- ─────────────────────────────────────────────────────────────────────────────
+-- LO QUE ESTABA DENTRO DEL JSONB DE LA CAMPAÑA
+--
+-- La campaña sigue guardándose entera en `campanas.datos`, que es lo que sincroniza la
+-- aplicación hoy. Estas tablas sacan a filas las cuatro partes que tienen vida propia
+-- —los manuales activos, las cifras de creación, las reglas caseras y el diario— porque
+-- son justo las que interesa consultar por separado: saber qué mesas han tocado una
+-- fórmula, o listar las sesiones sin traerse la campaña completa.
+-- ─────────────────────────────────────────────────────────────────────────────
+
+-- ── Manuales activos de cada campaña ────────────────────────────────────────
+
+create table if not exists public.manuales_campana (
+  campana_id  text not null references public.campanas (id) on delete cascade,
+  paquete_id  text not null references public.paquetes (id) on delete cascade,
+  activo      boolean not null default true,
+  primary key (campana_id, paquete_id)
+);
+
+
+-- ── Cifras de partida y sistema de combate ──────────────────────────────────
+--
+-- Los valores por defecto son los del manual básico: nivel 1, 3 Puntos de Creación y
+-- tope de 3 por desventajas. No son decorativos: llegan a la ficha.
+
+create table if not exists public.ajustes_campana (
+  campana_id            text primary key references public.campanas (id) on delete cascade,
+  nivel_inicial         integer not null default 1 check (nivel_inicial >= 0),
+  puntos_creacion       integer not null default 3 check (puntos_creacion >= 0),
+  maximo_por_desventajas integer not null default 3 check (maximo_por_desventajas >= 0),
+  -- El dramático sólo estira la duración del asalto; no cambia ninguna otra regla.
+  sistema_combate       text not null default 'normal'
+                        check (sistema_combate in ('normal', 'dramatico')),
+  actualizado_en        timestamptz not null default now()
+);
+
+
+-- ── Reglas caseras ──────────────────────────────────────────────────────────
+--
+-- Una fila por regla que la mesa haya tocado. `formula` null y `activa` false es una
+-- regla desactivada; `formula` con texto es una fórmula reescrita. No estar en esta tabla
+-- significa «como en el manual», que es lo que le pasa a la inmensa mayoría.
+--
+-- Ojo con lo que se guarda aquí: esa fórmula la escribe un jugador y **se evalúa en el
+-- navegador del máster**. Por eso la aplicación no usa `eval` sino un evaluador acotado
+-- que sólo entiende números y las cuatro operaciones. Guardar texto en esta columna es
+-- seguro; ejecutarlo de cualquier otra forma no lo sería.
+
+create table if not exists public.reglas_campana (
+  campana_id     text not null references public.campanas (id) on delete cascade,
+  clave          text not null,
+  formula        text,
+  activa         boolean not null default true,
+  actualizado_en timestamptz not null default now(),
+  primary key (campana_id, clave)
+);
+
+
+-- ── Diario de la campaña ────────────────────────────────────────────────────
+
+create table if not exists public.diario_campana (
+  id             text primary key,
+  campana_id     text not null references public.campanas (id) on delete cascade,
+  fecha          date not null default current_date,
+  titulo         text not null default '',
+  texto          text not null default '',
+  escrita_por    uuid references auth.users (id) on delete set null,
+  actualizado_en timestamptz not null default now(),
+  borrado        boolean not null default false
+);
+
+create index if not exists diario_campana_idx on public.diario_campana (campana_id, fecha desc);
+
+
+-- ─────────────────────────────────────────────────────────────────────────────
 -- PERMISOS
 --
 -- Esto es lo importante. La clave `anon` que usa el navegador es **pública por diseño**:
@@ -238,6 +397,12 @@ alter table public.enemigos             enable row level security;
 alter table public.tiradas              enable row level security;
 alter table public.imagenes             enable row level security;
 alter table public.preferencias         enable row level security;
+alter table public.paquetes             enable row level security;
+alter table public.catalogo             enable row level security;
+alter table public.manuales_campana     enable row level security;
+alter table public.ajustes_campana      enable row level security;
+alter table public.reglas_campana       enable row level security;
+alter table public.diario_campana       enable row level security;
 
 -- Saber si soy el máster de una campaña, sin repetir la subconsulta en cada política.
 -- `security definer` es lo que evita la recursión infinita entre políticas de tablas que
@@ -653,17 +818,165 @@ create policy "imagenes_archivo_borrar" on storage.objects for delete
   using (bucket_id = 'imagenes' and (storage.foldername(name))[1] = auth.uid()::text);
 
 
+-- ── El catálogo ─────────────────────────────────────────────────────────────
+--
+-- Aquí está lo que pediste: **lo de los manuales no se puede borrar**. A las filas
+-- oficiales se les da política de `select` y nada más. Con Row Level Security activo, lo
+-- que no tiene política está prohibido, así que ni update ni delete existen para ellas:
+-- no hay forma de tocarlas desde el navegador, ni por error ni a propósito. Sólo la clave
+-- `service_role` —la que nunca se pone en el `.env.local`— puede sembrarlas, que es
+-- justamente lo que hace `supabase/catalogo-oficial.sql`.
+
+-- Saber si un paquete es mío, sin repetir la subconsulta en cada política.
+create or replace function public.puedo_editar_paquete(id_paquete text)
+returns boolean
+language sql
+security definer
+set search_path = public
+as $$
+  select exists (
+    select 1 from public.paquetes p
+    where p.id = id_paquete
+      and not p.oficial
+      and (p.propietario = auth.uid() or public.soy_master_de(p.campana_id))
+  );
+$$;
+
+drop policy if exists "paquetes_leer" on public.paquetes;
+create policy "paquetes_leer" on public.paquetes for select
+  using (
+    -- Los manuales los ve todo el mundo: son el catálogo común.
+    oficial
+    or propietario = auth.uid()
+    -- Y el paquete de una mesa lo ve quien juega en ella.
+    or (campana_id is not null and public.soy_miembro_de(campana_id))
+    or (campana_id is not null and public.soy_master_de(campana_id))
+  );
+
+drop policy if exists "paquetes_crear" on public.paquetes;
+create policy "paquetes_crear" on public.paquetes for insert
+  with check (not oficial and propietario = auth.uid());
+
+drop policy if exists "paquetes_editar" on public.paquetes;
+create policy "paquetes_editar" on public.paquetes for update
+  using (not oficial and propietario = auth.uid())
+  -- El `with check` impide el truco de marcarse un paquete propio como oficial y colarlo
+  -- en el catálogo de todos.
+  with check (not oficial and propietario = auth.uid());
+
+drop policy if exists "paquetes_borrar" on public.paquetes;
+create policy "paquetes_borrar" on public.paquetes for delete
+  using (not oficial and propietario = auth.uid());
+
+-- Nótese que no hay «paquetes_borrar_oficial» ni «paquetes_editar_oficial». No es un
+-- olvido: es la protección.
+
+drop policy if exists "catalogo_leer" on public.catalogo;
+create policy "catalogo_leer" on public.catalogo for select
+  using (
+    exists (
+      select 1 from public.paquetes p
+      where p.id = catalogo.paquete_id
+        and (
+          p.oficial
+          or p.propietario = auth.uid()
+          or (p.campana_id is not null and public.soy_miembro_de(p.campana_id))
+          or (p.campana_id is not null and public.soy_master_de(p.campana_id))
+        )
+    )
+  );
+
+drop policy if exists "catalogo_crear" on public.catalogo;
+create policy "catalogo_crear" on public.catalogo for insert
+  with check (public.puedo_editar_paquete(paquete_id));
+
+drop policy if exists "catalogo_editar" on public.catalogo;
+create policy "catalogo_editar" on public.catalogo for update
+  using (public.puedo_editar_paquete(paquete_id))
+  with check (public.puedo_editar_paquete(paquete_id));
+
+drop policy if exists "catalogo_borrar" on public.catalogo;
+create policy "catalogo_borrar" on public.catalogo for delete
+  using (public.puedo_editar_paquete(paquete_id));
+
+
+-- ── Las cuatro tablas de la campaña ─────────────────────────────────────────
+--
+-- Mismo criterio que la campaña de la que cuelgan: el máster manda y los jugadores leen.
+-- El diario es la excepción: lo escribe la mesa, porque las notas de sesión las toma
+-- quien las toma.
+
+drop policy if exists "manuales_campana_leer" on public.manuales_campana;
+create policy "manuales_campana_leer" on public.manuales_campana for select
+  using (public.soy_master_de(campana_id) or public.soy_miembro_de(campana_id));
+
+drop policy if exists "manuales_campana_escribir" on public.manuales_campana;
+create policy "manuales_campana_escribir" on public.manuales_campana for all
+  using (public.soy_master_de(campana_id))
+  with check (public.soy_master_de(campana_id));
+
+drop policy if exists "ajustes_campana_leer" on public.ajustes_campana;
+create policy "ajustes_campana_leer" on public.ajustes_campana for select
+  using (public.soy_master_de(campana_id) or public.soy_miembro_de(campana_id));
+
+drop policy if exists "ajustes_campana_escribir" on public.ajustes_campana;
+create policy "ajustes_campana_escribir" on public.ajustes_campana for all
+  using (public.soy_master_de(campana_id))
+  with check (public.soy_master_de(campana_id));
+
+drop policy if exists "reglas_campana_leer" on public.reglas_campana;
+create policy "reglas_campana_leer" on public.reglas_campana for select
+  using (public.soy_master_de(campana_id) or public.soy_miembro_de(campana_id));
+
+drop policy if exists "reglas_campana_escribir" on public.reglas_campana;
+create policy "reglas_campana_escribir" on public.reglas_campana for all
+  using (public.soy_master_de(campana_id))
+  with check (public.soy_master_de(campana_id));
+
+drop policy if exists "diario_campana_leer" on public.diario_campana;
+create policy "diario_campana_leer" on public.diario_campana for select
+  using (public.soy_master_de(campana_id) or public.soy_miembro_de(campana_id));
+
+drop policy if exists "diario_campana_crear" on public.diario_campana;
+create policy "diario_campana_crear" on public.diario_campana for insert
+  with check (
+    (public.soy_master_de(campana_id) or public.soy_miembro_de(campana_id))
+    and escrita_por = auth.uid()
+  );
+
+drop policy if exists "diario_campana_editar" on public.diario_campana;
+create policy "diario_campana_editar" on public.diario_campana for update
+  using (escrita_por = auth.uid() or public.soy_master_de(campana_id))
+  with check (escrita_por = auth.uid() or public.soy_master_de(campana_id));
+
+drop policy if exists "diario_campana_borrar" on public.diario_campana;
+create policy "diario_campana_borrar" on public.diario_campana for delete
+  using (escrita_por = auth.uid() or public.soy_master_de(campana_id));
+
+
 -- ─────────────────────────────────────────────────────────────────────────────
 -- COMPROBACIÓN
 --
--- Esto debe devolver `true` en las nueve tablas. Si alguna sale `false`, esa tabla está
+-- Esto debe devolver `true` en las quince tablas. Si alguna sale `false`, esa tabla está
 -- abierta a cualquiera que tenga la URL del proyecto — que es pública.
 -- ─────────────────────────────────────────────────────────────────────────────
 --
--- select relname, relrowsecurity from pg_class
--- where relname in ('perfiles', 'campanas', 'miembros_campana', 'invitaciones_campana',
---                   'personajes', 'enemigos', 'tiradas', 'imagenes', 'preferencias')
+-- select relname, relrowsecurity from pg_class c
+-- join pg_namespace n on n.oid = c.relnamespace
+-- where n.nspname = 'public' and c.relkind = 'r'
 -- order by relname;
+--
+-- Y que el contenido de los manuales sea de sólo lectura. Estas dos consultas no deben
+-- devolver **ninguna** política de update ni de delete sobre filas oficiales:
+--
+-- select tablename, policyname, cmd from pg_policies
+-- where schemaname = 'public' and tablename in ('paquetes', 'catalogo')
+-- order by tablename, cmd;
+--
+-- La prueba de verdad es intentarlo desde la aplicación, con una sesión normal:
+--
+--   delete from catalogo;          -- debe borrar 0 filas
+--   update catalogo set borrado = true;   -- debe tocar 0 filas
 --
 -- Y que el bucket no sea público:
 --

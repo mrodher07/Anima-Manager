@@ -259,6 +259,26 @@ comentada en `supabase/esquema.sql` que lo cambia.
 | `tiradas` | El registro de la partida. Lo ve toda la mesa; lo escribe quien tiró |
 | `imagenes` | La ficha técnica de cada imagen; el archivo va al bucket `imagenes` |
 | `preferencias` | El tema y lo que vaya haciendo falta, por usuario |
+| `paquetes` | Los manuales y el paquete de contenido propio de cada mesa |
+| `catalogo` | Cada entrada del catálogo: razas, ventajas, conjuros, armas, secundarias… |
+| `manuales_campana` | Qué paquetes tiene activos una campaña |
+| `ajustes_campana` | Nivel de inicio, Puntos de Creación y sistema de combate |
+| `reglas_campana` | Cada fórmula reescrita o desactivada por la mesa |
+| `diario_campana` | Las notas de sesión, una fila por sesión |
+
+**Del login se encarga Supabase Auth**, en el esquema `auth`: correos, contraseñas cifradas
+y sesiones. Escribir aquí nuestra propia tabla de usuarios con contraseñas sería rehacer
+peor algo que ya está hecho y auditado, así que lo que hay en `public` es lo que rodea a la
+cuenta y sí nos pertenece —el perfil visible, las preferencias y quién juega en qué mesa—,
+todo colgando de `auth.users` con `on delete cascade`.
+
+**El catálogo de los manuales también está en la base de datos**, y es de sólo lectura para
+todo el mundo. Se siembra con `supabase/catalogo-oficial.sql` (4.219 entradas, generado por
+`tools/sembrar-catalogo.py` a partir de los mismos JSON que sirve la aplicación), y las
+políticas no dan a nadie permiso de update ni de delete sobre un paquete oficial: desde el
+navegador, un `delete from catalogo` sin condiciones borra cero filas. Una mesa que quiera
+cambiar una raza del manual no la toca: crea la suya con el mismo nombre en su paquete, que
+es como ha funcionado siempre el sistema de paquetes.
 
 Fichas, campañas y enemigos se guardan como **un jsonb entero**, no como columnas: el modelo
 crece cada vez que llega un manual nuevo, y con columnas cada suplemento sería una migración.
