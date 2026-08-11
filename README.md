@@ -282,8 +282,8 @@ el contador de la pestaña Ventajas dice 5 y deja de avisar al cuarto.
 
 ### Unirse a una mesa
 
-El máster genera un código en **Campañas → Invitaciones** y se lo pasa a sus jugadores, que
-lo canjean en **Cuenta → Unirte a una mesa**. Los códigos caducan a los 30 días y tienen un
+El máster genera un código en **Campañas → Jugadores** y se lo pasa a sus jugadores, que lo
+canjean en **Ajustes → Cuenta → Unirte a una mesa**. Los códigos caducan a los 30 días y tienen un
 número limitado de usos; si uno se escapa por un chat, se borra y se genera otro sin echar a
 nadie.
 
@@ -302,7 +302,7 @@ por defecto no da los mismos números.
    tablas, el bucket de imágenes y —lo importante— las políticas de acceso.
 3. **Project Settings → API**: copia la *Project URL* y la clave *anon public*.
 4. `cp .env.example .env.local` y rellena esos dos valores.
-5. `npm run dev`. Aparece la pestaña **Cuenta**.
+5. `npm run dev`. La sesión se abre en **Ajustes → Cuenta**.
 
 Si lo despliegas en Vercel, las mismas dos variables van en **Settings → Environment
 Variables** (y hay que volver a desplegar: Vite las incrusta al compilar, no las lee en
