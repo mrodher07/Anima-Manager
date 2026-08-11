@@ -259,6 +259,26 @@ comentada en `supabase/esquema.sql` que lo cambia.
 | `tiradas` | El registro de la partida. Lo ve toda la mesa; lo escribe quien tiró |
 | `imagenes` | La ficha técnica de cada imagen; el archivo va al bucket `imagenes` |
 | `preferencias` | El tema y lo que vaya haciendo falta, por usuario |
+| `paquetes` | Los manuales y el paquete de contenido propio de cada mesa |
+| `catalogo` | Cada entrada del catálogo: razas, ventajas, conjuros, armas, secundarias… |
+| `manuales_campana` | Qué paquetes tiene activos una campaña |
+| `ajustes_campana` | Nivel de inicio, Puntos de Creación y sistema de combate |
+| `reglas_campana` | Cada fórmula reescrita o desactivada por la mesa |
+| `diario_campana` | Las notas de sesión, una fila por sesión |
+
+**Del login se encarga Supabase Auth**, en el esquema `auth`: correos, contraseñas cifradas
+y sesiones. Escribir aquí nuestra propia tabla de usuarios con contraseñas sería rehacer
+peor algo que ya está hecho y auditado, así que lo que hay en `public` es lo que rodea a la
+cuenta y sí nos pertenece —el perfil visible, las preferencias y quién juega en qué mesa—,
+todo colgando de `auth.users` con `on delete cascade`.
+
+**El catálogo de los manuales también está en la base de datos**, y es de sólo lectura para
+todo el mundo. Se siembra con `supabase/catalogo-oficial.sql` (4.219 entradas, generado por
+`tools/sembrar-catalogo.py` a partir de los mismos JSON que sirve la aplicación), y las
+políticas no dan a nadie permiso de update ni de delete sobre un paquete oficial: desde el
+navegador, un `delete from catalogo` sin condiciones borra cero filas. Una mesa que quiera
+cambiar una raza del manual no la toca: crea la suya con el mismo nombre en su paquete, que
+es como ha funcionado siempre el sistema de paquetes.
 
 Fichas, campañas y enemigos se guardan como **un jsonb entero**, no como columnas: el modelo
 crece cada vez que llega un manual nuevo, y con columnas cada suplemento sería una migración.
@@ -282,8 +302,8 @@ el contador de la pestaña Ventajas dice 5 y deja de avisar al cuarto.
 
 ### Unirse a una mesa
 
-El máster genera un código en **Campañas → Invitaciones** y se lo pasa a sus jugadores, que
-lo canjean en **Cuenta → Unirte a una mesa**. Los códigos caducan a los 30 días y tienen un
+El máster genera un código en **Campañas → Jugadores** y se lo pasa a sus jugadores, que lo
+canjean en **Ajustes → Cuenta → Unirte a una mesa**. Los códigos caducan a los 30 días y tienen un
 número limitado de usos; si uno se escapa por un chat, se borra y se genera otro sin echar a
 nadie.
 
@@ -302,11 +322,48 @@ por defecto no da los mismos números.
    tablas, el bucket de imágenes y —lo importante— las políticas de acceso.
 3. **Project Settings → API**: copia la *Project URL* y la clave *anon public*.
 4. `cp .env.example .env.local` y rellena esos dos valores.
-5. `npm run dev`. Aparece la pestaña **Cuenta**.
+5. `npm run dev`. La sesión se abre en **Ajustes → Cuenta**.
 
 Si lo despliegas en Vercel, las mismas dos variables van en **Settings → Environment
 Variables** (y hay que volver a desplegar: Vite las incrusta al compilar, no las lee en
 tiempo de ejecución).
+
+### Que las tablas se actualicen solas
+
+Para no tener que volver a pegar el esquema cada vez que cambia, hay un workflow que lo
+aplica al fusionar a `main`: `.github/workflows/base-de-datos.yml`. Pide **un secreto**:
+
+| | |
+|---|---|
+| Dónde | **Settings → Secrets and variables → Actions → New repository secret** |
+| Nombre | `SUPABASE_DB_URL` |
+| Valor | La cadena de **Project Settings → Database → Connection string → URI**, con tu contraseña |
+
+Usa la conexión **directa** (puerto 5432), no el pooler de transacciones (6543): el esquema
+se aplica dentro de una transacción y el pooler no lo lleva bien.
+
+Ese secreto lleva la contraseña de la base de datos. GitHub lo guarda cifrado y lo tapa en
+los registros; si alguna vez se filtra, se cambia en **Project Settings → Database → Reset
+database password** y se actualiza el secreto.
+
+El workflow hace cuatro cosas, y las cuatro importan:
+
+1. **Aplica `esquema.sql`** con `--single-transaction`: o entra todo o no entra nada, así
+   que un fallo no te deja la base a medio migrar.
+2. **Siembra el catálogo** sólo si `catalogo-oficial.sql` ha cambiado, o si se lo pides a
+   mano desde la pestaña *Actions* — son 1,8 MB y sólo cambian al extraer un manual nuevo.
+3. **Comprueba que ninguna tabla se ha quedado sin Row Level Security**, que es lo único
+   que separa tus datos de los de otro usuario.
+4. **Comprueba que el contenido de los manuales sigue siendo de sólo lectura**, por si
+   alguna vez se cuela una política de escritura sobre el catálogo oficial.
+
+Los cuatro pasos fallan ruidosamente en vez de seguir adelante.
+
+Un detalle que conviene conocer: `create table if not exists` **no añade columnas nuevas**
+a una tabla que ya existe —se ejecuta sin error y sin hacer nada. Por eso `esquema.sql`
+tiene una sección **EVOLUCIÓN DEL ESQUEMA** donde cada columna añadida después de la
+primera versión se repite con `add column if not exists`, y un guardián que aborta si
+alguien añade una columna arriba y se olvida de repetirla ahí.
 
 Por defecto Supabase pide confirmar el correo antes de dejar entrar. Para pruebas se puede
 quitar en **Authentication → Providers → Email**.

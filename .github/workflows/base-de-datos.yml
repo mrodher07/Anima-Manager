@@ -1,0 +1,121 @@
+# Aplica el esquema a Supabase cuando cambia el SQL.
+#
+# La idea es que no haya que acordarse de nada: se fusiona a `main` un cambio en
+# `supabase/` y las tablas de tu proyecto quedan al día solas.
+#
+# Hace falta **un secreto**, que se pone en GitHub y no viaja a ninguna otra parte:
+#
+#   Settings → Secrets and variables → Actions → New repository secret
+#   Nombre:  SUPABASE_DB_URL
+#   Valor:   la cadena de conexión de Supabase, en Project Settings → Database →
+#            Connection string → URI, con tu contraseña puesta. La **directa** (puerto
+#            5432), no la del pooler de transacciones (6543): este script va dentro de una
+#            transacción y el pooler de transacciones no lo lleva bien.
+#
+# Esa cadena lleva la contraseña de la base de datos. GitHub la guarda cifrada y la tapa
+# en los registros, pero trátala como lo que es: si alguna vez se filtra, se cambia en
+# Project Settings → Database → Reset database password y se actualiza el secreto.
+
+name: Base de datos
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'supabase/**'
+      - '.github/workflows/base-de-datos.yml'
+  # Para poder lanzarlo a mano desde la pestaña Actions sin tocar nada.
+  workflow_dispatch:
+    inputs:
+      sembrar_catalogo:
+        description: 'Sembrar también el catálogo de los manuales (4.219 entradas)'
+        type: boolean
+        default: false
+
+jobs:
+  aplicar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # Dos commits para poder ver qué archivos cambiaron en este empujón.
+          fetch-depth: 2
+
+      - name: Instalar psql
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq postgresql-client
+
+      - name: Comprobar que hay secreto
+        env:
+          URL: ${{ secrets.SUPABASE_DB_URL }}
+        run: |
+          if [ -z "$URL" ]; then
+            echo "Falta el secreto SUPABASE_DB_URL."
+            echo "Se añade en Settings → Secrets and variables → Actions."
+            exit 1
+          fi
+
+      - name: Aplicar el esquema
+        env:
+          URL: ${{ secrets.SUPABASE_DB_URL }}
+        # --single-transaction: o entra todo o no entra nada. Si algo falla, la base se
+        # queda exactamente como estaba en vez de a medio aplicar.
+        # ON_ERROR_STOP=1: sin esto psql sigue tras un error y termina diciendo que fue bien.
+        run: |
+          psql "$URL" -v ON_ERROR_STOP=1 --single-transaction -f supabase/esquema.sql
+
+      - name: ¿Ha cambiado el catálogo?
+        id: catalogo
+        run: |
+          # El catálogo son 1,8 MB y sólo cambia cuando se extrae un manual nuevo, así que
+          # se siembra únicamente si el archivo se ha tocado —o si lo pides a mano.
+          if [ "${{ github.event.inputs.sembrar_catalogo }}" = "true" ]; then
+            echo "sembrar=si" >> "$GITHUB_OUTPUT"
+          elif git rev-parse HEAD~1 >/dev/null 2>&1 &&
+               git diff --name-only HEAD~1 HEAD | grep -q '^supabase/catalogo-oficial.sql$'; then
+            echo "sembrar=si" >> "$GITHUB_OUTPUT"
+          else
+            echo "sembrar=no" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Sembrar el catálogo de los manuales
+        if: steps.catalogo.outputs.sembrar == 'si'
+        env:
+          URL: ${{ secrets.SUPABASE_DB_URL }}
+        run: |
+          psql "$URL" -v ON_ERROR_STOP=1 -f supabase/catalogo-oficial.sql
+
+      - name: Comprobar que ninguna tabla se ha quedado abierta
+        env:
+          URL: ${{ secrets.SUPABASE_DB_URL }}
+        # La clave `anon` es pública: lo único que separa los datos de un usuario de los de
+        # otro es Row Level Security. Si una tabla se queda sin él, aquí se entera uno.
+        run: |
+          ABIERTAS=$(psql "$URL" -At -c "
+            select string_agg(c.relname, ', ')
+            from pg_class c join pg_namespace n on n.oid = c.relnamespace
+            where n.nspname = 'public' and c.relkind = 'r' and not c.relrowsecurity")
+          if [ -n "$ABIERTAS" ]; then
+            echo "Estas tablas están SIN Row Level Security: $ABIERTAS"
+            exit 1
+          fi
+          echo "Row Level Security activo en todas las tablas."
+
+      - name: Comprobar que los manuales siguen siendo de sólo lectura
+        env:
+          URL: ${{ secrets.SUPABASE_DB_URL }}
+        # Que nadie haya añadido sin querer una política de escritura sobre el catálogo
+        # oficial. Es la protección que impide borrar el contenido de los manuales.
+        run: |
+          SOBRAN=$(psql "$URL" -At -c "
+            select string_agg(policyname, ', ')
+            from pg_policies
+            where schemaname = 'public' and tablename in ('paquetes', 'catalogo')
+              and cmd in ('UPDATE', 'DELETE')
+              and qual not like '%oficial%' and qual not like '%puedo_editar_paquete%'")
+          if [ -n "$SOBRAN" ]; then
+            echo "Hay políticas de escritura que no excluyen el contenido oficial: $SOBRAN"
+            exit 1
+          fi
+          echo "El contenido de los manuales sigue siendo de sólo lectura."
