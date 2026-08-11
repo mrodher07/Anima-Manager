@@ -27,9 +27,24 @@
   --radio: 10px;
   --radio-s: 6px;
   --sombra: 0 8px 24px rgba(0, 0, 0, 0.45);
-  --serif: 'Iowan Old Style', 'Palatino Linotype', Palatino, 'Book Antiqua', Georgia, serif;
-  --sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  /*
+   * Las pilas llevan reservas para los tres mundos. Las que había —Iowan, Palatino,
+   * Rockwell, Georgia— sólo existen en Mac y en Windows, así que en Linux y en Android
+   * los cuatro temas caían en la misma `serif` genérica y se veían idénticos. Ahora cada
+   * pila termina en algo que sí está instalado en un móvil (Noto, Roboto) y en un Linux
+   * (Liberation, DejaVu).
+   */
+  --serif: 'Iowan Old Style', 'Palatino Linotype', Palatino, 'Book Antiqua', Georgia,
+           'Noto Serif', 'Liberation Serif', 'DejaVu Serif', serif;
+  --sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Noto Sans',
+          'Liberation Sans', sans-serif;
+  --mono: ui-monospace, 'SF Mono', Menlo, Consolas, 'Roboto Mono', 'Liberation Mono', monospace;
+  /*
+   * Qué fuente llevan los titulares. Se separa de `--serif` porque no todos los temas los
+   * quieren con serifa: el claro los pone en palo seco, y es lo que lo distingue del
+   * oscuro en un móvil, donde las dos pilas con serifa acabarían en la misma Noto Serif.
+   */
+  --titulos: var(--serif);
 
   /* Capa decorativa del fondo; cada tema la suya. */
   --velo: radial-gradient(1200px 600px at 50% -10%, rgba(109, 91, 168, 0.13), transparent 60%);
@@ -70,6 +85,9 @@
   --arcano-claro: #6a56ab;
   --sombra: 0 6px 18px rgba(60, 50, 30, 0.15);
   --velo: radial-gradient(1200px 600px at 50% -10%, rgba(85, 69, 140, 0.08), transparent 60%);
+  /* Titulares en palo seco: es el tema sobrio, el de leer a plena luz. */
+  --titulos: var(--sans);
+  --espaciado-titulos: -0.01em;
 }
 
 /* ── Steampunk: latón, cobre y cardenillo sobre cuero ── */
@@ -95,10 +113,17 @@
   --sombra: 0 8px 22px rgba(0, 0, 0, 0.55);
   --radio: 4px;
   --radio-s: 3px;
-  --serif: 'Rockwell', 'Roboto Slab', 'Bookman Old Style', Georgia, serif;
+  /* Egipcia de rótulo industrial. Donde no haya una slab —un móvil, un Linux— cae en una
+     condensada, que es lo que se pinta en la chapa de una máquina; nunca en la misma
+     serifa que el tema oscuro. */
+  --serif: 'Rockwell', 'Roboto Slab', 'Bookman Old Style', 'Roboto Condensed',
+           'Liberation Sans Narrow', 'DejaVu Sans Condensed', Georgia, serif;
   --velo:
     radial-gradient(900px 500px at 50% -10%, rgba(198, 139, 60, 0.12), transparent 60%),
     repeating-linear-gradient(135deg, rgba(198, 139, 60, 0.035) 0 2px, transparent 2px 9px);
+  /* Rótulo troquelado en chapa: más peso y las letras algo separadas. */
+  --peso-titulos: 700;
+  --espaciado-titulos: 0.05em;
 }
 
 /* ── Medieval: pergamino, tinta ferrogálica y bermellón ── */
@@ -144,11 +169,19 @@
   --sombra: 0 5px 16px rgba(90, 70, 35, 0.22);
   --radio: 3px;
   --radio-s: 2px;
-  --serif: 'Palatino Linotype', Palatino, 'Book Antiqua', 'Iowan Old Style', Georgia, serif;
-  --sans: 'Palatino Linotype', Palatino, 'Book Antiqua', Georgia, serif;
+  /* Humanista, que es la letra del Renacimiento —no gótica de misal, que sería ilegible—
+     y en el cuerpo del texto también: un códice no cambia de mano para las notas. */
+  --serif: 'Palatino Linotype', Palatino, 'Book Antiqua', 'Iowan Old Style', Georgia,
+           'Noto Serif', 'Liberation Serif', serif;
+  --sans: 'Palatino Linotype', Palatino, 'Book Antiqua', Georgia,
+          'Noto Serif', 'Liberation Serif', serif;
   --velo:
     radial-gradient(700px 420px at 15% 0%, rgba(156, 43, 29, 0.07), transparent 60%),
     radial-gradient(700px 420px at 85% 100%, rgba(150, 112, 42, 0.09), transparent 60%);
+  /* Copiado a mano: trazo algo más ligero y las letras más sueltas que en un titular
+     impreso. */
+  --peso-titulos: 600;
+  --espaciado-titulos: 0.04em;
 }
 
 * { box-sizing: border-box; }
@@ -191,7 +224,19 @@ body {
   contain-intrinsic-size: auto 400px;
 }
 
-h1, h2, h3 { font-family: var(--serif); font-weight: 600; letter-spacing: 0.01em; margin: 0; }
+/*
+ * Los titulares llevan además un espaciado y un peso por tema. No es un capricho: en un
+ * móvil o en un Linux pelado apenas hay tres o cuatro familias instaladas, así que dos
+ * temas distintos acaban en la misma letra por mucha pila que se escriba. El tratamiento
+ * —peso y espaciado— sí se aplica siempre, y es lo que mantiene los temas distinguibles
+ * donde la familia no puede.
+ */
+h1, h2, h3 {
+  font-family: var(--titulos);
+  font-weight: var(--peso-titulos, 600);
+  letter-spacing: var(--espaciado-titulos, 0.01em);
+  margin: 0;
+}
 
 /*
  * Escala tipográfica fluida.
@@ -236,7 +281,7 @@ h3 { font-size: clamp(0.98rem, 0.9rem + 0.4vw, 1.12rem); }
 }
 
 .marca {
-  font-family: var(--serif);
+  font-family: var(--titulos);
   font-size: 1.15rem;
   color: var(--oro-claro);
   white-space: nowrap;
@@ -324,7 +369,7 @@ h3 { font-size: clamp(0.98rem, 0.9rem + 0.4vw, 1.12rem); }
   align-items: center;
   gap: 10px;
   padding: 14px 18px;
-  font-family: var(--serif);
+  font-family: var(--titulos);
   font-size: 0.78rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -957,7 +1002,10 @@ button.marca {
   cursor: pointer;
   text-align: left;
   padding: 0;
-  font-family: var(--serif);
+  /* El logotipo es un titular más: sigue al tema, como el resto. Iba con `--serif` fijo
+     y, al ser un selector más específico que `.marca`, ganaba y dejaba la cabecera con
+     serifa incluso en los temas que no la quieren. */
+  font-family: var(--titulos);
 }
 
 .pestanas { display: flex; gap: 4px; margin-bottom: 16px; flex-wrap: wrap; border-bottom: 1px solid var(--borde); }
