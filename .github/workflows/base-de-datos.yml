@@ -7,10 +7,15 @@
 #
 #   Settings → Secrets and variables → Actions → New repository secret
 #   Nombre:  SUPABASE_DB_URL
-#   Valor:   la cadena de conexión de Supabase, en Project Settings → Database →
-#            Connection string → URI, con tu contraseña puesta. La **directa** (puerto
-#            5432), no la del pooler de transacciones (6543): este script va dentro de una
-#            transacción y el pooler de transacciones no lo lleva bien.
+#   Valor:   la cadena de conexión de Supabase, con tu contraseña puesta. Se saca del
+#            botón **Connect** del panel, o de Project Settings → Database.
+#
+#            Usa la del **Session pooler**: el host acaba en `pooler.supabase.com` y el
+#            puerto es el **5432**. Las otras dos no valen aquí:
+#              · Direct connection — en los proyectos nuevos sólo responde por IPv6, y los
+#                runners de GitHub son IPv4. Daría «Network is unreachable».
+#              · Transaction pooler (puerto 6543) — no lleva bien las transacciones largas,
+#                y este script se aplica entero dentro de una.
 #
 # Esa cadena lleva la contraseña de la base de datos. GitHub la guarda cifrada y la tapa
 # en los registros, pero trátala como lo que es: si alguna vez se filtra, se cambia en

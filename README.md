@@ -337,10 +337,12 @@ aplica al fusionar a `main`: `.github/workflows/base-de-datos.yml`. Pide **un se
 |---|---|
 | Dónde | **Settings → Secrets and variables → Actions → New repository secret** |
 | Nombre | `SUPABASE_DB_URL` |
-| Valor | La cadena de **Project Settings → Database → Connection string → URI**, con tu contraseña |
+| Valor | La cadena de conexión de Supabase con tu contraseña puesta: botón **Connect** del panel, o **Project Settings → Database** |
 
-Usa la conexión **directa** (puerto 5432), no el pooler de transacciones (6543): el esquema
-se aplica dentro de una transacción y el pooler no lo lleva bien.
+Usa la del **Session pooler** — host acabado en `pooler.supabase.com`, puerto **5432**. Las
+otras dos no sirven aquí: la *Direct connection* sólo responde por IPv6 en los proyectos
+nuevos y los runners de GitHub son IPv4, y el *Transaction pooler* (puerto 6543) no lleva
+bien que el esquema se aplique entero dentro de una transacción.
 
 Ese secreto lleva la contraseña de la base de datos. GitHub lo guarda cifrado y lo tapa en
 los registros; si alguna vez se filtra, se cambia en **Project Settings → Database → Reset
