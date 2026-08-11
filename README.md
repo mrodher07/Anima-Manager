@@ -350,9 +350,26 @@ por defecto no da los mismos números.
 4. `cp .env.example .env.local` y rellena esos dos valores.
 5. `npm run dev`. La sesión se abre en **Ajustes → Cuenta**.
 
-Si lo despliegas en Vercel, las mismas dos variables van en **Settings → Environment
-Variables** (y hay que volver a desplegar: Vite las incrusta al compilar, no las lee en
-tiempo de ejecución).
+### Publicarlo en Vercel
+
+El repositorio trae `vercel.json` con el comando de compilación, la carpeta de salida y
+unas cabeceras razonables, así que no hay que configurar nada de eso a mano. Lo que sí hay
+que hacer son dos cosas, y **si falta cualquiera de las dos la aplicación se abre pero las
+cuentas no funcionan**:
+
+1. **Las dos variables**, en **Settings → Environment Variables** del proyecto de Vercel:
+   `VITE_SUPABASE_URL` y `VITE_SUPABASE_ANON_KEY`, los mismos valores del `.env.local`.
+   Guardarlas no basta: **hay que volver a desplegar**, porque Vite las incrusta al
+   compilar y no las lee al abrir la página. En *Deployments*, en el último despliegue,
+   *Redeploy*.
+
+2. **Decirle a Supabase cuál es la dirección del sitio**, en **Authentication → URL
+   Configuration**: la *Site URL* es la de Vercel, y esa misma dirección va en *Redirect
+   URLs*. Sin esto el correo de confirmación lleva a `localhost` y parece que el registro
+   está roto cuando lo que pasa es que el enlace apunta al sitio equivocado.
+
+La clave `anon` es pública por diseño —viaja dentro del JavaScript que se descarga
+cualquiera—, así que no pasa nada porque se vea. Lo que nunca va aquí es la `service_role`.
 
 ### Que las tablas se actualicen solas
 
