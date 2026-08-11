@@ -358,130 +358,144 @@ export function VistaMesa({
         </section>
       )}
 
-      <div className="rejilla">
-        <section className="panel">
-          <h2>Resolver un ataque</h2>
-          {ficha.combate.armas.length === 0 ? (
-            <p style={{ color: 'var(--texto-tenue)' }}>
-              Este personaje no tiene armas equipadas. Añádelas en Editar → Equipo.
-            </p>
-          ) : (
-            <>
-              <div className="campo">
-                <label htmlFor="arma">Arma</label>
-                <select id="arma" value={armaElegida} onChange={(e) => setArmaElegida(Number(e.target.value))}>
-                  {ficha.combate.armas.map((a, i) => (
-                    <option key={i} value={i}>
-                      {a.arma} — ataque {a.ataque}, daño {a.dano}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div className="campo">
-                <label htmlFor="enemigo">Enemigo</label>
-                <select id="enemigo" value={enemigoId} onChange={(e) => setEnemigoId(e.target.value)}>
-                  <option value="">Enemigo suelto (a mano)</option>
-                  {enemigos.map((e) => (
-                    <option key={e.id} value={e.id}>
-                      {e.nombre} — {e.pvActuales ?? e.puntosVida}/{e.puntosVida} PV
-                    </option>
-                  ))}
-                </select>
-              </div>
+      {/*
+        Dos columnas: a la izquierda se tira, a la derecha se ve lo que ha salido. Antes el
+        registro estaba al final de la página, así que había que bajar después de cada
+        tirada para leer el resultado y volver a subir para tirar otra vez. En el móvil se
+        apilan solas.
+      */}
+      <div className="mesa-columnas">
+        <div className="mesa-acciones">
+          <section className="panel">
+            <h2>Resolver un ataque</h2>
+            {ficha.combate.armas.length === 0 ? (
+              <p style={{ color: 'var(--texto-tenue)' }}>
+                Este personaje no tiene armas equipadas. Añádelas en Editar → Equipo.
+              </p>
+            ) : (
+              <>
+                <div className="campo">
+                  <label htmlFor="arma">Arma</label>
+                  <select id="arma" value={armaElegida} onChange={(e) => setArmaElegida(Number(e.target.value))}>
+                    {ficha.combate.armas.map((a, i) => (
+                      <option key={i} value={i}>
+                        {a.arma} — ataque {a.ataque}, daño {a.dano}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div className="campo">
+                  <label htmlFor="enemigo">Enemigo</label>
+                  <select id="enemigo" value={enemigoId} onChange={(e) => setEnemigoId(e.target.value)}>
+                    <option value="">Enemigo suelto (a mano)</option>
+                    {enemigos.map((e) => (
+                      <option key={e.id} value={e.id}>
+                        {e.nombre} — {e.pvActuales ?? e.puntosVida}/{e.puntosVida} PV
+                      </option>
+                    ))}
+                  </select>
+                </div>
 
-              {enemigo ? (
-                <div style={{ display: 'flex', gap: 12, alignItems: 'center', marginBottom: 12 }}>
-                  {enemigo.imagenId && (
-                    <Imagen id={enemigo.imagenId} alt={enemigo.nombre} className="retrato-mini" />
-                  )}
-                  <div style={{ fontSize: '0.88rem' }}>
-                    <strong className="destacado">{enemigo.nombre}</strong>
-                    <br />
-                    PV{' '}
-                    <strong className={(enemigo.pvActuales ?? enemigo.puntosVida) <= 0 ? 'peligro-texto' : ''}>
-                      {enemigo.pvActuales ?? enemigo.puntosVida}
-                    </strong>{' '}
-                    / {enemigo.puntosVida} · Defensa {enemigo.defensa} ({enemigo.tipoDefensa}) · Ataque{' '}
-                    {enemigo.ataque} · Daño {enemigo.dano} {enemigo.tipoDano}
-                    <br />
-                    <button
-                      className="accion"
-                      style={{ marginTop: 6 }}
-                      onClick={() => void guardarEnemigo({ ...enemigo, pvActuales: enemigo.puntosVida })}
-                    >
-                      Curar del todo
-                    </button>
+                {enemigo ? (
+                  <div style={{ display: 'flex', gap: 12, alignItems: 'center', marginBottom: 12 }}>
+                    {enemigo.imagenId && (
+                      <Imagen id={enemigo.imagenId} alt={enemigo.nombre} className="retrato-mini" />
+                    )}
+                    <div style={{ fontSize: '0.88rem' }}>
+                      <strong className="destacado">{enemigo.nombre}</strong>
+                      <br />
+                      PV{' '}
+                      <strong className={(enemigo.pvActuales ?? enemigo.puntosVida) <= 0 ? 'peligro-texto' : ''}>
+                        {enemigo.pvActuales ?? enemigo.puntosVida}
+                      </strong>{' '}
+                      / {enemigo.puntosVida} · Defensa {enemigo.defensa} ({enemigo.tipoDefensa}) · Ataque{' '}
+                      {enemigo.ataque} · Daño {enemigo.dano} {enemigo.tipoDano}
+                      <br />
+                      <button
+                        className="accion"
+                        style={{ marginTop: 6 }}
+                        onClick={() => void guardarEnemigo({ ...enemigo, pvActuales: enemigo.puntosVida })}
+                      >
+                        Curar del todo
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                <div className="rejilla">
+                  <div className="campo">
+                    <label htmlFor="def">Defensa del enemigo</label>
+                    <input id="def" type="number" value={defensa} onChange={(e) => setDefensa(Number(e.target.value) || 0)} />
+                  </div>
+                  <div className="campo">
+                    <label htmlFor="ta">TA del enemigo</label>
+                    <input id="ta" type="number" min={0} max={12} value={taEnemigo} onChange={(e) => setTaEnemigo(Number(e.target.value) || 0)} />
+                  </div>
+                  <div className="campo">
+                    <label htmlFor="pve">PV del enemigo</label>
+                    <input id="pve" type="number" min={0} value={pvEnemigo} onChange={(e) => setPvEnemigo(Number(e.target.value) || 0)} />
                   </div>
                 </div>
-              ) : (
-              <div className="rejilla">
-                <div className="campo">
-                  <label htmlFor="def">Defensa del enemigo</label>
-                  <input id="def" type="number" value={defensa} onChange={(e) => setDefensa(Number(e.target.value) || 0)} />
-                </div>
-                <div className="campo">
-                  <label htmlFor="ta">TA del enemigo</label>
-                  <input id="ta" type="number" min={0} max={12} value={taEnemigo} onChange={(e) => setTaEnemigo(Number(e.target.value) || 0)} />
-                </div>
-                <div className="campo">
-                  <label htmlFor="pve">PV del enemigo</label>
-                  <input id="pve" type="number" min={0} value={pvEnemigo} onChange={(e) => setPvEnemigo(Number(e.target.value) || 0)} />
-                </div>
-              </div>
-              )}
-              <button className="accion primaria" onClick={atacar}>Atacar</button>
-            </>
-          )}
-        </section>
+                )}
+                <button className="accion primaria" onClick={atacar}>Atacar</button>
+              </>
+            )}
+          </section>
 
-        <section className="panel">
-          <h2>Tiradas rápidas</h2>
-          <p style={{ color: 'var(--texto-tenue)', fontSize: '0.86rem', marginTop: 0 }}>
-            Las secundarias que tengas mejor desarrolladas.
-          </p>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
-            {Object.entries(ficha.secundarias)
-              .sort(([, a], [, b]) => b.valor - a.valor)
-              .slice(0, 12)
-              .map(([nombre, v]) => (
-                <button key={nombre} className="accion" onClick={() => tirarSecundaria(nombre, v.valor)}>
-                  {nombre} {v.valor > 0 ? `+${v.valor}` : v.valor}
-                </button>
-              ))}
+          <section className="panel">
+            <h2>Tiradas rápidas</h2>
+            <p style={{ color: 'var(--texto-tenue)', fontSize: '0.86rem', marginTop: 0 }}>
+              Las secundarias que tengas mejor desarrolladas.
+            </p>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+              {Object.entries(ficha.secundarias)
+                .sort(([, a], [, b]) => b.valor - a.valor)
+                .slice(0, 12)
+                .map(([nombre, v]) => (
+                  <button key={nombre} className="accion" onClick={() => tirarSecundaria(nombre, v.valor)}>
+                    {nombre} {v.valor > 0 ? `+${v.valor}` : v.valor}
+                  </button>
+                ))}
+            </div>
+          </section>
+        </div>
+
+        <section className="panel registro-panel">
+          <div className="titulo-con-accion">
+            <h2>Registro de la partida</h2>
+            {tiradas.length > 0 && (
+              <button className="accion" onClick={() => void vaciarRegistro()}>Vaciar</button>
+            )}
           </div>
-        </section>
-      </div>
-
-      <section className="panel" style={{ marginTop: 16 }}>
-        <h2>Registro de la partida</h2>
-        {tiradas.length === 0 ? (
-          <p style={{ color: 'var(--texto-debil)', margin: 0 }}>Todavía no se ha tirado nada.</p>
-        ) : (
-          <>
+          {tiradas.length === 0 ? (
+            <p style={{ color: 'var(--texto-debil)', margin: 0 }}>Todavía no se ha tirado nada.</p>
+          ) : (
             <ol className="registro">
               {tiradas.map((r) => (
                 <li key={r.id} className={r.critico ? 'critico' : undefined}>
-                  <strong>{r.texto}</strong>
-                  <span>{r.detalle}</span>
-                  <span className="quien">
-                    {/* Con campaña, el registro es de la mesa: hay que saber quién tiró. */}
-                    {campanaId && r.autor !== (personaje.nombre || 'Sin nombre') ? `${r.autor} · ` : ''}
-                    {new Date(r.actualizadoEn).toLocaleTimeString('es-ES', {
-                      hour: '2-digit',
-                      minute: '2-digit',
-                    })}
-                  </span>
+                  <div className="linea">
+                    <strong>{r.texto}</strong>
+                    <span className="quien">
+                      {/*
+                        Quién tiró se ve siempre, también cuando eres tú. Antes sólo salía
+                        el nombre de los demás, y en una mesa con tres jugadores tirando a
+                        la vez el registro se volvía ilegible: no sabías si esa pifia era
+                        tuya o del de al lado.
+                      */}
+                      {r.autor}
+                      {' · '}
+                      {new Date(r.actualizadoEn).toLocaleTimeString('es-ES', {
+                        hour: '2-digit',
+                        minute: '2-digit',
+                      })}
+                    </span>
+                  </div>
+                  <span className="detalle">{r.detalle}</span>
                 </li>
               ))}
             </ol>
-            <div className="acciones-regla">
-              <button className="accion" onClick={() => void vaciarRegistro()}>
-                Vaciar el registro
-              </button>
-            </div>
-          </>
-        )}
-      </section>
+          )}
+        </section>
+      </div>
     </div>
   );
 }

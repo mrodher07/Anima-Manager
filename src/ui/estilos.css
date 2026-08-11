@@ -342,7 +342,8 @@ h3 { font-size: clamp(0.98rem, 0.9rem + 0.4vw, 1.12rem); }
   box-shadow: var(--sombra);
 }
 
-.panel > h2 {
+.panel > h2,
+.panel > .titulo-con-accion > h2 {
   font-size: 0.78rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -1075,16 +1076,194 @@ details:not(.plegable):not(.ayuda-plegable) > summary {
 }
 details:not(.plegable):not(.ayuda-plegable) > summary:hover { color: var(--oro-claro); }
 
-.registro { list-style: none; margin: 0; padding: 0; display: grid; gap: 7px; }
+/*
+ * La mesa: se tira a la izquierda y se lee a la derecha.
+ *
+ * El registro estaba al final de la página, debajo de todo, así que después de cada tirada
+ * había que bajar a leer el resultado y volver a subir para tirar otra vez. Ahora va en su
+ * propia columna y se queda pegado mientras se desplaza la de las acciones.
+ */
+.mesa-columnas { display: grid; gap: 16px; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); }
+.mesa-acciones { display: grid; gap: 16px; align-content: start; }
+.registro-panel {
+  position: sticky;
+  /* Justo debajo de la cabecera y de la barra de recursos, que también se quedan fijas. */
+  top: calc(var(--alto-cabecera) + 84px);
+  align-self: start;
+  max-height: calc(100vh - var(--alto-cabecera) - 104px);
+  overflow-y: auto;
+}
+
+/* Debajo de 900 px las dos columnas no caben: se apilan y el registro deja de pegarse. */
+@media (max-width: 900px) {
+  .mesa-columnas { grid-template-columns: 1fr; }
+  .registro-panel { position: static; max-height: none; }
+}
+
+/* Un título con un botón a la derecha, sin que el botón empuje al título. */
+.titulo-con-accion { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+
+.registro { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
 .registro li {
-  padding: 8px 12px;
+  /*
+   * Dos líneas por tirada, no tres. Cada entrada ocupaba 88 px para decir «Trepar: −26»,
+   * y cinco tiradas llenaban media pantalla. El resultado y quién tiró van en la misma
+   * línea, y el desglose debajo.
+   */
+  padding: 6px 10px;
   border-radius: var(--radio-s);
   background: var(--fondo-2);
   border-left: 3px solid var(--borde);
 }
 .registro li.critico { border-left-color: var(--sangre-claro); background: color-mix(in srgb, var(--sangre) 14%, var(--panel)); }
-.registro li strong { display: block; font-size: 0.92rem; }
-.registro li span { display: block; color: var(--texto-debil); font-size: 0.78rem; font-family: var(--mono); margin-top: 3px; }
+.registro li .linea { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+.registro li strong { font-size: 0.92rem; }
+.registro li .quien {
+  color: var(--texto-tenue);
+  font-size: 0.72rem;
+  white-space: nowrap;
+  /* Un nombre largo se recorta antes que empujar al resultado fuera de la fila. */
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.registro li .detalle {
+  display: block;
+  color: var(--texto-debil);
+  font-size: 0.76rem;
+  font-family: var(--mono);
+}
+
+/* ── Equipo ──
+ *
+ * La pestaña tenía tres paneles apilados a todo lo ancho, cada uno casi vacío: Armadura con
+ * un desplegable, Armas con otro, y el dinero enterrado dentro de Inventario, entre la
+ * explicación y el buscador de 339 objetos. Había que bajar mil píxeles para cambiar el oro.
+ *
+ * El reparto de ahora sigue lo que se hace más veces: primero la bolsa, que se toca en cada
+ * compra; luego el equipo de combate a dos columnas, porque ni armadura ni armas necesitan
+ * el ancho entero; y la mochila al final, que sí lo necesita para su tabla.
+ */
+.bolsa {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 12px 24px;
+  padding: 14px 18px;
+  margin-bottom: 16px;
+}
+.bolsa-monedas { display: flex; gap: 10px; }
+/* Anchura para cinco cifras y ni una más: son cantidades, no párrafos. */
+.bolsa-monedas .campo { margin-bottom: 0; width: 92px; }
+.bolsa-monedas .campo label { display: flex; align-items: baseline; gap: 4px; }
+.bolsa-monedas .sigla { color: var(--texto-debil); letter-spacing: 0.06em; }
+.bolsa-monedas input { text-align: right; font-variant-numeric: tabular-nums; }
+
+.bolsa-cuentas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 22px;
+  margin: 0;
+  /* Empuja las cuentas al otro extremo: a la izquierda lo que se edita, a la derecha lo que
+     sale de ello. */
+  margin-left: auto;
+}
+.bolsa-cuentas dt {
+  font-size: 0.66rem;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--texto-debil);
+}
+.bolsa-cuentas dd {
+  margin: 2px 0 0;
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  white-space: nowrap;
+}
+
+.equipo-combate {
+  display: grid;
+  gap: 0 16px;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  /* Sin esto, Armadura —cuatro líneas— se estira hasta la altura de Armas y deja 700 px de
+     panel vacío al lado. Cada uno mide lo que mide. */
+  align-items: start;
+}
+/* Los paneles ya traen su propio margen inferior; la rejilla sólo separa las columnas. */
+.equipo-combate > .panel { margin-bottom: 16px; }
+
+/*
+ * Los cuatro campos de un arma en media columna.
+ *
+ * La `.rejilla` normal pide 280 px por campo, que en una columna de 440 los pone de uno en
+ * uno: cada arma ocupaba 370 px de alto para cuatro desplegables. El arma lleva su fila
+ * entera —hay nombres largos— y escala, conocimiento y calidad se reparten la siguiente.
+ */
+.campos-arma { grid-template-columns: repeat(auto-fit, minmax(108px, 1fr)); gap: 10px; }
+.campos-arma > .campo { margin-bottom: 0; }
+.campos-arma > .campo:first-child { grid-column: 1 / -1; }
+
+/*
+ * El catálogo de 339 objetos, plegado.
+ *
+ * Ocupaba 500 px por encima de la mochila, así que para mirar lo que llevas —que es lo que
+ * se hace casi siempre— había que pasar por delante de la lista entera del manual. Se abre
+ * solo cuando la mochila está vacía, que es cuando lo que toca es justamente añadir algo.
+ */
+.anadir-catalogo { margin: 4px 0 14px; }
+.anadir-catalogo > summary {
+  list-style: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.85rem;
+  color: var(--texto-tenue);
+  padding: 7px 0;
+  user-select: none;
+}
+.anadir-catalogo > summary::-webkit-details-marker { display: none; }
+.anadir-catalogo > summary::before {
+  content: '+';
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  flex: none;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  font-size: 0.8rem;
+  line-height: 1;
+}
+.anadir-catalogo[open] > summary::before { content: '−'; }
+.anadir-catalogo > summary:hover { color: var(--oro-claro); }
+
+.tabla-ta {
+  list-style: none;
+  margin: 14px 0 10px;
+  padding: 0;
+  display: grid;
+  gap: 6px;
+  grid-template-columns: repeat(auto-fit, minmax(56px, 1fr));
+}
+.tabla-ta li {
+  display: grid;
+  gap: 1px;
+  justify-items: center;
+  padding: 5px 2px;
+  border: 1px solid var(--borde-suave);
+  border-radius: var(--radio-s);
+  background: var(--fondo-2);
+}
+.tabla-ta .tipo { font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--texto-debil); }
+.tabla-ta .valor { font-family: var(--serif); font-size: 1.25rem; line-height: 1.1; color: var(--oro-claro); }
+
+@media (max-width: 560px) {
+  /* En vertical la bolsa se lee de arriba abajo: monedas, y debajo las cuentas. */
+  .bolsa-cuentas { margin-left: 0; }
+  .bolsa-monedas { flex: 1; }
+  .bolsa-monedas .campo { width: auto; flex: 1; min-width: 0; }
+}
 
 input[type='checkbox'] { accent-color: var(--oro); }
 
@@ -1303,12 +1482,14 @@ input[type='checkbox'] { accent-color: var(--oro); }
 }
 
 /* Los rótulos, como una placa grabada con su fileteado. */
-:root[data-tema='steampunk'] .panel > h2 {
+:root[data-tema='steampunk'] .panel > h2,
+:root[data-tema='steampunk'] .panel > .titulo-con-accion > h2 {
   border-bottom: 2px solid;
   border-image: linear-gradient(90deg, var(--oro), rgba(198, 139, 60, 0.15)) 1;
   text-shadow: 0 1px 0 rgba(0, 0, 0, 0.6);
 }
-:root[data-tema='steampunk'] .panel > h2::after {
+:root[data-tema='steampunk'] .panel > h2::after,
+:root[data-tema='steampunk'] .panel > .titulo-con-accion > h2::after {
   content: ' ⚙';
   opacity: 0.5;
   font-size: 0.9em;
@@ -1385,11 +1566,13 @@ input[type='checkbox'] { accent-color: var(--oro); }
 }
 
 /* Rótulos con fleurón, como los epígrafes de un manuscrito. */
-:root[data-tema='medieval'] .panel > h2 {
+:root[data-tema='medieval'] .panel > h2,
+:root[data-tema='medieval'] .panel > .titulo-con-accion > h2 {
   border-bottom: 1px solid color-mix(in srgb, var(--oro) 45%, transparent);
   letter-spacing: 0.2em;
 }
-:root[data-tema='medieval'] .panel > h2::before {
+:root[data-tema='medieval'] .panel > h2::before,
+:root[data-tema='medieval'] .panel > .titulo-con-accion > h2::before {
   content: '❦ ';
   color: var(--sangre);
   letter-spacing: 0;
