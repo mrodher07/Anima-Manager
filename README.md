@@ -171,6 +171,24 @@ editarla.
 escribir sus colores. Una prueba comprueba que ningún tema se deje variables sin definir, y
 `tools/contraste.mjs` mide el contraste de los cuatro sobre la aplicación ya compilada.
 
+**Cada tema tiene su letra, y se nota en cualquier aparato.** Las pilas de fuentes
+nombraban sólo tipos de Mac y de Windows —Iowan, Palatino, Rockwell, Georgia—, así que en
+Linux y en Android los cuatro temas caían en la misma `serif` genérica y se veían idénticos.
+Ahora cada pila termina en algo que sí está instalado en un móvil (Noto, Roboto) y en un
+Linux (Liberation, DejaVu). Y como en un aparato pelado apenas hay tres o cuatro familias,
+la diferencia se apoya además en el tratamiento del titular —peso y espaciado—, que sí se
+aplica siempre:
+
+| Tema | Titulares | Cuerpo | Tratamiento |
+|---|---|---|---|
+| **Oscuro** | serifa | palo seco | peso 600 |
+| **Claro** | palo seco | palo seco | espaciado más cerrado |
+| **Steampunk** | egipcia, o condensada donde no la haya | palo seco | peso 700, letras separadas |
+| **Medieval** | humanista | humanista | letras sueltas, como copiado a mano |
+
+Nada de esto descarga una fuente: la aplicación no pide un solo archivo a un servidor de
+tipografías, así que funciona igual sin conexión y no filtra a nadie qué fichas abres.
+
 **Cumplir el contraste mínimo no basta: pasarse también cansa.** Los dos temas claros
 nacieron con la superficie más luminosa en blanco puro (L\*99) y texto casi negro encima,
 lo que daba 16:1 —más del triple del mínimo de la WCAG— y deslumbraba, sobre todo de noche.
