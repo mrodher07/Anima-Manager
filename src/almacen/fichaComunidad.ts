@@ -172,6 +172,23 @@ export function bolsaDe(hojas: Hoja[]): Bolsa | undefined {
   return bolsa.MO || bolsa.MP || bolsa.MC ? bolsa : undefined;
 }
 
+/**
+ * Los Puntos de Experiencia.
+ *
+ * La hoja los rotula de varias maneras según la versión, y al lado del acumulado suele
+ * haber también lo que pide el siguiente nivel. Se prueban las etiquetas de más concreta a
+ * menos y se coge la primera que dé un número: quedarse corto —no traer la experiencia— es
+ * mucho mejor que traerse por error el número del siguiente nivel y que el jugador se
+ * encuentre con que ya puede subir.
+ */
+export function experienciaDe(hojas: Hoja[]): number | undefined {
+  for (const etiqueta of ['PXs actuales', 'Experiencia actual', 'PX actuales', 'Experiencia', 'PXs', 'PX']) {
+    const n = numero(trasEtiqueta(hojas, etiqueta));
+    if (n > 0) return n;
+  }
+  return undefined;
+}
+
 // ───────────────────────────── Equipo de combate ─────────────────────────────
 
 /** Cómo escribe la hoja la empuñadura de cada arma. */

@@ -84,7 +84,24 @@ export function VistaFicha({ personaje, datos, reglamento }: Props) {
         )}
         <Recurso etiqueta="Presencia" valor={ficha.presencia.valor} />
         <Recurso etiqueta="Nivel" valor={ficha.nivel} />
+        {/* La experiencia va contra lo que pide la tabla, que es el número que interesa:
+            «59 de 125» dice de un vistazo cuánto queda. */}
+        <Recurso
+          etiqueta="Experiencia"
+          clase={ficha.experiencia.puedeSubir ? 'ki' : undefined}
+          valor={ficha.experiencia.actual}
+          maximo={ficha.experiencia.siguienteNivel}
+        />
       </div>
+
+      {ficha.experiencia.puedeSubir && (
+        <p className="cinta-campana" style={{ marginBottom: 14 }}>
+          Tiene <strong>{ficha.experiencia.actual}</strong> Puntos de Experiencia y para el
+          nivel {ficha.nivel + 1} hacen falta {ficha.experiencia.siguienteNivel}: ya puede
+          subir. Subir de nivel <strong>lo decidís vosotros</strong> — la aplicación no lo
+          hace sola.
+        </p>
+      )}
 
       {ficha.ajusteNivel > 0 && (
         <p className="cinta-campana" style={{ marginBottom: 14 }}>
@@ -208,6 +225,27 @@ export function VistaFicha({ personaje, datos, reglamento }: Props) {
             })}
           </tbody>
         </table>
+      </section>
+
+      <section className="panel" style={{ marginTop: 16 }}>
+        <h2>Carga</h2>
+        <div className="recursos tira" style={{ marginBottom: 10 }}>
+          <Recurso etiqueta="Índice de peso" valor={ficha.carga.indice} />
+          <Recurso etiqueta="Peso natural" valor={ficha.carga.natural} />
+          <Recurso etiqueta="Peso máximo" valor={ficha.carga.maximo} />
+          <Recurso etiqueta="Equipo" valor={ficha.carga.equipo} />
+        </div>
+        <p style={{ color: 'var(--texto-tenue)', fontSize: '0.86rem', margin: 0 }}>
+          {ficha.carga.indice === 0 && (
+            <>
+              Sin Fuerza puesta no hay fila en la tabla, así que todavía no hay cifras.{' '}
+            </>
+          )}
+          En kilos, de la Tabla de Fuerza. El <strong>peso natural</strong> es lo que carga
+          sin esfuerzo y el <strong>máximo</strong> lo que llega a levantar. Ánima no pone
+          tope de carga ni penalizadores automáticos: qué pasa cuando alguien va cargado
+          hasta arriba <strong>lo decidís en la mesa</strong>.
+        </p>
       </section>
 
       {ficha.inventario.lineas.length > 0 && (

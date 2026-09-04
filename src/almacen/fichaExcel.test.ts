@@ -40,6 +40,7 @@ function fichaDePrueba(): Personaje {
     ],
     dinero: { MO: 2, MP: 5, MC: 0 },
   };
+  p.experiencia = 59;
   p.manuales = { puntosVida: 999 };
   p.estado = { pvActuales: 40, zeonActual: 10 };
   p.trasfondo = {
@@ -146,6 +147,8 @@ describe('reconstruir desde las hojas legibles', () => {
     ]);
     expect(r.personaje.caracteristicas.FUE).toBe(10);
     expect(r.personaje.caracteristicas.CON).toBe(8);
+    // La experiencia va en la hoja «Ficha», así que sobrevive a la reconstrucción.
+    expect(r.personaje.experiencia).toBe(59);
   });
 
   it('recupera las listas y el equipo', async () => {

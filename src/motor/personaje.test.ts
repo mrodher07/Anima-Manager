@@ -156,6 +156,65 @@ describe('derivación de la ficha de Meirmeister', () => {
     expect(p.restriccionMovimiento).toBe(2);
   });
 
+  /*
+   * El desglose del Turno que muestra la ficha original:
+   *
+   *   base 55 · AGI+DES 30 · categoría 5 · armadura −20 · sin arma +20 · TOTAL 90
+   *
+   * Las cuatro últimas casillas salen solas del modelo. La base de 55 son 20 de partida,
+   * −10 por ser un Jayán de Tamaño Grande y +45 de «Reflejos rápidos (2)», que es lo único
+   * del manual que da exactamente +45 al Turno. Con eso la cuenta cuadra al número.
+   */
+  it('reproduce el desglose del Turno de la ficha', () => {
+    const p = meirmeister();
+    p.ventajas = ['Reflejos rápidos (2)'];
+    p.equipo = { ...p.equipo, armas: [{ arma: 'Desarmado' }] };
+    const f = calcular(p, datos('Jayán', 'Paladín Oscuro (RD)'));
+
+    // 55 + 30 (AGI 15 + DES 15) + 5 (Paladín Oscuro) − 20 (armadura) = 70.
+    expect(f.combate.turnoNatural.valor).toBe(70);
+    // Y con las manos vacías, los +20 de la fila «Desarmado»: 90, como la ficha.
+    expect(f.combate.armas[0].turno).toBe(90);
+  });
+
+  it('el Índice de Peso sale de la Fuerza y da los kilos de la Tabla de Fuerza', () => {
+    // La ficha: Índice 12, 350 kg naturales, 1.000 kg de máximo.
+    expect(ficha.carga.indice).toBe(12); // FUE total
+    expect(ficha.carga.natural).toBe(350);
+    expect(ficha.carga.maximo).toBe(1000);
+    // Sin mochila no hay nada que cargar.
+    expect(ficha.carga.equipo).toBe(0);
+  });
+
+  it('el peso del equipo es el de la mochila, que es a lo único que el manual da kilos', () => {
+    const p = meirmeister();
+    p.equipo = { ...p.equipo, objetos: [{ objeto: 'Cuerda normal (10 m)', cantidad: 3 }] };
+    const f = calcular(p, datos('Jayán', 'Paladín Oscuro (RD)'));
+    expect(f.carga.equipo).toBe(f.inventario.peso);
+    expect(f.carga.equipo).toBeGreaterThan(0);
+  });
+
+  it('la experiencia se compara con la tabla, contando el ajuste de nivel', () => {
+    const p = meirmeister();
+    p.experiencia = 59;
+    const f = calcular(p, datos('Jayán', 'Paladín Oscuro (RD)'));
+    // Nivel 1 con ajuste 1 → 125 PX, igual que la ficha. Sin el ajuste serían 100.
+    expect(f.experiencia.siguienteNivel).toBe(125);
+    expect(f.experiencia.actual).toBe(59);
+    expect(f.experiencia.faltan).toBe(66);
+    expect(f.experiencia.puedeSubir).toBe(false);
+  });
+
+  it('avisa de que se puede subir sólo cuando se llega, no antes', () => {
+    const p = meirmeister();
+    p.experiencia = 124;
+    expect(calcular(p, datos('Jayán', 'Paladín Oscuro (RD)')).experiencia.puedeSubir).toBe(false);
+    p.experiencia = 125;
+    const f = calcular(p, datos('Jayán', 'Paladín Oscuro (RD)'));
+    expect(f.experiencia.puedeSubir).toBe(true);
+    expect(f.experiencia.faltan).toBe(0);
+  });
+
   it('reproduce el hacha a dos manos', () => {
     const hacha = ficha.combate.armas[0];
     expect(hacha.dano).toBe(190);

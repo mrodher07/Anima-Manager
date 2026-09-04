@@ -311,6 +311,42 @@ export function EditorPersonaje({ personaje, datos, catalogo, reglamento, onCamb
             </div>
           </div>
 
+          {/*
+            * La experiencia se escribe a mano: los puntos los reparte el Director de Juego
+            * cuando le parece, y no hay regla que los deduzca de nada. Lo único que hace la
+            * aplicación es decir cuánto falta para el siguiente nivel — subir es una
+            * decisión de la mesa, no una cuenta.
+            */}
+          <div className="campo">
+            <label htmlFor="experiencia">Puntos de Experiencia</label>
+            <input
+              id="experiencia"
+              type="number"
+              min={0}
+              value={personaje.experiencia ?? 0}
+              onChange={(e) => set({ experiencia: Math.max(0, Number(e.target.value) || 0) })}
+            />
+            <small style={{ color: 'var(--texto-debil)' }}>
+              {ficha.experiencia.siguienteNivel > 0 ? (
+                ficha.experiencia.puedeSubir ? (
+                  <>
+                    Ya llega a los {ficha.experiencia.siguienteNivel} del nivel{' '}
+                    {ficha.nivel + 1}: puede subir cuando lo decidáis.
+                  </>
+                ) : (
+                  <>
+                    Para el nivel {ficha.nivel + 1} hacen falta{' '}
+                    <strong>{ficha.experiencia.siguienteNivel}</strong>; faltan{' '}
+                    {ficha.experiencia.faltan}
+                    {ficha.ajusteNivel > 0 && ` (con el ajuste de nivel +${ficha.ajusteNivel})`}.
+                  </>
+                )
+              ) : (
+                'Sin tabla de experiencia cargada.'
+              )}
+            </small>
+          </div>
+
           <div className="campo">
             <label>Retrato</label>
             {personaje.retratoId ? (
@@ -920,12 +956,30 @@ export function EditorPersonaje({ personaje, datos, catalogo, reglamento, onCamb
                 <dd className="destacado">{enMonedas(ficha.inventario.dinero) || '0 MC'}</dd>
               </div>
               <div>
-                <dt>Carga</dt>
-                <dd>{ficha.inventario.peso} kg</dd>
-              </div>
-              <div>
                 <dt>Valor de lo que lleva</dt>
                 <dd>{enMonedas(ficha.inventario.valor) || '0 MC'}</dd>
+              </div>
+              {/*
+                * La carga, con las dos cifras de la Tabla de Fuerza al lado. Sueltos, los
+                * «4 kg» de la mochila no dicen nada: lo que se quiere saber es si eso es
+                * mucho o poco para este personaje, y eso sólo se ve comparándolo.
+                */}
+              <div>
+                <dt>Carga</dt>
+                <dd>
+                  {ficha.carga.equipo} kg{' '}
+                  {/* Sin Fuerza puesta todavía no hay fila en la tabla, y «de 0 sin
+                      esfuerzo» diría algo que no es. */}
+                  {ficha.carga.natural > 0 && (
+                    <span className="de-tope">
+                      de {ficha.carga.natural} sin esfuerzo · {ficha.carga.maximo} máx.
+                    </span>
+                  )}
+                </dd>
+              </div>
+              <div>
+                <dt>Índice de peso</dt>
+                <dd>{ficha.carga.indice}</dd>
               </div>
             </dl>
           </div>
