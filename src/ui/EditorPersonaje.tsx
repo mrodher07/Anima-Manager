@@ -894,7 +894,7 @@ export function EditorPersonaje({ personaje, datos, catalogo, reglamento, onCamb
               presencia: ficha.presencia.valor,
               // La presencia **base** es la que dobla la Proyección Mágica de la Sheele.
               presenciaBase: Math.floor(ficha.pdTotales / 20),
-              turnoDesarmado: ficha.combate.turnoNatural.valor,
+              turnoDesarmado: ficha.combate.turnoSinArma,
               resistencias: Object.fromEntries(
                 Object.entries(ficha.resistencias).map(([k, v]) => [k, v.valor]),
               ),

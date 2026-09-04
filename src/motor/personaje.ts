@@ -477,7 +477,14 @@ export interface FichaCalculada {
     HParada: ValorDerivado;
     HEsquiva: ValorDerivado;
     llevarArmadura: ValorDerivado;
+    /** Turno sin arma en la mano: el natural, sin el modificador de ninguna. */
     turnoNatural: ValorDerivado;
+    /**
+     * Turno con las manos vacías, que es el que la ficha enseña como «el» Turno del
+     * personaje: el natural más los +20 de la fila «Desarmado». Nadie va por ahí sin poder
+     * pegar, así que es el número que se usa cuando no hay arma equipada.
+     */
+    turnoSinArma: number;
     tamano: number;
     proteccion: ProteccionTotal;
     armas: HabilidadesArma[];
@@ -991,6 +998,11 @@ export function calcular(
     HEsquiva: HEsquiva.valor,
     tablas,
   };
+  // El Turno con las manos vacías. «Desarmado» es una fila más de la tabla de armas, así
+  // que su modificador sale del catálogo como el de cualquier otra.
+  const turnoSinArma =
+    turnoNatural.valor + Number(datos.armas.find((a) => a.arma === 'Desarmado')?.turno ?? 0);
+
   const armasCalculadas = personaje.equipo.armas.map((a) =>
     calcularArma(a, datos.armas, ctxCombate, reglamento),
   );
@@ -1236,6 +1248,7 @@ export function calcular(
       HEsquiva,
       llevarArmadura,
       turnoNatural,
+      turnoSinArma,
       tamano,
       proteccion,
       armas: armasCalculadas,
