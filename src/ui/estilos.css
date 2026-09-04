@@ -1179,6 +1179,9 @@ details:not(.plegable):not(.ayuda-plegable) > summary:hover { color: var(--oro-c
   font-size: 1.15rem;
   white-space: nowrap;
 }
+/* Los topes de la Tabla de Fuerza, en pequeño detrás de lo que lleva: son la referencia
+   contra la que se lee la cifra, no una cifra más. */
+.bolsa-cuentas .de-tope { font-family: var(--sans); font-size: 0.74rem; color: var(--texto-debil); }
 
 .equipo-combate {
   display: grid;

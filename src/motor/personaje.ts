@@ -257,6 +257,12 @@ export interface Personaje {
     dinero?: string;
   };
 
+  /**
+   * Puntos de Experiencia acumulados. Los reparte el Director de Juego, no los deduce
+   * ninguna regla: aquí sólo se guardan y se comparan con lo que pide la tabla.
+   */
+  experiencia?: number;
+
   notas?: string;
 }
 
@@ -396,6 +402,42 @@ export interface ResumenInventario {
   dinero: number;
 }
 
+/**
+ * Lo que puede cargar el personaje, y lo que lleva.
+ *
+ * Ánima **no impone** un tope de carga: la Tabla de Fuerza dice cuánto levanta alguien de
+ * ese Índice, y qué pasa cuando se pasa lo decide la mesa. Por eso aquí no hay
+ * penalizadores automáticos, sólo las tres cifras de la ficha y el peso de la mochila para
+ * poder compararlas de un vistazo.
+ */
+export interface CargaCalculada {
+  /** Índice de Peso: la Fuerza total, más lo que se anote a mano. */
+  indice: number;
+  /** Peso natural: lo que carga sin esfuerzo, en kilos. Tabla de Fuerza. */
+  natural: number;
+  /** Peso máximo: lo que llega a levantar, en kilos. Tabla de Fuerza. */
+  maximo: number;
+  /** Lo que pesa la mochila. Sólo los objetos: el manual no da peso a armas ni armaduras. */
+  equipo: number;
+}
+
+/**
+ * La experiencia, comparada con lo que pide la tabla para el siguiente nivel.
+ *
+ * Quién da los puntos y cuándo es cosa del Director de Juego; lo único que hace la
+ * aplicación es decir cuánto falta.
+ */
+export interface ExperienciaCalculada {
+  /** Los que tiene ahora. */
+  actual: number;
+  /** Los que pide la tabla para pasar al siguiente nivel, con el ajuste de nivel puesto. */
+  siguienteNivel: number;
+  /** Lo que falta. Cero si ya llega. */
+  faltan: number;
+  /** true cuando ya tiene suficientes para subir. */
+  puedeSubir: boolean;
+}
+
 export interface FichaCalculada {
   /** Nivel real del personaje. Es el que da los bonos de categoría. */
   nivel: number;
@@ -422,6 +464,10 @@ export interface FichaCalculada {
   /** Convocar, Controlar, Atar y Desconvocar: las cuatro habilidades de invocación. */
   invocacion: Record<ClaveInvocacion, ValorDerivado>;
   inventario: ResumenInventario;
+  /** Índice de Peso y lo que carga. */
+  carga: CargaCalculada;
+  /** Puntos de Experiencia frente a lo que pide la tabla. */
+  experiencia: ExperienciaCalculada;
   secundarias: Record<string, ValorDerivado>;
   /** Lo que aportan las ventajas y desventajas elegidas. */
   efectos: EfectosAplicados;
@@ -672,6 +718,28 @@ export function calcular(
   );
   const nivel = multiclase.nivelTotal;
   const nivelParaExperiencia = nivel + ajusteNivel;
+
+  /*
+   * Experiencia.
+   *
+   * La tabla del manual se lee por filas: la fila es el nivel que tienes ahora y la columna
+   * es tu ajuste de nivel. La primera casilla de cada fila es el número de nivel, así que la
+   * columna del ajuste 0 es la 1. Verificado contra Meirmeister: nivel 1 con ajuste 1 pide
+   * 125 PX, que es lo que muestra su ficha.
+   *
+   * Los puntos los da el Director de Juego. La aplicación no sube de nivel sola —eso es una
+   * decisión de la mesa, no una cuenta— y se limita a decir cuánto falta.
+   */
+  const filasExperiencia = tablas.experienciaNecesaria?.filas ?? [];
+  const filaExperiencia = filasExperiencia.find((f) => f[0] === nivel) ?? filasExperiencia[0];
+  const experienciaSiguiente = Number(filaExperiencia?.[Math.max(0, ajusteNivel) + 1] ?? 0);
+  const experienciaActual = Math.max(0, personaje.experiencia ?? 0);
+  const experiencia: ExperienciaCalculada = {
+    actual: experienciaActual,
+    siguienteNivel: experienciaSiguiente,
+    faltan: Math.max(0, experienciaSiguiente - experienciaActual),
+    puedeSubir: experienciaSiguiente > 0 && experienciaActual >= experienciaSiguiente,
+  };
   // 600 al crear el personaje y +100 por nivel; los cambios de categoría se descuentan.
   const pdTotales = multiclase.pdDisponibles;
   for (const texto of multiclase.avisos) avisos.push({ gravedad: 'aviso', mensaje: texto });
@@ -786,6 +854,32 @@ export function calcular(
   }
 
   const inventario = resumirInventario(personaje, datos.objetos);
+
+  /*
+   * Índice de Peso y lo que carga.
+   *
+   * El Índice es la Fuerza total; la Tabla de Fuerza (Core Exxet, Tabla 8) la convierte en
+   * los kilos que se llevan sin esfuerzo y en los que se llegan a levantar. Verificado
+   * contra la ficha de Meirmeister: FUE 12 → 350 kg naturales y 1.000 kg de máximo.
+   *
+   * La columna «Esp.» sirve también aquí, porque hay capacidades raciales y poderes que
+   * suben el Índice sin tocar la Fuerza. Se acota a la tabla en vez de romperse: si algún
+   * poder deja el Índice en 25, se coge la última fila que hay.
+   */
+  const filasFuerza = tablas.fuerza ?? [];
+  const indicePeso = Math.max(
+    0,
+    caracteristicas.FUE.total + (personaje.bonosEspeciales['indicePeso'] ?? 0),
+  );
+  const filaFuerza =
+    filasFuerza.find((f) => f.valor === indicePeso) ??
+    (indicePeso > 0 ? filasFuerza[filasFuerza.length - 1] : undefined);
+  const carga: CargaCalculada = {
+    indice: indicePeso,
+    natural: filaFuerza?.pesoKg ?? 0,
+    maximo: filaFuerza?.pesoMaxKg ?? 0,
+    equipo: inventario.peso,
+  };
 
   // ── Combate: armadura primero, porque su penalizador afecta a casi todo ──
   const especial = (clave: string) => personaje.bonosEspeciales[clave] ?? 0;
@@ -1117,6 +1211,8 @@ export function calcular(
     nivel,
     ajusteNivel,
     nivelParaExperiencia,
+    experiencia,
+    carga,
     pdTotales,
     multiclase,
     caracteristicas,

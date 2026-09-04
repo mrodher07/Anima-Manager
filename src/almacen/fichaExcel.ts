@@ -18,6 +18,7 @@
 import { crearLibro, leerLibro, ErrorExcel, type Celda, type Hoja } from './xlsx';
 import {
   bolsaDe,
+  experienciaDe,
   eleccionesDe,
   fichaCivilDe,
   trasfondoDe,
@@ -55,6 +56,7 @@ function hojasLegibles(p: Personaje, ficha?: FichaCalculada | null): Hoja[] {
     ['Sexo', p.sexo ?? ''],
     ['Raza', p.raza],
     ['Nivel', p.categorias.reduce((t, c) => t + c.nivel, 0)],
+    ['Experiencia', p.experiencia ?? 0],
     [],
     ['Categorías'],
     ['Categoría', 'Niveles'],
@@ -256,6 +258,8 @@ function deHojasLegibles(hojas: Hoja[], id: string): ResultadoImportacion {
   const sexo = valorDe(ficha, 'Sexo');
   if (sexo === 'Hombre' || sexo === 'Mujer') p.sexo = sexo;
   p.raza = valorDe(ficha, 'Raza') || p.raza;
+  const experiencia = primerNumeroDe(valorDe(ficha, 'Experiencia'));
+  if (experiencia > 0) p.experiencia = experiencia;
 
   const categorias = bloque(ficha, 'Categoría')
     .map((f) => ({ categoria: texto(f[0]), nivel: numero(f[1]) }))
@@ -679,6 +683,9 @@ export async function deFichaComunidad(
 
   const bolsa = bolsaDe(hojas);
   if (bolsa) p.equipo.dinero = bolsa;
+
+  const experiencia = experienciaDe(hojas);
+  if (experiencia !== undefined) p.experiencia = experiencia;
 
   // Y todo lo que en la hoja se elige de un desplegable, que se empareja con el catálogo.
   if (catalogo) {

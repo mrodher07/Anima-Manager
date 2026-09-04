@@ -3,7 +3,9 @@
   "arma": "Desarmado",
   "tipoArma": "Natural/-",
   "conocida": "Distinta",
-  "tamano": "Pequeña"
+  "tamano": "Pequeña",
+  "turno": 20,
+  "_nota": "Turno +20: desglose de iniciativa de la ficha (sin arma). La fila del Excel viene vacía porque la hoja resuelve el combate sin arma aparte."
  },
  {
   "arma": "Armas naturales",
