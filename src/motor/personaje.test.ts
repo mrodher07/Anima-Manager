@@ -175,6 +175,18 @@ describe('derivación de la ficha de Meirmeister', () => {
     expect(f.combate.turnoNatural.valor).toBe(70);
     // Y con las manos vacías, los +20 de la fila «Desarmado»: 90, como la ficha.
     expect(f.combate.armas[0].turno).toBe(90);
+    // El mismo número sin necesidad de equiparse nada: es el que enseña la hoja.
+    expect(f.combate.turnoSinArma).toBe(90);
+  });
+
+  it('el turno sin arma vale también sin equipar nada', () => {
+    const p = meirmeister();
+    p.ventajas = ['Reflejos rápidos (2)'];
+    p.equipo = { ...p.equipo, armas: [] };
+    const f = calcular(p, datos('Jayán', 'Paladín Oscuro (RD)'));
+    expect(f.combate.armas).toEqual([]);
+    expect(f.combate.turnoSinArma).toBe(f.combate.turnoNatural.valor + 20);
+    expect(f.combate.turnoSinArma).toBe(90);
   });
 
   it('el Índice de Peso sale de la Fuerza y da los kilos de la Tabla de Fuerza', () => {

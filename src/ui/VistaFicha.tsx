@@ -504,6 +504,12 @@ export function VistaFicha({ personaje, datos, reglamento }: Props) {
                 <tr><td>Habilidad de Esquiva</td><td className="num destacado">{ficha.combate.HEsquiva.valor}</td></tr>
                 <tr><td>Llevar Armadura</td><td className="num">{ficha.combate.llevarArmadura.valor}</td></tr>
                 <tr><td>Turno natural</td><td className="num">{ficha.combate.turnoNatural.valor}</td></tr>
+                {/* El de la hoja: es el natural más los +20 de pelear con las manos
+                    vacías, y es el que se compara con el de la ficha de papel. */}
+                <tr>
+                  <td>Turno sin arma</td>
+                  <td className="num destacado">{ficha.combate.turnoSinArma}</td>
+                </tr>
                 <tr><td>Tamaño</td><td className="num">{ficha.combate.tamano}</td></tr>
               </tbody>
             </table>

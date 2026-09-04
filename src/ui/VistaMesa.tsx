@@ -111,7 +111,7 @@ export function VistaMesa({
   const arma = ficha.combate.armas[armaElegida];
 
   const tirarIniciativa = () => {
-    const base = arma?.turno ?? ficha.combate.turnoNatural.valor;
+    const base = arma?.turno ?? ficha.combate.turnoSinArma;
     const t = tirarD100(base);
     anotar(`Iniciativa: ${base + t.total}`, `${base} de turno + ${describeTirada(t)}`);
   };
