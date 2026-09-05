@@ -21,7 +21,7 @@ import {
   type Tienda,
 } from './bd';
 import type { TipoDano } from '../motor/combate';
-import type { Combate } from '../motor/combatePorTurnos';
+import { migrarCombate, type Combate } from '../motor/combatePorTurnos';
 export type { Combate, Participante } from '../motor/combatePorTurnos';
 import { PERSONALIZADOS_VACIOS, type Personalizados } from '../datos/paquetes';
 
@@ -231,6 +231,7 @@ export const almacen = {
   async listarCombates(campanaId: string | null): Promise<Combate[]> {
     const todos = await transaccion<Combate[]>('combates', 'readonly', (s) => s.getAll());
     return todos
+      .map(migrarCombate)
       .filter((c) => campanaId === null || c.campanaId === campanaId)
       .sort((a, b) => b.actualizadoEn.localeCompare(a.actualizadoEn));
   },

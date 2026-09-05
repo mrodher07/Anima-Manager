@@ -21,7 +21,7 @@ import { Seccion, cuenta as contar } from './Seccion';
 interface Props {
   campanaId: string;
   soyElMaster: boolean;
-  /** Las fichas que pueden entrar: las de esta campaña. */
+  /** Todas las fichas del aparato. Las de esta campaña salen primero. */
   personajes: Personaje[];
   catalogo: Catalogo;
   reglamento: Reglamento;
@@ -166,6 +166,7 @@ export function VistaCombate({
         >
           <Encuentro
             combate={c}
+            campanaId={campanaId}
             personajes={personajes}
             enemigos={enemigos}
             turnos={turnos}
@@ -182,6 +183,7 @@ export function VistaCombate({
 
 function Encuentro({
   combate,
+  campanaId,
   personajes,
   enemigos,
   turnos,
@@ -191,6 +193,7 @@ function Encuentro({
   onAnotar,
 }: {
   combate: Combate;
+  campanaId: string;
   personajes: Personaje[];
   enemigos: Enemigo[];
   turnos: Map<string, number>;
@@ -204,8 +207,59 @@ function Encuentro({
     [combate.participantes],
   );
   const enOrden = orden(combate.participantes);
+  /*
+   * Primero las fichas de esta campaña, que son las que casi siempre entran; detrás las
+   * demás del aparato, marcadas. No se esconden porque un máster mete de vez en cuando una
+   * ficha que no está formalmente en la campaña —un PNJ con hoja, el personaje de alguien
+   * que viene de visita— y esconderla obligaría a irse a otra pantalla a moverla de mesa.
+   */
+  const enOrdenDeMesa = useMemo(
+    () =>
+      [...personajes].sort((a, b) => {
+        const ma = a.campanaId === campanaId ? 0 : 1;
+        const mb = b.campanaId === campanaId ? 0 : 1;
+        return ma !== mb ? ma - mb : (a.nombre || '').localeCompare(b.nombre || '');
+      }),
+    [personajes, campanaId],
+  );
   const leToca = actuando(combate);
-  const preparando = combate.estado === 'preparando';
+  /*
+   * Elegir quién entra no se cierra al empezar.
+   *
+   * En una mesa llegan refuerzos a mitad de pelea, alguien aparece tarde y a veces se te
+   * olvida meter a uno. Cerrar la lista al pulsar «Empezar» obligaría a terminar el
+   * combate y montarlo otra vez por una tontería. Sólo se esconde cuando ya ha terminado,
+   * que entonces es un registro y no se toca.
+   */
+  const sePuedeTocar = combate.estado !== 'terminado';
+
+  const [cantidades, setCantidades] = useState<Record<string, number>>({});
+
+  /**
+   * Mete N copias de un enemigo de una tacada.
+   *
+   * Se numeran sólo cuando hay más de uno: «Bandido» a secas si es el único, y «Bandido 1,
+   * 2, 3» si son varios. Un «Jefe bandido 1» sin un 2 detrás se lee raro y encima ocupa
+   * sitio en una fila que ya va justa.
+   */
+  const anadirEnemigos = (e: Enemigo) => {
+    const cuantos = cantidades[e.id] ?? 1;
+    const yaHabia = combate.participantes.filter((x) => x.refId === e.id).length;
+    const total = yaHabia + cuantos;
+    const nuevos: Participante[] = Array.from({ length: cuantos }, (_, i) => ({
+      id: nuevoId(),
+      tipo: 'enemigo' as const,
+      refId: e.id,
+      nombre: total > 1 ? `${e.nombre} ${yaHabia + i + 1}` : e.nombre,
+      turnoBase: e.turno,
+      activo: true,
+    }));
+    onCambiar({
+      ...combate,
+      participantes: [...combate.participantes, ...nuevos],
+      actualizadoEn: new Date().toISOString(),
+    });
+  };
 
   const anadir = (tipo: Participante['tipo'], refId: string, nombre: string, turnoBase: number) =>
     onCambiar({
@@ -224,29 +278,37 @@ function Encuentro({
       actualizadoEn: new Date().toISOString(),
     });
 
-  /** Tira por todos los que aún no tienen número. Los escritos a mano no se pisan. */
-  const tirarPorTodos = () => {
+  const desglose = (p: Participante, t: ReturnType<typeof tirarD100>) =>
+    `${p.turnoBase} de turno + ${t.dados.join(' + ')}` +
+    (t.abierta ? ' (abierta)' : '') +
+    (t.pifia ? ` − ${t.nivelPifia} de pifia` : '');
+
+  /**
+   * Tira por unos cuantos y lo apunta en el registro de la partida.
+   *
+   * Nunca pisa un número que ya esté: si un jugador ha cantado su tirada y el máster le da
+   * al botón de tirar por los que falten, sería muy fácil borrarla sin enterarse.
+   */
+  const tirarPor = (quienes: Participante[]) => {
     let c = combate;
-    for (const p of combate.participantes) {
+    for (const p of quienes) {
       if (p.iniciativa !== undefined) continue;
       const t = tirarD100(p.turnoBase);
       c = conTirada(c, p.id, t.total);
-      onAnotar(
-        `Iniciativa de ${p.nombre}: ${p.turnoBase + t.total}`,
-        `${p.turnoBase} de turno + ${t.dados.join(' + ')}${t.abierta ? ' (abierta)' : ''}${t.pifia ? ` − ${t.nivelPifia} de pifia` : ''}`,
-      );
+      onAnotar(`Iniciativa de ${p.nombre}: ${p.turnoBase + t.total}`, desglose(p, t));
     }
     onCambiar(c);
   };
 
-  const tirarPorUno = (p: Participante) => {
+  /** Uno suelto, y este sí repite: se pulsa a propósito, sobre esa fila. */
+  const retirar = (p: Participante) => {
     const t = tirarD100(p.turnoBase);
-    onAnotar(
-      `Iniciativa de ${p.nombre}: ${p.turnoBase + t.total}`,
-      `${p.turnoBase} de turno + ${t.dados.join(' + ')}${t.abierta ? ' (abierta)' : ''}`,
-    );
+    onAnotar(`Iniciativa de ${p.nombre}: ${p.turnoBase + t.total}`, desglose(p, t));
     onCambiar(conTirada(combate, p.id, t.total));
   };
+
+  const sinTirar = combate.participantes.filter((p) => p.iniciativa === undefined);
+  const enemigosSinTirar = sinTirar.filter((p) => p.tipo === 'enemigo');
 
   return (
     <>
@@ -261,7 +323,7 @@ function Encuentro({
         />
       </div>
 
-      {preparando && (
+      {sePuedeTocar && (
         <>
           <h3 style={{ marginTop: 14 }}>Quién entra</h3>
           <p style={{ color: 'var(--texto-debil)', fontSize: '0.84rem', marginTop: 2 }}>
@@ -273,9 +335,9 @@ function Encuentro({
             <div>
               <h4>Jugadores</h4>
               {personajes.length === 0 ? (
-                <p className="nada">No hay fichas en esta campaña.</p>
+                <p className="nada">No hay ninguna ficha guardada en este aparato.</p>
               ) : (
-                personajes.map((p) => {
+                enOrdenDeMesa.map((p) => {
                   const ya = dentro.has(`personaje:${p.id}`);
                   const turno = turnos.get(p.id);
                   return (
@@ -294,7 +356,10 @@ function Encuentro({
                           }
                         }}
                       />
-                      <span className="nombre">{p.nombre || 'Sin nombre'}</span>
+                      <span className="nombre">
+                        {p.nombre || 'Sin nombre'}
+                        {p.campanaId !== campanaId && <span className="fuera-mesa"> · otra mesa</span>}
+                      </span>
                       <span className="turno">
                         {turno === undefined ? 'calculando…' : `turno ${turno}`}
                       </span>
@@ -313,21 +378,24 @@ function Encuentro({
                   <div key={e.id} className="fila-combatiente">
                     <span className="nombre">{e.nombre}</span>
                     <span className="turno">turno {e.turno}</span>
-                    {/* Un enemigo entra tantas veces como haga falta: tres bandidos son
-                        tres participantes con su propia iniciativa. */}
-                    <button
-                      className="accion"
-                      onClick={() => {
-                        const cuantos =
-                          combate.participantes.filter((x) => x.refId === e.id).length;
-                        anadir(
-                          'enemigo',
-                          e.id,
-                          cuantos > 0 ? `${e.nombre} ${cuantos + 1}` : e.nombre,
-                          e.turno,
-                        );
-                      }}
-                    >
+                    {/* Con cantidad, porque «hay tres bandidos» es una frase, no tres
+                        clics. Cada uno entra como participante con su propia iniciativa:
+                        en Ánima cada bandido actúa en su momento, no todos a la vez. */}
+                    <input
+                      type="number"
+                      min={1}
+                      max={20}
+                      className="cuantos"
+                      aria-label={`Cuántos ${e.nombre}`}
+                      value={cantidades[e.id] ?? 1}
+                      onChange={(ev) =>
+                        setCantidades((c) => ({
+                          ...c,
+                          [e.id]: Math.max(1, Math.min(20, Number(ev.target.value) || 1)),
+                        }))
+                      }
+                    />
+                    <button className="accion" onClick={() => anadirEnemigos(e)}>
                       Añadir
                     </button>
                   </div>
@@ -357,7 +425,7 @@ function Encuentro({
                 <th className="num">Dado</th>
                 <th className="num">Iniciativa</th>
                 <th>En pie</th>
-                {preparando && <th />}
+                {sePuedeTocar && <th />}
               </tr>
             </thead>
             <tbody>
@@ -377,7 +445,19 @@ function Encuentro({
                     <span className="de-donde">{p.tipo === 'enemigo' ? ' · bestiario' : ''}</span>
                   </td>
                   <td className="num">{p.turnoBase}</td>
-                  <td className="num">{p.tirada ?? '—'}</td>
+                  <td className="num">
+                    {p.tirada ?? '—'}
+                    {combate.estado !== 'terminado' && (
+                      <button
+                        className="accion dado"
+                        title={`Tirar por ${p.nombre}`}
+                        aria-label={`Tirar por ${p.nombre}`}
+                        onClick={() => retirar(p)}
+                      >
+                        Tirar
+                      </button>
+                    )}
+                  </td>
                   <td className="num">
                     <input
                       type="number"
@@ -404,7 +484,7 @@ function Encuentro({
                       }
                     />
                   </td>
-                  {preparando && (
+                  {sePuedeTocar && (
                     <td>
                       <button className="accion" onClick={() => quitar(p.id)}>Quitar</button>
                     </td>
@@ -417,21 +497,22 @@ function Encuentro({
       )}
 
       <div className="acciones-regla" style={{ marginTop: 14 }}>
-        {combate.participantes.length > 0 && combate.estado !== 'terminado' && (
-          <button className="accion" onClick={tirarPorTodos}>Tirar iniciativa</button>
-        )}
-        {combate.estado !== 'terminado' && combate.participantes.some((p) => p.iniciativa === undefined) && (
-          <button
-            className="accion"
-            onClick={() => {
-              const p = combate.participantes.find((x) => x.iniciativa === undefined);
-              if (p) tirarPorUno(p);
-            }}
-          >
-            Tirar por el siguiente
+        {/*
+          * Dos botones, no uno, porque en una mesa los jugadores tiran su propio dado y
+          * cantan el número: lo que el máster tira de verdad es lo de enfrente. El de
+          * «los que falten» está para las mesas que lo tiran todo por aquí.
+          */}
+        {enemigosSinTirar.length > 0 && (
+          <button className="accion" onClick={() => tirarPor(enemigosSinTirar)}>
+            Tirar por los enemigos
           </button>
         )}
-        {preparando && combate.participantes.length > 0 && (
+        {sinTirar.length > 0 && (
+          <button className="accion" onClick={() => tirarPor(sinTirar)}>
+            Tirar por los {sinTirar.length} que faltan
+          </button>
+        )}
+        {combate.estado === 'preparando' && combate.participantes.length > 0 && (
           <button className="accion primaria" onClick={() => onCambiar(empezar(combate))}>
             Empezar
           </button>

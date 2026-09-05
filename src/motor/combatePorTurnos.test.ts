@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import {
   actuando,
   combateVacio,
+  migrarCombate,
   conParticipante,
   conTirada,
   empezar,
@@ -58,6 +59,33 @@ describe('orden de iniciativa', () => {
   });
 });
 
+describe('combates guardados con el modelo viejo', () => {
+  /** Como lo escribía el código viejo: con `turno` y **sin** `turnoDe`. */
+  const guardadoViejo = (participantes: Participante[], turno: number) =>
+    ({
+      id: 'c', campanaId: null, actualizadoEn: '2026-01-01T00:00:00.000Z',
+      nombre: 'Viejo', estado: 'enCurso', asalto: 1, participantes, turno,
+    }) as never;
+
+  it('la posición guardada se traduce a quién le tocaba', () => {
+    const c = migrarCombate(guardadoViejo([p('a', 20, 150), p('b', 20, 120), p('c', 20, 90)], 1));
+    expect(c.turnoDe).toBe('b');
+    expect(actuando(c)?.id).toBe('b');
+  });
+
+  it('salta a los caídos al traducir, porque la posición era sobre los que seguían en pie', () => {
+    const c = migrarCombate(
+      guardadoViejo([p('a', 20, 150, false), p('b', 20, 120), p('c', 20, 90)], 1),
+    );
+    expect(c.turnoDe).toBe('c');
+  });
+
+  it('un combate del modelo nuevo pasa sin tocarse', () => {
+    const nuevo = { ...combateVacio('c', null), turnoDe: 'x' };
+    expect(migrarCombate(nuevo)).toBe(nuevo);
+  });
+});
+
 describe('llevar el combate', () => {
   const conTres = () => {
     const c = combateVacio('c1', 'camp', 'Emboscada');
@@ -73,6 +101,7 @@ describe('llevar el combate', () => {
     expect(actuando(c)).toBeUndefined();
     expect(empezar(c).asalto).toBe(1);
     expect(actuando(empezar(c))?.id).toBe('a');
+    expect(empezar(c).turnoDe).toBe('a');
   });
 
   it('el turno avanza por el orden y al cerrar la vuelta sube el asalto', () => {
@@ -104,6 +133,47 @@ describe('llevar el combate', () => {
     expect(actuando(c)?.id).toBe('c');
     c = siguiente(c);
     expect([actuando(c)?.id, c.asalto]).toEqual(['a', 2]);
+  });
+
+  /*
+   * El fallo que se lleva por delante una partida: se guardaba la posición dentro del
+   * orden, así que si caía alguien que iba **antes** del que estaba actuando, la lista se
+   * acortaba por delante, la posición pasaba a señalar al siguiente y a uno le robaban su
+   * turno sin que nadie se diera cuenta.
+   */
+  it('si cae alguien de más arriba, al que actúa no le roban el turno', () => {
+    let c = empezar(conTres()); // orden a(150), b(120), c(90)
+    c = siguiente(c);
+    expect(actuando(c)?.id).toBe('b');
+    // Cae «a», que iba por delante de «b».
+    c = conParticipante(c, 'a', { activo: false });
+    expect(actuando(c)?.id).toBe('b'); // sigue siendo su turno
+    c = siguiente(c);
+    expect(actuando(c)?.id).toBe('c');
+  });
+
+  it('si cae el que estaba actuando, sigue la pelea en vez de quedarse en blanco', () => {
+    let c = empezar(conTres());
+    expect(actuando(c)?.id).toBe('a');
+    c = conParticipante(c, 'a', { activo: false });
+    // Alguien puede morir en su propio turno: le toca al primero que quede en pie.
+    expect(actuando(c)?.id).toBe('b');
+    c = siguiente(c);
+    expect(actuando(c)?.id).toBe('c');
+  });
+
+  it('quien entra a mitad de pelea no descoloca a quien está actuando', () => {
+    let c = empezar(conTres());
+    c = siguiente(c);
+    expect(actuando(c)?.id).toBe('b');
+    // Refuerzos: entra alguien con más iniciativa que todos.
+    c = { ...c, participantes: [...c.participantes, p('refuerzo', 20, 999)] };
+    expect(actuando(c)?.id).toBe('b');
+    c = siguiente(c);
+    expect(actuando(c)?.id).toBe('c');
+    // Y el recién llegado actúa en la vuelta siguiente, en su sitio del orden.
+    c = siguiente(c);
+    expect([actuando(c)?.id, c.asalto]).toEqual(['refuerzo', 2]);
   });
 
   it('sin nadie en pie el turno no avanza en vez de romperse', () => {

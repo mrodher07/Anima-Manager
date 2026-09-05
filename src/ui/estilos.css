@@ -1301,6 +1301,22 @@ details:not(.plegable):not(.ayuda-plegable) > summary:hover { color: var(--oro-c
 .fila-combatiente .nombre { flex: 1; min-width: 0; }
 .fila-combatiente .turno { color: var(--texto-debil); font-size: 0.76rem; white-space: nowrap; }
 .fila-combatiente button.accion { padding: 3px 9px; font-size: 0.78rem; }
+.fila-combatiente input.cuantos {
+  width: 52px;
+  flex: none;
+  text-align: right;
+  padding: 3px 6px;
+  font-size: 0.82rem;
+}
+.fuera-mesa { color: var(--texto-debil); font-size: 0.76rem; }
+
+/* El dado de cada fila: al lado del número, discreto hasta que hace falta. */
+button.accion.dado {
+  padding: 2px 8px;
+  font-size: 0.72rem;
+  margin-left: 8px;
+  vertical-align: middle;
+}
 
 /* El asalto, al lado del título y en pequeño: acompaña, no compite. */
 .asalto {
