@@ -228,7 +228,7 @@ export function App() {
                 onBorrar={(id) => void borrarCampana(id)}
                 reglamento={reglamento}
                 onCambiarReglamento={cambiarReglamento}
-                personajes={personajes}
+                fichasDelDispositivo={todasLasFichas}
                 catalogo={catalogo}
                 nuevoId={nuevoId}
               />

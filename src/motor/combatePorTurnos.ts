@@ -44,11 +44,29 @@ export interface Combate {
   estado: EstadoCombate;
   /** Asalto en el que va. Empieza en 1 cuando arranca. */
   asalto: number;
-  /** A quién le toca: posición dentro del orden, no índice de `participantes`. */
-  turno: number;
+  /**
+   * A quién le toca, por su id.
+   *
+   * Guardaba la **posición** dentro del orden, y eso se rompe en cuanto alguien cae: si el
+   * que cae iba antes del que está actuando, la lista se acorta por delante, la posición
+   * pasa a señalar al siguiente y a alguien le roban su turno en mitad de la pelea. Con el
+   * id no hay ambigüedad, que es la información que de verdad se quiere guardar.
+   */
+  turnoDe: string | null;
   participantes: Participante[];
   empezadoEn?: string;
   terminadoEn?: string;
+}
+
+/**
+ * Adapta un combate guardado con el modelo viejo, que apuntaba la **posición** de quien
+ * actuaba en vez de su id. Se traduce una vez al leerlo y no se pierde el combate.
+ */
+export function migrarCombate(c: Combate & { turno?: number }): Combate {
+  if (c.turnoDe !== undefined) return c;
+  const { turno, ...resto } = c;
+  const lista = orden(resto.participantes ?? []).filter((p) => p.activo);
+  return { ...resto, turnoDe: lista[turno ?? 0]?.id ?? null };
 }
 
 export function combateVacio(id: string, campanaId: string | null, nombre = 'Combate'): Combate {
@@ -59,7 +77,7 @@ export function combateVacio(id: string, campanaId: string | null, nombre = 'Com
     nombre,
     estado: 'preparando',
     asalto: 0,
-    turno: 0,
+    turnoDe: null,
     participantes: [],
   };
 }
@@ -91,11 +109,17 @@ export function enJuego(combate: Combate): Participante[] {
   return orden(combate.participantes).filter((p) => p.activo);
 }
 
-/** A quién le toca ahora mismo, o `undefined` si no hay combate en curso. */
+/**
+ * A quién le toca ahora mismo, o `undefined` si no hay combate en curso.
+ *
+ * Si a quien le tocaba ha caído —pasa: alguien muere en su propio turno— le toca al
+ * siguiente que siga en pie, no a nadie.
+ */
 export function actuando(combate: Combate): Participante | undefined {
   if (combate.estado !== 'enCurso') return undefined;
   const lista = enJuego(combate);
-  return lista[combate.turno % Math.max(1, lista.length)];
+  if (lista.length === 0) return undefined;
+  return lista.find((p) => p.id === combate.turnoDe) ?? lista[0];
 }
 
 /**
@@ -106,11 +130,11 @@ export function actuando(combate: Combate): Participante | undefined {
  * empezar por eso sería la aplicación decidiendo por la mesa.
  */
 export function empezar(combate: Combate): Combate {
+  const enCurso: Combate = { ...combate, estado: 'enCurso' };
   return {
-    ...combate,
-    estado: 'enCurso',
+    ...enCurso,
     asalto: 1,
-    turno: 0,
+    turnoDe: enJuego(enCurso)[0]?.id ?? null,
     empezadoEn: combate.empezadoEn ?? new Date().toISOString(),
   };
 }
@@ -124,13 +148,19 @@ export function empezar(combate: Combate): Combate {
  */
 export function siguiente(combate: Combate): Combate {
   if (combate.estado !== 'enCurso') return combate;
-  const cuantos = enJuego(combate).length;
-  if (cuantos === 0) return combate;
+  const lista = enJuego(combate);
+  if (lista.length === 0) return combate;
+  // Quién va después **del que actúa de verdad**, que no siempre es `turnoDe`: si a quien
+  // le tocaba ha caído en su propio turno, `actuando` ya señala al siguiente en pie.
+  // Partir de `turnoDe` a pelo dejaba el botón sin hacer nada en ese caso.
+  const actual = actuando(combate);
+  const donde = actual ? lista.findIndex((p) => p.id === actual.id) : -1;
+  const siguienteIndice = donde + 1;
   // Al pasar del último se cierra la vuelta: turno al primero y un asalto más.
-  const daLaVuelta = combate.turno + 1 >= cuantos;
+  const daLaVuelta = siguienteIndice >= lista.length;
   return {
     ...combate,
-    turno: daLaVuelta ? 0 : combate.turno + 1,
+    turnoDe: (daLaVuelta ? lista[0] : lista[siguienteIndice]).id,
     asalto: combate.asalto + (daLaVuelta ? 1 : 0),
     actualizadoEn: new Date().toISOString(),
   };

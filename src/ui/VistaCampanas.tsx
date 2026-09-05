@@ -28,8 +28,15 @@ interface Props {
   /** El reglamento vigente y cómo cambiarlo: las reglas caseras son de la campaña. */
   reglamento: Reglamento;
   onCambiarReglamento: (r: Reglamento) => void;
-  /** Las fichas que pueden entrar en un combate: las que hay en esta campaña. */
-  personajes: Personaje[];
+  /**
+   * Todas las fichas guardadas en este aparato, **sin filtrar por cuenta**.
+   *
+   * La lista de «Personajes» enseña sólo las tuyas, que es lo que quieres al mirar tus
+   * fichas. Pero un combate es distinto: el máster monta la pelea de **su mesa**, y en su
+   * mesa están las fichas de sus jugadores. Filtrarlas aquí dejaría al máster montando
+   * combates en los que no puede meter a nadie más que a sí mismo.
+   */
+  fichasDelDispositivo: Personaje[];
   catalogo: Catalogo;
   nuevoId: () => string;
 }
@@ -88,7 +95,7 @@ export function VistaCampanas({
   onBorrar,
   reglamento,
   onCambiarReglamento,
-  personajes,
+  fichasDelDispositivo,
   catalogo,
   nuevoId: nuevoIdProp,
 }: Props) {
@@ -307,7 +314,7 @@ export function VistaCampanas({
           <VistaCombate
             campanaId={activa.id}
             soyElMaster={soyElMaster}
-            personajes={personajes.filter((p) => p.campanaId === activa.id)}
+            personajes={fichasDelDispositivo}
             catalogo={catalogo}
             reglamento={reglamento}
             nuevoId={nuevoIdProp}
