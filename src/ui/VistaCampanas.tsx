@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { CORE_EXXET, PAQUETES } from '../datos/paquetes';
+import { CORE_EXXET, PAQUETES, type Catalogo } from '../datos/paquetes';
 import { CREACION_POR_DEFECTO, type AjustesCreacion } from '../motor/reglamento';
 import { pdPorNivel } from '../motor/multiclase';
 import type { Campana } from '../almacen/almacen';
@@ -8,8 +8,10 @@ import { PanelMesa } from './PanelMesa';
 import { VistaReglas } from './VistaReglas';
 import { VistaPersonalizado } from './VistaPersonalizado';
 import { Ayuda, Seccion, cuenta as contar } from './Seccion';
-import { nuevoId } from './estado';
+import { nuevoId, useTiradas } from './estado';
 import type { Reglamento } from '../motor/reglamento';
+import type { Personaje } from '../motor/personaje';
+import { VistaCombate } from './VistaCombate';
 import { PERSONALIZADOS_VACIOS, type Personalizados } from '../datos/paquetes';
 
 interface Props {
@@ -26,6 +28,10 @@ interface Props {
   /** El reglamento vigente y cómo cambiarlo: las reglas caseras son de la campaña. */
   reglamento: Reglamento;
   onCambiarReglamento: (r: Reglamento) => void;
+  /** Las fichas que pueden entrar en un combate: las que hay en esta campaña. */
+  personajes: Personaje[];
+  catalogo: Catalogo;
+  nuevoId: () => string;
 }
 
 /**
@@ -33,10 +39,11 @@ interface Props {
  * barra de arriba, y las dos son **de una campaña**: sin campaña, Contenido propio no
  * podía hacer nada y sólo enseñaba un aviso. Aquí dentro se explican solas.
  */
-type Panel = 'jugadores' | 'ajustes' | 'reglas' | 'propio' | 'diario';
+type Panel = 'jugadores' | 'combate' | 'ajustes' | 'reglas' | 'propio' | 'diario';
 
 const PANELES: { id: Panel; texto: string }[] = [
   { id: 'jugadores', texto: 'Jugadores' },
+  { id: 'combate', texto: 'Combate' },
   { id: 'ajustes', texto: 'Ajustes' },
   { id: 'reglas', texto: 'Reglas' },
   { id: 'propio', texto: 'Contenido propio' },
@@ -81,6 +88,9 @@ export function VistaCampanas({
   onBorrar,
   reglamento,
   onCambiarReglamento,
+  personajes,
+  catalogo,
+  nuevoId: nuevoIdProp,
 }: Props) {
   const [creando, setCreando] = useState(false);
   const [panel, setPanel] = useState<Panel>('jugadores');
@@ -90,6 +100,11 @@ export function VistaCampanas({
 
   const todas = [...campanas, ...ajenas];
   const activa = todas.find((c) => c.id === campanaId) ?? null;
+  // Las tiradas de iniciativa entran en el registro de la partida como cualquier otra: es
+  // lo que hace que después quede constancia de lo que sacó cada uno.
+  const { anotar } = useTiradas(campanaId);
+  const anotarTirada = (texto: string, detalle: string) =>
+    void anotar({ personajeId: null, autor: 'Máster', texto, detalle });
   const soyElMaster = campanas.some((c) => c.id === campanaId);
   const editable = soyElMaster ? activa : null;
 
@@ -284,6 +299,21 @@ export function VistaCampanas({
           lleguen a tu pantalla. Se crea en <strong>Ajustes → Cuenta</strong>. Sin ella la
           campaña funciona igual, sólo que en este dispositivo.
         </div>
+      )}
+
+      {panel === 'combate' && activa && (
+        <section className="panel" style={{ marginTop: 16 }}>
+          <h2>Combate en «{activa.nombre}»</h2>
+          <VistaCombate
+            campanaId={activa.id}
+            soyElMaster={soyElMaster}
+            personajes={personajes.filter((p) => p.campanaId === activa.id)}
+            catalogo={catalogo}
+            reglamento={reglamento}
+            nuevoId={nuevoIdProp}
+            onAnotar={anotarTirada}
+          />
+        </section>
       )}
 
       {panel === 'ajustes' && editable && (

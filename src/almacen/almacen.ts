@@ -21,6 +21,8 @@ import {
   type Tienda,
 } from './bd';
 import type { TipoDano } from '../motor/combate';
+import type { Combate } from '../motor/combatePorTurnos';
+export type { Combate, Participante } from '../motor/combatePorTurnos';
 import { PERSONALIZADOS_VACIOS, type Personalizados } from '../datos/paquetes';
 
 export interface NotaSesion {
@@ -218,6 +220,29 @@ export const almacen = {
   async borrarTirada(id: string): Promise<void> {
     await transaccion('tiradas', 'readwrite', (s) => s.delete(id));
     await ponerLapida('tiradas', id);
+  },
+
+  /**
+   * Los combates de una campaña, del más reciente al más viejo.
+   *
+   * No se podan como las tiradas: un combate es el registro de lo que pasó una noche y
+   * son pocos, mientras que las tiradas son cientos. Los borra quien quiera borrarlos.
+   */
+  async listarCombates(campanaId: string | null): Promise<Combate[]> {
+    const todos = await transaccion<Combate[]>('combates', 'readonly', (s) => s.getAll());
+    return todos
+      .filter((c) => campanaId === null || c.campanaId === campanaId)
+      .sort((a, b) => b.actualizadoEn.localeCompare(a.actualizadoEn));
+  },
+
+  async guardarCombate(c: Combate): Promise<void> {
+    await transaccion('combates', 'readwrite', (s) => s.put(marcar(c)));
+    await quitarLapida('combates', c.id);
+  },
+
+  async borrarCombate(id: string): Promise<void> {
+    await transaccion('combates', 'readwrite', (s) => s.delete(id));
+    await ponerLapida('combates', id);
   },
 
   /** Vaciar el registro de una campaña. Lo pide el Director cuando acaba una sesión. */

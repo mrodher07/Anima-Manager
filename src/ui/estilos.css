@@ -1268,6 +1268,60 @@ details:not(.plegable):not(.ayuda-plegable) > summary:hover { color: var(--oro-c
   .bolsa-monedas .campo { width: auto; flex: 1; min-width: 0; }
 }
 
+/* ── Combate: quién entra y a quién le toca ── */
+
+.elegir-combatientes {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  margin-bottom: 6px;
+}
+.elegir-combatientes h4 {
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--texto-debil);
+  margin: 0 0 6px;
+}
+.elegir-combatientes .nada { color: var(--texto-debil); font-size: 0.86rem; margin: 0; }
+
+.fila-combatiente {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 6px 10px;
+  border: 1px solid var(--borde-suave);
+  border-radius: var(--radio-s);
+  background: var(--fondo-2);
+  margin-bottom: 5px;
+  font-size: 0.88rem;
+  cursor: pointer;
+}
+.fila-combatiente input[type='checkbox'] { width: auto; flex: none; margin: 0; }
+.fila-combatiente .nombre { flex: 1; min-width: 0; }
+.fila-combatiente .turno { color: var(--texto-debil); font-size: 0.76rem; white-space: nowrap; }
+.fila-combatiente button.accion { padding: 3px 9px; font-size: 0.78rem; }
+
+/* El asalto, al lado del título y en pequeño: acompaña, no compite. */
+.asalto {
+  margin-left: 10px;
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--oro);
+}
+
+/* A quién le toca tiene que verse de un vistazo desde el otro lado de la mesa. */
+tr.le-toca > td { background: color-mix(in srgb, var(--oro) 14%, transparent); }
+tr.le-toca > td:first-child { box-shadow: inset 3px 0 0 var(--oro); }
+.marca-turno { color: var(--oro-claro); margin-right: 6px; }
+/* Quien ha caído sigue en la lista —el registro importa— pero se aparta a la vista. */
+tr.fuera > td { opacity: 0.45; }
+tr.fuera .nombre, tr.fuera > td:first-child { text-decoration: line-through; }
+.de-donde { color: var(--texto-debil); font-size: 0.78rem; }
+input.iniciativa { width: 78px; text-align: right; font-variant-numeric: tabular-nums; }
+
 input[type='checkbox'] { accent-color: var(--oro); }
 
 .lista-seleccion {

@@ -24,6 +24,7 @@ const TABLAS: Record<Tienda, string> = {
   campanas: 'campanas',
   enemigos: 'enemigos',
   tiradas: 'tiradas',
+  combates: 'combates',
 };
 
 export interface ResultadoTienda {
@@ -49,6 +50,7 @@ export const NOMBRE_COLECCION: Record<string, string> = {
   personajes: 'Fichas',
   enemigos: 'Bestiario',
   tiradas: 'Tiradas',
+  combates: 'Combates',
   imagenes: 'Imágenes',
 };
 
@@ -67,7 +69,7 @@ interface FilaEscribible {
  * `enemigos.campana_id` apuntan a `campanas.id`. Si se subiera una ficha antes que su
  * campaña, la base de datos rechazaría la fila entera por clave ajena.
  */
-const ORDEN: Tienda[] = ['campanas', 'personajes', 'enemigos', 'tiradas'];
+const ORDEN: Tienda[] = ['campanas', 'personajes', 'enemigos', 'tiradas', 'combates'];
 
 /**
  * Sincroniza las tres colecciones.
@@ -273,6 +275,7 @@ async function leerLocales(tienda: Tienda): Promise<Sincronizable[]> {
   if (tienda === 'personajes') return almacen.listarPersonajes();
   if (tienda === 'campanas') return almacen.listarCampanas();
   if (tienda === 'tiradas') return almacen.listarTiradas(null);
+  if (tienda === 'combates') return almacen.listarCombates(null);
   return almacen.listarEnemigos(null);
 }
 
