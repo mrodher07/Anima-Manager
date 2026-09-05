@@ -7,7 +7,7 @@
  * necesitan —abrir la base y apuntar un borrado— se queda aquí, que no importa a nadie.
  */
 
-export const TIENDAS = ['personajes', 'campanas', 'enemigos', 'tiradas'] as const;
+export const TIENDAS = ['personajes', 'campanas', 'enemigos', 'tiradas', 'combates'] as const;
 export type Tienda = (typeof TIENDAS)[number];
 
 /**
@@ -18,9 +18,9 @@ export type Tienda = (typeof TIENDAS)[number];
 export type Coleccion = Tienda | 'imagenes';
 
 const BD = 'anima-manager';
-// v4 añade `tiradas`. El `onupgradeneeded` crea sólo lo que falta, así que subir de
+// v5 añade `combates`. El `onupgradeneeded` crea sólo lo que falta, así que subir de
 // versión no toca nada de lo que ya hay guardado.
-const VERSION = 4;
+const VERSION = 5;
 const BORRADOS = 'borrados';
 
 /**

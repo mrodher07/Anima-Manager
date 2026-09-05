@@ -11,7 +11,7 @@ import { useCuenta } from '../nube/cuenta';
 import { nuevoId } from './estado';
 import { SelectorTema } from './SelectorTema';
 import { aplicarTema, guardarTema, temaGuardado } from './temas';
-import { useCampanas, useDatosCalculo, usePersonajes, useReglamento } from './estado';
+import { fichasDe, useCampanas, useDatosCalculo, usePersonajes, useReglamento } from './estado';
 import './estilos.css';
 
 /**
@@ -32,7 +32,7 @@ export function App() {
   const [tema, setTema] = useState<string>(temaGuardado);
   const [campanaId, setCampanaId] = useState<string | null>(null);
 
-  const { personajes, cargando, guardar, crear, borrar, recargar } = usePersonajes();
+  const { personajes: todasLasFichas, cargando, guardar, crear, borrar, recargar } = usePersonajes();
   const {
     campanas,
     guardar: guardarCampana,
@@ -52,6 +52,13 @@ export function App() {
       // El tema elegido en el ordenador aparece también en el móvil.
       if (typeof preferencias.tema === 'string') setTema(preferencias.tema);
     },
+  );
+
+  // El almacén local es del navegador, no de la cuenta: si en este ordenador ha entrado
+  // más de una persona, sus fichas están todas ahí. Cada uno ve las suyas.
+  const personajes = useMemo(
+    () => fichasDe(todasLasFichas, cuenta.estado === 'dentro' ? cuenta.usuario?.id ?? null : null),
+    [todasLasFichas, cuenta.estado, cuenta.usuario?.id],
   );
 
   // Las campañas propias y aquellas en las que juego sin ser el máster. Las segundas son de
@@ -195,7 +202,12 @@ export function App() {
                 onAbrir={abrir}
                 // La ficha nace dentro de la campaña activa y con el nivel que la mesa ha
                 // acordado, para no tener que decírselo a cada jugador de viva voz.
-                onCrear={() => abrir(crear(campanaId, reglamento.creacion().nivelInicial).id)}
+                onCrear={() =>
+                  abrir(
+                    crear(campanaId, reglamento.creacion().nivelInicial, cuenta.usuario?.id ?? null)
+                      .id,
+                  )
+                }
                 onBorrar={(id) => {
                   void borrar(id);
                   if (abiertoId === id) setAbiertoId(null);
@@ -216,6 +228,9 @@ export function App() {
                 onBorrar={(id) => void borrarCampana(id)}
                 reglamento={reglamento}
                 onCambiarReglamento={cambiarReglamento}
+                personajes={personajes}
+                catalogo={catalogo}
+                nuevoId={nuevoId}
               />
             )}
 

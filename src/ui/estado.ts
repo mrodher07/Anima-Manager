@@ -44,6 +44,26 @@ export function useDatosCalculo(catalogo: Catalogo, personaje: Personaje | null)
  * Colección de personajes con persistencia.
  * Guarda con retardo para no escribir en IndexedDB en cada pulsación de tecla.
  */
+/**
+ * Las fichas de una cuenta.
+ *
+ * El almacén local es del **navegador**, no de la cuenta: si en el mismo ordenador entran
+ * dos personas, las fichas de las dos acaban en la misma base de datos y las dos las veían.
+ * Aquí se separan.
+ *
+ * Una ficha es tuya si la tienes puesta a tu nombre o si **no tiene dueño todavía**: las
+ * que se crean sin haber entrado nacen huérfanas y pasan a ser tuyas en la primera
+ * sincronización, así que esconderlas mientras tanto sería perder trabajo hecho.
+ *
+ * Sin sesión iniciada no se filtra nada. La aplicación funciona sin cuenta —eso es una
+ * propiedad del programa, no un descuido— y sin sesión no hay forma de saber de quién es
+ * cada ficha; esconderlas dejaría a alguien sin sus propias fichas por estar desconectado.
+ */
+export function fichasDe(personajes: Personaje[], usuarioId: string | null): Personaje[] {
+  if (!usuarioId) return personajes;
+  return personajes.filter((p) => p.propietario === usuarioId || p.propietario == null);
+}
+
 export function usePersonajes() {
   const [personajes, setPersonajes] = useState<Personaje[]>([]);
   const [cargando, setCargando] = useState(true);
@@ -71,10 +91,17 @@ export function usePersonajes() {
    * dicho**, que es lo que hace que ese ajuste sirva para algo: si no, el Director acuerda
    * empezar a nivel 3 y cada jugador tiene que acordarse de cambiarlo a mano.
    */
-  const crear = useCallback((campanaId: string | null = null, nivelInicial = 1): Personaje => {
+  const crear = useCallback((
+    campanaId: string | null = null,
+    nivelInicial = 1,
+    propietario: string | null = null,
+  ): Personaje => {
     const p = personajeVacio(nuevoId());
     p.nombre = 'Personaje sin nombre';
     p.campanaId = campanaId;
+    // Con sesión iniciada la ficha nace ya a tu nombre. Si nace huérfana, hasta la primera
+    // sincronización la vería cualquiera que entrase en este mismo navegador.
+    p.propietario = propietario;
     // Nivel 0 es legítimo en Anima, así que se respeta el 0; sólo se descartan los negativos.
     p.categorias = [{ categoria: '', nivel: Math.max(0, nivelInicial) }];
     void almacen.guardarPersonaje(p);

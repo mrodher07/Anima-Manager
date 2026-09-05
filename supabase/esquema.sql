@@ -29,6 +29,7 @@
 --    personajes            las fichas
 --    enemigos              el bestiario del máster
 --    tiradas               el registro de la partida, visible para toda la mesa
+--    combates              el orden de iniciativa de un combate, visible para toda la mesa
 --    imagenes              retratos, mapas y galería (el archivo vive en Storage)
 --    preferencias          tema y ajustes de cada usuario
 --
@@ -188,6 +189,32 @@ create table if not exists public.tiradas (
 
 create index if not exists tiradas_campana_idx on public.tiradas (campana_id, actualizado_en desc);
 create index if not exists tiradas_propietario_idx on public.tiradas (propietario);
+
+
+-- ── Combates ────────────────────────────────────────────────────────────────
+--
+-- El orden de iniciativa de un combate: quiénes entran, qué sacó cada uno y por dónde va
+-- el asalto. Lo monta el máster y lo ve la mesa entera, porque saber a quién le toca es
+-- justamente lo que hay que mirar todos a la vez.
+--
+-- Se guarda entero en `datos` como los demás documentos, incluida la lista de
+-- participantes: un combate se lee y se escribe de una pieza, y partirlo en una tabla de
+-- participantes obligaría a una transacción para avanzar un turno.
+--
+-- Al terminar no se borra. «Que quede registro» es la mitad de para qué sirve esto: el
+-- combate acabado se queda con lo que sacó cada uno y en qué asalto cayó quién.
+
+create table if not exists public.combates (
+  id            text primary key,
+  propietario   uuid not null references auth.users (id) on delete cascade,
+  campana_id    text references public.campanas (id) on delete cascade,
+  datos         jsonb not null,
+  actualizado_en timestamptz not null default now(),
+  borrado       boolean not null default false
+);
+
+create index if not exists combates_campana_idx on public.combates (campana_id, actualizado_en desc);
+create index if not exists combates_propietario_idx on public.combates (propietario);
 
 
 -- ── Imágenes ────────────────────────────────────────────────────────────────
@@ -444,6 +471,7 @@ alter table public.invitaciones_campana enable row level security;
 alter table public.personajes           enable row level security;
 alter table public.enemigos             enable row level security;
 alter table public.tiradas              enable row level security;
+alter table public.combates             enable row level security;
 alter table public.imagenes             enable row level security;
 alter table public.preferencias         enable row level security;
 alter table public.paquetes             enable row level security;
@@ -652,6 +680,34 @@ create policy "tiradas_editar" on public.tiradas for update
 drop policy if exists "tiradas_borrar" on public.tiradas;
 create policy "tiradas_borrar" on public.tiradas for delete
   using (propietario = auth.uid());
+
+-- ── Combates: los ve la mesa, los lleva el máster ───────────────────────────
+--
+-- Leer, todo el que juegue en la campaña: a quién le toca es información de la mesa.
+-- Escribir, sólo quien lo creó — que es el máster, porque es quien monta el combate. Un
+-- jugador no reordena la iniciativa de los demás.
+
+drop policy if exists "combates_leer" on public.combates;
+create policy "combates_leer" on public.combates for select
+  using (
+    propietario = auth.uid()
+    or (campana_id is not null
+        and (public.soy_master_de(campana_id) or public.soy_miembro_de(campana_id)))
+  );
+
+drop policy if exists "combates_crear" on public.combates;
+create policy "combates_crear" on public.combates for insert
+  with check (propietario = auth.uid());
+
+drop policy if exists "combates_editar" on public.combates;
+create policy "combates_editar" on public.combates for update
+  using (propietario = auth.uid())
+  with check (propietario = auth.uid());
+
+drop policy if exists "combates_borrar" on public.combates;
+create policy "combates_borrar" on public.combates for delete
+  using (propietario = auth.uid());
+
 
 -- ── Imágenes ────────────────────────────────────────────────────────────────
 --
