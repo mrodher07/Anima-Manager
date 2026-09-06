@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { almacen, type Combate, type Enemigo } from '../almacen/almacen';
+import { cliente } from '../nube/supabase';
+import { combateDeCampana } from '../nube/sincronizacion';
 import {
   actuando,
   combateVacio,
@@ -96,6 +98,142 @@ export function useCombates(campanaId: string | null) {
   }, []);
 
   return { combates, guardar, borrar, recargar };
+}
+
+/*
+ * Cada cuánto se pregunta si hay combate y por dónde va.
+ *
+ * Cuatro segundos mientras se pelea: es lo que tarda alguien en decir «te toca» en voz alta
+ * desde el otro lado de la mesa, y llegar más tarde que eso convierte la pantalla en un
+ * estorbo. Veinte cuando no hay nada, que es sólo para enterarse de que ha empezado uno.
+ *
+ * Con la pestaña de fondo no se pregunta nada: nadie está mirando, y son peticiones a un
+ * plan gratuito.
+ */
+const CADA_EN_COMBATE = 4000;
+const CADA_EN_CALMA = 20000;
+
+/**
+ * El combate que se está jugando en esta campaña, mire quien mire.
+ *
+ * El máster lo tiene en su propio aparato, porque es suyo. Un jugador no: el suyo vive en
+ * la nube y lo lee de ahí, que para eso las políticas dejan leer a la mesa entera.
+ */
+export function useCombateEnCurso(campanaId: string | null): Combate | null {
+  const [combate, setCombate] = useState<Combate | null>(null);
+
+  useEffect(() => {
+    if (!campanaId) { setCombate(null); return; }
+    let vigente = true;
+    let reloj: ReturnType<typeof setTimeout> | undefined;
+
+    const mirar = async () => {
+      if (!vigente) return;
+      let encontrado: Combate | null = null;
+
+      // Lo propio primero: si el que mira es el máster, el combate es suyo y está aquí.
+      const locales = await almacen.listarCombates(campanaId);
+      encontrado = locales.find((c) => c.estado === 'enCurso') ?? null;
+
+      // Y si no, el de la mesa. Un fallo de red no borra lo que ya se estaba enseñando:
+      // en mitad de un combate, quedarse en blanco por un corte de wifi es peor que
+      // enseñar el último orden conocido.
+      if (!encontrado) {
+        const supa = cliente();
+        if (supa) {
+          const { combate: remoto } = await combateDeCampana(supa, campanaId);
+          if (remoto) encontrado = remoto;
+        }
+      }
+
+      if (!vigente) return;
+      setCombate((antes) => (encontrado ? encontrado : antes && antes.estado === 'enCurso' ? antes : null));
+      reloj = setTimeout(
+        () => void mirar(),
+        encontrado ? CADA_EN_COMBATE : CADA_EN_CALMA,
+      );
+    };
+
+    const alVolver = () => {
+      if (document.visibilityState !== 'visible') { clearTimeout(reloj); return; }
+      clearTimeout(reloj);
+      void mirar();
+    };
+    document.addEventListener('visibilitychange', alVolver);
+    void mirar();
+
+    return () => {
+      vigente = false;
+      clearTimeout(reloj);
+      document.removeEventListener('visibilitychange', alVolver);
+    };
+  }, [campanaId]);
+
+  return combate;
+}
+
+/**
+ * Lo que ve un jugador durante un combate: si le toca y por dónde va el orden.
+ *
+ * Va arriba del todo de la Mesa y sin poder plegarse. Durante una pelea es lo único que se
+ * mira de verdad, y esconderlo detrás de un desplegable obligaría a abrirlo cada asalto.
+ */
+export function PanelIniciativa({
+  combate,
+  personajeId,
+}: {
+  combate: Combate;
+  personajeId: string;
+}) {
+  const lista = enJuego(combate);
+  const leToca = actuando(combate);
+  const soyYo = (p: Participante) => p.tipo === 'personaje' && p.refId === personajeId;
+  const esMiTurno = leToca ? soyYo(leToca) : false;
+  // Cuántos actúan antes que yo en lo que queda de asalto. Sirve para saber si te da
+  // tiempo a ir a por agua o si más te vale ir pensando lo que haces.
+  const miSitio = lista.findIndex(soyYo);
+  const donde = leToca ? lista.findIndex((p) => p.id === leToca.id) : -1;
+  const cuantosAntes = miSitio > donde ? miSitio - donde : -1;
+
+  return (
+    <section className={`panel iniciativa-mesa${esMiTurno ? ' es-mi-turno' : ''}`}>
+      <div className="titulo-con-accion">
+        <h2>{combate.nombre}</h2>
+        <span className="asalto">asalto {combate.asalto}</span>
+      </div>
+
+      {esMiTurno ? (
+        <p className="tu-turno" role="status">Es tu turno</p>
+      ) : (
+        <p className="quien-va" role="status">
+          {leToca ? (
+            <>
+              Va <strong>{leToca.nombre}</strong>
+              {cuantosAntes === 1 && ' · eres el siguiente'}
+              {cuantosAntes > 1 && ` · te quedan ${cuantosAntes} por delante`}
+              {miSitio < 0 && ' · no estás en este combate'}
+            </>
+          ) : (
+            'Todavía no ha empezado.'
+          )}
+        </p>
+      )}
+
+      <ol className="orden-mesa">
+        {lista.map((p) => (
+          <li
+            key={p.id}
+            className={[leToca?.id === p.id ? 'actua' : '', soyYo(p) ? 'yo' : '']
+              .filter(Boolean)
+              .join(' ') || undefined}
+          >
+            <span className="nombre">{p.nombre}</span>
+            <span className="ini">{p.iniciativa ?? '—'}</span>
+          </li>
+        ))}
+      </ol>
+    </section>
+  );
 }
 
 export function VistaCombate({

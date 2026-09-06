@@ -1338,6 +1338,55 @@ tr.fuera .nombre, tr.fuera > td:first-child { text-decoration: line-through; }
 .de-donde { color: var(--texto-debil); font-size: 0.78rem; }
 input.iniciativa { width: 78px; text-align: right; font-variant-numeric: tabular-nums; }
 
+/* ── Lo que ve el jugador durante el combate ── */
+
+.iniciativa-mesa { margin-bottom: 16px; }
+/*
+ * Cuando te toca, el panel entero cambia de color. No es adorno: en una mesa hay cinco
+ * pantallas encendidas y la tuya tiene que distinguirse de un vistazo desde donde estés
+ * sentado, sin ponerte a leer.
+ */
+.iniciativa-mesa.es-mi-turno {
+  border-color: var(--oro);
+  box-shadow: 0 0 0 1px var(--oro), 0 6px 26px -12px var(--oro);
+}
+
+.iniciativa-mesa .tu-turno {
+  font-family: var(--titulos);
+  font-size: clamp(1.5rem, 1.1rem + 2vw, 2.1rem);
+  line-height: 1.1;
+  color: var(--oro-claro);
+  letter-spacing: 0.02em;
+  margin: 6px 0 12px;
+}
+.iniciativa-mesa .quien-va { color: var(--texto-tenue); margin: 4px 0 12px; font-size: 0.92rem; }
+.iniciativa-mesa .quien-va strong { color: var(--texto); }
+
+.orden-mesa {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 4px;
+}
+.orden-mesa li {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 5px 10px;
+  border-radius: var(--radio-s);
+  background: var(--fondo-2);
+  border-left: 3px solid transparent;
+  font-size: 0.9rem;
+}
+/* Quien actúa, marcado; y tú, en negrita, para encontrarte en la lista sin leerla entera. */
+.orden-mesa li.actua { border-left-color: var(--oro); background: color-mix(in srgb, var(--oro) 12%, var(--panel)); }
+.orden-mesa li.yo .nombre { font-weight: 600; color: var(--texto); }
+.orden-mesa li.yo .nombre::after { content: ' · tú'; color: var(--texto-debil); font-weight: 400; font-size: 0.8rem; }
+.orden-mesa .nombre { color: var(--texto-tenue); min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.orden-mesa .ini { font-family: var(--serif); color: var(--texto); font-variant-numeric: tabular-nums; flex: none; }
+
 input[type='checkbox'] { accent-color: var(--oro); }
 
 .lista-seleccion {
