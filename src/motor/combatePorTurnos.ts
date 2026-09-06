@@ -175,6 +175,33 @@ export function terminar(combate: Combate): Combate {
   };
 }
 
+/** Lo mínimo de una tirada que hace falta aquí, para no arrastrar el almacén al motor. */
+export interface TiradaDeIniciativa {
+  personajeId: string | null;
+  combateId?: string;
+  iniciativa?: number;
+  actualizadoEn: string;
+}
+
+/**
+ * La iniciativa que cada jugador ha tirado desde su pantalla para este combate.
+ *
+ * Se queda con la **última** de cada uno: si alguien repite porque se equivocó de botón o
+ * porque en la mesa se decide volver a tirar, manda la de después. Y sólo mira las de este
+ * combate: en el registro conviven las de la pelea de hoy con las de la semana pasada.
+ */
+export function ultimaIniciativaPorPersonaje(
+  tiradas: TiradaDeIniciativa[],
+  combateId: string,
+): Map<string, number> {
+  const fuera = new Map<string, number>();
+  for (const t of [...tiradas].sort((a, b) => b.actualizadoEn.localeCompare(a.actualizadoEn))) {
+    if (t.combateId !== combateId || t.iniciativa === undefined || !t.personajeId) continue;
+    if (!fuera.has(t.personajeId)) fuera.set(t.personajeId, t.iniciativa);
+  }
+  return fuera;
+}
+
 /** Cambia un participante sin tocar los demás. */
 export function conParticipante(
   combate: Combate,

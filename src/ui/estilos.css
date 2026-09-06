@@ -1387,6 +1387,10 @@ input.iniciativa { width: 78px; text-align: right; font-variant-numeric: tabular
 .orden-mesa .nombre { color: var(--texto-tenue); min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .orden-mesa .ini { font-family: var(--serif); color: var(--texto); font-variant-numeric: tabular-nums; flex: none; }
 
+.sin-dato { color: var(--texto-debil); }
+/* Los PV en rojo cuando ya no queda nada, con el botón de tirarlo al suelo al lado. */
+.pv-caido { color: var(--sangre-claro); font-weight: 600; }
+
 input[type='checkbox'] { accent-color: var(--oro); }
 
 .lista-seleccion {

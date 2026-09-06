@@ -59,6 +59,37 @@ export function useDatosCalculo(catalogo: Catalogo, personaje: Personaje | null)
  * propiedad del programa, no un descuido— y sin sesión no hay forma de saber de quién es
  * cada ficha; esconderlas dejaría a alguien sin sus propias fichas por estar desconectado.
  */
+/*
+ * La campaña activa, recordada.
+ *
+ * No se guardaba en ningún sitio: cada vez que recargabas la página salías de la campaña y
+ * había que volver a entrar. Y como de la campaña cuelgan las reglas caseras, los manuales
+ * activos y el nivel inicial, lo que perdías no era una pantalla sino la mesa entera.
+ *
+ * Va a los dos sitios a propósito: en `localStorage` para que funcione sin cuenta y esté
+ * puesta antes del primer pintado, y en las preferencias de la nube para que al abrir el
+ * móvil estés donde estabas en el ordenador.
+ */
+const CLAVE_CAMPANA = 'anima-manager:campana';
+
+export function campanaGuardada(): string | null {
+  try {
+    return localStorage.getItem(CLAVE_CAMPANA) || null;
+  } catch {
+    // Navegar en privado puede bloquear localStorage; no es motivo para fallar.
+    return null;
+  }
+}
+
+export function guardarCampanaActiva(id: string | null): void {
+  try {
+    if (id) localStorage.setItem(CLAVE_CAMPANA, id);
+    else localStorage.removeItem(CLAVE_CAMPANA);
+  } catch {
+    // Sin guardar, la campaña sigue activa en esta sesión.
+  }
+}
+
 export function fichasDe(personajes: Personaje[], usuarioId: string | null): Personaje[] {
   if (!usuarioId) return personajes;
   return personajes.filter((p) => p.propietario === usuarioId || p.propietario == null);

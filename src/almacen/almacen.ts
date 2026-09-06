@@ -100,6 +100,20 @@ export interface Tirada {
   texto: string;
   detalle: string;
   critico?: boolean;
+  /*
+   * Una tirada de iniciativa hecha desde la pantalla de un jugador lleva además a qué
+   * combate pertenece y cuánto ha salido.
+   *
+   * Va aquí y no en el combate porque **un jugador no puede escribir el combate del
+   * máster**: las políticas sólo dejan escribirlo a quien lo creó, y aflojar eso para que
+   * cada uno toque el documento compartido traería pisotones —el máster avanzando el turno
+   * mientras otro escribe su número— además de dejar que cualquiera reordenase la
+   * iniciativa de los demás. En el registro cada uno escribe lo suyo, que es lo que las
+   * políticas ya permiten, y el máster lo recoge de ahí. Y de paso queda apuntado, que es
+   * donde una tirada tiene que estar de todas formas.
+   */
+  combateId?: string;
+  iniciativa?: number;
 }
 
 /**

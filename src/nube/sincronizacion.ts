@@ -13,7 +13,7 @@
  */
 
 import type { SupabaseClient } from '@supabase/supabase-js';
-import { almacen, type Campana, type Enemigo, type Tienda } from '../almacen/almacen';
+import { almacen, type Campana, type Enemigo, type Tienda, type Tirada } from '../almacen/almacen';
 import { migrarPersonaje, type Personaje } from '../motor/personaje';
 import { migrarCombate, type Combate } from '../motor/combatePorTurnos';
 import { planificar, lapidasPendientes, type FilaRemota, type Sincronizable } from './fusion';
@@ -364,8 +364,9 @@ export async function fichasDeCampana(
  * IndexedDB, la siguiente sincronización intentaría subirlo y el servidor lo rechazaría
  * porque no es suyo. Se consulta y se enseña.
  *
- * Devuelve sólo el que está en curso. Los terminados son un registro para el máster, no
- * algo que un jugador necesite tener delante mientras juega.
+ * Devuelve el que está en curso y, si no hay, el que se está montando: la iniciativa se
+ * tira antes de empezar, y un jugador tiene que poder tirar la suya desde su pantalla. Los
+ * terminados son un registro para el máster, no algo que haga falta tener delante.
  */
 export async function combateDeCampana(
   supa: SupabaseClient,
@@ -380,6 +381,7 @@ export async function combateDeCampana(
     .limit(20);
   if (error) return { combate: null, error: error.message };
 
+  let montandose: Combate | null = null;
   for (const f of data ?? []) {
     const fila = f as { id: unknown; datos: unknown; actualizado_en: unknown };
     const registro = normalizar('combates', {
@@ -391,8 +393,45 @@ export async function combateDeCampana(
     if (!registro) continue;
     const combate = migrarCombate(registro as unknown as Combate);
     if (combate.estado === 'enCurso') return { combate };
+    if (combate.estado === 'preparando' && !montandose) montandose = combate;
   }
-  return { combate: null };
+  return { combate: montandose };
+}
+
+/**
+ * Las tiradas de la mesa, para que el máster vea las de sus jugadores.
+ *
+ * Las políticas dejan leer las de la campaña a quien juegue en ella; cada uno sólo escribe
+ * las suyas. Se usa para recoger las iniciativas que los jugadores tiran desde su pantalla.
+ *
+ * No se guardan en local, como todo lo ajeno: se consultan y se enseñan.
+ */
+export async function tiradasDeCampana(
+  supa: SupabaseClient,
+  campanaId: string,
+  limite = 60,
+): Promise<{ tiradas: Tirada[]; error?: string }> {
+  const { data, error } = await supa
+    .from('tiradas')
+    .select('id, datos, actualizado_en, borrado')
+    .eq('campana_id', campanaId)
+    .eq('borrado', false)
+    .order('actualizado_en', { ascending: false })
+    .limit(limite);
+  if (error) return { tiradas: [], error: error.message };
+
+  const tiradas: Tirada[] = [];
+  for (const f of data ?? []) {
+    const fila = f as { id: unknown; datos: unknown; actualizado_en: unknown };
+    const registro = normalizar('tiradas', {
+      id: String(fila.id),
+      datos: fila.datos,
+      actualizado_en: String(fila.actualizado_en),
+      borrado: false,
+    });
+    if (registro) tiradas.push(registro as unknown as Tirada);
+  }
+  return { tiradas };
 }
 
 /** Resumen de una sincronización, para enseñarlo de una línea. */

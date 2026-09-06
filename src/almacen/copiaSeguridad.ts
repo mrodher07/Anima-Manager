@@ -31,8 +31,14 @@ import {
 export const FORMATO = 'anima-manager-copia';
 export const VERSION_COPIA = 1;
 
-/** Preferencias que viven en `localStorage` y no en la base de datos. */
-export const CLAVES_PREFERENCIAS = ['anima-manager:tema'] as const;
+/**
+ * Preferencias que viven en `localStorage`.
+ *
+ * Con cuenta también van a la nube —para que el móvil sepa lo que elegiste en el
+ * ordenador— pero aquí siguen: la aplicación funciona sin cuenta, y una copia de seguridad
+ * tiene que poder devolverte a donde estabas aunque nunca hayas entrado.
+ */
+export const CLAVES_PREFERENCIAS = ['anima-manager:tema', 'anima-manager:campana'] as const;
 
 export class ErrorCopia extends Error {}
 

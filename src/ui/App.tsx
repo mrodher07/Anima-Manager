@@ -11,7 +11,15 @@ import { useCuenta } from '../nube/cuenta';
 import { nuevoId } from './estado';
 import { SelectorTema } from './SelectorTema';
 import { aplicarTema, guardarTema, temaGuardado } from './temas';
-import { fichasDe, useCampanas, useDatosCalculo, usePersonajes, useReglamento } from './estado';
+import {
+  campanaGuardada,
+  fichasDe,
+  guardarCampanaActiva,
+  useCampanas,
+  useDatosCalculo,
+  usePersonajes,
+  useReglamento,
+} from './estado';
 import './estilos.css';
 
 /**
@@ -30,7 +38,9 @@ export function App() {
   const [seccion, setSeccion] = useState<Seccion>('personajes');
   const [abiertoId, setAbiertoId] = useState<string | null>(null);
   const [tema, setTema] = useState<string>(temaGuardado);
-  const [campanaId, setCampanaId] = useState<string | null>(null);
+  // Se lee del almacén antes del primer pintado: entrar y ver un parpadeo de «sin campaña»
+  // antes de que aparezca la tuya es peor que esperar un instante más.
+  const [campanaId, setCampanaIdCrudo] = useState<string | null>(campanaGuardada);
 
   const { personajes: todasLasFichas, cargando, guardar, crear, borrar, recargar } = usePersonajes();
   const {
@@ -51,8 +61,22 @@ export function App() {
     (preferencias) => {
       // El tema elegido en el ordenador aparece también en el móvil.
       if (typeof preferencias.tema === 'string') setTema(preferencias.tema);
+      // Y la campaña en la que estabas. Sólo si no hay ninguna puesta ya en este aparato:
+      // si acabas de entrar en otra aquí, que la nube te saque de ella sería peor.
+      if (typeof preferencias.campana === 'string' && !campanaGuardada()) {
+        setCampanaIdCrudo(preferencias.campana);
+        guardarCampanaActiva(preferencias.campana);
+      }
     },
   );
+
+  /** Cambia de campaña y lo deja apuntado: aquí para el próximo arranque, y en la nube
+   *  para que el móvil sepa dónde estabas en el ordenador. */
+  const setCampanaId = (id: string | null) => {
+    setCampanaIdCrudo(id);
+    guardarCampanaActiva(id);
+    void cuenta.guardarPreferencia('campana', id);
+  };
 
   // El almacén local es del navegador, no de la cuenta: si en este ordenador ha entrado
   // más de una persona, sus fichas están todas ahí. Cada uno ve las suyas.
