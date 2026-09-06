@@ -20,6 +20,7 @@ import { Imagen } from './Imagen';
 import { useColeccion } from './estado';
 import type { Catalogo } from '../datos/paquetes';
 import { CombateAlternativo } from './CombateAlternativo';
+import { PanelIniciativa, useCombateEnCurso } from './VistaCombate';
 import type { SistemaCombate } from '../motor/combateAlternativo';
 
 interface Props {
@@ -50,6 +51,8 @@ export function VistaMesa({
   onCambiar,
 }: Props) {
   const { enemigos, guardar: guardarEnemigo } = useEnemigos(campanaId);
+  // El combate que lleve el máster de esta mesa, si es que hay alguno en marcha.
+  const combateEnCurso = useCombateEnCurso(campanaId);
   const [enemigoId, setEnemigoId] = useState<string>('');
   const ficha = calcular(personaje, datos, reglamento);
   // El registro se guarda en el almacén, no en un `useState`: antes bastaba recargar la
@@ -225,6 +228,11 @@ export function VistaMesa({
 
   return (
     <div>
+      {/* Arriba del todo: durante una pelea es lo único que se mira de verdad. */}
+      {combateEnCurso && (
+        <PanelIniciativa combate={combateEnCurso} personajeId={personaje.id} />
+      )}
+
       <CombateAlternativo sistema={sistemaCombate} habilidadMedia={habilidadMedia} />
 
       <section className="panel" style={{ marginBottom: 16 }}>
