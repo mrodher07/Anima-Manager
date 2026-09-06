@@ -10,7 +10,9 @@ import {
   orden,
   siguiente,
   terminar,
+  ultimaIniciativaPorPersonaje,
   type Participante,
+  type TiradaDeIniciativa,
 } from './combatePorTurnos';
 
 const p = (
@@ -215,5 +217,58 @@ describe('llevar el combate', () => {
     // marcas distintas y la prueba fallaría según en qué milisegundo cayera.
     const acabado = terminar(c);
     expect(siguiente(acabado)).toEqual(acabado);
+  });
+});
+
+/**
+ * Un jugador tira su iniciativa desde su pantalla y la apunta en el registro, que es donde
+ * puede escribir. El máster la recoge de ahí.
+ */
+describe('recoger las iniciativas que tiran los jugadores', () => {
+  const t = (
+    personajeId: string | null,
+    iniciativa: number | undefined,
+    actualizadoEn: string,
+    combateId = 'cb1',
+  ): TiradaDeIniciativa => ({ personajeId, iniciativa, actualizadoEn, combateId });
+
+  it('coge la de cada jugador', () => {
+    const m = ultimaIniciativaPorPersonaje(
+      [t('ana', 120, '2026-01-01T10:00:00Z'), t('bruno', 95, '2026-01-01T10:00:01Z')],
+      'cb1',
+    );
+    expect([...m]).toEqual([
+      ['bruno', 95],
+      ['ana', 120],
+    ]);
+  });
+
+  it('si alguien repite manda la última', () => {
+    const m = ultimaIniciativaPorPersonaje(
+      [t('ana', 120, '2026-01-01T10:00:00Z'), t('ana', 60, '2026-01-01T10:05:00Z')],
+      'cb1',
+    );
+    expect(m.get('ana')).toBe(60);
+  });
+
+  it('no se cuela la de otro combate', () => {
+    // En el registro conviven la pelea de hoy y la de la semana pasada.
+    const m = ultimaIniciativaPorPersonaje([t('ana', 120, '2026-01-01T10:00:00Z', 'otro')], 'cb1');
+    expect(m.size).toBe(0);
+  });
+
+  it('las tiradas normales no cuentan como iniciativa', () => {
+    // Una tirada de Trepar no lleva número de iniciativa, y no debe colarse como uno.
+    const m = ultimaIniciativaPorPersonaje(
+      [t('ana', undefined, '2026-01-01T10:00:00Z'), t(null, 50, '2026-01-01T10:00:00Z')],
+      'cb1',
+    );
+    expect(m.size).toBe(0);
+  });
+
+  it('no toca la lista que recibe', () => {
+    const lista = [t('ana', 1, '2026-01-01T10:00:00Z'), t('bruno', 2, '2026-01-01T09:00:00Z')];
+    ultimaIniciativaPorPersonaje(lista, 'cb1');
+    expect(lista.map((x) => x.personajeId)).toEqual(['ana', 'bruno']);
   });
 });

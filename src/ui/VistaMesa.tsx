@@ -20,7 +20,7 @@ import { Imagen } from './Imagen';
 import { useColeccion } from './estado';
 import type { Catalogo } from '../datos/paquetes';
 import { CombateAlternativo } from './CombateAlternativo';
-import { PanelIniciativa, useCombateEnCurso } from './VistaCombate';
+import { PanelIniciativa, useCombateActivo } from './VistaCombate';
 import type { SistemaCombate } from '../motor/combateAlternativo';
 
 interface Props {
@@ -52,7 +52,7 @@ export function VistaMesa({
 }: Props) {
   const { enemigos, guardar: guardarEnemigo } = useEnemigos(campanaId);
   // El combate que lleve el máster de esta mesa, si es que hay alguno en marcha.
-  const combateEnCurso = useCombateEnCurso(campanaId);
+  const combateEnCurso = useCombateActivo(campanaId);
   const [enemigoId, setEnemigoId] = useState<string>('');
   const ficha = calcular(personaje, datos, reglamento);
   // El registro se guarda en el almacén, no en un `useState`: antes bastaba recargar la
@@ -75,15 +75,26 @@ export function VistaMesa({
 
   const enemigo = enemigos.find((e) => e.id === enemigoId) ?? null;
 
-  const anotar = (texto: string, detalle: string, critico = false) => {
+  const anotar = (
+    texto: string,
+    detalle: string,
+    critico = false,
+    extra?: { combateId?: string; iniciativa?: number },
+  ) => {
     void guardarTirada({
       personajeId: personaje.id,
       autor: personaje.nombre || 'Sin nombre',
       texto,
       detalle,
       critico,
+      ...extra,
     });
   };
+
+  /** El sitio de este personaje en el combate que se esté jugando, si es que está. */
+  const miSitioEnCombate = combateEnCurso?.participantes.find(
+    (p) => p.tipo === 'personaje' && p.refId === personaje.id,
+  );
 
   const estado = personaje.estado;
   const pv = estado.pvActuales ?? ficha.puntosVida.valor;
@@ -113,10 +124,27 @@ export function VistaMesa({
 
   const arma = ficha.combate.armas[armaElegida];
 
+  /*
+   * La iniciativa la tira el jugador desde su propia pantalla, como tiraría su dado.
+   *
+   * Si hay un combate montado y está en él, la tirada va marcada con el combate al que
+   * pertenece: el máster la recoge del registro y se le rellena sola la casilla, sin tener
+   * que cantar el número en voz alta ni que él lo teclee.
+   */
   const tirarIniciativa = () => {
-    const base = arma?.turno ?? ficha.combate.turnoSinArma;
+    // Con el combate en marcha manda el turno con el que te apuntaron: el máster pudo
+    // ajustarlo, y tirar sobre otro número dejaría dos verdades distintas.
+    const base = miSitioEnCombate?.turnoBase ?? arma?.turno ?? ficha.combate.turnoSinArma;
     const t = tirarD100(base);
-    anotar(`Iniciativa: ${base + t.total}`, `${base} de turno + ${describeTirada(t)}`);
+    const total = base + t.total;
+    anotar(
+      `Iniciativa: ${total}`,
+      `${base} de turno + ${describeTirada(t)}`,
+      false,
+      combateEnCurso && miSitioEnCombate
+        ? { combateId: combateEnCurso.id, iniciativa: total }
+        : undefined,
+    );
   };
 
   /**
@@ -277,7 +305,13 @@ export function VistaMesa({
         </div>
         <div className="acciones-regla">
           <button className="accion" onClick={restablecer}>Descanso completo</button>
-          <button className="accion" onClick={tirarIniciativa}>Tirar iniciativa</button>
+          <button
+            className={`accion${miSitioEnCombate && miSitioEnCombate.iniciativa === undefined ? ' primaria' : ''}`}
+            onClick={tirarIniciativa}
+            title={miSitioEnCombate ? 'Se la lleva el máster a su lista' : undefined}
+          >
+            {miSitioEnCombate ? 'Tirar mi iniciativa' : 'Tirar iniciativa'}
+          </button>
         </div>
       </section>
 

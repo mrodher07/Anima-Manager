@@ -273,6 +273,8 @@ describe('restaurar', () => {
    * quien lo abre. Sólo se restauran las claves que la aplicación conoce.
    */
   it('ignora preferencias que no son suyas', async () => {
+    // Con todas las conocidas puestas, para que la cuenta de restauradas signifique algo.
+    for (const clave of CLAVES_PREFERENCIAS) localStorage.setItem(clave, 'x');
     const copia = JSON.parse(JSON.stringify(await crearCopia()));
     copia.preferencias['algo:ajeno'] = 'valor';
     const r = await restaurarCopia(copia, 'fusionar');

@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { almacen, type Combate, type Enemigo } from '../almacen/almacen';
 import { cliente } from '../nube/supabase';
-import { combateDeCampana } from '../nube/sincronizacion';
+import { combateDeCampana, fichasDeCampana, tiradasDeCampana } from '../nube/sincronizacion';
 import {
   actuando,
   combateVacio,
@@ -12,6 +12,7 @@ import {
   orden,
   siguiente,
   terminar,
+  ultimaIniciativaPorPersonaje,
   type Participante,
 } from '../motor/combatePorTurnos';
 import { calcular, cargarDatosCalculo, type Personaje } from '../motor/personaje';
@@ -44,26 +45,39 @@ interface Props {
  * se enseña como desconocido en vez de como un cero que nadie sabría distinguir de un
  * turno de verdad malísimo.
  */
+export interface ResumenDeFicha {
+  turno: number;
+  pv: number;
+  pvMax: number;
+}
+
 function useTurnos(
   personajes: Personaje[],
   catalogo: Catalogo,
   reglamento: Reglamento,
-): Map<string, number> {
-  const [turnos, setTurnos] = useState(new Map<string, number>());
+): Map<string, ResumenDeFicha> {
+  const [turnos, setTurnos] = useState(new Map<string, ResumenDeFicha>());
   // La lista se recalcula sola en cada repintado; lo que importa es qué fichas hay y con
   // qué equipo, no la identidad del array.
   const clave = personajes
-    .map((p) => `${p.id}:${p.actualizadoEn}`)
+    .map((p) => `${p.id}:${p.actualizadoEn}:${p.estado.pvActuales ?? ''}`)
     .join('|');
 
   useEffect(() => {
     let vigente = true;
     void (async () => {
       const pares = await Promise.all(
-        personajes.map(async (p): Promise<[string, number]> => {
+        personajes.map(async (p): Promise<[string, ResumenDeFicha]> => {
           const datos = await cargarDatosCalculo(p, catalogo);
           const ficha = calcular(p, datos, reglamento);
-          return [p.id, ficha.combate.armas[0]?.turno ?? ficha.combate.turnoSinArma];
+          return [
+            p.id,
+            {
+              turno: ficha.combate.armas[0]?.turno ?? ficha.combate.turnoSinArma,
+              pv: p.estado.pvActuales ?? ficha.puntosVida.valor,
+              pvMax: ficha.puntosVida.valor,
+            },
+          ];
         }),
       );
       if (vigente) setTurnos(new Map(pares));
@@ -114,12 +128,17 @@ const CADA_EN_COMBATE = 4000;
 const CADA_EN_CALMA = 20000;
 
 /**
- * El combate que se está jugando en esta campaña, mire quien mire.
+ * El combate que hay montado en esta campaña, mire quien mire.
  *
  * El máster lo tiene en su propio aparato, porque es suyo. Un jugador no: el suyo vive en
  * la nube y lo lee de ahí, que para eso las políticas dejan leer a la mesa entera.
+ *
+ * Cuenta también el que está **montándose**, no sólo el que ya ha empezado: la iniciativa
+ * se tira justo antes de empezar, así que si sólo valiera el que está en curso el jugador
+ * no podría tirar la suya desde su pantalla, que es para lo que sirve todo esto. Si
+ * hubiera dos, manda el que se está jugando.
  */
-export function useCombateEnCurso(campanaId: string | null): Combate | null {
+export function useCombateActivo(campanaId: string | null): Combate | null {
   const [combate, setCombate] = useState<Combate | null>(null);
 
   useEffect(() => {
@@ -133,7 +152,10 @@ export function useCombateEnCurso(campanaId: string | null): Combate | null {
 
       // Lo propio primero: si el que mira es el máster, el combate es suyo y está aquí.
       const locales = await almacen.listarCombates(campanaId);
-      encontrado = locales.find((c) => c.estado === 'enCurso') ?? null;
+      encontrado =
+        locales.find((c) => c.estado === 'enCurso') ??
+        locales.find((c) => c.estado === 'preparando') ??
+        null;
 
       // Y si no, el de la mesa. Un fallo de red no borra lo que ya se estaba enseñando:
       // en mitad de un combate, quedarse en blanco por un corte de wifi es peor que
@@ -147,7 +169,7 @@ export function useCombateEnCurso(campanaId: string | null): Combate | null {
       }
 
       if (!vigente) return;
-      setCombate((antes) => (encontrado ? encontrado : antes && antes.estado === 'enCurso' ? antes : null));
+      setCombate((antes) => (encontrado ? encontrado : antes && antes.estado !== 'terminado' ? antes : null));
       reloj = setTimeout(
         () => void mirar(),
         encontrado ? CADA_EN_COMBATE : CADA_EN_CALMA,
@@ -178,6 +200,84 @@ export function useCombateEnCurso(campanaId: string | null): Combate | null {
  * Va arriba del todo de la Mesa y sin poder plegarse. Durante una pelea es lo único que se
  * mira de verdad, y esconderlo detrás de un desplegable obligaría a abrirlo cada asalto.
  */
+/**
+ * Las iniciativas que los jugadores han tirado desde su pantalla para este combate.
+ *
+ * Llegan por el registro de la partida, que es donde cada uno puede escribir lo suyo. Se
+ * miran las locales y las de la mesa, igual que el combate: en el aparato del máster
+ * estarán las suyas, y las de sus jugadores vienen de la nube.
+ *
+ * Devuelve, por personaje, la **última** que haya tirado: si alguien repite la tirada
+ * porque se equivocó, manda la de después.
+ */
+function useIniciativasTiradas(campanaId: string | null, combateId: string | null) {
+  const [porPersonaje, setPorPersonaje] = useState<Map<string, number>>(new Map());
+
+  useEffect(() => {
+    if (!campanaId || !combateId) { setPorPersonaje(new Map()); return; }
+    let vigente = true;
+    let reloj: ReturnType<typeof setTimeout> | undefined;
+
+    const mirar = async () => {
+      if (!vigente) return;
+      const locales = await almacen.listarTiradas(campanaId);
+      let todas = locales;
+      const supa = cliente();
+      if (supa) {
+        const { tiradas } = await tiradasDeCampana(supa, campanaId);
+        todas = [...locales, ...tiradas];
+      }
+      if (!vigente) return;
+      setPorPersonaje(ultimaIniciativaPorPersonaje(todas, combateId));
+      reloj = setTimeout(() => void mirar(), CADA_EN_COMBATE);
+    };
+
+    const alVolver = () => {
+      clearTimeout(reloj);
+      if (document.visibilityState === 'visible') void mirar();
+    };
+    document.addEventListener('visibilitychange', alVolver);
+    void mirar();
+    return () => {
+      vigente = false;
+      clearTimeout(reloj);
+      document.removeEventListener('visibilitychange', alVolver);
+    };
+  }, [campanaId, combateId]);
+
+  return porPersonaje;
+}
+
+/**
+ * Las fichas que hay en esta mesa: las de este aparato más las de los jugadores.
+ *
+ * Sin esto, el máster sólo podía meter en un combate las fichas que tuviera él guardadas,
+ * que en una mesa de verdad son las suyas y poco más. Las de los jugadores viven en la
+ * nube y las políticas le dejan leerlas —pero no escribirlas, que la ficha de un jugador
+ * es del jugador—, así que se consultan y se enseñan sin guardarlas en local.
+ *
+ * Si una ficha está en los dos sitios manda la local: es la que se está editando aquí.
+ */
+function useFichasDeLaMesa(campanaId: string | null, locales: Personaje[]): Personaje[] {
+  const [ajenas, setAjenas] = useState<Personaje[]>([]);
+
+  useEffect(() => {
+    if (!campanaId) { setAjenas([]); return; }
+    const supa = cliente();
+    if (!supa) { setAjenas([]); return; }
+    let vigente = true;
+    void fichasDeCampana(supa, campanaId).then(({ personajes }) => {
+      if (vigente) setAjenas(personajes);
+    });
+    return () => { vigente = false; };
+  }, [campanaId]);
+
+  return useMemo(() => {
+    const mios = new Set(locales.map((p) => p.id));
+    return [...locales, ...ajenas.filter((p) => !mios.has(p.id))];
+  }, [locales, ajenas]);
+}
+
 export function PanelIniciativa({
   combate,
   personajeId,
@@ -192,6 +292,7 @@ export function PanelIniciativa({
   // Cuántos actúan antes que yo en lo que queda de asalto. Sirve para saber si te da
   // tiempo a ir a por agua o si más te vale ir pensando lo que haces.
   const miSitio = lista.findIndex(soyYo);
+  const yo = lista[miSitio];
   const donde = leToca ? lista.findIndex((p) => p.id === leToca.id) : -1;
   const cuantosAntes = miSitio > donde ? miSitio - donde : -1;
 
@@ -204,17 +305,27 @@ export function PanelIniciativa({
 
       {esMiTurno ? (
         <p className="tu-turno" role="status">Es tu turno</p>
-      ) : (
+      ) : leToca ? (
         <p className="quien-va" role="status">
-          {leToca ? (
-            <>
-              Va <strong>{leToca.nombre}</strong>
-              {cuantosAntes === 1 && ' · eres el siguiente'}
-              {cuantosAntes > 1 && ` · te quedan ${cuantosAntes} por delante`}
-              {miSitio < 0 && ' · no estás en este combate'}
-            </>
+          Va <strong>{leToca.nombre}</strong>
+          {cuantosAntes === 1 && ' · eres el siguiente'}
+          {cuantosAntes > 1 && ` · te quedan ${cuantosAntes} por delante`}
+          {miSitio < 0 && ' · no estás en este combate'}
+        </p>
+      ) : (
+        /*
+         * Antes de empezar. Es el momento en el que hay algo que hacer —tirar— así que se
+         * dice, en vez de un «todavía no ha empezado» que no lleva a ninguna parte.
+         */
+        <p className="quien-va" role="status">
+          {miSitio < 0 ? (
+            'Se está montando un combate y no estás en él.'
+          ) : yo?.iniciativa === undefined ? (
+            <strong>Tira tu iniciativa, abajo en Recursos.</strong>
           ) : (
-            'Todavía no ha empezado.'
+            <>
+              Tu iniciativa: <strong>{yo.iniciativa}</strong> · esperando a los demás.
+            </>
           )}
         </p>
       )}
@@ -246,7 +357,8 @@ export function VistaCombate({
   onAnotar,
 }: Props) {
   const { combates, guardar, borrar } = useCombates(campanaId);
-  const turnos = useTurnos(personajes, catalogo, reglamento);
+  const fichasDeLaMesa = useFichasDeLaMesa(campanaId, personajes);
+  const turnos = useTurnos(fichasDeLaMesa, catalogo, reglamento);
   const [enemigos, setEnemigos] = useState<Enemigo[]>([]);
   const [abiertoId, setAbiertoId] = useState<string | null>(null);
 
@@ -254,9 +366,12 @@ export function VistaCombate({
     void almacen.listarEnemigos(campanaId).then(setEnemigos);
   }, [campanaId]);
 
-  // El que se esté jugando ahora mismo se abre solo: es lo que se viene a mirar.
+  // El que se esté jugando —o montando— se abre solo: es lo que se viene a mirar.
   useEffect(() => {
-    if (!abiertoId) setAbiertoId(combates.find((c) => c.estado === 'enCurso')?.id ?? null);
+    if (abiertoId) return;
+    const vivo =
+      combates.find((c) => c.estado === 'enCurso') ?? combates.find((c) => c.estado === 'preparando');
+    setAbiertoId(vivo?.id ?? null);
   }, [combates, abiertoId]);
 
   const crear = async () => {
@@ -305,9 +420,9 @@ export function VistaCombate({
           <Encuentro
             combate={c}
             campanaId={campanaId}
-            personajes={personajes}
+            personajes={fichasDeLaMesa}
             enemigos={enemigos}
-            turnos={turnos}
+            fichas={turnos}
             nuevoId={nuevoId}
             onCambiar={(x) => void guardar(x)}
             onBorrar={() => void borrar(c.id)}
@@ -324,7 +439,7 @@ function Encuentro({
   campanaId,
   personajes,
   enemigos,
-  turnos,
+  fichas,
   nuevoId,
   onCambiar,
   onBorrar,
@@ -334,7 +449,7 @@ function Encuentro({
   campanaId: string;
   personajes: Personaje[];
   enemigos: Enemigo[];
-  turnos: Map<string, number>;
+  fichas: Map<string, ResumenDeFicha>;
   nuevoId: () => string;
   onCambiar: (c: Combate) => void;
   onBorrar: () => void;
@@ -372,6 +487,33 @@ function Encuentro({
   const sePuedeTocar = combate.estado !== 'terminado';
 
   const [cantidades, setCantidades] = useState<Record<string, number>>({});
+
+  /*
+   * Las iniciativas que han tirado los jugadores desde su pantalla se recogen solas.
+   *
+   * Sólo rellenan huecos: si el máster ya tiene un número para alguien —lo tiró él o lo
+   * escribió a mano— no se pisa. Recoger por sorpresa un número sobre uno que ya estaba
+   * puesto sería cambiarle el orden a la mesa sin que nadie lo haya pedido.
+   */
+  const tiradasDeJugadores = useIniciativasTiradas(campanaId, combate.id);
+  useEffect(() => {
+    const pendientes = combate.participantes.filter(
+      (p) => p.tipo === 'personaje' && p.iniciativa === undefined && tiradasDeJugadores.has(p.refId),
+    );
+    if (pendientes.length === 0) return;
+    onCambiar({
+      ...combate,
+      participantes: combate.participantes.map((p) =>
+        pendientes.some((x) => x.id === p.id)
+          ? { ...p, iniciativa: tiradasDeJugadores.get(p.refId) }
+          : p,
+      ),
+      actualizadoEn: new Date().toISOString(),
+    });
+    // `onCambiar` y `combate` cambian en cada repintado; lo que dispara esto es que llegue
+    // una tirada nueva.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tiradasDeJugadores]);
 
   /**
    * Mete N copias de un enemigo de una tacada.
@@ -477,7 +619,8 @@ function Encuentro({
               ) : (
                 enOrdenDeMesa.map((p) => {
                   const ya = dentro.has(`personaje:${p.id}`);
-                  const turno = turnos.get(p.id);
+                  const resumen = fichas.get(p.id);
+                  const turno = resumen?.turno;
                   return (
                     <label key={p.id} className="fila-combatiente">
                       <input
@@ -562,6 +705,7 @@ function Encuentro({
                 <th className="num">Turno</th>
                 <th className="num">Dado</th>
                 <th className="num">Iniciativa</th>
+                <th className="num">Vida</th>
                 <th>En pie</th>
                 {sePuedeTocar && <th />}
               </tr>
@@ -611,6 +755,33 @@ function Encuentro({
                         )
                       }
                     />
+                  </td>
+                  {/*
+                    * Los PV de los jugadores, para no ir preguntando «¿cómo vas?» cada dos
+                    * turnos. De los enemigos no se enseñan aquí: el máster los lleva en el
+                    * bestiario y meterlos en esta tabla la volvería otra cosa.
+                    */}
+                  <td className="num">
+                    {(() => {
+                      if (p.tipo !== 'personaje') return <span className="sin-dato">—</span>;
+                      const r = fichas.get(p.refId);
+                      if (!r) return <span className="sin-dato">—</span>;
+                      const caido = r.pv <= 0;
+                      return (
+                        <span className={caido ? 'pv-caido' : undefined}>
+                          {r.pv}
+                          <span className="de-tope"> / {r.pvMax}</span>
+                          {caido && p.activo && (
+                            <button
+                              className="accion dado"
+                              onClick={() => onCambiar(conParticipante(combate, p.id, { activo: false }))}
+                            >
+                              Cae
+                            </button>
+                          )}
+                        </span>
+                      );
+                    })()}
                   </td>
                   <td>
                     <input
