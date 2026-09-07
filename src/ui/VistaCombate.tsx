@@ -20,6 +20,7 @@ import type { Catalogo } from '../datos/paquetes';
 import type { Reglamento } from '../motor/reglamento';
 import { tirarD100 } from '../motor/dados';
 import { Seccion, cuenta as contar } from './Seccion';
+import { MapaBatalla } from './MapaBatalla';
 
 interface Props {
   campanaId: string;
@@ -343,6 +344,20 @@ export function PanelIniciativa({
           </li>
         ))}
       </ol>
+
+      {/*
+        * El mapa debajo de la lista, no encima: la lista es cuatro líneas y el mapa ocupa
+        * media pantalla, así que puesto delante empujaría fuera de la vista justo lo que
+        * hay que mirar cada turno. De sólo lectura: las fichas las mueve el máster.
+        */}
+      {combate.mapa?.imagenId && (
+        <MapaBatalla
+          combate={combate}
+          campanaId={combate.campanaId}
+          editable={false}
+          personajeId={personajeId}
+        />
+      )}
     </section>
   );
 }
@@ -686,6 +701,14 @@ function Encuentro({
           </div>
         </>
       )}
+
+      <Seccion
+        titulo="Campo de batalla"
+        resumen={combate.mapa?.imagenId ? 'con mapa' : 'sin montar'}
+        abierta={Boolean(combate.mapa)}
+      >
+        <MapaBatalla combate={combate} campanaId={campanaId} editable onCambiar={onCambiar} />
+      </Seccion>
 
       <h3 style={{ marginTop: 18 }}>
         Orden de iniciativa

@@ -1391,6 +1391,112 @@ input.iniciativa { width: 78px; text-align: right; font-variant-numeric: tabular
 /* Los PV en rojo cuando ya no queda nada, con el botón de tirarlo al suelo al lado. */
 .pv-caido { color: var(--sangre-claro); font-weight: 600; }
 
+/* ── El campo de batalla ── */
+
+.mapa-batalla { margin: 12px 0; }
+.mapa-mandos { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 10px 16px; margin-bottom: 10px; }
+.mapa-mandos .campo { margin-bottom: 0; }
+.mapa-mandos .campo:first-child { flex: 1; min-width: 200px; }
+.mapa-mandos .campo:nth-child(2) { width: 130px; }
+.mapa-mandos .mapa-nota { color: var(--texto-debil); font-size: 0.8rem; margin: 0 0 4px; }
+
+.tablero {
+  position: relative;
+  width: 100%;
+  /*
+   * Que quepa en una pantalla. Sin tope, un mapa de pocas casillas se estira hasta ocupar
+   * dos pantallas de alto y deja el orden de iniciativa fuera de la vista, que es
+   * justamente lo que hay que mirar al lado del mapa. Se acota por el ancho, no por el
+   * alto, para que la proporción no se rompa.
+   */
+  max-width: min(100%, calc(68vh * var(--columnas) / var(--filas)));
+  margin-inline: auto;
+  overflow: hidden;
+  border: 1px solid var(--borde);
+  border-radius: var(--radio-s);
+  background: var(--fondo-2);
+  /* Sin esto, arrastrar una ficha con el dedo desplaza la página en vez de mover la ficha. */
+  touch-action: none;
+  user-select: none;
+}
+/*
+ * `fill` y no `contain`: las casillas tienen que ser cuadradas, y como el número de filas
+ * se redondea, la proporción de la cuadrícula casi nunca coincide con la de la imagen al
+ * milímetro. Se prefiere estirar el mapa un 2% —que no se nota— a dejar franjas negras o
+ * a que las casillas salgan rectangulares, que sí se nota al contar distancias.
+ */
+.mapa-fondo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: fill; }
+
+/* La cuadrícula, pintada con un degradado repetido: nada de mil divs. */
+.rejilla-mapa {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, color-mix(in srgb, var(--texto) 22%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in srgb, var(--texto) 22%, transparent) 1px, transparent 1px);
+  background-size: calc(100% / var(--columnas)) calc(100% / var(--filas));
+  pointer-events: none;
+}
+
+.ficha-mapa {
+  position: absolute;
+  width: calc(100% / var(--columnas));
+  height: calc(100% / var(--filas));
+  padding: 0;
+  margin: 0;
+  border: none;
+  background: none;
+  display: grid;
+  place-items: center;
+  cursor: default;
+  /* Que la ficha acompañe al dedo sin dar tirones, pero no mientras se arrastra. */
+  transition: left 0.12s ease, top 0.12s ease;
+}
+.tablero.editable .ficha-mapa { cursor: grab; }
+.ficha-mapa.cogida { transition: none; cursor: grabbing; z-index: 3; }
+
+/* El disco de la ficha ocupa el 80% de la casilla: deja ver la cuadrícula por debajo. */
+.ficha-mapa .inicial {
+  width: 80%;
+  height: 80%;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-family: var(--titulos);
+  font-size: clamp(0.5rem, 1.1vw, 0.95rem);
+  line-height: 1;
+  text-transform: uppercase;
+  color: var(--fondo);
+  border: 2px solid color-mix(in srgb, var(--fondo) 60%, transparent);
+  box-shadow: 0 2px 6px -2px #000;
+}
+.ficha-mapa.jugador .inicial { background: var(--oro); }
+.ficha-mapa.enemigo .inicial { background: var(--sangre-claro); }
+/* A quien le toca, un anillo; el tuyo, otro distinto. Se ven a la vez sin confundirse. */
+.ficha-mapa.actua .inicial { box-shadow: 0 0 0 3px var(--oro-claro), 0 2px 6px -2px #000; }
+.ficha-mapa.mia .inicial { border-color: var(--texto); }
+
+/* El nombre sólo al pasar por encima: doce nombres a la vez tapan el mapa. */
+.ficha-mapa .nombre-ficha {
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  transform: translate(-50%, 100%);
+  background: var(--panel);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio-s);
+  padding: 1px 6px;
+  font-size: 0.7rem;
+  white-space: nowrap;
+  color: var(--texto);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.12s ease;
+  z-index: 4;
+}
+.ficha-mapa:hover .nombre-ficha,
+.ficha-mapa:focus-visible .nombre-ficha { opacity: 1; }
+
 input[type='checkbox'] { accent-color: var(--oro); }
 
 .lista-seleccion {
