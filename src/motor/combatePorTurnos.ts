@@ -10,6 +10,8 @@
  * sostiene el orden para que nadie tenga que apuntarlo en un papel.
  */
 
+import type { Mapa } from './mapaBatalla';
+
 /** De dónde sale un participante: de una ficha de jugador o del bestiario. */
 export type TipoParticipante = 'personaje' | 'enemigo';
 
@@ -32,6 +34,14 @@ export interface Participante {
    * de quien queda en pie.
    */
   activo: boolean;
+  /**
+   * Dónde está en el mapa, en casillas. Sin valor mientras no se le haya colocado.
+   *
+   * En casillas y no en píxeles: así el mapa se ve igual en un monitor grande y en un
+   * móvil, y cambiar el tamaño de la ventana no descoloca a nadie.
+   */
+  x?: number;
+  y?: number;
 }
 
 export type EstadoCombate = 'preparando' | 'enCurso' | 'terminado';
@@ -54,6 +64,8 @@ export interface Combate {
    */
   turnoDe: string | null;
   participantes: Participante[];
+  /** El campo de batalla, si la mesa lo usa. Sin él el combate funciona igual. */
+  mapa?: Mapa;
   empezadoEn?: string;
   terminadoEn?: string;
 }
