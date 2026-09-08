@@ -32,6 +32,9 @@ interface Props {
   campanaId: string | null;
   /** El de la campaña activa. Sólo cambia cuánto dura cada asalto. */
   sistemaCombate: SistemaCombate;
+  /** Si la mesa lleva el combate por turnos y el campo de batalla. */
+  conCombate: boolean;
+  conMapa: boolean;
   onCambiar: (p: Personaje) => void;
 }
 
@@ -49,11 +52,15 @@ export function VistaMesa({
   reglamento,
   campanaId,
   sistemaCombate,
+  conCombate,
+  conMapa,
   onCambiar,
 }: Props) {
   const { enemigos, guardar: guardarEnemigo } = useEnemigos(campanaId);
   // El combate que lleve el máster de esta mesa, si es que hay alguno en marcha.
-  const combateEnCurso = useCombateActivo(campanaId);
+  // Si la mesa no usa el combate por turnos, ni se pregunta: son peticiones a la nube cada
+  // pocos segundos para enseñar algo que nadie quiere ver.
+  const combateEnCurso = useCombateActivo(conCombate ? campanaId : null);
   const [enemigoId, setEnemigoId] = useState<string>('');
   const ficha = calcular(personaje, datos, reglamento);
   // El registro se guarda en el almacén, no en un `useState`: antes bastaba recargar la
@@ -262,6 +269,7 @@ export function VistaMesa({
         <PanelIniciativa
           combate={combateEnCurso}
           personajeId={personaje.id}
+          conMapa={conMapa}
           onMoverMiFicha={(destino, desde) => {
             const cuantas = desde ? distancia(desde, destino) : 0;
             anotar(

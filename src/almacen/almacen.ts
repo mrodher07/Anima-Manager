@@ -140,12 +140,43 @@ export interface Campana {
    * (*Los que Caminaron con Nosotros*, cap. 4.)
    */
   sistemaCombate?: SistemaCombate;
+  /**
+   * Qué herramientas usa esta mesa.
+   *
+   * Nada de esto es una regla de Ánima: son ayudas. Hay mesas que llevan la iniciativa en
+   * una servilleta y no quieren una pantalla más, y hay muchas que juegan sin cuadrícula
+   * —el manual no la usa— y para las que un tablero de casillas sobra. Sin valor puesto se
+   * dan por activas, que es lo que había antes de existir este ajuste: apagarle a alguien
+   * algo que ya estaba usando sería peor que ofrecerlo de más.
+   */
+  herramientas?: {
+    /** El seguimiento de turnos y el orden de iniciativa. */
+    combate?: boolean;
+    /** El campo de batalla con cuadrícula. Necesita el combate para tener sentido. */
+    mapa?: boolean;
+  };
   /** Reglas caseras de la mesa. */
   ajustes: AjustesMesa;
   /** Diario de la campaña: lo que pasó en cada sesión. Lo escribe la mesa. */
   notasSesion: NotaSesion[];
   /** Razas, armas, armaduras y ventajas propias de esta mesa. */
   personalizados?: Personalizados;
+}
+
+/**
+ * Si una mesa usa el seguimiento de combate. Sin decir nada, sí.
+ *
+ * Va en una función y no leyendo el campo a pelo porque «sin poner» y «puesto a sí» tienen
+ * que significar lo mismo en los cinco sitios donde se pregunta, y con `?? true` repetido
+ * es cuestión de tiempo que uno se escriba al revés.
+ */
+export function usaCombate(campana: Campana | null | undefined): boolean {
+  return campana?.herramientas?.combate !== false;
+}
+
+/** Si usa además el campo de batalla. Sin el combate no hay mapa que enseñar. */
+export function usaMapa(campana: Campana | null | undefined): boolean {
+  return usaCombate(campana) && campana?.herramientas?.mapa !== false;
 }
 
 function marcar<T extends { actualizadoEn: string }>(registro: T): T {
