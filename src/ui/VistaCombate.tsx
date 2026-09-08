@@ -13,6 +13,7 @@ import {
   siguiente,
   terminar,
   ultimaIniciativaPorPersonaje,
+  ultimoMovimientoPorPersonaje,
   type Participante,
 } from '../motor/combatePorTurnos';
 import { calcular, cargarDatosCalculo, type Personaje } from '../motor/personaje';
@@ -213,9 +214,10 @@ export function useCombateActivo(campanaId: string | null): Combate | null {
  */
 function useIniciativasTiradas(campanaId: string | null, combateId: string | null) {
   const [porPersonaje, setPorPersonaje] = useState<Map<string, number>>(new Map());
+  const [movimientos, setMovimientos] = useState<Map<string, { x: number; y: number }>>(new Map());
 
   useEffect(() => {
-    if (!campanaId || !combateId) { setPorPersonaje(new Map()); return; }
+    if (!campanaId || !combateId) { setPorPersonaje(new Map()); setMovimientos(new Map()); return; }
     let vigente = true;
     let reloj: ReturnType<typeof setTimeout> | undefined;
 
@@ -230,6 +232,7 @@ function useIniciativasTiradas(campanaId: string | null, combateId: string | nul
       }
       if (!vigente) return;
       setPorPersonaje(ultimaIniciativaPorPersonaje(todas, combateId));
+      setMovimientos(ultimoMovimientoPorPersonaje(todas, combateId));
       reloj = setTimeout(() => void mirar(), CADA_EN_COMBATE);
     };
 
@@ -246,7 +249,7 @@ function useIniciativasTiradas(campanaId: string | null, combateId: string | nul
     };
   }, [campanaId, combateId]);
 
-  return porPersonaje;
+  return { iniciativas: porPersonaje, movimientos };
 }
 
 /**
@@ -282,9 +285,12 @@ function useFichasDeLaMesa(campanaId: string | null, locales: Personaje[]): Pers
 export function PanelIniciativa({
   combate,
   personajeId,
+  onMoverMiFicha,
 }: {
   combate: Combate;
   personajeId: string;
+  /** Mover tu propia ficha. Se apunta en el registro y el máster lo recoge. */
+  onMoverMiFicha?: (destino: { x: number; y: number }, desde?: { x: number; y: number }) => void;
 }) {
   const lista = enJuego(combate);
   const leToca = actuando(combate);
@@ -356,6 +362,7 @@ export function PanelIniciativa({
           campanaId={combate.campanaId}
           editable={false}
           personajeId={personajeId}
+          onMoverMiFicha={onMoverMiFicha}
         />
       )}
     </section>
@@ -510,7 +517,7 @@ function Encuentro({
    * escribió a mano— no se pisa. Recoger por sorpresa un número sobre uno que ya estaba
    * puesto sería cambiarle el orden a la mesa sin que nadie lo haya pedido.
    */
-  const tiradasDeJugadores = useIniciativasTiradas(campanaId, combate.id);
+  const { iniciativas: tiradasDeJugadores, movimientos } = useIniciativasTiradas(campanaId, combate.id);
   useEffect(() => {
     const pendientes = combate.participantes.filter(
       (p) => p.tipo === 'personaje' && p.iniciativa === undefined && tiradasDeJugadores.has(p.refId),
@@ -529,6 +536,29 @@ function Encuentro({
     // una tirada nueva.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tiradasDeJugadores]);
+
+  /*
+   * Y lo mismo con las fichas que los jugadores han movido en el mapa.
+   *
+   * Aquí sí se pisa lo que hubiera: un jugador moviendo su ficha **está diciendo dónde
+   * está**, no rellenando un hueco. Sólo se escribe si de verdad ha cambiado de casilla,
+   * para no estar guardando el combate cada cuatro segundos sin motivo.
+   */
+  useEffect(() => {
+    const movidos = combate.participantes.filter((p) => {
+      const m = p.tipo === 'personaje' ? movimientos.get(p.refId) : undefined;
+      return m && (m.x !== p.x || m.y !== p.y);
+    });
+    if (movidos.length === 0) return;
+    onCambiar({
+      ...combate,
+      participantes: combate.participantes.map((p) =>
+        movidos.some((x) => x.id === p.id) ? { ...p, ...movimientos.get(p.refId)! } : p,
+      ),
+      actualizadoEn: new Date().toISOString(),
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [movimientos]);
 
   /**
    * Mete N copias de un enemigo de una tacada.

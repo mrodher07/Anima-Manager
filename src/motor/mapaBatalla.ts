@@ -11,12 +11,92 @@
  * a nadie.
  */
 
+/** Una posición en la cuadrícula. El origen es la esquina de arriba a la izquierda. */
+export interface Casilla {
+  x: number;
+  y: number;
+}
+
 /** El mapa de un combate. Sin imagen es una cuadrícula pelada, que también sirve. */
 export interface Mapa {
   /** Imagen de la galería. `null` = sólo la cuadrícula. */
   imagenId: string | null;
   /** Cuántas casillas de ancho. El alto sale de la proporción de la imagen. */
   columnas: number;
+  /**
+   * Cuánto mide una casilla, si la mesa lo ha decidido.
+   *
+   * Va sin valor por defecto **a propósito**: Ánima no usa cuadrícula, así que no hay un
+   * número oficial que poner aquí. Sin él se cuenta en casillas, que no se lo inventa
+   * nadie; con él se enseñan además los metros.
+   */
+  metrosPorCasilla?: number;
+  /**
+   * Casillas tapadas, como «x,y». Los jugadores no ven lo que hay debajo, ni las fichas
+   * que estén dentro.
+   */
+  niebla?: string[];
+  /** Casillas marcadas con un color: «x,y» → color. Lo que significa lo decide la mesa. */
+  marcas?: Record<string, string>;
+}
+
+/** La clave con la que se guarda una casilla. */
+export function clave(x: number, y: number): string {
+  return `${x},${y}`;
+}
+
+/** Los colores con los que se puede marcar. Lo que quiera decir cada uno, lo dice la mesa. */
+export const COLORES_MARCA = [
+  { id: 'rojo', nombre: 'Rojo', css: '#c0392b' },
+  { id: 'azul', nombre: 'Azul', css: '#2e6fb7' },
+  { id: 'verde', nombre: 'Verde', css: '#3d8b52' },
+  { id: 'ambar', nombre: 'Ámbar', css: '#c9922b' },
+] as const;
+
+/**
+ * Cuántas casillas hay de una a otra.
+ *
+ * Se cuentan las diagonales como una, que es como cuenta cualquiera cuando mira un tablero
+ * y va diciendo «una, dos, tres». **Ánima no tiene reglas de cuadrícula**, así que esto no
+ * es una regla del manual sino una cuenta: la aplicación dice cuántas casillas hay y qué
+ * significa eso —si llegas, si te cuesta un asalto— lo decide la mesa.
+ */
+export function distancia(a: Casilla, b: Casilla): number {
+  return Math.max(Math.abs(a.x - b.x), Math.abs(a.y - b.y));
+}
+
+/** «3 casillas», y los metros al lado si la mesa ha dicho cuánto mide una. */
+export function describeDistancia(casillas: number, metrosPorCasilla?: number): string {
+  const cuenta = `${casillas} ${casillas === 1 ? 'casilla' : 'casillas'}`;
+  if (!metrosPorCasilla || metrosPorCasilla <= 0) return cuenta;
+  const metros = casillas * metrosPorCasilla;
+  // Sin decimales cuando son redondos: «6 m» se lee mejor que «6,0 m».
+  const texto = Number.isInteger(metros) ? String(metros) : metros.toFixed(1).replace('.', ',');
+  return `${cuenta} · ${texto} m`;
+}
+
+/**
+ * Las casillas de una línea entre dos, para pintar el rastro de un movimiento.
+ *
+ * Va en diagonal mientras pueda y luego recto, que es el camino que hace cualquiera con el
+ * dedo sobre un tablero.
+ */
+export function camino(a: Casilla, b: Casilla): Casilla[] {
+  const pasos: Casilla[] = [];
+  let { x, y } = a;
+  while (x !== b.x || y !== b.y) {
+    x += Math.sign(b.x - x);
+    y += Math.sign(b.y - y);
+    pasos.push({ x, y });
+  }
+  return pasos;
+}
+
+/** Añade o quita una casilla de un conjunto guardado como lista de claves. */
+export function alternar(claves: string[] | undefined, x: number, y: number): string[] {
+  const k = clave(x, y);
+  const actuales = claves ?? [];
+  return actuales.includes(k) ? actuales.filter((c) => c !== k) : [...actuales, k];
 }
 
 export const COLUMNAS_POR_DEFECTO = 20;
@@ -40,12 +120,6 @@ export function columnasValidas(n: number): number {
 export function filasDe(columnas: number, anchura?: number, altura?: number): number {
   const proporcion = anchura && altura ? altura / anchura : 9 / 16;
   return Math.max(1, Math.round(columnas * proporcion));
-}
-
-/** Una posición en la cuadrícula. El origen es la esquina de arriba a la izquierda. */
-export interface Casilla {
-  x: number;
-  y: number;
 }
 
 /**

@@ -114,6 +114,8 @@ export interface Tirada {
    */
   combateId?: string;
   iniciativa?: number;
+  /** A qué casilla se ha movido, cuando un jugador mueve su ficha en el mapa. */
+  movimiento?: { x: number; y: number };
 }
 
 /**
