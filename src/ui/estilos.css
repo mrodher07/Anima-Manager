@@ -1585,6 +1585,24 @@ input.iniciativa { width: 78px; text-align: right; font-variant-numeric: tabular
   box-shadow: 0 2px 8px -3px #000;
 }
 
+/* Un interruptor con su explicación al lado: se lee qué apagas antes de apagarlo. */
+.interruptor {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 1px solid var(--borde);
+  border-radius: var(--radio-s);
+  background: var(--fondo-2);
+  margin-bottom: 8px;
+  cursor: pointer;
+}
+.interruptor input[type='checkbox'] { width: auto; flex: none; margin: 3px 0 0; }
+.interruptor > span { display: grid; gap: 2px; }
+.interruptor small { color: var(--texto-debil); font-size: 0.82rem; }
+/* Apagado el de arriba, el de abajo no puede hacer nada: se dice, no se esconde. */
+.interruptor.apagado { opacity: 0.55; cursor: default; }
+
 input[type='checkbox'] { accent-color: var(--oro); }
 
 .lista-seleccion {

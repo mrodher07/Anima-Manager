@@ -26,6 +26,8 @@ import { MapaBatalla } from './MapaBatalla';
 interface Props {
   campanaId: string;
   soyElMaster: boolean;
+  /** Si esta mesa usa el campo de batalla. Se decide en los ajustes de la campaña. */
+  conMapa: boolean;
   /** Todas las fichas del aparato. Las de esta campaña salen primero. */
   personajes: Personaje[];
   catalogo: Catalogo;
@@ -285,10 +287,13 @@ function useFichasDeLaMesa(campanaId: string | null, locales: Personaje[]): Pers
 export function PanelIniciativa({
   combate,
   personajeId,
+  conMapa,
   onMoverMiFicha,
 }: {
   combate: Combate;
   personajeId: string;
+  /** Si la mesa usa el campo de batalla. */
+  conMapa: boolean;
   /** Mover tu propia ficha. Se apunta en el registro y el máster lo recoge. */
   onMoverMiFicha?: (destino: { x: number; y: number }, desde?: { x: number; y: number }) => void;
 }) {
@@ -356,7 +361,7 @@ export function PanelIniciativa({
         * media pantalla, así que puesto delante empujaría fuera de la vista justo lo que
         * hay que mirar cada turno. De sólo lectura: las fichas las mueve el máster.
         */}
-      {combate.mapa?.imagenId && (
+      {conMapa && combate.mapa?.imagenId && (
         <MapaBatalla
           combate={combate}
           campanaId={combate.campanaId}
@@ -372,6 +377,7 @@ export function PanelIniciativa({
 export function VistaCombate({
   campanaId,
   soyElMaster,
+  conMapa,
   personajes,
   catalogo,
   reglamento,
@@ -442,6 +448,7 @@ export function VistaCombate({
           <Encuentro
             combate={c}
             campanaId={campanaId}
+            conMapa={conMapa}
             personajes={fichasDeLaMesa}
             enemigos={enemigos}
             fichas={turnos}
@@ -459,6 +466,7 @@ export function VistaCombate({
 function Encuentro({
   combate,
   campanaId,
+  conMapa,
   personajes,
   enemigos,
   fichas,
@@ -469,6 +477,8 @@ function Encuentro({
 }: {
   combate: Combate;
   campanaId: string;
+  /** Si la mesa usa el campo de batalla. */
+  conMapa: boolean;
   personajes: Personaje[];
   enemigos: Enemigo[];
   fichas: Map<string, ResumenDeFicha>;
@@ -732,13 +742,15 @@ function Encuentro({
         </>
       )}
 
-      <Seccion
-        titulo="Campo de batalla"
-        resumen={combate.mapa?.imagenId ? 'con mapa' : 'sin montar'}
-        abierta={Boolean(combate.mapa)}
-      >
-        <MapaBatalla combate={combate} campanaId={campanaId} editable onCambiar={onCambiar} />
-      </Seccion>
+      {conMapa && (
+        <Seccion
+          titulo="Campo de batalla"
+          resumen={combate.mapa?.imagenId ? 'con mapa' : 'sin montar'}
+          abierta={Boolean(combate.mapa)}
+        >
+          <MapaBatalla combate={combate} campanaId={campanaId} editable onCambiar={onCambiar} />
+        </Seccion>
+      )}
 
       <h3 style={{ marginTop: 18 }}>
         Orden de iniciativa

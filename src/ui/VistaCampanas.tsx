@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { CORE_EXXET, PAQUETES, type Catalogo } from '../datos/paquetes';
 import { CREACION_POR_DEFECTO, type AjustesCreacion } from '../motor/reglamento';
 import { pdPorNivel } from '../motor/multiclase';
-import type { Campana } from '../almacen/almacen';
+import { usaCombate, usaMapa, type Campana } from '../almacen/almacen';
 import type { Cuenta } from '../nube/cuenta';
 import { PanelMesa } from './PanelMesa';
 import { VistaReglas } from './VistaReglas';
@@ -107,6 +107,9 @@ export function VistaCampanas({
 
   const todas = [...campanas, ...ajenas];
   const activa = todas.find((c) => c.id === campanaId) ?? null;
+  // La pestaña de Combate no está si la mesa no lo usa: enseñar una que sólo diga «esto
+  // está apagado» es peor que no enseñarla.
+  const panelesVisibles = PANELES.filter((x) => x.id !== 'combate' || usaCombate(activa));
   // Las tiradas de iniciativa entran en el registro de la partida como cualquier otra: es
   // lo que hace que después quede constancia de lo que sacó cada uno.
   const { anotar } = useTiradas(campanaId);
@@ -282,7 +285,7 @@ export function VistaCampanas({
             aquí dentro Reglas y Contenido propio, que estaban sueltas arriba.
           */}
           <nav className="pestanas" style={{ marginTop: 18 }}>
-            {PANELES.map((s) => (
+            {panelesVisibles.map((s) => (
               <button
                 key={s.id}
                 onClick={() => setPanel(s.id)}
@@ -314,6 +317,7 @@ export function VistaCampanas({
           <VistaCombate
             campanaId={activa.id}
             soyElMaster={soyElMaster}
+            conMapa={usaMapa(activa)}
             personajes={fichasDelDispositivo}
             catalogo={catalogo}
             reglamento={reglamento}
@@ -326,6 +330,71 @@ export function VistaCampanas({
       {panel === 'ajustes' && editable && (
         <section className="panel" style={{ marginTop: 16 }}>
           <h2>Ajustes de «{editable.nombre}»</h2>
+
+          <Seccion
+            titulo="Herramientas"
+            resumen={
+              !usaCombate(editable)
+                ? 'sin combate ni mapa'
+                : usaMapa(editable)
+                  ? 'combate y mapa'
+                  : 'combate, sin mapa'
+            }
+            abierta={false}
+            ayuda={
+              <>
+                <p>
+                  Nada de esto es una regla de Ánima: son ayudas. Hay mesas que llevan la
+                  iniciativa en una servilleta y no quieren una pantalla más, y muchas que
+                  juegan <strong>sin cuadrícula</strong> —el manual no la usa— y para las que
+                  un tablero de casillas sobra.
+                </p>
+                <p style={{ marginBottom: 0 }}>
+                  Apagarlas no borra nada: los combates que ya tengas se quedan guardados y
+                  vuelven a aparecer si las enciendes otra vez.
+                </p>
+              </>
+            }
+          >
+            <label className="interruptor">
+              <input
+                type="checkbox"
+                checked={usaCombate(editable)}
+                onChange={(e) =>
+                  onGuardar({
+                    ...editable,
+                    herramientas: { ...editable.herramientas, combate: e.target.checked },
+                  })
+                }
+              />
+              <span>
+                <strong>Combate por turnos</strong>
+                <small>Quién entra, el orden de iniciativa y a quién le toca.</small>
+              </span>
+            </label>
+
+            <label className={`interruptor${usaCombate(editable) ? '' : ' apagado'}`}>
+              <input
+                type="checkbox"
+                checked={usaMapa(editable)}
+                disabled={!usaCombate(editable)}
+                onChange={(e) =>
+                  onGuardar({
+                    ...editable,
+                    herramientas: { ...editable.herramientas, mapa: e.target.checked },
+                  })
+                }
+              />
+              <span>
+                <strong>Campo de batalla</strong>
+                <small>
+                  {usaCombate(editable)
+                    ? 'Un mapa con cuadrícula y fichas que se arrastran.'
+                    : 'Necesita el combate por turnos.'}
+                </small>
+              </span>
+            </label>
+          </Seccion>
 
           <Seccion titulo="Identidad" resumen={editable.descripcion ? 'con descripción' : 'sin descripción'} abierta={false}>
             <div className="campo">

@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
+import { usaCombate, usaMapa } from '../almacen/almacen';
 import { Catalogo, PERSONALIZADOS_VACIOS, paquetePersonalizado } from '../datos/paquetes';
 import { VistaPersonajes } from './VistaPersonajes';
 import { VistaBestiario } from './VistaBestiario';
@@ -212,6 +213,8 @@ export function App() {
             reglamento={reglamento}
             campanaId={campanaId}
             sistemaCombate={campana?.sistemaCombate ?? 'normal'}
+            conCombate={Boolean(campana) && usaCombate(campana)}
+            conMapa={Boolean(campana) && usaMapa(campana)}
             onCambiar={guardar}
             onCerrar={() => { setAbiertoId(null); setSeccion('personajes'); }}
           />

@@ -23,6 +23,9 @@ interface Props {
   reglamento: Reglamento;
   campanaId: string | null;
   sistemaCombate: SistemaCombate;
+  /** Qué herramientas usa la mesa. Sin campaña activa, ninguna: no hay combate que seguir. */
+  conCombate: boolean;
+  conMapa: boolean;
   onCambiar: (p: Personaje) => void;
   onCerrar: () => void;
 }
@@ -46,6 +49,8 @@ export function VistaPersonaje({
   reglamento,
   campanaId,
   sistemaCombate,
+  conCombate,
+  conMapa,
   onCambiar,
   onCerrar,
 }: Props) {
@@ -121,6 +126,8 @@ export function VistaPersonaje({
               reglamento={reglamento}
               campanaId={campanaId}
               sistemaCombate={sistemaCombate}
+              conCombate={conCombate}
+              conMapa={conMapa}
               onCambiar={onCambiar}
             />
           )}
