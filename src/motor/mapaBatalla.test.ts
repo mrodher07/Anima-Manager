@@ -1,5 +1,10 @@
 import { describe, expect, it } from 'vitest';
 import {
+  alternar,
+  camino,
+  clave,
+  describeDistancia,
+  distancia,
   COLUMNAS_MAXIMAS,
   COLUMNAS_MINIMAS,
   COLUMNAS_POR_DEFECTO,
@@ -107,5 +112,63 @@ describe('colocación inicial', () => {
       expect(c.x).toBeLessThan(2);
       expect(c.y).toBeLessThan(2);
     }
+  });
+});
+
+describe('contar casillas', () => {
+  it('las diagonales cuentan como una, que es como cuenta cualquiera', () => {
+    expect(distancia({ x: 0, y: 0 }, { x: 3, y: 3 })).toBe(3);
+    expect(distancia({ x: 0, y: 0 }, { x: 3, y: 0 })).toBe(3);
+    expect(distancia({ x: 2, y: 5 }, { x: 2, y: 5 })).toBe(0);
+  });
+
+  it('da igual el orden', () => {
+    expect(distancia({ x: 7, y: 1 }, { x: 2, y: 4 })).toBe(distancia({ x: 2, y: 4 }, { x: 7, y: 1 }));
+  });
+
+  it('se lee en casillas, y en metros sólo si la mesa ha dicho cuánto mide una', () => {
+    // Sin valor no se inventa: Ánima no usa cuadrícula y no hay metro oficial.
+    expect(describeDistancia(3)).toBe('3 casillas');
+    expect(describeDistancia(1)).toBe('1 casilla');
+    expect(describeDistancia(3, 1.5)).toBe('3 casillas · 4,5 m');
+    expect(describeDistancia(3, 2)).toBe('3 casillas · 6 m');
+    expect(describeDistancia(3, 0)).toBe('3 casillas');
+  });
+});
+
+describe('el camino de una ficha', () => {
+  it('va en diagonal mientras puede y luego recto', () => {
+    expect(camino({ x: 0, y: 0 }, { x: 3, y: 1 })).toEqual([
+      { x: 1, y: 1 }, { x: 2, y: 1 }, { x: 3, y: 1 },
+    ]);
+  });
+
+  it('sin moverse no hay camino', () => {
+    expect(camino({ x: 4, y: 4 }, { x: 4, y: 4 })).toEqual([]);
+  });
+
+  it('tiene tantos pasos como casillas de distancia', () => {
+    const a = { x: 1, y: 6 };
+    const b = { x: 8, y: 2 };
+    expect(camino(a, b)).toHaveLength(distancia(a, b));
+  });
+});
+
+describe('pintar casillas', () => {
+  it('alternar añade y quita', () => {
+    expect(alternar(undefined, 2, 3)).toEqual(['2,3']);
+    expect(alternar(['2,3'], 2, 3)).toEqual([]);
+    expect(alternar(['1,1'], 2, 3)).toEqual(['1,1', '2,3']);
+  });
+
+  it('no toca la lista que recibe', () => {
+    const antes = ['1,1'];
+    alternar(antes, 2, 2);
+    expect(antes).toEqual(['1,1']);
+  });
+
+  it('la clave es la misma la escriba quien la escriba', () => {
+    expect(clave(2, 3)).toBe('2,3');
+    expect(alternar([clave(2, 3)], 2, 3)).toEqual([]);
   });
 });

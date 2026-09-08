@@ -21,6 +21,7 @@ import { useColeccion } from './estado';
 import type { Catalogo } from '../datos/paquetes';
 import { CombateAlternativo } from './CombateAlternativo';
 import { PanelIniciativa, useCombateActivo } from './VistaCombate';
+import { describeDistancia, distancia } from '../motor/mapaBatalla';
 import type { SistemaCombate } from '../motor/combateAlternativo';
 
 interface Props {
@@ -79,7 +80,7 @@ export function VistaMesa({
     texto: string,
     detalle: string,
     critico = false,
-    extra?: { combateId?: string; iniciativa?: number },
+    extra?: { combateId?: string; iniciativa?: number; movimiento?: { x: number; y: number } },
   ) => {
     void guardarTirada({
       personajeId: personaje.id,
@@ -258,7 +259,21 @@ export function VistaMesa({
     <div>
       {/* Arriba del todo: durante una pelea es lo único que se mira de verdad. */}
       {combateEnCurso && (
-        <PanelIniciativa combate={combateEnCurso} personajeId={personaje.id} />
+        <PanelIniciativa
+          combate={combateEnCurso}
+          personajeId={personaje.id}
+          onMoverMiFicha={(destino, desde) => {
+            const cuantas = desde ? distancia(desde, destino) : 0;
+            anotar(
+              `${personaje.nombre || 'Sin nombre'} se mueve`,
+              desde
+                ? `de ${desde.x},${desde.y} a ${destino.x},${destino.y} · ${describeDistancia(cuantas, combateEnCurso.mapa?.metrosPorCasilla)}`
+                : `a ${destino.x},${destino.y}`,
+              false,
+              { combateId: combateEnCurso.id, movimiento: destino },
+            );
+          }}
+        />
       )}
 
       <CombateAlternativo sistema={sistemaCombate} habilidadMedia={habilidadMedia} />

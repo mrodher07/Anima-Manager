@@ -214,6 +214,24 @@ export function ultimaIniciativaPorPersonaje(
   return fuera;
 }
 
+/**
+ * A dónde ha movido cada jugador su ficha, de lo apuntado en el registro.
+ *
+ * Mismo camino que la iniciativa y por lo mismo: un jugador no puede escribir el combate
+ * del máster. Manda el último movimiento de cada uno, que es donde está ahora.
+ */
+export function ultimoMovimientoPorPersonaje(
+  tiradas: (TiradaDeIniciativa & { movimiento?: { x: number; y: number } })[],
+  combateId: string,
+): Map<string, { x: number; y: number }> {
+  const fuera = new Map<string, { x: number; y: number }>();
+  for (const t of [...tiradas].sort((a, b) => b.actualizadoEn.localeCompare(a.actualizadoEn))) {
+    if (t.combateId !== combateId || !t.movimiento || !t.personajeId) continue;
+    if (!fuera.has(t.personajeId)) fuera.set(t.personajeId, t.movimiento);
+  }
+  return fuera;
+}
+
 /** Cambia un participante sin tocar los demás. */
 export function conParticipante(
   combate: Combate,

@@ -1425,7 +1425,16 @@ input.iniciativa { width: 78px; text-align: right; font-variant-numeric: tabular
  * milímetro. Se prefiere estirar el mapa un 2% —que no se nota— a dejar franjas negras o
  * a que las casillas salgan rectangulares, que sí se nota al contar distancias.
  */
-.mapa-fondo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: fill; }
+.mapa-fondo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  /* Que el navegador no intente arrastrar la imagen por su cuenta: cancela el trazo. */
+  -webkit-user-drag: none;
+  user-select: none;
+}
 
 /* La cuadrícula, pintada con un degradado repetido: nada de mil divs. */
 .rejilla-mapa {
@@ -1496,6 +1505,85 @@ input.iniciativa { width: 78px; text-align: right; font-variant-numeric: tabular
 }
 .ficha-mapa:hover .nombre-ficha,
 .ficha-mapa:focus-visible .nombre-ficha { opacity: 1; }
+
+/* Modos del mapa: mover, tapar, marcar. */
+.mapa-modos {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  /*
+   * Altura fija. Al cambiar de modo aparecen los colores o el botón de destapar, y sin
+   * esto la fila crecía y **el tablero daba un salto hacia abajo** justo cuando acabas de
+   * decidir dónde ibas a pintar.
+   */
+  min-height: 36px;
+}
+.mapa-modos button.accion[aria-pressed='true'] { color: var(--oro-claro); border-color: var(--oro); }
+.mapa-modos .colores { display: flex; gap: 4px; margin-left: 4px; }
+.mapa-modos .color {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  padding: 0;
+  cursor: pointer;
+}
+.mapa-modos .color.elegido { border-color: var(--texto); }
+
+/* Pintando, el cursor deja claro que no se está moviendo nada. */
+.tablero.pintando { cursor: crosshair; }
+.tablero.pintando .ficha-mapa { pointer-events: none; }
+
+.marca-casilla,
+.niebla-casilla,
+.paso-rastro {
+  position: absolute;
+  width: calc(100% / var(--columnas));
+  height: calc(100% / var(--filas));
+  pointer-events: none;
+}
+.marca-casilla { opacity: 0.34; }
+/* Para el máster la niebla es un velo —tiene que ver qué está tapando—; para el jugador,
+   opaca de verdad. */
+.niebla-casilla { background: #05060a; opacity: 0.97; }
+.tablero.editable .niebla-casilla,
+.tablero.pintando .niebla-casilla { opacity: 0.72; outline: 1px solid color-mix(in srgb, var(--arcano-claro) 50%, transparent); outline-offset: -1px; }
+.ficha-mapa.bajo-niebla { opacity: 0.55; }
+
+/* El rastro de un movimiento: puntos, no una línea, porque lo que se cuenta son casillas. */
+.paso-rastro { display: grid; place-items: center; }
+.paso-rastro::after {
+  content: '';
+  width: 26%;
+  height: 26%;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--oro-claro) 80%, transparent);
+}
+
+/* La cuenta de casillas, pegada a donde va el dedo. */
+.cuenta-casillas {
+  position: absolute;
+  width: calc(100% / var(--columnas));
+  height: calc(100% / var(--filas));
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+  z-index: 5;
+  /* El texto se sale de la casilla —una casilla no da para «3 casillas · 4,5 m»— así que
+     no se recorta y se centra sobre ella. */
+  overflow: visible;
+}
+.cuenta-casillas > span {
+  background: var(--panel);
+  border: 1px solid var(--oro);
+  border-radius: var(--radio-s);
+  padding: 2px 7px;
+  font-size: 0.74rem;
+  white-space: nowrap;
+  color: var(--texto);
+  box-shadow: 0 2px 8px -3px #000;
+}
 
 input[type='checkbox'] { accent-color: var(--oro); }
 
