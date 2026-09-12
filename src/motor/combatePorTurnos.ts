@@ -22,6 +22,16 @@ export interface Participante {
   /** Id de la ficha o del enemigo del que salió. */
   refId: string;
   nombre: string;
+  /**
+   * El retrato con el que sale en el mapa, copiado al entrar en el combate.
+   *
+   * Se guarda aquí, y no se mira en la ficha, **a propósito**: quien pinta el mapa en la
+   * pantalla de un jugador no tiene las fichas de los demás en su aparato, así que sin esto
+   * sólo podría dibujar la suya con cara y las otras con dos letras. La pantalla del máster
+   * lo mantiene al día mientras tenga la ficha delante; si la ficha ya no está —un enemigo
+   * borrado del bestiario— se queda con el que se apuntó, que es el que se vio en la mesa.
+   */
+  retratoId?: string | null;
   /** Turno de partida, antes de tirar. */
   turnoBase: number;
   /** Lo que salió en el d100. Sin valor mientras no haya tirado. */

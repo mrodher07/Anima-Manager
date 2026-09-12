@@ -3,21 +3,28 @@ import {
   COLORES_MARCA,
   COLUMNAS_MAXIMAS,
   COLUMNAS_MINIMAS,
+  ELEMENTOS_DE_SIEMPRE,
   MAPA_VACIO,
   camino,
   casillaDesde,
   clave,
   colocacionInicial,
   columnasValidas,
+  dentroDelMapa,
   describeDistancia,
   distancia,
+  elementoEn,
   filasDe,
+  moverElemento,
+  quitarElemento,
   type Casilla,
+  type ElementoMapa,
   type Mapa,
 } from '../motor/mapaBatalla';
 import type { Combate } from '../motor/combatePorTurnos';
 import { actuando } from '../motor/combatePorTurnos';
 import { listarImagenes, obtenerImagen, type ImagenInfo } from '../almacen/imagenes';
+import { nuevoId } from './estado';
 
 interface Props {
   combate: Combate;
@@ -35,7 +42,14 @@ interface Props {
 }
 
 /** Qué hace el ratón sobre el tablero. Sólo el máster tiene más de uno. */
-type Modo = 'mover' | 'niebla' | 'marcar';
+type Modo = 'mover' | 'niebla' | 'marcar' | 'cosas';
+
+/** Lo que se está poniendo en el suelo: uno de los de siempre o una imagen de la galería. */
+interface CosaElegida {
+  nombre: string;
+  icono?: string;
+  imagenId?: string | null;
+}
 
 /** La imagen del mapa, como URL de objeto. Se revoca al cambiar para no filtrar memoria. */
 function useUrlImagen(id: string | null | undefined) {
@@ -61,6 +75,49 @@ function useUrlImagen(id: string | null | undefined) {
   return { url, medidas };
 }
 
+/**
+ * Varias imágenes a la vez —los retratos de las fichas y los dibujos del suelo—, cada una
+ * como URL de objeto.
+ *
+ * Se guardan en un `ref` y no en el estado porque lo caro es crearlas: si se rehicieran
+ * cada vez que entra alguien en el combate, todos los retratos parpadearían por uno nuevo.
+ * Sólo se pide lo que falta, y se sueltan todas al desmontar para no dejar memoria colgada.
+ */
+function useUrlesImagenes(ids: (string | null | undefined)[]): Map<string, string> {
+  const guardadas = useRef(new Map<string, string>());
+  const [, repintar] = useState(0);
+  // Una clave de texto: así el efecto no se dispara porque el array sea otro array.
+  const pedidas = [...new Set(ids.filter(Boolean) as string[])].sort();
+  const clave = pedidas.join('|');
+
+  useEffect(() => {
+    const faltan = (clave ? clave.split('|') : []).filter((id) => !guardadas.current.has(id));
+    if (faltan.length === 0) return;
+    let vigente = true;
+    void Promise.all(faltan.map(async (id) => [id, await obtenerImagen(id)] as const)).then((pares) => {
+      if (!vigente) return;
+      let alguna = false;
+      for (const [id, img] of pares) {
+        if (!img || guardadas.current.has(id)) continue;
+        guardadas.current.set(id, URL.createObjectURL(img.datos));
+        alguna = true;
+      }
+      if (alguna) repintar((n) => n + 1);
+    });
+    return () => { vigente = false; };
+  }, [clave]);
+
+  useEffect(() => {
+    const mapa = guardadas.current;
+    return () => {
+      for (const url of mapa.values()) URL.revokeObjectURL(url);
+      mapa.clear();
+    };
+  }, []);
+
+  return guardadas.current;
+}
+
 export function MapaBatalla({
   combate,
   campanaId,
@@ -77,6 +134,11 @@ export function MapaBatalla({
   const [encima, setEncima] = useState<Casilla | null>(null);
   const [modo, setModo] = useState<Modo>('mover');
   const [color, setColor] = useState<string>(COLORES_MARCA[0].id);
+  /** Lo que se pone al pulsar en el suelo, y de qué tamaño. */
+  const [cosa, setCosa] = useState<CosaElegida>(ELEMENTOS_DE_SIEMPRE[0]);
+  const [tamano, setTamano] = useState({ ancho: 1, alto: 1 });
+  /** El barril que se está arrastrando, si hay alguno. */
+  const [cogiendoCosa, setCogiendoCosa] = useState<string | null>(null);
   /*
    * Si esto fuera estado de React, el `pointermove` que llega justo detrás del
    * `pointerdown` lo leería todavía en `false` y el arrastre no pintaría. No hace falta
@@ -95,6 +157,19 @@ export function MapaBatalla({
   const niebla = borrador?.niebla ?? mapa.niebla ?? [];
   const marcas = borrador?.marcas ?? mapa.marcas ?? {};
   const filas = filasDe(columnas, medidas?.anchura, medidas?.altura);
+  const elementos = mapa.elementos ?? [];
+
+  /*
+   * Los retratos de las fichas y los dibujos del suelo, todos de una vez.
+   *
+   * Los retratos salen del combate y no de las fichas a propósito: la pantalla de un
+   * jugador no tiene las fichas de los demás, así que si se miraran ahí sólo su propia
+   * ficha tendría cara. Quien no tenga retrato se queda con sus dos letras de siempre.
+   */
+  const urles = useUrlesImagenes([
+    ...combate.participantes.map((p) => p.retratoId),
+    ...elementos.map((e) => e.imagenId),
+  ]);
 
   useEffect(() => {
     if (!editable) return;
@@ -147,6 +222,19 @@ export function MapaBatalla({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [combate.participantes.length, columnas, filas, editable]);
 
+  /* Y lo mismo con los barriles: al encoger el mapa se meten dentro en vez de perderse. */
+  useEffect(() => {
+    if (!editable || !onCambiar) return;
+    const metidos = dentroDelMapa(mapa.elementos, columnas, filas);
+    if (metidos === mapa.elementos) return;
+    onCambiar({
+      ...combate,
+      mapa: { ...mapa, elementos: metidos },
+      actualizadoEn: new Date().toISOString(),
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mapa.elementos, columnas, filas, editable]);
+
   const cambiarMapa = (cambios: Partial<Mapa>) =>
     onCambiar?.({ ...combate, mapa: { ...mapa, ...cambios }, actualizadoEn: new Date().toISOString() });
 
@@ -180,6 +268,45 @@ export function MapaBatalla({
       participantes: combate.participantes.map((p) => (p.id === id ? { ...p, ...sitio } : p)),
       actualizadoEn: new Date().toISOString(),
     });
+  };
+
+  /**
+   * Pone una cosa en el suelo, o la quita si ya había una ahí.
+   *
+   * Poner y quitar con el mismo gesto porque es lo que espera cualquiera al mirar un
+   * tablero: pulsas donde quieres el barril, y vuelves a pulsar encima cuando ya no lo
+   * quieres. Nada de esto tiene reglas: un barril no tapa el paso ni da cobertura, lo que
+   * signifique lo decide la mesa.
+   */
+  const ponerCosa = (clienteX: number, clienteY: number) => {
+    if (!editable || !onCambiar) return;
+    const c = casillaDelPuntero(clienteX, clienteY);
+    if (!c) return;
+    const ya = elementoEn(elementos, c.x, c.y);
+    if (ya) {
+      cambiarMapa({ elementos: quitarElemento(elementos, ya.id) });
+      return;
+    }
+    // Que no se salga por abajo o por la derecha si es grande y se pulsa junto al borde.
+    const ancho = Math.max(1, tamano.ancho);
+    const alto = Math.max(1, tamano.alto);
+    const nueva: ElementoMapa = {
+      id: nuevoId(),
+      x: Math.min(c.x, Math.max(0, columnas - ancho)),
+      y: Math.min(c.y, Math.max(0, filas - alto)),
+      nombre: cosa.nombre,
+      icono: cosa.icono,
+      imagenId: cosa.imagenId ?? null,
+      ancho,
+      alto,
+    };
+    cambiarMapa({ elementos: [...elementos, nueva] });
+  };
+
+  const moverCosa = (id: string, clienteX: number, clienteY: number) => {
+    const sitio = casillaDelPuntero(clienteX, clienteY);
+    if (!sitio || !editable) return;
+    cambiarMapa({ elementos: dentroDelMapa(moverElemento(elementos, id, sitio), columnas, filas) });
   };
 
   /**
@@ -245,6 +372,11 @@ export function MapaBatalla({
   // Un solo manejador en el tablero en vez de uno por ficha: con `setPointerCapture` el
   // dedo puede salirse de la ficha —y se sale siempre— sin que se pierda el arrastre.
   const alSoltar = (e: React.PointerEvent) => {
+    if (cogiendoCosa) {
+      moverCosa(cogiendoCosa, e.clientX, e.clientY);
+      setCogiendoCosa(null);
+      return;
+    }
     // Lo de pintar lo cierra el escuchador de la ventana; aquí sólo se suelta la ficha.
     if (!arrastrando) return;
     mover(arrastrando, e.clientX, e.clientY);
@@ -363,6 +495,7 @@ export function MapaBatalla({
               ['mover', 'Mover'],
               ['niebla', 'Tapar'],
               ['marcar', 'Marcar'],
+              ['cosas', 'Cosas'],
             ] as const).map(([id, texto]) => (
               <button
                 key={id}
@@ -397,7 +530,92 @@ export function MapaBatalla({
                 Quitar marcas
               </button>
             )}
+            {modo === 'cosas' && elementos.length > 0 && (
+              <button className="accion" onClick={() => cambiarMapa({ elementos: [] })}>
+                Vaciar el suelo
+              </button>
+            )}
           </div>
+
+          {/*
+            * La caja de las cosas. Sale sólo en su modo: son dieciséis dibujos y un par de
+            * mandos, y tenerlos siempre delante le quita sitio al mapa, que es lo que hay
+            * que mirar.
+            */}
+          {modo === 'cosas' && (
+            <div className="paleta-cosas">
+              <div className="cacharros" role="group" aria-label="Qué poner en el suelo">
+                {ELEMENTOS_DE_SIEMPRE.map((c) => (
+                  <button
+                    key={c.nombre}
+                    type="button"
+                    className={`cacharro${!cosa.imagenId && cosa.nombre === c.nombre ? ' elegido' : ''}`}
+                    aria-pressed={!cosa.imagenId && cosa.nombre === c.nombre}
+                    title={c.nombre}
+                    onClick={() => setCosa({ nombre: c.nombre, icono: c.icono })}
+                  >
+                    <span aria-hidden>{c.icono}</span>
+                    <span className="como-se-llama">{c.nombre}</span>
+                  </button>
+                ))}
+              </div>
+
+              <div className="mandos-cosas">
+                <div className="campo">
+                  <label htmlFor={`cosa-img-${combate.id}`}>O una imagen tuya</label>
+                  <select
+                    id={`cosa-img-${combate.id}`}
+                    value={cosa.imagenId ?? ''}
+                    onChange={(e) => {
+                      const elegida = mapas.find((m) => m.id === e.target.value);
+                      setCosa(
+                        elegida
+                          ? { nombre: elegida.nombre, imagenId: elegida.id }
+                          : ELEMENTOS_DE_SIEMPRE[0],
+                      );
+                    }}
+                  >
+                    <option value="">— de los de siempre —</option>
+                    {/* Aquí los objetos primero, que es lo que se busca cuando se pone algo
+                        en el suelo; en el desplegable del fondo van los mapas primero. */}
+                    {[...mapas]
+                      .sort((a, b) => (a.tipo === 'objeto' ? -1 : 0) - (b.tipo === 'objeto' ? -1 : 0))
+                      .map((m) => (
+                        <option key={m.id} value={m.id}>
+                          {m.nombre}{m.tipo !== 'objeto' ? ` · ${m.tipo}` : ''}
+                        </option>
+                      ))}
+                  </select>
+                </div>
+                <div className="campo estrecho">
+                  <label htmlFor={`cosa-ancho-${combate.id}`}>Ancho</label>
+                  <input
+                    id={`cosa-ancho-${combate.id}`}
+                    type="number"
+                    min={1}
+                    max={8}
+                    value={tamano.ancho}
+                    onChange={(e) =>
+                      setTamano((t) => ({ ...t, ancho: Math.max(1, Math.min(8, Number(e.target.value) || 1)) }))
+                    }
+                  />
+                </div>
+                <div className="campo estrecho">
+                  <label htmlFor={`cosa-alto-${combate.id}`}>Alto</label>
+                  <input
+                    id={`cosa-alto-${combate.id}`}
+                    type="number"
+                    min={1}
+                    max={8}
+                    value={tamano.alto}
+                    onChange={(e) =>
+                      setTamano((t) => ({ ...t, alto: Math.max(1, Math.min(8, Number(e.target.value) || 1)) }))
+                    }
+                  />
+                </div>
+              </div>
+            </div>
+          )}
 
           <p className="mapa-nota">
             {mapas.length === 0 && !mapa.imagenId
@@ -406,7 +624,9 @@ export function MapaBatalla({
                 ? `${columnas} × ${filas} casillas. Arrastra las fichas.`
                 : modo === 'niebla'
                   ? 'Arrastra para tapar lo que los jugadores no deben ver.'
-                  : 'Arrastra para marcar casillas. Lo que signifiquen, lo decidís vosotros.'}
+                  : modo === 'marcar'
+                    ? 'Arrastra para marcar casillas. Lo que signifiquen, lo decidís vosotros.'
+                    : 'Pulsa en una casilla para poner lo elegido, y encima de algo para quitarlo. En «Mover» se arrastran como las fichas.'}
           </p>
         </div>
       )}
@@ -416,11 +636,14 @@ export function MapaBatalla({
         className={[
           'tablero',
           puedeMover ? 'editable' : '',
-          editable && modo !== 'mover' ? 'pintando' : '',
+          editable && (modo === 'niebla' || modo === 'marcar') ? 'pintando' : '',
+          editable && modo === 'cosas' ? 'poniendo' : '',
         ].filter(Boolean).join(' ')}
         style={{ aspectRatio: proporcion, ['--columnas' as string]: columnas, ['--filas' as string]: filas }}
         onPointerDown={(e) => {
           if (!editable || modo === 'mover') return;
+          // Las cosas del suelo se ponen de una en una: no hay trazo que arrastrar.
+          if (modo === 'cosas') { ponerCosa(e.clientX, e.clientY); return; }
           // Lo que haga la primera casilla es lo que hará el arrastre entero.
           const c = casillaDelPuntero(e.clientX, e.clientY);
           pintandoPone.current = c
@@ -438,6 +661,7 @@ export function MapaBatalla({
         onPointerUp={alSoltar}
         onPointerCancel={() => {
           setArrastrando(null);
+          setCogiendoCosa(null);
           pintando.current = false;
           setEncima(null);
           ultimaPintada.current = null;
@@ -483,6 +707,63 @@ export function MapaBatalla({
           );
         })}
 
+        {/*
+          * Lo que hay en el suelo, debajo de las fichas: si un barril tapara a quien está
+          * detrás, habría que moverlo para ver de quién es el turno.
+          *
+          * Bajo la niebla tampoco se ve, igual que las fichas: si el máster ha tapado media
+          * sala, enseñar los barriles de dentro sería decir lo que hay ahí.
+          */}
+        {elementos.map((e) => {
+          if (!editable && tapada(e.x, e.y)) return null;
+          const dibujo = e.imagenId ? urles.get(e.imagenId) : null;
+          const seMueve = editable && modo === 'mover';
+          const seQuita = editable && modo === 'cosas';
+          return (
+            <button
+              key={e.id}
+              type="button"
+              className={[
+                'cosa-mapa',
+                cogiendoCosa === e.id ? 'cogida' : '',
+                editable && tapada(e.x, e.y) ? 'bajo-niebla' : '',
+              ].filter(Boolean).join(' ')}
+              style={{
+                left: `${(e.x * 100) / columnas}%`,
+                top: `${(e.y * 100) / filas}%`,
+                width: `calc(${Math.max(1, e.ancho ?? 1)} * 100% / ${columnas})`,
+                height: `calc(${Math.max(1, e.alto ?? 1)} * 100% / ${filas})`,
+              }}
+              title={seQuita ? `${e.nombre} · pulsa para quitarlo` : e.nombre}
+              disabled={!seMueve && !seQuita}
+              onPointerDown={(ev) => {
+                if (seQuita) {
+                  ev.stopPropagation();
+                  cambiarMapa({ elementos: quitarElemento(elementos, e.id) });
+                  return;
+                }
+                if (!seMueve) return;
+                ev.stopPropagation();
+                (ev.target as HTMLElement).setPointerCapture?.(ev.pointerId);
+                setCogiendoCosa(e.id);
+              }}
+              onPointerUp={(ev) => {
+                if (!cogiendoCosa) return;
+                ev.stopPropagation();
+                moverCosa(cogiendoCosa, ev.clientX, ev.clientY);
+                setCogiendoCosa(null);
+              }}
+            >
+              {dibujo ? (
+                <img src={dibujo} alt="" className="dibujo" draggable={false} />
+              ) : (
+                <span className="dibujo emoji" aria-hidden>{e.icono ?? '⬛'}</span>
+              )}
+              <span className="nombre-ficha">{e.nombre}</span>
+            </button>
+          );
+        })}
+
         {/* El rastro de lo que se está arrastrando, con la cuenta al final. */}
         {rastro.map((c, i) => (
           <div
@@ -509,6 +790,8 @@ export function MapaBatalla({
           // ve: saber dónde estás tú no es información que el máster esté escondiendo.
           if (!editable && !mia && tapada(p.x, p.y)) return null;
           const mueve = puedoMoverA(p) && (!editable || modo === 'mover');
+          // Si el retrato no está en este aparato se cae en las dos letras de siempre.
+          const retrato = p.retratoId ? urles.get(p.retratoId) : null;
           return (
             <button
               key={p.id}
@@ -539,7 +822,11 @@ export function MapaBatalla({
                 setEncima(null);
               }}
             >
-              <span className="inicial">{p.nombre.slice(0, 2)}</span>
+              {retrato ? (
+                <img src={retrato} alt="" className="inicial retrato" draggable={false} />
+              ) : (
+                <span className="inicial">{p.nombre.slice(0, 2)}</span>
+              )}
               <span className="nombre-ficha">{p.nombre}</span>
             </button>
           );

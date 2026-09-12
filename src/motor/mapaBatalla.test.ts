@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import {
   alternar,
   camino,
+  casillasDe,
   clave,
   describeDistancia,
   distancia,
@@ -11,7 +12,12 @@ import {
   casillaDesde,
   colocacionInicial,
   columnasValidas,
+  dentroDelMapa,
+  elementoEn,
   filasDe,
+  moverElemento,
+  quitarElemento,
+  type ElementoMapa,
   type EnElMapa,
 } from './mapaBatalla';
 
@@ -170,5 +176,65 @@ describe('pintar casillas', () => {
   it('la clave es la misma la escriba quien la escriba', () => {
     expect(clave(2, 3)).toBe('2,3');
     expect(alternar([clave(2, 3)], 2, 3)).toEqual([]);
+  });
+});
+
+describe('las cosas que hay en el suelo', () => {
+  const barril = (extra: Partial<ElementoMapa> = {}): ElementoMapa => ({
+    id: 'b', x: 2, y: 3, nombre: 'Barril', icono: '🛢️', ...extra,
+  });
+
+  it('uno normal ocupa una casilla', () => {
+    expect(casillasDe(barril())).toEqual([{ x: 2, y: 3 }]);
+  });
+
+  it('una mesa larga ocupa las casillas que diga', () => {
+    expect(casillasDe(barril({ nombre: 'Mesa', ancho: 3, alto: 2 }))).toEqual([
+      { x: 2, y: 3 }, { x: 2, y: 4 },
+      { x: 3, y: 3 }, { x: 3, y: 4 },
+      { x: 4, y: 3 }, { x: 4, y: 4 },
+    ]);
+  });
+
+  it('un tamaño de cero o de menos sigue ocupando su casilla', () => {
+    expect(casillasDe(barril({ ancho: 0, alto: -2 }))).toEqual([{ x: 2, y: 3 }]);
+  });
+
+  it('se sabe qué hay en una casilla, y también en las que ocupa algo grande', () => {
+    const mesa = barril({ id: 'm', x: 5, y: 5, nombre: 'Mesa', ancho: 2 });
+    const cosas = [barril(), mesa];
+    expect(elementoEn(cosas, 2, 3)?.id).toBe('b');
+    expect(elementoEn(cosas, 6, 5)?.id).toBe('m');
+    expect(elementoEn(cosas, 9, 9)).toBeUndefined();
+    expect(elementoEn(undefined, 0, 0)).toBeUndefined();
+  });
+
+  it('si hay dos encima gana el último puesto, que es el que se ve', () => {
+    const abajo = barril({ id: 'abajo' });
+    const arriba = barril({ id: 'arriba' });
+    expect(elementoEn([abajo, arriba], 2, 3)?.id).toBe('arriba');
+  });
+
+  it('quitar y mover no tocan la lista que reciben', () => {
+    const cosas = [barril(), barril({ id: 'c2', x: 8, y: 1 })];
+    expect(quitarElemento(cosas, 'b').map((e) => e.id)).toEqual(['c2']);
+    expect(quitarElemento(cosas, 'no-existe')).toHaveLength(2);
+    expect(moverElemento(cosas, 'b', { x: 7, y: 7 })[0]).toMatchObject({ x: 7, y: 7 });
+    expect(cosas[0]).toMatchObject({ x: 2, y: 3 });
+  });
+
+  it('al encoger el mapa las cosas se meten dentro, con su tamaño', () => {
+    const cosas = [barril({ x: 18, y: 9 }), barril({ id: 'm', x: 8, y: 2, ancho: 3, alto: 2 })];
+    const metidas = dentroDelMapa(cosas, 10, 6);
+    expect(metidas[0]).toMatchObject({ x: 9, y: 5 });
+    // A la mesa de 3×2 se la deja entera dentro, no sólo su esquina.
+    expect(metidas[1]).toMatchObject({ x: 7, y: 2 });
+    expect(casillasDe(metidas[1]).every((c) => c.x < 10 && c.y < 6)).toBe(true);
+  });
+
+  it('si no hay nada que recolocar devuelve la misma lista, para no repintar por gusto', () => {
+    const cosas = [barril()];
+    expect(dentroDelMapa(cosas, 20, 12)).toBe(cosas);
+    expect(dentroDelMapa(undefined, 20, 12)).toEqual([]);
   });
 });
