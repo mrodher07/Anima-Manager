@@ -347,7 +347,17 @@ export interface Exportacion {
   personajes: Personaje[];
   campanas: Campana[];
   enemigos?: Enemigo[];
-  /** Retratos de las fichas exportadas. Sin esto, al compartir se perderían. */
+  /**
+   * Los combates, con su orden de iniciativa y su campo de batalla dentro.
+   *
+   * Opcional: al compartir una ficha suelta no van, y los archivos de antes no los traen.
+   */
+  combates?: Combate[];
+  /**
+   * Las imágenes que hace falta llevarse: los retratos de las fichas, las de los enemigos
+   * y las que use el campo de batalla —el mapa de fondo y lo que haya en el suelo—. Sin
+   * esto, al compartir llegaría un mapa en gris y unas fichas sin cara.
+   */
   imagenes?: ImagenExportada[];
 }
 
@@ -364,12 +374,13 @@ async function deDataUri(uri: string): Promise<Blob> {
   return (await fetch(uri)).blob();
 }
 
-/** Recoge los retratos de unas fichas para incluirlos en la exportación. */
-async function recogerRetratos(personajes: Personaje[]): Promise<ImagenExportada[]> {
+/** Recoge unas imágenes por su id, sin repetir, para incluirlas en la exportación. */
+async function recogerImagenes(
+  ids: (string | null | undefined)[],
+): Promise<ImagenExportada[]> {
   const salida: ImagenExportada[] = [];
-  for (const p of personajes) {
-    if (!p.retratoId) continue;
-    const img = await obtenerImagen(p.retratoId);
+  for (const id of new Set(ids.filter(Boolean) as string[])) {
+    const img = await obtenerImagen(id);
     if (!img) continue;
     const { datos, ...info } = img;
     salida.push({ ...info, dataUri: await aDataUri(datos) });
@@ -377,11 +388,21 @@ async function recogerRetratos(personajes: Personaje[]): Promise<ImagenExportada
   return salida;
 }
 
+/** Todo lo que dibuja un combate: el mapa, lo que hay en el suelo y las caras. */
+function imagenesDe(combates: Combate[]): (string | null | undefined)[] {
+  return combates.flatMap((c) => [
+    c.mapa?.imagenId,
+    ...(c.mapa?.elementos ?? []).map((e) => e.imagenId),
+    ...c.participantes.map((p) => p.retratoId),
+  ]);
+}
+
 export async function exportarTodo(): Promise<Exportacion> {
-  const [personajes, campanas, enemigos] = await Promise.all([
+  const [personajes, campanas, enemigos, combates] = await Promise.all([
     almacen.listarPersonajes(),
     almacen.listarCampanas(),
     almacen.listarEnemigos(null),
+    almacen.listarCombates(null),
   ]);
   return {
     formato: 'anima-manager',
@@ -390,7 +411,12 @@ export async function exportarTodo(): Promise<Exportacion> {
     personajes,
     campanas,
     enemigos,
-    imagenes: await recogerRetratos(personajes),
+    combates,
+    imagenes: await recogerImagenes([
+      ...personajes.map((p) => p.retratoId),
+      ...enemigos.map((e) => e.imagenId),
+      ...imagenesDe(combates),
+    ]),
   };
 }
 
@@ -401,7 +427,7 @@ export async function exportarPersonaje(p: Personaje): Promise<Exportacion> {
     exportadoEn: new Date().toISOString(),
     personajes: [p],
     campanas: [],
-    imagenes: await recogerRetratos([p]),
+    imagenes: await recogerImagenes([p.retratoId]),
   };
 }
 
@@ -425,13 +451,14 @@ export async function analizarImportacion(
   const personajes = Array.isArray(e.personajes) ? e.personajes : [];
   const campanas = Array.isArray(e.campanas) ? e.campanas : [];
   const enemigos = Array.isArray(e.enemigos) ? e.enemigos : [];
+  const combates = Array.isArray(e.combates) ? e.combates : [];
 
   const existentes = new Set((await almacen.listarPersonajes()).map((p) => p.id));
   const conflictos = personajes.filter((p) => existentes.has(p.id)).map((p) => p.nombre || p.id);
 
   return {
     ok: true,
-    exportacion: { ...(e as Exportacion), personajes, campanas, enemigos },
+    exportacion: { ...(e as Exportacion), personajes, campanas, enemigos, combates },
     conflictos,
   };
 }
@@ -453,9 +480,20 @@ export async function importar(exportacion: Exportacion, sobrescribir: boolean):
   }
   for (const e of exportacion.enemigos ?? []) {
     await almacen.guardarEnemigo(e);
+    if (e.imagenId) importadas.add(e.imagenId);
+  }
+  /*
+   * Los combates entran enteros y traducidos, igual que las fichas: uno guardado con el
+   * modelo viejo apuntaba la **posición** del que actuaba en vez de su id, y meterlo tal
+   * cual dejaría el turno señalando a quien no era.
+   */
+  for (const bruto of exportacion.combates ?? []) {
+    const c = migrarCombate(bruto);
+    await almacen.guardarCombate(c);
+    for (const id of imagenesDe([c])) if (id) importadas.add(id);
   }
 
-  // Sólo se restauran los retratos de las fichas que de verdad han entrado.
+  // Sólo se restauran las imágenes de lo que de verdad ha entrado.
   for (const img of exportacion.imagenes ?? []) {
     if (!importadas.has(img.id)) continue;
     const { dataUri, ...info } = img;

@@ -122,7 +122,7 @@ export function VistaPersonajes({
           <button
             className="accion"
             onClick={async () => descargar('anima-manager.json', await exportarTodo())}
-            title="Incluye las fichas, las campañas y los retratos"
+            title="Incluye las fichas, las campañas, el bestiario, los combates con su campo de batalla y las imágenes que usan"
             disabled={personajes.length === 0}
           >
             Exportar todo
