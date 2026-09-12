@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { personajeVacio, type Personaje } from '../motor/personaje';
+import type { Combate } from '../motor/combatePorTurnos';
 import type { Campana, Enemigo, Tirada } from './almacen';
 import type { Imagen, ImagenInfo } from './imagenes';
 
@@ -21,6 +22,7 @@ const bd = {
   campanas: new Map<string, Campana>(),
   enemigos: new Map<string, Enemigo>(),
   tiradas: new Map<string, Tirada>(),
+  combates: new Map<string, Combate>(),
   imagenes: new Map<string, Imagen>(),
 };
 
@@ -30,14 +32,17 @@ vi.mock('./almacen', () => ({
     listarCampanas: async () => [...bd.campanas.values()],
     listarEnemigos: async () => [...bd.enemigos.values()],
     listarTiradas: async () => [...bd.tiradas.values()],
+    listarCombates: async () => [...bd.combates.values()],
     guardarPersonaje: async (p: Personaje) => void bd.personajes.set(p.id, p),
     guardarCampana: async (c: Campana) => void bd.campanas.set(c.id, c),
     guardarEnemigo: async (e: Enemigo) => void bd.enemigos.set(e.id, e),
     guardarTirada: async (t: Tirada) => void bd.tiradas.set(t.id, t),
+    guardarCombate: async (c: Combate) => void bd.combates.set(c.id, c),
     borrarPersonaje: async (id: string) => void bd.personajes.delete(id),
     borrarCampana: async (id: string) => void bd.campanas.delete(id),
     borrarEnemigo: async (id: string) => void bd.enemigos.delete(id),
     borrarTirada: async (id: string) => void bd.tiradas.delete(id),
+    borrarCombate: async (id: string) => void bd.combates.delete(id),
   },
 }));
 
@@ -91,6 +96,7 @@ function poblar() {
   bd.campanas.clear();
   bd.enemigos.clear();
   bd.tiradas.clear();
+  bd.combates.clear();
   bd.imagenes.clear();
 
   const p = personajeVacio('p1');
@@ -114,6 +120,37 @@ function poblar() {
     actualizadoEn: '2026-08-04T20:00:00.000Z',
     texto: 'Iniciativa: 118',
     detalle: '75 de turno + 43',
+  });
+
+  bd.combates.set('k1', {
+    id: 'k1',
+    campanaId: 'c1',
+    actualizadoEn: '2026-08-04T21:00:00.000Z',
+    nombre: 'Emboscada en el puente',
+    estado: 'terminado',
+    asalto: 4,
+    turnoDe: null,
+    participantes: [
+      {
+        id: 'x1', tipo: 'personaje', refId: 'p1', nombre: 'Meirmeister',
+        retratoId: 'img-retrato', turnoBase: 90, tirada: 28, iniciativa: 118,
+        activo: true, x: 3, y: 2,
+      },
+      {
+        id: 'x2', tipo: 'enemigo', refId: 'e1', nombre: 'Goblin',
+        turnoBase: 30, iniciativa: 61, activo: false, x: 12, y: 5,
+      },
+    ],
+    mapa: {
+      imagenId: 'img-mapa',
+      columnas: 16,
+      niebla: ['1,1', '1,2'],
+      marcas: { '4,4': 'rojo' },
+      elementos: [
+        { id: 'o1', x: 6, y: 3, nombre: 'Barril', icono: '🛢️', ancho: 1, alto: 1 },
+        { id: 'o2', x: 9, y: 7, nombre: 'Altar', imagenId: 'img-pnj', ancho: 2, alto: 2 },
+      ],
+    },
   });
 
   bd.imagenes.set('img-retrato', imagenDePrueba('img-retrato', 'retrato'));
@@ -163,6 +200,23 @@ describe('lo que entra en una copia', () => {
     expect(resumirCopia(c).tiradas).toBe(1);
   });
 
+  it('se lleva los combates enteros, con su campo de batalla', async () => {
+    // Un combate terminado es el registro de lo que pasó en la mesa: si la copia no lo
+    // cogiera, «copia completa» dejaría de ser cierto y eso no se reconstruye después.
+    const c = await crearCopia();
+    expect(c.combates).toHaveLength(1);
+    const k = c.combates![0];
+    expect(k.nombre).toBe('Emboscada en el puente');
+    expect(k.participantes.map((p) => [p.nombre, p.iniciativa, p.x, p.y])).toEqual([
+      ['Meirmeister', 118, 3, 2],
+      ['Goblin', 61, 12, 5],
+    ]);
+    // Y el mapa con todo lo suyo: fondo, niebla, marcas y lo que hay en el suelo.
+    expect(k.mapa).toMatchObject({ imagenId: 'img-mapa', columnas: 16, niebla: ['1,1', '1,2'] });
+    expect(k.mapa?.elementos?.map((e) => e.nombre)).toEqual(['Barril', 'Altar']);
+    expect(resumirCopia(c).combates).toBe(1);
+  });
+
   it('se lleva las preferencias del navegador, que no están en la base de datos', async () => {
     const c = await crearCopia();
     expect(c.preferencias['anima-manager:tema']).toBe('medieval');
@@ -170,7 +224,9 @@ describe('lo que entra en una copia', () => {
 
   it('el resumen cuenta lo que hay y estima lo que pesa', async () => {
     const r = resumirCopia(await crearCopia());
-    expect(r).toMatchObject({ personajes: 1, campanas: 1, enemigos: 1, imagenes: 3, preferencias: 1 });
+    expect(r).toMatchObject({
+      personajes: 1, campanas: 1, enemigos: 1, combates: 1, imagenes: 3, preferencias: 1,
+    });
     expect(r.bytes).toBeGreaterThan(0);
   });
 });
@@ -242,6 +298,61 @@ describe('restaurar', () => {
     expect(bd.imagenes.size).toBe(3);
   });
 
+  it('devuelve los combates con su mapa y sus fichas donde estaban', async () => {
+    const copia = JSON.parse(JSON.stringify(await crearCopia()));
+    bd.combates.clear();
+
+    const r = await restaurarCopia(copia, 'fusionar');
+    expect(r.combates).toBe(1);
+    const k = bd.combates.get('k1')!;
+    expect(k.nombre).toBe('Emboscada en el puente');
+    expect(k.mapa?.elementos).toHaveLength(2);
+    expect(k.participantes[0]).toMatchObject({ nombre: 'Meirmeister', x: 3, y: 2 });
+  });
+
+  it('reemplazar también se lleva por delante los combates que no estaban en la copia', async () => {
+    const copia = JSON.parse(JSON.stringify(await crearCopia()));
+    bd.combates.set('k2', { ...bd.combates.get('k1')!, id: 'k2', nombre: 'Otra pelea' });
+
+    await restaurarCopia(copia, 'reemplazar');
+    expect([...bd.combates.keys()]).toEqual(['k1']);
+  });
+
+  it('una copia vieja sin combates se restaura igual, sin borrar los que haya', async () => {
+    // Las copias de la versión 1 no traen la lista. No es motivo para fallar ni para
+    // dejarse por el camino lo que ya había en el aparato.
+    const copia = JSON.parse(JSON.stringify(await crearCopia()));
+    delete copia.combates;
+    copia.version = 1;
+
+    const leida = analizarCopia(copia);
+    expect(leida.ok).toBe(true);
+    const r = await restaurarCopia(copia, 'fusionar');
+    expect(r.combates).toBe(0);
+    expect(bd.combates.size).toBe(1);
+  });
+
+  it('un combate del modelo viejo se traduce al restaurarlo', async () => {
+    // Antes se guardaba la **posición** del que actuaba, no su id. Restaurarlo tal cual
+    // dejaría el turno señalando a quien no era.
+    const copia = JSON.parse(JSON.stringify(await crearCopia()));
+    const viejo = {
+      ...copia.combates[0],
+      id: 'k3',
+      estado: 'enCurso',
+      turno: 1,
+      // En pie los dos: el turno avanza sobre los que siguen en la pelea.
+      participantes: copia.combates[0].participantes.map((p: { activo: boolean }) => ({ ...p, activo: true })),
+    };
+    delete viejo.turnoDe;
+    copia.combates.push(viejo);
+    bd.combates.clear();
+
+    await restaurarCopia(copia, 'fusionar');
+    // El segundo del orden de iniciativa es el Goblin, con 61.
+    expect(bd.combates.get('k3')?.turnoDe).toBe('x2');
+  });
+
   it('lo que coincide por id lo manda la copia', async () => {
     const copia = JSON.parse(JSON.stringify(await crearCopia()));
     const tocada = { ...bd.personajes.get('p1')!, nombre: 'Cambiado' };
@@ -302,6 +413,7 @@ describe('restaurar', () => {
     bd.campanas.clear();
     bd.enemigos.clear();
     bd.tiradas.clear();
+    bd.combates.clear();
     bd.imagenes.clear();
     localStorage.clear();
 
@@ -312,6 +424,7 @@ describe('restaurar', () => {
     expect(despues.campanas).toEqual(antes.campanas);
     expect(despues.enemigos).toEqual(antes.enemigos);
     expect(despues.tiradas).toEqual(antes.tiradas);
+    expect(despues.combates).toEqual(antes.combates);
     expect(despues.imagenes.map((i) => i.id).sort()).toEqual(antes.imagenes.map((i) => i.id).sort());
     expect(despues.preferencias).toEqual(antes.preferencias);
   });

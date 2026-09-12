@@ -17,6 +17,7 @@
  * dispositivo exactamente como estaba el día de la copia, borrando lo demás).
  */
 
+import { migrarCombate, type Combate } from '../motor/combatePorTurnos';
 import { migrarPersonaje, type Personaje } from '../motor/personaje';
 import { almacen, type Campana, type Enemigo, type Tirada } from './almacen';
 import {
@@ -29,7 +30,8 @@ import {
 } from './imagenes';
 
 export const FORMATO = 'anima-manager-copia';
-export const VERSION_COPIA = 1;
+/** La 2 añade los combates. Una copia vieja se sigue leyendo: lo que falte entra vacío. */
+export const VERSION_COPIA = 2;
 
 /**
  * Preferencias que viven en `localStorage`.
@@ -55,6 +57,14 @@ export interface CopiaSeguridad {
   enemigos: Enemigo[];
   /** El registro de tiradas. Opcional: las copias anteriores a v4 no lo traen. */
   tiradas?: Tirada[];
+  /**
+   * Los combates, con su orden de iniciativa y su campo de batalla dentro.
+   *
+   * Opcional porque las copias de la versión 1 no los traían. Van enteros —quién entró, lo
+   * que sacó cada uno, dónde estaba en el mapa y qué había en el suelo— porque un combate
+   * terminado es el registro de lo que pasó en la mesa, y eso no se vuelve a reconstruir.
+   */
+  combates?: Combate[];
   /** **Todas** las imágenes, no sólo los retratos: mapas, PNJs, objetos… */
   imagenes: ImagenEnCopia[];
   /** Tema elegido y cualquier otra preferencia del navegador. */
@@ -66,6 +76,7 @@ export interface ResumenCopia {
   campanas: number;
   enemigos: number;
   tiradas: number;
+  combates: number;
   imagenes: number;
   preferencias: number;
   /** Tamaño aproximado del archivo, para poder avisar antes de descargarlo. */
@@ -144,12 +155,13 @@ async function recogerImagenes(): Promise<ImagenEnCopia[]> {
 }
 
 export async function crearCopia(): Promise<CopiaSeguridad> {
-  const [personajes, campanas, enemigos, tiradas, imagenes] = await Promise.all([
+  const [personajes, campanas, enemigos, tiradas, combates, imagenes] = await Promise.all([
     almacen.listarPersonajes(),
     almacen.listarCampanas(),
     // `null` trae los de todas las campañas, no sólo los de la activa.
     almacen.listarEnemigos(null),
     almacen.listarTiradas(null),
+    almacen.listarCombates(null),
     recogerImagenes(),
   ]);
 
@@ -161,6 +173,7 @@ export async function crearCopia(): Promise<CopiaSeguridad> {
     campanas,
     enemigos,
     tiradas,
+    combates,
     imagenes,
     preferencias: leerPreferencias(),
   };
@@ -172,6 +185,7 @@ export function resumirCopia(c: CopiaSeguridad): ResumenCopia {
     campanas: c.campanas.length,
     enemigos: c.enemigos.length,
     tiradas: (c.tiradas ?? []).length,
+    combates: (c.combates ?? []).length,
     imagenes: c.imagenes.length,
     preferencias: Object.keys(c.preferencias).length,
     // Una data URI en base64 ocupa cuatro tercios de lo que ocupan sus bytes.
@@ -221,6 +235,7 @@ export function analizarCopia(
     campanas: Array.isArray(c.campanas) ? c.campanas : [],
     enemigos: Array.isArray(c.enemigos) ? c.enemigos : [],
     tiradas: Array.isArray(c.tiradas) ? c.tiradas : [],
+    combates: Array.isArray(c.combates) ? c.combates : [],
     imagenes: Array.isArray(c.imagenes) ? c.imagenes : [],
     preferencias:
       typeof c.preferencias === 'object' && c.preferencias !== null ? c.preferencias : {},
@@ -235,6 +250,7 @@ export interface ResultadoRestauracion {
   personajes: number;
   campanas: number;
   enemigos: number;
+  combates: number;
   imagenes: number;
   preferencias: number;
   borrados: number;
@@ -261,20 +277,23 @@ export async function restaurarCopia(
   let borrados = 0;
 
   if (modo === 'reemplazar') {
-    const [personajes, campanas, enemigos, tiradas, imagenes] = await Promise.all([
+    const [personajes, campanas, enemigos, tiradas, combates, imagenes] = await Promise.all([
       almacen.listarPersonajes(),
       almacen.listarCampanas(),
       almacen.listarEnemigos(null),
       almacen.listarTiradas(null),
+      almacen.listarCombates(null),
       listarImagenes(null),
     ]);
     for (const p of personajes) await almacen.borrarPersonaje(p.id);
     for (const c of campanas) await almacen.borrarCampana(c.id);
     for (const e of enemigos) await almacen.borrarEnemigo(e.id);
     for (const t of tiradas) await almacen.borrarTirada(t.id);
+    for (const c of combates) await almacen.borrarCombate(c.id);
     for (const i of imagenes) await borrarImagen(i.id);
     borrados =
-      personajes.length + campanas.length + enemigos.length + tiradas.length + imagenes.length;
+      personajes.length + campanas.length + enemigos.length + tiradas.length +
+      combates.length + imagenes.length;
   }
 
   for (const bruto of copia.personajes) {
@@ -307,6 +326,21 @@ export async function restaurarCopia(
     }
   }
 
+  /*
+   * Los combates pasan por `migrarCombate` al entrar, igual que las fichas por
+   * `migrarPersonaje`: una copia puede ser de antes de que el turno se guardara por id y
+   * restaurarla sin traducirla dejaría el orden de la pelea señalando a quien no era.
+   */
+  let combates = 0;
+  for (const c of copia.combates ?? []) {
+    try {
+      await almacen.guardarCombate(migrarCombate(c));
+      combates++;
+    } catch {
+      fallos.push(`No he podido restaurar el combate «${c?.nombre ?? c?.id}».`);
+    }
+  }
+
   let imagenes = 0;
   for (const i of copia.imagenes) {
     try {
@@ -323,6 +357,7 @@ export async function restaurarCopia(
     personajes: copia.personajes.length - fallos.filter((f) => f.includes('ficha')).length,
     campanas: copia.campanas.length - fallos.filter((f) => f.includes('campaña')).length,
     enemigos: copia.enemigos.length - fallos.filter((f) => f.includes('enemigo')).length,
+    combates,
     imagenes,
     preferencias: escribirPreferencias(copia.preferencias),
     borrados,

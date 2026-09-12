@@ -277,7 +277,16 @@ export function App() {
                   void recargarCampanas();
                   // Tras restaurar, lo que estuviera abierto puede haber dejado de existir.
                   setAbiertoId(null);
-                  setCampanaId(null);
+                  /*
+                   * La campaña se relee de donde la acaba de dejar la restauración.
+                   *
+                   * Antes se ponía a `null`, y con `setCampanaId` —que además lo **apunta**—:
+                   * la copia traía en qué campaña estabas, la restauración la escribía, y
+                   * acto seguido esto la borraba. Salías de restaurar tu copia entera y sin
+                   * campaña puesta. Si la que venía ya no existe, se queda en nada y sale la
+                   * lista, que es lo que tiene que pasar.
+                   */
+                  setCampanaIdCrudo(campanaGuardada());
                 }}
               />
             )}

@@ -28,6 +28,7 @@ function Resumen({ r }: { r: ResumenCopia }) {
       <Cuenta titulo="Campañas" valor={r.campanas} />
       <Cuenta titulo="Enemigos" valor={r.enemigos} />
       <Cuenta titulo="Tiradas" valor={r.tiradas} />
+      <Cuenta titulo="Combates" valor={r.combates} />
       <Cuenta titulo="Imágenes" valor={r.imagenes} />
       <Cuenta titulo="Preferencias" valor={r.preferencias} />
       <Cuenta titulo="Tamaño" valor={formatearBytes(r.bytes)} sufijo="aproximado" />
@@ -103,7 +104,8 @@ export function VistaCopia({ onRecargar }: { onRecargar: () => void }) {
       const partes = [
         `Restaurado: ${plural(r.personajes, 'ficha', 'fichas')}, ` +
           `${plural(r.campanas, 'campaña', 'campañas')}, ` +
-          `${plural(r.enemigos, 'enemigo', 'enemigos')} y ` +
+          `${plural(r.enemigos, 'enemigo', 'enemigos')}, ` +
+          `${plural(r.combates, 'combate', 'combates')} y ` +
           `${plural(r.imagenes, 'imagen', 'imágenes')}.`,
       ];
       if (r.borrados > 0) partes.push(`Se han borrado ${r.borrados} registros anteriores.`);
@@ -124,7 +126,8 @@ export function VistaCopia({ onRecargar }: { onRecargar: () => void }) {
           Todo lo tuyo vive <strong>en este navegador y en este dispositivo</strong>: si borras
           los datos de navegación, cambias de ordenador o le pasa algo al equipo, se va.
           Una copia se lleva <strong>todo</strong> —fichas, campañas con sus reglas caseras y
-          su contenido propio, enemigos, la galería entera y hasta el tema que tengas puesto—
+          su contenido propio, enemigos, los combates con su campo de batalla, la galería
+          entera y hasta el tema que tengas puesto—
           y lo devuelve tal cual estaba.
         </p>
 
@@ -217,7 +220,8 @@ export function VistaCopia({ onRecargar }: { onRecargar: () => void }) {
           {modo === 'reemplazar' && actual && (
             <p className="aviso error" style={{ marginTop: 12 }}>
               Vas a borrar {actual.personajes} fichas, {actual.campanas} campañas,{' '}
-              {actual.enemigos} enemigos y {actual.imagenes} imágenes de este dispositivo, y a
+              {actual.enemigos} enemigos, {actual.combates} combates y {actual.imagenes}{' '}
+              imágenes de este dispositivo, y a
               dejar en su lugar lo de la copia. Esto no se puede deshacer.
             </p>
           )}
