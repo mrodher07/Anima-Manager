@@ -1481,6 +1481,14 @@ input.iniciativa { width: 78px; text-align: right; font-variant-numeric: tabular
 }
 .ficha-mapa.jugador .inicial { background: var(--oro); }
 .ficha-mapa.enemigo .inicial { background: var(--sangre-claro); }
+/*
+ * Con retrato, la cara ocupa el disco entero y el color del bando se queda en el borde: en
+ * un mapa con ocho fichas lo primero que hay que distinguir sigue siendo quién es de quién.
+ */
+.ficha-mapa .inicial.retrato { object-fit: cover; background: var(--fondo-2); border-width: 3px; }
+.ficha-mapa.jugador .inicial.retrato { border-color: var(--oro); }
+.ficha-mapa.enemigo .inicial.retrato { border-color: var(--sangre-claro); }
+.ficha-mapa.mia .inicial.retrato { border-color: var(--texto); }
 /* A quien le toca, un anillo; el tuyo, otro distinto. Se ven a la vez sin confundirse. */
 .ficha-mapa.actua .inicial { box-shadow: 0 0 0 3px var(--oro-claro), 0 2px 6px -2px #000; }
 .ficha-mapa.mia .inicial { border-color: var(--texto); }
@@ -1533,7 +1541,112 @@ input.iniciativa { width: 78px; text-align: right; font-variant-numeric: tabular
 
 /* Pintando, el cursor deja claro que no se está moviendo nada. */
 .tablero.pintando { cursor: crosshair; }
-.tablero.pintando .ficha-mapa { pointer-events: none; }
+.tablero.pintando .ficha-mapa,
+.tablero.pintando .cosa-mapa { pointer-events: none; }
+/* Poniendo cosas en el suelo: las fichas no estorban, se pone el barril debajo y ya. */
+.tablero.poniendo { cursor: copy; }
+.tablero.poniendo .ficha-mapa { pointer-events: none; }
+
+/*
+ * Las cosas del suelo: barriles, mesas, puertas. Debajo de las fichas —si taparan a quien
+ * está detrás habría que apartarlas para ver de quién es el turno— y encima de las marcas.
+ * El tamaño lo pone el estilo en línea, porque una mesa larga ocupa varias casillas.
+ */
+.cosa-mapa {
+  position: absolute;
+  padding: 0;
+  margin: 0;
+  border: none;
+  background: none;
+  display: grid;
+  place-items: center;
+  cursor: default;
+  z-index: 1;
+  transition: left 0.12s ease, top 0.12s ease;
+}
+.tablero.editable .cosa-mapa { cursor: grab; }
+.tablero.poniendo .cosa-mapa { cursor: not-allowed; }
+.cosa-mapa.cogida { transition: none; cursor: grabbing; z-index: 2; }
+.cosa-mapa .dibujo {
+  width: 86%;
+  height: 86%;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.55));
+  -webkit-user-drag: none;
+}
+/*
+ * El emoji se estira hasta llenar su hueco. Se mide contra el propio botón —de ahí el
+ * `container-type`— porque el lado de una casilla depende del ancho del mapa y del número
+ * de columnas, y con un tamaño de letra fijo un barril se quedaba en una mota en un mapa
+ * de 40 casillas y se salía en uno de 6.
+ */
+.cosa-mapa { container-type: size; }
+.cosa-mapa .dibujo.emoji {
+  display: grid;
+  place-items: center;
+  font-size: 76cqmin;
+  line-height: 1;
+}
+/*
+ * El color se pone a mano porque los emoji de color heredan la **transparencia** del color
+ * del texto, y un botón desactivado —que es lo que son las cosas en la pantalla de un
+ * jugador— lo baja al 30%: los barriles salían descoloridos en la mesa y enteros en la del
+ * máster, sin más motivo que ese.
+ */
+.cosa-mapa,
+.cosa-mapa:disabled { color: var(--texto); opacity: 1; }
+.cosa-mapa.bajo-niebla,
+.cosa-mapa.bajo-niebla:disabled { opacity: 0.55; }
+.cosa-mapa:hover .nombre-ficha,
+.cosa-mapa:focus-visible .nombre-ficha { opacity: 1; }
+.cosa-mapa .nombre-ficha {
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  transform: translate(-50%, 100%);
+  background: var(--panel);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio-s);
+  padding: 1px 6px;
+  font-size: 0.7rem;
+  white-space: nowrap;
+  color: var(--texto);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.12s ease;
+  z-index: 4;
+}
+
+/* La caja de las cosas: los dibujos de siempre y de qué tamaño se ponen. */
+.paleta-cosas {
+  width: 100%;
+  border: 1px solid var(--borde);
+  border-radius: var(--radio-s);
+  background: var(--fondo-2);
+  padding: 8px 10px;
+  margin-bottom: 10px;
+}
+.paleta-cosas .cacharros { display: flex; flex-wrap: wrap; gap: 4px; }
+.paleta-cosas .cacharro {
+  width: 46px;
+  padding: 4px 2px 3px;
+  border: 1px solid transparent;
+  border-radius: var(--radio-s);
+  background: none;
+  color: var(--texto-debil);
+  font-size: 1.3rem;
+  line-height: 1.1;
+  cursor: pointer;
+  display: grid;
+  justify-items: center;
+  gap: 1px;
+}
+.paleta-cosas .cacharro:hover { border-color: var(--borde); }
+.paleta-cosas .cacharro.elegido { border-color: var(--oro); background: var(--panel); }
+.paleta-cosas .cacharro .como-se-llama { font-size: 0.58rem; text-transform: uppercase; letter-spacing: 0.02em; }
+.paleta-cosas .mandos-cosas { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 8px 14px; margin-top: 8px; }
+.paleta-cosas .mandos-cosas .campo { margin-bottom: 0; flex: 1; min-width: 180px; }
+.paleta-cosas .mandos-cosas .campo.estrecho { flex: 0 0 74px; min-width: 0; }
 
 .marca-casilla,
 .niebla-casilla,

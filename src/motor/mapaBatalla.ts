@@ -38,6 +38,120 @@ export interface Mapa {
   niebla?: string[];
   /** Casillas marcadas con un color: «x,y» → color. Lo que significa lo decide la mesa. */
   marcas?: Record<string, string>;
+  /** Barriles, mesas, puertas… lo que haya en el suelo y no sea nadie. */
+  elementos?: ElementoMapa[];
+}
+
+/**
+ * Una cosa puesta en el mapa que no es un combatiente: un barril, una mesa, una puerta.
+ *
+ * **No tiene reglas.** No estorba el paso, no da cobertura y no bloquea la vista, porque
+ * nada de eso lo dice el manual: Ánima no usa cuadrícula. Es un dibujo puesto encima para
+ * que todos miren lo mismo, y lo que signifique lo dice la mesa.
+ */
+export interface ElementoMapa {
+  id: string;
+  x: number;
+  y: number;
+  nombre: string;
+  /** Un emoji. Es lo que traen los de la lista de siempre. */
+  icono?: string;
+  /** O una imagen de la galería, para lo que la mesa quiera dibujar a su manera. */
+  imagenId?: string | null;
+  /** Cuántas casillas ocupa. Una mesa larga son 2×1. */
+  ancho?: number;
+  alto?: number;
+}
+
+/**
+ * Lo que se suele poner en un mapa, para no tener que buscar una imagen cada vez.
+ *
+ * Son emoji a propósito: no hay que subir nada, funcionan sin conexión y se ven igual en
+ * cualquier aparato. Quien quiera un barril dibujado a mano lo sube a la Galería y lo elige.
+ */
+export const ELEMENTOS_DE_SIEMPRE = [
+  { icono: '🛢️', nombre: 'Barril' },
+  { icono: '📦', nombre: 'Caja' },
+  { icono: '🪵', nombre: 'Tronco' },
+  { icono: '🪨', nombre: 'Roca' },
+  { icono: '🌳', nombre: 'Árbol' },
+  { icono: '🔥', nombre: 'Fuego' },
+  { icono: '🚪', nombre: 'Puerta' },
+  { icono: '🪑', nombre: 'Silla' },
+  { icono: '🛏️', nombre: 'Cama' },
+  { icono: '⚱️', nombre: 'Urna' },
+  { icono: '💰', nombre: 'Tesoro' },
+  { icono: '🕯️', nombre: 'Vela' },
+  { icono: '🩸', nombre: 'Sangre' },
+  { icono: '💧', nombre: 'Agua' },
+  { icono: '🕳️', nombre: 'Agujero' },
+  { icono: '⬛', nombre: 'Muro' },
+] as const;
+
+/** Las casillas que ocupa un elemento, para saber si se ha pinchado encima. */
+export function casillasDe(e: ElementoMapa): Casilla[] {
+  const casillas: Casilla[] = [];
+  for (let dx = 0; dx < Math.max(1, e.ancho ?? 1); dx++) {
+    for (let dy = 0; dy < Math.max(1, e.alto ?? 1); dy++) {
+      casillas.push({ x: e.x + dx, y: e.y + dy });
+    }
+  }
+  return casillas;
+}
+
+/** El elemento que hay en una casilla, si hay alguno. El último puesto gana. */
+export function elementoEn(
+  elementos: ElementoMapa[] | undefined,
+  x: number,
+  y: number,
+): ElementoMapa | undefined {
+  return [...(elementos ?? [])].reverse().find((e) =>
+    casillasDe(e).some((c) => c.x === x && c.y === y),
+  );
+}
+
+/** Quita un elemento del mapa. Si no está, la lista se queda como estaba. */
+export function quitarElemento(
+  elementos: ElementoMapa[] | undefined,
+  id: string,
+): ElementoMapa[] {
+  return (elementos ?? []).filter((e) => e.id !== id);
+}
+
+/** Lleva un elemento a otra casilla. */
+export function moverElemento(
+  elementos: ElementoMapa[] | undefined,
+  id: string,
+  destino: Casilla,
+): ElementoMapa[] {
+  return (elementos ?? []).map((e) => (e.id === id ? { ...e, ...destino } : e));
+}
+
+/**
+ * Mete dentro del tablero a los elementos que se hayan quedado fuera.
+ *
+ * Pasa al reducir las casillas de ancho: un barril puesto en la columna 19 de un mapa de 20
+ * se queda pintado en el aire cuando el mapa pasa a tener 16. Lo mismo que se hace con las
+ * fichas, y por lo mismo: una cosa que no se ve no se puede quitar.
+ *
+ * Devuelve **la misma lista** si no había nada que recolocar, para no provocar una escritura
+ * —y un repintado— cada vez que se mira.
+ */
+export function dentroDelMapa(
+  elementos: ElementoMapa[] | undefined,
+  columnas: number,
+  filas: number,
+): ElementoMapa[] {
+  const lista = elementos ?? [];
+  let cambia = false;
+  const metidos = lista.map((e) => {
+    const x = Math.max(0, Math.min(columnas - Math.max(1, e.ancho ?? 1), e.x));
+    const y = Math.max(0, Math.min(filas - Math.max(1, e.alto ?? 1), e.y));
+    if (x === e.x && y === e.y) return e;
+    cambia = true;
+    return { ...e, x, y };
+  });
+  return cambia ? metidos : lista;
 }
 
 /** La clave con la que se guarda una casilla. */

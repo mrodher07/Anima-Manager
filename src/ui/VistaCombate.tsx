@@ -570,6 +570,39 @@ function Encuentro({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [movimientos]);
 
+  /*
+   * Los retratos con los que salen en el mapa se mantienen al día desde aquí.
+   *
+   * El combate guarda una copia del id del retrato porque la pantalla de un jugador no
+   * tiene las fichas de los demás; esta pantalla sí, así que es la que puede enterarse de
+   * que alguien se ha cambiado el retrato —o de que un combate viejo, de antes de que esto
+   * existiera, no tiene ninguno apuntado—. Sólo escribe cuando de verdad cambia algo, y no
+   * toca un combate terminado, que ya es un registro de lo que pasó.
+   */
+  useEffect(() => {
+    if (combate.estado === 'terminado') return;
+    const retratos = new Map<string, string | null>();
+    for (const p of personajes) retratos.set(`personaje:${p.id}`, p.retratoId ?? null);
+    for (const e of enemigos) retratos.set(`enemigo:${e.id}`, e.imagenId ?? null);
+
+    const cambian = combate.participantes.filter((p) => {
+      const clave = `${p.tipo}:${p.refId}`;
+      // A quien ya no está en el bestiario ni en las fichas se le deja el que tuviera.
+      return retratos.has(clave) && (retratos.get(clave) ?? null) !== (p.retratoId ?? null);
+    });
+    if (cambian.length === 0) return;
+    onCambiar({
+      ...combate,
+      participantes: combate.participantes.map((p) =>
+        cambian.some((x) => x.id === p.id)
+          ? { ...p, retratoId: retratos.get(`${p.tipo}:${p.refId}`) ?? null }
+          : p,
+      ),
+      actualizadoEn: new Date().toISOString(),
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [personajes, enemigos, combate.participantes]);
+
   /**
    * Mete N copias de un enemigo de una tacada.
    *
@@ -586,6 +619,7 @@ function Encuentro({
       tipo: 'enemigo' as const,
       refId: e.id,
       nombre: total > 1 ? `${e.nombre} ${yaHabia + i + 1}` : e.nombre,
+      retratoId: e.imagenId ?? null,
       turnoBase: e.turno,
       activo: true,
     }));
@@ -596,12 +630,18 @@ function Encuentro({
     });
   };
 
-  const anadir = (tipo: Participante['tipo'], refId: string, nombre: string, turnoBase: number) =>
+  const anadir = (
+    tipo: Participante['tipo'],
+    refId: string,
+    nombre: string,
+    turnoBase: number,
+    retratoId?: string | null,
+  ) =>
     onCambiar({
       ...combate,
       participantes: [
         ...combate.participantes,
-        { id: nuevoId(), tipo, refId, nombre, turnoBase, activo: true },
+        { id: nuevoId(), tipo, refId, nombre, turnoBase, retratoId: retratoId ?? null, activo: true },
       ],
       actualizadoEn: new Date().toISOString(),
     });
@@ -688,7 +728,7 @@ function Encuentro({
                             );
                             if (suyo) quitar(suyo.id);
                           } else {
-                            anadir('personaje', p.id, p.nombre || 'Sin nombre', turno ?? 0);
+                            anadir('personaje', p.id, p.nombre || 'Sin nombre', turno ?? 0, p.retratoId);
                           }
                         }}
                       />
