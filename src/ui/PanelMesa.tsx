@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { cliente } from '../nube/supabase';
+import { almacen } from '../almacen/almacen';
+import { subirRegistros } from '../nube/sincronizacion';
 import {
   borrarInvitacion,
   crearInvitacion,
@@ -77,6 +79,17 @@ export function PanelMesa({ campanaId, soyElMaster }: { campanaId: string; soyEl
               onClick={async () => {
                 setOcupado(true);
                 setAviso('');
+                /*
+                 * La campaña tiene que estar en el servidor para poder invitar a ella: es él
+                 * quien comprueba que eres su máster. Recién creada podía no haber subido
+                 * todavía, y entonces el servidor le contestaba al propio máster «sólo el
+                 * máster puede invitar». Se sube antes de pedir el código.
+                 */
+                const { data: sesion } = await supa.auth.getSession();
+                const propia = (await almacen.listarCampanas()).find((c) => c.id === campanaId);
+                if (propia && sesion.session) {
+                  await subirRegistros(supa, sesion.session.user.id, 'campanas', [propia]);
+                }
                 const r = await crearInvitacion(supa, campanaId);
                 setAviso(r.codigo ? `Código nuevo: ${r.codigo}` : (r.error ?? 'No se ha podido crear.'));
                 await recargar();

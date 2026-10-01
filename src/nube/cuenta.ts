@@ -10,7 +10,9 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { Session } from '@supabase/supabase-js';
 import { cliente, hayNube } from './supabase';
-import { sincronizar, resumir, type Resultado } from './sincronizacion';
+import { sincronizar, subirRegistros, resumir, type Resultado } from './sincronizacion';
+import { alCambiar } from '../almacen/cambios';
+import type { Tienda } from '../almacen/bd';
 import {
   cambiarNombre,
   campanasDondeJuego,
@@ -92,6 +94,12 @@ export function useCuenta(
   avisarPreferencias.current = alLlegarPreferencias;
   // Evita que dos sincronizaciones se pisen: la periódica y la del botón, por ejemplo.
   const enCurso = useRef(false);
+  /*
+   * Y si se pide una mientras otra está en marcha, no se tira la petición: se repite al
+   * terminar. Antes se ignoraba, y lo que se guardara durante esos segundos esperaba a la
+   * siguiente vuelta del reloj —tres minutos—.
+   */
+  const otraVez = useRef(false);
 
   const deSesion = (sesion: Session | null): Usuario | null =>
     sesion?.user ? { id: sesion.user.id, correo: sesion.user.email ?? '' } : null;
@@ -116,7 +124,8 @@ export function useCuenta(
 
   const sincronizarAhora = useCallback(async () => {
     const supa = cliente();
-    if (!supa || !usuario || enCurso.current) return;
+    if (!supa || !usuario) return;
+    if (enCurso.current) { otraVez.current = true; return; }
     enCurso.current = true;
     setSincronizando(true);
     try {
@@ -138,7 +147,12 @@ export function useCuenta(
     } finally {
       enCurso.current = false;
       setSincronizando(false);
+      if (otraVez.current) {
+        otraVez.current = false;
+        setTimeout(() => void sincronizarAhora(), 0);
+      }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [usuario]);
 
   // El perfil y las preferencias se piden una vez al entrar, no en cada sincronización:
@@ -160,6 +174,52 @@ export function useCuenta(
       vivo = false;
     };
   }, [estado, usuario]);
+
+  /*
+   * Lo que se guarda en este aparato sube **en el momento**, no a la siguiente vuelta.
+   *
+   * En una partida es lo que decide si la aplicación sirve o estorba: el jugador tira su
+   * iniciativa y el máster tiene que verla ya; el máster pasa el turno y al jugador le
+   * tiene que salir «es tu turno» ya, no tres minutos después. Se agrupa lo que llega
+   * seguido —cinco pulsaciones de «−1 vida» son una subida, no cinco— y se sube sólo lo
+   * que ha cambiado. Lo que no es un guardado simple, o lo que no se ha podido subir así,
+   * pide una sincronización completa poco después.
+   */
+  useEffect(() => {
+    const supa = cliente();
+    if (!supa || estado !== 'dentro' || !usuario) return;
+    const pendientes = new Map<Tienda, Map<string, { id: string; actualizadoEn: string }>>();
+    let relojSubida: ReturnType<typeof setTimeout> | undefined;
+    let relojSincronia: ReturnType<typeof setTimeout> | undefined;
+
+    const sincronizarPronto = () => {
+      clearTimeout(relojSincronia);
+      relojSincronia = setTimeout(() => void sincronizarAhora(), 1500);
+    };
+    const subir = async () => {
+      const lote = [...pendientes.entries()];
+      pendientes.clear();
+      for (const [tienda, registros] of lote) {
+        const ok = await subirRegistros(supa, usuario.id, tienda, [...registros.values()]).catch(() => false);
+        if (!ok) sincronizarPronto();
+      }
+    };
+
+    const dejar = alCambiar((c) => {
+      if (c.tipo !== 'guardado') { sincronizarPronto(); return; }
+      if (!pendientes.has(c.tienda)) pendientes.set(c.tienda, new Map());
+      pendientes.get(c.tienda)!.set(c.registro.id, c.registro);
+      clearTimeout(relojSubida);
+      relojSubida = setTimeout(() => void subir(), 300);
+    });
+    return () => {
+      dejar();
+      clearTimeout(relojSubida);
+      clearTimeout(relojSincronia);
+      // Lo que quedara a medias se sube igual: salir de la pantalla no es perderlo.
+      if (pendientes.size) void subir();
+    };
+  }, [estado, usuario, sincronizarAhora]);
 
   // Al entrar, cada tanto, al volver la conexión y al volver a la pestaña.
   useEffect(() => {
