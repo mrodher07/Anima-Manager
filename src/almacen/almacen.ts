@@ -22,6 +22,7 @@ import {
 } from './bd';
 import type { TipoDano } from '../motor/combate';
 import { migrarCombate, type Combate } from '../motor/combatePorTurnos';
+import { avisarCambio } from './cambios';
 export type { Combate, Participante } from '../motor/combatePorTurnos';
 import { PERSONALIZADOS_VACIOS, type Personalizados } from '../datos/paquetes';
 
@@ -195,13 +196,16 @@ export const almacen = {
   },
 
   async guardarPersonaje(p: Personaje): Promise<void> {
-    await transaccion('personajes', 'readwrite', (s) => s.put(marcar(p)));
+    const marcado = marcar(p);
+    await transaccion('personajes', 'readwrite', (s) => s.put(marcado));
     await quitarLapida('personajes', p.id);
+    avisarCambio({ tipo: 'guardado', tienda: 'personajes', registro: marcado });
   },
 
   async borrarPersonaje(id: string): Promise<void> {
     await transaccion('personajes', 'readwrite', (s) => s.delete(id));
     await ponerLapida('personajes', id);
+    avisarCambio({ tipo: 'otro', tienda: 'personajes' });
   },
 
   async listarCampanas(): Promise<Campana[]> {
@@ -212,13 +216,16 @@ export const almacen = {
   },
 
   async guardarCampana(c: Campana): Promise<void> {
-    await transaccion('campanas', 'readwrite', (s) => s.put(marcar(c)));
+    const marcado = marcar(c);
+    await transaccion('campanas', 'readwrite', (s) => s.put(marcado));
     await quitarLapida('campanas', c.id);
+    avisarCambio({ tipo: 'guardado', tienda: 'campanas', registro: marcado });
   },
 
   async borrarCampana(id: string): Promise<void> {
     await transaccion('campanas', 'readwrite', (s) => s.delete(id));
     await ponerLapida('campanas', id);
+    avisarCambio({ tipo: 'otro', tienda: 'campanas' });
   },
 
   async listarEnemigos(campanaId: string | null): Promise<Enemigo[]> {
@@ -229,13 +236,16 @@ export const almacen = {
   },
 
   async guardarEnemigo(e: Enemigo): Promise<void> {
-    await transaccion('enemigos', 'readwrite', (s) => s.put(marcar(e)));
+    const marcado = marcar(e);
+    await transaccion('enemigos', 'readwrite', (s) => s.put(marcado));
     await quitarLapida('enemigos', e.id);
+    avisarCambio({ tipo: 'guardado', tienda: 'enemigos', registro: marcado });
   },
 
   async borrarEnemigo(id: string): Promise<void> {
     await transaccion('enemigos', 'readwrite', (s) => s.delete(id));
     await ponerLapida('enemigos', id);
+    avisarCambio({ tipo: 'otro', tienda: 'enemigos' });
   },
 
   /** Las tiradas de una campaña, de la más reciente a la más antigua. */
@@ -257,6 +267,8 @@ export const almacen = {
     await transaccion('tiradas', 'readwrite', (s) => s.put(t));
     await quitarLapida('tiradas', t.id);
 
+    avisarCambio({ tipo: 'guardado', tienda: 'tiradas', registro: t });
+
     const suyas = await this.listarTiradas(t.campanaId);
     for (const vieja of suyas.slice(TIRADAS_GUARDADAS)) {
       await transaccion('tiradas', 'readwrite', (s) => s.delete(vieja.id));
@@ -267,6 +279,7 @@ export const almacen = {
   async borrarTirada(id: string): Promise<void> {
     await transaccion('tiradas', 'readwrite', (s) => s.delete(id));
     await ponerLapida('tiradas', id);
+    avisarCambio({ tipo: 'otro', tienda: 'tiradas' });
   },
 
   /**
@@ -284,13 +297,16 @@ export const almacen = {
   },
 
   async guardarCombate(c: Combate): Promise<void> {
-    await transaccion('combates', 'readwrite', (s) => s.put(marcar(c)));
+    const marcado = marcar(c);
+    await transaccion('combates', 'readwrite', (s) => s.put(marcado));
     await quitarLapida('combates', c.id);
+    avisarCambio({ tipo: 'guardado', tienda: 'combates', registro: marcado });
   },
 
   async borrarCombate(id: string): Promise<void> {
     await transaccion('combates', 'readwrite', (s) => s.delete(id));
     await ponerLapida('combates', id);
+    avisarCambio({ tipo: 'otro', tienda: 'combates' });
   },
 
   /** Vaciar el registro de una campaña. Lo pide el Director cuando acaba una sesión. */

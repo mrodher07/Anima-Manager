@@ -53,7 +53,7 @@ vi.mock('./imagenesNube', () => ({
   },
 }));
 
-const { sincronizar, fichasDeCampana, resumir } = await import('./sincronizacion');
+const { sincronizar, subirRegistros, fichasDeCampana, resumir } = await import('./sincronizacion');
 
 const YO = 'usuario-1';
 const OTRO = 'usuario-2';
@@ -435,5 +435,48 @@ describe('fichasDeCampana', () => {
     const { personajes, error } = await fichasDeCampana(clienteFalso(), 'c1');
     expect(personajes).toEqual([]);
     expect(error).toBe('la red se fue');
+  });
+});
+
+describe('subir en el momento lo que acaba de cambiar', () => {
+  it('sube sólo esos registros, con su fecha, y la sincronización siguiente no tiene nada que hacer', async () => {
+    enServidor('campanas', { id: 'c1' });
+    const nueva = ficha('a', LUEGO, 'c1');
+    bd.personajes.set('a', nueva);
+    bd.personajes.set('b', ficha('b', LUEGO)); // otra que no se ha pedido subir
+
+    const ok = await subirRegistros(clienteFalso(), YO, 'personajes', [nueva]);
+    expect(ok).toBe(true);
+    const fila = servidor.tablas.personajes.get('a');
+    expect(fila).toMatchObject({ propietario: YO, actualizado_en: LUEGO, campana_id: 'c1', borrado: false });
+    expect(servidor.tablas.personajes.has('b')).toBe(false);
+
+    // Lo subido ya coincide en los dos lados: la completa sólo envía la que faltaba.
+    servidor.escrituras = [];
+    const r = await sincronizar(clienteFalso(), YO);
+    expect(r.tiendas.find((t) => t.tienda === 'personajes')?.subidos).toBe(1);
+  });
+
+  it('es una sola escritura por tabla aunque sean varios', async () => {
+    await subirRegistros(clienteFalso(), YO, 'campanas', [campana('c1', HOY), campana('c2', HOY)]);
+    expect(servidor.escrituras).toEqual(['campanas']);
+    expect(servidor.tablas.campanas.size).toBe(2);
+  });
+
+  it('si la campaña aún no está arriba dice que no, para que se haga la completa', async () => {
+    const ok = await subirRegistros(clienteFalso(), YO, 'personajes', [ficha('a', HOY, 'sin-subir')]);
+    expect(ok).toBe(false);
+    expect(servidor.tablas.personajes.size).toBe(0);
+  });
+
+  it('sin red dice que no, y no lanza', async () => {
+    servidor.falla.add('combates');
+    const ok = await subirRegistros(clienteFalso(), YO, 'combates', [{ id: 'k', actualizadoEn: HOY }]);
+    expect(ok).toBe(false);
+  });
+
+  it('con la lista vacía no pregunta nada', async () => {
+    expect(await subirRegistros(clienteFalso(), YO, 'tiradas', [])).toBe(true);
+    expect(servidor.escrituras).toEqual([]);
   });
 });

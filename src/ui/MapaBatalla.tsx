@@ -25,6 +25,24 @@ import type { Combate } from '../motor/combatePorTurnos';
 import { actuando } from '../motor/combatePorTurnos';
 import { listarImagenes, obtenerImagen, type ImagenInfo } from '../almacen/imagenes';
 import { nuevoId } from './estado';
+import { cliente } from '../nube/supabase';
+import { imagenRemota } from '../nube/imagenesNube';
+
+/**
+ * Una imagen para enseñar: la de este aparato si está, y si no, la del servidor.
+ *
+ * Lo segundo es lo normal en la pantalla de un jugador: el mapa lo subió el máster y los
+ * retratos, cada uno el suyo.
+ */
+async function buscarImagen(
+  id: string,
+): Promise<{ url: string; local: boolean; anchura: number; altura: number } | null> {
+  const img = await obtenerImagen(id);
+  if (img) return { url: URL.createObjectURL(img.datos), local: true, anchura: img.anchura, altura: img.altura };
+  const supa = cliente();
+  const remota = supa ? await imagenRemota(supa, id) : null;
+  return remota ? { ...remota, local: false } : null;
+}
 
 interface Props {
   combate: Combate;
@@ -60,10 +78,11 @@ function useUrlImagen(id: string | null | undefined) {
     if (!id) { setUrl(null); setMedidas(null); return; }
     let vigente = true;
     let creada: string | null = null;
-    void obtenerImagen(id).then((img) => {
-      if (!vigente || !img) return;
-      creada = URL.createObjectURL(img.datos);
-      setUrl(creada);
+    void buscarImagen(id).then((img) => {
+      if (!img) return;
+      if (img.local) creada = img.url;
+      if (!vigente) { if (creada) URL.revokeObjectURL(creada); return; }
+      setUrl(img.url);
       setMedidas({ anchura: img.anchura, altura: img.altura });
     });
     return () => {
@@ -86,6 +105,12 @@ function useUrlImagen(id: string | null | undefined) {
 function useUrlesImagenes(ids: (string | null | undefined)[]): Map<string, string> {
   const guardadas = useRef(new Map<string, string>());
   const [, repintar] = useState(0);
+  /*
+   * Lo que no se encuentra se vuelve a pedir un rato después, unas pocas veces: el
+   * retrato de un jugador que acaba de unirse puede no haber llegado al servidor todavía
+   * cuando el máster abre el mapa, y sin esto se quedaba con dos letras toda la noche.
+   */
+  const [intento, setIntento] = useState(0);
   // Una clave de texto: así el efecto no se dispara porque el array sea otro array.
   const pedidas = [...new Set(ids.filter(Boolean) as string[])].sort();
   const clave = pedidas.join('|');
@@ -94,18 +119,25 @@ function useUrlesImagenes(ids: (string | null | undefined)[]): Map<string, strin
     const faltan = (clave ? clave.split('|') : []).filter((id) => !guardadas.current.has(id));
     if (faltan.length === 0) return;
     let vigente = true;
-    void Promise.all(faltan.map(async (id) => [id, await obtenerImagen(id)] as const)).then((pares) => {
-      if (!vigente) return;
+    void Promise.all(faltan.map(async (id) => [id, await buscarImagen(id)] as const)).then((pares) => {
+      if (!vigente) {
+        for (const [, img] of pares) if (img?.local) URL.revokeObjectURL(img.url);
+        return;
+      }
       let alguna = false;
       for (const [id, img] of pares) {
         if (!img || guardadas.current.has(id)) continue;
-        guardadas.current.set(id, URL.createObjectURL(img.datos));
+        guardadas.current.set(id, img.url);
         alguna = true;
       }
       if (alguna) repintar((n) => n + 1);
+      if (pares.some(([, img]) => !img) && intento < 6) {
+        reintento = setTimeout(() => setIntento((n) => n + 1), 10000);
+      }
     });
-    return () => { vigente = false; };
-  }, [clave]);
+    let reintento: ReturnType<typeof setTimeout> | undefined;
+    return () => { vigente = false; clearTimeout(reintento); };
+  }, [clave, intento]);
 
   useEffect(() => {
     const mapa = guardadas.current;

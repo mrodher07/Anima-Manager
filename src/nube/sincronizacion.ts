@@ -280,6 +280,38 @@ async function leerLocales(tienda: Tienda): Promise<Sincronizable[]> {
   return almacen.listarEnemigos(null);
 }
 
+/**
+ * Sube **sólo** unos registros recién guardados, sin hacer una sincronización entera.
+ *
+ * Es lo que hace que una partida vaya en vivo. La sincronización completa lee todas las
+ * filas de cada tabla para conciliar los dos lados, y está bien cada pocos minutos; para
+ * cada clic de «Siguiente» o cada tirada de iniciativa es demasiado, y esperar a la
+ * siguiente dejaba al resto de la mesa hasta tres minutos por detrás. Esto es una petición
+ * por tabla con lo que ha cambiado y nada más.
+ *
+ * Lleva la misma fecha que el registro local, así que la sincronización siguiente lo verá
+ * igual en los dos lados y no hará nada con él.
+ *
+ * Devuelve `false` si no ha podido —sin red, o una campaña que todavía no está arriba—:
+ * quien llama pide entonces una sincronización completa, que sabe resolver esos casos.
+ */
+export async function subirRegistros(
+  supa: SupabaseClient,
+  usuario: string,
+  tienda: Tienda,
+  registros: Sincronizable[],
+): Promise<boolean> {
+  if (!registros.length) return true;
+  // Se da por hecho que la campaña ya existe arriba; si no, la base de datos lo rechaza
+  // por la clave foránea y se cae a la sincronización completa, que la sube antes.
+  const campanas = new Set(
+    registros.map((r) => (r as { campanaId?: string | null }).campanaId).filter(Boolean) as string[],
+  );
+  const filas = registros.map((r) => aFila(tienda, r, usuario, campanas));
+  const { error } = await supa.from(TABLAS[tienda]).upsert(filas, { onConflict: 'id' });
+  return !error;
+}
+
 function aFila(
   tienda: Tienda,
   registro: Sincronizable,

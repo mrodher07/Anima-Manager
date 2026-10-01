@@ -258,6 +258,41 @@ export async function enlaceTemporal(
   return error ? null : (data?.signedUrl ?? null);
 }
 
+/** Enlaces ya pedidos, para no firmar el mismo mapa cada vez que se repinta la pantalla. */
+const enlacesPedidos = new Map<string, { url: string; anchura: number; altura: number; caduca: number }>();
+
+/**
+ * Una imagen que **no está en este aparato** pero que se puede ver: el mapa que subió el
+ * máster, el retrato de otro jugador de la mesa.
+ *
+ * Las políticas ya dejaban a la mesa leerlas; lo que faltaba es que alguien las pidiera.
+ * El mapa sólo miraba en el almacén local, así que el jugador veía la cuadrícula sin mapa
+ * debajo y a sus compañeros sin cara. Se pide la fila —que trae las medidas, y sin ellas
+ * el jugador calculaba otro número de filas que el máster y las fichas no caían en la misma
+ * casilla— y un enlace firmado al archivo. `null` si no existe o no se puede ver.
+ */
+export async function imagenRemota(
+  supa: SupabaseClient,
+  id: string,
+): Promise<{ url: string; anchura: number; altura: number } | null> {
+  const ya = enlacesPedidos.get(id);
+  if (ya && ya.caduca > Date.now()) return ya;
+  const { data, error } = await supa
+    .from('imagenes')
+    .select('ruta, anchura, altura')
+    .eq('id', id)
+    .eq('borrado', false)
+    .maybeSingle();
+  if (error || !data) return null;
+  const fila = data as { ruta: string; anchura: number; altura: number };
+  const url = await enlaceTemporal(supa, fila.ruta);
+  if (!url) return null;
+  // Se da por caducado un rato antes que el enlace, para no repartir uno a punto de morir.
+  const enlace = { url, anchura: fila.anchura, altura: fila.altura, caduca: Date.now() + 50 * 60 * 1000 };
+  enlacesPedidos.set(id, enlace);
+  return enlace;
+}
+
 function mensaje(e: unknown): string {
   return e instanceof Error ? e.message : String(e);
 }

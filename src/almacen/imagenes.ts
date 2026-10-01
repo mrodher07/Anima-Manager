@@ -11,6 +11,7 @@
  */
 
 import { ponerLapida, quitarLapida } from './bd';
+import { avisarCambio } from './cambios';
 
 export type TipoImagen = 'retrato' | 'mapa' | 'pnj' | 'enemigo' | 'objeto' | 'otro';
 
@@ -179,6 +180,7 @@ export async function guardarImagen(archivo: File, opciones: OpcionesGuardado): 
     throw e;
   }
 
+  avisarCambio({ tipo: 'otro', tienda: 'imagenes' });
   return imagen;
 }
 
@@ -207,6 +209,7 @@ export async function listarImagenes(campanaId: string | null): Promise<ImagenIn
 export async function borrarImagen(id: string): Promise<void> {
   await pedir('readwrite', (t) => t.delete(id));
   await ponerLapida('imagenes', id);
+  avisarCambio({ tipo: 'otro', tienda: 'imagenes' });
 }
 
 /** Borra sin dejar lápida: el borrado venía de fuera, no hay que devolvérselo. */
@@ -221,6 +224,7 @@ export async function actualizarImagen(
   const actual = await obtenerImagen(id);
   if (!actual) return;
   await pedir('readwrite', (t) => t.put(tocada({ ...actual, ...cambios })));
+  avisarCambio({ tipo: 'otro', tienda: 'imagenes' });
 }
 
 /** Cuánto ocupan las imágenes, para poder avisar antes de llenar la cuota. */

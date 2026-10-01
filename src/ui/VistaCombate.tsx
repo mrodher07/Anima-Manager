@@ -164,16 +164,24 @@ export function useCombateActivo(campanaId: string | null): Combate | null {
       // Y si no, el de la mesa. Un fallo de red no borra lo que ya se estaba enseñando:
       // en mitad de un combate, quedarse en blanco por un corte de wifi es peor que
       // enseñar el último orden conocido.
+      let sinRed = false;
       if (!encontrado) {
         const supa = cliente();
         if (supa) {
-          const { combate: remoto } = await combateDeCampana(supa, campanaId);
+          const { combate: remoto, error } = await combateDeCampana(supa, campanaId);
           if (remoto) encontrado = remoto;
+          sinRed = Boolean(error);
         }
       }
 
       if (!vigente) return;
-      setCombate((antes) => (encontrado ? encontrado : antes && antes.estado !== 'terminado' ? antes : null));
+      /*
+       * Sólo se conserva el último combate conocido si **no se ha podido preguntar**.
+       * Antes se conservaba siempre que no llegara ninguno, y «no hay combate» se confundía
+       * con «no hay red»: el máster lo daba por terminado y a los jugadores se les quedaba
+       * en pantalla para siempre, con su orden de iniciativa y todo.
+       */
+      setCombate((antes) => (encontrado ? encontrado : sinRed && antes?.estado !== 'terminado' ? antes : null));
       reloj = setTimeout(
         () => void mirar(),
         encontrado ? CADA_EN_COMBATE : CADA_EN_CALMA,
@@ -267,15 +275,31 @@ function useIniciativasTiradas(campanaId: string | null, combateId: string | nul
 function useFichasDeLaMesa(campanaId: string | null, locales: Personaje[]): Personaje[] {
   const [ajenas, setAjenas] = useState<Personaje[]>([]);
 
+  /*
+   * Se relee cada poco mientras esta pantalla está abierta, no sólo al entrar.
+   *
+   * Sólo al entrar, el máster no veía la ficha que un jugador acababa de hacer hasta que
+   * salía y volvía, y —peor— la vida que se le ve a cada uno en el combate se quedaba con
+   * lo que tuviera al abrir la pantalla: el jugador se bajaba los PV y aquí no cambiaba
+   * nada. Con la pestaña de fondo no se pregunta.
+   */
   useEffect(() => {
     if (!campanaId) { setAjenas([]); return; }
     const supa = cliente();
     if (!supa) { setAjenas([]); return; }
     let vigente = true;
-    void fichasDeCampana(supa, campanaId).then(({ personajes }) => {
-      if (vigente) setAjenas(personajes);
-    });
-    return () => { vigente = false; };
+    let reloj: ReturnType<typeof setTimeout> | undefined;
+    const mirar = async () => {
+      if (!vigente) return;
+      if (document.visibilityState === 'visible') {
+        const { personajes, error } = await fichasDeCampana(supa, campanaId);
+        // Un fallo de red no vacía la lista: se sigue con lo último que se supo.
+        if (vigente && !error) setAjenas(personajes);
+      }
+      reloj = setTimeout(() => void mirar(), CADA_EN_COMBATE);
+    };
+    void mirar();
+    return () => { vigente = false; clearTimeout(reloj); };
   }, [campanaId]);
 
   return useMemo(() => {
@@ -361,7 +385,9 @@ export function PanelIniciativa({
         * media pantalla, así que puesto delante empujaría fuera de la vista justo lo que
         * hay que mirar cada turno. De sólo lectura: las fichas las mueve el máster.
         */}
-      {conMapa && combate.mapa?.imagenId && (
+      {/* Basta con que el máster haya montado un mapa: una cuadrícula sin imagen también
+          es un mapa, y antes al jugador no le salía. */}
+      {conMapa && combate.mapa && (
         <MapaBatalla
           combate={combate}
           campanaId={combate.campanaId}
