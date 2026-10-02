@@ -22,6 +22,8 @@ import type { Reglamento } from '../motor/reglamento';
 import { tirarD100 } from '../motor/dados';
 import { Seccion, cuenta as contar } from './Seccion';
 import { MapaBatalla } from './MapaBatalla';
+import { useColeccion } from './estado';
+import type { CosaMapa } from '../datos/tipos';
 
 interface Props {
   campanaId: string;
@@ -313,11 +315,14 @@ export function PanelIniciativa({
   personajeId,
   conMapa,
   onMoverMiFicha,
+  cosasPropias,
 }: {
   combate: Combate;
   personajeId: string;
   /** Si la mesa usa el campo de batalla. */
   conMapa: boolean;
+  /** Las cosas propias de la mesa, para poder leer su ficha al pulsarlas en el mapa. */
+  cosasPropias?: CosaMapa[];
   /** Mover tu propia ficha. Se apunta en el registro y el máster lo recoge. */
   onMoverMiFicha?: (destino: { x: number; y: number }, desde?: { x: number; y: number }) => void;
 }) {
@@ -394,6 +399,7 @@ export function PanelIniciativa({
           editable={false}
           personajeId={personajeId}
           onMoverMiFicha={onMoverMiFicha}
+          cosasPropias={cosasPropias}
         />
       )}
     </section>
@@ -413,6 +419,7 @@ export function VistaCombate({
   const { combates, guardar, borrar } = useCombates(campanaId);
   const fichasDeLaMesa = useFichasDeLaMesa(campanaId, personajes);
   const turnos = useTurnos(fichasDeLaMesa, catalogo, reglamento);
+  const cosasPropias = useColeccion(catalogo, 'cosasMapa');
   const [enemigos, setEnemigos] = useState<Enemigo[]>([]);
   const [abiertoId, setAbiertoId] = useState<string | null>(null);
 
@@ -482,6 +489,7 @@ export function VistaCombate({
             onCambiar={(x) => void guardar(x)}
             onBorrar={() => void borrar(c.id)}
             onAnotar={onAnotar}
+            cosasPropias={cosasPropias}
           />
         </Seccion>
       ))}
@@ -500,11 +508,13 @@ function Encuentro({
   onCambiar,
   onBorrar,
   onAnotar,
+  cosasPropias,
 }: {
   combate: Combate;
   campanaId: string;
   /** Si la mesa usa el campo de batalla. */
   conMapa: boolean;
+  cosasPropias: CosaMapa[];
   personajes: Personaje[];
   enemigos: Enemigo[];
   fichas: Map<string, ResumenDeFicha>;
@@ -814,7 +824,13 @@ function Encuentro({
           resumen={combate.mapa?.imagenId ? 'con mapa' : 'sin montar'}
           abierta={Boolean(combate.mapa)}
         >
-          <MapaBatalla combate={combate} campanaId={campanaId} editable onCambiar={onCambiar} />
+          <MapaBatalla
+            combate={combate}
+            campanaId={campanaId}
+            editable
+            onCambiar={onCambiar}
+            cosasPropias={cosasPropias}
+          />
         </Seccion>
       )}
 

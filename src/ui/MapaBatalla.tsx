@@ -15,12 +15,19 @@ import {
   distancia,
   elementoEn,
   filasDe,
+  alDiaConPlantillas,
+  cambiarElemento,
+  fichaParaElMapa,
   moverElemento,
+  nuevaCosa,
   quitarElemento,
   type Casilla,
+  type CosaParaPoner,
   type ElementoMapa,
+  type FichaDeCosa,
   type Mapa,
 } from '../motor/mapaBatalla';
+import type { CosaMapa } from '../datos/tipos';
 import type { Combate } from '../motor/combatePorTurnos';
 import { actuando } from '../motor/combatePorTurnos';
 import { listarImagenes, obtenerImagen, type ImagenInfo } from '../almacen/imagenes';
@@ -57,17 +64,15 @@ interface Props {
    * a dónde se ha ido y el máster lo recoge.
    */
   onMoverMiFicha?: (destino: Casilla, desde: Casilla | undefined) => void;
+  /** Las cosas propias de la mesa, de su contenido propio, para ponerlas y enseñar su ficha. */
+  cosasPropias?: CosaMapa[];
 }
 
 /** Qué hace el ratón sobre el tablero. Sólo el máster tiene más de uno. */
 type Modo = 'mover' | 'niebla' | 'marcar' | 'cosas';
 
-/** Lo que se está poniendo en el suelo: uno de los de siempre o una imagen de la galería. */
-interface CosaElegida {
-  nombre: string;
-  icono?: string;
-  imagenId?: string | null;
-}
+/** Lo que se está poniendo en el suelo: de los de siempre, de la mesa o una imagen suelta. */
+type CosaElegida = CosaParaPoner;
 
 /** La imagen del mapa, como URL de objeto. Se revoca al cambiar para no filtrar memoria. */
 function useUrlImagen(id: string | null | undefined) {
@@ -157,6 +162,7 @@ export function MapaBatalla({
   personajeId,
   onCambiar,
   onMoverMiFicha,
+  cosasPropias = [],
 }: Props) {
   const mapa: Mapa = combate.mapa ?? MAPA_VACIO;
   const { url, medidas } = useUrlImagen(mapa.imagenId);
@@ -171,6 +177,8 @@ export function MapaBatalla({
   const [tamano, setTamano] = useState({ ancho: 1, alto: 1 });
   /** El barril que se está arrastrando, si hay alguno. */
   const [cogiendoCosa, setCogiendoCosa] = useState<string | null>(null);
+  /** La cosa del suelo cuya ficha se está mirando. */
+  const [mirando, setMirando] = useState<string | null>(null);
   /*
    * Si esto fuera estado de React, el `pointermove` que llega justo detrás del
    * `pointerdown` lo leería todavía en `false` y el arrastre no pintaría. No hace falta
@@ -201,6 +209,8 @@ export function MapaBatalla({
   const urles = useUrlesImagenes([
     ...combate.participantes.map((p) => p.retratoId),
     ...elementos.map((e) => e.imagenId),
+    // Las de la paleta, sólo para quien la ve: un jugador no tiene paleta.
+    ...(editable ? cosasPropias.map((c) => c.imagenId) : []),
   ]);
 
   useEffect(() => {
@@ -267,6 +277,19 @@ export function MapaBatalla({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mapa.elementos, columnas, filas, editable]);
 
+  /*
+   * Si el máster corrige una cosa en Contenido propio —otra imagen, otra Entereza—, las
+   * que ya están puestas se corrigen solas. Lo hace su pantalla porque es la que puede
+   * escribir el combate, y así a los jugadores les llega con él, en segundos.
+   */
+  useEffect(() => {
+    if (!editable || !onCambiar || cosasPropias.length === 0) return;
+    const alDia = alDiaConPlantillas(mapa.elementos, cosasPropias);
+    if (alDia === mapa.elementos) return;
+    onCambiar({ ...combate, mapa: { ...mapa, elementos: alDia }, actualizadoEn: new Date().toISOString() });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mapa.elementos, cosasPropias, editable]);
+
   const cambiarMapa = (cambios: Partial<Mapa>) =>
     onCambiar?.({ ...combate, mapa: { ...mapa, ...cambios }, actualizadoEn: new Date().toISOString() });
 
@@ -319,26 +342,32 @@ export function MapaBatalla({
       cambiarMapa({ elementos: quitarElemento(elementos, ya.id) });
       return;
     }
-    // Que no se salga por abajo o por la derecha si es grande y se pulsa junto al borde.
-    const ancho = Math.max(1, tamano.ancho);
-    const alto = Math.max(1, tamano.alto);
-    const nueva: ElementoMapa = {
-      id: nuevoId(),
-      x: Math.min(c.x, Math.max(0, columnas - ancho)),
-      y: Math.min(c.y, Math.max(0, filas - alto)),
-      nombre: cosa.nombre,
-      icono: cosa.icono,
-      imagenId: cosa.imagenId ?? null,
-      ancho,
-      alto,
-    };
-    cambiarMapa({ elementos: [...elementos, nueva] });
+    cambiarMapa({ elementos: [...elementos, nuevaCosa(nuevoId(), cosa, c, tamano, columnas, filas)] });
   };
 
+  /**
+   * Suelta una cosa que se estaba arrastrando. Si se suelta en la misma casilla es que no
+   * se quería mover sino **mirarla**: se abre su ficha. Es el mismo gesto que en una mesa de
+   * verdad, coger la ficha para moverla o señalarla para preguntar qué es.
+   */
   const moverCosa = (id: string, clienteX: number, clienteY: number) => {
     const sitio = casillaDelPuntero(clienteX, clienteY);
-    if (!sitio || !editable) return;
+    const antes = elementos.find((e) => e.id === id);
+    if (!sitio || !editable || !antes) return;
+    if (sitio.x === antes.x && sitio.y === antes.y) { setMirando(id); return; }
     cambiarMapa({ elementos: dentroDelMapa(moverElemento(elementos, id, sitio), columnas, filas) });
+  };
+
+  /** Elegir en la paleta una cosa propia: trae su tamaño, que es parte de lo que es. */
+  const elegirPropia = (c: CosaMapa) => {
+    setCosa({
+      nombre: c.cosa,
+      icono: c.icono || undefined,
+      imagenId: c.imagenId ?? null,
+      plantilla: c.cosa,
+      ficha: fichaParaElMapa(c),
+    });
+    setTamano({ ancho: Math.max(1, c.ancho || 1), alto: Math.max(1, c.alto || 1) });
   };
 
   /**
@@ -576,13 +605,46 @@ export function MapaBatalla({
             */}
           {modo === 'cosas' && (
             <div className="paleta-cosas">
+              {/*
+                * Las de la mesa primero: si el máster se ha tomado la molestia de hacer su
+                * barril, es ése el que quiere poner. Se crean en Contenido propio.
+                */}
+              {cosasPropias.length > 0 && (
+                <>
+                  <p className="titulo-paleta">De tu mesa</p>
+                  <div className="cacharros propias" role="group" aria-label="Cosas de tu mesa">
+                    {cosasPropias.map((c) => {
+                      const dibujo = c.imagenId ? urles.get(c.imagenId) : null;
+                      const elegida = cosa.plantilla === c.cosa;
+                      return (
+                        <button
+                          key={c.cosa}
+                          type="button"
+                          className={`cacharro${elegida ? ' elegido' : ''}`}
+                          aria-pressed={elegida}
+                          title={c.cosa}
+                          onClick={() => elegirPropia(c)}
+                        >
+                          {dibujo ? (
+                            <img src={dibujo} alt="" draggable={false} />
+                          ) : (
+                            <span aria-hidden>{c.icono || '⬛'}</span>
+                          )}
+                          <span className="como-se-llama">{c.cosa}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                  <p className="titulo-paleta">Las de siempre</p>
+                </>
+              )}
               <div className="cacharros" role="group" aria-label="Qué poner en el suelo">
                 {ELEMENTOS_DE_SIEMPRE.map((c) => (
                   <button
                     key={c.nombre}
                     type="button"
-                    className={`cacharro${!cosa.imagenId && cosa.nombre === c.nombre ? ' elegido' : ''}`}
-                    aria-pressed={!cosa.imagenId && cosa.nombre === c.nombre}
+                    className={`cacharro${!cosa.imagenId && !cosa.plantilla && cosa.nombre === c.nombre ? ' elegido' : ''}`}
+                    aria-pressed={!cosa.imagenId && !cosa.plantilla && cosa.nombre === c.nombre}
                     title={c.nombre}
                     onClick={() => setCosa({ nombre: c.nombre, icono: c.icono })}
                   >
@@ -597,7 +659,7 @@ export function MapaBatalla({
                   <label htmlFor={`cosa-img-${combate.id}`}>O una imagen tuya</label>
                   <select
                     id={`cosa-img-${combate.id}`}
-                    value={cosa.imagenId ?? ''}
+                    value={cosa.plantilla ? '' : (cosa.imagenId ?? '')}
                     onChange={(e) => {
                       const elegida = mapas.find((m) => m.id === e.target.value);
                       setCosa(
@@ -751,6 +813,8 @@ export function MapaBatalla({
           const dibujo = e.imagenId ? urles.get(e.imagenId) : null;
           const seMueve = editable && modo === 'mover';
           const seQuita = editable && modo === 'cosas';
+          // Un jugador no la mueve, pero sí puede pulsarla para ver qué es.
+          const seMira = !editable;
           return (
             <button
               key={e.id}
@@ -759,6 +823,9 @@ export function MapaBatalla({
                 'cosa-mapa',
                 cogiendoCosa === e.id ? 'cogida' : '',
                 editable && tapada(e.x, e.y) ? 'bajo-niebla' : '',
+                e.roto ? 'rota' : '',
+                mirando === e.id ? 'mirada' : '',
+                seMira ? 'se-mira' : '',
               ].filter(Boolean).join(' ')}
               style={{
                 left: `${(e.x * 100) / columnas}%`,
@@ -766,8 +833,13 @@ export function MapaBatalla({
                 width: `calc(${Math.max(1, e.ancho ?? 1)} * 100% / ${columnas})`,
                 height: `calc(${Math.max(1, e.alto ?? 1)} * 100% / ${filas})`,
               }}
-              title={seQuita ? `${e.nombre} · pulsa para quitarlo` : e.nombre}
-              disabled={!seMueve && !seQuita}
+              title={
+                seQuita ? `${e.nombre} · pulsa para quitarlo`
+                  : `${e.nombre}${e.roto ? ' · rota' : ''} · pulsa para ver su ficha`
+              }
+              aria-label={`${e.nombre}${e.roto ? ', rota' : ''}`}
+              disabled={!seMueve && !seQuita && !seMira}
+              onClick={() => { if (seMira) setMirando(mirando === e.id ? null : e.id); }}
               onPointerDown={(ev) => {
                 if (seQuita) {
                   ev.stopPropagation();
@@ -864,6 +936,134 @@ export function MapaBatalla({
           );
         })}
       </div>
+
+      {(() => {
+        const e = elementos.find((x) => x.id === mirando);
+        // Bajo la niebla tampoco se puede leer: sería decir qué hay ahí.
+        if (!e || (!editable && tapada(e.x, e.y))) return null;
+        return (
+          <FichaDeCosa
+            elemento={e}
+            plantilla={e.plantilla ? cosasPropias.find((c) => c.cosa === e.plantilla) : undefined}
+            dibujo={e.imagenId ? urles.get(e.imagenId) ?? null : null}
+            editable={editable}
+            onCambiar={(cambios) => cambiarMapa({ elementos: cambiarElemento(elementos, e.id, cambios) })}
+            onQuitar={() => { cambiarMapa({ elementos: quitarElemento(elementos, e.id) }); setMirando(null); }}
+            onCerrar={() => setMirando(null)}
+          />
+        );
+      })()}
     </div>
+  );
+}
+
+/**
+ * La ficha de una cosa del suelo: lo que es y cómo está.
+ *
+ * Arriba lo de su tipo —Entereza, Presencia y lo que la mesa le haya puesto, que viene de
+ * Contenido propio—; abajo lo de **ésta**: si está rota y lo que el máster le haya apuntado.
+ * Nada se calcula: un golpe no la rompe sola, la rompe el máster cuando la mesa lo decide.
+ *
+ * Si la cosa es secreta, el jugador ve que está ahí y cómo se llama, pero no sus datos: una
+ * trampa que enseña su ficha deja de ser una trampa.
+ */
+function FichaDeCosa({
+  elemento: e,
+  plantilla,
+  dibujo,
+  editable,
+  onCambiar,
+  onQuitar,
+  onCerrar,
+}: {
+  elemento: ElementoMapa;
+  plantilla: CosaMapa | undefined;
+  dibujo: string | null;
+  editable: boolean;
+  onCambiar: (c: Partial<Pick<ElementoMapa, 'roto' | 'notas'>>) => void;
+  onQuitar: () => void;
+  onCerrar: () => void;
+}) {
+  // El máster lee la plantilla viva y entera —también la de las secretas—; el jugador, la
+  // copia que viaja en el combate, que de una secreta no trae nada.
+  const ficha: FichaDeCosa | undefined = editable && plantilla
+    ? fichaParaElMapa({ ...plantilla, oculta: 'No' })
+    : e.ficha;
+  const secreta = plantilla ? plantilla.oculta === 'Sí' : Boolean(e.ficha?.secreta);
+  const veDatos = editable || !secreta;
+  const [notas, setNotas] = useState(e.notas ?? '');
+  // Si llega una nota nueva desde otra pantalla, se enseña la nueva.
+  useEffect(() => { setNotas(e.notas ?? ''); }, [e.id, e.notas]);
+  const caracteristicas = ficha?.caracteristicas ?? [];
+
+  return (
+    <section className={`ficha-cosa${e.roto ? ' rota' : ''}`} aria-label={`Ficha de ${e.nombre}`}>
+      <div className="cabecera-cosa">
+        {dibujo ? <img src={dibujo} alt="" /> : <span className="emoji" aria-hidden>{e.icono ?? '⬛'}</span>}
+        <div>
+          <h3>
+            {e.nombre}
+            {e.roto && <span className="marca-rota">rota</span>}
+          </h3>
+          <p className="tamano-cosa">
+            {Math.max(1, e.ancho ?? 1)} × {Math.max(1, e.alto ?? 1)} casillas
+            {editable && secreta && ' · sus datos no los ven los jugadores'}
+          </p>
+        </div>
+        <button type="button" className="accion" onClick={onCerrar} aria-label="Cerrar la ficha">
+          Cerrar
+        </button>
+      </div>
+
+      {!veDatos ? (
+        <p className="sin-datos">Sus características las lleva el máster.</p>
+      ) : !ficha ? (
+        <p className="sin-datos">
+          {editable
+            ? e.plantilla
+              ? `«${e.plantilla}» ya no está en el contenido propio de la mesa.`
+              : 'Es de las de siempre: no tiene ficha. Para darle características, créala en Campañas → Contenido propio → Cosas del mapa.'
+            : 'No tiene ficha.'}
+        </p>
+      ) : (
+        <>
+          {(ficha.entereza || ficha.presencia || caracteristicas.length > 0) && (
+            <dl className="datos-cosa">
+              {ficha.entereza ? <div><dt>Entereza</dt><dd>{ficha.entereza}</dd></div> : null}
+              {ficha.presencia ? <div><dt>Presencia</dt><dd>{ficha.presencia}</dd></div> : null}
+              {caracteristicas.map((c, i) => (
+                <div key={i}><dt>{c.nombre}</dt><dd>{c.valor}</dd></div>
+              ))}
+            </dl>
+          )}
+          {ficha.descripcion && <p className="descripcion-cosa">{ficha.descripcion}</p>}
+        </>
+      )}
+
+      {editable ? (
+        <div className="estado-cosa">
+          <label className="casilla">
+            <input type="checkbox" checked={Boolean(e.roto)} onChange={(ev) => onCambiar({ roto: ev.target.checked })} />
+            Rota
+          </label>
+          <div className="campo">
+            <label htmlFor={`notas-${e.id}`}>
+              Notas de ésta{secreta ? '' : ' · las ven los jugadores'}
+            </label>
+            <textarea
+              id={`notas-${e.id}`}
+              rows={2}
+              value={notas}
+              placeholder="Ya está vacía, la abrió Zhaira…"
+              onChange={(ev) => setNotas(ev.target.value)}
+              onBlur={() => { if (notas !== (e.notas ?? '')) onCambiar({ notas }); }}
+            />
+          </div>
+          <button type="button" className="accion peligro" onClick={onQuitar}>Quitar del mapa</button>
+        </div>
+      ) : (
+        veDatos && e.notas && <p className="notas-cosa">{e.notas}</p>
+      )}
+    </section>
   );
 }

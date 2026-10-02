@@ -1,23 +1,148 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { PERSONALIZADOS_VACIOS, cuentaPersonalizados, type Personalizados } from '../datos/paquetes';
 import { ESQUEMAS, type Campo, type EsquemaColeccion } from '../datos/esquemas';
 import type { NombreColeccion } from '../datos/tipos';
+import { ErrorImagen, guardarImagen } from '../almacen/imagenes';
+import { Imagen } from './Imagen';
 
 interface Props {
   personalizados: Personalizados;
   onCambiar: (p: Personalizados) => void;
+  /** La campaña dueña: las imágenes que se suban aquí son suyas, y así la mesa las ve. */
+  campanaId?: string | null;
+}
+
+/**
+ * Una imagen propia, subida desde aquí mismo.
+ *
+ * Se guarda en la Galería como «objeto» y **con la campaña puesta**: es lo que permite que
+ * los jugadores la vean en el mapa, porque las políticas de la nube dejan a la mesa ver
+ * las imágenes de su campaña y nada más. Quitarla no la borra de la Galería: puede estar
+ * usada en un mapa.
+ */
+function EditorImagen({
+  id, valor, onCambiar, etiqueta, nombre, campanaId,
+}: {
+  id: string;
+  valor: unknown;
+  onCambiar: (v: unknown) => void;
+  etiqueta: React.ReactNode;
+  nombre: string;
+  campanaId: string | null;
+}) {
+  const archivo = useRef<HTMLInputElement>(null);
+  const [fallo, setFallo] = useState<string | null>(null);
+  const actual = typeof valor === 'string' && valor ? valor : null;
+  return (
+    <div className="campo editor-imagen">
+      {etiqueta}
+      <div style={{ display: 'flex', gap: 10, alignItems: 'center', flexWrap: 'wrap' }}>
+        {actual && <Imagen id={actual} alt={nombre} className="miniatura-propia" />}
+        <button id={id} type="button" className="accion" onClick={() => archivo.current?.click()}>
+          {actual ? 'Cambiar imagen' : 'Subir imagen'}
+        </button>
+        {actual && (
+          <button type="button" className="accion" onClick={() => onCambiar(null)}>
+            Quitar
+          </button>
+        )}
+      </div>
+      {fallo && <small style={{ color: 'var(--peligro, #c33)' }}>{fallo}</small>}
+      <input
+        ref={archivo}
+        type="file"
+        accept="image/*"
+        aria-label={`Archivo de imagen para ${nombre || 'esta entrada'}`}
+        style={{ display: 'none' }}
+        onChange={async (e) => {
+          const f = e.target.files?.[0];
+          e.target.value = '';
+          if (!f) return;
+          try {
+            const img = await guardarImagen(f, { tipo: 'objeto', nombre: nombre || f.name, campanaId });
+            setFallo(null);
+            onCambiar(img.id);
+          } catch (err) {
+            setFallo(err instanceof ErrorImagen ? err.message : 'No se ha podido subir la imagen.');
+          }
+        }}
+      />
+    </div>
+  );
+}
+
+type Par = { nombre: string; valor: string };
+
+/** Características con el nombre que la mesa quiera. Una fila por cada una. */
+function EditorLista({
+  id, valor, onCambiar, etiqueta, pista,
+}: {
+  id: string;
+  valor: unknown;
+  onCambiar: (v: unknown) => void;
+  etiqueta: React.ReactNode;
+  pista?: string;
+}) {
+  const filas: Par[] = Array.isArray(valor) ? (valor as Par[]) : [];
+  const cambiar = (i: number, cambio: Partial<Par>) =>
+    onCambiar(filas.map((f, j) => (j === i ? { ...f, ...cambio } : f)));
+  return (
+    <div className="campo editor-lista">
+      {etiqueta}
+      {filas.map((f, i) => (
+        <div key={i} className="par">
+          <input
+            aria-label={`Característica ${i + 1}`}
+            placeholder={i === 0 ? pista?.split('…')[0].split(',')[0] : 'Nombre'}
+            value={f.nombre}
+            onChange={(e) => cambiar(i, { nombre: e.target.value })}
+          />
+          <input
+            aria-label={`Valor de la característica ${i + 1}`}
+            placeholder="Valor"
+            value={f.valor}
+            onChange={(e) => cambiar(i, { valor: e.target.value })}
+          />
+          <button type="button" className="accion" onClick={() => onCambiar(filas.filter((_, j) => j !== i))}>
+            Quitar
+          </button>
+        </div>
+      ))}
+      <button id={id} type="button" className="accion" onClick={() => onCambiar([...filas, { nombre: '', valor: '' }])}>
+        Añadir característica
+      </button>
+    </div>
+  );
 }
 
 type Entrada = Record<string, unknown>;
 
 function EditorCampo({
-  campo, valor, onCambiar, id,
-}: { campo: Campo; valor: unknown; onCambiar: (v: unknown) => void; id: string }) {
+  campo, valor, onCambiar, id, nombre = '', campanaId = null,
+}: {
+  campo: Campo;
+  valor: unknown;
+  onCambiar: (v: unknown) => void;
+  id: string;
+  /** El nombre de la entrada, para ponérselo a la imagen que se suba. */
+  nombre?: string;
+  campanaId?: string | null;
+}) {
   const etiqueta = (
     <label htmlFor={id} style={{ display: 'block', fontSize: '0.62rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--texto-debil)' }}>
       {campo.etiqueta}
     </label>
   );
+
+  if (campo.tipo === 'imagen') {
+    return (
+      <EditorImagen id={id} valor={valor} onCambiar={onCambiar} etiqueta={etiqueta} nombre={nombre} campanaId={campanaId} />
+    );
+  }
+
+  if (campo.tipo === 'lista') {
+    return <EditorLista id={id} valor={valor} onCambiar={onCambiar} etiqueta={etiqueta} pista={campo.pista} />;
+  }
 
   if (campo.tipo === 'numero') {
     return (
@@ -75,13 +200,14 @@ function EditorCampo({
 }
 
 function EditorEntrada({
-  esquema, entrada, indice, onCambiar, onBorrar,
+  esquema, entrada, indice, onCambiar, onBorrar, campanaId,
 }: {
   esquema: EsquemaColeccion;
   entrada: Entrada;
   indice: number;
   onCambiar: (e: Entrada) => void;
   onBorrar: () => void;
+  campanaId: string | null;
 }) {
   const [confirmar, setConfirmar] = useState(false);
   const sueltos = esquema.campos.filter((c) => !c.grupo);
@@ -90,6 +216,8 @@ function EditorEntrada({
   const set = (clave: string, valor: unknown) => onCambiar({ ...entrada, [clave]: valor });
 
   const nombre = String(entrada[esquema.clave] ?? '');
+  // Los campos que ocupan una fila entera van aparte, debajo de los cortos.
+  const ancho = (c: Campo) => c.tipo === 'parrafo' || c.tipo === 'lista' || c.tipo === 'imagen';
 
   return (
     <article className="panel" style={{ marginBottom: 12 }}>
@@ -99,7 +227,7 @@ function EditorEntrada({
 
       <div className="rejilla">
         {sueltos
-          .filter((c) => c.tipo !== 'parrafo')
+          .filter((c) => !ancho(c))
           .map((c) => (
             <EditorCampo key={c.clave} campo={c} id={id(c.clave)} valor={entrada[c.clave]} onCambiar={(v) => set(c.clave, v)} />
           ))}
@@ -119,9 +247,17 @@ function EditorEntrada({
       ))}
 
       {sueltos
-        .filter((c) => c.tipo === 'parrafo')
+        .filter(ancho)
         .map((c) => (
-          <EditorCampo key={c.clave} campo={c} id={id(c.clave)} valor={entrada[c.clave]} onCambiar={(v) => set(c.clave, v)} />
+          <EditorCampo
+            key={c.clave}
+            campo={c}
+            id={id(c.clave)}
+            valor={entrada[c.clave]}
+            onCambiar={(v) => set(c.clave, v)}
+            nombre={nombre}
+            campanaId={campanaId}
+          />
         ))}
 
       <div className="acciones-regla">
@@ -138,7 +274,7 @@ function EditorEntrada({
   );
 }
 
-export function VistaPersonalizado({ personalizados, onCambiar }: Props) {
+export function VistaPersonalizado({ personalizados, onCambiar, campanaId = null }: Props) {
   const [coleccion, setColeccion] = useState<NombreColeccion>('razas');
   const propio: Personalizados = { ...PERSONALIZADOS_VACIOS, ...personalizados };
   const esquema = ESQUEMAS.find((e) => e.coleccion === coleccion)!;
@@ -193,6 +329,7 @@ export function VistaPersonalizado({ personalizados, onCambiar }: Props) {
           indice={i}
           onCambiar={(e) => guardar(entradas.map((x, j) => (j === i ? e : x)))}
           onBorrar={() => guardar(entradas.filter((_, j) => j !== i))}
+          campanaId={campanaId}
         />
       ))}
 

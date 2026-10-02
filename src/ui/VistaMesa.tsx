@@ -79,6 +79,7 @@ export function VistaMesa({
   const [esPacto, setEsPacto] = useState(false);
   const [criaturaElegida, setCriaturaElegida] = useState('');
   const sellosCriatura = useColeccion(catalogo, 'sellosCriatura');
+  const cosasPropias = useColeccion(catalogo, 'cosasMapa');
   const criaturaFicha = sellosCriatura.find((c) => c.criatura === criaturaElegida);
 
   const enemigo = enemigos.find((e) => e.id === enemigoId) ?? null;
@@ -270,6 +271,7 @@ export function VistaMesa({
           combate={combateEnCurso}
           personajeId={personaje.id}
           conMapa={conMapa}
+          cosasPropias={cosasPropias}
           onMoverMiFicha={(destino, desde) => {
             const cuantas = desde ? distancia(desde, destino) : 0;
             anotar(

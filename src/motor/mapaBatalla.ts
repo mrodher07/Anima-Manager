@@ -61,6 +61,142 @@ export interface ElementoMapa {
   /** Cuántas casillas ocupa. Una mesa larga son 2×1. */
   ancho?: number;
   alto?: number;
+  /**
+   * La cosa propia de la mesa de la que sale, por su nombre, si sale de una. Es lo que
+   * permite enseñar su ficha —Entereza, Presencia, lo que la mesa le haya puesto— al
+   * pulsarla, y que si el máster la corrige se corrija en todos los mapas.
+   */
+  plantilla?: string;
+  /**
+   * Su ficha, copiada de la plantilla. Viaja **dentro del combate** para que la pantalla
+   * de un jugador la tenga ya —el combate lo consulta cada pocos segundos; el contenido
+   * propio de la campaña le llega mucho más despacio— y la pantalla del máster la mantiene
+   * al día si corrige la plantilla.
+   */
+  ficha?: FichaDeCosa;
+  /** Esta en concreto, no todas las de su tipo: un barril roto no rompe los demás. */
+  roto?: boolean;
+  /** Lo que haya que apuntar de esta: «ya está vacío», «la abrió Zhaira». */
+  notas?: string;
+}
+
+/** Lo que se ve de una cosa al pulsarla. Ningún valor se calcula: es su ficha y ya. */
+export interface FichaDeCosa {
+  entereza?: number;
+  presencia?: number;
+  caracteristicas?: { nombre: string; valor: string }[];
+  descripcion?: string;
+  /** Sus datos son sólo del máster. Si es así, **no viajan**: no hay nada que espiar. */
+  secreta?: boolean;
+}
+
+/** Lo que trae una cosa del contenido propio, en la forma en que la escribe la mesa. */
+export interface DatosDeCosa {
+  entereza?: number;
+  presencia?: number;
+  caracteristicas?: { nombre: string; valor: string }[];
+  descripcion?: string;
+  oculta?: string;
+}
+
+/**
+ * La ficha que se pone en el mapa a partir de la cosa que hizo la mesa.
+ *
+ * Si es secreta se manda **sólo la marca**, no los datos con una bandera de «no lo
+ * enseñes»: el combate lo puede leer cualquiera de la mesa, y esconder en la pantalla algo
+ * que sí ha llegado al aparato del jugador no es esconderlo. Tampoco se copian los valores
+ * vacíos ni las características sin nombre ni valor: son huecos del formulario.
+ */
+export function fichaParaElMapa(c: DatosDeCosa): FichaDeCosa {
+  if (c.oculta === 'Sí') return { secreta: true };
+  const f: FichaDeCosa = {};
+  if (c.entereza) f.entereza = c.entereza;
+  if (c.presencia) f.presencia = c.presencia;
+  const caracteristicas = (c.caracteristicas ?? []).filter((x) => x.nombre.trim() || x.valor.trim());
+  if (caracteristicas.length) f.caracteristicas = caracteristicas;
+  if (c.descripcion?.trim()) f.descripcion = c.descripcion;
+  return f;
+}
+
+/** Lo que se elige en la paleta antes de pulsar en el mapa. */
+export interface CosaParaPoner {
+  nombre: string;
+  icono?: string;
+  imagenId?: string | null;
+  plantilla?: string;
+  ficha?: FichaDeCosa;
+}
+
+/**
+ * La cosa que queda en el suelo al pulsar en una casilla.
+ *
+ * Si es grande y se pulsa junto al borde se corre hacia dentro en vez de salirse: pulsar
+ * en la última columna con una mesa de 3×1 es pedir la mesa ahí, no media mesa.
+ */
+export function nuevaCosa(
+  id: string,
+  cosa: CosaParaPoner,
+  en: Casilla,
+  tamano: { ancho: number; alto: number },
+  columnas: number,
+  filas: number,
+): ElementoMapa {
+  const ancho = Math.max(1, Math.min(columnas, Math.round(tamano.ancho) || 1));
+  const alto = Math.max(1, Math.min(filas, Math.round(tamano.alto) || 1));
+  const e: ElementoMapa = {
+    id,
+    x: Math.max(0, Math.min(en.x, columnas - ancho)),
+    y: Math.max(0, Math.min(en.y, filas - alto)),
+    nombre: cosa.nombre,
+    imagenId: cosa.imagenId ?? null,
+    ancho,
+    alto,
+  };
+  if (cosa.icono) e.icono = cosa.icono;
+  if (cosa.plantilla) e.plantilla = cosa.plantilla;
+  if (cosa.ficha) e.ficha = cosa.ficha;
+  return e;
+}
+
+/**
+ * Las cosas puestas cuya plantilla ha cambiado desde que se pusieron, ya corregidas.
+ *
+ * Devuelve **la misma lista** si no hay nada que corregir, para que mirarla no provoque
+ * una escritura. Las que no salen de una plantilla, o cuya plantilla ya no existe, se
+ * quedan como estaban: lo que se vio en la mesa no se borra por borrar la plantilla.
+ */
+export function alDiaConPlantillas(
+  elementos: ElementoMapa[] | undefined,
+  plantillas: (DatosDeCosa & { cosa: string; imagenId?: string | null; icono?: string })[],
+): ElementoMapa[] {
+  const lista = elementos ?? [];
+  let cambia = false;
+  const nuevos = lista.map((e) => {
+    const p = e.plantilla ? plantillas.find((x) => x.cosa === e.plantilla) : undefined;
+    if (!p) return e;
+    const ficha = fichaParaElMapa(p);
+    const imagenId = p.imagenId ?? null;
+    const icono = p.icono || undefined;
+    if (
+      JSON.stringify(ficha) === JSON.stringify(e.ficha ?? {}) &&
+      imagenId === (e.imagenId ?? null) &&
+      icono === e.icono
+    ) return e;
+    cambia = true;
+    const corregido: ElementoMapa = { ...e, ficha, imagenId };
+    if (icono) corregido.icono = icono; else delete corregido.icono;
+    return corregido;
+  });
+  return cambia ? nuevos : lista;
+}
+
+/** Cambia algo de una cosa ya puesta: romperla, apuntarle algo. */
+export function cambiarElemento(
+  elementos: ElementoMapa[] | undefined,
+  id: string,
+  cambios: Partial<Pick<ElementoMapa, 'roto' | 'notas'>>,
+): ElementoMapa[] {
+  return (elementos ?? []).map((e) => (e.id === id ? { ...e, ...cambios } : e));
 }
 
 /**
