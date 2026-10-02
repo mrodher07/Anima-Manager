@@ -404,6 +404,11 @@ async function recogerImagenes(
   return salida;
 }
 
+/** Las imágenes de las cosas del mapa que la mesa se ha hecho en Contenido propio. */
+function imagenesDeCampanas(campanas: Campana[]): (string | null | undefined)[] {
+  return campanas.flatMap((c) => (c.personalizados?.cosasMapa ?? []).map((x) => x.imagenId));
+}
+
 /** Todo lo que dibuja un combate: el mapa, lo que hay en el suelo y las caras. */
 function imagenesDe(combates: Combate[]): (string | null | undefined)[] {
   return combates.flatMap((c) => [
@@ -432,6 +437,7 @@ export async function exportarTodo(): Promise<Exportacion> {
       ...personajes.map((p) => p.retratoId),
       ...enemigos.map((e) => e.imagenId),
       ...imagenesDe(combates),
+      ...imagenesDeCampanas(campanas),
     ]),
   };
 }
@@ -493,6 +499,7 @@ export async function importar(exportacion: Exportacion, sobrescribir: boolean):
   }
   for (const c of exportacion.campanas) {
     await almacen.guardarCampana(c);
+    for (const id of imagenesDeCampanas([c])) if (id) importadas.add(id);
   }
   for (const e of exportacion.enemigos ?? []) {
     await almacen.guardarEnemigo(e);

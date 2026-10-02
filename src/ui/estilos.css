@@ -2120,3 +2120,95 @@ input[type='checkbox'] { accent-color: var(--oro); }
 /* Las tablas, con renglones de manuscrito. */
 :root[data-tema='medieval'] td { border-bottom: 1px solid color-mix(in srgb, var(--oro) 22%, transparent); }
 :root[data-tema='medieval'] th { border-bottom: 1px solid color-mix(in srgb, var(--oro) 50%, transparent); }
+
+/* ── Cosas propias del mapa ─────────────────────────────────────────────── */
+
+/* Rota: en gris y con un aspa encima. Se tiene que ver de un vistazo, no al pulsarla. */
+.cosa-mapa.rota .dibujo { filter: grayscale(1) brightness(0.7) drop-shadow(0 2px 3px rgba(0, 0, 0, 0.55)); }
+.cosa-mapa.rota::after {
+  content: '';
+  position: absolute;
+  inset: 12%;
+  background:
+    linear-gradient(45deg, transparent 45%, var(--sangre-claro) 45% 55%, transparent 55%),
+    linear-gradient(-45deg, transparent 45%, var(--sangre-claro) 45% 55%, transparent 55%);
+  opacity: 0.85;
+  pointer-events: none;
+}
+/* Un jugador puede pulsarla para leer su ficha. */
+.cosa-mapa.se-mira { cursor: pointer; }
+.cosa-mapa.mirada { outline: 2px solid var(--oro-claro); outline-offset: -2px; border-radius: 4px; }
+
+.paleta-cosas .titulo-paleta {
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--oro);
+  margin: 2px 0 4px;
+}
+.paleta-cosas .titulo-paleta + .cacharros { margin-bottom: 8px; }
+.paleta-cosas .cacharro img { width: 28px; height: 28px; object-fit: contain; }
+
+/* La ficha de una cosa, debajo del mapa. */
+.ficha-cosa {
+  margin-top: 10px;
+  border: 1px solid var(--borde);
+  border-left: 3px solid var(--oro);
+  border-radius: var(--radio-s);
+  background: var(--panel);
+  padding: 10px 12px;
+}
+.ficha-cosa.rota { border-left-color: var(--sangre-claro); }
+.ficha-cosa .cabecera-cosa { display: flex; gap: 12px; align-items: center; }
+.ficha-cosa .cabecera-cosa > div { flex: 1; min-width: 0; }
+.ficha-cosa .cabecera-cosa img,
+.ficha-cosa .cabecera-cosa .emoji {
+  width: 52px;
+  height: 52px;
+  object-fit: contain;
+  font-size: 40px;
+  line-height: 52px;
+  text-align: center;
+  flex: none;
+}
+.ficha-cosa h3 { margin: 0; font-size: 1.05rem; }
+.ficha-cosa .marca-rota {
+  margin-left: 8px;
+  font-size: 0.66rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--sangre-claro);
+  border: 1px solid currentColor;
+  border-radius: var(--radio-s);
+  padding: 1px 5px;
+  vertical-align: middle;
+}
+.ficha-cosa .tamano-cosa { margin: 2px 0 0; font-size: 0.8rem; color: var(--texto-debil); }
+.ficha-cosa .datos-cosa {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 18px;
+  margin: 10px 0 0;
+}
+.ficha-cosa .datos-cosa div { display: flex; flex-direction: column; }
+.ficha-cosa .datos-cosa dt { font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--texto-debil); }
+.ficha-cosa .datos-cosa dd { margin: 0; font-family: var(--titulos); font-size: 1.1rem; color: var(--texto); }
+.ficha-cosa .descripcion-cosa,
+.ficha-cosa .notas-cosa,
+.ficha-cosa .sin-datos { margin: 10px 0 0; font-size: 0.88rem; color: var(--texto-tenue); white-space: pre-line; }
+.ficha-cosa .estado-cosa {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 8px 14px;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--borde);
+}
+.ficha-cosa .estado-cosa .campo { flex: 1; min-width: 200px; margin-bottom: 0; }
+.ficha-cosa .estado-cosa .casilla { display: flex; gap: 6px; align-items: center; }
+
+/* En Contenido propio: la imagen que se sube y las características libres. */
+.miniatura-propia { width: 64px; height: 64px; object-fit: contain; border: 1px solid var(--borde); border-radius: var(--radio-s); background: var(--fondo-2); }
+.editor-lista .par { display: flex; gap: 6px; margin-bottom: 6px; flex-wrap: wrap; }
+.editor-lista .par input { flex: 1; min-width: 110px; }

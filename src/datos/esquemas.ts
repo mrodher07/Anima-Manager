@@ -9,7 +9,15 @@
 
 import type { NombreColeccion } from './tipos';
 
-export type TipoCampo = 'texto' | 'numero' | 'parrafo' | 'opcion';
+export type TipoCampo =
+  | 'texto'
+  | 'numero'
+  | 'parrafo'
+  | 'opcion'
+  /** Una imagen subida desde el propio editor; se guarda su id de la Galería. */
+  | 'imagen'
+  /** Pares nombre → valor que la mesa se inventa, tantos como quiera. */
+  | 'lista';
 
 export interface Campo {
   clave: string;
@@ -642,6 +650,33 @@ export const ESQUEMAS: EsquemaColeccion[] = [
       num('requisito', 'Requisito', 'Valores', 90),
       num('coste', 'Coste', 'Valores'),
       { clave: 'descripcion', etiqueta: 'Descripción', tipo: 'parrafo' },
+    ],
+  },
+  {
+    coleccion: 'cosasMapa',
+    singular: 'cosa del mapa',
+    plural: 'Cosas del mapa',
+    clave: 'cosa',
+    ayuda:
+      'Lo que pones en el campo de batalla con tu propia imagen: un barril, un altar, una ' +
+      'puerta reforzada. Entereza y Presencia son los valores que el manual da a cualquier ' +
+      'objeto; debajo puedes añadir las características que quieras con el nombre que ' +
+      'quieras. Nada se calcula solo: es su ficha, para tenerla a mano en la partida. ' +
+      'Aparecen en el mapa, en el modo «Cosas».',
+    campos: [
+      txt('cosa', 'Nombre', 'Barril de aceite, Altar de Abel…'),
+      { clave: 'imagenId', etiqueta: 'Imagen', tipo: 'imagen' },
+      txt('icono', 'O un emoji', '🛢️'),
+      num('ancho', 'Ancho', 'Casillas que ocupa'),
+      num('alto', 'Alto', 'Casillas que ocupa'),
+      num('entereza', 'Entereza', 'Valores', 84),
+      num('presencia', 'Presencia', 'Valores', 84),
+      { clave: 'oculta', etiqueta: 'Sólo la ve el máster', tipo: 'opcion', opciones: ['No', 'Sí'],
+        pista: 'Sus datos no se enseñan a los jugadores; la cosa en el mapa sí.' },
+      { clave: 'caracteristicas', etiqueta: 'Características', tipo: 'lista',
+        pista: 'TA, Explota, Contiene…' },
+      { clave: 'descripcion', etiqueta: 'Descripción', tipo: 'parrafo',
+        pista: 'Qué es, qué hay dentro, qué pasa si se rompe. Lo decide la mesa.' },
     ],
   },
 ];

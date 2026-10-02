@@ -549,6 +549,7 @@ export function VistaCampanas({
           {panel === 'propio' && (
             editable ? (
               <VistaPersonalizado
+                campanaId={editable.id}
                 personalizados={editable.personalizados ?? PERSONALIZADOS_VACIOS}
                 onCambiar={(pers: Personalizados) =>
                   onGuardar({ ...editable, personalizados: pers })

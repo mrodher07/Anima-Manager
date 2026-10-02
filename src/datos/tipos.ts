@@ -401,6 +401,31 @@ export interface Grimorio {
   especial?: string;
 }
 
+/**
+ * Una cosa propia para el campo de batalla: el barril de la taberna, el altar del templo.
+ *
+ * No sale de ningún manual: la hace la mesa. Lleva los dos valores que el manual da a
+ * cualquier objeto —Entereza y Presencia, los mismos que traen armas y armaduras— y luego
+ * las características que la mesa quiera ponerle, con el nombre que quiera. **Ninguno se
+ * calcula solo**: es la ficha de la cosa, para tenerla a mano cuando alguien la golpea.
+ */
+export interface CosaMapa {
+  cosa: string;
+  /** Imagen subida por la mesa. Sin ella se usa el emoji, y sin emoji un cuadro. */
+  imagenId?: string | null;
+  icono?: string;
+  /** Casillas que ocupa al ponerla. Se puede cambiar al colocarla. */
+  ancho?: number;
+  alto?: number;
+  entereza?: number;
+  presencia?: number;
+  /** Lo que la mesa quiera apuntar, con su propio nombre: «TA: 2», «Explota: 60 CAL»… */
+  caracteristicas?: { nombre: string; valor: string }[];
+  descripcion?: string;
+  /** «Sí» si sus datos son sólo para el máster: una trampa no se anuncia. */
+  oculta?: string;
+}
+
 /** Nombre de cada colección del catálogo y el tipo que contiene. */
 export interface Colecciones {
   razas: Raza;
@@ -433,6 +458,7 @@ export interface Colecciones {
   poderesPsiquicos: PoderPsiquico;
   disciplinasPsiquicas: EntradaTabla;
   elan: EntradaTabla;
+  cosasMapa: CosaMapa;
 }
 
 export type NombreColeccion = keyof Colecciones;
@@ -470,4 +496,5 @@ export const CLAVE_DE: Record<NombreColeccion, string> = {
   poderesPsiquicos: 'poder',
   disciplinasPsiquicas: 'disciplina',
   elan: 'nombre',
+  cosasMapa: 'cosa',
 };

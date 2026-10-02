@@ -3,6 +3,7 @@ import {
   alternar,
   camino,
   casillasDe,
+  cambiarElemento,
   clave,
   describeDistancia,
   distancia,
@@ -12,10 +13,13 @@ import {
   casillaDesde,
   colocacionInicial,
   columnasValidas,
+  alDiaConPlantillas,
   dentroDelMapa,
   elementoEn,
+  fichaParaElMapa,
   filasDe,
   moverElemento,
+  nuevaCosa,
   quitarElemento,
   type ElementoMapa,
   type EnElMapa,
@@ -236,5 +240,104 @@ describe('las cosas que hay en el suelo', () => {
     const cosas = [barril()];
     expect(dentroDelMapa(cosas, 20, 12)).toBe(cosas);
     expect(dentroDelMapa(undefined, 20, 12)).toEqual([]);
+  });
+});
+
+describe('poner cosas propias en el mapa', () => {
+  const barril = { nombre: 'Barril de aceite', imagenId: 'img-1', plantilla: 'Barril de aceite' };
+
+  it('queda donde se pulsa, con su imagen y sabiendo de qué cosa sale', () => {
+    expect(nuevaCosa('a', barril, { x: 3, y: 2 }, { ancho: 1, alto: 1 }, 16, 9)).toEqual({
+      id: 'a', x: 3, y: 2, nombre: 'Barril de aceite', imagenId: 'img-1', ancho: 1, alto: 1,
+      plantilla: 'Barril de aceite',
+    });
+  });
+
+  it('una grande pulsada junto al borde se mete entera', () => {
+    const e = nuevaCosa('m', { nombre: 'Mesa' }, { x: 15, y: 8 }, { ancho: 3, alto: 2 }, 16, 9);
+    expect(e).toMatchObject({ x: 13, y: 7, ancho: 3, alto: 2 });
+    expect(casillasDe(e).every((c) => c.x < 16 && c.y < 9)).toBe(true);
+  });
+
+  it('un tamaño sin poner o de cero cuenta como una casilla, y nunca más que el mapa', () => {
+    expect(nuevaCosa('z', { nombre: 'X' }, { x: 0, y: 0 }, { ancho: 0, alto: NaN }, 8, 4))
+      .toMatchObject({ ancho: 1, alto: 1 });
+    expect(nuevaCosa('g', { nombre: 'Muralla' }, { x: 2, y: 1 }, { ancho: 40, alto: 2 }, 8, 4))
+      .toMatchObject({ x: 0, ancho: 8 });
+  });
+
+  it('sin emoji ni plantilla no se inventa esos campos', () => {
+    const e = nuevaCosa('s', { nombre: 'Suelta' }, { x: 1, y: 1 }, { ancho: 1, alto: 1 }, 8, 4);
+    expect('icono' in e).toBe(false);
+    expect('plantilla' in e).toBe(false);
+  });
+
+  it('romper una no rompe las demás, y no toca la lista que recibe', () => {
+    const antes = [
+      nuevaCosa('a', barril, { x: 1, y: 1 }, { ancho: 1, alto: 1 }, 8, 4),
+      nuevaCosa('b', barril, { x: 2, y: 1 }, { ancho: 1, alto: 1 }, 8, 4),
+    ];
+    const despues = cambiarElemento(antes, 'a', { roto: true, notas: 'Lo partió Meirmeister' });
+    expect(despues[0]).toMatchObject({ roto: true, notas: 'Lo partió Meirmeister' });
+    expect(despues[1].roto).toBeUndefined();
+    expect(antes[0].roto).toBeUndefined();
+  });
+});
+
+describe('la ficha de una cosa en el mapa', () => {
+  const barril = {
+    cosa: 'Barril de aceite',
+    imagenId: 'img-barril',
+    entereza: 10,
+    presencia: 15,
+    caracteristicas: [{ nombre: 'Explota', valor: '60 CAL' }, { nombre: '', valor: '' }],
+    descripcion: 'Lleno de aceite de lámpara.',
+  };
+
+  it('copia lo que la mesa ha escrito y deja fuera los huecos', () => {
+    expect(fichaParaElMapa(barril)).toEqual({
+      entereza: 10,
+      presencia: 15,
+      caracteristicas: [{ nombre: 'Explota', valor: '60 CAL' }],
+      descripcion: 'Lleno de aceite de lámpara.',
+    });
+    expect(fichaParaElMapa({ entereza: 0, descripcion: '  ' })).toEqual({});
+  });
+
+  it('si es secreta no viaja ningún dato, sólo la marca', () => {
+    expect(fichaParaElMapa({ ...barril, oculta: 'Sí' })).toEqual({ secreta: true });
+    expect(fichaParaElMapa({ ...barril, oculta: 'No' }).entereza).toBe(10);
+  });
+
+  it('al corregir la plantilla se corrigen las que ya están puestas', () => {
+    const puesto = nuevaCosa('a', { nombre: 'Barril de aceite', plantilla: 'Barril de aceite', ficha: fichaParaElMapa(barril), imagenId: 'img-barril' },
+      { x: 1, y: 1 }, { ancho: 1, alto: 1 }, 8, 4);
+    const suelto = nuevaCosa('b', { nombre: 'Roca', icono: '🪨' }, { x: 3, y: 1 }, { ancho: 1, alto: 1 }, 8, 4);
+    const roto = { ...puesto, id: 'c', roto: true, notas: 'Partido' };
+    const antes = [puesto, suelto, roto];
+
+    expect(alDiaConPlantillas(antes, [barril])).toBe(antes);
+
+    const corregida = { ...barril, entereza: 12, imagenId: 'img-nueva' };
+    const despues = alDiaConPlantillas(antes, [corregida]);
+    expect(despues[0].ficha?.entereza).toBe(12);
+    expect(despues[0].imagenId).toBe('img-nueva');
+    expect(despues[1]).toBe(suelto);
+    // Lo de ésta en concreto no se pisa al corregir la plantilla.
+    expect(despues[2]).toMatchObject({ roto: true, notas: 'Partido', ficha: { entereza: 12 } });
+  });
+
+  it('si la plantilla ya no existe, la cosa se queda como se vio', () => {
+    const puesto = nuevaCosa('a', { nombre: 'Barril', plantilla: 'Barril', ficha: { entereza: 3 } },
+      { x: 0, y: 0 }, { ancho: 1, alto: 1 }, 8, 4);
+    const lista = [puesto];
+    expect(alDiaConPlantillas(lista, [])).toBe(lista);
+  });
+
+  it('volverla secreta borra los datos que ya viajaban', () => {
+    const puesto = nuevaCosa('a', { nombre: 'Barril de aceite', plantilla: 'Barril de aceite', ficha: fichaParaElMapa(barril), imagenId: 'img-barril' },
+      { x: 0, y: 0 }, { ancho: 1, alto: 1 }, 8, 4);
+    const [despues] = alDiaConPlantillas([puesto], [{ ...barril, oculta: 'Sí' }]);
+    expect(despues.ficha).toEqual({ secreta: true });
   });
 });
