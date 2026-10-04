@@ -247,3 +247,28 @@ export async function campanasDondeJuego(
 
   return { campanas };
 }
+
+/**
+ * Cuándo se tocó por última vez cada campaña en la que juego. Es la consulta barata para
+ * saber si hay que volver a descargarlas: dos filas cortas por campaña en vez de su
+ * contenido entero, que con reglas caseras y contenido propio puede pesar.
+ */
+export async function versionesDondeJuego(
+  supa: SupabaseClient,
+  usuario: string,
+): Promise<Map<string, string> | null> {
+  const { data: pertenencias, error: fallo } = await supa
+    .from('miembros_campana')
+    .select('campana_id')
+    .eq('usuario', usuario);
+  if (fallo) return null;
+  const ids = ((pertenencias ?? []) as { campana_id: string }[]).map((m) => m.campana_id);
+  if (!ids.length) return new Map();
+  const { data, error } = await supa
+    .from('campanas')
+    .select('id, actualizado_en')
+    .in('id', ids)
+    .eq('borrado', false);
+  if (error) return null;
+  return new Map(((data ?? []) as { id: string; actualizado_en: string }[]).map((f) => [f.id, f.actualizado_en]));
+}

@@ -199,6 +199,19 @@ export function VistaFicha({ personaje, datos, reglamento }: Props) {
         </section>
       </div>
 
+      {/*
+        * Las tres primarias sobrenaturales que se tiran: con ellas se lanza un conjuro o un
+        * poder y se apunta. Sin PD valen el bono de la característica, como en la hoja.
+        */}
+      <section className="panel" style={{ marginTop: 16 }}>
+        <h2>Proyección y potencial</h2>
+        <div className="recursos tira">
+          <Recurso etiqueta="Proyección Mágica" clase="zeon" valor={ficha.proyeccionMagica.valor} />
+          <Recurso etiqueta="Proyección Psíquica" valor={ficha.proyeccionPsiquica.valor} />
+          <Recurso etiqueta="Potencial Psíquico" valor={ficha.potencialPsiquico.valor} />
+        </div>
+      </section>
+
       <section className="panel" style={{ marginTop: 16 }}>
         <h2>Invocación</h2>
         <p style={{ color: 'var(--texto-debil)', fontSize: '0.85rem', marginTop: 0 }}>
