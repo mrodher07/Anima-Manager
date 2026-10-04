@@ -114,7 +114,9 @@ export const SECUNDARIAS: readonly DefinicionSecundaria[] = [
   { nombre: 'Valoración Mágica', grupo: 'Intelectuales', caracteristica: 'INT' },
   { nombre: 'Frialdad', grupo: 'Vigor', caracteristica: 'VOL' },
   { nombre: 'Proezas de Fuerza', grupo: 'Vigor', caracteristica: 'FUE' },
-  { nombre: 'Resistencia al Dolor', grupo: 'Vigor', caracteristica: 'CON' },
+  // Voluntad, no Constitución: es la que reproduce la hoja de Meirmeister (VOL 6 → +5,
+  // −30 sin desarrollar, +10 del Paladín Oscuro = −15) y la que da el manual.
+  { nombre: 'Resistencia al Dolor', grupo: 'Vigor', caracteristica: 'VOL' },
   { nombre: 'Cerrajería', grupo: 'Subterfugio', caracteristica: 'DES' },
   { nombre: 'Disfraz', grupo: 'Subterfugio', caracteristica: 'DES' },
   { nombre: 'Ocultarse', grupo: 'Subterfugio', caracteristica: 'PER' },
@@ -463,6 +465,9 @@ export interface FichaCalculada {
   ki: FichaKi;
   /** Convocar, Controlar, Atar y Desconvocar: las cuatro habilidades de invocación. */
   invocacion: Record<ClaveInvocacion, ValorDerivado>;
+  proyeccionMagica: ValorDerivado;
+  proyeccionPsiquica: ValorDerivado;
+  potencialPsiquico: ValorDerivado;
   inventario: ResumenInventario;
   /** Índice de Peso y lo que carga. */
   carga: CargaCalculada;
@@ -495,6 +500,29 @@ export interface FichaCalculada {
 }
 
 /** Campo de la categoría que da el coste de desarrollo de cada grupo de secundarias. */
+/**
+ * Cómo se llama una secundaria en las columnas de la tabla de categorías.
+ *
+ * Las columnas van sin tildes ni espacios —`bonPersuasion`, `costeTasacion`— y cuatro
+ * están abreviadas. Antes se buscaba el nombre tal cual, sin quitar las tildes, y ni
+ * «Persuasión» ni «Resistencia al Dolor» encontraban su columna: el +5 y el +10 del
+ * Paladín Oscuro no se sumaban, y los costes propios de cada categoría —Frialdad a 1,
+ * Proezas de Fuerza a 3…— se ignoraban por completo.
+ */
+const ABREVIATURAS_SECUNDARIAS: Record<string, string> = {
+  'Proezas de Fuerza': 'PFuerza',
+  'Resistencia al Dolor': 'ResDolor',
+  'Trucos de Manos': 'TManos',
+  'Valoración Mágica': 'VMagica',
+};
+
+export function columnaDeSecundaria(nombre: string): string {
+  return (
+    ABREVIATURAS_SECUNDARIAS[nombre] ??
+    nombre.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/\s/g, '')
+  );
+}
+
 const CAMPO_COSTE: Record<GrupoSecundarias, string> = {
   'Atléticas': 'costeAtleticas',
   'Sociales': 'costeSociales',
@@ -860,6 +888,35 @@ export function calcular(
     );
   }
 
+  // Proyecciones: primarias, así que sin PD valen el bono de Destreza y nada más. Con
+  // coste 0 la categoría no deja comprarlas, pero el bono se tiene igual.
+  const proyeccion = (clave: 'ProyeccionMagica' | 'ProyeccionPsiquica', columna: string) => {
+    const coste = Number(categoria?.[columna] ?? 0);
+    return derivar(
+      clave,
+      aplicar('proyeccion', {
+        pd: coste > 0 ? personaje.pdInvertidos[clave] ?? 0 : 0,
+        coste: coste || 1,
+        bonoDES: caracteristicas.DES.bono,
+      }) + (personaje.bonosEspeciales[clave] ?? 0),
+    );
+  };
+  const proyeccionMagica = proyeccion('ProyeccionMagica', 'costeProyeccionMagica');
+  const proyeccionPsiquica = proyeccion('ProyeccionPsiquica', 'costeProyeccionPsiquica');
+  const tablaPotencial = (tablas as { potencialPsiquico?: { VOL: number; potencial: number }[] }).potencialPsiquico ?? [];
+  const vol = caracteristicas.VOL.total;
+  // La tabla llega hasta VOL 20; por encima vale la última fila.
+  const filaPotencial =
+    tablaPotencial.find((f) => f.VOL === vol) ??
+    (vol > 0 ? [...tablaPotencial].reverse().find((f) => f.VOL <= vol) : undefined);
+  const potencialPsiquico = derivar(
+    'PotencialPsiquico',
+    aplicar('potencialPsiquico', {
+      potencialPorVOL: filaPotencial?.potencial ?? 0,
+      especial: personaje.bonosEspeciales['PotencialPsiquico'] ?? 0,
+    }),
+  );
+
   const inventario = resumirInventario(personaje, datos.objetos);
 
   /*
@@ -913,8 +970,10 @@ export function calcular(
   const secundarias: Record<string, ValorDerivado> = {};
   for (const def of secundarias_) {
     const pd = personaje.pdInvertidos[def.nombre] ?? 0;
-    const coste = Number(categoria?.[CAMPO_COSTE[def.grupo]] ?? 2);
-    const bonoCategoria = Number(categoria?.[`bon${def.nombre.replace(/\s/g, '')}`] ?? 0);
+    const columna = columnaDeSecundaria(def.nombre);
+    // El coste propio de la habilidad manda sobre el de su grupo, cuando la categoría lo tiene.
+    const coste = Number(categoria?.[`coste${columna}`] ?? categoria?.[CAMPO_COSTE[def.grupo]] ?? 2);
+    const bonoCategoria = Number(categoria?.[`bon${columna}`] ?? 0);
     const mejoraNatural =
       (personaje.habilidadesNaturales.includes(def.nombre) ? 10 : 0) +
       (personaje.bonificadorNatural.fisica === def.nombre ||
@@ -1108,7 +1167,13 @@ export function calcular(
       cmVentajas: efectos.conocimientoMarcial,
       nivel,
       pdTotales,
-      penalizadorArmadura,
+      /*
+       * `Mod_ATA` en la hoja: el modificador **a toda acción**, el que aparece cuando
+       * Llevar Armadura no llega al requerimiento. No el penalizador natural: Meirmeister
+       * lleva −20 de natural y su hoja le da la acumulación entera, 9, porque su Llevar
+       * Armadura cubre justo el requerimiento. Con el natural le quedaban 3.
+       */
+      penalizadorArmadura: proteccion.penalizadorAccionFisica,
       advertir: secundarias['Advertir']?.valor ?? 0,
       ocultarse: secundarias['Ocultarse']?.valor ?? 0,
       especialDeteccion: especial('DeteccionKi'),
@@ -1238,6 +1303,9 @@ export function calcular(
     metamagia,
     ki,
     invocacion,
+    proyeccionMagica,
+    proyeccionPsiquica,
+    potencialPsiquico,
     inventario,
     secundarias,
     efectos,

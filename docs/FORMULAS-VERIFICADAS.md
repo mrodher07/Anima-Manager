@@ -642,8 +642,10 @@ se llamaba `acumulacionPorPOD` por error; ahora es `acumulacionKi`):
 Una característica a **0 da 0**, no 1: `IF(AGI=0, 0, VLOOKUP(...))`.
 
 `PDs!AA36` da el total: `MAX(0, base + comprada + especial + IF(Mod_ATA<0, MIN(0,
-TRUNC(Mod_ATA/20,0)), 0))`. Es decir, **la armadura resta 1 de Acumulación por cada 20
-puntos de penalizador**.
+TRUNC(Mod_ATA/20,0)), 0))`. `Mod_ATA` es el modificador **a toda acción**: el que sale
+cuando Llevar Armadura no llega al requerimiento. **El penalizador natural no cuenta.** Lo
+confirma la propia hoja de Meirmeister: −20 de penalizador natural y acumulación entera, 9,
+porque sus 50 de Llevar Armadura cubren justo los 50 del requerimiento.
 
 Si el personaje hace cualquier otra cosa durante el asalto, la Acumulación se reduce **a la
 mitad redondeando hacia arriba** (`CEILING`, `Ki!E12`). La ventaja **Acumulación plena** lo

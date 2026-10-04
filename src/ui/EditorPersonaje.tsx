@@ -58,6 +58,18 @@ const PESTANAS: { id: Pestana; texto: string }[] = [
   { id: 'trasfondo', texto: 'Trasfondo' },
 ];
 
+/**
+ * Primarias a las que el cálculo les suma un bono especial anotado a mano: la columna
+ * «Esp.» de la hoja. Sólo éstas tienen casilla: ofrecerla en las demás sería un campo que
+ * no hace nada. Antes no la tenía ninguna, y el +5 de la hoja a Llevar Armadura no había
+ * forma de meterlo.
+ */
+const PRIMARIAS_CON_ESPECIAL = new Set([
+  'HAtaque', 'HParada', 'HEsquiva', 'LlevarArmadura',
+  'Convocar', 'Controlar', 'Atar', 'Desconvocar',
+  'ProyeccionMagica', 'ProyeccionPsiquica',
+]);
+
 /** Una habilidad primaria: su clave, cómo se llama y de dónde sale su coste en PD. */
 interface Primaria {
   clave: string;
@@ -506,7 +518,11 @@ export function EditorPersonaje({ personaje, datos, catalogo, reglamento, onCamb
             <div className="desplazable">
               <table>
                 <thead>
-                  <tr><th>Habilidad</th><th className="num">Coste</th><th className="num">PD</th><th className="num">Valor</th></tr>
+                  <tr>
+                    <th>Habilidad</th><th className="num">Coste</th><th className="num">PD</th>
+                    <th className="num" title="Bonos especiales anotados a mano, como la columna «Esp.» de la hoja">Esp.</th>
+                    <th className="num">Valor</th>
+                  </tr>
                 </thead>
                 <tbody>
                   {[
@@ -531,6 +547,18 @@ export function EditorPersonaje({ personaje, datos, catalogo, reglamento, onCamb
                             aria-label={`PD en ${h.nombre}`}
                           />
                         </td>
+                        <td className="num" style={{ width: 80 }}>
+                          {PRIMARIAS_CON_ESPECIAL.has(h.clave) ? (
+                            <input
+                              type="number"
+                              value={personaje.bonosEspeciales[h.clave] ?? 0}
+                              onChange={(e) => setEspecial(h.clave, Number(e.target.value))}
+                              aria-label={`Bono especial en ${h.nombre}`}
+                            />
+                          ) : (
+                            <span style={{ color: 'var(--texto-debil)' }}>—</span>
+                          )}
+                        </td>
                         <td className="num destacado">
                           {h.clave === 'HAtaque' && ficha.combate.HAtaque.valor}
                           {h.clave === 'HParada' && ficha.combate.HParada.valor}
@@ -539,6 +567,8 @@ export function EditorPersonaje({ personaje, datos, catalogo, reglamento, onCamb
                           {h.clave === 'Zeon' && ficha.zeon.valor}
                           {h.clave === 'ACT' && ficha.act.valor}
                           {h.clave === 'NivelMagia' && ficha.nivelMagia.valor}
+                          {h.clave === 'ProyeccionMagica' && ficha.proyeccionMagica.valor}
+                          {h.clave === 'ProyeccionPsiquica' && ficha.proyeccionPsiquica.valor}
                           {h.clave in ficha.invocacion &&
                             ficha.invocacion[h.clave as ClaveInvocacion].valor}
                           {!VALOR_PROPIO.has(h.clave) &&

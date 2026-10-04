@@ -19,6 +19,7 @@ import {
   guardarPreferencias,
   leerPreferencias,
   miPerfil,
+  versionesDondeJuego,
 } from './mesa';
 import type { Campana } from '../almacen/almacen';
 
@@ -38,6 +39,17 @@ export interface Usuario {
  * volver la conexión y al volver a la pestaña, que es cuando de verdad suele hacer falta.
  */
 const CADA = 3 * 60 * 1000;
+
+/**
+ * Cada cuánto se mira si el máster ha tocado alguna de mis campañas.
+ *
+ * Por separado de la sincronización porque lo que viaja con la campaña —las reglas
+ * caseras, los manuales activos, el contenido propio— cambia **cómo se calcula mi ficha**.
+ * Antes sólo se releía cada tres minutos: el máster cambiaba la fórmula de la vida y el
+ * jugador seguía viendo la de antes hasta dos minutos y medio después. Se pregunta con
+ * una consulta mínima y sólo se descarga entera si ha cambiado.
+ */
+const CADA_CAMPANAS = 15 * 1000;
 
 export interface Cuenta {
   estado: EstadoCuenta;
@@ -86,6 +98,9 @@ export function useCuenta(
   const [sincronizando, setSincronizando] = useState(false);
   const [ultima, setUltima] = useState<Resultado | null>(null);
   const [campanasAjenas, setCampanasAjenas] = useState<Campana[]>([]);
+  // Para compararlas desde el reloj sin rehacerlo cada vez que cambian.
+  const campanasAjenasRef = useRef<Campana[]>([]);
+  campanasAjenasRef.current = campanasAjenas;
 
   // En una ref para que el temporizador no se recree cada vez que cambia el callback.
   const avisar = useRef(alCambiarDatos);
@@ -220,6 +235,26 @@ export function useCuenta(
       if (pendientes.size) void subir();
     };
   }, [estado, usuario, sincronizarAhora]);
+
+  useEffect(() => {
+    const supa = cliente();
+    if (!supa || estado !== 'dentro' || !usuario) return;
+    let vigente = true;
+    const mirar = async () => {
+      if (document.visibilityState !== 'visible') return;
+      const versiones = await versionesDondeJuego(supa, usuario.id);
+      if (!vigente || !versiones) return;
+      const conocidas = campanasAjenasRef.current;
+      const cambia =
+        versiones.size !== conocidas.length ||
+        conocidas.some((c) => versiones.get(c.id) !== c.actualizadoEn);
+      if (!cambia) return;
+      const { campanas, error } = await campanasDondeJuego(supa, usuario.id);
+      if (vigente && !error) setCampanasAjenas(campanas);
+    };
+    const reloj = setInterval(() => void mirar(), CADA_CAMPANAS);
+    return () => { vigente = false; clearInterval(reloj); };
+  }, [estado, usuario]);
 
   // Al entrar, cada tanto, al volver la conexión y al volver a la pestaña.
   useEffect(() => {

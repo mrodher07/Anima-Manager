@@ -292,7 +292,7 @@ export function calcularKi(
   });
 
   // ── Acumulaciones ──
-  // La armadura resta 1 por cada 20 de penalizador, truncando hacia cero.
+  // La armadura resta 1 por cada 20 de penalizador a toda acción, truncando hacia cero.
   const penalizadorArmadura =
     ctx.penalizadorArmadura < 0 ? Math.min(0, Math.trunc(ctx.penalizadorArmadura / 20)) : 0;
 

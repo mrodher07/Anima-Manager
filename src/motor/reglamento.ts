@@ -20,6 +20,8 @@ export type ClaveRegla =
   | 'turno'
   | 'habilidadSecundaria'
   | 'habilidadInvocacion'
+  | 'proyeccion'
+  | 'potencialPsiquico'
   | 'danoArma'
   | 'absorcion'
   | 'porcentajeDano'
@@ -202,6 +204,37 @@ export const REGLAS: readonly DefinicionRegla[] = [
     desactivable: false,
   },
   {
+    clave: 'proyeccion',
+    nombre: 'Proyección Mágica y Psíquica',
+    grupo: 'Sobrenatural',
+    formula: 'truncar(pd / coste) + bonoDES',
+    variables: {
+      pd: 'PD invertidos en la Proyección',
+      coste: 'Coste de desarrollo según la categoría',
+      bonoDES: 'Bono de Destreza',
+    },
+    /*
+     * Como las de invocación, es una primaria: sin PD vale el bono de la característica,
+     * sin el −30 de las secundarias. La hoja de Meirmeister lo enseña así: 0 PD y DES 10
+     * → 15 en las dos. La Sheele es la excepción que lo confirma: su Proyección se
+     * calcula «sin sumar el bono de Destreza», luego la de los demás sí lo suma.
+     */
+    referencia: 'Ficha de la comunidad. Verificado con Meirmeister: 0 PD + DES 10 = 15.',
+    desactivable: false,
+  },
+  {
+    clave: 'potencialPsiquico',
+    nombre: 'Potencial Psíquico',
+    grupo: 'Sobrenatural',
+    formula: 'potencialPorVOL + especial',
+    variables: {
+      potencialPorVOL: 'Tabla 68 del manual, según la Voluntad',
+      especial: 'Bonos especiales anotados a mano',
+    },
+    referencia: 'Core Exxet, cap. 13, Tabla 68; Psíquicos!H11. Verificado: VOL 6 → +20.',
+    desactivable: false,
+  },
+  {
     clave: 'nivelMagia',
     nombre: 'Nivel de Magia',
     grupo: 'Sobrenatural',
@@ -288,7 +321,9 @@ export const REGLAS: readonly DefinicionRegla[] = [
       acumulacionBase: 'Acumulación de la Tabla 53 según la característica (0 si vale 0)',
       acumulacionComprada: 'Acumulación adquirida con PD',
       especial: 'Bonos especiales (raza, ventajas, personalización)',
-      penalizadorArmadura: 'La armadura resta 1 de Acumulación por cada 20 de penalizador',
+      penalizadorArmadura:
+        'La armadura resta 1 de Acumulación por cada 20 de penalizador a toda acción (el de ' +
+        'no llegar al requerimiento con Llevar Armadura; el natural no cuenta)',
     },
     referencia:
       'Ficha, PDs!AA36: =MAX(0, base + comprada + especial + IF(Mod_ATA<0, MIN(0, ' +
