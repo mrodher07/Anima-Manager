@@ -299,7 +299,12 @@ export function VistaCampanas({
       {panel === 'jugadores' && activa && cuenta.estado === 'dentro' && (
         <section className="panel" style={{ marginTop: 16 }}>
           <h2>La mesa de «{activa.nombre}»</h2>
-          <PanelMesa campanaId={activa.id} soyElMaster={soyElMaster} />
+          <PanelMesa
+            campanaId={activa.id}
+            soyElMaster={soyElMaster}
+            catalogo={catalogo}
+            reglamento={reglamento}
+          />
         </section>
       )}
 

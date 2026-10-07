@@ -3,6 +3,7 @@ import type { Cuenta } from '../nube/cuenta';
 import { NOMBRE_COLECCION } from '../nube/sincronizacion';
 import { cliente, SIN_NUBE } from '../nube/supabase';
 import { unirseACampana } from '../nube/mesa';
+import type { Personaje } from '../motor/personaje';
 
 /**
  * La pantalla de la cuenta.
@@ -12,7 +13,19 @@ import { unirseACampana } from '../nube/mesa';
  * gente confía en una herramienta cuando sabe qué pasa con lo suyo, y en una campaña de rol
  * lo que hay dentro son años de partidas.
  */
-export function VistaCuenta({ cuenta, onRecargar }: { cuenta: Cuenta; onRecargar?: () => void }) {
+export function VistaCuenta({
+  cuenta,
+  onRecargar,
+  onUnirse,
+  fichas = [],
+  onGuardarFicha,
+}: {
+  cuenta: Cuenta;
+  onRecargar?: () => void;
+  onUnirse?: (campanaId: string) => void;
+  fichas?: Personaje[];
+  onGuardarFicha?: (p: Personaje) => void;
+}) {
   const [correo, setCorreo] = useState('');
   const [clave, setClave] = useState('');
   const [modo, setModo] = useState<'entrar' | 'registrar'>('entrar');
@@ -20,6 +33,8 @@ export function VistaCuenta({ cuenta, onRecargar }: { cuenta: Cuenta; onRecargar
   const [nombre, setNombre] = useState(cuenta.nombre);
   const [codigo, setCodigo] = useState('');
   const [avisoMesa, setAvisoMesa] = useState('');
+  /** La mesa a la que me acabo de unir, para ofrecer llevar a ella las fichas que ya tenía. */
+  const [recienUnida, setRecienUnida] = useState<{ id: string; nombre: string } | null>(null);
 
   // El nombre llega del servidor después de pintar. Se copia al campo cuando llega, no
   // antes: si no, el campo saldría vacío y parecería que no hay nombre puesto.
@@ -165,12 +180,22 @@ export function VistaCuenta({ cuenta, onRecargar }: { cuenta: Cuenta; onRecargar
                 return;
               }
               setAvisoMesa(
-                r.yaEstaba
+                (r.yaEstaba
                   ? `Ya jugabas en «${r.nombre}».`
-                  : `Te has unido a «${r.nombre}».`,
+                  : `Te has unido a «${r.nombre}».`) +
+                  ' Es tu campaña activa: las fichas que crees a partir de ahora serán de esta mesa.',
               );
               setCodigo('');
               await cuenta.sincronizarAhora();
+              /*
+               * La mesa a la que te unes pasa a ser la activa. Antes no: había que ir a
+               * Campañas y pulsar «Activar», nadie lo sabía, y la ficha que se hacía justo
+               * después nacía sin campaña. El máster no la veía en ninguna parte.
+               */
+              if (r.campanaId) {
+                onUnirse?.(r.campanaId);
+                setRecienUnida({ id: r.campanaId, nombre: r.nombre ?? 'la campaña' });
+              }
               onRecargar?.();
             });
           }}
@@ -191,6 +216,40 @@ export function VistaCuenta({ cuenta, onRecargar }: { cuenta: Cuenta; onRecargar
           </button>
         </form>
         {avisoMesa && <div className="aviso" style={{ marginTop: 12 }}>{avisoMesa}</div>}
+
+        {/*
+          * Las fichas que ya tenías, para llevarlas a la mesa con un botón. Es lo normal:
+          * uno se une a una campaña con el personaje ya hecho, o importado del Excel, y esa
+          * ficha no sabe nada de la campaña. Sin esto el máster no la veía nunca.
+          */}
+        {recienUnida && onGuardarFicha && (() => {
+          const fuera = fichas.filter((p) => p.campanaId !== recienUnida.id);
+          const dentro = fichas.filter((p) => p.campanaId === recienUnida.id);
+          if (!fuera.length && !dentro.length) return null;
+          return (
+            <div className="llevar-fichas" style={{ marginTop: 12 }}>
+              <p style={{ margin: '0 0 6px' }}>
+                {fuera.length
+                  ? `¿Qué personajes juegas en «${recienUnida.nombre}»? Tu máster sólo ve los que estén en la campaña.`
+                  : `Tus personajes ya están en «${recienUnida.nombre}».`}
+              </p>
+              <div className="acciones-regla" style={{ marginTop: 0 }}>
+                {fuera.map((p) => (
+                  <button
+                    key={p.id}
+                    className="accion primaria"
+                    onClick={() => onGuardarFicha({ ...p, campanaId: recienUnida.id })}
+                  >
+                    Llevar «{p.nombre || 'Sin nombre'}» a la campaña
+                  </button>
+                ))}
+                {dentro.map((p) => (
+                  <span key={p.id} className="ya-en-campana">✓ {p.nombre || 'Sin nombre'}</span>
+                ))}
+              </div>
+            </div>
+          );
+        })()}
 
         {cuenta.campanasAjenas.length > 0 && (
           <>
