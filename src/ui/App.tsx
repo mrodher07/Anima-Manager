@@ -122,6 +122,20 @@ export function App() {
   const abrir = (id: string) => setAbiertoId(id);
 
   /*
+   * Una ficha se calcula con las reglas de **su** mesa y en su Mesa sale el combate de
+   * **su** máster. Si se abre una de otra campaña que la activa, se activa la suya: si no,
+   * un jugador con dos campañas veía su ficha con las reglas caseras de la otra.
+   */
+  const campanaDeLaAbierta = personajes.find((p) => p.id === abiertoId)?.campanaId ?? null;
+  const campanasConocidas = todasLasCampanas.map((c) => c.id).join('|');
+  useEffect(() => {
+    if (!campanaDeLaAbierta || campanaDeLaAbierta === campanaId) return;
+    if (!todasLasCampanas.some((c) => c.id === campanaDeLaAbierta)) return;
+    setCampanaId(campanaDeLaAbierta);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [campanaDeLaAbierta, campanasConocidas]);
+
+  /*
    * El orden va de dentro afuera, y en el móvil eso importa: la tira se arrastra, así que
    * lo primero es lo que está al alcance sin mover el dedo.
    *
@@ -217,11 +231,18 @@ export function App() {
             conMapa={Boolean(campana) && usaMapa(campana)}
             onCambiar={guardar}
             onCerrar={() => { setAbiertoId(null); setSeccion('personajes'); }}
+            campanas={todasLasCampanas.map((c) => ({
+              id: c.id,
+              nombre: c.nombre,
+              mia: campanas.some((x) => x.id === c.id),
+            }))}
           />
         ) : (
           <>
             {seccion === 'personajes' && (
               <VistaPersonajes
+                campana={campana ? { id: campana.id, nombre: campana.nombre } : null}
+                campanasConocidas={todasLasCampanas.map((c) => c.id)}
                 personajes={personajes}
                 catalogo={catalogo}
                 cargando={cargando}
@@ -272,6 +293,9 @@ export function App() {
             {seccion === 'ajustes' && (
               <VistaAjustes
                 cuenta={cuenta}
+                onUnirse={(id) => setCampanaId(id)}
+                fichas={personajes}
+                onGuardarFicha={(p) => void guardar(p)}
                 onRecargar={() => {
                   void recargar();
                   void recargarCampanas();

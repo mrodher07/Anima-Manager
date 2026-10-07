@@ -1,7 +1,12 @@
 import { useCallback, useEffect, useState } from 'react';
 import { cliente } from '../nube/supabase';
 import { almacen } from '../almacen/almacen';
-import { subirRegistros } from '../nube/sincronizacion';
+import { fichasDeCampana, subirRegistros } from '../nube/sincronizacion';
+import type { Personaje } from '../motor/personaje';
+import type { Catalogo } from '../datos/paquetes';
+import type { Reglamento } from '../motor/reglamento';
+import { useDatosCalculo } from './estado';
+import { VistaFicha } from './VistaFicha';
 import {
   borrarInvitacion,
   crearInvitacion,
@@ -17,7 +22,32 @@ import {
  * Sólo aparece con nube configurada y sesión abierta: sin cuenta no hay a quién invitar,
  * y anunciar un botón que no puede funcionar es peor que no tenerlo.
  */
-export function PanelMesa({ campanaId, soyElMaster }: { campanaId: string; soyElMaster: boolean }) {
+/** La ficha de un jugador, de sólo lectura, calculada con las reglas de esta mesa. */
+function FichaDeJugador({
+  personaje, catalogo, reglamento,
+}: { personaje: Personaje; catalogo: Catalogo; reglamento: Reglamento }) {
+  const datos = useDatosCalculo(catalogo, personaje);
+  if (!datos) return <p style={{ color: 'var(--texto-debil)' }}>Calculando…</p>;
+  return <VistaFicha personaje={personaje} datos={datos} reglamento={reglamento} />;
+}
+
+/**
+ * Cada cuánto se vuelven a pedir las fichas de los jugadores mientras el máster mira la
+ * mesa: lo bastante seguido para ver aparecer al que acaba de traer la suya.
+ */
+const CADA_FICHAS = 15 * 1000;
+
+export function PanelMesa({
+  campanaId,
+  soyElMaster,
+  catalogo,
+  reglamento,
+}: {
+  campanaId: string;
+  soyElMaster: boolean;
+  catalogo?: Catalogo;
+  reglamento?: Reglamento;
+}) {
   const [miembros, setMiembros] = useState<Miembro[]>([]);
   const [invitaciones, setInvitaciones] = useState<Invitacion[]>([]);
   const [aviso, setAviso] = useState('');
@@ -30,9 +60,42 @@ export function PanelMesa({ campanaId, soyElMaster }: { campanaId: string; soyEl
     if (soyElMaster) setInvitaciones(await invitacionesDe(supa, campanaId));
   }, [campanaId, soyElMaster]);
 
+  /*
+   * Quién juega se vuelve a pedir cada poco, no sólo al abrir la pestaña. El máster abre
+   * Jugadores para generar el código y se queda ahí mientras los demás se unen; antes la
+   * lista se quedaba en «Todavía no se ha unido nadie» hasta que salía y volvía a entrar.
+   */
   useEffect(() => {
     void recargar();
+    const reloj = setInterval(() => {
+      if (document.visibilityState === 'visible') void recargar();
+    }, CADA_FICHAS);
+    return () => clearInterval(reloj);
   }, [recargar]);
+
+  /*
+   * Los personajes de la mesa. Antes el máster no los veía en ninguna parte salvo al
+   * montar un combate: aquí salían las personas y nada más.
+   */
+  const [fichas, setFichas] = useState<Personaje[]>([]);
+  const [yo, setYo] = useState<string | null>(null);
+  const [abierta, setAbierta] = useState<string | null>(null);
+  useEffect(() => {
+    const supa = cliente();
+    if (!supa || !soyElMaster) return;
+    let vigente = true;
+    void supa.auth.getSession().then(({ data }) => { if (vigente) setYo(data.session?.user.id ?? null); });
+    const mirar = async () => {
+      if (document.visibilityState !== 'visible') return;
+      const { personajes, error } = await fichasDeCampana(supa, campanaId);
+      if (vigente && !error) setFichas(personajes.sort((a, b) => a.nombre.localeCompare(b.nombre)));
+    };
+    void mirar();
+    const reloj = setInterval(() => void mirar(), CADA_FICHAS);
+    return () => { vigente = false; clearInterval(reloj); };
+  }, [campanaId, soyElMaster]);
+  const nombreDe = (usuario: string | null | undefined) =>
+    !usuario ? '—' : usuario === yo ? 'Tú' : miembros.find((m) => m.usuario === usuario)?.nombre ?? 'Sin nombre';
 
   const supa = cliente();
   if (!supa) return null;
@@ -66,6 +129,60 @@ export function PanelMesa({ campanaId, soyElMaster }: { campanaId: string; soyEl
 
       {soyElMaster && (
         <>
+          <h2 style={{ marginTop: 22 }}>Sus personajes</h2>
+          {fichas.length === 0 ? (
+            <p style={{ color: 'var(--texto-debil)', marginTop: 0 }}>
+              Ningún jugador ha traído todavía su personaje a esta campaña. Al unirse con el
+              código se les ofrece traer las fichas que ya tenían, y también pueden elegir la
+              campaña en su ficha, en Editar → Identidad.
+            </p>
+          ) : (
+            <div className="desplazable">
+              <table className="personajes-mesa">
+                <thead>
+                  <tr><th>Personaje</th><th>Jugador</th><th>Raza y categoría</th><th></th></tr>
+                </thead>
+                <tbody>
+                  {fichas.map((p) => (
+                    <tr key={p.id}>
+                      <td className="destacado">{p.nombre || 'Sin nombre'}</td>
+                      <td>{nombreDe(p.propietario)}</td>
+                      <td>
+                        {[p.raza, p.categorias.filter((c) => c.categoria).map((c) => `${c.categoria} ${c.nivel}`).join(' / ')]
+                          .filter(Boolean)
+                          .join(' · ') || '—'}
+                      </td>
+                      <td style={{ textAlign: 'right' }}>
+                        {catalogo && reglamento && (
+                          <button
+                            className="accion"
+                            aria-expanded={abierta === p.id}
+                            onClick={() => setAbierta(abierta === p.id ? null : p.id)}
+                          >
+                            {abierta === p.id ? 'Cerrar' : 'Ver ficha'}
+                          </button>
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+          {(() => {
+            const p = fichas.find((x) => x.id === abierta);
+            if (!p || !catalogo || !reglamento) return null;
+            return (
+              <div className="ficha-de-jugador" style={{ marginTop: 12 }}>
+                <p style={{ color: 'var(--texto-tenue)', fontSize: '0.86rem', margin: '0 0 8px' }}>
+                  La ficha de {nombreDe(p.propietario)}, calculada con las reglas de esta mesa.
+                  Es de sólo lectura: la edita su jugador.
+                </p>
+                <FichaDeJugador personaje={p} catalogo={catalogo} reglamento={reglamento} />
+              </div>
+            );
+          })()}
+
           <h2 style={{ marginTop: 22 }}>Invitaciones</h2>
           <p style={{ color: 'var(--texto-tenue)', fontSize: '0.86rem', marginTop: 0 }}>
             Un código deja entrar a quien lo tenga, así que caduca a los 30 días y admite un

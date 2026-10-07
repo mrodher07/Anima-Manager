@@ -28,6 +28,8 @@ interface Props {
   conMapa: boolean;
   onCambiar: (p: Personaje) => void;
   onCerrar: () => void;
+  /** Las campañas a las que puede pertenecer la ficha. */
+  campanas?: { id: string; nombre: string; mia: boolean }[];
 }
 
 /**
@@ -53,6 +55,7 @@ export function VistaPersonaje({
   conMapa,
   onCambiar,
   onCerrar,
+  campanas = [],
 }: Props) {
   const [vista, setVista] = useState<Vista>('ficha');
 
@@ -116,6 +119,7 @@ export function VistaPersonaje({
               catalogo={catalogo}
               reglamento={reglamento}
               onCambiar={onCambiar}
+              campanas={campanas}
             />
           )}
           {vista === 'mesa' && (

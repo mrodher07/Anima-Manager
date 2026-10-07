@@ -33,6 +33,8 @@ interface Props {
   catalogo: Catalogo;
   reglamento: Reglamento;
   onCambiar: (p: Personaje) => void;
+  /** Las campañas a las que puede pertenecer: las mías y en las que juego. */
+  campanas?: { id: string; nombre: string; mia: boolean }[];
 }
 
 type Pestana =
@@ -133,7 +135,7 @@ const CAMPOS_TRASFONDO: { clave: keyof Personaje['trasfondo']; etiqueta: string;
   { clave: 'dinero', etiqueta: 'Dinero', ayuda: 'Monedas, joyas, propiedades…' },
 ];
 
-export function EditorPersonaje({ personaje, datos, catalogo, reglamento, onCambiar }: Props) {
+export function EditorPersonaje({ personaje, datos, catalogo, reglamento, onCambiar, campanas = [] }: Props) {
   const [pestana, setPestana] = useState<Pestana>('identidad');
   const [falloRetrato, setFalloRetrato] = useState<string | null>(null);
   const retrato = useRef<HTMLInputElement>(null);
@@ -217,6 +219,33 @@ export function EditorPersonaje({ personaje, datos, catalogo, reglamento, onCamb
               <div className="campo">
                 <label htmlFor="nombre">Nombre</label>
                 <input id="nombre" value={personaje.nombre} onChange={(e) => set({ nombre: e.target.value })} />
+              </div>
+              {/*
+                * De qué campaña es. Es lo que decide si el máster la ve: sólo ve las
+                * fichas de su campaña. Antes una ficha sólo entraba en una campaña si se
+                * creaba con ella activa, y una importada del Excel o hecha antes de unirse
+                * no había forma de meterla.
+                */}
+              <div className="campo">
+                <label htmlFor="campana-ficha">Campaña</label>
+                <select
+                  id="campana-ficha"
+                  value={personaje.campanaId ?? ''}
+                  onChange={(e) => set({ campanaId: e.target.value || null })}
+                >
+                  <option value="">Sin campaña</option>
+                  {campanas.map((c) => (
+                    <option key={c.id} value={c.id}>
+                      {c.nombre}{c.mia ? ' · la llevas tú' : ''}
+                    </option>
+                  ))}
+                  {personaje.campanaId && !campanas.some((c) => c.id === personaje.campanaId) && (
+                    <option value={personaje.campanaId}>Una campaña que no está en este aparato</option>
+                  )}
+                </select>
+                <small style={{ color: 'var(--texto-debil)' }}>
+                  El máster de esa campaña podrá ver esta ficha; los demás jugadores, no.
+                </small>
               </div>
               <div className="campo">
                 <label htmlFor="jugador">Jugador</label>

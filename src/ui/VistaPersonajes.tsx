@@ -26,6 +26,13 @@ interface Props {
   onCrear: () => void;
   onBorrar: (id: string) => void;
   onRecargar: () => void;
+  /**
+   * La campaña activa, a la que van las fichas importadas. Antes se importaban siempre sin
+   * campaña, y la ficha de un jugador que traía su Excel no le salía nunca a su máster.
+   */
+  campana?: { id: string; nombre: string } | null;
+  /** Las campañas que conoce este aparato: una ficha que ya sea de una de ellas, se queda. */
+  campanasConocidas?: string[];
 }
 
 function bajar(nombre: string, blob: Blob) {
@@ -58,7 +65,10 @@ export function VistaPersonajes({
   onCrear,
   onBorrar,
   onRecargar,
+  campana = null,
+  campanasConocidas = [],
 }: Props) {
+  const enCampana = campana ? ` en «${campana.nombre}»` : '';
   const archivo = useRef<HTMLInputElement>(null);
   const excel = useRef<HTMLInputElement>(null);
   const [mensaje, setMensaje] = useState<Mensaje | null>(null);
@@ -79,11 +89,14 @@ export function VistaPersonajes({
             'Aceptar las sobrescribe. Cancelar importa sólo las nuevas.',
         );
       }
-      const n = await importar(exportacion, sobrescribir);
+      const n = await importar(exportacion, sobrescribir, {
+        campanaPorDefecto: campana?.id ?? null,
+        campanasConocidas,
+      });
       onRecargar();
       setMensaje({
         tipo: 'aviso',
-        texto: `Importadas ${n} fichas${conflictos.length && !sobrescribir ? `, ${conflictos.length} omitidas por conflicto` : ''}.`,
+        texto: `Importadas ${n} fichas${enCampana}${conflictos.length && !sobrescribir ? `, ${conflictos.length} omitidas por conflicto` : ''}.`,
       });
     } catch {
       setMensaje({ tipo: 'error', texto: 'El archivo no es un JSON válido.' });
@@ -93,14 +106,16 @@ export function VistaPersonajes({
   const importarExcel = async (f: File) => {
     try {
       const r = await importarDeExcel(await f.arrayBuffer(), nuevoId(), catalogo);
+      // A la campaña activa: es en la que se va a jugar, y es la que mira el máster.
+      r.personaje.campanaId = campana?.id ?? null;
       await almacen.guardarPersonaje(r.personaje);
       onRecargar();
       // Cuando viene de la hoja técnica no hay nada que explicar; en los otros casos los
       // avisos ya dicen de dónde sale y qué se ha quedado fuera, así que no se repite.
       const cabecera =
         r.origen === 'datos'
-          ? `Importada «${r.personaje.nombre}»: ficha completa, tal cual se exportó.`
-          : `Importada «${r.personaje.nombre}».`;
+          ? `Importada «${r.personaje.nombre}»${enCampana}: ficha completa, tal cual se exportó.`
+          : `Importada «${r.personaje.nombre}»${enCampana}.`;
       setMensaje({ tipo: 'aviso', texto: cabecera, puntos: r.avisos });
     } catch (e) {
       setMensaje({

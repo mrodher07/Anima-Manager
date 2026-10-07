@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import type { Cuenta } from '../nube/cuenta';
+import type { Personaje } from '../motor/personaje';
 import { VistaCuenta } from './VistaCuenta';
 import { VistaCopia } from './VistaCopia';
 
@@ -8,6 +9,11 @@ type Panel = 'cuenta' | 'copia';
 interface Props {
   cuenta: Cuenta;
   onRecargar: () => void;
+  /** Al unirse a una mesa, esa pasa a ser la campaña activa. */
+  onUnirse?: (campanaId: string) => void;
+  /** Mis fichas, para ofrecer llevar a la mesa las que ya tenía. */
+  fichas?: Personaje[];
+  onGuardarFicha?: (p: Personaje) => void;
 }
 
 /**
@@ -18,7 +24,7 @@ interface Props {
  * cargada; juntas dejan la barra en seis secciones y se explican mejor la una al lado de la
  * otra: la nube te salva de perder el dispositivo, la copia de equivocarte.
  */
-export function VistaAjustes({ cuenta, onRecargar }: Props) {
+export function VistaAjustes({ cuenta, onRecargar, onUnirse, fichas, onGuardarFicha }: Props) {
   const [panel, setPanel] = useState<Panel>('cuenta');
 
   return (
@@ -38,7 +44,15 @@ export function VistaAjustes({ cuenta, onRecargar }: Props) {
         </button>
       </nav>
 
-      {panel === 'cuenta' && <VistaCuenta cuenta={cuenta} onRecargar={onRecargar} />}
+      {panel === 'cuenta' && (
+        <VistaCuenta
+          cuenta={cuenta}
+          onRecargar={onRecargar}
+          onUnirse={onUnirse}
+          fichas={fichas}
+          onGuardarFicha={onGuardarFicha}
+        />
+      )}
       {panel === 'copia' && <VistaCopia onRecargar={onRecargar} />}
     </>
   );

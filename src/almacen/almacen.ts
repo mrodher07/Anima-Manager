@@ -485,7 +485,20 @@ export async function analizarImportacion(
   };
 }
 
-export async function importar(exportacion: Exportacion, sobrescribir: boolean): Promise<number> {
+export async function importar(
+  exportacion: Exportacion,
+  sobrescribir: boolean,
+  opciones: {
+    /** Adonde va una ficha que no traiga campaña, o que traiga una que aquí no existe. */
+    campanaPorDefecto?: string | null;
+    /** Las campañas que ya hay en este aparato, además de las que trae el archivo. */
+    campanasConocidas?: string[];
+  } = {},
+): Promise<number> {
+  const conocidas = new Set([
+    ...(opciones.campanasConocidas ?? []),
+    ...exportacion.campanas.map((c) => c.id),
+  ]);
   const existentes = new Set((await almacen.listarPersonajes()).map((p) => p.id));
   const importadas = new Set<string>();
   let importados = 0;
@@ -493,6 +506,12 @@ export async function importar(exportacion: Exportacion, sobrescribir: boolean):
   for (const bruto of exportacion.personajes) {
     const p = migrarPersonaje(bruto);
     if (existentes.has(p.id) && !sobrescribir) continue;
+    /*
+     * Una ficha que llega de otro aparato puede traer una campaña que aquí no existe, o
+     * ninguna. Las dos cosas la dejaban fuera de cualquier mesa y el máster no la veía; va
+     * a la campaña activa, que es en la que se va a jugar.
+     */
+    if (!p.campanaId || !conocidas.has(p.campanaId)) p.campanaId = opciones.campanaPorDefecto ?? null;
     await almacen.guardarPersonaje(p);
     if (p.retratoId) importadas.add(p.retratoId);
     importados++;
