@@ -65,6 +65,8 @@ function ordenarArbol(habilidades: HabilidadKi[]): HabilidadKi[] {
   return salida;
 }
 
+
+
 export function EditorKi({ personaje, ficha, datos, catalogo, onCambiar }: Props) {
   const habilidadesKi = useColeccion(catalogo, 'habilidadesKi');
   const artesMarciales = useColeccion(catalogo, 'artesMarciales');
@@ -496,10 +498,16 @@ export function EditorKi({ personaje, ficha, datos, catalogo, onCambiar }: Props
                   <span style={{ color: 'var(--texto-debil)' }}>
                     ({ars.PD ?? 0} PD, {ars.CM ?? 0} CM
                     {ars.requisitos && ars.requisitos !== '-' && ars.requisitos !== 'NO'
-                      ? `, requiere ${ars.requisitos}`
+                      ? `; requiere ${ars.requisitos}`
                       : ''}
                     )
                   </span>
+                  {ars.descuentoCon && (
+                    <span style={{ color: 'var(--texto-debil)' }}>
+                      {' '}{ars.descuentoPD} PD menos con {String(ars.descuentoCon)}.
+                    </span>
+                  )}
+                  {ars.notaPD && <span style={{ color: 'var(--texto-debil)' }}> {String(ars.notaPD)}</span>}
                   <br />
                   {String(ars.descripcion ?? '')}
                 </p>

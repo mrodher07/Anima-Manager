@@ -87,15 +87,7 @@ const secundaria = (nombre: string) =>
  * quite de aquí.
  */
 const SIN_DATOS = 'El JSON sólo guarda el total: faltan los PD y los bonos especiales del jugador.';
-/**
- * Con lo que hay anotado sale 15, y la v8.7.0 de la hoja, rellenada igual, también da 15
- * (`data/pruebas/hoja-v870.json`, escenario «meirmeister»). La diferencia con el 5 de la
- * hoja original son justo los 10 de una Habilidad Natural: o Atletismo no lo era, o el
- * jugador tenía algo más anotado que no está en la transcripción.
- */
-const NATURAL_DUDOSA = 'Atletismo: la original dice 5 y con estos datos salen 15, también en la v8.7.0.';
 export const PENDIENTES: Record<string, string> = {
-  '· Atletismo': NATURAL_DUDOSA,
   '· Estilo': SIN_DATOS, '· Advertir': SIN_DATOS, '· Buscar': SIN_DATOS, '· Memorizar': SIN_DATOS,
   '· Frialdad': SIN_DATOS, '· Proezas de Fuerza': SIN_DATOS, '· Disfraz': SIN_DATOS, '· Arte': SIN_DATOS,
 };
@@ -177,9 +169,24 @@ export function comparacion(): [string, unknown, unknown][] {
 
 const filas = comparacion();
 
+/**
+ * Donde la hoja de Meirmeister (una versión anterior) y la v8.7.0 no dan lo mismo, manda la
+ * v8.7.0: es la buena. Con lo que hay anotado, Atletismo sale 15, como en la v8.7.0
+ * rellenada igual (`data/pruebas/hoja-v870.json`, escenario «meirmeister»); la original
+ * decía 5.
+ */
+export const SEGUN_V870: Record<string, number> = { '· Atletismo': 15 };
+
 describe('la hoja de Meirmeister, número a número', () => {
-  it.each(filas.filter(([n]) => !(n in PENDIENTES)))('%s: la hoja dice %s', (_n, enHoja, app) => {
-    expect(String(app)).toBe(String(enHoja));
+  it.each(filas.filter(([n]) => !(n in PENDIENTES) && !(n in SEGUN_V870)))(
+    '%s: la hoja dice %s',
+    (_n, enHoja, app) => {
+      expect(String(app)).toBe(String(enHoja));
+    },
+  );
+
+  it.each(Object.entries(SEGUN_V870))('%s: vale lo de la v8.7.0, %s', (n, v870) => {
+    expect(filas.find(([x]) => x === n)?.[2]).toBe(v870);
   });
 
   it('lo pendiente sigue sin cuadrar; si cuadra, que se quite de la lista', () => {

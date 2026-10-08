@@ -579,16 +579,21 @@ export function VistaFicha({ personaje, datos, reglamento }: Props) {
               <thead>
                 <tr>
                   <th>Arma</th><th className="num">Turno</th><th className="num">Ataque</th>
-                  <th className="num">Parada</th><th className="num">Daño</th><th>Críticos</th>
+                  <th className="num">Defensa</th><th className="num">Daño</th><th>Críticos</th>
                 </tr>
               </thead>
               <tbody>
                 {ficha.combate.armas.map((a, i) => (
                   <tr key={i}>
-                    <td className="destacado">{a.arma}</td>
+                    <td className="destacado">
+                      {a.arma}
+                      {personaje.equipo.armas[i]?.municion && ` con ${personaje.equipo.armas[i].municion}`}
+                    </td>
                     <td className="num">{a.turno}</td>
                     <td className="num">{a.ataque}</td>
-                    <td className="num">{a.parada}</td>
+                    <td className="num" title={a.tipoDefensa}>
+                      {a.defensa}{a.tipoDefensa === 'Esquiva' ? ' (E)' : ''}
+                    </td>
                     <td className="num">{a.dano}</td>
                     <td>{a.criticos.join(' / ') || '—'}</td>
                   </tr>

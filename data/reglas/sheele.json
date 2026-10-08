@@ -101,7 +101,7 @@
   "zeon": "-",
   "proyeccion": "-",
   "dano": "-",
-  "efecto": "Los puntos de vida se incrementan a Presencia·4 (120)"
+  "efecto": "Los puntos de vida se incrementan a Presencia·4 ([Presencia×4])"
  },
  {
   "mejora": "Potenciación Mejorada",
@@ -123,15 +123,15 @@
   "mejora": "Trueno del Alma",
   "grupo": "AIRE",
   "zeon": 250,
-  "proyeccion": 110,
-  "dano": 60,
+  "proyeccion": "50 + Proyección ofensiva",
+  "dano": "Presencia×2",
   "efecto": "Ataque en ELE. Afecta a sobrenaturales. Afecta a 5m de la línea de ataque."
  },
  {
   "mejora": "Vendaval Afilado",
   "grupo": "AIRE",
   "zeon": 100,
-  "proyeccion": 60,
+  "proyeccion": "Proyección ofensiva",
   "dano": 60,
   "efecto": "Ataque FIL. Área 25m. Aquellos en contacto directo no son afectados"
  },
@@ -147,8 +147,8 @@
   "mejora": "Mano de Aire",
   "grupo": "AIRE",
   "zeon": "20 /obj",
-  "proyeccion": 60,
-  "dano": "x +10",
+  "proyeccion": "Proyección ofensiva",
+  "dano": "x +bono de POD",
   "efecto": "Puede mover objetos de no más de 20kg. Puede atacar con ellos."
  },
  {
@@ -173,7 +173,7 @@
   "zeon": "-",
   "proyeccion": "-",
   "dano": "-",
-  "efecto": "+2 FUE al alcance y +10 al daño de proyectiles de quien esté en contacto con ella."
+  "efecto": "+2 FUE al alcance y +[bono de POD] al daño de proyectiles de quien esté en contacto con ella."
  },
  {
   "mejora": "Hab. Mejoradas (Aire)",
@@ -189,7 +189,7 @@
   "zeon": "25 (5)",
   "proyeccion": "-",
   "dano": "-",
-  "efecto": "Inmune a ataques físicos. Aquel en contacto RF 70 o sufre [Nv de fracaso] daño."
+  "efecto": "Inmune a ataques físicos. Aquel en contacto RF [Presencia×2 + bono de POD] o sufre [Nv de fracaso] daño."
  },
  {
   "mejora": "Reacción Veloz",
@@ -203,7 +203,7 @@
   "mejora": "Agujas de hielo",
   "grupo": "AGUA",
   "zeon": "100 (20)",
-  "proyeccion": 60,
+  "proyeccion": "Proyección ofensiva",
   "dano": 50,
   "efecto": "FRI y PEN. Si se mantiene hace un ataque automático al inicio del turno. Ver."
  },
@@ -211,9 +211,9 @@
   "mejora": "Ola de Poder",
   "grupo": "AGUA",
   "zeon": "100 (20)",
-  "proyeccion": 60,
-  "dano": 30,
-  "efecto": "CON. Área 30m. Impacto FUE 8. Aquellos en contacto son inmunes."
+  "proyeccion": "Proyección ofensiva",
+  "dano": "Presencia",
+  "efecto": "CON. Área [Presencia]m. Impacto FUE [POD]. Aquellos en contacto son inmunes."
  },
  {
   "mejora": "Defensa Absoluta",
@@ -229,13 +229,13 @@
   "zeon": 100,
   "proyeccion": "Auto",
   "dano": "-",
-  "efecto": "50m. RM o RF 70- 5*[TA FRI]. Parálisis parcial (completa si se falla por 40+)"
+  "efecto": "50m. RM o RF [Presencia×2 + bono de POD]- 5*[TA FRI]. Parálisis parcial (completa si se falla por 40+)"
  },
  {
   "mejora": "Pantalla de Cristal",
   "grupo": "AGUA",
   "zeon": 150,
-  "proyeccion": 110,
+  "proyeccion": "Proyección ofensiva + 50",
   "dano": "-",
   "efecto": "Escudo sobrenatural de 500"
  },
@@ -283,8 +283,8 @@
   "mejora": "Fenix",
   "grupo": "FUEGO",
   "zeon": 100,
-  "proyeccion": 110,
-  "dano": 60,
+  "proyeccion": "Proyección ofensiva + 50",
+  "dano": "Presencia×2",
   "efecto": "CAL. Afecta sobrenaturales. RF [daño*2], [Nv de fracaso] daño adicional."
  },
  {
@@ -293,7 +293,7 @@
   "zeon": 100,
   "proyeccion": "Auto",
   "dano": "-",
-  "efecto": "50m. Tira 1d100+ 70 en 'Tabla 76: En llamas' (Core p.234)"
+  "efecto": "50m. Tira 1d100+ [Presencia×2 + bono de POD] en 'Tabla 76: En llamas' (Core p.234)"
  },
  {
   "mejora": "Sheol",
@@ -307,17 +307,17 @@
   "mejora": "Llamas de Ghehena",
   "grupo": "FUEGO",
   "zeon": 50,
-  "proyeccion": 60,
-  "dano": "30+10*",
-  "efecto": "CAL. Área 6*[# ataques sucesivos] m. Daño 30+10*[# ataques sucesivos]"
+  "proyeccion": "Proyección ofensiva",
+  "dano": "Presencia+10*",
+  "efecto": "CAL. Área [VOL]*[# ataques sucesivos] m. Daño [Presencia]+10*[# ataques sucesivos] "
  },
  {
   "mejora": "Ignis",
   "grupo": "FUEGO",
   "zeon": "-",
-  "proyeccion": 60,
+  "proyeccion": "Proyección ofensiva",
   "dano": "Intens*5",
-  "efecto": "La Sheele controla el fuego de hasta 8 intensidades. Puede atacar con él."
+  "efecto": "La Sheele controla el fuego de hasta [POD] intensidades. Puede atacar con él."
  },
  {
   "mejora": "Hab. Mejoradas (Fuego)",
@@ -333,7 +333,7 @@
   "zeon": "-",
   "proyeccion": "-",
   "dano": "-",
-  "efecto": "En contacto: Obtiene crítico secundario CAL, y +10 daño."
+  "efecto": "En contacto: Obtiene crítico secundario CAL, y +[bono de POD] daño."
  },
  {
   "mejora": "Forma de fuego",
@@ -341,7 +341,7 @@
   "zeon": "25 (5)",
   "proyeccion": "-",
   "dano": "-",
-  "efecto": "A voluntad, solo vulnerable a energía o frío. En contacto: RF 70 o [Nv de fracaso] daño."
+  "efecto": "A voluntad, solo vulnerable a energía o frío. En contacto: RF [Presencia×2 + bono de POD] o [Nv de fracaso] daño."
  },
  {
   "mejora": "Poder Destructivo",
@@ -364,7 +364,7 @@
   "grupo": "TIERRA",
   "zeon": 150,
   "proyeccion": "-",
-  "dano": 90,
+  "dano": "Presencia×3, redondeado a 10",
   "efecto": "Área 10m. Tras su activación tarda un turno en llegar al blanco."
  },
  {
@@ -373,7 +373,7 @@
   "zeon": 150,
   "proyeccion": "Auto",
   "dano": "-",
-  "efecto": "Área 25m. RM 70: -50 turno y x0.5 movimiento. En contacto: Inmune."
+  "efecto": "Área 25m. RM [Presencia×2 + bono de POD]: -50 turno y x0.5 movimiento. En contacto: Inmune."
  },
  {
   "mejora": "Indestructible",
@@ -389,7 +389,7 @@
   "zeon": 80,
   "proyeccion": "-",
   "dano": "-",
-  "efecto": "Area 60m. Construcciones e individuos sobre el suelo control de AGI 4 o derribados"
+  "efecto": "Area [Presencia×2]m. Construcciones e individuos sobre el suelo control de AGI [FUE×2] o derribados"
  },
  {
   "mejora": "Aguante",
@@ -411,9 +411,9 @@
   "mejora": "Furia de la Tierra",
   "grupo": "TIERRA",
   "zeon": 150,
-  "proyeccion": 110,
+  "proyeccion": "Proyección ofensiva + 50",
   "dano": null,
-  "efecto": "100m. Si >0%, Control FUE 16-[TA CON]: 10*[Nv de fracaso] daño (*5 si Acumulación)"
+  "efecto": "100m. Si >0%, Control FUE [FUE + POD + VOL]-[TA CON]: 10*[Nv de fracaso] daño (*5 si Acumulación)"
  },
  {
   "mejora": "Hab. Mejoradas (Tierra)",
@@ -429,7 +429,7 @@
   "zeon": "-",
   "proyeccion": "-",
   "dano": "-",
-  "efecto": "Movimiento subterráneo de Tipo 8"
+  "efecto": "Movimiento subterráneo de Tipo [su Movimiento]"
  },
  {
   "mejora": "Aguante de Diamante",
@@ -443,17 +443,17 @@
   "mejora": "Esferas de Luz",
   "grupo": "LUZ",
   "zeon": 250,
-  "proyeccion": 60,
+  "proyeccion": "Proyección ofensiva",
   "dano": 40,
-  "efecto": "Crea 8 proyectiles durante 6 asaltos. Máximo 4 ataques/ turno. Ataca en ENE."
+  "efecto": "Crea [POD] proyectiles durante [VOL] asaltos. Máximo [DES/2] ataques/ turno. Ataca en ENE."
  },
  {
   "mejora": "Fulgor Final",
   "grupo": "LUZ",
   "zeon": 250,
-  "proyeccion": "60+",
-  "dano": 60,
-  "efecto": "ENE. +15 Proy. cada asalto que lo prepare, máximo 8."
+  "proyeccion": "Proyección ofensiva+",
+  "dano": "Presencia×2",
+  "efecto": "ENE. +15 Proy. cada asalto que lo prepare, máximo [POD]."
  },
  {
   "mejora": "Ascensión",
@@ -461,7 +461,7 @@
   "zeon": 250,
   "proyeccion": "-",
   "dano": "-",
-  "efecto": "5 asaltos. +20 a toda acción y al ACT transferible. Después, -50 ata (10/ asalto)"
+  "efecto": "5 asaltos. +[bono de POD×2] a toda acción y al ACT transferible. Después, -50 ata (10/ asalto)"
  },
  {
   "mejora": "Luz de Vida",
@@ -469,7 +469,7 @@
   "zeon": 10,
   "proyeccion": "-",
   "dano": "-",
-  "efecto": "Cura 30 PV o elimina penalizadores por el mismo valor. 1 uso/ persona/ día."
+  "efecto": "Cura [Presencia] PV o elimina penalizadores por el mismo valor. 1 uso/ persona/ día."
  },
  {
   "mejora": "Guardián de los Sueños",
@@ -509,7 +509,7 @@
   "zeon": "-",
   "proyeccion": "-",
   "dano": "-",
-  "efecto": "A voluntad. Inmune a ataques físicos. Puede cegar a quien la mire, RM 70. Ver"
+  "efecto": "A voluntad. Inmune a ataques físicos. Puede cegar a quien la mire, RM [Presencia×2 + bono de POD]. Ver"
  },
  {
   "mejora": "Resistencia",
@@ -531,17 +531,17 @@
   "mejora": "Obscuritas Delta",
   "grupo": "OSCURIDAD",
   "zeon": 300,
-  "proyeccion": 160,
-  "dano": 60,
+  "proyeccion": "Proyección ofensiva + 100",
+  "dano": "Presencia×2",
   "efecto": "RM [daño]: Penalizador a toda acción de [Nv de fracaso]."
  },
  {
   "mejora": "Alas de Sombra",
   "grupo": "OSCURIDAD",
   "zeon": 250,
-  "proyeccion": 60,
+  "proyeccion": "Proyección defensiva",
   "dano": "-",
-  "efecto": "Defensa. RM 70: -50 a toda acción que se recupera a 10/asalto"
+  "efecto": "Defensa. RM [Presencia×2 + bono de POD]: -50 a toda acción que se recupera a 10/asalto"
  },
  {
   "mejora": "Forma de Oscuridad",
@@ -557,7 +557,7 @@
   "zeon": 200,
   "proyeccion": "-",
   "dano": "-",
-  "efecto": "Automático 50m. RM 60: -20 a toda acción."
+  "efecto": "Automático 50m. RM [Presencia×2]: -[bono de POD×2] a toda acción."
  },
  {
   "mejora": "Ascensión Oscura",
@@ -565,7 +565,7 @@
   "zeon": 250,
   "proyeccion": "-",
   "dano": "-",
-  "efecto": "5 asaltos. +20 ATA y al ACT trasferible. Al finalizar, -50 ATA (-10/asalto)"
+  "efecto": "5 asaltos. +[bono de POD×2] ATA y al ACT trasferible. Al finalizar, -50 ATA (-10/asalto)"
  },
  {
   "mejora": "Señora de Pesadillas",
@@ -573,7 +573,7 @@
   "zeon": "-",
   "proyeccion": "-",
   "dano": "-",
-  "efecto": "Objetivo durmiendo. RM 70 o malos sueños. En la Vigilia es más potente. Ver"
+  "efecto": "Objetivo durmiendo. RM [Presencia×2 + bono de POD] o malos sueños. En la Vigilia es más potente. Ver"
  },
  {
   "mejora": "Ensombrecer",
@@ -596,24 +596,24 @@
   "grupo": "OSCURIDAD",
   "zeon": "-",
   "proyeccion": "-",
-  "dano": 10,
+  "dano": "Presencia + bono de FUE",
   "efecto": "Puede atacar y defender usando su proyección. Daño base [Presencia]+[Bono Fue]"
  },
  {
   "mejora": "Lazos de Vida",
   "grupo": "NATURALEZA",
   "zeon": "100 (10)",
-  "proyeccion": 110,
+  "proyeccion": "50 + Proyección ofensiva",
   "dano": "-",
-  "efecto": "Presa de FUE 8. Se puede mantener pagando el coste de zeon."
+  "efecto": "Presa de FUE [POD]. Se puede mantener pagando el coste de zeon."
  },
  {
   "mejora": "Escudo del Alma",
   "grupo": "NATURALEZA",
   "zeon": 150,
-  "proyeccion": 110,
+  "proyeccion": "Proyección defensiva + 50",
   "dano": "-",
-  "efecto": "Escudo sobrenatural 300 PV, que dura máximo 6 asaltos."
+  "efecto": "Escudo sobrenatural [10×Presencia] PV, que dura máximo [VOL] asaltos."
  },
  {
   "mejora": "Exaltación",
@@ -629,14 +629,14 @@
   "zeon": 10,
   "proyeccion": "-",
   "dano": "-",
-  "efecto": "Cura 60 PV. 1 uso/ persona/ día."
+  "efecto": "Cura [Presencia×2] PV. 1 uso/ persona/ día."
  },
  {
   "mejora": "Ola de Poder",
   "grupo": "NATURALEZA",
   "zeon": 150,
-  "proyeccion": 60,
-  "dano": 30,
+  "proyeccion": "Proyección ofensiva",
+  "dano": "Presencia",
   "efecto": "Area 20m, ENE a criaturas con alma. Anímico. En contacto: Inmune"
  },
  {
@@ -683,8 +683,8 @@
   "mejora": "Hipnos Ragna",
   "grupo": "ILUSIÓN",
   "zeon": 100,
-  "proyeccion": 110,
-  "dano": 60,
+  "proyeccion": "Proyección ofensiva + 50",
+  "dano": "Presencia×2",
   "efecto": "Ataque fantasmal. Afecta a seres sobrenaturales. Daño no real."
  },
  {
@@ -709,7 +709,7 @@
   "zeon": 100,
   "proyeccion": "Auto",
   "dano": "-",
-  "efecto": "Área 25m. RM 70: -[fracaso] Hab. PER y -0.5*[fracaso] ata. En contacto: Inmune"
+  "efecto": "Área 25m. RM [Presencia×2 + bono de POD]: -[fracaso] Hab. PER y -0.5*[fracaso] ata. En contacto: Inmune"
  },
  {
   "mejora": "Fantasía o Realidad",
@@ -733,7 +733,7 @@
   "zeon": 200,
   "proyeccion": "+10/c",
   "dano": "-",
-  "efecto": "Defensa. Crea 8 copias. Se desvanece 1/ turno y 1/ defensa. Ver."
+  "efecto": "Defensa. Crea [POD] copias. Se desvanece 1/ turno y 1/ defensa. Ver."
  },
  {
   "mejora": "Dualidad",
@@ -757,6 +757,6 @@
   "zeon": "50 (10)",
   "proyeccion": "-",
   "dano": "-",
-  "efecto": "A voluntad. Solo vulnerable a destrucción de sortilegios (Base, valor zeonico 60)"
+  "efecto": "A voluntad. Solo vulnerable a destrucción de sortilegios (Base, valor zeonico [sus PV])"
  }
 ]

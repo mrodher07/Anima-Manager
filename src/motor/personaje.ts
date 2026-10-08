@@ -8,8 +8,10 @@
 
 import { Reglamento, REGLAMENTO_OFICIAL, type ClaveRegla } from './reglamento';
 import type { EleccionesSheele } from './sheele';
+import { armaduraRacial, avisosRaza, razaDelPersonaje, type OpcionesRaza } from './razas';
 import {
   calcularArma,
+  type ContextoCombate,
   combinarArmadura,
   type ArmaEquipada,
   type HabilidadesArma,
@@ -208,6 +210,12 @@ export interface Personaje {
 
   ventajas: string[];
   desventajas: string[];
+  /**
+   * Las casillas de raza de la hoja (pestaña Personalización): Éxtasis sanguíneo del
+   * Vetala, Sue'Aman del Ebudan, transformación y fase lunar del Tuan Dalyr, Cercanía con
+   * El Dragón del Turak.
+   */
+  opcionesRaza?: OpcionesRaza;
   /**
    * Legados de Sangre. Se pagan con Puntos de Creación como las ventajas, pero además
    * dan **+1 al ajuste de nivel** por muchos que se tengan (Dominus Exxet, cap. 6).
@@ -780,8 +788,14 @@ export function calcular(
   datos: DatosCalculo,
   reglamento: Reglamento = REGLAMENTO_OFICIAL,
 ): FichaCalculada {
-  const { raza, categoria, tablas } = datos;
-  const avisos: Aviso[] = [];
+  const { categoria, tablas } = datos;
+  // La fila de la raza con lo que depende del personaje: sexo, Éxtasis sanguíneo,
+  // Sue'Aman, transformación, Cercanía con El Dragón…
+  const raza = razaDelPersonaje(datos.raza, personaje.sexo, personaje.opcionesRaza);
+  const avisos: Aviso[] = avisosRaza(raza, personaje.opcionesRaza).map((mensaje) => ({
+    gravedad: 'aviso' as const,
+    mensaje,
+  }));
   // Una mesa puede añadir secundarias propias, así que la lista buena es la del catálogo.
   // Si viene vacía —catálogo sin cargar— se usan las del manual para no dejar la ficha coja.
   const secundarias_ = datos.secundarias.length > 0 ? datos.secundarias : [...SECUNDARIAS];
@@ -1105,12 +1119,19 @@ export function calcular(
     especial('LlevarArmadura');
   const llevarArmadura = derivar('LlevarArmadura', llevarArmaduraBase);
 
-  // Las ventajas de armadura (natural, mística) son una capa más, no un suplemento.
+  // Las ventajas de armadura (natural, mística), las escamas de la raza y la Armadura de
+  // energía del Ki son cada una una capa más, no un suplemento (`Combate!AY21:BE27`). Del
+  // Ki la hoja sólo cuenta la Armadura de energía (2 contra Energía) y la arcana (4).
+  const kiHabilidades = personaje.ki?.habilidades ?? [];
+  const armaduraKi = Math.max(
+    kiHabilidades.includes('Armadura de energía') ? 2 : 0,
+    kiHabilidades.includes('Armadura de energía arcana') ? 4 : 0,
+  );
   const proteccion = combinarArmadura(
     personaje.equipo.armadura,
     datos.armaduras,
     llevarArmadura.valor,
-    efectos.TA,
+    [efectos.TA, armaduraRacial(raza, personaje.opcionesRaza), { ENE: armaduraKi }],
   );
   const penalizadorArmadura = proteccion.penalizadorNatural;
 
@@ -1248,8 +1269,12 @@ export function calcular(
   // Tamaño = CON + FUE **base** (sin modificadores raciales, que ya van aparte)
   // − 1 si es mujer, + el modificador de tamaño de la raza, + Tamaño no natural (±5 como
   // mucho). Ficha, Principal!AO21, AQ21 y K6.
+  // Un Jayán, o un Turak con rasgos Descomunales, puede llegar a 24 (y a «Grande»).
+  const puedeSerGrande =
+    raza?.raza === 'Jayán' ||
+    (raza?.raza === 'Turak' && (personaje.opcionesRaza?.cercaniaDragon ?? []).includes('Descomunales'));
   const tamano = Math.min(
-    raza?.raza === 'Jayán' ? 24 : 22,
+    puedeSerGrande ? 24 : 22,
     Math.max(
       1,
       caracteristicas.CON.base + caracteristicas.FUE.base - (personaje.sexo === 'Mujer' ? 1 : 0),
@@ -1259,10 +1284,12 @@ export function calcular(
   const turnoNatural = derivar(
     'turnoNatural',
     aplicar('turno', {
-      // Jayán y Turak de tamaño Grande arrastran −10 al turno base. Ficha, Principal!D24.
+      // El Turak tiene −20 al turno base, y −10 más si es Grande (Tamaño de más de 22),
+      // como el Jayán. Ficha, Principal!D24 y L6.
       turnoBase:
         20 +
-        (tamano >= 20 && (raza?.raza === 'Jayán' || raza?.raza === 'Turak') ? -10 : 0) +
+        (raza?.raza === 'Turak' ? -20 : 0) +
+        (puedeSerGrande && tamano > 22 ? -10 : 0) +
         efectos.turno +
         especial('turnoNatural') +
         mitadSiResta,
@@ -1274,7 +1301,7 @@ export function calcular(
     }),
   );
 
-  const ctxCombate = {
+  const ctxCombate: ContextoCombate = {
     bonoFUE: caracteristicas.FUE.bono,
     FUE: caracteristicas.FUE.total,
     tamano,
@@ -1283,11 +1310,17 @@ export function calcular(
     HParada: HParada.valor,
     HEsquiva: HEsquiva.valor,
     tablas,
+    bonos: Object.fromEntries(CARACTERISTICAS.map((c) => [c, caracteristicas[c].bono])),
+    valores: Object.fromEntries(CARACTERISTICAS.map((c) => [c, caracteristicas[c].total])),
+    presencia: presencia.valor,
+    raza: raza?.raza,
+    legados: personaje.legados,
+    arsMagnus: personaje.ki?.arsMagnus,
+    habilidadesKi: personaje.ki?.habilidades,
   };
-  // El Turno con las manos vacías. «Desarmado» es una fila más de la tabla de armas, así
-  // que su modificador sale del catálogo como el de cualquier otra.
-  const turnoSinArma =
-    turnoNatural.valor + Number(datos.armas.find((a) => a.arma === 'Desarmado')?.turno ?? 0);
+  // El Turno con las manos vacías: +20 «Sin arma» (`Principal!D28`), que la hoja quita al
+  // coger un arma y deja con un escudo (`Combate!AW40`).
+  const turnoSinArma = turnoNatural.valor + 20;
 
   const armasCalculadas = personaje.equipo.armas.map((a) =>
     calcularArma(a, datos.armas, ctxCombate, reglamento),
@@ -1388,10 +1421,19 @@ export function calcular(
     const nombre = String(arte.arte ?? '');
     if (nombre) cmPorArteMarcial[nombre] = Number(arte.CM ?? 0);
   }
+  // El coste en PD de un Ars Magnus, como `PDs!L81`: el Maestro en Armas paga la mitad de
+  // todos y el Tao la de Kiai; Cáncer cuesta 10 menos con Virgo: Instrumentos de cuerda
+  // (`Tablas!F1017`).
   const costesArsMagnus: Record<string, { CM: number; PD: number }> = {};
+  const arsTenidos = new Set(personaje.ki?.arsMagnus ?? []);
+  const categoriaArs = categoriaActual(personaje);
   for (const ars of datos.arsMagnus) {
     const nombre = String(ars.nombre ?? '');
-    if (nombre) costesArsMagnus[nombre] = { CM: Number(ars.CM ?? 0), PD: Number(ars.PD ?? 0) };
+    if (!nombre) continue;
+    let pd = Number(ars.PD ?? 0);
+    if (ars.descuentoCon && arsTenidos.has(String(ars.descuentoCon))) pd -= Number(ars.descuentoPD ?? 0);
+    if (categoriaArs === 'Maestro en Armas' || (categoriaArs === 'Tao' && nombre === 'Kiai')) pd *= 0.5;
+    costesArsMagnus[nombre] = { CM: Number(ars.CM ?? 0), PD: pd };
   }
   const caracteristicasKi = Object.fromEntries(
     CARACTERISTICAS_KI.map((c) => [c, caracteristicas[c].total]),

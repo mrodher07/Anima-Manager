@@ -265,15 +265,19 @@ export const REGLAS: readonly DefinicionRegla[] = [
     grupo: 'Combate',
     formula:
       'multiploInferior((danoBase + danoMunicion) * multTamano, 5)' +
-      ' + bonoFUE * (aDosManos ? 2 : 1) + 2 * calidad + extras',
+      ' + (conMunicion ? bonoMunicion + 2 * calidadMunicion : bonoFUE * (aDosManos ? 2 : 1) + 2 * calidad)' +
+      ' + extras',
     variables: {
       danoBase: 'Daño base del arma',
       danoMunicion: 'Daño de la munición, si la hay',
       multTamano: 'Multiplicador por tamaño del arma (Normal 1, Enorme 1.5, Gigante 2)',
-      bonoFUE: 'Bono de Fuerza',
+      bonoFUE: 'Bono que suma al daño: el de FUE, salvo que el arma diga otro (Umbra, POD; Piscis, DES)',
       aDosManos: '1 si se empuña a dos manos',
-      calidad: 'Calidad del arma',
-      extras: 'Ki, Elan y otros añadidos al daño',
+      calidad: 'Calidad del arma (las de Virgo no la suman)',
+      conMunicion: '1 si dispara munición',
+      bonoMunicion: 'Con munición: el bono de la Fuerza del arma (más su calidad / 5), o el de arriba si no tiene',
+      calidadMunicion: 'Calidad de la munición',
+      extras: 'Ki (Daño incrementado, Extensión del aura al arma) y otros añadidos al daño',
     },
     referencia: 'Ficha, Combate!AW46. Verificado: suelo(100×1.5,5) + 20×2 = 190.',
     desactivable: false,

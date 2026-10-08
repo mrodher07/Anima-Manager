@@ -1,5 +1,5 @@
 {
- "fuente": "Meirmeister.xlsm",
+ "fuente": "Ficha_Anima_v8.7.0.xlsm",
  "conjuntos": {
   "razas": 21,
   "categorias": 22,
@@ -21,7 +21,7 @@
   "disciplinasPsiquicas": 13,
   "poderesCriatura": 484,
   "elan": 169,
-  "tablasBase": 19,
+  "tablasBase": 21,
   "objetos": 339,
   "secundarias": 51
  }

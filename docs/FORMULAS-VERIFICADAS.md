@@ -197,13 +197,27 @@ Verificación RF: `30 + 10 (Bono_CON) + 20 (Jayán) = 60` ✔.
 acróbata): `20 + 10 (Bono_DES) + 15 (Bono_AGI) + 20 (desarmada) + 10 (categoría) = 75`.
 
 ```
-turnoBase   = 20 + ajustes raciales (Jayán o Turak de tamaño Grande: −10)
-                 + ventajas (Reflejos rápidos: +25 / +45 / +60)
+turnoBase   = 20 + ajustes raciales + ventajas (Reflejos rápidos: +25 / +45 / +60)
 turnoNatural = turnoBase + Bono_AGI + Bono_DES + bonoTurnoCategoría + penalizadorNatural
+turnoSinArma = turnoNatural + 20
 ```
 
-`Principal!D24`, `D25`, `D26`, `D27`, `D31`. El penalizador natural viene de la armadura
-(`Combate!E16`) más penalizadores por exceso de peso.
+`Principal!D24`, `D25`, `D26`, `D27`, `D28`, `D31`. El penalizador natural viene de la
+armadura (`Combate!E16`) más penalizadores por exceso de peso.
+
+Ajustes raciales, contrastados con la v8.7.0 (escenarios `turak`, `turak-descomunales`):
+
+- **Turak: −20** siempre.
+- **−10 más si es «Grande»**: sólo un Jayán, o un Turak con el rasgo *Descomunales*, con
+  Tamaño de más de 22 (`Principal!L6`). Son también los únicos que llegan a Tamaño 24; los
+  demás se quedan en 22 (`K6`).
+- La hoja escribe además «−10 al Nephilim Turak», pero mirando si la *raza* es «Nephilim
+  Turak», cosa que no puede pasar: en la hoja un Nephilim es un Humano con la casilla
+  Nephilim puesta. Así que la hoja no se lo aplica nunca, y la aplicación tampoco.
+
+Los **+20 «Sin arma»** son una constante de la hoja (`D28`). Al coger un arma se quitan
+(`Combate!AW40`): por eso «Desarmado» puesto en un hueco de arma da 20 menos que el Turno
+sin arma. Lo ha confirmado la propia hoja.
 
 **Acciones por turno**: `VLOOKUP(Bono_DES + Bono_AGI, Tabla_NumAcciones)` (`Principal!J32`).
 
@@ -264,79 +278,137 @@ Verificación Acrobacias: `15 (30 PD ÷ coste 2) + 15 (Bono_AGI) + 10 (habilidad
 
 ---
 
-## Combate — las tres fórmulas que estaban pendientes
+## Combate: las armas ✔ (contrastado con la hoja v8.7.0)
 
-### 1. Daño con multiplicador de tamaño ✔ verificada
+`tools/oraculo-hoja.py --armas` empuña en la hoja **871 combinaciones** —cada arma del
+catálogo a una y a dos manos, con calidad 0 y +5; las de proyectiles con cada una de sus
+municiones; las del Zodiaco con y sin su Ars Magnus; las Armas naturales de cada raza;
+armas Enormes y Gigantes; el Ki que suma al arma— y `src/motor/hojaV870Armas.test.ts`
+compara turno, ataque, defensa (y si es Parada o Esquiva), daño, conocimiento, críticos,
+entereza, rotura y presencia. **Cuadran las 871.**
 
-```
-Daño = FLOOR( (dañoArma + dañoMunición) × multiplicadorTamaño , 5 )
-     + Bono_FUE × (2 si se empuña a dos manos, 1 si a una)
-     + 2 × calidadArma
-     + bonos de Ki / Elan / personalización
-```
-
-`Combate!AW46`. El multiplicador sale de `tablasBase.armasEnormes`:
-Normal ×1, **Enorme ×1.5**, Gigante ×2.
-
-Verificación Meirmeister (Hacha a dos manos, tamaño Enorme, calidad 0, FUE 12 → bono 20):
+### Turno (`Combate!AW40`)
 
 ```
-FLOOR(100 × 1.5, 5) = 150
-+ 20 × 2 (a dos manos) = 40
-────────────────────────────
-                      190  ✔  (la ficha muestra 190)
+turnoArma = turnoNatural (sin los +20 de ir desarmado)
+          + 20 si es un Escudo
+          + calidad + turno de la tabla
+          + −40 si es Enorme/Gigante y el Tamaño no llega
 ```
 
-### 2. Turno al combinar dos armas ✔ verificada
+Con dos armas (`AW41`): si la segunda es un Escudo se suman los turnos; si es otra arma,
+el menor de los dos, y −10 (o −20 si el turno del arma es negativo) si son la misma o del
+mismo tipo.
 
-`Combate!AW40` (turno del arma sola) y `AW41` (turno final):
-
-```
-turnoArma = turnoNatural
-          + (0 si el arma es tipo Escudo, si no −20)
-          + calidad
-          + turnoTablaArma
-          + (−40 si el Tamaño del personaje < tamaño mínimo del arma enorme)
-```
-
-Al combinar con una segunda arma:
-
-- **Si la segunda es un Escudo**: `turnoArma + turnoDelEscudo` (más el ajuste por tamaño).
-- **Si es otra arma**: `MIN(turnoArma, turnoDeLaOtra)` y, **si ambas son la misma arma o
-  del mismo tipo**, se aplica **−10** si el turno del arma es ≥ 0, o **−20** si es
-  negativo.
-- Si la mano es "Torpe" y no hay ambidestría, el arma no puede usarse.
-
-### 3. Bonos de artes marciales ✔ verificada
-
-En la Habilidad de Ataque (`Combate!AW42`) y de Parada (`AW43`):
+### Ataque y defensa (`Combate!AW42:AW44`, `J29`, `K29`)
 
 ```
-HA_arma = HA_final − bonoCategoríaHA
-        + MIN( 50 , bonoCategoríaHA + bonoArteMarcialAplicableAlArma )
-        + ajusteArmaConocida/Similar/Distinta
-        + calidad
-        + MIN(0, 10 × (FUE − FUErequerida − penalizadorArmaEnorme))
-        + −30 si no es el arma desarrollada y hay "Arma exclusiva"
-        + −10/−40 si se usa con la mano torpe
+ataque  = HA + conocimiento + calidad + MIN(0, 10 × (FUE − FUE requerida − extra Enorme))
+          + −10 a la Lanza y la Vara a una mano
+parada  = HP + calidad + bono de Parada del arma + conocimiento + falta de FUE
+esquiva = HE + bono de Esquiva del arma
+defensa = la Parada si es mayor que la Esquiva; si no, la Esquiva
 ```
 
-**La clave: el bono de categoría más el de artes marciales están topados conjuntamente en
-+50.** La Habilidad de Parada añade además el `bonusParada` de la tabla de armas.
+- **Conocimiento**: Conocida 0, Similar −20, Mixta −40, Distinta −60 (`Tablas!T578`).
+- Las armas de **Virgo** no suman la calidad ni al ataque, ni a la parada, ni al daño.
+- **«-» en la FUE requerida** quiere decir que así no se puede empuñar (el Arco largo a una
+  mano): la hoja deja ataque y defensa a 0, y la aplicación avisa.
+- Una **fila de munición** no tiene casilla de conocimiento: la hoja no le saca ni ataque
+  ni defensa. En la aplicación la munición no sale en la lista de armas: va dentro de su
+  arma de proyectiles.
+- El bono de categoría y el de las tablas de armas de las artes marciales van topados
+  juntos en +50 (`MIN(50, …)`). Las tablas de armas de artes marciales no están aún.
 
-La penalización por FUE insuficiente es **−10 por cada punto de FUE que falte**, y usa
-`fueReq2M` si el arma se empuña a dos manos.
+### Daño (`Combate!AW46`)
+
+```
+sin munición: FLOOR(daño × multEnorme, 5) + bono × (2 a dos manos) + 2 × calidad + extras
+con munición: FLOOR((daño + dañoMunición) × multEnorme, 5)
+              + (Fuerza del arma ? bono(Fuerza del arma + calidad/5) : bono)
+              + 2 × calidadMunición + extras
+extras = +10 Daño incrementado (Ki) + 10 Extensión del aura al arma
+```
+
+- **El bono no siempre es el de FUE** (`Tablas!Y`): Umbra y Mundus suman el de POD;
+  Capricornius y Piscis, el de DES; las ballestas, el arcabuz, la pistola y las armas de
+  asedio, el de **su propia Fuerza**; la Cerbatana, las municiones y varias del Zodiaco,
+  ninguno (`atributoDano` en `data/reglas/armas.json`).
+- Algunos daños **dependen del que empuña** (`danoFormula`): Katana de doble hoja
+  `55 − bono FUE`, Kusari-Gama `40 − bono FUE`, Lazo `5 − 2 × bono FUE`, Aries
+  `100 − bono FUE`, Mundus `80 − bono POD`, Umbra la Presencia, el Arco de balas
+  `bono(FUE + 2) − bono FUE`; el Atlatl tira con FUE + 2.
+- La munición de cada arma sale de `Tablas!AC801:AV824`.
+
+Verificación Meirmeister (Hacha a dos manos, Enorme, FUE 12 → bono 20):
+`FLOOR(100 × 1.5, 5) + 20 × 2 = 190` ✔.
+
+### Entereza, rotura y presencia (`Combate!E31:G31`)
+
+```
+entereza = MAX(0, entereza + 2 × calidad + extra Enorme + 10 con Extensión del aura)
+rotura   = rotura + 2 × calidad / 5 + extra Enorme + bono de la Tabla de Fuerza (FUE)
+           + 5 con Extensión del aura + 5 con Ojos de la Muerte
+presencia = presencia + 10 × calidad (no en Virgo ni Umbra; Ophiucos nunca)
+```
+
+Umbra rompe con su POD; Virgo, Libra y Umbra tienen la Presencia del personaje, Ophiucos
+el doble.
+
+### Armas naturales (`Tablas!E639:N639`)
+
+No son una fila fija: dependen de la raza (o del Legado de Sangre «Armas Naturales», que
+manda) y del Tamaño (`tablasBase.armasNaturales` y `tablasBase.creacionSeres`):
+
+| | Daño | Críticos | Entereza / Rotura |
+|---|---|---|---|
+| Ebudan | 60 | FIL | 20 / 5 |
+| Tuan Dalyr, Turak | 40 | Turak FIL | por Tamaño |
+| Daimah | 30 | FIL / PEN | por Tamaño |
+| Nephilim Turak | 30 | — (la hoja tiene «Nehpilim» mal escrito y no le pone FIL) | por Tamaño |
+| Jayán | por Tamaño (40 Medio, 60 Grande…) | FIL / PEN | por Tamaño |
+| Legado «Armas Naturales» | 40 | los elige el jugador | por Tamaño |
+| Las demás | 0 («Armas naturales no disponibles») | — | por Tamaño |
+
+### Armas del Zodiaco
+
+Sin su Ars Magnus son **Distintas** (`Tablas!L797…`), diga lo que diga el jugador. Leo,
+Taurus, Scorpio y Ophiucos piden además conocer otras armas (una espada y la pistola…):
+eso la aplicación no lo puede comprobar —el conocimiento de cada arma lo marca el
+jugador—, así que lo avisa (`requiereArmas`).
 
 ---
 
-## Corrección aplicada a los datos extraídos
+## Lo que en la hoja depende del personaje, y ya no se guarda como número
 
-La columna *Atr. Daño* de la tabla de armas **no es un dato del arma**: en la hoja es la
-fórmula `=Bono_Fue`, es decir el bono de FUE del personaje cargado. Se había quedado
-congelada en `20` (el valor de Meirmeister) para las 170 armas. **Se ha eliminado** de
-`data/reglas/armas.json`; el bono de FUE se calcula en tiempo de ejecución.
+Al extraer los datos de la v8.7.0 se ha mirado, columna a columna, qué casillas de las
+tablas son **fórmulas** que miran al personaje cargado. Leer su valor metía en el catálogo
+los números de quien estuviera rellenado. Ahora:
 
-Se ha añadido `tablasBase.armasEnormes` con los multiplicadores de daño por tamaño de arma.
+- **Armas**: la columna *Atr. Daño* (`=Bono_Fue`) era el bono de quien estuviera; ahora es
+  `atributoDano`. *Conocida* era su conocimiento; se ha quitado (lo marca el jugador). Los
+  daños, fuerzas, roturas y presencias que dependen del personaje van como fórmula. La
+  fila «Desarmado» no tiene turno: los +20 son del Turno sin arma (antes había un `turno: 20`
+  puesto a mano para que cuadrara, y se ha quitado).
+- **Ars Magnus**: los requisitos eran «NO»/«-» (si el personaje los cumplía); ahora son el
+  texto de la fórmula («Ataque 200, Inhumanidad, DES 11»). **Ophiucos Sigma cuesta 80 PD**
+  (−10 por cada Tabla de tipología que se conozca, mínimo 10); **Cáncer** y **Cáncer
+  Magister** cuestan 10 menos con *Virgo: Instrumentos de cuerda*; el **Maestro en Armas**
+  paga la mitad de todos y el **Tao** la de Kiai (`PDs!L81`). La aplicación aplica estos
+  dos últimos.
+- **Artes marciales**: el daño base es una fórmula (`20 + bono FUE`, `20 + 2 × bono POD`…) y
+  los requisitos, texto (habilidades, Ataque/Defensa, grados previos).
+- **Sheele**: las mejoras dicen «RF [Presencia×2 + bono de POD]» en vez de «RF 70».
+- **Elan**: las descripciones dicen «[Elan/2]» en vez del número del personaje, y el
+  requisito es el nombre del poder que hace falta, no 0/1.
+- **Poderes de criatura**: el coste normal y una nota con la excepción (10 más para un
+  Elemental; la Forma espectral, 25 para un No muerto Espectro).
+- **Razas** (`src/motor/razas.ts`, contrastado con 9 escenarios de la hoja): el Duk'zarist
+  cambia RF y RM según el sexo; el Vetala gana con el Éxtasis sanguíneo, de noche y bien
+  alimentado; el Ebudan con el Sue'Aman; el Tuan Dalyr transformado y según la fase lunar;
+  el Turak con sus rasgos de Cercanía con El Dragón, y sus escamas son una capa de armadura
+  natural (TA 2, 3 con Escamas de metal; Nephilim Turak 1). La Armadura de energía del Ki
+  (2 contra Energía, 4 la arcana) es otra capa.
 
 ---
 

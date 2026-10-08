@@ -25,6 +25,8 @@ describe('una hoja v8.7.0 real, con contenido propio', () => {
     expect(r.personalizados?.armas?.[0]).toMatchObject({
       arma: 'Espada de la casa', dano: 55, turno: 5, fueRequerida: 6, critico1: 'FIL', critico2: 'CON',
     });
+    // Su «Atrib.» está vacío, así que suma el bono de FUE; el «CON» de al lado es su crítico.
+    expect(r.personalizados?.armas?.[0].atributoDano).toBeUndefined();
     expect(r.personalizados?.armaduras?.[0]).toMatchObject({
       armadura: 'Cota de la casa', requerimiento: 10, penNatural: -5, clase: 'Blanda', CON: 3, PEN: 2,
     });

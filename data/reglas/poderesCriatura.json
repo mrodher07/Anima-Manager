@@ -207,109 +207,127 @@
   "nombre": "Ataque especial Daño Base 40",
   "gnosis": 5,
   "coste": 10,
-  "_seccion": "HABILIDADES OFENSIVAS"
+  "_seccion": "HABILIDADES OFENSIVAS",
+  "notaCoste": "20 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Ataque especial Daño Base 50",
   "gnosis": 10,
   "coste": 15,
-  "_seccion": "HABILIDADES OFENSIVAS"
+  "_seccion": "HABILIDADES OFENSIVAS",
+  "notaCoste": "25 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Ataque especial Daño Base 60",
   "gnosis": 10,
   "coste": 20,
-  "_seccion": "HABILIDADES OFENSIVAS"
+  "_seccion": "HABILIDADES OFENSIVAS",
+  "notaCoste": "30 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Ataque especial Daño Base 80",
   "gnosis": 10,
   "coste": 25,
-  "_seccion": "HABILIDADES OFENSIVAS"
+  "_seccion": "HABILIDADES OFENSIVAS",
+  "notaCoste": "35 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Ataque especial Daño Base 100",
   "gnosis": 15,
   "coste": 30,
-  "_seccion": "HABILIDADES OFENSIVAS"
+  "_seccion": "HABILIDADES OFENSIVAS",
+  "notaCoste": "40 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Ataque especial Daño Base 120",
   "gnosis": 20,
   "coste": 50,
-  "_seccion": "HABILIDADES OFENSIVAS"
+  "_seccion": "HABILIDADES OFENSIVAS",
+  "notaCoste": "60 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Ataque especial Daño Base 150",
   "gnosis": 20,
   "coste": 60,
-  "_seccion": "HABILIDADES OFENSIVAS"
+  "_seccion": "HABILIDADES OFENSIVAS",
+  "notaCoste": "70 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Ataque especial Daño Base 200",
   "gnosis": 25,
   "coste": 80,
-  "_seccion": "HABILIDADES OFENSIVAS"
+  "_seccion": "HABILIDADES OFENSIVAS",
+  "notaCoste": "90 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Ataque especial Daño Base 250",
   "gnosis": 30,
   "coste": 100,
-  "_seccion": "HABILIDADES OFENSIVAS"
+  "_seccion": "HABILIDADES OFENSIVAS",
+  "notaCoste": "110 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Ataque especial 1m de radio",
   "gnosis": 10,
   "coste": 10,
-  "_seccion": "HABILIDADES OFENSIVAS"
+  "_seccion": "HABILIDADES OFENSIVAS",
+  "notaCoste": "20 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Ataque especial 3m de radio",
   "gnosis": 10,
   "coste": 20,
-  "_seccion": "HABILIDADES OFENSIVAS"
+  "_seccion": "HABILIDADES OFENSIVAS",
+  "notaCoste": "30 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Ataque especial 5m de radio",
   "gnosis": 15,
   "coste": 30,
-  "_seccion": "HABILIDADES OFENSIVAS"
+  "_seccion": "HABILIDADES OFENSIVAS",
+  "notaCoste": "40 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Ataque especial 10m de radio",
   "gnosis": 20,
   "coste": 40,
-  "_seccion": "HABILIDADES OFENSIVAS"
+  "_seccion": "HABILIDADES OFENSIVAS",
+  "notaCoste": "50 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Ataque especial 25m de radio",
   "gnosis": 25,
   "coste": 50,
-  "_seccion": "HABILIDADES OFENSIVAS"
+  "_seccion": "HABILIDADES OFENSIVAS",
+  "notaCoste": "60 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Ataque especial 50m de radio",
   "gnosis": 30,
   "coste": 60,
-  "_seccion": "HABILIDADES OFENSIVAS"
+  "_seccion": "HABILIDADES OFENSIVAS",
+  "notaCoste": "70 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Ataque especial 100m de radio",
   "gnosis": 35,
   "coste": 80,
-  "_seccion": "HABILIDADES OFENSIVAS"
+  "_seccion": "HABILIDADES OFENSIVAS",
+  "notaCoste": "90 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Ataque especial Uso adicional",
   "gnosis": 10,
   "coste": 5,
-  "_seccion": "HABILIDADES OFENSIVAS"
+  "_seccion": "HABILIDADES OFENSIVAS",
+  "notaCoste": "10 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Ataque especial Sin límite",
   "gnosis": 20,
   "coste": 60,
-  "_seccion": "HABILIDADES OFENSIVAS"
+  "_seccion": "HABILIDADES OFENSIVAS",
+  "notaCoste": "70 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Ataque especial Preparación 1 turno",
@@ -459,7 +477,8 @@
   "nombre": "Efecto místico añadido Miedo",
   "gnosis": 10,
   "coste": 20,
-  "_seccion": "HABILIDADES OFENSIVAS"
+  "_seccion": "HABILIDADES OFENSIVAS",
+  "notaCoste": "30 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Efecto místico añadido Terror",
@@ -471,151 +490,176 @@
   "nombre": "Efecto místico añadido Dolor",
   "gnosis": 10,
   "coste": 20,
-  "_seccion": "HABILIDADES OFENSIVAS"
+  "_seccion": "HABILIDADES OFENSIVAS",
+  "notaCoste": "30 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Efecto místico añadido Dolor extremo",
   "gnosis": 20,
   "coste": 40,
-  "_seccion": "HABILIDADES OFENSIVAS"
+  "_seccion": "HABILIDADES OFENSIVAS",
+  "notaCoste": "50 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Efecto místico añadido Debilidad",
   "gnosis": 10,
   "coste": 50,
-  "_seccion": "HABILIDADES OFENSIVAS"
+  "_seccion": "HABILIDADES OFENSIVAS",
+  "notaCoste": "60 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Efecto místico añadido Paralización parcial",
   "gnosis": 20,
   "coste": 40,
-  "_seccion": "HABILIDADES OFENSIVAS"
+  "_seccion": "HABILIDADES OFENSIVAS",
+  "notaCoste": "50 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Efecto místico añadido Paralización completa",
   "gnosis": 20,
   "coste": 80,
-  "_seccion": "HABILIDADES OFENSIVAS"
+  "_seccion": "HABILIDADES OFENSIVAS",
+  "notaCoste": "90 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Efecto místico añadido Ira",
   "gnosis": 20,
   "coste": 20,
-  "_seccion": "HABILIDADES OFENSIVAS"
+  "_seccion": "HABILIDADES OFENSIVAS",
+  "notaCoste": "30 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Efecto místico añadido Ceguera",
   "gnosis": 10,
   "coste": 50,
-  "_seccion": "HABILIDADES OFENSIVAS"
+  "_seccion": "HABILIDADES OFENSIVAS",
+  "notaCoste": "60 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Efecto místico añadido Sordera",
   "gnosis": 10,
   "coste": 10,
-  "_seccion": "HABILIDADES OFENSIVAS"
+  "_seccion": "HABILIDADES OFENSIVAS",
+  "notaCoste": "20 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Efecto místico añadido Mudez",
   "gnosis": 10,
   "coste": 10,
-  "_seccion": "HABILIDADES OFENSIVAS"
+  "_seccion": "HABILIDADES OFENSIVAS",
+  "notaCoste": "20 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Efecto místico añadido Fascinación",
   "gnosis": 20,
   "coste": 20,
-  "_seccion": "HABILIDADES OFENSIVAS"
+  "_seccion": "HABILIDADES OFENSIVAS",
+  "notaCoste": "30 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Efecto místico añadido Daño simple",
   "gnosis": 10,
   "coste": 30,
-  "_seccion": "HABILIDADES OFENSIVAS"
+  "_seccion": "HABILIDADES OFENSIVAS",
+  "notaCoste": "40 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Efecto místico añadido Daño doble",
   "gnosis": 20,
   "coste": 60,
-  "_seccion": "HABILIDADES OFENSIVAS"
+  "_seccion": "HABILIDADES OFENSIVAS",
+  "notaCoste": "70 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Efecto místico añadido Inconsciencia",
   "gnosis": 20,
   "coste": 100,
-  "_seccion": "HABILIDADES OFENSIVAS"
+  "_seccion": "HABILIDADES OFENSIVAS",
+  "notaCoste": "110 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Efecto místico añadido Dominio",
   "gnosis": 25,
   "coste": 120,
-  "_seccion": "HABILIDADES OFENSIVAS"
+  "_seccion": "HABILIDADES OFENSIVAS",
+  "notaCoste": "130 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Efecto místico añadido Muerte",
   "gnosis": 25,
   "coste": 140,
-  "_seccion": "HABILIDADES OFENSIVAS"
+  "_seccion": "HABILIDADES OFENSIVAS",
+  "notaCoste": "150 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Efecto místico añadido Locura",
   "gnosis": 20,
   "coste": 20,
-  "_seccion": "HABILIDADES OFENSIVAS"
+  "_seccion": "HABILIDADES OFENSIVAS",
+  "notaCoste": "30 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Efecto místico añadido Vejez",
   "gnosis": 20,
   "coste": 60,
-  "_seccion": "HABILIDADES OFENSIVAS"
+  "_seccion": "HABILIDADES OFENSIVAS",
+  "notaCoste": "70 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Efecto místico añadido Petrificación",
   "gnosis": 20,
   "coste": 120,
-  "_seccion": "HABILIDADES OFENSIVAS"
+  "_seccion": "HABILIDADES OFENSIVAS",
+  "notaCoste": "130 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Efecto místico añadido Pen a toda acción",
   "gnosis": 20,
   "coste": 60,
-  "_seccion": "HABILIDADES OFENSIVAS"
+  "_seccion": "HABILIDADES OFENSIVAS",
+  "notaCoste": "70 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Efecto místico añadido Dest de características",
   "gnosis": 20,
   "coste": 120,
-  "_seccion": "HABILIDADES OFENSIVAS"
+  "_seccion": "HABILIDADES OFENSIVAS",
+  "notaCoste": "130 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Efecto místico añadido Posesión",
   "gnosis": 25,
   "coste": 120,
-  "_seccion": "HABILIDADES OFENSIVAS"
+  "_seccion": "HABILIDADES OFENSIVAS",
+  "notaCoste": "130 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Efecto místico añadido Drenaje (Mitad)",
   "gnosis": 10,
   "coste": 20,
-  "_seccion": "HABILIDADES OFENSIVAS"
+  "_seccion": "HABILIDADES OFENSIVAS",
+  "notaCoste": "30 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Efecto místico añadido Drenaje (Completo)",
   "gnosis": 15,
   "coste": 50,
-  "_seccion": "HABILIDADES OFENSIVAS"
+  "_seccion": "HABILIDADES OFENSIVAS",
+  "notaCoste": "60 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Efecto místico añadido Drenaje (Doble)",
   "gnosis": 20,
   "coste": 100,
-  "_seccion": "HABILIDADES OFENSIVAS"
+  "_seccion": "HABILIDADES OFENSIVAS",
+  "notaCoste": "110 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Efecto místico añadido Efecto adicional",
   "gnosis": 10,
   "coste": 10,
-  "_seccion": "HABILIDADES OFENSIVAS"
+  "_seccion": "HABILIDADES OFENSIVAS",
+  "notaCoste": "20 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Efecto místico añadido Efecto condicionado",
@@ -855,19 +899,22 @@
   "nombre": "Transporte automático Puerta",
   "gnosis": 35,
   "coste": 200,
-  "_seccion": "DESPLAZAMIENTOS Y TRANSPORTES"
+  "_seccion": "DESPLAZAMIENTOS Y TRANSPORTES",
+  "notaCoste": "210 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Transporte automático Uso adicional",
   "gnosis": 10,
   "coste": 10,
-  "_seccion": "DESPLAZAMIENTOS Y TRANSPORTES"
+  "_seccion": "DESPLAZAMIENTOS Y TRANSPORTES",
+  "notaCoste": "20 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Transporte automático Sin límite",
   "gnosis": 35,
   "coste": 100,
-  "_seccion": "DESPLAZAMIENTOS Y TRANSPORTES"
+  "_seccion": "DESPLAZAMIENTOS Y TRANSPORTES",
+  "notaCoste": "110 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Transporte automático Preparación 1 turno",
@@ -1713,7 +1760,8 @@
   "nombre": "Forma Forma espectral",
   "gnosis": 20,
   "coste": 100,
-  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS",
+  "notaCoste": "25 para un No muerto, Espectro"
  },
  {
   "nombre": "Forma Forma física a voluntad",
@@ -1725,7 +1773,8 @@
   "nombre": "Forma Forma mayor",
   "gnosis": 30,
   "coste": 20,
-  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS",
+  "notaCoste": "30 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Forma Condición",
@@ -1743,13 +1792,15 @@
   "nombre": "Magia Innata Un uso adicional",
   "gnosis": 10,
   "coste": 5,
-  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS",
+  "notaCoste": "10 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Magia Innata Sin límite",
   "gnosis": 30,
   "coste": 100,
-  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS",
+  "notaCoste": "110 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Magia Innata Condicionado",
@@ -1797,13 +1848,15 @@
   "nombre": "Psíquica innata Un uso adicional",
   "gnosis": 10,
   "coste": 5,
-  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS",
+  "notaCoste": "10 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Psíquica innata Sin límite",
   "gnosis": 25,
   "coste": 80,
-  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS",
+  "notaCoste": "90 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Psíquica Innata Condicionado",
@@ -1965,169 +2018,197 @@
   "nombre": "Aura RM o RF 40",
   "gnosis": 20,
   "coste": 20,
-  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS",
+  "notaCoste": "30 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Aura RM o RF 60",
   "gnosis": 20,
   "coste": 30,
-  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS",
+  "notaCoste": "40 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Aura RM o RF 80",
   "gnosis": 25,
   "coste": 40,
-  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS",
+  "notaCoste": "50 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Aura RM o RF 100",
   "gnosis": 25,
   "coste": 50,
-  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS",
+  "notaCoste": "60 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Aura RM o RF 120",
   "gnosis": 30,
   "coste": 60,
-  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS",
+  "notaCoste": "70 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Aura RM o RF 140",
   "gnosis": 35,
   "coste": 80,
-  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS",
+  "notaCoste": "90 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Aura Miedo",
   "gnosis": 20,
   "coste": 60,
-  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS",
+  "notaCoste": "70 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Aura Terror",
   "gnosis": 30,
   "coste": 80,
-  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS",
+  "notaCoste": "90 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Aura Dolor",
   "gnosis": 20,
   "coste": 60,
-  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS",
+  "notaCoste": "70 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Aura Dolor extremo",
   "gnosis": 25,
   "coste": 80,
-  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS",
+  "notaCoste": "90 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Aura Debilidad",
   "gnosis": 20,
   "coste": 100,
-  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS",
+  "notaCoste": "110 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Aura Paralización parcial",
   "gnosis": 20,
   "coste": 80,
-  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS",
+  "notaCoste": "90 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Aura Paralización completa",
   "gnosis": 30,
   "coste": 120,
-  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS",
+  "notaCoste": "130 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Aura Ira",
   "gnosis": 20,
   "coste": 60,
-  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS",
+  "notaCoste": "70 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Aura Ceguera",
   "gnosis": 20,
   "coste": 80,
-  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS",
+  "notaCoste": "90 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Aura Sordera",
   "gnosis": 20,
   "coste": 40,
-  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS",
+  "notaCoste": "50 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Aura Mudez",
   "gnosis": 20,
   "coste": 40,
-  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS",
+  "notaCoste": "50 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Aura Fascinación",
   "gnosis": 20,
   "coste": 40,
-  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS",
+  "notaCoste": "50 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Aura Daño simple",
   "gnosis": 20,
   "coste": 60,
-  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS",
+  "notaCoste": "70 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Aura Daño doble",
   "gnosis": 30,
   "coste": 100,
-  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS",
+  "notaCoste": "110 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Aura Inconsciencia",
   "gnosis": 20,
   "coste": 120,
-  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS",
+  "notaCoste": "130 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Aura Dominio",
   "gnosis": 30,
   "coste": 140,
-  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS",
+  "notaCoste": "150 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Aura Muerte",
   "gnosis": 35,
   "coste": 160,
-  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS",
+  "notaCoste": "170 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Aura Locura",
   "gnosis": 20,
   "coste": 40,
-  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS",
+  "notaCoste": "50 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Aura Vejez",
   "gnosis": 25,
   "coste": 80,
-  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS",
+  "notaCoste": "90 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Aura Petrificación",
   "gnosis": 30,
   "coste": 140,
-  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS",
+  "notaCoste": "150 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Aura Penalización a toda acción",
   "gnosis": 20,
   "coste": 100,
-  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS",
+  "notaCoste": "110 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Aura Efecto adicional",
   "gnosis": 20,
   "coste": 10,
-  "_seccion": "HABILIDADES SOBRENATURALES INNATAS"
+  "_seccion": "HABILIDADES SOBRENATURALES INNATAS",
+  "notaCoste": "20 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Aura Condición adicional",
@@ -2223,43 +2304,50 @@
   "nombre": "Detección sobrenatural RM 100",
   "gnosis": 10,
   "coste": 10,
-  "_seccion": "PERCEPCIONES ESPECIALES"
+  "_seccion": "PERCEPCIONES ESPECIALES",
+  "notaCoste": "20 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Detección sobrenatural RM 140",
   "gnosis": 10,
   "coste": 20,
-  "_seccion": "PERCEPCIONES ESPECIALES"
+  "_seccion": "PERCEPCIONES ESPECIALES",
+  "notaCoste": "30 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Detección sobrenatural RM 180",
   "gnosis": 15,
   "coste": 40,
-  "_seccion": "PERCEPCIONES ESPECIALES"
+  "_seccion": "PERCEPCIONES ESPECIALES",
+  "notaCoste": "50 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Detección sobrenatural RM 220",
   "gnosis": 20,
   "coste": 80,
-  "_seccion": "PERCEPCIONES ESPECIALES"
+  "_seccion": "PERCEPCIONES ESPECIALES",
+  "notaCoste": "90 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Detección sobrenatural RM 260",
   "gnosis": 25,
   "coste": 120,
-  "_seccion": "PERCEPCIONES ESPECIALES"
+  "_seccion": "PERCEPCIONES ESPECIALES",
+  "notaCoste": "130 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Detección sobrenatural Detección de vida",
   "gnosis": 10,
   "coste": 20,
-  "_seccion": "PERCEPCIONES ESPECIALES"
+  "_seccion": "PERCEPCIONES ESPECIALES",
+  "notaCoste": "30 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Detección sobrenatural Algo determinado",
   "gnosis": 20,
   "coste": 30,
-  "_seccion": "PERCEPCIONES ESPECIALES"
+  "_seccion": "PERCEPCIONES ESPECIALES",
+  "notaCoste": "40 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Ataque adicional independiente",
@@ -2385,13 +2473,15 @@
   "nombre": "Reflejar ataques Elección de blanco",
   "gnosis": 15,
   "coste": 20,
-  "_seccion": "[CN] PODERES DE COMBATE"
+  "_seccion": "[CN] PODERES DE COMBATE",
+  "notaCoste": "30 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Reflejar ataques Contrataque limitado",
   "gnosis": 30,
   "coste": 40,
-  "_seccion": "[CN] PODERES DE COMBATE"
+  "_seccion": "[CN] PODERES DE COMBATE",
+  "notaCoste": "50 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Arma natural a distancia",
@@ -2403,25 +2493,29 @@
   "nombre": "Arma natural a distancia Munición avanzada",
   "gnosis": 10,
   "coste": 20,
-  "_seccion": "[CN] PODERES DE COMBATE"
+  "_seccion": "[CN] PODERES DE COMBATE",
+  "notaCoste": "30 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Arma natural a distancia Munición ilimitada",
   "gnosis": 20,
   "coste": 40,
-  "_seccion": "[CN] PODERES DE COMBATE"
+  "_seccion": "[CN] PODERES DE COMBATE",
+  "notaCoste": "50 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Arma natural a distancia Larga distancia",
   "gnosis": 10,
   "coste": 30,
-  "_seccion": "[CN] PODERES DE COMBATE"
+  "_seccion": "[CN] PODERES DE COMBATE",
+  "notaCoste": "40 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Arma natural a distancia Disparo",
   "gnosis": 10,
   "coste": 20,
-  "_seccion": "[CN] PODERES DE COMBATE"
+  "_seccion": "[CN] PODERES DE COMBATE",
+  "notaCoste": "30 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Impactos de Fuerza",
@@ -2457,37 +2551,43 @@
   "nombre": "Ataque automático condicionado Daño menor",
   "gnosis": 20,
   "coste": 40,
-  "_seccion": "[CN] PODERES DE COMBATE"
+  "_seccion": "[CN] PODERES DE COMBATE",
+  "notaCoste": "50 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Ataque automático condicionado Daño mayor",
   "gnosis": 10,
   "coste": 20,
-  "_seccion": "[CN] PODERES DE COMBATE"
+  "_seccion": "[CN] PODERES DE COMBATE",
+  "notaCoste": "30 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Ataque automático condicionado Crítico",
   "gnosis": 15,
   "coste": 30,
-  "_seccion": "[CN] PODERES DE COMBATE"
+  "_seccion": "[CN] PODERES DE COMBATE",
+  "notaCoste": "40 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Ataque automático condicionado Muerte",
   "gnosis": 5,
   "coste": 10,
-  "_seccion": "[CN] PODERES DE COMBATE"
+  "_seccion": "[CN] PODERES DE COMBATE",
+  "notaCoste": "20 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Ataque automático condicionado Compleja",
   "gnosis": 10,
   "coste": 10,
-  "_seccion": "[CN] PODERES DE COMBATE"
+  "_seccion": "[CN] PODERES DE COMBATE",
+  "notaCoste": "20 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Ataque automático condicionado Simple",
   "gnosis": 20,
   "coste": 40,
-  "_seccion": "[CN] PODERES DE COMBATE"
+  "_seccion": "[CN] PODERES DE COMBATE",
+  "notaCoste": "50 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Rotura +5",
@@ -2553,19 +2653,22 @@
   "nombre": "Acumular ataque Acumulación rápida",
   "gnosis": 15,
   "coste": 10,
-  "_seccion": "[CN] PODERES DE COMBATE"
+  "_seccion": "[CN] PODERES DE COMBATE",
+  "notaCoste": "20 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Acumular ataque Acumulación dual",
   "gnosis": 20,
   "coste": 10,
-  "_seccion": "[CN] PODERES DE COMBATE"
+  "_seccion": "[CN] PODERES DE COMBATE",
+  "notaCoste": "20 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Acumular ataque Acumulación múltiple",
   "gnosis": 30,
   "coste": 20,
-  "_seccion": "[CN] PODERES DE COMBATE"
+  "_seccion": "[CN] PODERES DE COMBATE",
+  "notaCoste": "30 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Ataques múltiples aleatorios D5",
@@ -2583,31 +2686,36 @@
   "nombre": "Ataques múltiples aleatorios Ataque -80",
   "gnosis": 20,
   "coste": 30,
-  "_seccion": "[CN] PODERES DE COMBATE"
+  "_seccion": "[CN] PODERES DE COMBATE",
+  "notaCoste": "40 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Ataques múltiples aleatorios Ataque -60",
   "gnosis": 20,
   "coste": 40,
-  "_seccion": "[CN] PODERES DE COMBATE"
+  "_seccion": "[CN] PODERES DE COMBATE",
+  "notaCoste": "50 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Ataques múltiples aleatorios Ataque -40",
   "gnosis": 20,
   "coste": 50,
-  "_seccion": "[CN] PODERES DE COMBATE"
+  "_seccion": "[CN] PODERES DE COMBATE",
+  "notaCoste": "60 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Ataques múltiples aleatorios Ataque -20",
   "gnosis": 20,
   "coste": 60,
-  "_seccion": "[CN] PODERES DE COMBATE"
+  "_seccion": "[CN] PODERES DE COMBATE",
+  "notaCoste": "70 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Ataques múltiples aleatorios Ataque pleno",
   "gnosis": 20,
   "coste": 80,
-  "_seccion": "[CN] PODERES DE COMBATE"
+  "_seccion": "[CN] PODERES DE COMBATE",
+  "notaCoste": "90 para un Elemental (Entre mundos o Ánima)"
  },
  {
   "nombre": "Carga Natural",
