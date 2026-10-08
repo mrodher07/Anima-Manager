@@ -826,41 +826,5 @@
   "FRI": 0,
   "ENE": 10,
   "_seccion": "ARM. SOBRENAT."
- },
- {
-  "armadura": "Armadura #1",
-  "requerimiento": 0,
-  "penNatural": 0,
-  "restMovimiento": 0,
-  "entereza": 0,
-  "presencia": 0,
-  "localizacion": "-",
-  "clase": "-",
-  "FIL": 0,
-  "CON": 0,
-  "PEN": 0,
-  "CAL": 0,
-  "ELE": 0,
-  "FRI": 0,
-  "ENE": 0,
-  "_seccion": "ARM. PERSONALIZADA"
- },
- {
-  "armadura": "Armadura #2",
-  "requerimiento": 0,
-  "penNatural": 0,
-  "restMovimiento": 0,
-  "entereza": 0,
-  "presencia": 0,
-  "localizacion": "-",
-  "clase": "-",
-  "FIL": 0,
-  "CON": 0,
-  "PEN": 0,
-  "CAL": 0,
-  "ELE": 0,
-  "FRI": 0,
-  "ENE": 0,
-  "_seccion": "ARM. PERSONALIZADA"
  }
 ]

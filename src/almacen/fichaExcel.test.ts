@@ -362,12 +362,32 @@ describe('la hoja de cálculo de la comunidad', () => {
       expect(sinReconocer).toContain('Perspicacia');
     });
 
-    it('avisa de que los totales no van a cuadrar todavía', async () => {
-      // Es la parte honesta: la hoja suma armadura, ventajas, Naturales y bonos de raza en
-      // la misma columna, y nada de eso se puede leer de ahí.
-      const { avisos } = await deFichaComunidad(libroComunidad(), 'x');
-      expect(avisos.join(' ')).toMatch(/no van a coincidir/);
-      expect(avisos.join(' ')).toMatch(/armadura/);
+    it('trae también las columnas Hab., Bon. y Esp. de la pestaña PDs', async () => {
+      // En la hoja son casillas que el jugador marca a mano junto a los PD: la Habilidad
+      // Natural, cuántos Bonificadores Naturales y el bono especial de cada habilidad.
+      const libro = libroComunidad().map((h) =>
+        h.nombre !== 'PDs'
+          ? h
+          : {
+              nombre: 'PDs',
+              filas: [
+                [null, null, 'Habilidades Secundarias', 'Tipo', 'Habilidad', null, null, null, null,
+                 'Coste', 'PDs', 'Base', 'Bonos', 'Cat.', 'Bon.', 'Hab.', 'Novel', 'Esp.', 'Total'],
+                [null, 'Atléticas', 'Atléticas', null, 'Acrobacias', null, null, null, null, 2, 30,
+                 15, 15, 0, 1, 1, null, null, 40],
+                [null, 'Sociales', null, null, 'Intimidar', null, null, null, null, 2, 50,
+                 25, 15, 0, null, 1, null, 15, 55],
+                [null, 'Atléticas', null, null, 'Montar', null, null, null, null, 2, null,
+                 0, 15, 0, null, null, null, 20, 5],
+              ],
+            },
+      );
+      const { personaje, avisos } = await deFichaComunidad(libro, 'x');
+      expect(personaje.habilidadesNaturales).toEqual(['Acrobacias', 'Intimidar']);
+      expect(personaje.bonosNaturales).toEqual({ Acrobacias: 1 });
+      expect(personaje.bonosEspeciales).toMatchObject({ Intimidar: 15, Montar: 20 });
+      expect(personaje.pdInvertidos).toMatchObject({ Acrobacias: 30, Intimidar: 50 });
+      expect(avisos.join(' ')).toMatch(/2 Habilidades Naturales/);
     });
   });
 

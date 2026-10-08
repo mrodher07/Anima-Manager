@@ -16,6 +16,8 @@ export type TipoDano = (typeof TIPOS_DANO)[number];
 export interface PiezaEquipada {
   armadura: string;
   calidad?: number;
+  /** Encantada: sólo entonces la calidad sube también el TA contra Energía. `Combate!S12`. */
+  encantada?: boolean;
 }
 
 /**
@@ -43,68 +45,132 @@ export const PENALIZADOR_CONOCIMIENTO: Record<string, number> = {
 };
 
 export interface ProteccionTotal {
-  /** TA final por tipo de daño; se toma el mayor de las piezas, no la suma. */
+  /**
+   * TA del cuerpo por tipo de daño. No se suman: la mejor capa, más la mitad de la segunda y
+   * la mitad de la tercera. Ficha, `Combate!AY9`.
+   */
   TA: Record<TipoDano, number>;
-  /** Requerimiento combinado: los de las piezas se suman. */
+  /** TA de la cabeza: el yelmo combinado con las capas naturales. Ficha, `Combate!AY10`. */
+  TACabeza: Record<TipoDano, number>;
+  /** Requerimiento combinado, yelmo incluido. La calidad lo rebaja. `Combate!H16`. */
   requisito: number;
-  /** Penalizador al turno y a las secundarias físicas. */
+  /** Penalizador al turno y a las secundarias físicas. `Combate!S17`. */
   penalizadorNatural: number;
-  /** Penalizador a toda acción física por no llegar al requerimiento. */
+  /**
+   * Nadar no se beneficia de que Llevar Armadura sobrepase el requerimiento: le llega el
+   * penalizador de las piezas entero. `Principal!O25`.
+   */
+  penalizadorNadar: number;
+  /** Sigilo sólo puede compensar hasta la mitad del penalizador de las piezas. `Principal!O58`. */
+  penalizadorSigilo: number;
+  /** El yelmo no da penalizador natural sino a la percepción: Advertir y Buscar. `Principal!O36`. */
+  penalizadorPercepcion: number;
+  /** Penalizador a toda acción física por no llegar al requerimiento. `Combate!S16`. */
   penalizadorAccionFisica: number;
   restriccionMovimiento: number;
   presencia: number;
 }
 
+/** El yelmo va en su casilla, aparte del cuerpo. Los del catálogo dicen «Cabeza». */
+function esYelmo(a: Armadura): boolean {
+  return a.esYelmo === true || a.localizacion === 'Cabeza';
+}
+
+/** La mejor capa más la mitad de la otra. `Combate!AY9` y `AY10`. */
+function combinarCapas(a: number, b: number): number {
+  return a > b ? a + Math.trunc(b / 2) : b + Math.trunc(a / 2);
+}
+
 /**
- * Combina las piezas de armadura. Core Exxet, cap. 8.
+ * Combina las piezas de armadura. Core Exxet, cap. 8, tal como lo cuenta la hoja de la
+ * comunidad (v8.7.0, pestaña Combate):
  *
- * - Los **TA** no se suman: se toma el **valor más alto** de cada tipo entre las piezas.
- * - Los **requerimientos**, los penalizadores naturales y las restricciones de movimiento
- *   sí se **acumulan**.
+ * - **Calidad**: cada +5 suma 1 al TA (a Energía sólo si la pieza está encantada), y rebaja
+ *   en lo mismo el requerimiento y el penalizador natural de esa pieza.
+ * - **Capas**: los TA no se suman. Del cuerpo cuenta la mejor armadura dura o la mejor no
+ *   dura —la que sea mayor— más la mitad de la otra, más la mitad de la segunda no dura.
+ *   Las capas «naturales» (Armadura natural, Armadura mística…) cuentan como no duras.
+ * - Cada armadura de más que no sea natural añade −20 al penalizador natural, hasta −40.
+ * - El **yelmo** va aparte: protege la cabeza, suma su requerimiento y penaliza la
+ *   percepción, no el resto de acciones.
  * - Si Llevar Armadura no llega al requerimiento, la diferencia penaliza **toda acción
- *   física**.
- * - El excedente de Llevar Armadura sobre el requerimiento **compensa** el penalizador
- *   natural, y por cada 50 puntos de exceso baja un punto la restricción de movimiento.
+ *   física**. Lo que lo sobrepasa compensa el penalizador natural, y cada 50 puntos de
+ *   exceso bajan un punto la restricción de movimiento.
  */
 export function combinarArmadura(
   piezas: PiezaEquipada[],
   catalogo: Armadura[],
   llevarArmadura: number,
+  capaNatural: Partial<Record<TipoDano, number>> = {},
 ): ProteccionTotal {
-  const TA = Object.fromEntries(TIPOS_DANO.map((t) => [t, 0])) as Record<TipoDano, number>;
+  const cero = () => Object.fromEntries(TIPOS_DANO.map((t) => [t, 0])) as Record<TipoDano, number>;
+  const TA = cero();
+  const TACabeza = cero();
   let requisito = 0;
-  let penNaturalBruto = 0;
+  let penPiezas = 0;
   let restBruta = 0;
   let presencia = 0;
+  let noNaturales = 0;
+  let penalizadorPercepcion = 0;
+
+  /** TA de cada capa: las piezas que lleva y, si las hay, las naturales. */
+  const duras: Record<TipoDano, number>[] = [];
+  const blandas: Record<TipoDano, number>[] = [];
+  const naturales: Record<TipoDano, number>[] = [];
+  let yelmo: Record<TipoDano, number> | null = null;
 
   for (const pieza of piezas) {
     const datos = catalogo.find((a) => a.armadura === pieza.armadura);
     if (!datos) continue;
     const calidad = pieza.calidad ?? 0;
+    const ta = cero();
     for (const t of TIPOS_DANO) {
-      const valor = (datos[t] ?? 0) + (calidad >= 5 ? 1 : 0);
-      TA[t] = Math.max(TA[t], valor);
+      ta[t] = (datos[t] ?? 0) + (t === 'ENE' && !pieza.encantada ? 0 : calidad / 5);
     }
-    requisito += datos.requerimiento ?? 0;
-    penNaturalBruto += datos.penNatural ?? 0;
-    restBruta += datos.restMovimiento ?? 0;
+    requisito += Math.max(0, (datos.requerimiento ?? 0) - calidad);
     presencia = Math.max(presencia, datos.presencia ?? 0);
+    if (esYelmo(datos)) {
+      yelmo = ta;
+      // La tercera columna de la tabla de yelmos es el penalizador a la percepción.
+      penalizadorPercepcion += datos.penNatural ?? 0;
+      continue;
+    }
+    penPiezas += Math.min(0, (datos.penNatural ?? 0) + calidad);
+    // La calidad también alivia la restricción: un punto por cada +5. Combate!R12.
+    restBruta += Math.max(0, (datos.restMovimiento ?? 0) - calidad / 5);
+    if (datos.clase === 'Natural') naturales.push(ta);
+    else {
+      noNaturales++;
+      (datos.clase === 'Dura' ? duras : blandas).push(ta);
+    }
+  }
+  if (TIPOS_DANO.some((t) => (capaNatural[t] ?? 0) > 0)) {
+    naturales.push(Object.fromEntries(TIPOS_DANO.map((t) => [t, capaNatural[t] ?? 0])) as Record<TipoDano, number>);
   }
 
-  if (piezas.length === 0) {
-    return {
-      TA, requisito: 0, penalizadorNatural: 0, penalizadorAccionFisica: 0,
-      restriccionMovimiento: 0, presencia: 0,
-    };
+  for (const t of TIPOS_DANO) {
+    const mejores = (capas: Record<TipoDano, number>[]) => capas.map((c) => c[t]).sort((a, b) => b - a);
+    const dura = mejores(duras)[0] ?? 0;
+    const [noDura1 = 0, noDura2 = 0] = mejores([...blandas, ...naturales]);
+    TA[t] = combinarCapas(dura, noDura1) + Math.trunc(noDura2 / 2);
+    const [nat1 = 0, nat2 = 0] = mejores(naturales);
+    TACabeza[t] = combinarCapas(yelmo?.[t] ?? 0, nat1) + Math.trunc(nat2 / 2);
   }
 
   const excedente = Math.max(0, llevarArmadura - requisito);
-  const penalizadorNatural = Math.min(0, excedente + penNaturalBruto);
-  const penalizadorAccionFisica = Math.min(0, llevarArmadura - requisito);
-  const restriccionMovimiento = Math.max(0, restBruta - Math.trunc(excedente / 50));
-
+  const capas = Math.max(-40, Math.min(0, -20 * noNaturales + 20));
+  const penalizadorNatural = Math.min(0, excedente + penPiezas) + capas;
   return {
-    TA, requisito, penalizadorNatural, penalizadorAccionFisica, restriccionMovimiento, presencia,
+    TA,
+    TACabeza,
+    requisito,
+    penalizadorNatural,
+    penalizadorNadar: capas + penPiezas,
+    penalizadorSigilo: capas + Math.min(penPiezas + excedente, Math.trunc(penPiezas / 2)),
+    penalizadorPercepcion,
+    penalizadorAccionFisica: requisito === 0 ? 0 : Math.min(0, llevarArmadura - requisito),
+    restriccionMovimiento: Math.max(0, restBruta - Math.trunc(excedente / 50)),
+    presencia,
   };
 }
 

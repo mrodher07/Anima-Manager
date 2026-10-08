@@ -97,6 +97,12 @@
  {
   "secundaria": "Ciencia",
   "grupo": "Intelectuales",
+  "caracteristica": "INT",
+  "requiereFormacion": true
+ },
+ {
+  "secundaria": "Ley",
+  "grupo": "Intelectuales",
   "caracteristica": "INT"
  },
  {
@@ -107,12 +113,14 @@
  {
   "secundaria": "Historia",
   "grupo": "Intelectuales",
-  "caracteristica": "INT"
+  "caracteristica": "INT",
+  "requiereFormacion": true
  },
  {
   "secundaria": "Medicina",
   "grupo": "Intelectuales",
-  "caracteristica": "INT"
+  "caracteristica": "INT",
+  "requiereFormacion": true
  },
  {
   "secundaria": "Memorizar",
@@ -132,7 +140,8 @@
  {
   "secundaria": "Tasación",
   "grupo": "Intelectuales",
-  "caracteristica": "INT"
+  "caracteristica": "INT",
+  "requiereFormacion": true
  },
  {
   "secundaria": "Táctica",
@@ -142,7 +151,8 @@
  {
   "secundaria": "Valoración Mágica",
   "grupo": "Intelectuales",
-  "caracteristica": "INT"
+  "caracteristica": "POD",
+  "requiereFormacion": true
  },
  {
   "secundaria": "Frialdad",
@@ -195,7 +205,8 @@
  {
   "secundaria": "Venenos",
   "grupo": "Subterfugio",
-  "caracteristica": "INT"
+  "caracteristica": "INT",
+  "requiereFormacion": true
  },
  {
   "secundaria": "Arte",
@@ -206,12 +217,14 @@
   "secundaria": "Baile",
   "grupo": "Creativas",
   "caracteristica": "AGI",
-  "fisica": true
+  "fisica": true,
+  "requiereFormacion": true
  },
  {
   "secundaria": "Forja",
   "grupo": "Creativas",
-  "caracteristica": "DES"
+  "caracteristica": "DES",
+  "requiereFormacion": true
  },
  {
   "secundaria": "Runas",
@@ -231,11 +244,32 @@
  {
   "secundaria": "Música",
   "grupo": "Creativas",
-  "caracteristica": "POD"
+  "caracteristica": "POD",
+  "requiereFormacion": true
  },
  {
   "secundaria": "Trucos de Manos",
   "grupo": "Creativas",
   "caracteristica": "DES"
+ },
+ {
+  "secundaria": "Caligrafía ritual",
+  "grupo": "Creativas",
+  "caracteristica": "DES"
+ },
+ {
+  "secundaria": "Orfebrería",
+  "grupo": "Creativas",
+  "caracteristica": "DES"
+ },
+ {
+  "secundaria": "Confección",
+  "grupo": "Creativas",
+  "caracteristica": "DES"
+ },
+ {
+  "secundaria": "Confección de marionetas",
+  "grupo": "Creativas",
+  "caracteristica": "POD"
  }
 ]

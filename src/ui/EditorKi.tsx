@@ -241,10 +241,10 @@ export function EditorKi({ personaje, ficha, datos, catalogo, onCambiar }: Props
                       {a.penalizadorArmadura < 0 && (
                         <em
                           style={{ color: 'var(--texto-debil)', fontSize: '0.75rem' }}
-                          title="La armadura resta 1 por cada 20 de penalizador"
+                          title="Resta 1 por cada 20 de penalizador a toda acción (cansancio…)"
                         >
                           {' '}
-                          {a.penalizadorArmadura} armadura
+                          {a.penalizadorArmadura} a toda acción
                         </em>
                       )}
                     </td>

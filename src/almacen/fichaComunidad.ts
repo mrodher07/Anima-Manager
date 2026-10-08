@@ -524,3 +524,183 @@ export async function eleccionesDe(
     sinCasar,
   };
 }
+
+// ───────────────────────────── Contenido propio de la mesa ─────────────────────────────
+
+/**
+ * Lo que la mesa ha creado en la pestaña **Personalización**: ventajas, desventajas, armas,
+ * armaduras, Ars Magnus, Habilidades Esenciales y poderes de criatura propios.
+ *
+ * No se lee de la propia pestaña —es un formulario, con cada dato en un sitio— sino de
+ * dónde la hoja lo **copia**: la pestaña oculta «Tablas», en la que cada tabla del manual
+ * termina con unas filas «personalizadas» que apuntan a ese formulario. Ahí cada dato ya
+ * está en la columna que le toca, igual que una fila del manual, y por eso sale con la
+ * misma forma que el catálogo.
+ *
+ * Las filas que la mesa no ha usado llevan el nombre de relleno de la hoja («Ventaja
+ * personalizada #1», «Arma #2»…) y se descartan.
+ */
+interface TablaPropia {
+  coleccion: 'ventajas' | 'armas' | 'armaduras' | 'arsMagnus' | 'habilidadesEsenciales' | 'poderesCriatura';
+  /** Columna del nombre, que es donde la hoja pone también el rótulo «> … PERSONALIZADAS». */
+  columna: string;
+  /** Dónde empieza el bloque: el rótulo, o la fila de antes. */
+  inicio: RegExp;
+  campos: string[];
+  relleno: RegExp;
+}
+
+const TABLAS_PROPIAS: TablaPropia[] = [
+  {
+    coleccion: 'ventajas', columna: 'E', inicio: /^>\s*ventajas personalizadas$/,
+    campos: ['nombre', 'coste', '', '', 'implementada', 'tipo'], relleno: /^ventaja personalizada #\d+$/,
+  },
+  {
+    coleccion: 'ventajas', columna: 'E', inicio: /^>\s*desventajas personalizadas$/,
+    campos: ['nombre', 'coste', '', '', 'implementada', 'tipo'], relleno: /^desventaja personalizada #\d+$/,
+  },
+  {
+    coleccion: 'armaduras', columna: 'D', inicio: /^>\s*arm\.? personalizadas?$/,
+    campos: ['armadura', 'requerimiento', 'penNatural', 'restMovimiento', 'entereza', 'presencia',
+      'localizacion', 'clase', 'FIL', 'CON', 'PEN', 'CAL', 'ELE', 'FRI', 'ENE'],
+    relleno: /^armadura #\d+$/,
+  },
+  {
+    // La tabla de armas no rotula sus personalizadas: van justo después de «Armas naturales».
+    coleccion: 'armas', columna: 'D', inicio: /^armas naturales$/,
+    campos: ['arma', 'dano', 'turno', 'fueRequerida', 'fueReq2M', 'critico1', 'critico2', 'tipoArma',
+      '', 'entereza', 'rotura', 'presencia', 'bonusParada', 'bonusEsquiva', 'cadencia', 'recarga',
+      'alcance', 'fuerza', 'especial', '', 'tamano'],
+    relleno: /^arma #\d+$/,
+  },
+  {
+    coleccion: 'arsMagnus', columna: 'E', inicio: /^>\s*ars magnus personalizados$/,
+    campos: ['nombre', 'PD', 'CM', '', 'requisitos', 'descripcion'], relleno: /^ars magnus personalizado \d+$/,
+  },
+  {
+    coleccion: 'habilidadesEsenciales', columna: 'E', inicio: /^>\s*h\.?\s*esenciales\s*personalizadas$/,
+    campos: ['nombre', 'gnosis', 'coste'], relleno: /^habilidad #\d+$/,
+  },
+  {
+    coleccion: 'poderesCriatura', columna: 'O', inicio: /^>\s*poderes personalizados$/,
+    campos: ['nombre', 'gnosis', 'coste'], relleno: /^poder #\d+$/,
+  },
+];
+
+/** Índice de columna a partir de su letra: «A» → 0, «AA» → 26. */
+function indiceColumna(letras: string): number {
+  let n = 0;
+  for (const c of letras) n = n * 26 + (c.charCodeAt(0) - 64);
+  return n - 1;
+}
+
+export type ContenidoPropio = Partial<Record<TablaPropia['coleccion'] | 'yelmos', Record<string, unknown>[]>>;
+
+export function contenidoPropioDe(hojas: Hoja[]): ContenidoPropio {
+  const tablas = buscarHoja(hojas, 'Tablas');
+  const salida: ContenidoPropio = {};
+  if (!tablas) return salida;
+
+  for (const t of TABLAS_PROPIAS) {
+    const col = indiceColumna(t.columna);
+    const inicio = tablas.filas.findIndex((f) => t.inicio.test(normalizar(texto(f?.[col]))));
+    if (inicio < 0) continue;
+    for (let i = inicio + 1; i < Math.min(tablas.filas.length, inicio + 15); i++) {
+      const fila = tablas.filas[i] ?? [];
+      const nombre = texto(fila[col]);
+      // Se para en el rótulo del bloque siguiente o en el primer hueco.
+      if (!nombre || nombre.startsWith('>')) break;
+      if (t.relleno.test(normalizar(nombre))) continue;
+
+      const entrada: Record<string, unknown> = {};
+      t.campos.forEach((campo, j) => {
+        if (!campo) return;
+        const v = fila[col + j];
+        if (v === null || v === undefined || v === '' || v === '-') return;
+        entrada[campo] = typeof v === 'string' ? v.trim() : v;
+      });
+      let coleccion: keyof ContenidoPropio = t.coleccion;
+      if (t.coleccion === 'ventajas') {
+        // La hoja usa el mismo hueco para las dos: con coste negativo es una desventaja.
+        const coste = numero(entrada.coste as Celda);
+        const esDesventaja = /desventajas/.test(t.inicio.source);
+        if (esDesventaja !== coste < 0) continue;
+        entrada.coste = coste;
+        entrada.esDesventaja = esDesventaja;
+        entrada.tipo ??= 'Comunes';
+      }
+      // Una armadura de cabeza es un yelmo: en la aplicación van en su propia lista.
+      if (t.coleccion === 'armaduras' && normalizar(String(entrada.localizacion ?? '')) === 'cabeza') {
+        const { armadura, ...resto } = entrada;
+        Object.assign(entrada, { yelmo: armadura, ...resto });
+        delete entrada.armadura;
+        coleccion = 'yelmos';
+      }
+      (salida[coleccion] ??= []).push(entrada);
+    }
+  }
+  return salida;
+}
+
+/** Cuántas cosas propias trae, para decirlo en los avisos. */
+export function resumenPropio(propio: ContenidoPropio): string[] {
+  const nombres: Record<string, [string, string]> = {
+    ventajas: ['ventaja o desventaja', 'ventajas y desventajas'],
+    armas: ['arma', 'armas'],
+    armaduras: ['armadura', 'armaduras'],
+    yelmos: ['yelmo', 'yelmos'],
+    arsMagnus: ['Ars Magnus', 'Ars Magnus'],
+    habilidadesEsenciales: ['Habilidad Esencial', 'Habilidades Esenciales'],
+    poderesCriatura: ['poder de criatura', 'poderes de criatura'],
+  };
+  return Object.entries(propio)
+    .filter(([, l]) => (l?.length ?? 0) > 0)
+    .map(([c, l]) => `${l!.length} ${l!.length === 1 ? nombres[c][0] : nombres[c][1]}`);
+}
+
+// ───────────────────────────── Ventajas en Secundarias ─────────────────────────────
+
+/** Cómo rotula la pestaña Personalización cada ventaja que va a una habilidad elegida. */
+const ROTULOS_MATERIA: Record<string, string> = {
+  'apto en m. (1)': 'Apto en una materia (1)',
+  'apto en m. (2)': 'Apto en una materia (2)',
+  'apr. innato (1)': 'Aprendizaje innato (1)',
+  'apr. innato (2)': 'Aprendizaje innato (2)',
+  'apr. innato (3)': 'Aprendizaje innato (3)',
+};
+
+/**
+ * Las habilidades elegidas para Apto en una materia y Aprendizaje innato. En la hoja van
+ * en «Ventajas en Secundarias», tres casillas por ventaja bajo «Habilidad 1/2/3», y con los
+ * nombres cortos de la hoja («P. Fuerza», «Tactica»); `nombreDe` los traduce.
+ */
+export function eleccionesVentajasDe(
+  hojas: Hoja[],
+  nombreDe: (escrito: string) => string | null,
+): Record<string, string[]> {
+  const hoja = buscarHoja(hojas, 'Personalización');
+  const salida: Record<string, string[]> = {};
+  if (!hoja) return salida;
+  let columnas: number[] = [];
+  for (const fila of hoja.filas) {
+    if (!fila) continue;
+    const habilidades = fila
+      .map((v, j) => (/^habilidad [123]$/.test(normalizar(texto(v))) ? j : -1))
+      .filter((j) => j >= 0);
+    if (habilidades.length === 3) {
+      columnas = habilidades;
+      continue;
+    }
+    if (columnas.length === 0) continue;
+    const j = fila.findIndex((v) => normalizar(texto(v)) in ROTULOS_MATERIA);
+    if (j < 0) continue;
+    const ventaja = ROTULOS_MATERIA[normalizar(texto(fila[j]))];
+    const elegidas = columnas
+      .map((c) => texto(fila[c]))
+      .filter((v) => v && v !== '0')
+      .map((v) => nombreDe(v))
+      .filter((v): v is string => Boolean(v));
+    if (elegidas.length > 0) salida[ventaja] = elegidas;
+  }
+  return salida;
+}

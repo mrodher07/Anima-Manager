@@ -3,13 +3,13 @@
  "conjuntos": {
   "razas": 21,
   "categorias": 22,
-  "ventajas": 292,
-  "habilidadesEsenciales": 198,
+  "ventajas": 284,
+  "habilidadesEsenciales": 193,
   "armas": 170,
-  "armaduras": 48,
+  "armaduras": 46,
   "yelmos": 7,
   "artesMarciales": 88,
-  "arsMagnus": 57,
+  "arsMagnus": 54,
   "habilidadesKi": 75,
   "efectosTecnica": 555,
   "tiposEfectoTecnica": 65,
@@ -19,10 +19,10 @@
   "conjuros": 640,
   "poderesPsiquicos": 125,
   "disciplinasPsiquicas": 13,
-  "poderesCriatura": 494,
-  "elan": 185,
-  "tablasBase": 17,
+  "poderesCriatura": 484,
+  "elan": 169,
+  "tablasBase": 19,
   "objetos": 339,
-  "secundarias": 46
+  "secundarias": 51
  }
 }

@@ -3,7 +3,7 @@ import { nivelTotalDe, type Personaje } from '../motor/personaje';
 import { almacen, analizarImportacion, exportarPersonaje, exportarTodo, importar } from '../almacen/almacen';
 import { exportarAExcel, importarDeExcel } from '../almacen/fichaExcel';
 import { ErrorExcel } from '../almacen/xlsx';
-import type { Catalogo } from '../datos/paquetes';
+import type { Catalogo, Personalizados } from '../datos/paquetes';
 
 /**
  * Un aviso de la interfaz. Los puntos van sueltos y no pegados en un párrafo: importar una
@@ -33,6 +33,11 @@ interface Props {
   campana?: { id: string; nombre: string } | null;
   /** Las campañas que conoce este aparato: una ficha que ya sea de una de ellas, se queda. */
   campanasConocidas?: string[];
+  /**
+   * Lo que trae la pestaña Personalización de una hoja de la comunidad, para el «Contenido
+   * propio» de la campaña. Devuelve qué se ha hecho con ello, para contarlo.
+   */
+  onContenidoPropio?: (propio: Personalizados) => Promise<string>;
 }
 
 function bajar(nombre: string, blob: Blob) {
@@ -67,6 +72,7 @@ export function VistaPersonajes({
   onRecargar,
   campana = null,
   campanasConocidas = [],
+  onContenidoPropio,
 }: Props) {
   const enCampana = campana ? ` en «${campana.nombre}»` : '';
   const archivo = useRef<HTMLInputElement>(null);
@@ -108,6 +114,8 @@ export function VistaPersonajes({
       const r = await importarDeExcel(await f.arrayBuffer(), nuevoId(), catalogo);
       // A la campaña activa: es en la que se va a jugar, y es la que mira el máster.
       r.personaje.campanaId = campana?.id ?? null;
+      // Lo propio de la mesa va antes que la ficha, para que al abrirla ya esté en el catálogo.
+      const propio = r.personalizados && onContenidoPropio ? await onContenidoPropio(r.personalizados) : null;
       await almacen.guardarPersonaje(r.personaje);
       onRecargar();
       // Cuando viene de la hoja técnica no hay nada que explicar; en los otros casos los
@@ -116,7 +124,7 @@ export function VistaPersonajes({
         r.origen === 'datos'
           ? `Importada «${r.personaje.nombre}»${enCampana}: ficha completa, tal cual se exportó.`
           : `Importada «${r.personaje.nombre}»${enCampana}.`;
-      setMensaje({ tipo: 'aviso', texto: cabecera, puntos: r.avisos });
+      setMensaje({ tipo: 'aviso', texto: cabecera, puntos: propio ? [...r.avisos, propio] : r.avisos });
     } catch (e) {
       setMensaje({
         tipo: 'error',

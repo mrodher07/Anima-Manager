@@ -38,7 +38,7 @@ const datos: DatosCalculo = {
   // Como `cargarDatosCalculo`: los yelmos son piezas de armadura con otra columna de nombre.
   armaduras: [
     ...(armadurasJson as Armadura[]),
-    ...(yelmosJson as Yelmo[]).map(({ yelmo, ...resto }) => ({ ...resto, armadura: yelmo }) as Armadura),
+    ...(yelmosJson as Yelmo[]).map(({ yelmo, ...resto }) => ({ ...resto, armadura: yelmo, esYelmo: true }) as Armadura),
   ],
   objetos: objetosJson as Objeto[],
   secundarias: (secundariasJson as Secundaria[]).map(secundariaDeCatalogo),
@@ -86,21 +86,18 @@ const secundaria = (nombre: string) =>
  * qué falta para poder cerrarlo. Si alguno empieza a cuadrar, esta prueba avisa para que se
  * quite de aquí.
  */
-const YELMO =
-  'La hoja no suma el −10 de la Capucha de Malla al penalizador natural (−20 y no −30). ' +
-  'Hasta saber si es regla del manual, la aplicación los suma.';
 const SIN_DATOS = 'El JSON sólo guarda el total: faltan los PD y los bonos especiales del jugador.';
-const SIN_TABLA = 'Falta la tabla del manual para calcularlo.';
-const OTRO_MANUAL = 'Secundaria que no es del Core Exxet: la hoja la trae de otro manual.';
+/**
+ * Con lo que hay anotado sale 15, y la v8.7.0 de la hoja, rellenada igual, también da 15
+ * (`data/pruebas/hoja-v870.json`, escenario «meirmeister»). La diferencia con el 5 de la
+ * hoja original son justo los 10 de una Habilidad Natural: o Atletismo no lo era, o el
+ * jugador tenía algo más anotado que no está en la transcripción.
+ */
+const NATURAL_DUDOSA = 'Atletismo: la original dice 5 y con estos datos salen 15, también en la v8.7.0.';
 export const PENDIENTES: Record<string, string> = {
-  'Penalizador natural': YELMO, 'Turno (sin arma)': YELMO, 'Hacha turno': YELMO,
-  '· Acrobacias': YELMO, '· Nadar': YELMO, '· Trepar': YELMO, '· Saltar': YELMO,
-  '· Ocultarse': YELMO, '· Sigilo': YELMO,
-  CV: SIN_TABLA, 'Regeneración': SIN_TABLA, Movimiento: SIN_TABLA,
+  '· Atletismo': NATURAL_DUDOSA,
   '· Estilo': SIN_DATOS, '· Advertir': SIN_DATOS, '· Buscar': SIN_DATOS, '· Memorizar': SIN_DATOS,
   '· Frialdad': SIN_DATOS, '· Proezas de Fuerza': SIN_DATOS, '· Disfraz': SIN_DATOS, '· Arte': SIN_DATOS,
-  '· Ley': OTRO_MANUAL, '· Caligrafía ritual': OTRO_MANUAL, '· Orfebrería': OTRO_MANUAL,
-  '· Confección': OTRO_MANUAL, '· Confección de marionetas': OTRO_MANUAL,
 };
 
 /** Cada número de la hoja frente al de la aplicación. */

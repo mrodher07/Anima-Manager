@@ -131,18 +131,28 @@ export const REGLAS: readonly DefinicionRegla[] = [
     nombre: 'Habilidad secundaria',
     grupo: 'Desarrollo',
     formula:
-      'truncar(pd / coste) + bonoCaracteristica + bonoCategoria + mejoraNatural' +
-      ' + (pd == 0 ? penalizadorNoDesarrollada : 0) + penalizadorNatural',
+      'truncar(pd / coste)' +
+      ' + min(bonoCaracteristica * (1 + bonosNaturales) + conocimientoTotal + 10 * habilidadNatural, 100)' +
+      ' + bonoCategoria + especial' +
+      ' + (truncar(pd / coste) < 5 && conocimientoTotal == 0 ? penalizadorNoDesarrollada : 0)' +
+      ' + penalizadorNatural + modificadorTodaAccion',
     variables: {
       pd: 'PD invertidos en la habilidad',
-      coste: 'Coste de desarrollo según la categoría',
+      coste: 'Coste de desarrollo: el de la categoría menos lo que abaraten las ventajas (entre 1 y 3)',
       bonoCaracteristica: 'Bono de la característica asociada',
-      bonoCategoria: 'Bono innato de la categoría a esa habilidad',
-      mejoraNatural: 'Habilidades Naturales (+10) y Bonificador Natural',
-      penalizadorNoDesarrollada: 'Penalizador por no invertir PD (−30 por defecto)',
-      penalizadorNatural: 'Penalizador de la armadura, si aplica',
+      bonosNaturales: 'Bonificadores Naturales puestos en esta habilidad (cada uno suma otra vez el bono)',
+      habilidadNatural: '1 si es Habilidad Natural (+10)',
+      conocimientoTotal: '10 con Conocimiento de todas las materias, si no 0',
+      bonoCategoria: 'Bono de la categoría, más lo que den por nivel los Aprendizajes innatos',
+      especial: 'Bonos especiales: la columna «Esp.» y los de ventajas como Sentidos agudos',
+      mejoraNatural: 'Lo que suman bonos naturales, habilidad natural y especiales (fórmulas antiguas)',
+      penalizadorNoDesarrollada: 'Penalizador con menos de 5 de base (−30 por defecto)',
+      penalizadorNatural: 'Penalizador de la armadura y del yelmo, si aplica',
+      modificadorTodaAccion: 'Modificador a toda acción: cansancio, Endeble y lo anotado a mano',
     },
-    referencia: 'Core Exxet, cap. 4. Verificado Trepar: 0+15−30−20 = −35.',
+    referencia:
+      'Core Exxet, cap. 4. Ficha v8.7.0, PDs!AA129: el −30 cae con menos de 5 de base y ' +
+      'el bono, con su tope de 100, en PDs!U129.',
     desactivable: false,
   },
   {
@@ -238,9 +248,15 @@ export const REGLAS: readonly DefinicionRegla[] = [
     clave: 'nivelMagia',
     nombre: 'Nivel de Magia',
     grupo: 'Sobrenatural',
-    formula: 'truncar(pd / coste) * 5',
-    variables: { pd: 'PD invertidos', coste: 'Coste de desarrollo' },
-    referencia: 'Ficha, PDs!V97.',
+    formula: 'truncar(pd / coste) * 5 + nivelInnato + porNivel * nivel',
+    variables: {
+      pd: 'PD invertidos',
+      coste: 'Coste de desarrollo',
+      nivelInnato: 'El que da la Inteligencia en la tabla de Nivel de Magia',
+      porNivel: 'Lo que suman las ventajas por nivel (Aprendizaje mágico gradual: 5)',
+      nivel: 'Nivel del personaje',
+    },
+    referencia: 'Ficha, PDs!V97, W97 (VLOOKUP de la INT en Tabla_NivelMagia) y X97.',
     desactivable: false,
   },
   {
@@ -322,8 +338,8 @@ export const REGLAS: readonly DefinicionRegla[] = [
       acumulacionComprada: 'Acumulación adquirida con PD',
       especial: 'Bonos especiales (raza, ventajas, personalización)',
       penalizadorArmadura:
-        'La armadura resta 1 de Acumulación por cada 20 de penalizador a toda acción (el de ' +
-        'no llegar al requerimiento con Llevar Armadura; el natural no cuenta)',
+        'Resta 1 de Acumulación por cada 20 de modificador a toda acción (cansancio, Endeble…; ' +
+        'la armadura no cuenta)',
     },
     referencia:
       'Ficha, PDs!AA36: =MAX(0, base + comprada + especial + IF(Mod_ATA<0, MIN(0, ' +

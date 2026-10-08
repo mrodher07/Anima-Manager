@@ -823,6 +823,321 @@
    800
   ]
  ],
+ "regeneracion": {
+  "porCON": [
+   [
+    1,
+    0
+   ],
+   [
+    2,
+    0
+   ],
+   [
+    3,
+    1
+   ],
+   [
+    4,
+    1
+   ],
+   [
+    5,
+    1
+   ],
+   [
+    6,
+    1
+   ],
+   [
+    7,
+    1
+   ],
+   [
+    8,
+    2
+   ],
+   [
+    9,
+    2
+   ],
+   [
+    10,
+    3
+   ],
+   [
+    11,
+    4
+   ],
+   [
+    12,
+    5
+   ],
+   [
+    13,
+    6
+   ],
+   [
+    14,
+    7
+   ],
+   [
+    15,
+    8
+   ],
+   [
+    16,
+    9
+   ],
+   [
+    17,
+    10
+   ],
+   [
+    18,
+    11
+   ],
+   [
+    19,
+    12
+   ],
+   [
+    20,
+    12
+   ]
+  ],
+  "niveles": [
+   {
+    "nivel": 0,
+    "cantidad": null,
+    "unidad": "Ninguna",
+    "reduccion": "Ninguna",
+    "especial": null
+   },
+   {
+    "nivel": 1,
+    "cantidad": 10,
+    "unidad": "PV / día",
+    "reduccion": "-5 al día",
+    "especial": null
+   },
+   {
+    "nivel": 2,
+    "cantidad": 20,
+    "unidad": "PV / día",
+    "reduccion": "-5 al día",
+    "especial": null
+   },
+   {
+    "nivel": 3,
+    "cantidad": 30,
+    "unidad": "PV / día",
+    "reduccion": "-5 al día",
+    "especial": null
+   },
+   {
+    "nivel": 4,
+    "cantidad": 40,
+    "unidad": "PV / día",
+    "reduccion": "-10 al día",
+    "especial": null
+   },
+   {
+    "nivel": 5,
+    "cantidad": 50,
+    "unidad": "PV / día *",
+    "reduccion": "-10 al día",
+    "especial": "Sin cicatrices."
+   },
+   {
+    "nivel": 6,
+    "cantidad": 75,
+    "unidad": "PV / día *",
+    "reduccion": "-15 al día",
+    "especial": "Sin desangramiento. Sin cicatrices."
+   },
+   {
+    "nivel": 7,
+    "cantidad": 100,
+    "unidad": "PV / día *",
+    "reduccion": "-20 al día",
+    "especial": "Miembros limpios unidos se recuperan en 1 semana. Sin cicatrices. Sin desangramiento."
+   },
+   {
+    "nivel": 8,
+    "cantidad": 250,
+    "unidad": "PV / día *",
+    "reduccion": "-25 al día",
+    "especial": "Miembros limpios unidos se recuperan en 5 días. Sin cicatrices. Sin desangramiento."
+   },
+   {
+    "nivel": 9,
+    "cantidad": 500,
+    "unidad": "PV / día *",
+    "reduccion": "-30 al día",
+    "especial": "Miembros limpios unidos se recuperan en 3 días. Supera entre la vida y la muerte. Sin cicatrices. Sin desangramiento."
+   },
+   {
+    "nivel": 10,
+    "cantidad": 1,
+    "unidad": "PV / min *",
+    "reduccion": "-40 al día",
+    "especial": "Miembros limpios unidos se recuperan en 1 día. Supera entre la vida y la muerte. Sin cicatrices. Sin desangramiento."
+   },
+   {
+    "nivel": 11,
+    "cantidad": 2,
+    "unidad": "PV / min *",
+    "reduccion": "-50 al día",
+    "especial": "Miembros unidos se recuperan en 1 semana, limpios en 1 día. Supera entre la vida y la muerte. Sin cicatrices. Sin desangramiento."
+   },
+   {
+    "nivel": 12,
+    "cantidad": 5,
+    "unidad": "PV / min *",
+    "reduccion": "-5 por hora",
+    "especial": "Miembros unidos se recuperan en 3 días, limpios en 1 día. Supera entre la vida y la muerte. Sin cicatrices. Sin desangramiento."
+   },
+   {
+    "nivel": 13,
+    "cantidad": 10,
+    "unidad": "PV / min *",
+    "reduccion": "-10 por hora",
+    "especial": "Miembros unidos se recuperan en 1 día. Supera entre la vida y la muerte. Sin cicatrices. Sin desangramiento."
+   },
+   {
+    "nivel": 14,
+    "cantidad": 1,
+    "unidad": "PV / turno *",
+    "reduccion": "-15 por hora",
+    "especial": "Miembros unidos se recuperan en horas. Supera entre la vida y la muerte. Sin cicatrices. Sin desangramiento."
+   },
+   {
+    "nivel": 15,
+    "cantidad": 5,
+    "unidad": "PV / turno *",
+    "reduccion": "-20 por hora",
+    "especial": "Salvo cabeza, miembros crecen en 1 semana, unidos en 1 asalto. Supera entre la vida y la muerte. Sin cicatrices. Sin desangramiento."
+   },
+   {
+    "nivel": 16,
+    "cantidad": 10,
+    "unidad": "PV / turno *",
+    "reduccion": "-10 por minuto",
+    "especial": "Salvo cabeza, miembros crecen en 1 día, unidos en 1 asalto. Supera entre la vida y la muerte. Sin cicatrices. Sin desangramiento."
+   },
+   {
+    "nivel": 17,
+    "cantidad": 25,
+    "unidad": "PV / turno *",
+    "reduccion": "-10 por asalto",
+    "especial": "Salvo cabeza, miembros crecen en minutos, unidos en 1 asalto. Supera entre la vida y la muerte. Sin cicatrices. Sin desangramiento."
+   },
+   {
+    "nivel": 18,
+    "cantidad": 50,
+    "unidad": "PV / turno *",
+    "reduccion": "-25 por asalto",
+    "especial": "Salvo cabeza, miembros crecen en asaltos, unidos en 1 asalto. Supera entre la vida y la muerte. Sin cicatrices. Sin desangramiento."
+   },
+   {
+    "nivel": 19,
+    "cantidad": 100,
+    "unidad": "PV / turno *",
+    "reduccion": "Todos",
+    "especial": "Los miembros crecen en 1 asalto. Supera entre la vida y la muerte. Sin cicatrices. Sin desangramiento."
+   },
+   {
+    "nivel": 20,
+    "cantidad": 250,
+    "unidad": "PV / turno *",
+    "reduccion": "Todos",
+    "especial": "Inmune a críticos físicos. Los miembros crecen en 1 asalto. Supera entre la vida y la muerte. Sin cicatrices. Sin desangramiento."
+   }
+  ]
+ },
+ "movimiento": [
+  [
+   1,
+   "< 1 m / asalto"
+  ],
+  [
+   2,
+   "4 m / asalto"
+  ],
+  [
+   3,
+   "8 m / asalto"
+  ],
+  [
+   4,
+   "15 m / asalto"
+  ],
+  [
+   5,
+   "20 m / asalto"
+  ],
+  [
+   6,
+   "22 m / asalto"
+  ],
+  [
+   7,
+   "25 m / asalto"
+  ],
+  [
+   8,
+   "28 m / asalto"
+  ],
+  [
+   9,
+   "32 m / asalto"
+  ],
+  [
+   10,
+   "35 m / asalto"
+  ],
+  [
+   11,
+   "40 m / asalto"
+  ],
+  [
+   12,
+   "50 m / asalto"
+  ],
+  [
+   13,
+   "80 m / asalto"
+  ],
+  [
+   14,
+   "150 m / asalto"
+  ],
+  [
+   15,
+   "250 m / asalto"
+  ],
+  [
+   16,
+   "500 m / asalto"
+  ],
+  [
+   17,
+   "1 km / asalto"
+  ],
+  [
+   18,
+   "5 km / asalto"
+  ],
+  [
+   19,
+   "25 km / asalto"
+  ],
+  [
+   20,
+   "Esp*"
+  ]
+ ],
  "experienciaNecesaria": {
   "nota": "fila = nivel actual; columnas = ajuste de nivel 0..10",
   "filas": [

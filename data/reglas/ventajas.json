@@ -1025,34 +1025,6 @@
   "esDesventaja": false
  },
  {
-  "nombre": "Ventaja personalizada #1",
-  "coste": 0,
-  "tipo": "Comunes",
-  "_seccion": "VENTAJAS PERSONALIZADAS",
-  "esDesventaja": false
- },
- {
-  "nombre": "Ventaja personalizada #2",
-  "coste": 0,
-  "tipo": "Comunes",
-  "_seccion": "VENTAJAS PERSONALIZADAS",
-  "esDesventaja": false
- },
- {
-  "nombre": "Ventaja personalizada #3",
-  "coste": 0,
-  "tipo": "Comunes",
-  "_seccion": "VENTAJAS PERSONALIZADAS",
-  "esDesventaja": false
- },
- {
-  "nombre": "Ventaja personalizada #4",
-  "coste": 0,
-  "tipo": "Comunes",
-  "_seccion": "VENTAJAS PERSONALIZADAS",
-  "esDesventaja": false
- },
- {
   "nombre": "Rec. superior de magia (1)",
   "coste": 1,
   "implementada": 1,
@@ -2167,33 +2139,5 @@
   "tipo": "Trasfondo",
   "_seccion": "DESVENTAJAS TRASFONDO",
   "esDesventaja": true
- },
- {
-  "nombre": "Desventaja Personalizada #1",
-  "coste": 0,
-  "tipo": "Comunes",
-  "_seccion": "DESVENTAJAS PERSONALIZADAS",
-  "esDesventaja": false
- },
- {
-  "nombre": "Desventaja Personalizada #2",
-  "coste": 0,
-  "tipo": "Comunes",
-  "_seccion": "DESVENTAJAS PERSONALIZADAS",
-  "esDesventaja": false
- },
- {
-  "nombre": "Desventaja Personalizada #3",
-  "coste": 0,
-  "tipo": "Comunes",
-  "_seccion": "DESVENTAJAS PERSONALIZADAS",
-  "esDesventaja": false
- },
- {
-  "nombre": "Desventaja Personalizada #4",
-  "coste": 0,
-  "tipo": "Comunes",
-  "_seccion": "DESVENTAJAS PERSONALIZADAS",
-  "esDesventaja": false
  }
 ]

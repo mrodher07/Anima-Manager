@@ -515,6 +515,7 @@ export function VistaMesa({
             </p>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
               {Object.entries(ficha.secundarias)
+                .filter(([nombre]) => !ficha.secundariasSinUso.includes(nombre))
                 .sort(([, a], [, b]) => b.valor - a.valor)
                 .slice(0, 12)
                 .map(([nombre, v]) => (

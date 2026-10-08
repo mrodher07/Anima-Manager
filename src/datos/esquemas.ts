@@ -232,15 +232,18 @@ export const ESQUEMAS: EsquemaColeccion[] = [
     plural: 'Habilidades secundarias',
     clave: 'secundaria',
     ayuda:
-      'Las 46 del manual vienen puestas, y aquí podéis añadir las vuestras. El grupo dice ' +
+      'Las 51 de la hoja vienen puestas, y aquí podéis añadir las vuestras. El grupo dice ' +
       'de qué columna de coste de la categoría tira, y la característica, qué bono suma. ' +
-      'Marca «física» si tiene que sufrir el penalizador de la armadura, como Trepar o Sigilo.',
+      'Marca «física» si tiene que sufrir el penalizador de la armadura, como Trepar o Sigilo, ' +
+      'y «pide formación» si sin desarrollarla no se puede ni intentar, como Medicina.',
     campos: [
       txt('secundaria', 'Nombre'),
       { clave: 'grupo', etiqueta: 'Grupo', tipo: 'opcion', opciones: [...GRUPOS_SECUNDARIAS] },
       { clave: 'caracteristica', etiqueta: 'Característica', tipo: 'opcion',
         opciones: [...CARACTERISTICAS] },
       { clave: 'fisica', etiqueta: 'Física (sufre la armadura)', tipo: 'opcion',
+        opciones: ['', 'Sí'] },
+      { clave: 'requiereFormacion', etiqueta: 'Pide formación («—» sin desarrollar)', tipo: 'opcion',
         opciones: ['', 'Sí'] },
     ],
   },

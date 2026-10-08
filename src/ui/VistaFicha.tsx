@@ -209,6 +209,7 @@ export function VistaFicha({ personaje, datos, reglamento }: Props) {
           <Recurso etiqueta="Proyección Mágica" clase="zeon" valor={ficha.proyeccionMagica.valor} />
           <Recurso etiqueta="Proyección Psíquica" valor={ficha.proyeccionPsiquica.valor} />
           <Recurso etiqueta="Potencial Psíquico" valor={ficha.potencialPsiquico.valor} />
+          <Recurso etiqueta="Cargas Vitales (CV)" valor={ficha.cv.valor} />
         </div>
       </section>
 
@@ -524,6 +525,19 @@ export function VistaFicha({ personaje, datos, reglamento }: Props) {
                   <td className="num destacado">{ficha.combate.turnoSinArma}</td>
                 </tr>
                 <tr><td>Tamaño</td><td className="num">{ficha.combate.tamano}</td></tr>
+                <tr>
+                  <td>Movimiento</td>
+                  <td className="num" title={ficha.movimientoTexto}>
+                    {ficha.movimiento.valor}
+                    {ficha.movimientoTexto && (
+                      <span style={{ color: 'var(--texto-debil)', fontSize: '0.75rem' }}> · {ficha.movimientoTexto}</span>
+                    )}
+                  </td>
+                </tr>
+                <tr>
+                  <td>Regeneración</td>
+                  <td className="num" title={ficha.regeneracionTexto}>{ficha.regeneracion.valor}</td>
+                </tr>
               </tbody>
             </table>
           </div>
@@ -541,10 +555,20 @@ export function VistaFicha({ personaje, datos, reglamento }: Props) {
                     <td key={i} className="num destacado">{v}</td>
                   ))}
                 </tr>
+                {Object.values(ficha.combate.proteccion.TACabeza).some((v) => v > 0) && (
+                  <tr title="Cabeza: el yelmo y las capas naturales">
+                    {Object.values(ficha.combate.proteccion.TACabeza).map((v, i) => (
+                      <td key={i} className="num">{v}</td>
+                    ))}
+                  </tr>
+                )}
               </tbody>
             </table>
             <p style={{ color: 'var(--texto-debil)', fontSize: '0.78rem', marginBottom: 0 }}>
               Absorción = 20 + 10 × TA del tipo de daño recibido.
+              {Object.values(ficha.combate.proteccion.TACabeza).some((v) => v > 0) &&
+                ' La segunda fila es la cabeza, con el yelmo.'}
+              {ficha.regeneracionTexto && <> Regeneración: {ficha.regeneracionTexto}.</>}
             </p>
           </div>
         </div>
@@ -591,10 +615,14 @@ export function VistaFicha({ personaje, datos, reglamento }: Props) {
                           {s.nombre}{' '}
                           <span style={{ color: 'var(--texto-debil)', fontSize: '0.72rem' }}>{s.caracteristica}</span>
                         </td>
-                        <td className={`num ${v.valor < 0 ? 'negativo' : ''}`}>
-                          {v.valor > 0 ? `+${v.valor}` : v.valor}
-                          {v.manual && <span title="Valor puesto a mano" style={{ color: 'var(--oro)' }}> ✎</span>}
-                        </td>
+                        {ficha.secundariasSinUso.includes(s.nombre) && !v.manual ? (
+                          <td className="num" title="Sin formación no se puede usar">—</td>
+                        ) : (
+                          <td className={`num ${v.valor < 0 ? 'negativo' : ''}`}>
+                            {v.valor > 0 ? `+${v.valor}` : v.valor}
+                            {v.manual && <span title="Valor puesto a mano" style={{ color: 'var(--oro)' }}> ✎</span>}
+                          </td>
+                        )}
                       </tr>
                     );
                   })}
