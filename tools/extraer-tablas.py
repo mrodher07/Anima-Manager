@@ -92,7 +92,14 @@ for v in ventajas:
     v.pop('_adq', None)
     v.pop('_pts', None)
     v['esDesventaja'] = isinstance(v.get('coste'), int) and v['coste'] < 0
-data['ventajas'] = ventajas
+# Las casillas «personalizadas» de la hoja (Ventaja personalizada #1…) no son contenido:
+# son huecos que la mesa rellena en la pestaña Personalización. En la aplicación eso va a
+# «Contenido propio», y la importación trae lo que la mesa haya escrito en ellos.
+def sin_huecos(filas):
+    return [f for f in filas if 'PERSONALIZ' not in str(f.get('_seccion', '')).upper()]
+
+
+data['ventajas'] = sin_huecos(ventajas)
 
 # --- Habilidades esenciales (Ventajas/Desventajas esenciales) ---------
 data['habilidadesEsenciales'] = table(
@@ -101,6 +108,7 @@ data['habilidadesEsenciales'] = table(
 for h in data['habilidadesEsenciales']:
     h.pop('_adq', None)
     h.pop('_bono', None)
+data['habilidadesEsenciales'] = sin_huecos(data['habilidadesEsenciales'])
 
 # --- Armas y escudos ---------------------------------------------------
 ARMA_H = ['arma', 'dano', 'turno', 'fueRequerida', 'fueReq2M', 'critico1',
@@ -120,11 +128,13 @@ data['armaduras'] = table('Tablas', '$D$580:$R$632', [
     'armadura', 'requerimiento', 'penNatural', 'restMovimiento', 'entereza',
     'presencia', 'localizacion', 'clase',
     'FIL', 'CON', 'PEN', 'CAL', 'ELE', 'FRI', 'ENE'])
+data['armaduras'] = [a for a in data['armaduras'] if not str(a['armadura']).startswith('Armadura #')]
 
 data['yelmos'] = table('Tablas', '$V$619:$AI$628', [
     'yelmo', 'requerimiento', 'penNatural', 'entereza', 'presencia',
     'localizacion', 'clase',
     'FIL', 'CON', 'PEN', 'CAL', 'ELE', 'FRI', 'ENE'])
+data['yelmos'] = [y for y in data['yelmos'] if not str(y['yelmo']).startswith('Armadura #')]
 
 # --- Artes marciales ---------------------------------------------------
 data['artesMarciales'] = table('Tablas', '$D$850:$Z$939', [
@@ -141,6 +151,7 @@ data['arsMagnus'] = table('Tablas', '$E$985:$J$1046', [
     'nombre', 'PD', 'CM', '_adq', 'requisitos', 'descripcion'])
 for a in data['arsMagnus']:
     a.pop('_adq', None)
+data['arsMagnus'] = sin_huecos(data['arsMagnus'])
 
 # --- Habilidades del Ki y del Némesis ----------------------------------
 # La hoja «Ki» dibuja los dos árboles con caracteres de línea (├ └ │). El nombre de
@@ -383,6 +394,7 @@ data['poderesCriatura'] = table('Tablas', '$O$1249:$R$1755',
                                 ['nombre', 'gnosis', 'coste', '_adq'])
 for p in data['poderesCriatura']:
     p.pop('_adq', None)
+data['poderesCriatura'] = sin_huecos(data['poderesCriatura'])
 
 # --- Elan --------------------------------------------------------------
 elan, patron = [], None
@@ -395,7 +407,7 @@ for row in cells('Tablas', '$E$1764:$L$1963'):
         continue
     elan.append({'patron': patron, 'nombre': v[0], 'elan': v[2],
                  'requisito': v[3], 'coste': v[4], 'descripcion': v[7]})
-data['elan'] = elan
+data['elan'] = [e for e in elan if e['patron'] != 'Elan Personalizado']
 
 # --- Tablas numéricas base --------------------------------------------
 base = {}
@@ -438,6 +450,20 @@ base['cordura'] = [[clean(c.value) for c in r] for r in cells('Tablas', '$AA$27:
 base['fama'] = [[clean(c.value) for c in r] for r in cells('Tablas', '$AE$27:$AG$34')]
 base['idiomas'] = [clean(r[0].value) for r in cells('Tablas', '$AI$27:$AJ$46') if clean(r[0].value)]
 base['nivelMagia'] = [[clean(c.value) for c in r] for r in cells('Tablas', '$P$1065:$Q$1084')]
+# Tabla_Regen: la CON da el nivel de Regeneración (C:D) y cada nivel, lo que se recupera
+# (I: cantidad, F: unidad, G: reducción de penalizadores, H: especial). Principal!J11.
+base['regeneracion'] = {
+    'porCON': [[clean(r[0].value), clean(r[1].value)]
+               for r in cells('Tablas', '$C$38:$D$57') if clean(r[0].value) is not None],
+    # Las filas van por CON, así que un mismo nivel sale varias veces: basta la primera.
+    'niveles': list({
+        clean(r[1].value): {'nivel': clean(r[1].value), 'cantidad': clean(r[6].value),
+                            'unidad': clean(r[3].value), 'reduccion': clean(r[4].value),
+                            'especial': clean(r[5].value)}
+        for r in reversed(cells('Tablas', '$C$38:$I$65'))}.values())[::-1],
+}
+# Tabla_TipoMovimiento: el Tipo de Movimiento y lo que avanza por asalto. Principal!K17.
+base['movimiento'] = [[clean(r[0].value), clean(r[1].value)] for r in cells('Tablas', '$J$38:$K$57')]
 base['experienciaNecesaria'] = {
     'nota': 'fila = nivel actual; columnas = ajuste de nivel 0..10',
     'filas': [[clean(c.value) for c in r] for r in cells('Tablas', '$P$69:$AA$99')]}

@@ -155,10 +155,14 @@ describe('reglamento oficial contra la ficha de Meirmeister', () => {
       pd: 0,
       coste: 2,
       bonoCaracteristica: bonoPorValor(10), // AGI 10 → +15
+      bonosNaturales: 0,
+      habilidadNatural: 0,
+      conocimientoTotal: 0,
       bonoCategoria: 0,
-      mejoraNatural: 0,
+      especial: 0,
       penalizadorNoDesarrollada: -30,
       penalizadorNatural: -20,
+      modificadorTodaAccion: 0,
     });
     expect(trepar).toBe(-35);
   });
@@ -168,12 +172,27 @@ describe('reglamento oficial contra la ficha de Meirmeister', () => {
       pd: 30,
       coste: 2,
       bonoCaracteristica: bonoPorValor(10),
+      bonosNaturales: 0,
+      habilidadNatural: 1, // una de las Habilidades Naturales
+      conocimientoTotal: 0,
       bonoCategoria: 0,
-      mejoraNatural: 10, // una de las cinco Habilidades Naturales
+      especial: 0,
       penalizadorNoDesarrollada: -30,
       penalizadorNatural: 0,
+      modificadorTodaAccion: 0,
     });
     expect(acrobacias).toBe(40);
+  });
+
+  it('con menos de 5 de base sigue sin desarrollar: 6 PD a coste 2 dan 3 y cae el −30', () => {
+    // Ficha v8.7.0, PDs!AA129: IF(AND(T129<5, sin Conocimiento de todas las materias), -30).
+    const ctx = {
+      pd: 6, coste: 2, bonoCaracteristica: 10, bonosNaturales: 0, habilidadNatural: 0,
+      bonoCategoria: 0, especial: 0, penalizadorNoDesarrollada: -30, penalizadorNatural: 0,
+      modificadorTodaAccion: 0,
+    };
+    expect(REGLAMENTO_OFICIAL.aplicar('habilidadSecundaria', { ...ctx, conocimientoTotal: 0 })).toBe(-17);
+    expect(REGLAMENTO_OFICIAL.aplicar('habilidadSecundaria', { ...ctx, conocimientoTotal: 10 })).toBe(23);
   });
 
   it('límites de PD de Meirmeister: 360 en combate, 300 en mística y psíquica', () => {

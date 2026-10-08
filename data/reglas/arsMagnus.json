@@ -360,30 +360,6 @@
   "_seccion": "ARMAS IMPOSIBLES"
  },
  {
-  "nombre": "Ars Magnus Personalizado 1",
-  "PD": 0,
-  "CM": 0,
-  "requisitos": "-",
-  "descripcion": "Ars Magnus Personalizado 1",
-  "_seccion": "ARS MAGNUS PERSONALIZADOS"
- },
- {
-  "nombre": "Ars Magnus Personalizado 2",
-  "PD": 0,
-  "CM": 0,
-  "requisitos": "-",
-  "descripcion": "Ars Magnus Personalizado 2",
-  "_seccion": "ARS MAGNUS PERSONALIZADOS"
- },
- {
-  "nombre": "Ars Magnus Personalizado 3",
-  "PD": 0,
-  "CM": 0,
-  "requisitos": "-",
-  "descripcion": "Ars Magnus Personalizado 3",
-  "_seccion": "ARS MAGNUS PERSONALIZADOS"
- },
- {
   "nombre": "Atrapar",
   "PD": 20,
   "CM": 10,

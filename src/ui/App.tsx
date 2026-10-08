@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { usaCombate, usaMapa } from '../almacen/almacen';
-import { Catalogo, PERSONALIZADOS_VACIOS, paquetePersonalizado } from '../datos/paquetes';
+import { Catalogo, PERSONALIZADOS_VACIOS, mezclarPersonalizados, paquetePersonalizado } from '../datos/paquetes';
+import { resumenPropio, type ContenidoPropio } from '../almacen/fichaComunidad';
 import { VistaPersonajes } from './VistaPersonajes';
 import { VistaBestiario } from './VistaBestiario';
 import { VistaArcana } from './VistaArcana';
@@ -243,6 +244,27 @@ export function App() {
               <VistaPersonajes
                 campana={campana ? { id: campana.id, nombre: campana.nombre } : null}
                 campanasConocidas={todasLasCampanas.map((c) => c.id)}
+                onContenidoPropio={async (nuevo) => {
+                  const cuantos = resumenPropio(nuevo as ContenidoPropio).join(', ');
+                  if (!campana) {
+                    return `El contenido propio de tu hoja (${cuantos}) no se ha guardado porque no hay ` +
+                      'campaña activa: en la aplicación vive en el «Contenido propio» de una campaña. ' +
+                      'Activa una tuya y vuelve a importar la hoja.';
+                  }
+                  if (!soyElMaster) {
+                    return `El contenido propio de tu hoja (${cuantos}) no se ha añadido a «${campana.nombre}» ` +
+                      'porque esa campaña es de tu máster: sólo él puede tocar su «Contenido propio». ' +
+                      'Pásale tu hoja para que la importe él, o pídele que lo cree a mano.';
+                  }
+                  const { personalizados, anadidos } = mezclarPersonalizados(
+                    campana.personalizados ?? PERSONALIZADOS_VACIOS,
+                    nuevo,
+                  );
+                  if (anadidos === 0) return `El contenido propio de tu hoja ya estaba en «${campana.nombre}».`;
+                  await guardarCampana({ ...campana, personalizados });
+                  return `Añadido al «Contenido propio» de «${campana.nombre}»: ${cuantos}. ` +
+                    'Lo que ya existía con el mismo nombre se ha dejado como estaba.';
+                }}
                 personajes={personajes}
                 catalogo={catalogo}
                 cargando={cargando}

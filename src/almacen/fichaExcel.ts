@@ -18,12 +18,15 @@
 import { crearLibro, leerLibro, ErrorExcel, type Celda, type Hoja } from './xlsx';
 import {
   bolsaDe,
+  contenidoPropioDe,
   experienciaDe,
   eleccionesDe,
+  eleccionesVentajasDe,
   fichaCivilDe,
+  resumenPropio,
   trasfondoDe,
 } from './fichaComunidad';
-import type { Catalogo } from '../datos/paquetes';
+import type { Catalogo, Personalizados } from '../datos/paquetes';
 import {
   CARACTERISTICAS,
   SECUNDARIAS,
@@ -103,6 +106,18 @@ function hojasLegibles(p: Personaje, ficha?: FichaCalculada | null): Hoja[] {
     ['Bonificador Natural'],
     ['Física', p.bonificadorNatural?.fisica ?? ''],
     ['Anímica', p.bonificadorNatural?.animica ?? ''],
+    [],
+    // Como la columna «Bon.» de la hoja: cuántos Bonificadores Naturales lleva cada una.
+    ['Bonificadores Naturales', 'Veces'],
+    ...Object.entries(p.bonosNaturales ?? {})
+      .filter(([, n]) => n > 0)
+      .map(([h, n]): Celda[] => [h, n]),
+    [],
+    // Como «Ventajas en Secundarias» de la pestaña Personalización.
+    ['Ventajas en secundarias', 'Habilidad 1', 'Habilidad 2', 'Habilidad 3'],
+    ...Object.entries(p.eleccionesVentajas ?? {})
+      .filter(([, hs]) => hs.length > 0)
+      .map(([v, hs]): Celda[] => [v, ...hs.slice(0, 3)]),
   ];
 
   const listas: Celda[][] = [
@@ -203,6 +218,11 @@ export interface ResultadoImportacion {
   origen: 'datos' | 'hojas' | 'comunidad';
   /** Lo que no se ha podido recuperar. Vacío cuando viene de la hoja técnica. */
   avisos: string[];
+  /**
+   * Lo que la mesa creó en la pestaña Personalización de su hoja: ventajas, armas,
+   * armaduras… Va al «Contenido propio» de la campaña, que es donde vive en la aplicación.
+   */
+  personalizados?: Personalizados;
 }
 
 function buscarHoja(hojas: Hoja[], nombre: string): Hoja | undefined {
@@ -294,6 +314,23 @@ function deHojasLegibles(hojas: Hoja[], id: string): ResultadoImportacion {
       fisica: valorDe(hojaHab, 'Física') || undefined,
       animica: valorDe(hojaHab, 'Anímica') || undefined,
     };
+    const bonos: Record<string, number> = {};
+    for (const fila of bloque(hojaHab, 'Bonificadores Naturales')) {
+      const h = texto(fila[0]);
+      const n = numero(fila[1]);
+      if (h && n > 0) bonos[h] = n;
+    }
+    if (Object.keys(bonos).length > 0) {
+      p.bonosNaturales = bonos;
+      p.bonificadorNatural = {};
+    }
+    const elecciones: Record<string, string[]> = {};
+    for (const fila of bloque(hojaHab, 'Ventajas en secundarias')) {
+      const v = texto(fila[0]);
+      const hs = [fila[1], fila[2], fila[3]].map(texto).filter(Boolean);
+      if (v && hs.length > 0) elecciones[v] = hs;
+    }
+    if (Object.keys(elecciones).length > 0) p.eleccionesVentajas = elecciones;
   }
 
   const hojaListas = buscarHoja(hojas, 'Ventajas y poderes');
@@ -497,11 +534,23 @@ export function pdInvertidosDe(
    * manual.
    */
   lista: readonly { nombre: string }[] = SECUNDARIAS,
-): { pd: Record<string, number>; sinReconocer: string[] } {
+): {
+  pd: Record<string, number>;
+  sinReconocer: string[];
+  /** La columna «Esp.»: lo que el jugador anota a mano en cada habilidad. */
+  especiales: Record<string, number>;
+  /** La columna «Hab.»: las Habilidades Naturales. */
+  naturales: string[];
+  /** La columna «Bon.»: cuántos Bonificadores Naturales lleva cada una. */
+  bonosNaturales: Record<string, number>;
+} {
   const pd: Record<string, number> = {};
   const sinReconocer: string[] = [];
+  const especiales: Record<string, number> = {};
+  const naturales: string[] = [];
+  const bonosNaturales: Record<string, number> = {};
   const hoja = buscarHoja(hojas, 'PDs');
-  if (!hoja) return { pd, sinReconocer };
+  if (!hoja) return { pd, sinReconocer, especiales, naturales, bonosNaturales };
 
   const secundarias = new Set(lista.map((s) => s.nombre.toLowerCase()));
   const porNombre = new Map(lista.map((s) => [s.nombre.toLowerCase(), s.nombre]));
@@ -519,6 +568,12 @@ export function pdInvertidosDe(
       .map((v, j) => (typeof v === 'string' && v.trim().toLowerCase() === 'pds' ? j : -1))
       .filter((j) => j >= 0);
     if (colsPD.length === 0) continue;
+    const columna = (rotulo: string) =>
+      fila.findIndex((v) => typeof v === 'string' && v.trim().toLowerCase() === rotulo);
+    const colEsp = columna('esp.');
+    const colHab = columna('hab.');
+    const colBon = columna('bon.');
+    const numeroEn = (f: Celda[], j: number) => (j >= 0 && typeof f[j] === 'number' ? (f[j] as number) : 0);
 
     // El Ki tiene dos bloques con las **mismas** etiquetas —AGI, CON, DES…— uno de Puntos
     // y otro de Acumulación. Lo que los distingue es el rótulo del grupo, que la hoja pone
@@ -543,14 +598,23 @@ export function pdInvertidosDe(
         (t, j) => t + (typeof f[j] === 'number' ? (f[j] as number) : 0),
         0,
       );
-      if (puntos <= 0) continue;
+      const esp = numeroEn(f, colEsp);
+      const hab = numeroEn(f, colHab);
+      const bon = numeroEn(f, colBon);
+      if (puntos <= 0 && !esp && hab <= 0 && bon <= 0) continue;
 
       const clave = claveDe(nombre, grupo, secundarias, porNombre);
-      if (clave) pd[clave] = (pd[clave] ?? 0) + puntos;
-      else if (!sinReconocer.includes(nombre)) sinReconocer.push(nombre);
+      if (!clave) {
+        if (puntos > 0 && !sinReconocer.includes(nombre)) sinReconocer.push(nombre);
+        continue;
+      }
+      if (puntos > 0) pd[clave] = (pd[clave] ?? 0) + puntos;
+      if (esp) especiales[clave] = (especiales[clave] ?? 0) + esp;
+      if (hab > 0 && !naturales.includes(clave)) naturales.push(clave);
+      if (bon > 0) bonosNaturales[clave] = bon;
     }
   }
-  return { pd, sinReconocer };
+  return { pd, sinReconocer, especiales, naturales, bonosNaturales };
 }
 
 /**
@@ -591,6 +655,7 @@ const CLAVE_DESDE_HOJA: Record<string, string> = {
   'res. dolor': 'Resistencia al Dolor',
   'v. mágica': 'Valoración Mágica',
   't. manos': 'Trucos de Manos',
+  'conf. marionetas': 'Confección de marionetas',
   tactica: 'Táctica',
   // Combate, Ki y místicas.
   'h. ataque': 'HAtaque',
@@ -652,22 +717,40 @@ export async function deFichaComunidad(
   const secundariasMesa = catalogo
     ? (await catalogo.obtener('secundarias')).map(secundariaDeCatalogo)
     : SECUNDARIAS;
-  const { pd, sinReconocer } = pdInvertidosDe(
-    hojas,
-    secundariasMesa.length > 0 ? secundariasMesa : SECUNDARIAS,
-  );
+  const listaMesa = secundariasMesa.length > 0 ? secundariasMesa : SECUNDARIAS;
+  const { pd, sinReconocer, especiales, naturales, bonosNaturales } = pdInvertidosDe(hojas, listaMesa);
   const claves = Object.keys(pd);
   if (claves.length > 0) {
     p.pdInvertidos = { ...p.pdInvertidos, ...pd };
     const total = Object.values(pd).reduce((t, n) => t + n, 0);
-    avisos.push(
-      `Se han traído los PD de ${claves.length} habilidades, ${total} PD en total. ` +
-        'Los valores finales no van a coincidir todavía con los de tu hoja, y no es un ' +
-        'error: en esa columna la hoja suma además la armadura que llevas, las ventajas, ' +
-        'las Habilidades Naturales y los bonos de tu raza. Nada de eso se puede leer de ahí, ' +
-        'así que hay que ponerlo a mano; en cuanto esté, los números cuadran.',
-    );
+    avisos.push(`Se han traído los PD de ${claves.length} habilidades, ${total} PD en total.`);
   }
+  // Las columnas «Hab.», «Bon.» y «Esp.» de la pestaña PDs: lo que el jugador marca a mano.
+  if (naturales.length > 0) p.habilidadesNaturales = naturales;
+  if (Object.keys(bonosNaturales).length > 0) p.bonosNaturales = bonosNaturales;
+  if (Object.keys(especiales).length > 0) p.bonosEspeciales = { ...p.bonosEspeciales, ...especiales };
+  const marcadas = [
+    [naturales.length, 'Habilidad Natural', 'Habilidades Naturales'],
+    [Object.keys(bonosNaturales).length, 'habilidad con Bonificador Natural', 'habilidades con Bonificador Natural'],
+    [Object.keys(especiales).length, 'bono especial', 'bonos especiales'],
+  ] as const;
+  const resumenMarcadas = marcadas
+    .filter(([n]) => n > 0)
+    .map(([n, uno, varios]) => `${n} ${n === 1 ? uno : varios}`);
+  if (resumenMarcadas.length > 0) avisos.push(`De la pestaña PDs: ${resumenMarcadas.join(', ')}.`);
+
+  // Ventajas en Secundarias, de la pestaña Personalización: a qué habilidad va cada una.
+  const porNombre = new Map(listaMesa.map((s) => [s.nombre.toLowerCase(), s.nombre]));
+  const secundariasMesaSet = new Set(porNombre.keys());
+  const elecciones = eleccionesVentajasDe(hojas, (escrito) => {
+    const clave = claveDe(escrito.trim(), '', secundariasMesaSet, porNombre);
+    return clave && secundariasMesaSet.has(clave.toLowerCase()) ? clave : null;
+  });
+  if (Object.keys(elecciones).length > 0) p.eleccionesVentajas = elecciones;
+
+  // Y lo que la mesa haya creado ella misma.
+  const propio = contenidoPropioDe(hojas);
+  const resumenDePropio = resumenPropio(propio);
   if (sinReconocer.length > 0) {
     avisos.push(
       `Estas filas de la pestaña PDs tenían puntos pero no corresponden a nada que la ` +
@@ -687,9 +770,16 @@ export async function deFichaComunidad(
   const experiencia = experienciaDe(hojas);
   if (experiencia !== undefined) p.experiencia = experiencia;
 
-  // Y todo lo que en la hoja se elige de un desplegable, que se empareja con el catálogo.
+  // Y todo lo que en la hoja se elige de un desplegable, que se empareja con el catálogo
+  // y con lo propio de la mesa, que para esta hoja es como si fuera del manual.
   if (catalogo) {
-    const e = await eleccionesDe(hojas, catalogo);
+    const conPropio = {
+      obtener: async (coleccion: string) => [
+        ...(await catalogo.obtener(coleccion as never)),
+        ...((propio as Record<string, unknown[]>)[coleccion] ?? []),
+      ],
+    } as unknown as Catalogo;
+    const e = await eleccionesDe(hojas, conPropio);
     p.ventajas = e.ventajas;
     p.desventajas = e.desventajas;
     if (e.legados.length > 0) p.legados = e.legados;
@@ -724,6 +814,9 @@ export async function deFichaComunidad(
           'propio» y vuelve a importar.',
       );
     }
+    for (const v of Object.keys(p.eleccionesVentajas ?? {})) {
+      if (!p.ventajas.includes(v)) delete p.eleccionesVentajas![v];
+    }
   } else {
     avisos.push(
       'Las ventajas, los poderes y el equipo no se han traído porque no había catálogo ' +
@@ -731,11 +824,22 @@ export async function deFichaComunidad(
     );
   }
 
+  if (resumenDePropio.length > 0) {
+    avisos.push(
+      `Tu hoja trae contenido propio de tu mesa (pestaña Personalización): ` +
+        `${resumenDePropio.join(', ')}.`,
+    );
+  }
   avisos.push(
     'Lo que la hoja calcula por su cuenta no se copia: la aplicación lo recalcula. Y hay ' +
       'cosas que esa hoja no guarda de forma que se puedan leer —las Técnicas de Ki, la ' +
       'Metamagia y el Sheele—, así que ésas sí hay que rehacerlas a mano.',
   );
 
-  return { personaje: p, origen: 'comunidad', avisos };
+  return {
+    personaje: p,
+    origen: 'comunidad',
+    avisos,
+    ...(resumenDePropio.length > 0 ? { personalizados: propio as Personalizados } : {}),
+  };
 }

@@ -62,7 +62,8 @@ describe('combinación de armaduras', () => {
 
   it('sin armadura no hay penalizadores', () => {
     expect(combinarArmadura([], armaduras, 50)).toEqual({
-      TA: sinTA, requisito: 0, penalizadorNatural: 0, penalizadorAccionFisica: 0,
+      TA: sinTA, TACabeza: sinTA, requisito: 0, penalizadorNatural: 0, penalizadorNadar: 0,
+      penalizadorSigilo: 0, penalizadorPercepcion: 0, penalizadorAccionFisica: 0,
       restriccionMovimiento: 0, presencia: 0,
     });
   });
@@ -75,6 +76,25 @@ describe('combinación de armaduras', () => {
     );
     // Piezas da FIL 4; la cota de cuero da 1. Se queda el 4, no 5.
     expect(combinada.TA.FIL).toBe(4);
+  });
+
+  it('dos armaduras: la mejor más la mitad de la otra, y −20 de penalizador por la de más', () => {
+    // Ficha v8.7.0, Combate!AY9 y S17. Mallas es blanda (FIL 4), Peto dura (FIL 4).
+    const una = combinarArmadura([{ armadura: 'Mallas' }], armaduras, 200);
+    const dos = combinarArmadura([{ armadura: 'Mallas' }, { armadura: 'Peto' }], armaduras, 200);
+    expect(dos.TA.FIL).toBe(4 + 2);
+    expect(una.penalizadorNatural).toBe(0);
+    expect(dos.penalizadorNatural).toBe(-20);
+  });
+
+  it('la calidad sube el TA y rebaja requerimiento, penalizador y restricción', () => {
+    // Combate!I12, BF18, BG18 y R12: +1 de TA, −5 de requerimiento y de penalizador por cada +5.
+    const normal = combinarArmadura([{ armadura: 'Mallas' }], armaduras, 0);
+    const buena = combinarArmadura([{ armadura: 'Mallas', calidad: 10 }], armaduras, 0);
+    expect(buena.TA.FIL).toBe(normal.TA.FIL + 2);
+    expect(buena.TA.ENE).toBe(normal.TA.ENE); // a Energía sólo si está encantada
+    expect(buena.requisito).toBe(normal.requisito - 10);
+    expect(buena.restriccionMovimiento).toBe(Math.max(0, normal.restriccionMovimiento - 2));
   });
 
   it('suma los requerimientos de las piezas combinadas', () => {

@@ -133,19 +133,33 @@ Verificación: `9 + 3 (Jayán) = 12` ✔.
 > **Corrección importante:** el cansancio **no** sale de la 3.ª columna de la tabla
 > `valoresBase`, como supuse en el primer análisis. Sale directamente de CON.
 
-## Regeneración
+## Regeneración ✔
 
 ```
-Regeneración = MIN(20, tablaRegen[CON] + modificadorRaza)
+Regeneración = MIN(20, tablaRegen[CON] + modificadorRaza + 2/4/6 por Regeneración (1/2/3))
 ```
 
-Con tope de 18 al sumar bonos temporales. `Principal!J11`, `AS19`, `AO19`.
+`Principal!J11`, `AO19`, `AQ19`. La tabla (`Tabla_Regen`, `Tablas!C38:I65`) da además lo que
+se recupera a cada nivel; Lenta curación lo deja a la mitad (`Tablas!E40`).
+
+## Movimiento ✔
+
+```
+Tipo de Movimiento = ENTRE(1, 10, AGI + 2 × Desplazamiento rápido − restricción)
+```
+
+`Principal!AQ20`, `Tablas!U58`. La restricción es la de la armadura (la calidad la rebaja un
+punto por cada +5), +2 si la carga pasa del peso natural y +3 más si pasa del máximo
+(`Principal!L16`). Por encima de 10 sólo con Inhumanidad (13) o Zen (20).
 
 ## Tamaño
 
 ```
-Tamaño = MIN(tope, CON + FUE − (1 si Sexo = Mujer) + modificadorRaza)
+Tamaño = MIN(tope, CON + FUE − (1 si Sexo = Mujer) + modificadorRaza + Tamaño no natural)
 ```
+
+Tamaño no natural: el mayor de los positivos más el menor de los negativos, entre −5 y +5
+(`Tablas!K319`, `Principal!AQ21`).
 
 Tope: 22 normal, 24 para Jayán (y Turak con "Descomunales"), 45 para Criatura.
 `Principal!K6`, `AO21`.
@@ -193,23 +207,42 @@ turnoNatural = turnoBase + Bono_AGI + Bono_DES + bonoTurnoCategoría + penalizad
 
 **Acciones por turno**: `VLOOKUP(Bono_DES + Bono_AGI, Tabla_NumAcciones)` (`Principal!J32`).
 
-## Habilidades secundarias 📖
+## Habilidades secundarias 📖 ✔ (contrastado con la hoja v8.7.0)
 
 ```
-total = (PD ÷ coste) + Bono_Característica + bonoCategoría
-      + habilidadesNaturales + bonificadorNatural
-      − 30 si no se ha invertido ningún PD
-      + penalizadorNatural (armadura)
+coste  = entre 1 y 3: el menor del propio de la habilidad y el de su campo,
+         − 1 por Apto en campo, − 1 / − 2 por Apto en una materia (1) / (2)     PDs!J129, AL129
+base   = TRUNC(PD ÷ coste)                                                    PDs!T129
+bono   = MIN(Bono_Car × (1 + Bonificadores Naturales) + 10 × Habilidad Natural
+             + 10 si Conocimiento de todas las materias, 100)                 PDs!U129
+cat.   = bono de categoría × niveles + (10/20/30 por Aprendizaje innato (1/2/3)
+         en esa habilidad + 5/10 por Apr. innato (2)/(3) del campo) × nivel   PDs!V129, Tablas!X281
+total  = base + bono + cat. + Esp. + bonos de ventaja (Sentidos agudos…)
+         − 30 si base < 5 y no hay Conocimiento de todas las materias
+         + Mod_ATA (+ Mod_Fisico en las siete Atléticas)                        PDs!AA129
+         + penalizador de la armadura                                          Principal!O22:Q73
 ```
 
-- **−30 por habilidad sin desarrollar.** Explica los valores negativos de la ficha.
-- **Habilidades Naturales**: elegir 5 secundarias distintas y sumar **+10** a cada una.
-  Se repite en cada subida de nivel.
-- **Bonificador Natural**: repetir el bono de **una característica física** y el de **una
-  anímica** sobre dos secundarias ligadas a esos atributos. Sólo si el bono es positivo.
+- **El −30 no es «sin PD», es «menos de 5 de base»**: 6 PD a coste 2 dan 3 y siguen
+  llevando el −30.
+- **Nueve habilidades no se pueden ni intentar sin formación**: Ciencia, Historia,
+  Medicina, Tasación, Valoración Mágica, Venenos, Baile, Forja y Música. La hoja enseña
+  «-» (`PDs!AA147`) y la aplicación «—».
+- **Valoración Mágica es de POD**, no de INT (`PDs!H157`).
+- La hoja trae **51 secundarias**: las 46 del Core Exxet más Ley, Caligrafía ritual,
+  Orfebrería, Confección y Confección de marionetas.
+- **Bonificadores Naturales**: uno físico y uno anímico **por nivel** (dos con Bono natural
+  incrementado, ninguno con Sin bonificador natural; `PDs!AA185`). Cada uno suma otra vez el
+  bono de la característica, y se pueden apilar en la misma habilidad.
+- **Habilidades Naturales**: cinco por nivel (`PDs!AA186`), +10 cada una.
+- **Armadura**: el penalizador natural cae sobre Acrobacias, Atletismo, Trepar, Saltar,
+  Proezas de Fuerza, Ocultarse y Baile. Nadar lo recibe **sin** la compensación del exceso
+  de Llevar Armadura (`Principal!O25`) y Sigilo sólo puede compensar hasta la mitad
+  (`O58`). El yelmo no da penalizador natural sino a la **percepción**: Advertir y Buscar
+  (`O36`, `O37`).
 
 Verificación Trepar (Meirmeister): `0 (sin PD) + 15 (Bono_AGI) − 30 (sin desarrollar)
-− 20 (pen. armadura) = −35` ✔ (la ficha muestra −35).
+− 20 (pen. armadura) = −35` ✔.
 
 Verificación Acrobacias: `15 (30 PD ÷ coste 2) + 15 (Bono_AGI) + 10 (habilidad natural)
 = 40` ✔.
@@ -642,10 +675,11 @@ se llamaba `acumulacionPorPOD` por error; ahora es `acumulacionKi`):
 Una característica a **0 da 0**, no 1: `IF(AGI=0, 0, VLOOKUP(...))`.
 
 `PDs!AA36` da el total: `MAX(0, base + comprada + especial + IF(Mod_ATA<0, MIN(0,
-TRUNC(Mod_ATA/20,0)), 0))`. `Mod_ATA` es el modificador **a toda acción**: el que sale
-cuando Llevar Armadura no llega al requerimiento. **El penalizador natural no cuenta.** Lo
-confirma la propia hoja de Meirmeister: −20 de penalizador natural y acumulación entera, 9,
-porque sus 50 de Llevar Armadura cubren justo los 50 del requerimiento.
+TRUNC(Mod_ATA/20,0)), 0))`. `Mod_ATA` (`Combate!AD15`) es el modificador **a toda acción**:
+cansancio, Endeble y lo anotado a mano. **La armadura no cuenta**, ni el penalizador natural
+ni el de no llegar al requerimiento (que es `Mod_Fisico`, otra casilla). Antes la aplicación
+restaba este último: lo desmintió la v8.7.0 con un personaje de 35 por debajo del
+requerimiento y la acumulación entera.
 
 Si el personaje hace cualquier otra cosa durante el asalto, la Acumulación se reduce **a la
 mitad redondeando hacia arriba** (`CEILING`, `Ki!E12`). La ventaja **Acumulación plena** lo

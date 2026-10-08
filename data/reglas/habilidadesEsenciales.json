@@ -1288,35 +1288,5 @@
   "gnosis": 0,
   "coste": -20,
   "_seccion": "[CN] DESVENTAJAS ESENCIALES"
- },
- {
-  "nombre": "Habilidad #1",
-  "gnosis": 0,
-  "coste": 0,
-  "_seccion": "H.ESENCIALESPERSONALIZADAS"
- },
- {
-  "nombre": "Habilidad #2",
-  "gnosis": 0,
-  "coste": 0,
-  "_seccion": "H.ESENCIALESPERSONALIZADAS"
- },
- {
-  "nombre": "Habilidad #3",
-  "gnosis": 0,
-  "coste": 0,
-  "_seccion": "H.ESENCIALESPERSONALIZADAS"
- },
- {
-  "nombre": "Habilidad #4",
-  "gnosis": 0,
-  "coste": 0,
-  "_seccion": "H.ESENCIALESPERSONALIZADAS"
- },
- {
-  "nombre": "Habilidad #5",
-  "gnosis": 0,
-  "coste": 0,
-  "_seccion": "H.ESENCIALESPERSONALIZADAS"
  }
 ]

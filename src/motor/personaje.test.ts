@@ -512,9 +512,10 @@ describe('efectos de ventajas y desventajas', () => {
     expect(ficha.combate.llevarArmadura.valor).toBe(50); // 45 + 5×1
   });
 
-  it('«Armadura natural» suma al TA de la armadura llevada', () => {
+  it('«Armadura natural» es una capa más: la armadura llevada y la mitad de la natural', () => {
+    // Ficha v8.7.0, Combate!AY9: la mejor capa, más la mitad de la segunda. 4 + 2/2 = 5.
     const ficha = conVentajas(['Armadura natural']);
-    expect(ficha.combate.proteccion.TA.FIL).toBe(6); // 4 de la armadura + 2
+    expect(ficha.combate.proteccion.TA.FIL).toBe(5);
     expect(ficha.combate.proteccion.TA.ENE).toBe(0); // no la cubre
   });
 
@@ -523,18 +524,28 @@ describe('efectos de ventajas y desventajas', () => {
     const ficha = conVentajas(['Sentido del combate: Ataque']);
     expect(ficha.combate.HAtaque.valor - base.combate.HAtaque.valor).toBe(5);
 
+    // A nivel 6 el Paladín Oscuro ya lleva 30 de categoría (5 por nivel), y la ventaja
+    // añade otros 30: el tope conjunto de 50 se come 10. Ficha, PDs!X25.
     const p = meirmeister();
     p.ventajas = ['Sentido del combate: Ataque'];
-    p.categorias = [{ categoria: 'Paladín Oscuro (RD)', nivel: 20 }]; // tope conjunto 50
+    p.categorias = [{ categoria: 'Paladín Oscuro (RD)', nivel: 6 }];
     const alto = calcular(p, datos('Jayán', 'Paladín Oscuro (RD)'));
     const sinVentaja = { ...p, ventajas: [] };
     const altoBase = calcular(sinVentaja, datos('Jayán', 'Paladín Oscuro (RD)'));
-    expect(alto.combate.HAtaque.valor - altoBase.combate.HAtaque.valor).toBe(45); // 5 → 50
+    expect(alto.combate.HAtaque.valor - altoBase.combate.HAtaque.valor).toBe(20); // 30 → 50
   });
 
-  it('«Sin bonificador natural» anula las Habilidades Naturales', () => {
+  it('«Sin bonificador natural» quita los Bonificadores Naturales, no las Habilidades Naturales', () => {
+    // Ficha v8.7.0, PDs!AA185: la desventaja deja en cero cuántos Bonificadores se pueden
+    // repartir; las Habilidades Naturales (+10) son otra cosa y siguen.
+    const base = conVentajas([]);
     const ficha = conVentajas([], ['Sin bonificador natural']);
-    expect(ficha.secundarias['Acrobacias'].valor).toBe(10); // 20 − los 10 de la natural
+    expect(ficha.secundarias['Acrobacias'].valor).toBe(base.secundarias['Acrobacias'].valor);
+    const p = meirmeister();
+    p.desventajas = ['Sin bonificador natural'];
+    p.bonosNaturales = { Acrobacias: 1 };
+    const conBono = calcular(p, datos('Jayán', 'Paladín Oscuro (RD)'));
+    expect(conBono.avisos.some((a) => a.mensaje.includes('Bonificadores Naturales'))).toBe(true);
   });
 
   it('recoge notas de lo que no se automatiza', () => {
@@ -717,7 +728,7 @@ describe('inventario y dinero', () => {
     expect(f.inventario.peso).toBe(0);
   });
 
-  it('los yelmos protegen como una pieza de armadura más', () => {
+  it('los yelmos protegen la cabeza, suman su requerimiento y penalizan la percepción', () => {
     const p = personajeVacio('con-yelmo');
     p.categorias = [{ categoria: 'Guerrero', nivel: 1 }];
     p.equipo.armadura = [{ armadura: 'Yelmo Cerrado' }];
@@ -730,10 +741,15 @@ describe('inventario y dinero', () => {
     };
     const f = calcular(p, conYelmos);
 
-    // Tabla de yelmos del Excel: FIL 5, CON 5, ENE 2, requerimiento 10.
-    expect(f.combate.proteccion.TA.FIL).toBe(5);
-    expect(f.combate.proteccion.TA.ENE).toBe(2);
+    // Tabla de yelmos del Excel: FIL 5, CON 5, ENE 2, requerimiento 10. Va en su propia
+    // casilla (Combate!C15): protege la cabeza (AY10), no el cuerpo (AY9).
+    expect(f.combate.proteccion.TACabeza.FIL).toBe(5);
+    expect(f.combate.proteccion.TACabeza.ENE).toBe(2);
+    expect(f.combate.proteccion.TA.FIL).toBe(0);
     expect(f.combate.proteccion.requisito).toBe(10);
+    // Su tercera columna no es penalizador natural sino a la percepción (Principal!O36).
+    expect(f.combate.proteccion.penalizadorNatural).toBe(0);
+    expect(f.combate.proteccion.penalizadorPercepcion).toBeLessThan(0);
   });
 });
 
@@ -802,12 +818,12 @@ describe('habilidades secundarias de la casa', () => {
     );
   });
 
-  it('si el catálogo viene vacío se usan las 46 del manual', () => {
+  it('si el catálogo viene vacío se usan las 51 de la hoja', () => {
     const p = personajeVacio('sin-catalogo');
     p.raza = 'Humano';
     p.categorias = [{ categoria: 'Guerrero', nivel: 1 }];
     const f = calcular(p, { ...datos('Humano', 'Guerrero'), secundarias: [] });
-    expect(Object.keys(f.secundarias)).toHaveLength(46);
+    expect(Object.keys(f.secundarias)).toHaveLength(51);
     expect(f.secundarias['Acrobacias']).toBeDefined();
   });
 });

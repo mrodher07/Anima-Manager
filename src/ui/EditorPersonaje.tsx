@@ -23,7 +23,7 @@ import { Selector } from './Selector';
 import { Ayuda, Seccion, cuenta } from './Seccion';
 import { Imagen } from './Imagen';
 import { ErrorImagen, borrarImagen, guardarImagen } from '../almacen/imagenes';
-import { EFECTOS } from '../motor/efectos';
+import { EFECTOS, MAXIMO_HABILIDADES_POR_VENTAJA, VENTAJAS_CON_HABILIDAD } from '../motor/efectos';
 import { MAX_CATEGORIAS } from '../motor/multiclase';
 import { EditorKi } from './EditorKi';
 
@@ -68,8 +68,9 @@ const PESTANAS: { id: Pestana; texto: string }[] = [
  */
 const PRIMARIAS_CON_ESPECIAL = new Set([
   'HAtaque', 'HParada', 'HEsquiva', 'LlevarArmadura',
+  'Zeon', 'ACT', 'MultiploRegeneracion', 'NivelMagia',
   'Convocar', 'Controlar', 'Atar', 'Desconvocar',
-  'ProyeccionMagica', 'ProyeccionPsiquica',
+  'ProyeccionMagica', 'ProyeccionPsiquica', 'CV',
 ]);
 
 /** Una habilidad primaria: su clave, cómo se llama y de dónde sale su coste en PD. */
@@ -80,6 +81,8 @@ interface Primaria {
   coste: string;
   /** Coste igual para todas las categorías, cuando la tabla no trae columna. */
   costeFijo?: number;
+  /** Cuesta la mitad que la columna: el Múltiplo de regeneración, a medio ACT (`PDs!T95`). */
+  mitad?: boolean;
 }
 
 const PRIMARIAS_COMBATE: Primaria[] = [
@@ -92,6 +95,7 @@ const PRIMARIAS_COMBATE: Primaria[] = [
 const PRIMARIAS_MISTICAS: Primaria[] = [
   { clave: 'Zeon', nombre: 'Zeón', coste: 'costeZeon' },
   { clave: 'ACT', nombre: 'ACT (Acumulación)', coste: 'costeACT' },
+  { clave: 'MultiploRegeneracion', nombre: 'Múltiplo de regeneración', coste: 'costeACT', mitad: true },
   { clave: 'ProyeccionMagica', nombre: 'Proyección Mágica', coste: 'costeProyeccionMagica' },
   // El Nivel de Magia cuesta 5 PD en todas las categorías: la tabla no trae columna
   // propia para él, así que se pasa fijo.
@@ -115,6 +119,7 @@ const MONEDAS = [
 /** Habilidades cuyo valor sale ya calculado de la ficha, sin dividir PD entre coste. */
 const VALOR_PROPIO = new Set<string>([
   'HAtaque', 'HParada', 'HEsquiva', 'LlevarArmadura', 'Zeon', 'ACT', 'NivelMagia',
+  'ProyeccionMagica', 'ProyeccionPsiquica', 'CV', 'MultiploRegeneracion',
   ...INVOCACION.map((i) => i.clave),
 ]);
 
@@ -163,6 +168,33 @@ export function EditorPersonaje({ personaje, datos, catalogo, reglamento, onCamb
     set({ pdInvertidos: { ...personaje.pdInvertidos, [clave]: Math.max(0, pd || 0) } });
   const setEspecial = (clave: string, valor: number) =>
     set({ bonosEspeciales: { ...personaje.bonosEspeciales, [clave]: valor || 0 } });
+  /** Bonificadores Naturales: la hoja los cuenta por habilidad (`PDs!W`). */
+  const bonosNaturalesDe = (nombre: string) =>
+    personaje.bonosNaturales?.[nombre] ??
+    (personaje.bonificadorNatural.fisica === nombre || personaje.bonificadorNatural.animica === nombre ? 1 : 0);
+  const setBonoNatural = (nombre: string, veces: number) => {
+    // Al tocar uno se pasa todo al modelo nuevo, para que el antiguo no se sume aparte.
+    const actuales: Record<string, number> = {};
+    for (const s of secundarias) {
+      const v = bonosNaturalesDe(s.nombre);
+      if (v > 0) actuales[s.nombre] = v;
+    }
+    const n = Math.max(0, Math.trunc(veces || 0));
+    if (n > 0) actuales[nombre] = n;
+    else delete actuales[nombre];
+    set({ bonosNaturales: actuales, bonificadorNatural: {} });
+  };
+  const eleccionesDe = (ventaja: string) => personaje.eleccionesVentajas?.[ventaja] ?? [];
+  const setEleccion = (ventaja: string, i: number, habilidad: string) => {
+    const lista = [...eleccionesDe(ventaja)];
+    lista[i] = habilidad;
+    set({
+      eleccionesVentajas: {
+        ...(personaje.eleccionesVentajas ?? {}),
+        [ventaja]: lista.filter(Boolean),
+      },
+    });
+  };
   const setTrasfondo = (clave: keyof Personaje['trasfondo'], texto: string) =>
     set({ trasfondo: { ...personaje.trasfondo, [clave]: texto } });
 
@@ -559,7 +591,8 @@ export function EditorPersonaje({ personaje, datos, catalogo, reglamento, onCamb
                     ...PRIMARIAS_MISTICAS,
                     ...PRIMARIAS_PSIQUICAS,
                   ].map((h) => {
-                    const coste = h.costeFijo ?? Number(datos.categoria?.[h.coste] ?? 0);
+                    const coste =
+                      h.costeFijo ?? Number(datos.categoria?.[h.coste] ?? 0) / (h.mitad ? 2 : 1);
                     const disponible = coste > 0;
                     return (
                       <tr key={h.clave} style={disponible ? undefined : { opacity: 0.4 }}>
@@ -598,6 +631,8 @@ export function EditorPersonaje({ personaje, datos, catalogo, reglamento, onCamb
                           {h.clave === 'NivelMagia' && ficha.nivelMagia.valor}
                           {h.clave === 'ProyeccionMagica' && ficha.proyeccionMagica.valor}
                           {h.clave === 'ProyeccionPsiquica' && ficha.proyeccionPsiquica.valor}
+                          {h.clave === 'CV' && ficha.cv.valor}
+                          {h.clave === 'MultiploRegeneracion' && ficha.regeneracionZeonica.valor}
                           {h.clave in ficha.invocacion &&
                             ficha.invocacion[h.clave as ClaveInvocacion].valor}
                           {!VALOR_PROPIO.has(h.clave) &&
@@ -615,8 +650,11 @@ export function EditorPersonaje({ personaje, datos, catalogo, reglamento, onCamb
             titulo="Habilidades secundarias"
             ayuda={
               <>
-                «Nat.» marca las cinco Habilidades Naturales (+10). «Esp.» es el bono especial que te
-                den raza, ventajas o poderes: se escribe a mano, igual que en la ficha original.
+                «Nat.» marca las Habilidades Naturales (+10; cinco por nivel). «Bon.» es cuántos
+                Bonificadores Naturales le pones: cada uno suma otra vez el bono de su
+                característica, y tienes uno físico y uno anímico por nivel. «Esp.» es el bono
+                especial que te den raza, ventajas o poderes: se escribe a mano, igual que en la
+                ficha original. «—» es que sin formación no se puede ni intentar.
               </>
             }
           >
@@ -628,7 +666,8 @@ export function EditorPersonaje({ personaje, datos, catalogo, reglamento, onCamb
                     <thead>
                       <tr>
                         <th>Habilidad</th><th className="num">PD</th>
-                        <th className="num">Nat.</th><th className="num">Esp.</th>
+                        <th className="num">Nat.</th><th className="num">Bon.</th>
+                        <th className="num">Esp.</th>
                         <th className="num">Total</th>
                       </tr>
                     </thead>
@@ -667,6 +706,14 @@ export function EditorPersonaje({ personaje, datos, catalogo, reglamento, onCamb
                                 }
                               />
                             </td>
+                            <td className="num" style={{ width: 64 }}>
+                              <input
+                                type="number" min={0}
+                                value={bonosNaturalesDe(s.nombre)}
+                                onChange={(e) => setBonoNatural(s.nombre, Number(e.target.value))}
+                                aria-label={`Bonificadores Naturales en ${s.nombre}`}
+                              />
+                            </td>
                             <td className="num" style={{ width: 84 }}>
                               <input
                                 type="number"
@@ -675,9 +722,13 @@ export function EditorPersonaje({ personaje, datos, catalogo, reglamento, onCamb
                                 aria-label={`Bono especial en ${s.nombre}`}
                               />
                             </td>
-                            <td className={`num ${v.valor < 0 ? 'negativo' : 'destacado'}`}>
-                              {v.valor > 0 ? `+${v.valor}` : v.valor}
-                            </td>
+                            {ficha.secundariasSinUso.includes(s.nombre) ? (
+                              <td className="num" title="Sin formación no se puede usar">—</td>
+                            ) : (
+                              <td className={`num ${v.valor < 0 ? 'negativo' : 'destacado'}`}>
+                                {v.valor > 0 ? `+${v.valor}` : v.valor}
+                              </td>
+                            )}
                           </tr>
                         );
                       })}
@@ -726,6 +777,37 @@ export function EditorPersonaje({ personaje, datos, catalogo, reglamento, onCamb
               onCambiar={(v) => set({ ventajas: v })}
               etiquetaBusqueda="Buscar ventaja"
             />
+            {VENTAJAS_CON_HABILIDAD.some((v) => personaje.ventajas.includes(v)) && (
+              <div className="elecciones-ventajas" style={{ marginTop: 12 }}>
+                <h4 style={{ margin: '8px 0' }}>¿A qué habilidad van?</h4>
+                <p style={{ color: 'var(--texto-debil)', fontSize: '0.85rem', marginTop: 0 }}>
+                  Como en la pestaña Personalización de la hoja: cada habilidad que elijas es una
+                  vez que tomas la ventaja (hasta tres), y cada vez cuesta sus PC.
+                </p>
+                {VENTAJAS_CON_HABILIDAD.filter((v) => personaje.ventajas.includes(v)).map((ventaja) => {
+                  const elegidas = eleccionesDe(ventaja);
+                  const casillas = Math.min(MAXIMO_HABILIDADES_POR_VENTAJA, elegidas.length + 1);
+                  return (
+                    <div key={ventaja} className="campo" style={{ display: 'flex', gap: 8, flexWrap: 'wrap', alignItems: 'center' }}>
+                      <span style={{ minWidth: 190 }}>{ventaja}</span>
+                      {Array.from({ length: casillas }, (_, i) => (
+                        <select
+                          key={i}
+                          aria-label={`${ventaja}: habilidad ${i + 1}`}
+                          value={elegidas[i] ?? ''}
+                          onChange={(e) => setEleccion(ventaja, i, e.target.value)}
+                        >
+                          <option value="">{i === 0 ? 'Elige habilidad…' : '(otra vez, opcional)'}</option>
+                          {secundarias.map((sec) => (
+                            <option key={sec.nombre} value={sec.nombre}>{sec.nombre}</option>
+                          ))}
+                        </select>
+                      ))}
+                    </div>
+                  );
+                })}
+              </div>
+            )}
           </Seccion>
 
           <Seccion

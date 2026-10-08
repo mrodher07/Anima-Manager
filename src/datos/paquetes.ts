@@ -30,6 +30,34 @@ export function cuentaPersonalizados(propio: Personalizados): number {
 }
 
 /**
+ * Añade contenido propio al que ya tiene la campaña, sin pisar nada: lo que ya existe con
+ * la misma clave se queda como está, porque puede que la mesa lo haya retocado aquí.
+ * Devuelve el resultado y cuántas entradas son nuevas.
+ */
+export function mezclarPersonalizados(
+  actual: Personalizados,
+  nuevo: Personalizados,
+): { personalizados: Personalizados; anadidos: number } {
+  const salida: Personalizados = { ...actual };
+  let anadidos = 0;
+  for (const [coleccion, entradas] of Object.entries(nuevo) as [NombreColeccion, unknown[]][]) {
+    if (!entradas?.length) continue;
+    const clave = CLAVE_DE[coleccion];
+    const existentes = [...((salida[coleccion] as unknown[] | undefined) ?? [])];
+    const ya = new Set(existentes.map((e) => String((e as Record<string, unknown>)[clave] ?? '')));
+    for (const e of entradas) {
+      const id = String((e as Record<string, unknown>)[clave] ?? '');
+      if (!id || ya.has(id)) continue;
+      existentes.push(e);
+      ya.add(id);
+      anadidos++;
+    }
+    (salida as Record<string, unknown[]>)[coleccion] = existentes;
+  }
+  return { personalizados: salida, anadidos };
+}
+
+/**
  * Convierte el contenido propio de una campaña en un paquete.
  * Va con prioridad alta para que pueda además **corregir** entradas de los manuales.
  */

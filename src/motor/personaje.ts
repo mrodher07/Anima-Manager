@@ -16,7 +16,9 @@ import {
   type PiezaEquipada,
   type ProteccionTotal,
 } from './combate';
-import { acumularEfectos, type EfectosAplicados } from './efectos';
+import {
+  acumularEfectos, MAXIMO_HABILIDADES_POR_VENTAJA, VENTAJAS_CON_HABILIDAD, type EfectosAplicados,
+} from './efectos';
 import {
   CARACTERISTICAS_KI,
   ELECCIONES_KI_VACIAS,
@@ -64,6 +66,11 @@ export interface DefinicionSecundaria {
   caracteristica: Caracteristica;
   /** Si sufre el penalizador natural de la armadura. */
   fisica?: boolean;
+  /**
+   * Si sin formación no se puede ni intentar: la hoja enseña «-» en vez de un −30. Son las
+   * de saber de verdad —Ciencia, Medicina, Forja…—. Ficha, `PDs!AA147`.
+   */
+  requiereFormacion?: boolean;
 }
 
 /**
@@ -75,11 +82,15 @@ export interface DefinicionSecundaria {
 export function secundariaDeCatalogo(s: Secundaria): DefinicionSecundaria {
   const grupo = GRUPOS_SECUNDARIAS.find((g) => g === s.grupo) ?? GRUPOS_SECUNDARIAS[0];
   const caracteristica = CARACTERISTICAS.find((c) => c === s.caracteristica) ?? 'AGI';
-  return { nombre: s.secundaria, grupo, caracteristica, fisica: s.fisica };
+  return {
+    nombre: s.secundaria, grupo, caracteristica, fisica: s.fisica,
+    requiereFormacion: s.requiereFormacion,
+  };
 }
 
 /**
- * Las 46 del Core Exxet. Son el **valor por defecto**: la lista que manda es la del
+ * Las 51 de la hoja de la comunidad (las 46 del Core Exxet, más Ley, Caligrafía ritual,
+ * Orfebrería, Confección y Confección de marionetas). Son el **valor por defecto**: la lista que manda es la del
  * catálogo (`datos.secundarias`), para que una mesa pueda añadir las suyas. Ésta se usa
  * cuando no hay catálogo cargado, y es de donde salió `data/reglas/secundarias.json`.
  */
@@ -102,16 +113,18 @@ export const SECUNDARIAS: readonly DefinicionSecundaria[] = [
   { nombre: 'Buscar', grupo: 'Perceptivas', caracteristica: 'PER' },
   { nombre: 'Rastrear', grupo: 'Perceptivas', caracteristica: 'PER' },
   { nombre: 'Animales', grupo: 'Intelectuales', caracteristica: 'INT' },
-  { nombre: 'Ciencia', grupo: 'Intelectuales', caracteristica: 'INT' },
+  { nombre: 'Ciencia', grupo: 'Intelectuales', caracteristica: 'INT', requiereFormacion: true },
+  { nombre: 'Ley', grupo: 'Intelectuales', caracteristica: 'INT' },
   { nombre: 'Herbolaria', grupo: 'Intelectuales', caracteristica: 'INT' },
-  { nombre: 'Historia', grupo: 'Intelectuales', caracteristica: 'INT' },
-  { nombre: 'Medicina', grupo: 'Intelectuales', caracteristica: 'INT' },
+  { nombre: 'Historia', grupo: 'Intelectuales', caracteristica: 'INT', requiereFormacion: true },
+  { nombre: 'Medicina', grupo: 'Intelectuales', caracteristica: 'INT', requiereFormacion: true },
   { nombre: 'Memorizar', grupo: 'Intelectuales', caracteristica: 'INT' },
   { nombre: 'Navegación', grupo: 'Intelectuales', caracteristica: 'INT' },
   { nombre: 'Ocultismo', grupo: 'Intelectuales', caracteristica: 'INT' },
-  { nombre: 'Tasación', grupo: 'Intelectuales', caracteristica: 'INT' },
+  { nombre: 'Tasación', grupo: 'Intelectuales', caracteristica: 'INT', requiereFormacion: true },
   { nombre: 'Táctica', grupo: 'Intelectuales', caracteristica: 'INT' },
-  { nombre: 'Valoración Mágica', grupo: 'Intelectuales', caracteristica: 'INT' },
+  // Poder, no Inteligencia: PDs!H157.
+  { nombre: 'Valoración Mágica', grupo: 'Intelectuales', caracteristica: 'POD', requiereFormacion: true },
   { nombre: 'Frialdad', grupo: 'Vigor', caracteristica: 'VOL' },
   { nombre: 'Proezas de Fuerza', grupo: 'Vigor', caracteristica: 'FUE' },
   // Voluntad, no Constitución: es la que reproduce la hoja de Meirmeister (VOL 6 → +5,
@@ -123,15 +136,19 @@ export const SECUNDARIAS: readonly DefinicionSecundaria[] = [
   { nombre: 'Robo', grupo: 'Subterfugio', caracteristica: 'DES' },
   { nombre: 'Sigilo', grupo: 'Subterfugio', caracteristica: 'AGI' },
   { nombre: 'Trampería', grupo: 'Subterfugio', caracteristica: 'DES' },
-  { nombre: 'Venenos', grupo: 'Subterfugio', caracteristica: 'INT' },
+  { nombre: 'Venenos', grupo: 'Subterfugio', caracteristica: 'INT', requiereFormacion: true },
   { nombre: 'Arte', grupo: 'Creativas', caracteristica: 'POD' },
-  { nombre: 'Baile', grupo: 'Creativas', caracteristica: 'AGI' },
-  { nombre: 'Forja', grupo: 'Creativas', caracteristica: 'DES' },
+  { nombre: 'Baile', grupo: 'Creativas', caracteristica: 'AGI', requiereFormacion: true },
+  { nombre: 'Forja', grupo: 'Creativas', caracteristica: 'DES', requiereFormacion: true },
   { nombre: 'Runas', grupo: 'Creativas', caracteristica: 'DES' },
   { nombre: 'Alquimia', grupo: 'Creativas', caracteristica: 'INT' },
   { nombre: 'Animismo', grupo: 'Creativas', caracteristica: 'POD' },
-  { nombre: 'Música', grupo: 'Creativas', caracteristica: 'POD' },
+  { nombre: 'Música', grupo: 'Creativas', caracteristica: 'POD', requiereFormacion: true },
   { nombre: 'Trucos de Manos', grupo: 'Creativas', caracteristica: 'DES' },
+  { nombre: 'Caligrafía ritual', grupo: 'Creativas', caracteristica: 'DES' },
+  { nombre: 'Orfebrería', grupo: 'Creativas', caracteristica: 'DES' },
+  { nombre: 'Confección', grupo: 'Creativas', caracteristica: 'DES' },
+  { nombre: 'Confección de marionetas', grupo: 'Creativas', caracteristica: 'POD' },
 ];
 
 export const RESISTENCIAS = ['RF', 'RE', 'RV', 'RM', 'RP'] as const;
@@ -169,10 +186,25 @@ export interface Personaje {
   /** PD invertidos, por clave de habilidad. */
   pdInvertidos: Record<string, number>;
 
-  /** Las cinco Habilidades Naturales (+10 cada una). */
+  /** Habilidades Naturales (+10 cada una): cinco por nivel. Ficha, `PDs!X` y `AA186`. */
   habilidadesNaturales: string[];
-  /** Bonificador Natural: una secundaria física y una anímica. */
+  /**
+   * Bonificador Natural del modelo antiguo: una secundaria física y una anímica. Se sigue
+   * leyendo, pero lo que manda es `bonosNaturales`.
+   */
   bonificadorNatural: { fisica?: string; animica?: string };
+  /**
+   * Bonificadores Naturales por habilidad: cuántas veces se le suma el bono de su
+   * característica. Hay tantos físicos y tantos anímicos como niveles. Ficha, `PDs!W`,
+   * `PDs!U129` (`bono*(1+W)`) y `PDs!AA185`.
+   */
+  bonosNaturales?: Record<string, number>;
+  /**
+   * A qué habilidades va cada ventaja de las que se aplican a una que elige el jugador:
+   * `{ 'Apto en una materia (1)': ['Medicina'] }`. Cada habilidad es una vez que se toma la
+   * ventaja. Ficha, pestaña Personalización, «Ventajas en Secundarias».
+   */
+  eleccionesVentajas?: Record<string, string[]>;
 
   ventajas: string[];
   desventajas: string[];
@@ -468,12 +500,27 @@ export interface FichaCalculada {
   proyeccionMagica: ValorDerivado;
   proyeccionPsiquica: ValorDerivado;
   potencialPsiquico: ValorDerivado;
+  /** Cargas Vitales: las que dan los niveles más las compradas. `PDs!AA111`. */
+  cv: ValorDerivado;
+  /** Zeón que se recupera al día. `Místicos!J9`. */
+  regeneracionZeonica: ValorDerivado;
+  /** Nivel de Regeneración y lo que supone. `Principal!J11` y `K11`. */
+  regeneracion: ValorDerivado;
+  regeneracionTexto: string;
+  /** Tipo de Movimiento y lo que avanza por asalto. `Tablas!U58` y `Principal!K17`. */
+  movimiento: ValorDerivado;
+  movimientoTexto: string;
   inventario: ResumenInventario;
   /** Índice de Peso y lo que carga. */
   carga: CargaCalculada;
   /** Puntos de Experiencia frente a lo que pide la tabla. */
   experiencia: ExperienciaCalculada;
   secundarias: Record<string, ValorDerivado>;
+  /**
+   * Las secundarias que no se pueden usar sin formación y que el personaje no tiene: la hoja
+   * enseña «-». El número de `secundarias` se sigue calculando, por si la mesa lo quiere.
+   */
+  secundariasSinUso: string[];
   /** Lo que aportan las ventajas y desventajas elegidas. */
   efectos: EfectosAplicados;
   puntosCreacion: { disponibles: number; gastados: number; ganados: number };
@@ -548,7 +595,10 @@ const CLAVES_COMBATE = [
   ...CARACTERISTICAS_KI.map((c) => `Ki${c}`),
   ...CARACTERISTICAS_KI.map((c) => `AcumKi${c}`),
 ];
-const CLAVES_MISTICAS = ['Zeon', 'ACT', 'ProyeccionMagica', 'NivelMagia', 'Convocar', 'Controlar', 'Atar', 'Desconvocar'];
+const CLAVES_MISTICAS = [
+  'Zeon', 'ACT', 'MultiploRegeneracion', 'ProyeccionMagica', 'NivelMagia',
+  'Convocar', 'Controlar', 'Atar', 'Desconvocar',
+];
 
 /**
  * Las cuatro habilidades de invocación. Core Exxet, cap. 4: Convocar, Atar y Desconvocar
@@ -655,7 +705,10 @@ export async function cargarDatosCalculo(
     armas,
     // Los yelmos son piezas de armadura como las demás, sólo que en otra tabla del
     // Excel. Se juntan aquí para que el selector de armadura los ofrezca igual.
-    armaduras: [...armaduras, ...yelmos.map(({ yelmo, ...resto }) => ({ ...resto, armadura: yelmo }))],
+    armaduras: [
+      ...armaduras,
+      ...yelmos.map(({ yelmo, ...resto }) => ({ ...resto, armadura: yelmo, esYelmo: true })),
+    ],
     objetos,
     secundarias: secundarias.map(secundariaDeCatalogo),
     ventajas,
@@ -741,7 +794,17 @@ export function calcular(
     });
 
   // Efectos de ventajas y desventajas, antes de nada: modifican características.
-  const efectos = acumularEfectos([...personaje.ventajas, ...personaje.desventajas]);
+  const efectos = acumularEfectos(
+    [...personaje.ventajas, ...personaje.desventajas],
+    personaje.eleccionesVentajas ?? {},
+  );
+  /**
+   * Los bonos de la tabla de categorías son **por nivel**: cada categoría da el suyo por cada
+   * nivel hecho en ella. Ficha, `Tablas!E225` (`Bonos_Cat_Base`): SUMPRODUCT de los niveles
+   * por el bono de cada categoría.
+   */
+  const bonoPorNiveles = (campo: string) =>
+    acumularPorNivel(personaje.categorias, datos.categorias, campo);
 
   // Ser Legado encarece la experiencia: +1 sea cual sea el número de Legados que tengas.
   const esLegado = (personaje.legados ?? []).length > 0;
@@ -821,6 +884,41 @@ export function calcular(
     }),
   );
 
+  /*
+   * Modificador a toda acción: el `Mod_ATA` de la hoja (`Combate!AD15`). Lo forman:
+   * - el Cansancio (`AU5`): con 4 o menos de Cansancio actual, −10, −20, −40 y −80, y −120 a
+   *   cero. Exhausto lo dobla; Inmunidad al dolor y al cansancio o Eliminación de
+   *   penalizadores lo dejan a la mitad (a un tercio las dos juntas), y Esencia de Vacío lo
+   *   anula (`AV5`);
+   * - Endeble: −30 con menos de un tercio de los PV (`AY5`);
+   * - y lo que se anote a mano en «TodaAccion», la casilla «Esp.» de la hoja (`AD14`).
+   * Resta a las habilidades de combate, a las secundarias y a las proyecciones, y la mitad
+   * al Turno y al ACT.
+   */
+  const cansancioActual = personaje.estado?.cansancioActual;
+  const penalizadorCansancio =
+    cansancioActual === undefined || cansancioActual > 4
+      ? 0
+      : cansancioActual <= 0 ? -120 : -10 * 2 ** (4 - cansancioActual);
+  const tieneKi = (h: string) => (personaje.ki?.habilidades ?? []).includes(h);
+  const alivioVentaja = personaje.ventajas.includes('Inm. al dolor y al cansancio');
+  const alivioKi = tieneKi('Eliminación de penalizadores');
+  const factorCansancio = tieneKi('Esencia de Vacío')
+    ? 0
+    : personaje.desventajas.includes('Exhausto')
+      ? (alivioVentaja || alivioKi ? 1 : 2)
+      : alivioVentaja && alivioKi ? 1 / 3 : alivioVentaja || alivioKi ? 1 / 2 : 1;
+  const pvActuales = personaje.estado?.pvActuales;
+  const penalizadorEndeble =
+    personaje.desventajas.includes('Endeble') && pvActuales !== undefined && pvActuales < puntosVida.valor / 3
+      ? -30
+      : 0;
+  const modificadorTodaAccion =
+    Math.trunc(penalizadorCansancio * factorCansancio) + penalizadorEndeble +
+    (personaje.bonosEspeciales['TodaAccion'] ?? 0);
+  /** La mitad, sólo si resta: así lo aplica la hoja al Turno y al ACT. */
+  const mitadSiResta = modificadorTodaAccion < 0 ? Math.trunc(modificadorTodaAccion / 2) : 0;
+
   const cansancio = derivar(
     'cansancio',
     aplicar('cansancio', {
@@ -858,16 +956,19 @@ export function calcular(
       zeonCategoria:
         acumularPorNivel(personaje.categorias, datos.categorias, 'bonoZeon') + efectos.zeonPorNivel * nivel,
       nivelTotal: 1,
-    }),
+    }) + (personaje.bonosEspeciales['Zeon'] ?? 0),
   );
 
   const costeACT = Number(categoria?.costeACT ?? 0);
   const base = actBase(caracteristicas.POD.total, tablas);
   const act = derivar(
     'act',
-    costeACT > 0
-      ? aplicar('act', { actBasePorPOD: base, pd: personaje.pdInvertidos['ACT'] ?? 0, coste: costeACT })
-      : base,
+    Math.max(
+      0,
+      (costeACT > 0
+        ? aplicar('act', { actBasePorPOD: base, pd: personaje.pdInvertidos['ACT'] ?? 0, coste: costeACT })
+        : base) + (personaje.bonosEspeciales['ACT'] ?? 0) + mitadSiResta,
+    ),
   );
 
   // Convocar, Controlar, Atar y Desconvocar. Son místicas, así que no llevan el −30 de
@@ -883,8 +984,8 @@ export function calcular(
         pd: coste > 0 ? personaje.pdInvertidos[def.clave] ?? 0 : 0,
         coste: coste || 1,
         bonoCaracteristica: caracteristicas[def.caracteristica].bono,
-        bonoCategoria: Number(categoria?.[`bon${def.clave}`] ?? 0),
-      }) + (personaje.bonosEspeciales[def.clave] ?? 0),
+        bonoCategoria: bonoPorNiveles(`bon${def.clave}`),
+      }) + (personaje.bonosEspeciales[def.clave] ?? 0) + Math.min(0, modificadorTodaAccion),
     );
   }
 
@@ -898,7 +999,7 @@ export function calcular(
         pd: coste > 0 ? personaje.pdInvertidos[clave] ?? 0 : 0,
         coste: coste || 1,
         bonoDES: caracteristicas.DES.bono,
-      }) + (personaje.bonosEspeciales[clave] ?? 0),
+      }) + (personaje.bonosEspeciales[clave] ?? 0) + modificadorTodaAccion,
     );
   };
   const proyeccionMagica = proyeccion('ProyeccionMagica', 'costeProyeccionMagica');
@@ -914,8 +1015,54 @@ export function calcular(
     aplicar('potencialPsiquico', {
       potencialPorVOL: filaPotencial?.potencial ?? 0,
       especial: personaje.bonosEspeciales['PotencialPsiquico'] ?? 0,
-    }),
+    }) + Math.min(0, modificadorTodaAccion), // Psíquicos!H11: + MIN(0, Mod_ATA)
   );
+
+  /*
+   * Cargas Vitales. `PDs!X111`: la primera categoría da 1 al empezar y otra cada tantos
+   * niveles como diga su columna «nvPorCV»; las demás, una cada tantos niveles. Más las
+   * compradas con PD (`V111`) y lo que se anote a mano (`Z111`).
+   */
+  const nvPorCV = (nombre: string) =>
+    Number(datos.categorias.find((c) => c.categoria === nombre)?.nvPorCV ?? 0) || 1;
+  let cvPorNiveles = 0;
+  if (nivel > 0) {
+    personaje.categorias.slice(0, 5).forEach((c, i) => {
+      if (!c.categoria || !(c.nivel > 0)) return;
+      const empieza = i === 0 || (i === 1 && !((personaje.categorias[0]?.nivel ?? 0) > 0));
+      cvPorNiveles += empieza ? 1 + (c.nivel - 1) / nvPorCV(c.categoria) : c.nivel / nvPorCV(c.categoria);
+    });
+  }
+  const cv = derivar(
+    'CV',
+    Math.trunc(cvPorNiveles) +
+      truncarPD(personaje.pdInvertidos['CV'] ?? 0, Number(categoria?.costeCV ?? 0)) +
+      (personaje.bonosEspeciales['CV'] ?? 0),
+  );
+
+  /*
+   * Regeneración. `Principal!J11`: el nivel que da la CON en la Tabla_Regen, más el de la
+   * raza y el de las ventajas, hasta 20. Lenta curación deja lo que se recupera a la mitad
+   * (`Tablas!E40`).
+   */
+  const tablaRegen = tablas.regeneracion;
+  const conTotal = caracteristicas.CON.total;
+  const regenPorCON =
+    conTotal > 0 ? [...(tablaRegen?.porCON ?? [])].reverse().find(([c]) => c <= conTotal)?.[1] ?? 0 : 0;
+  const regeneracion = derivar(
+    'Regeneracion',
+    Math.min(
+      20,
+      regenPorCON + Number(raza?.regeneracion ?? 0) + efectos.regeneracion +
+        (personaje.bonosEspeciales['Regeneracion'] ?? 0),
+    ),
+  );
+  const filaRegen = tablaRegen?.niveles.find((f) => f.nivel === regeneracion.valor);
+  const lentaCuracion = personaje.desventajas.includes('Lenta curación');
+  const regeneracionTexto = !filaRegen || filaRegen.cantidad === null
+    ? (filaRegen?.unidad ?? '')
+    : `${filaRegen.cantidad * (lentaCuracion ? 0.5 : 1)} ${filaRegen.unidad.trim()} · ` +
+      `penalizadores ${filaRegen.reduccion}` + (filaRegen.especial ? ` · ${filaRegen.especial}` : '');
 
   const inventario = resumirInventario(personaje, datos.objetos);
 
@@ -953,81 +1100,160 @@ export function calcular(
   const llevarArmaduraBase =
     truncarPD(personaje.pdInvertidos['LlevarArmadura'] ?? 0, Number(categoria?.costeLlevarArmadura ?? 2)) +
     caracteristicas.FUE.bono +
-    Number(categoria?.bonoLlevarArmadura ?? 0) +
+    bonoPorNiveles('bonoLlevarArmadura') +
     efectos.llevarArmaduraPorNivel * nivel +
     especial('LlevarArmadura');
   const llevarArmadura = derivar('LlevarArmadura', llevarArmaduraBase);
 
-  const proteccion = combinarArmadura(personaje.equipo.armadura, datos.armaduras, llevarArmadura.valor);
-  // Armadura natural y mística se suman al TA de las piezas llevadas.
-  for (const [dano, valor] of Object.entries(efectos.TA)) {
-    const t = dano as keyof typeof proteccion.TA;
-    proteccion.TA[t] = (proteccion.TA[t] ?? 0) + (valor ?? 0);
-  }
+  // Las ventajas de armadura (natural, mística) son una capa más, no un suplemento.
+  const proteccion = combinarArmadura(
+    personaje.equipo.armadura,
+    datos.armaduras,
+    llevarArmadura.valor,
+    efectos.TA,
+  );
   const penalizadorArmadura = proteccion.penalizadorNatural;
 
-  // Habilidades secundarias.
+  /*
+   * Tipo de Movimiento. `Principal!AQ20` y `Tablas!U58`: la Agilidad, +2 por Desplazamiento
+   * rápido, menos la restricción de la armadura y lo que pese de más (+2 si pasa del peso
+   * natural, +3 más si pasa del máximo, `Principal!L16`), entre 1 y 10. Por encima de 10
+   * sólo se llega con Inhumanidad o Zen, que la aplicación no sabe: se anota en «Esp.».
+   */
+  const restriccionMovimiento =
+    proteccion.restriccionMovimiento +
+    (carga.natural > 0 && carga.equipo > carga.natural ? 2 : 0) +
+    (carga.maximo > 0 && carga.equipo > carga.maximo ? 3 : 0);
+  const movimiento = derivar(
+    'Movimiento',
+    Math.max(
+      1,
+      Math.min(10, caracteristicas.AGI.total + efectos.movimiento - restriccionMovimiento) +
+        (personaje.bonosEspeciales['Movimiento'] ?? 0),
+    ),
+  );
+  const movimientoTexto =
+    (tablas.movimiento ?? []).find(([v]) => v === Math.min(20, movimiento.valor))?.[1] ?? '';
+
+  /*
+   * Habilidades secundarias, como las cuenta la hoja: `PDs!J129:AA179` y, encima, el
+   * penalizador de la armadura de `Principal!O22:O73`.
+   *
+   * - Coste: el propio de la habilidad o el de su campo, el menor (`PDs!AL129`), menos lo
+   *   que abaraten Apto en campo y Apto en una materia, entre 1 y 3 (`PDs!J129`).
+   * - Bono: el de la característica, una vez más por cada Bonificador Natural, +10 por
+   *   Habilidad Natural y +10 por Conocimiento de todas las materias, con tope 100 (`U129`).
+   * - Categoría: su bono, más lo que den por nivel los Aprendizajes innatos (`V129`).
+   * - Sin al menos 5 de base, −30; y las que piden formación, ni eso: «-» (`AA129`, `AA147`).
+   */
   const secundarias: Record<string, ValorDerivado> = {};
+  const secundariasSinUso: string[] = [];
+  // Los Bonificadores Naturales del modelo antiguo cuentan como uno cada uno.
+  const bonosNaturales: Record<string, number> = { ...(personaje.bonosNaturales ?? {}) };
+  for (const n of [personaje.bonificadorNatural.fisica, personaje.bonificadorNatural.animica]) {
+    if (n && bonosNaturales[n] === undefined) bonosNaturales[n] = 1;
+  }
+  const conocimientoTotal = efectos.conocimientoTotal ? 10 : 0;
+  /** Sentidos agudos da 80 y no 50 a los Tuan Dalyr. `PDs!AD143`. */
+  const bonoVentajas = (nombre: string) =>
+    (efectos.bonoSecundaria[nombre] ?? 0) *
+    (raza?.raza === 'Tuan Dalyr' && personaje.ventajas.includes('Sentidos agudos') &&
+    (nombre === 'Advertir' || nombre === 'Buscar') ? 80 / 50 : 1);
+  /** Lo que la armadura resta a cada una. `Principal!O22:O73` y `PDs!AA129:AA135`. */
+  const penalizadorSecundaria = (def: DefinicionSecundaria) => {
+    const natural =
+      def.nombre === 'Nadar' ? proteccion.penalizadorNadar
+      : def.nombre === 'Sigilo' ? proteccion.penalizadorSigilo
+      : def.fisica ? penalizadorArmadura : 0;
+    const percepcion = def.nombre === 'Advertir' || def.nombre === 'Buscar' ? proteccion.penalizadorPercepcion : 0;
+    // No llegar al requerimiento castiga las Atléticas, que son la acción física pura.
+    const accionFisica = def.grupo === 'Atléticas' ? proteccion.penalizadorAccionFisica : 0;
+    return natural + percepcion + accionFisica;
+  };
+
   for (const def of secundarias_) {
     const pd = personaje.pdInvertidos[def.nombre] ?? 0;
     const columna = columnaDeSecundaria(def.nombre);
-    // El coste propio de la habilidad manda sobre el de su grupo, cuando la categoría lo tiene.
-    const coste = Number(categoria?.[`coste${columna}`] ?? categoria?.[CAMPO_COSTE[def.grupo]] ?? 2);
-    const bonoCategoria = Number(categoria?.[`bon${columna}`] ?? 0);
-    const mejoraNatural =
-      (personaje.habilidadesNaturales.includes(def.nombre) ? 10 : 0) +
-      (personaje.bonificadorNatural.fisica === def.nombre ||
-      personaje.bonificadorNatural.animica === def.nombre
-        ? caracteristicas[def.caracteristica].bono
-        : 0);
+    const costeCampo = Number(categoria?.[CAMPO_COSTE[def.grupo]] ?? 2) || 2;
+    const costePropio = Number(categoria?.[`coste${columna}`]);
+    const costeCategoria = costePropio > 0 ? Math.min(costePropio, costeCampo) : costeCampo;
+    const coste = Math.max(
+      1,
+      Math.min(
+        3,
+        costeCategoria + (efectos.costeCampo[def.grupo] ?? 0) + (efectos.costeSecundaria[def.nombre] ?? 0),
+      ),
+    );
+    const bono = caracteristicas[def.caracteristica].bono;
+    const naturales = bonosNaturales[def.nombre] ?? 0;
+    const habilidadNatural = personaje.habilidadesNaturales.includes(def.nombre) ? 1 : 0;
+    const bonoTotal = Math.min(bono * (1 + naturales) + conocimientoTotal + 10 * habilidadNatural, 100);
+    const aprendizaje =
+      (efectos.aprendizajeSecundaria[def.nombre] ?? 0) + (efectos.aprendizajeCampo[def.grupo] ?? 0);
+    const bonoCategoria = bonoPorNiveles(`bon${columna}`) + aprendizaje * nivel;
+    const especialHabilidad = (personaje.bonosEspeciales[def.nombre] ?? 0) + bonoVentajas(def.nombre);
 
+    if (def.requiereFormacion && conocimientoTotal === 0 && Math.trunc(pd / coste) < 5) {
+      secundariasSinUso.push(def.nombre);
+    }
     secundarias[def.nombre] = derivar(
       def.nombre,
       aplicar('habilidadSecundaria', {
         pd,
-        coste: coste || 2,
-        bonoCaracteristica: caracteristicas[def.caracteristica].bono,
+        coste,
+        bonoCaracteristica: bono,
+        bonosNaturales: naturales,
+        habilidadNatural,
+        conocimientoTotal,
         bonoCategoria,
-        mejoraNatural:
-        mejoraNatural * efectos.factorMejoraNatural + (personaje.bonosEspeciales[def.nombre] ?? 0),
+        especial: especialHabilidad,
+        // Lo de antes, para las fórmulas que una mesa haya reescrito con estas variables.
+        mejoraNatural: bonoTotal - bono + especialHabilidad,
         penalizadorNoDesarrollada: -30,
-        // Sólo las habilidades físicas sufren el penalizador de la armadura.
-        penalizadorNatural: def.fisica ? penalizadorArmadura : 0,
+        penalizadorNatural: penalizadorSecundaria(def),
+        modificadorTodaAccion,
       }),
     );
   }
 
   // ── Habilidades primarias de combate y armas equipadas ──
+  // No llegar al requerimiento de la armadura castiga también el combate: `PDs!AA25:AA27`
+  // suman `Mod_Fisico`, que es `Combate!S16`, y el modificador a toda acción.
+  const accionFisica = proteccion.penalizadorAccionFisica + modificadorTodaAccion;
   const HAtaque = derivar(
     'HAtaque',
     truncarPD(personaje.pdInvertidos['HAtaque'] ?? 0, Number(categoria?.costeHA ?? 2)) +
       caracteristicas.DES.bono +
-      bonoCategoriaCombate('HAtaque', Number(categoria?.bonoHA ?? 0)) +
-      especial('HAtaque'),
+      bonoCategoriaCombate('HAtaque', bonoPorNiveles('bonoHA')) +
+      especial('HAtaque') +
+      accionFisica,
   );
   const HParada = derivar(
     'HParada',
     truncarPD(personaje.pdInvertidos['HParada'] ?? 0, Number(categoria?.costeHP ?? 2)) +
       caracteristicas.DES.bono +
-      bonoCategoriaCombate('HParada', Number(categoria?.bonoHP ?? 0)) +
-      especial('HParada'),
+      bonoCategoriaCombate('HParada', bonoPorNiveles('bonoHP')) +
+      especial('HParada') +
+      accionFisica,
   );
   const HEsquiva = derivar(
     'HEsquiva',
     truncarPD(personaje.pdInvertidos['HEsquiva'] ?? 0, Number(categoria?.costeHE ?? 2)) +
       caracteristicas.AGI.bono +
-      bonoCategoriaCombate('HEsquiva', Number(categoria?.bonoHE ?? 0)) +
-      especial('HEsquiva'),
+      bonoCategoriaCombate('HEsquiva', bonoPorNiveles('bonoHE')) +
+      especial('HEsquiva') +
+      accionFisica,
   );
 
   // Tamaño = CON + FUE **base** (sin modificadores raciales, que ya van aparte)
-  // − 1 si es mujer, + el modificador de tamaño de la raza. Ficha, Principal!AO21.
+  // − 1 si es mujer, + el modificador de tamaño de la raza, + Tamaño no natural (±5 como
+  // mucho). Ficha, Principal!AO21, AQ21 y K6.
   const tamano = Math.min(
     raza?.raza === 'Jayán' ? 24 : 22,
     Math.max(
       1,
       caracteristicas.CON.base + caracteristicas.FUE.base - (personaje.sexo === 'Mujer' ? 1 : 0),
-    ) + (raza?.tamano ?? 0),
+    ) + (raza?.tamano ?? 0) + efectos.tamano,
   );
 
   const turnoNatural = derivar(
@@ -1038,10 +1264,11 @@ export function calcular(
         20 +
         (tamano >= 20 && (raza?.raza === 'Jayán' || raza?.raza === 'Turak') ? -10 : 0) +
         efectos.turno +
-        especial('turnoNatural'),
+        especial('turnoNatural') +
+        mitadSiResta,
       bonoAGI: caracteristicas.AGI.bono,
       bonoDES: caracteristicas.DES.bono,
-      turnoCategoria: Number(categoria?.turno ?? 0),
+      turnoCategoria: bonoPorNiveles('turno'),
       penalizadorNatural: penalizadorArmadura,
       turnoArma: 0,
     }),
@@ -1077,12 +1304,21 @@ export function calcular(
   // en 50 y Christopher en 40 sin haber invertido un solo PD) y el que da una ventaja por
   // nivel. Eso todavía no se deriva aquí; si tu personaje lo tiene, sobrescribe el valor
   // a mano como cualquier otro derivado.
+  // El innato sale de la Inteligencia: `PDs!W97` busca `Principal!AQ15` en Tabla_NivelMagia.
+  const intTotal = caracteristicas.INT.total;
+  const nivelInnato =
+    intTotal > 0
+      ? Number([...((tablas.nivelMagia as [number, number][] | undefined) ?? [])].reverse().find(([i]) => Number(i) <= intTotal)?.[1] ?? 0)
+      : 0;
   const nivelMagia = derivar(
     'NivelMagia',
     aplicar('nivelMagia', {
       pd: personaje.pdInvertidos['NivelMagia'] ?? 0,
       coste: COSTE_NIVEL_MAGIA,
-    }),
+      nivelInnato,
+      porNivel: efectos.nivelMagiaPorNivel,
+      nivel,
+    }) + (personaje.bonosEspeciales['NivelMagia'] ?? 0),
   );
 
   const esferasElegidas = personaje.metamagia ?? [];
@@ -1117,6 +1353,32 @@ export function calcular(
     gastado: metamagiaGastada,
     disponible: nivelMagia.valor - metamagiaGastada,
   };
+
+  /*
+   * Regeneración zeónica, lo que se recupera de Zeón cada día. `PDs!AA95` y `Místicos!I12`:
+   * el Múltiplo de regeneración —el ACT, +10 por cada esfera de Regeneración zeónica
+   * avanzada, y otra vez el ACT base por cada múltiplo comprado a medio coste de ACT—, que
+   * Recuperación superior de magia suma una vez más por grado. Lenta recuperación lo deja a
+   * la mitad y Magia estanca a cero; lo anotado a mano en ACT y en el múltiplo no se
+   * multiplica.
+   */
+  const esferasRegeneracion = esferasElegidas.filter(
+    (pos) => porPosicion.get(pos)?.habilidad === 'Regeneración zeónica avanzada',
+  ).length;
+  const costeMultiplo = costeACT / 2;
+  const multiplosComprados =
+    costeMultiplo > 0 ? Math.trunc((personaje.pdInvertidos['MultiploRegeneracion'] ?? 0) / costeMultiplo) * base : 0;
+  const especialACT = personaje.bonosEspeciales['ACT'] ?? 0;
+  const especialMultiplo = personaje.bonosEspeciales['MultiploRegeneracion'] ?? 0;
+  const multiploRegeneracion = act.valor + 10 * esferasRegeneracion + multiplosComprados + especialMultiplo;
+  const regeneracionZeonica = derivar(
+    'RegeneracionZeonica',
+    Math.trunc(
+      (multiploRegeneracion - especialACT - especialMultiplo) *
+        (1 + efectos.regeneracionZeonGrados) *
+        efectos.regeneracionZeonFactor,
+    ) + especialACT + especialMultiplo,
+  );
 
   // ── Dominios del Ki ──
   // Va después de las secundarias porque Detección y Ocultación se calculan sobre
@@ -1168,12 +1430,11 @@ export function calcular(
       nivel,
       pdTotales,
       /*
-       * `Mod_ATA` en la hoja: el modificador **a toda acción**, el que aparece cuando
-       * Llevar Armadura no llega al requerimiento. No el penalizador natural: Meirmeister
-       * lleva −20 de natural y su hoja le da la acumulación entera, 9, porque su Llevar
-       * Armadura cubre justo el requerimiento. Con el natural le quedaban 3.
+       * `Mod_ATA` en la hoja (`PDs!AA36`): el modificador **a toda acción** —cansancio,
+       * Endeble y lo anotado a mano—. Ni el penalizador natural ni el de no llegar al
+       * requerimiento, que es `Mod_Fisico` y la hoja no lo pone aquí.
        */
-      penalizadorArmadura: proteccion.penalizadorAccionFisica,
+      penalizadorArmadura: modificadorTodaAccion,
       advertir: secundarias['Advertir']?.valor ?? 0,
       ocultarse: secundarias['Ocultarse']?.valor ?? 0,
       especialDeteccion: especial('DeteccionKi'),
@@ -1191,8 +1452,16 @@ export function calcular(
   for (const texto of ki.avisos) avisos.push({ gravedad: 'aviso', mensaje: texto });
 
   // ── Puntos de Creación: ventajas contra desventajas ──
+  /**
+   * Las ventajas de una habilidad elegida se toman una vez por habilidad, y cada vez se
+   * paga (`Tablas!H284 = G284*F284`, con G contando las casillas).
+   */
+  const vecesTomada = (nombre: string) =>
+    (VENTAJAS_CON_HABILIDAD as readonly string[]).includes(nombre)
+      ? Math.max(1, Math.min(MAXIMO_HABILIDADES_POR_VENTAJA, (personaje.eleccionesVentajas?.[nombre] ?? []).filter(Boolean).length))
+      : 1;
   const costeDe = (nombre: string) =>
-    Math.abs(datos.ventajas.find((v) => v.nombre === nombre)?.coste ?? 0);
+    Math.abs(datos.ventajas.find((v) => v.nombre === nombre)?.coste ?? 0) * vecesTomada(nombre);
   // Los Legados de Sangre salen de los mismos Puntos de Creación que las ventajas. Cuando
   // el coste es un rango («1, 2 o 3») se cobra el mínimo: lo demás lo decide el jugador.
   const costeLegado = (nombre: string) => {
@@ -1268,10 +1537,39 @@ export function calcular(
   comprobarLimite('misticas', 'Habilidades místicas');
   comprobarLimite('psiquicas', 'Habilidades psíquicas');
 
-  if (personaje.habilidadesNaturales.length > 5) {
+  // Cinco Habilidades Naturales por nivel (PDs!AA186) y un Bonificador Natural físico y uno
+  // anímico por nivel, que las ventajas doblan o anulan (PDs!AA185).
+  const maxNaturales = 5 * Math.max(1, nivel);
+  if (personaje.habilidadesNaturales.length > maxNaturales) {
     avisos.push({
       gravedad: 'aviso',
-      mensaje: `Habilidades Naturales: has elegido ${personaje.habilidadesNaturales.length} y sólo se permiten 5.`,
+      mensaje:
+        `Habilidades Naturales: has elegido ${personaje.habilidadesNaturales.length} y a tu nivel ` +
+        `se permiten ${maxNaturales}.`,
+    });
+  }
+  const maxBonos = nivel === 0 ? 1 : nivel * efectos.factorBonosNaturales;
+  const FISICAS = new Set<string>(['AGI', 'DES', 'CON', 'FUE']);
+  const repartidos = { fisica: 0, animica: 0 };
+  for (const def of secundarias_) {
+    const n = bonosNaturales[def.nombre] ?? 0;
+    if (FISICAS.has(def.caracteristica)) repartidos.fisica += n;
+    else repartidos.animica += n;
+  }
+  for (const [tipo, n] of Object.entries(repartidos)) {
+    if (n > maxBonos) {
+      avisos.push({
+        gravedad: 'aviso',
+        mensaje:
+          `Bonificadores Naturales ${tipo === 'fisica' ? 'físicos' : 'anímicos'}: has puesto ${n} ` +
+          `y a tu nivel ${maxBonos === 0 ? 'no te corresponde ninguno' : `te corresponden ${maxBonos}`}.`,
+      });
+    }
+  }
+  for (const nombre of efectos.sinHabilidad) {
+    avisos.push({
+      gravedad: 'aviso',
+      mensaje: `${nombre}: elige a qué habilidad se aplica; mientras no la elijas no suma nada.`,
     });
   }
 
@@ -1306,8 +1604,15 @@ export function calcular(
     proyeccionMagica,
     proyeccionPsiquica,
     potencialPsiquico,
+    cv,
+    regeneracionZeonica,
+    regeneracion,
+    regeneracionTexto,
+    movimiento,
+    movimientoTexto,
     inventario,
     secundarias,
+    secundariasSinUso,
     efectos,
     puntosCreacion,
     combate: {

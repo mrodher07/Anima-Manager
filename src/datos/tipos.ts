@@ -95,6 +95,8 @@ export interface Secundaria {
   caracteristica: string;
   /** Si sufre el penalizador natural de la armadura. */
   fisica?: boolean;
+  /** Si sin formación no se puede usar: la hoja enseña «-» en vez de un −30. */
+  requiereFormacion?: boolean;
 }
 
 export interface Armadura {
@@ -106,6 +108,8 @@ export interface Armadura {
   presencia?: number;
   localizacion?: string;
   clase?: string;
+  /** Viene de la tabla de yelmos: va en la casilla de la cabeza, aparte del cuerpo. */
+  esYelmo?: boolean;
   FIL?: number; CON?: number; PEN?: number;
   CAL?: number; ELE?: number; FRI?: number; ENE?: number;
   _seccion?: string;
@@ -296,6 +300,13 @@ export interface TablasBase {
   /** Tabla 53: valor de característica → Acumulación de Ki base. */
   acumulacionKi: { valor: number; acumulacion: number }[];
   experienciaNecesaria: { nota: string; filas: (number | null)[][] };
+  /** Tabla_Regen: la CON da el nivel, y el nivel lo que se recupera. */
+  regeneracion?: {
+    porCON: [number, number][];
+    niveles: { nivel: number; cantidad: number | null; unidad: string; reduccion: string; especial: string | null }[];
+  };
+  /** Tabla_TipoMovimiento: lo que avanza por asalto cada Tipo de Movimiento. */
+  movimiento?: [number, string][];
   [tabla: string]: unknown;
 }
 

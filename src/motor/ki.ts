@@ -147,7 +147,7 @@ export interface AcumulacionPorCaracteristica {
   base: number;
   comprada: number;
   especial: number;
-  /** Lo que resta la armadura: −1 por cada 20 de penalizador. */
+  /** Lo que resta el modificador a toda acción: −1 por cada 20. */
   penalizadorArmadura: number;
   total: number;
   /** La mitad, redondeada hacia arriba: lo que queda si haces algo más ese asalto. */
@@ -292,7 +292,7 @@ export function calcularKi(
   });
 
   // ── Acumulaciones ──
-  // La armadura resta 1 por cada 20 de penalizador a toda acción, truncando hacia cero.
+  // El modificador a toda acción resta 1 por cada 20, truncando hacia cero (PDs!AA36).
   const penalizadorArmadura =
     ctx.penalizadorArmadura < 0 ? Math.min(0, Math.trunc(ctx.penalizadorArmadura / 20)) : 0;
 

@@ -16,7 +16,7 @@ interface Props<T> {
 }
 
 /**
- * Selector con búsqueda para listas largas: 292 ventajas, 640 conjuros, 125 poderes.
+ * Selector con búsqueda para listas largas: 284 ventajas, 640 conjuros, 125 poderes.
  * Muestra primero lo ya elegido para que no se pierda de vista al filtrar.
  */
 export function Selector<T>({
