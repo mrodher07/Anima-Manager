@@ -273,6 +273,7 @@ export function EditorSheele({
                       <small style={{ display: 'block', color: 'var(--texto-debil)' }}>
                         {String(m.grupo ?? '')}
                         {m.zeon && m.zeon !== '-' ? ` · Zeon ${m.zeon}` : ''}
+                        {m.proyeccion && m.proyeccion !== '-' ? ` · Proyección ${m.proyeccion}` : ''}
                         {m.dano && m.dano !== '-' ? ` · Daño ${m.dano}` : ''}
                         {m.efecto ? ` · ${m.efecto}` : ''}
                       </small>

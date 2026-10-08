@@ -6,6 +6,7 @@
  */
 
 import { Reglamento, REGLAMENTO_OFICIAL } from './reglamento';
+import { evaluar } from './expresiones';
 import { tirarD100, type Aleatorio, type Tirada, azarReal } from './dados';
 import type { Arma, Armadura, TablasBase } from '../datos/tipos';
 
@@ -34,6 +35,9 @@ export interface ArmaEquipada {
   escala?: EscalaArma;
   /** Conocimiento del personaje sobre el arma. Modifica ataque y parada. */
   conocimiento?: 'Conocida' | 'Similar' | 'Mixta' | 'Distinta';
+  /** Lo que dispara un arma de proyectiles: una fila de munición del catálogo. */
+  municion?: string;
+  calidadMunicion?: number;
 }
 
 /** Penalizadores por usar un arma que no se domina. Core Exxet, cap. 7. */
@@ -101,7 +105,11 @@ export function combinarArmadura(
   piezas: PiezaEquipada[],
   catalogo: Armadura[],
   llevarArmadura: number,
-  capaNatural: Partial<Record<TipoDano, number>> = {},
+  /**
+   * Las capas naturales que no son piezas: Armadura natural, las escamas del Turak, la
+   * Armadura de energía del Ki… Cada una es una capa aparte (`Combate!AY21:BE27`).
+   */
+  capasNaturales: Partial<Record<TipoDano, number>>[] | Partial<Record<TipoDano, number>> = [],
 ): ProteccionTotal {
   const cero = () => Object.fromEntries(TIPOS_DANO.map((t) => [t, 0])) as Record<TipoDano, number>;
   const TA = cero();
@@ -144,8 +152,10 @@ export function combinarArmadura(
       (datos.clase === 'Dura' ? duras : blandas).push(ta);
     }
   }
-  if (TIPOS_DANO.some((t) => (capaNatural[t] ?? 0) > 0)) {
-    naturales.push(Object.fromEntries(TIPOS_DANO.map((t) => [t, capaNatural[t] ?? 0])) as Record<TipoDano, number>);
+  for (const capa of Array.isArray(capasNaturales) ? capasNaturales : [capasNaturales]) {
+    if (TIPOS_DANO.some((t) => (capa[t] ?? 0) > 0)) {
+      naturales.push(Object.fromEntries(TIPOS_DANO.map((t) => [t, capa[t] ?? 0])) as Record<TipoDano, number>);
+    }
   }
 
   for (const t of TIPOS_DANO) {
@@ -180,8 +190,26 @@ export interface HabilidadesArma {
   ataque: number;
   parada: number;
   esquiva: number;
+  /**
+   * La defensa que la hoja pone con esta arma: la Parada si es mayor que la Esquiva, si no
+   * la Esquiva (`Combate!J29`, `K29`).
+   */
+  defensa: number;
+  tipoDefensa: 'Parada' | 'Esquiva';
   dano: number;
   criticos: string[];
+  /** «-» si el arma no tiene (Umbra). `Combate!E31`. */
+  entereza: number | string;
+  /** «-» si el arma no tiene (las de asedio). `Combate!F31`. */
+  rotura: number | string;
+  presencia: number | string;
+  /** Cómo la conoce el personaje, después de mirar si tiene el Ars Magnus que pide. */
+  conocimiento: NonNullable<ArmaEquipada['conocimiento']>;
+  /**
+   * Falso si no se puede empuñar así (un arma de dos manos a una, una fila de munición…):
+   * la hoja deja a 0 lo que no puede calcular.
+   */
+  utilizable: boolean;
   /** Avisos, por ejemplo si no se llega a la FUE requerida. */
   avisos: string[];
 }
@@ -190,14 +218,77 @@ export interface ContextoCombate {
   bonoFUE: number;
   FUE: number;
   tamano: number;
+  /** El Turno sin los +20 de ir desarmado: la hoja los quita al coger un arma (`Combate!AW40`). */
   turnoNatural: number;
   HAtaque: number;
   HParada: number;
   HEsquiva: number;
   tablas: TablasBase;
+  /** Bono de cada característica, para las armas que no suman el de FUE (Umbra, Piscis). */
+  bonos?: Partial<Record<string, number>>;
+  /** Valor de cada característica, para las fórmulas de daño (Atlatl: FUE + 2). */
+  valores?: Partial<Record<string, number>>;
+  /** Presencia del personaje: la de algunas armas del Zodiaco y el daño de Umbra. */
+  presencia?: number;
+  raza?: string;
+  legados?: string[];
+  /** Ars Magnus que tiene: sin el suyo, un arma del Zodiaco es Distinta. */
+  arsMagnus?: string[];
+  /** Habilidades del Ki: Daño incrementado y Extensión del aura al arma suman al arma. */
+  habilidadesKi?: string[];
 }
 
-/** Calcula las habilidades del personaje con un arma concreta. */
+/** Lo que la hoja hace con IFERROR: lo que no se puede calcular sale 0. */
+const oCero = (x: number) => (Number.isFinite(x) ? x : 0);
+
+/** Un valor de la tabla de armas: «-» o un texto no es un número, y lo que lo use tampoco. */
+function cifra(v: unknown): number {
+  if (v === undefined || v === null || v === '') return 0;
+  return typeof v === 'number' ? v : Number.NaN;
+}
+
+/** El bono de una característica de valor `x`, como `VLOOKUP(x, Tabla_BonoStats, 2)`. */
+function bonoDe(tablas: TablasBase, x: number, exacto = false): number {
+  const filas = tablas.bonoCaracteristica ?? [];
+  if (exacto) return filas.find((f) => f.valor === x)?.bono ?? Number.NaN;
+  let bono = Number.NaN;
+  for (const f of filas) if (f.valor <= x) bono = f.bono;
+  return bono;
+}
+
+/** La fila de la tabla de creación de seres que toca a un Tamaño. */
+function filaTamano(tablas: TablasBase, tamano: number) {
+  let fila: NonNullable<TablasBase['creacionSeres']>[number] | undefined;
+  for (const f of tablas.creacionSeres ?? []) if (f.tamano <= tamano) fila = f;
+  return fila;
+}
+
+/**
+ * Las Armas naturales con los números del que las tiene: su raza (o el Legado de Sangre,
+ * que manda) y su Tamaño. `Tablas!E639:N639`.
+ */
+function conArmaNatural(datos: Arma, ctx: ContextoCombate, avisos: string[]): Arma {
+  const filas = ctx.tablas.armasNaturales ?? [];
+  const propia =
+    filas.find((f) => f.legado && ctx.legados?.includes(f.legado)) ??
+    filas.find((f) => f.raza && f.raza === ctx.raza);
+  const porTamano = filaTamano(ctx.tablas, ctx.tamano);
+  if (!propia) avisos.push('Armas naturales no disponibles para su raza: la hoja les pone daño 0.');
+  return {
+    ...datos,
+    dano: propia ? (propia.dano === 'tamaño' ? (porTamano?.armaNatural ?? 0) : propia.dano) : 0,
+    critico1: propia?.critico1 ?? '-',
+    critico2: propia?.critico2 ?? '-',
+    tipoArma: propia?.tipoArma ?? datos.tipoArma,
+    entereza: propia?.entereza ?? porTamano?.entereza,
+    rotura: propia?.rotura ?? porTamano?.rotura,
+  };
+}
+
+/**
+ * Calcula las habilidades del personaje con un arma concreta, como la pestaña Combate de la
+ * hoja de la comunidad (v8.7.0, `Combate!AW40:AW46` y `C31:G31`).
+ */
 export function calcularArma(
   equipada: ArmaEquipada,
   catalogo: Arma[],
@@ -205,65 +296,167 @@ export function calcularArma(
   reglamento: Reglamento = REGLAMENTO_OFICIAL,
 ): HabilidadesArma {
   const avisos: string[] = [];
-  const datos = catalogo.find((a) => a.arma === equipada.arma);
-  if (!datos) {
+  const encontrada = catalogo.find((a) => a.arma === equipada.arma);
+  if (!encontrada) {
     return {
       arma: equipada.arma,
-      turno: 0, ataque: 0, parada: 0, esquiva: ctx.HEsquiva, dano: 0,
-      criticos: [],
+      turno: 0, ataque: 0, parada: 0, esquiva: ctx.HEsquiva, defensa: 0, tipoDefensa: 'Esquiva',
+      dano: 0, criticos: [], entereza: 0, rotura: 0, presencia: 0,
+      conocimiento: equipada.conocimiento ?? 'Conocida', utilizable: false,
       avisos: [`Arma desconocida: "${equipada.arma}".`],
     };
   }
+  // Las Armas naturales salen de la raza; su munición, del arma (`Tablas!I793:N793`), con
+  // daño 0.
+  const datos = !encontrada.porRaza
+    ? encontrada
+    : encontrada.arma === 'Armas naturales'
+      ? conArmaNatural(encontrada, ctx, avisos)
+      : { ...conArmaNatural(encontrada, ctx, []), dano: 0, tipoArma: encontrada.tipoArma };
 
   const calidad = equipada.calidad ?? 0;
   const aDosManos = equipada.aDosManos ?? false;
-  const conocimiento = equipada.conocimiento ?? 'Conocida';
+  const esVirgo = datos.arma.includes('Virgo');
+  const calidadQueSuma = esVirgo ? 0 : calidad;
+  const esEscudo = (datos.tipoArma ?? '').includes('Escudo');
+  const habilidadKi = (n: string) => ctx.habilidadesKi?.includes(n) ?? false;
+  const extensionAura = habilidadKi('Extensión del aura al arma');
+
+  // Las armas del Zodiaco sólo se conocen con su Ars Magnus.
+  let conocimiento = equipada.conocimiento ?? 'Conocida';
+  if (datos.requiereArsMagnus?.length && !datos.requiereArsMagnus.some((a) => ctx.arsMagnus?.includes(a))) {
+    conocimiento = 'Distinta';
+    avisos.push(`Sin el Ars Magnus (${datos.requiereArsMagnus.join(' o ')}) es un arma Distinta.`);
+  } else if (datos.requiereArmas && conocimiento === 'Conocida') {
+    avisos.push(`Para que sea Conocida la hoja pide además conocer ${datos.requiereArmas}.`);
+  }
 
   // Armas Enormes o Gigantes: multiplican el daño pero exigen más Fuerza y Tamaño.
   const escala = equipada.escala ?? 'Normal';
-  const filaTamano = ctx.tablas.armasEnormes?.find((f) => f.tamano === escala);
-  const multTamano = filaTamano?.multDano ?? 1;
-  const penTamano = filaTamano?.penFUE ?? 0;
-
-  const tamanoInsuficiente = escala !== 'Normal' && ctx.tamano < (filaTamano?.tamanoMin ?? 0);
+  const filaEscala = ctx.tablas.armasEnormes?.find((f) => f.tamano === escala);
+  const multTamano = filaEscala?.multDano ?? 1;
+  const penTamano = filaEscala?.penFUE ?? 0;
+  const tamanoInsuficiente = escala !== 'Normal' && ctx.tamano < (filaEscala?.tamanoMin ?? 0);
   if (tamanoInsuficiente) {
     avisos.push(
-      `Tu Tamaño (${ctx.tamano}) no llega al mínimo del arma ${escala} (${filaTamano?.tamanoMin}): −40 al turno.`,
+      `Tu Tamaño (${ctx.tamano}) no llega al mínimo del arma ${escala} (${filaEscala?.tamanoMin}): −40 al turno.`,
     );
   }
 
-  const fueRequerida = (aDosManos ? datos.fueReq2M : datos.fueRequerida) ?? 0;
+  // «-» en la FUE requerida: así no se puede empuñar, y la hoja deja ataque y defensa a 0.
+  const fueRequerida = cifra(aDosManos ? datos.fueReq2M : datos.fueRequerida);
   const faltaFUE = Math.min(0, 10 * (ctx.FUE - fueRequerida - penTamano));
   if (faltaFUE < 0) {
     avisos.push(`Te falta Fuerza para esta arma (requiere ${fueRequerida + penTamano}): ${faltaFUE} al ataque.`);
   }
+  const esMunicion = (datos.tipoArma ?? '').startsWith('Munición');
+  const utilizable = Number.isFinite(faltaFUE) && !esMunicion;
+  if (!utilizable) {
+    avisos.push(
+      esMunicion
+        ? 'Es munición: va en un arma de proyectiles.'
+        : `No se puede empuñar ${aDosManos ? 'a dos manos' : 'a una mano'}.`,
+    );
+  }
 
-  const penConocimiento = PENALIZADOR_CONOCIMIENTO[conocimiento] ?? 0;
-  const penTamanoTurno = tamanoInsuficiente ? -40 : 0;
+  // Una fila de munición no tiene casilla de conocimiento: sin ella la hoja no saca ni
+  // ataque ni defensa (`Combate!C29`).
+  const penConocimiento = esMunicion ? Number.NaN : (PENALIZADOR_CONOCIMIENTO[conocimiento] ?? 0);
+  // La Lanza y la Vara a una mano: −10 al ataque (`Combate!AW42`).
+  const lanzaUnaMano = (datos.arma === 'Lanza' || datos.arma === 'Vara') && !aDosManos ? -10 : 0;
 
-  const turno = ctx.turnoNatural + (datos.turno ?? 0) + calidad + penTamanoTurno;
-  const ataque = ctx.HAtaque + penConocimiento + calidad + faltaFUE;
-  const parada = ctx.HParada + penConocimiento + calidad + faltaFUE + (datos.bonusParada ?? 0);
-  const esquiva = ctx.HEsquiva + (datos.bonusEsquiva ?? 0);
+  // El turno de la hoja ya lleva los +20 de ir desarmado: un arma los quita, un escudo no.
+  const turno =
+    ctx.turnoNatural + (esEscudo ? 20 : 0) + calidad + cifra(datos.turno) + (tamanoInsuficiente ? -40 : 0);
+  const ataque = ctx.HAtaque + penConocimiento + calidadQueSuma + faltaFUE + lanzaUnaMano;
+  const parada = ctx.HParada + calidadQueSuma + cifra(datos.bonusParada) + penConocimiento + faltaFUE;
+  const esquiva = ctx.HEsquiva + cifra(datos.bonusEsquiva);
+
+  // ── Daño ──
+  // Lo que la Tabla de Fuerza suma a la rotura (`Tablas!G14:J33`).
+  const roturaFUE = ctx.FUE === 0 ? 0 : (
+    [...(ctx.tablas.fuerza ?? [])].reverse().find((f) => f.valor <= ctx.FUE)?.bonoRotura ?? 0
+  );
+  const variables = {
+    FUE: ctx.valores?.FUE ?? ctx.FUE,
+    POD: ctx.valores?.POD ?? 0,
+    bonoFUE: ctx.bonoFUE,
+    bonoPOD: ctx.bonos?.POD ?? 0,
+    presencia: ctx.presencia ?? 0,
+    roturaFUE,
+  };
+  const funciones = { bono: (x: number) => bonoDe(ctx.tablas, x) };
+  const evaluarArma = (formula: string | undefined, valor: unknown) => {
+    if (!formula) return cifra(valor);
+    try {
+      return evaluar(formula, variables, funciones);
+    } catch {
+      avisos.push(`No se puede calcular «${formula}».`);
+      return Number.NaN;
+    }
+  };
+  const fuerzaArma = evaluarArma(datos.fuerzaFormula, datos.fuerza);
+  const atributo = datos.atributoDano ?? 'FUE';
+  const bonoAtributo =
+    atributo === 'ninguno' ? 0
+      : atributo === 'propia' ? bonoDe(ctx.tablas, fuerzaArma)
+        : atributo === 'FUE' ? ctx.bonoFUE
+          : (ctx.bonos?.[atributo] ?? 0);
+
+  const municion = equipada.municion ? catalogo.find((a) => a.arma === equipada.municion) : undefined;
+  if (equipada.municion && !municion) avisos.push(`Munición desconocida: "${equipada.municion}".`);
+  if (municion && datos.municiones && !datos.municiones.includes(municion.arma)) {
+    avisos.push(`${municion.arma} no es munición de ${datos.arma}.`);
+  }
+  const calidadMunicion = equipada.calidadMunicion ?? 0;
+  const extras = (habilidadKi('Daño incrementado') ? 10 : 0) + (extensionAura ? 10 : 0);
 
   const dano = reglamento.aplicar('danoArma', {
-    danoBase: datos.dano ?? 0,
-    danoMunicion: 0,
+    danoBase: evaluarArma(datos.danoFormula, datos.dano),
+    danoMunicion: municion ? cifra(municion.dano) : 0,
     multTamano,
-    bonoFUE: ctx.bonoFUE,
+    bonoFUE: bonoAtributo,
     aDosManos,
-    calidad,
-    extras: 0,
+    calidad: calidadQueSuma,
+    conMunicion: !!municion,
+    // Con munición, la Fuerza del arma (la Ballesta tira con la suya) más su calidad / 5.
+    bonoMunicion: fuerzaArma === 0 ? bonoAtributo : bonoDe(ctx.tablas, fuerzaArma + calidad / 5, true),
+    calidadMunicion,
+    extras,
   });
 
+  // ── Entereza, rotura y presencia (`Combate!E31:G31`) ──
+  const entereza = Math.max(0, (extensionAura ? 10 : 0) + calidad * 2 + cifra(datos.entereza) + (filaEscala?.enterezaExtra ?? 0));
+  const rotura =
+    (extensionAura ? 5 : 0) + (calidad * 2) / 5 + evaluarArma(datos.roturaFormula, datos.rotura) +
+    (filaEscala?.roturaExtra ?? 0) + roturaFUE + (ctx.legados?.includes('Ojos de la Muerte') ? 5 : 0);
+  const presenciaArma = evaluarArma(datos.presenciaFormula, datos.presencia);
+  const presencia =
+    (datos.arma === 'Ophiucos' ? 0 : Math.max((esVirgo || datos.arma === 'Umbra' ? 0 : calidad) * 10, 0)) +
+    presenciaArma;
+
+  const paradaFinal = oCero(parada);
+  const esquivaFinal = oCero(esquiva);
+  const tipoDefensa = parada > esquiva ? 'Parada' : 'Esquiva';
   return {
     arma: datos.arma,
-    turno,
-    ataque,
-    parada,
-    esquiva,
-    dano,
-    criticos: [datos.critico1, datos.critico2].filter((c): c is string => !!c && c !== '-'),
+    turno: oCero(turno),
+    ataque: oCero(ataque),
+    parada: paradaFinal,
+    esquiva: esquivaFinal,
+    defensa:
+      !Number.isFinite(parada) || !Number.isFinite(esquiva) ? 0
+        : tipoDefensa === 'Parada' ? paradaFinal : esquivaFinal,
+    tipoDefensa,
+    dano: oCero(dano),
+    criticos: [municion?.critico1 ?? datos.critico1, municion?.critico2 ?? datos.critico2].filter(
+      (c): c is string => !!c && c !== '-',
+    ),
+    entereza: Number.isFinite(entereza) ? entereza : '-',
+    rotura: Number.isFinite(rotura) ? rotura : '-',
+    presencia: Number.isFinite(presencia) ? presencia : '-',
+    conocimiento,
+    utilizable,
     avisos,
   };
 }

@@ -2,28 +2,23 @@
  {
   "arma": "Desarmado",
   "tipoArma": "Natural/-",
-  "conocida": "Distinta",
-  "tamano": "Pequeña",
-  "turno": 20,
-  "_nota": "Turno +20: desglose de iniciativa de la ficha (sin arma). La fila del Excel viene vacía porque la hoja resuelve el combate sin arma aparte."
+  "tamano": "Pequeña"
  },
  {
   "arma": "Armas naturales",
-  "dano": 60,
   "turno": 20,
   "fueRequerida": 0,
   "fueReq2M": 0,
-  "critico1": "FIL",
-  "critico2": "PEN",
   "tipoArma": "Natural/-",
-  "conocida": "Distinta",
-  "entereza": 16,
-  "rotura": 4,
-  "presencia": 30,
   "recarga": "-",
   "alcance": 0,
-  "fuerza": 12,
-  "tamano": "Mediana"
+  "tamano": "Mediana",
+  "presenciaFormula": "presencia",
+  "fuerzaFormula": "FUE",
+  "municiones": [
+   "Munición natural"
+  ],
+  "porRaza": true
  },
  {
   "arma": "Alabarda",
@@ -34,7 +29,6 @@
   "critico1": "FIL",
   "critico2": "CON",
   "tipoArma": "Asta/Mandoble",
-  "conocida": "Mixta",
   "entereza": 15,
   "rotura": 4,
   "presencia": 20,
@@ -54,7 +48,6 @@
   "critico1": "PEN",
   "critico2": "-",
   "tipoArma": "Asta/-",
-  "conocida": "Distinta",
   "entereza": 11,
   "rotura": 0,
   "presencia": 15,
@@ -74,7 +67,6 @@
   "critico1": "CON",
   "critico2": "-",
   "tipoArma": "Asta/-",
-  "conocida": "Distinta",
   "entereza": 10,
   "rotura": -1,
   "presencia": 15,
@@ -94,7 +86,6 @@
   "critico1": "PEN",
   "critico2": "CON",
   "tipoArma": "Asta/Maza",
-  "conocida": "Distinta",
   "entereza": 12,
   "rotura": 2,
   "presencia": 20,
@@ -114,7 +105,6 @@
   "critico1": "FIL",
   "critico2": "CON",
   "tipoArma": "Asta/-",
-  "conocida": "Distinta",
   "entereza": 12,
   "rotura": 4,
   "presencia": 20,
@@ -134,7 +124,6 @@
   "critico1": "CON",
   "critico2": "-",
   "tipoArma": "Lanzamiento/-",
-  "conocida": "Distinta",
   "entereza": 10,
   "rotura": 2,
   "presencia": 15,
@@ -154,7 +143,6 @@
   "critico1": "CON",
   "critico2": "-",
   "tipoArma": "Lanzamiento/-",
-  "conocida": "Distinta",
   "entereza": 6,
   "rotura": 2,
   "presencia": 15,
@@ -174,7 +162,6 @@
   "critico1": "FIL",
   "critico2": "-",
   "tipoArma": "Espada/-",
-  "conocida": "Distinta",
   "entereza": 15,
   "rotura": 4,
   "presencia": 20,
@@ -194,7 +181,6 @@
   "critico1": "PEN",
   "critico2": "CON",
   "tipoArma": "Asta/-",
-  "conocida": "Distinta",
   "entereza": 9,
   "rotura": 3,
   "presencia": 25,
@@ -214,7 +200,6 @@
   "critico1": "CON",
   "critico2": "-",
   "tipoArma": "Cuerda/-",
-  "conocida": "Distinta",
   "entereza": 13,
   "rotura": 2,
   "presencia": 15,
@@ -234,7 +219,6 @@
   "critico1": "PEN",
   "critico2": "FIL",
   "tipoArma": "Corta/-",
-  "conocida": "Distinta",
   "entereza": 11,
   "rotura": -2,
   "presencia": 15,
@@ -254,7 +238,6 @@
   "critico1": "CON",
   "critico2": "-",
   "tipoArma": "Maza/-",
-  "conocida": "Distinta",
   "entereza": 13,
   "rotura": 3,
   "presencia": 15,
@@ -274,7 +257,6 @@
   "critico1": "FIL",
   "critico2": "-",
   "tipoArma": "Espada/-",
-  "conocida": "Distinta",
   "entereza": 13,
   "rotura": 4,
   "presencia": 20,
@@ -294,7 +276,6 @@
   "critico1": "PEN",
   "critico2": "FIL",
   "tipoArma": "Corta/-",
-  "conocida": "Distinta",
   "entereza": 12,
   "rotura": 0,
   "presencia": 20,
@@ -314,7 +295,6 @@
   "critico1": "FIL",
   "critico2": "CON",
   "tipoArma": "Mandoble/-",
-  "conocida": "Mixta",
   "entereza": 16,
   "rotura": 5,
   "presencia": 25,
@@ -334,7 +314,6 @@
   "critico1": "PEN",
   "critico2": "FIL",
   "tipoArma": "Corta/-",
-  "conocida": "Distinta",
   "entereza": 10,
   "rotura": -2,
   "presencia": 15,
@@ -354,7 +333,6 @@
   "critico1": "PEN",
   "critico2": "FIL",
   "tipoArma": "Corta/-",
-  "conocida": "Distinta",
   "entereza": 12,
   "rotura": 0,
   "presencia": 20,
@@ -374,7 +352,6 @@
   "critico1": "PEN",
   "critico2": "-",
   "tipoArma": "Lanzamiento/-",
-  "conocida": "Distinta",
   "entereza": 3,
   "rotura": -4,
   "presencia": 15,
@@ -394,7 +371,6 @@
   "critico1": "PEN",
   "critico2": "-",
   "tipoArma": "Corta/-",
-  "conocida": "Distinta",
   "entereza": 10,
   "rotura": -2,
   "presencia": 15,
@@ -414,7 +390,6 @@
   "critico1": "FIL",
   "critico2": "PEN",
   "tipoArma": "Corta/-",
-  "conocida": "Distinta",
   "entereza": 14,
   "rotura": 4,
   "presencia": 20,
@@ -434,7 +409,6 @@
   "critico1": "FIL",
   "critico2": "CON",
   "tipoArma": "Mandoble/-",
-  "conocida": "Mixta",
   "entereza": 18,
   "rotura": 6,
   "presencia": 30,
@@ -454,7 +428,6 @@
   "critico1": "FIL",
   "critico2": "-",
   "tipoArma": "Espada/-",
-  "conocida": "Distinta",
   "entereza": 15,
   "rotura": 3,
   "presencia": 25,
@@ -474,7 +447,6 @@
   "critico1": "FIL",
   "critico2": "CON",
   "tipoArma": "Espada/Mandoble",
-  "conocida": "Mixta",
   "entereza": 15,
   "rotura": 5,
   "presencia": 25,
@@ -494,7 +466,6 @@
   "critico1": "PEN",
   "critico2": "FIL",
   "tipoArma": "Corta/-",
-  "conocida": "Distinta",
   "entereza": 12,
   "rotura": 1,
   "presencia": 20,
@@ -514,7 +485,6 @@
   "critico1": "FIL",
   "critico2": "-",
   "tipoArma": "Espada/-",
-  "conocida": "Distinta",
   "entereza": 13,
   "rotura": 3,
   "presencia": 25,
@@ -534,7 +504,6 @@
   "critico1": "PEN",
   "critico2": "-",
   "tipoArma": "Corta/-",
-  "conocida": "Distinta",
   "entereza": 8,
   "rotura": -3,
   "presencia": 15,
@@ -554,7 +523,6 @@
   "critico1": "PEN",
   "critico2": "FIL",
   "tipoArma": "Espada/-",
-  "conocida": "Distinta",
   "entereza": 11,
   "rotura": 2,
   "presencia": 20,
@@ -574,7 +542,6 @@
   "critico1": "FIL",
   "critico2": "-",
   "tipoArma": "Espada/Hacha",
-  "conocida": "Mixta",
   "entereza": 12,
   "rotura": 5,
   "presencia": 20,
@@ -594,7 +561,6 @@
   "critico1": "PEN",
   "critico2": "-",
   "tipoArma": "Espada/Corta",
-  "conocida": "Distinta",
   "entereza": 9,
   "rotura": -2,
   "presencia": 20,
@@ -614,7 +580,6 @@
   "critico1": "PEN",
   "critico2": "-",
   "tipoArma": "Corta/-",
-  "conocida": "Distinta",
   "entereza": 11,
   "rotura": -2,
   "presencia": 15,
@@ -634,7 +599,6 @@
   "critico1": "CON",
   "critico2": "-",
   "tipoArma": "Maza/-",
-  "conocida": "Distinta",
   "entereza": 11,
   "rotura": -2,
   "presencia": 15,
@@ -654,7 +618,6 @@
   "critico1": "PEN",
   "critico2": "FIL",
   "tipoArma": "Asta/-",
-  "conocida": "Distinta",
   "entereza": 12,
   "rotura": 1,
   "presencia": 20,
@@ -674,7 +637,6 @@
   "critico1": "PEN",
   "critico2": "CON",
   "tipoArma": "Asta/-",
-  "conocida": "Distinta",
   "entereza": 10,
   "rotura": 2,
   "presencia": 20,
@@ -694,7 +656,6 @@
   "critico1": "FIL",
   "critico2": "-",
   "tipoArma": "Mandoble/-",
-  "conocida": "Mixta",
   "entereza": 12,
   "rotura": 3,
   "presencia": 20,
@@ -714,7 +675,6 @@
   "critico1": "CON",
   "critico2": "-",
   "tipoArma": "Maza/-",
-  "conocida": "Distinta",
   "entereza": 16,
   "rotura": 6,
   "presencia": 20,
@@ -734,7 +694,6 @@
   "critico1": "FIL",
   "critico2": "CON",
   "tipoArma": "Asta/Mandoble",
-  "conocida": "Mixta",
   "entereza": 12,
   "rotura": 2,
   "presencia": 25,
@@ -754,7 +713,6 @@
   "critico1": "FIL",
   "critico2": "PEN",
   "tipoArma": "Asta/-",
-  "conocida": "Distinta",
   "entereza": 13,
   "rotura": 3,
   "presencia": 20,
@@ -774,7 +732,6 @@
   "critico1": "FIL",
   "critico2": "CON",
   "tipoArma": "Hacha/Mandoble",
-  "conocida": "Conocida",
   "entereza": 17,
   "rotura": 7,
   "presencia": 30,
@@ -794,7 +751,6 @@
   "critico1": "FIL",
   "critico2": "CON",
   "tipoArma": "Hacha/-",
-  "conocida": "Mixta",
   "entereza": 15,
   "rotura": 5,
   "presencia": 25,
@@ -814,7 +770,6 @@
   "critico1": "FIL",
   "critico2": "-",
   "tipoArma": "Hacha/-",
-  "conocida": "Mixta",
   "entereza": 13,
   "rotura": 4,
   "presencia": 15,
@@ -834,7 +789,6 @@
   "critico1": "FIL",
   "critico2": "CON",
   "tipoArma": "Corta/-",
-  "conocida": "Distinta",
   "entereza": 10,
   "rotura": -2,
   "presencia": 20,
@@ -854,7 +808,6 @@
   "critico1": "PEN",
   "critico2": "-",
   "tipoArma": "Asta/-",
-  "conocida": "Distinta",
   "entereza": 10,
   "rotura": -2,
   "presencia": 20,
@@ -874,7 +827,6 @@
   "critico1": "FIL",
   "critico2": "-",
   "tipoArma": "Corta/-",
-  "conocida": "Distinta",
   "entereza": 13,
   "rotura": 2,
   "presencia": 20,
@@ -894,7 +846,6 @@
   "critico1": "FIL",
   "critico2": "CON",
   "tipoArma": "Corta/-",
-  "conocida": "Distinta",
   "entereza": 10,
   "rotura": -2,
   "presencia": 15,
@@ -914,7 +865,6 @@
   "critico1": "PEN",
   "critico2": "-",
   "tipoArma": "Espada/-",
-  "conocida": "Distinta",
   "entereza": 9,
   "rotura": 2,
   "presencia": 20,
@@ -934,7 +884,6 @@
   "critico1": "FIL",
   "critico2": "-",
   "tipoArma": "Corta/-",
-  "conocida": "Distinta",
   "entereza": 12,
   "rotura": 3,
   "presencia": 20,
@@ -954,7 +903,6 @@
   "critico1": "PEN",
   "critico2": "-",
   "tipoArma": "Asta/-",
-  "conocida": "Distinta",
   "entereza": 13,
   "rotura": 2,
   "presencia": 25,
@@ -974,7 +922,6 @@
   "critico1": "PEN",
   "critico2": "-",
   "tipoArma": "Asta/-",
-  "conocida": "Distinta",
   "entereza": 12,
   "rotura": 7,
   "presencia": 25,
@@ -994,7 +941,6 @@
   "critico1": "FIL",
   "critico2": "CON",
   "tipoArma": "Cuerda/-",
-  "conocida": "Distinta",
   "entereza": 9,
   "rotura": -3,
   "presencia": 20,
@@ -1007,14 +953,12 @@
  },
  {
   "arma": "Lazo",
-  "dano": -35,
   "turno": 10,
   "fueRequerida": "-",
   "fueReq2M": 4,
   "critico1": "CON",
   "critico2": "-",
   "tipoArma": "Cuerda/-",
-  "conocida": "Distinta",
   "entereza": 9,
   "rotura": -4,
   "presencia": 20,
@@ -1023,7 +967,8 @@
   "alcance": "-",
   "especial": "Compleja, Presa (FUE 9), Ver",
   "tamano": "Mediana",
-  "_seccion": "ARMAS COMUNES"
+  "_seccion": "ARMAS COMUNES",
+  "danoFormula": "5 - bonoFUE * 2"
  },
  {
   "arma": "Liu Xing Chui",
@@ -1034,7 +979,6 @@
   "critico1": "CON",
   "critico2": "-",
   "tipoArma": "Cuerda/-",
-  "conocida": "Distinta",
   "entereza": 8,
   "rotura": 1,
   "presencia": 15,
@@ -1054,7 +998,6 @@
   "critico1": "FIL",
   "critico2": "-",
   "tipoArma": "Corta/-",
-  "conocida": "Distinta",
   "entereza": 12,
   "rotura": 5,
   "presencia": 15,
@@ -1074,7 +1017,6 @@
   "critico1": "CON",
   "critico2": "-",
   "tipoArma": "Maza/Mandoble",
-  "conocida": "Mixta",
   "entereza": 14,
   "rotura": 6,
   "presencia": 20,
@@ -1094,7 +1036,6 @@
   "critico1": "CON",
   "critico2": "-",
   "tipoArma": "Maza/-",
-  "conocida": "Distinta",
   "entereza": 15,
   "rotura": 4,
   "presencia": 15,
@@ -1114,7 +1055,6 @@
   "critico1": "CON",
   "critico2": "-",
   "tipoArma": "Maza/Cuerda",
-  "conocida": "Distinta",
   "entereza": 13,
   "rotura": 4,
   "presencia": 15,
@@ -1134,7 +1074,6 @@
   "critico1": "CON",
   "critico2": "-",
   "tipoArma": "Maza/-",
-  "conocida": "Distinta",
   "entereza": 14,
   "rotura": 4,
   "presencia": 20,
@@ -1154,7 +1093,6 @@
   "critico1": "CON",
   "critico2": "-",
   "tipoArma": "Maza/-",
-  "conocida": "Distinta",
   "entereza": 14,
   "rotura": 4,
   "presencia": 15,
@@ -1174,7 +1112,6 @@
   "critico1": "CON",
   "critico2": "-",
   "tipoArma": "Maza/Mandoble",
-  "conocida": "Mixta",
   "entereza": 16,
   "rotura": 5,
   "presencia": 15,
@@ -1194,7 +1131,6 @@
   "critico1": "PEN",
   "critico2": "FIL",
   "tipoArma": "Mandoble/-",
-  "conocida": "Mixta",
   "entereza": 18,
   "rotura": 5,
   "presencia": 25,
@@ -1214,7 +1150,6 @@
   "critico1": "FIL",
   "critico2": "PEN",
   "tipoArma": "Corta/-",
-  "conocida": "Distinta",
   "entereza": 13,
   "rotura": 2,
   "presencia": 20,
@@ -1234,7 +1169,6 @@
   "critico1": "PEN",
   "critico2": "-",
   "tipoArma": "Asta/-",
-  "conocida": "Distinta",
   "entereza": 12,
   "rotura": 4,
   "presencia": 15,
@@ -1254,7 +1188,6 @@
   "critico1": "FIL",
   "critico2": "CON",
   "tipoArma": "Asta/-",
-  "conocida": "Distinta",
   "entereza": 12,
   "rotura": 2,
   "presencia": 20,
@@ -1274,7 +1207,6 @@
   "critico1": "CON",
   "critico2": "FIL",
   "tipoArma": "Cuerda/-",
-  "conocida": "Distinta",
   "entereza": 13,
   "rotura": -4,
   "presencia": 15,
@@ -1294,7 +1226,6 @@
   "critico1": "FIL",
   "critico2": "PEN",
   "tipoArma": "Espada/-",
-  "conocida": "Distinta",
   "entereza": 12,
   "rotura": 3,
   "presencia": 20,
@@ -1314,7 +1245,6 @@
   "critico1": "FIL",
   "critico2": "-",
   "tipoArma": "Espada/-",
-  "conocida": "Distinta",
   "entereza": 12,
   "rotura": 1,
   "presencia": 20,
@@ -1334,7 +1264,6 @@
   "critico1": "PEN",
   "critico2": "FIL",
   "tipoArma": "Espada/-",
-  "conocida": "Distinta",
   "entereza": 14,
   "rotura": 3,
   "presencia": 20,
@@ -1354,7 +1283,6 @@
   "critico1": "PEN",
   "critico2": "-",
   "tipoArma": "Asta/-",
-  "conocida": "Distinta",
   "entereza": 12,
   "rotura": 3,
   "presencia": 15,
@@ -1374,7 +1302,6 @@
   "critico1": "FIL",
   "critico2": "-",
   "tipoArma": "Lanzamiento/-",
-  "conocida": "Distinta",
   "entereza": 9,
   "rotura": 2,
   "presencia": 20,
@@ -1394,7 +1321,6 @@
   "critico1": "FIL",
   "critico2": "-",
   "tipoArma": "Cuerda/-",
-  "conocida": "Distinta",
   "entereza": 7,
   "rotura": -3,
   "presencia": 15,
@@ -1414,7 +1340,6 @@
   "critico1": "FIL",
   "critico2": "CON",
   "tipoArma": "Asta/Hacha",
-  "conocida": "Mixta",
   "entereza": 11,
   "rotura": 2,
   "presencia": 20,
@@ -1434,7 +1359,6 @@
   "critico1": "CON",
   "critico2": "-",
   "tipoArma": "Asta/-",
-  "conocida": "Distinta",
   "entereza": 11,
   "rotura": 0,
   "presencia": 30,
@@ -1454,7 +1378,6 @@
   "critico1": "CON",
   "critico2": "-",
   "tipoArma": "Escudo/-",
-  "conocida": "Distinta",
   "entereza": 18,
   "rotura": 1,
   "presencia": 25,
@@ -1475,7 +1398,6 @@
   "critico1": "CON",
   "critico2": "-",
   "tipoArma": "Escudo/-",
-  "conocida": "Distinta",
   "entereza": 16,
   "rotura": 0,
   "presencia": 25,
@@ -1496,7 +1418,6 @@
   "critico1": "CON",
   "critico2": "-",
   "tipoArma": "Escudo/-",
-  "conocida": "Distinta",
   "entereza": 14,
   "rotura": 0,
   "presencia": 20,
@@ -1517,7 +1438,6 @@
   "critico1": "FIL",
   "critico2": "CON",
   "tipoArma": "Corta/-",
-  "conocida": "Distinta",
   "entereza": 8,
   "rotura": 0,
   "presencia": 25,
@@ -1537,7 +1457,6 @@
   "critico1": "FIL",
   "critico2": "PEN",
   "tipoArma": "Asta/-",
-  "conocida": "Distinta",
   "entereza": 12,
   "rotura": 2,
   "presencia": 25,
@@ -1557,7 +1476,6 @@
   "critico1": "CON",
   "critico2": "FIL",
   "tipoArma": "Corta/-",
-  "conocida": "Distinta",
   "entereza": 10,
   "rotura": 0,
   "presencia": 15,
@@ -1577,7 +1495,6 @@
   "critico1": "CON",
   "critico2": "FIL",
   "tipoArma": "Corta/-",
-  "conocida": "Distinta",
   "entereza": 11,
   "rotura": 2,
   "presencia": 25,
@@ -1597,7 +1514,6 @@
   "critico1": "FIL",
   "critico2": "PEN",
   "tipoArma": "Corta/-",
-  "conocida": "Distinta",
   "entereza": 12,
   "rotura": 2,
   "presencia": 15,
@@ -1617,7 +1533,6 @@
   "critico1": "FIL",
   "critico2": "-",
   "tipoArma": "Espada/-",
-  "conocida": "Distinta",
   "entereza": 11,
   "rotura": 3,
   "presencia": 40,
@@ -1630,14 +1545,12 @@
  },
  {
   "arma": "Katana de doble hoja",
-  "dano": 35,
   "turno": -5,
   "fueRequerida": 8,
   "fueReq2M": 8,
   "critico1": "FIL",
   "critico2": "-",
   "tipoArma": "Espada/-",
-  "conocida": "Distinta",
   "entereza": 11,
   "rotura": 3,
   "presencia": 40,
@@ -1646,7 +1559,8 @@
   "alcance": "-",
   "especial": "A 2 manos. Permite ataque extra con -10",
   "tamano": "Mediana",
-  "_seccion": "ARMAS EXÓTICAS"
+  "_seccion": "ARMAS EXÓTICAS",
+  "danoFormula": "55 - bonoFUE"
  },
  {
   "arma": "Katar",
@@ -1657,7 +1571,6 @@
   "critico1": "PEN",
   "critico2": "FIL",
   "tipoArma": "Corta/-",
-  "conocida": "Distinta",
   "entereza": 13,
   "rotura": 3,
   "presencia": 25,
@@ -1670,14 +1583,12 @@
  },
  {
   "arma": "Kusari-Gama",
-  "dano": 20,
   "turno": 5,
   "fueRequerida": 5,
   "fueReq2M": 5,
   "critico1": "FIL",
   "critico2": "CON",
   "tipoArma": "Corta/Cuerda",
-  "conocida": "Distinta",
   "entereza": 12,
   "rotura": 4,
   "presencia": 25,
@@ -1686,7 +1597,8 @@
   "alcance": "-",
   "especial": "A 2 manos, Presa (FUE 8), Ver",
   "tamano": "Pequeña",
-  "_seccion": "ARMAS EXÓTICAS"
+  "_seccion": "ARMAS EXÓTICAS",
+  "danoFormula": "40 - bonoFUE"
  },
  {
   "arma": "Nodachi",
@@ -1697,7 +1609,6 @@
   "critico1": "FIL",
   "critico2": "-",
   "tipoArma": "Mandoble/-",
-  "conocida": "Mixta",
   "entereza": 14,
   "rotura": 4,
   "presencia": 40,
@@ -1717,7 +1628,6 @@
   "critico1": "CON",
   "critico2": "-",
   "tipoArma": "Cuerda/-",
-  "conocida": "Distinta",
   "entereza": 11,
   "rotura": 0,
   "presencia": 15,
@@ -1737,7 +1647,6 @@
   "critico1": "CON",
   "critico2": "FIL",
   "tipoArma": "Mandoble/-",
-  "conocida": "Mixta",
   "entereza": 16,
   "rotura": 8,
   "presencia": 25,
@@ -1757,7 +1666,6 @@
   "critico1": "PEN",
   "critico2": "FIL",
   "tipoArma": "Corta/-",
-  "conocida": "Distinta",
   "entereza": 12,
   "rotura": 0,
   "presencia": 25,
@@ -1777,7 +1685,6 @@
   "critico1": "PEN",
   "critico2": "-",
   "tipoArma": "Corta/-",
-  "conocida": "Distinta",
   "entereza": 9,
   "rotura": -2,
   "presencia": 25,
@@ -1797,7 +1704,6 @@
   "critico1": "FIL",
   "critico2": "PEN",
   "tipoArma": "Corta/-",
-  "conocida": "Distinta",
   "entereza": 10,
   "rotura": 1,
   "presencia": 20,
@@ -1817,7 +1723,6 @@
   "critico1": "FIL",
   "critico2": "-",
   "tipoArma": "Corta/-",
-  "conocida": "Distinta",
   "entereza": 9,
   "rotura": 1,
   "presencia": 40,
@@ -1837,7 +1742,6 @@
   "critico1": "CON",
   "critico2": "-",
   "tipoArma": "Corta/-",
-  "conocida": "Distinta",
   "entereza": 13,
   "rotura": 0,
   "presencia": 25,
@@ -1857,7 +1761,6 @@
   "critico1": "CON",
   "critico2": "-",
   "tipoArma": "Espada/-",
-  "conocida": "Distinta",
   "entereza": 8,
   "rotura": -1,
   "presencia": 15,
@@ -1877,7 +1780,6 @@
   "critico1": "CON",
   "critico2": "-",
   "tipoArma": "Corta/-",
-  "conocida": "Distinta",
   "entereza": 13,
   "rotura": 2,
   "presencia": 20,
@@ -1897,7 +1799,6 @@
   "critico1": "FIL",
   "critico2": "PEN",
   "tipoArma": "Corta/-",
-  "conocida": "Distinta",
   "entereza": 12,
   "rotura": 1,
   "presencia": 20,
@@ -1917,7 +1818,6 @@
   "critico1": "CON",
   "critico2": "-",
   "tipoArma": "Cuerda/-",
-  "conocida": "Distinta",
   "entereza": 13,
   "rotura": 3,
   "presencia": 20,
@@ -1937,7 +1837,6 @@
   "critico1": "CON",
   "critico2": "-",
   "tipoArma": "Maza/-",
-  "conocida": "Distinta",
   "entereza": 13,
   "rotura": 3,
   "presencia": 20,
@@ -1957,7 +1856,6 @@
   "critico1": "PEN",
   "critico2": "FIL",
   "tipoArma": "Corta/-",
-  "conocida": "Distinta",
   "entereza": 11,
   "rotura": 1,
   "presencia": 20,
@@ -1977,7 +1875,6 @@
   "critico1": "PEN",
   "critico2": "-",
   "tipoArma": "Asta/-",
-  "conocida": "Distinta",
   "entereza": 13,
   "rotura": 2,
   "presencia": 25,
@@ -1997,7 +1894,6 @@
   "critico1": "PEN",
   "critico2": "-",
   "tipoArma": "Corta/-",
-  "conocida": "Distinta",
   "entereza": 10,
   "rotura": 2,
   "presencia": 15,
@@ -2017,7 +1913,6 @@
   "critico1": "PEN",
   "critico2": "-",
   "tipoArma": "Corta/Cuerda",
-  "conocida": "Distinta",
   "entereza": 9,
   "rotura": -3,
   "presencia": 20,
@@ -2037,7 +1932,6 @@
   "critico1": "FIL",
   "critico2": "-",
   "tipoArma": "Asta/-",
-  "conocida": "Distinta",
   "entereza": 13,
   "rotura": 3,
   "presencia": 25,
@@ -2057,7 +1951,6 @@
   "critico1": "FIL",
   "critico2": "-",
   "tipoArma": "Asta/-",
-  "conocida": "Distinta",
   "entereza": 12,
   "rotura": 2,
   "presencia": 20,
@@ -2077,7 +1970,6 @@
   "critico1": "FIL",
   "critico2": "PEN",
   "tipoArma": "Asta/-",
-  "conocida": "Distinta",
   "entereza": 13,
   "rotura": 3,
   "presencia": 25,
@@ -2097,7 +1989,6 @@
   "critico1": "FIL",
   "critico2": "PEN",
   "tipoArma": "Espada/-",
-  "conocida": "Distinta",
   "entereza": 12,
   "rotura": 1,
   "presencia": 25,
@@ -2117,7 +2008,6 @@
   "critico1": "FIL",
   "critico2": "-",
   "tipoArma": "Espada/Mandoble",
-  "conocida": "Mixta",
   "entereza": 16,
   "rotura": 7,
   "presencia": 30,
@@ -2137,7 +2027,6 @@
   "critico1": "FIL",
   "critico2": "PEN",
   "tipoArma": "Asta/-",
-  "conocida": "Distinta",
   "entereza": 10,
   "rotura": 2,
   "presencia": 25,
@@ -2157,7 +2046,6 @@
   "critico1": "CON",
   "critico2": "-",
   "tipoArma": "Asta/-",
-  "conocida": "Distinta",
   "entereza": 13,
   "rotura": 2,
   "presencia": 20,
@@ -2177,7 +2065,6 @@
   "critico1": "CON",
   "critico2": "-",
   "tipoArma": "Maza/-",
-  "conocida": "Distinta",
   "entereza": 13,
   "rotura": 4,
   "presencia": 30,
@@ -2197,7 +2084,6 @@
   "critico1": "PEN",
   "critico2": "-",
   "tipoArma": "Asta/-",
-  "conocida": "Distinta",
   "entereza": 10,
   "rotura": -2,
   "presencia": 20,
@@ -2217,7 +2103,6 @@
   "critico1": "FIL",
   "critico2": "-",
   "tipoArma": "Espada/-",
-  "conocida": "Distinta",
   "entereza": 11,
   "rotura": 3,
   "presencia": 40,
@@ -2237,7 +2122,6 @@
   "critico1": "-",
   "critico2": "-",
   "tipoArma": "Proyectiles/-",
-  "conocida": "Distinta",
   "entereza": 9,
   "rotura": -3,
   "presencia": 20,
@@ -2247,7 +2131,11 @@
   "fuerza": 11,
   "especial": "Compleja, Ver",
   "tamano": "Mediana",
-  "_seccion": "A. DE PROYECTILES"
+  "_seccion": "A. DE PROYECTILES",
+  "atributoDano": "propia",
+  "municiones": [
+   "Balas"
+  ]
  },
  {
   "arma": "Arco compuesto",
@@ -2258,7 +2146,6 @@
   "critico1": "-",
   "critico2": "-",
   "tipoArma": "Proyectiles/-",
-  "conocida": "Distinta",
   "entereza": 8,
   "rotura": -2,
   "presencia": 25,
@@ -2267,7 +2154,12 @@
   "alcance": 90,
   "especial": "A 2 manos",
   "tamano": "Grande",
-  "_seccion": "A. DE PROYECTILES"
+  "_seccion": "A. DE PROYECTILES",
+  "municiones": [
+   "Flechas de descarga",
+   "Flechas de fajo",
+   "Flechas de mella"
+  ]
  },
  {
   "arma": "Arco corto",
@@ -2278,7 +2170,6 @@
   "critico1": "-",
   "critico2": "-",
   "tipoArma": "Proyectiles/-",
-  "conocida": "Distinta",
   "entereza": 7,
   "rotura": -3,
   "presencia": 15,
@@ -2287,18 +2178,21 @@
   "alcance": 40,
   "especial": "A 2 manos",
   "tamano": "Grande",
-  "_seccion": "A. DE PROYECTILES"
+  "_seccion": "A. DE PROYECTILES",
+  "municiones": [
+   "Flechas de descarga",
+   "Flechas de fajo",
+   "Flechas de mella"
+  ]
  },
  {
   "arma": "Arco de balas",
-  "dano": 5,
   "turno": -10,
   "fueRequerida": 4,
   "fueReq2M": 4,
   "critico1": "-",
   "critico2": "-",
   "tipoArma": "Proyectiles/-",
-  "conocida": "Distinta",
   "entereza": 6,
   "rotura": -3,
   "presencia": 15,
@@ -2307,7 +2201,12 @@
   "alcance": 40,
   "especial": "A 2 manos, Ver",
   "tamano": "Grande",
-  "_seccion": "A. DE PROYECTILES"
+  "_seccion": "A. DE PROYECTILES",
+  "danoFormula": "bono(FUE + 2) - bonoFUE",
+  "municiones": [
+   "Balas de arco",
+   "Piedras de arco"
+  ]
  },
  {
   "arma": "Arco largo",
@@ -2318,7 +2217,6 @@
   "critico1": "-",
   "critico2": "-",
   "tipoArma": "Proyectiles/-",
-  "conocida": "Distinta",
   "entereza": 8,
   "rotura": -2,
   "presencia": 20,
@@ -2327,7 +2225,12 @@
   "alcance": 60,
   "especial": "A 2 manos",
   "tamano": "Grande",
-  "_seccion": "A. DE PROYECTILES"
+  "_seccion": "A. DE PROYECTILES",
+  "municiones": [
+   "Flechas de descarga",
+   "Flechas de fajo",
+   "Flechas de mella"
+  ]
  },
  {
   "arma": "Atlatl",
@@ -2338,17 +2241,20 @@
   "critico1": "-",
   "critico2": "-",
   "tipoArma": "Proyectiles/-",
-  "conocida": "Distinta",
   "entereza": 8,
   "rotura": -4,
   "presencia": 10,
   "cadencia": "-",
   "recarga": 1,
   "alcance": 30,
-  "fuerza": 14,
   "especial": "Ver",
   "tamano": "Mediana",
-  "_seccion": "A. DE PROYECTILES"
+  "_seccion": "A. DE PROYECTILES",
+  "fuerzaFormula": "FUE + 2",
+  "atributoDano": "propia",
+  "municiones": [
+   "Jabalina (Munición)"
+  ]
  },
  {
   "arma": "Ballesta",
@@ -2359,7 +2265,6 @@
   "critico1": "-",
   "critico2": "-",
   "tipoArma": "Proyectiles/-",
-  "conocida": "Distinta",
   "entereza": 8,
   "rotura": -2,
   "presencia": 20,
@@ -2369,7 +2274,11 @@
   "fuerza": 8,
   "especial": "1 o 2 manos, Ver",
   "tamano": "Mediana",
-  "_seccion": "A. DE PROYECTILES"
+  "_seccion": "A. DE PROYECTILES",
+  "atributoDano": "propia",
+  "municiones": [
+   "Saetas"
+  ]
  },
  {
   "arma": "Ballesta de mano",
@@ -2380,7 +2289,6 @@
   "critico1": "-",
   "critico2": "-",
   "tipoArma": "Proyectiles/-",
-  "conocida": "Distinta",
   "entereza": 5,
   "rotura": -4,
   "presencia": 15,
@@ -2390,7 +2298,11 @@
   "fuerza": 5,
   "especial": "Ver",
   "tamano": "Mediana",
-  "_seccion": "A. DE PROYECTILES"
+  "_seccion": "A. DE PROYECTILES",
+  "atributoDano": "propia",
+  "municiones": [
+   "Saetas ligeras"
+  ]
  },
  {
   "arma": "Ballesta de repetición",
@@ -2401,7 +2313,6 @@
   "critico1": "-",
   "critico2": "-",
   "tipoArma": "Proyectiles/-",
-  "conocida": "Distinta",
   "entereza": 6,
   "rotura": -2,
   "presencia": 20,
@@ -2411,7 +2322,11 @@
   "fuerza": 8,
   "especial": "1 o 2 manos, Ver",
   "tamano": "Mediana",
-  "_seccion": "A. DE PROYECTILES"
+  "_seccion": "A. DE PROYECTILES",
+  "atributoDano": "propia",
+  "municiones": [
+   "Saetas"
+  ]
  },
  {
   "arma": "Ballesta pesada",
@@ -2422,7 +2337,6 @@
   "critico1": "-",
   "critico2": "-",
   "tipoArma": "Proyectiles/-",
-  "conocida": "Distinta",
   "entereza": 8,
   "rotura": -1,
   "presencia": 20,
@@ -2432,7 +2346,11 @@
   "fuerza": 10,
   "especial": "1 o 2 manos, Ver",
   "tamano": "Mediana",
-  "_seccion": "A. DE PROYECTILES"
+  "_seccion": "A. DE PROYECTILES",
+  "atributoDano": "propia",
+  "municiones": [
+   "Saetas pesadas"
+  ]
  },
  {
   "arma": "Cerbatana",
@@ -2443,7 +2361,6 @@
   "critico1": "-",
   "critico2": "-",
   "tipoArma": "Proyectiles/-",
-  "conocida": "Distinta",
   "entereza": 3,
   "rotura": -3,
   "presencia": 15,
@@ -2452,7 +2369,11 @@
   "alcance": 50,
   "especial": "-",
   "tamano": "Pequeña",
-  "_seccion": "A. DE PROYECTILES"
+  "_seccion": "A. DE PROYECTILES",
+  "atributoDano": "ninguno",
+  "municiones": [
+   "Dardos de cerbatana"
+  ]
  },
  {
   "arma": "Daikyu",
@@ -2463,7 +2384,6 @@
   "critico1": "-",
   "critico2": "-",
   "tipoArma": "Proyectiles/-",
-  "conocida": "Distinta",
   "entereza": 8,
   "rotura": -2,
   "presencia": 20,
@@ -2472,7 +2392,12 @@
   "alcance": 90,
   "especial": "A 2 manos",
   "tamano": "Grande",
-  "_seccion": "A. DE PROYECTILES"
+  "_seccion": "A. DE PROYECTILES",
+  "municiones": [
+   "Flechas de descarga",
+   "Flechas de fajo",
+   "Flechas de mella"
+  ]
  },
  {
   "arma": "Honda",
@@ -2483,7 +2408,6 @@
   "critico1": "-",
   "critico2": "-",
   "tipoArma": "Proyectiles/-",
-  "conocida": "Distinta",
   "entereza": 3,
   "rotura": -6,
   "presencia": 10,
@@ -2492,7 +2416,10 @@
   "alcance": 50,
   "especial": "-",
   "tamano": "Pequeña",
-  "_seccion": "A. DE PROYECTILES"
+  "_seccion": "A. DE PROYECTILES",
+  "municiones": [
+   "Piedras de honda"
+  ]
  },
  {
   "arma": "Pistola",
@@ -2503,7 +2430,6 @@
   "critico1": "-",
   "critico2": "-",
   "tipoArma": "Proyectiles/-",
-  "conocida": "Distinta",
   "entereza": 8,
   "rotura": -3,
   "presencia": 20,
@@ -2513,7 +2439,11 @@
   "fuerza": 9,
   "especial": "Compleja, Ver",
   "tamano": "Mediana",
-  "_seccion": "A. DE PROYECTILES"
+  "_seccion": "A. DE PROYECTILES",
+  "atributoDano": "propia",
+  "municiones": [
+   "Balas"
+  ]
  },
  {
   "arma": "Balista ligera",
@@ -2524,7 +2454,6 @@
   "critico1": "-",
   "critico2": "-",
   "tipoArma": "Proyectiles/-",
-  "conocida": "Distinta",
   "entereza": 18,
   "rotura": "-",
   "presencia": 25,
@@ -2533,7 +2462,11 @@
   "fuerza": 10,
   "especial": "Ver",
   "tamano": "Grande",
-  "_seccion": "ARMAS DE ASEDIO"
+  "_seccion": "ARMAS DE ASEDIO",
+  "atributoDano": "propia",
+  "municiones": [
+   "Virote ligero"
+  ]
  },
  {
   "arma": "Balista pesada",
@@ -2544,7 +2477,6 @@
   "critico1": "-",
   "critico2": "-",
   "tipoArma": "Proyectiles/-",
-  "conocida": "Distinta",
   "entereza": 20,
   "rotura": "-",
   "presencia": 30,
@@ -2553,7 +2485,11 @@
   "fuerza": 13,
   "especial": "Ver",
   "tamano": "Grande",
-  "_seccion": "ARMAS DE ASEDIO"
+  "_seccion": "ARMAS DE ASEDIO",
+  "atributoDano": "propia",
+  "municiones": [
+   "Virote pesado"
+  ]
  },
  {
   "arma": "Cañón",
@@ -2564,7 +2500,6 @@
   "critico1": "-",
   "critico2": "-",
   "tipoArma": "Proyectiles/-",
-  "conocida": "Distinta",
   "entereza": 24,
   "rotura": "-",
   "presencia": 30,
@@ -2574,7 +2509,11 @@
   "fuerza": 14,
   "especial": "Ver",
   "tamano": "Grande",
-  "_seccion": "ARMAS DE ASEDIO"
+  "_seccion": "ARMAS DE ASEDIO",
+  "atributoDano": "propia",
+  "municiones": [
+   "Balas de cañón"
+  ]
  },
  {
   "arma": "Balas",
@@ -2592,7 +2531,8 @@
   "recarga": "-",
   "alcance": "-",
   "especial": "Munición para armas de fuego",
-  "_seccion": "MUNICIÓN"
+  "_seccion": "MUNICIÓN",
+  "atributoDano": "ninguno"
  },
  {
   "arma": "Balas de arco",
@@ -2610,7 +2550,8 @@
   "recarga": "-",
   "alcance": "-",
   "especial": "Munición para arcos de balas",
-  "_seccion": "MUNICIÓN"
+  "_seccion": "MUNICIÓN",
+  "atributoDano": "ninguno"
  },
  {
   "arma": "Balas de cañón",
@@ -2628,7 +2569,8 @@
   "recarga": "-",
   "alcance": "-",
   "especial": "Munición para cañón",
-  "_seccion": "MUNICIÓN"
+  "_seccion": "MUNICIÓN",
+  "atributoDano": "ninguno"
  },
  {
   "arma": "Balas de cañón Leo",
@@ -2646,7 +2588,8 @@
   "recarga": "-",
   "alcance": "-",
   "especial": "Munición para cañón Leo",
-  "_seccion": "MUNICIÓN"
+  "_seccion": "MUNICIÓN",
+  "atributoDano": "ninguno"
  },
  {
   "arma": "Balas de Leo",
@@ -2664,7 +2607,8 @@
   "recarga": "-",
   "alcance": "-",
   "especial": "Munición para Leo",
-  "_seccion": "MUNICIÓN"
+  "_seccion": "MUNICIÓN",
+  "atributoDano": "ninguno"
  },
  {
   "arma": "Dardos de cerbatana",
@@ -2682,7 +2626,8 @@
   "recarga": "-",
   "alcance": "-",
   "especial": "Munición para cerbatana",
-  "_seccion": "MUNICIÓN"
+  "_seccion": "MUNICIÓN",
+  "atributoDano": "ninguno"
  },
  {
   "arma": "Flechas de descarga",
@@ -2700,7 +2645,8 @@
   "recarga": "-",
   "alcance": "-",
   "especial": "Munición para arcos",
-  "_seccion": "MUNICIÓN"
+  "_seccion": "MUNICIÓN",
+  "atributoDano": "ninguno"
  },
  {
   "arma": "Flechas de fajo",
@@ -2718,7 +2664,8 @@
   "recarga": "-",
   "alcance": "-",
   "especial": "+20 al Alcance. Munición arcos",
-  "_seccion": "MUNICIÓN"
+  "_seccion": "MUNICIÓN",
+  "atributoDano": "ninguno"
  },
  {
   "arma": "Flechas de mella",
@@ -2736,7 +2683,8 @@
   "recarga": "-",
   "alcance": "-",
   "especial": "-1 TA del Defensor. Munición arcos",
-  "_seccion": "MUNICIÓN"
+  "_seccion": "MUNICIÓN",
+  "atributoDano": "ninguno"
  },
  {
   "arma": "Jabalina (Munición)",
@@ -2754,7 +2702,8 @@
   "recarga": "-",
   "alcance": "-",
   "especial": "Munición para Atlatl",
-  "_seccion": "MUNICIÓN"
+  "_seccion": "MUNICIÓN",
+  "atributoDano": "ninguno"
  },
  {
   "arma": "Piedras de arco",
@@ -2772,7 +2721,8 @@
   "recarga": "-",
   "alcance": "-",
   "especial": "Munición para arcos de balas",
-  "_seccion": "MUNICIÓN"
+  "_seccion": "MUNICIÓN",
+  "atributoDano": "ninguno"
  },
  {
   "arma": "Piedras de honda",
@@ -2790,7 +2740,8 @@
   "recarga": "-",
   "alcance": "-",
   "especial": "Munición para honda",
-  "_seccion": "MUNICIÓN"
+  "_seccion": "MUNICIÓN",
+  "atributoDano": "ninguno"
  },
  {
   "arma": "Saetas",
@@ -2808,7 +2759,8 @@
   "recarga": "-",
   "alcance": "-",
   "especial": "Munición para ballestas",
-  "_seccion": "MUNICIÓN"
+  "_seccion": "MUNICIÓN",
+  "atributoDano": "ninguno"
  },
  {
   "arma": "Saetas ligeras",
@@ -2826,7 +2778,8 @@
   "recarga": "-",
   "alcance": "-",
   "especial": "Munición para ballestas de mano",
-  "_seccion": "MUNICIÓN"
+  "_seccion": "MUNICIÓN",
+  "atributoDano": "ninguno"
  },
  {
   "arma": "Saetas pesadas",
@@ -2844,7 +2797,8 @@
   "recarga": "-",
   "alcance": "-",
   "especial": "Munición para ballestas pesadas",
-  "_seccion": "MUNICIÓN"
+  "_seccion": "MUNICIÓN",
+  "atributoDano": "ninguno"
  },
  {
   "arma": "Virote ligero",
@@ -2862,7 +2816,8 @@
   "recarga": "-",
   "alcance": "-",
   "especial": "Munición para balistas ligeras",
-  "_seccion": "MUNICIÓN"
+  "_seccion": "MUNICIÓN",
+  "atributoDano": "ninguno"
  },
  {
   "arma": "Virote pesado",
@@ -2880,51 +2835,49 @@
   "recarga": "-",
   "alcance": "-",
   "especial": "Munición para balistas pesadas",
-  "_seccion": "MUNICIÓN"
+  "_seccion": "MUNICIÓN",
+  "atributoDano": "ninguno"
  },
  {
   "arma": "Munición natural",
-  "dano": 0,
   "turno": "-",
   "fueRequerida": 0,
   "fueReq2M": 0,
-  "critico1": "FIL",
-  "critico2": "PEN",
   "tipoArma": "Munición/-",
-  "entereza": 16,
-  "rotura": 4,
   "cadencia": "-",
   "recarga": "-",
   "alcance": "-",
-  "especial": "Munición para armas naturales",
-  "_seccion": "MUNICIÓN"
+  "_seccion": "MUNICIÓN",
+  "atributoDano": "ninguno",
+  "porRaza": true
  },
  {
   "arma": "Umbra",
-  "dano": 30,
   "turno": 20,
   "fueRequerida": 0,
   "fueReq2M": 0,
   "critico1": "*",
   "critico2": "-",
   "tipoArma": "Natural/-",
-  "conocida": "Distinta",
   "entereza": "-",
-  "rotura": 0,
-  "presencia": 30,
   "especial": "Sorpresa, Pantalla, At. área, Presa (DES), Uso indirecto, Ofuscación",
-  "_seccion": "ARS MAGNUS"
+  "_seccion": "ARS MAGNUS",
+  "danoFormula": "presencia",
+  "roturaFormula": "POD - roturaFUE",
+  "presenciaFormula": "presencia",
+  "atributoDano": "POD",
+  "requiereArsMagnus": [
+   "Umbra: Ataque de Sombras"
+  ]
  },
  {
   "arma": "Aries",
-  "dano": 80,
   "turno": -20,
   "fueRequerida": 0,
   "fueReq2M": 0,
   "critico1": "PEN",
   "critico2": "FIL",
   "tipoArma": "/",
-  "conocida": "Distinta",
   "entereza": 16,
   "rotura": 6,
   "presencia": 30,
@@ -2933,7 +2886,11 @@
   "alcance": "-",
   "especial": "Compleja, Presa (FUE 10), Alcance (8m), Arma Grande, A 2 manos",
   "tamano": "Grande",
-  "_seccion": "ARMAS IMPOSIBLES"
+  "_seccion": "ARMAS IMPOSIBLES",
+  "danoFormula": "100 - bonoFUE",
+  "requiereArsMagnus": [
+   "Aries: Masificación armas y cadenas"
+  ]
  },
  {
   "arma": "Taurus",
@@ -2944,7 +2901,6 @@
   "critico1": "FIL",
   "critico2": "CON",
   "tipoArma": "/",
-  "conocida": "Distinta",
   "entereza": 16,
   "rotura": 8,
   "presencia": 25,
@@ -2953,7 +2909,11 @@
   "alcance": "-",
   "especial": "Lanzable (-/20m), Compleja, A 1 o 2 manos",
   "tamano": "Grande",
-  "_seccion": "ARMAS IMPOSIBLES"
+  "_seccion": "ARMAS IMPOSIBLES",
+  "requiereArsMagnus": [
+   "Taurus: Enormes armas dobles"
+  ],
+  "requiereArmas": "Espada a dos manos, Hacha a dos manos o Maza pesada"
  },
  {
   "arma": "Cáncer",
@@ -2964,7 +2924,6 @@
   "critico1": "FIL",
   "critico2": "PEN",
   "tipoArma": "/",
-  "conocida": "Distinta",
   "entereza": 10,
   "rotura": 0,
   "presencia": 30,
@@ -2973,7 +2932,12 @@
   "alcance": "-",
   "especial": "Alcance (5m), Presa (FUE 11), Invisible (MDF), -2 TA, Ver",
   "tamano": "Pequeña",
-  "_seccion": "ARMAS IMPOSIBLES"
+  "_seccion": "ARMAS IMPOSIBLES",
+  "atributoDano": "ninguno",
+  "requiereArsMagnus": [
+   "Cáncer: Monofilos",
+   "Cáncer Magister: Monofilos"
+  ]
  },
  {
   "arma": "Leo (Espada-Pistola)",
@@ -2984,7 +2948,6 @@
   "critico1": "FIL",
   "critico2": "CON",
   "tipoArma": "/",
-  "conocida": "Distinta",
   "entereza": 13,
   "rotura": 4,
   "presencia": 35,
@@ -2993,7 +2956,11 @@
   "alcance": "-",
   "especial": "Cargador, A 1 o 2 manos",
   "tamano": "Mediana",
-  "_seccion": "ARMAS IMPOSIBLES"
+  "_seccion": "ARMAS IMPOSIBLES",
+  "requiereArsMagnus": [
+   "Leo: Armas-pistola"
+  ],
+  "requiereArmas": "Pistola y Bracamarte, Cimitarra, Espada ancha, Espada larga, Estoque, Koncerz, Sable, Shang Gou, Spatha, Katana, Katana de doble hoja, Boku-to, Ninja-to o Wakizashi"
  },
  {
   "arma": "Leo (Espada-Pistola) P.",
@@ -3004,7 +2971,6 @@
   "critico1": "PEN",
   "critico2": "-",
   "tipoArma": "/",
-  "conocida": "Distinta",
   "entereza": 13,
   "rotura": 4,
   "presencia": 35,
@@ -3014,7 +2980,15 @@
   "fuerza": 10,
   "especial": "Cargador, A 1 o 2 manos",
   "tamano": "Mediana",
-  "_seccion": "ARMAS IMPOSIBLES"
+  "_seccion": "ARMAS IMPOSIBLES",
+  "atributoDano": "ninguno",
+  "requiereArsMagnus": [
+   "Leo: Armas-pistola"
+  ],
+  "requiereArmas": "Pistola y Bracamarte, Cimitarra, Espada ancha, Espada larga, Estoque, Koncerz, Sable, Shang Gou, Spatha, Katana, Katana de doble hoja, Boku-to, Ninja-to o Wakizashi",
+  "municiones": [
+   "Balas de Leo"
+  ]
  },
  {
   "arma": "Leo (Lanza-Rifle)",
@@ -3025,7 +2999,6 @@
   "critico1": "PEN",
   "critico2": "-",
   "tipoArma": "/",
-  "conocida": "Distinta",
   "entereza": 12,
   "rotura": 2,
   "presencia": 35,
@@ -3034,7 +3007,11 @@
   "alcance": "-",
   "especial": "Cargador, A 1 o 2 manos",
   "tamano": "Mediana",
-  "_seccion": "ARMAS IMPOSIBLES"
+  "_seccion": "ARMAS IMPOSIBLES",
+  "requiereArsMagnus": [
+   "Leo: Armas-pistola"
+  ],
+  "requiereArmas": "Arcabuz y Lanza"
  },
  {
   "arma": "Leo (Lanza-Rifle) R.",
@@ -3045,7 +3022,6 @@
   "critico1": "PEN",
   "critico2": "-",
   "tipoArma": "/",
-  "conocida": "Distinta",
   "entereza": 12,
   "rotura": 2,
   "presencia": 35,
@@ -3055,7 +3031,15 @@
   "fuerza": 11,
   "especial": "Cargador, A 1 o 2 manos",
   "tamano": "Mediana",
-  "_seccion": "ARMAS IMPOSIBLES"
+  "_seccion": "ARMAS IMPOSIBLES",
+  "atributoDano": "ninguno",
+  "requiereArsMagnus": [
+   "Leo: Armas-pistola"
+  ],
+  "requiereArmas": "Arcabuz y Lanza",
+  "municiones": [
+   "Balas de Leo"
+  ]
  },
  {
   "arma": "Leo (Maza-Cañón) C.",
@@ -3066,7 +3050,6 @@
   "critico1": "CON",
   "critico2": "-",
   "tipoArma": "/",
-  "conocida": "Distinta",
   "entereza": 15,
   "rotura": 5,
   "presencia": 35,
@@ -3076,7 +3059,15 @@
   "fuerza": 12,
   "especial": "At. área automático (2m), A 2 manos",
   "tamano": "Grande",
-  "_seccion": "ARMAS IMPOSIBLES"
+  "_seccion": "ARMAS IMPOSIBLES",
+  "atributoDano": "ninguno",
+  "requiereArsMagnus": [
+   "Leo: Armas-pistola"
+  ],
+  "requiereArmas": "Cañón y Maza Barra, Maza ligera o Maza pesada",
+  "municiones": [
+   "Balas de cañón Leo"
+  ]
  },
  {
   "arma": "Leo (Maza-Cañón)",
@@ -3087,7 +3078,6 @@
   "critico1": "CON",
   "critico2": "-",
   "tipoArma": "/",
-  "conocida": "Distinta",
   "entereza": 15,
   "rotura": 5,
   "presencia": 35,
@@ -3096,18 +3086,20 @@
   "alcance": "-",
   "especial": "At. área automático (2m), A 2 manos",
   "tamano": "Grande",
-  "_seccion": "ARMAS IMPOSIBLES"
+  "_seccion": "ARMAS IMPOSIBLES",
+  "requiereArsMagnus": [
+   "Leo: Armas-pistola"
+  ],
+  "requiereArmas": "Cañón y Maza Barra, Maza ligera o Maza pesada"
  },
  {
   "arma": "Mundus",
-  "dano": 90,
   "turno": 20,
   "fueRequerida": "-",
   "fueReq2M": 0,
   "critico1": "Esp",
   "critico2": "-",
   "tipoArma": "/",
-  "conocida": "Distinta",
   "entereza": "-",
   "rotura": 8,
   "presencia": "Esp",
@@ -3115,7 +3107,12 @@
   "recarga": "-",
   "alcance": "-",
   "especial": "Ver",
-  "_seccion": "ARMAS IMPOSIBLES"
+  "_seccion": "ARMAS IMPOSIBLES",
+  "danoFormula": "80 - bonoPOD",
+  "atributoDano": "POD",
+  "requiereArsMagnus": [
+   "Mundus: Control del Entorno"
+  ]
  },
  {
   "arma": "Virgo (Viento pequeño)",
@@ -3126,16 +3123,22 @@
   "critico1": "CON",
   "critico2": "-",
   "tipoArma": "/",
-  "conocida": "Distinta",
   "entereza": 0,
   "rotura": 2,
-  "presencia": 30,
   "cadencia": "-",
   "recarga": "-",
   "alcance": 0,
-  "especial": "Alcance 60m, Fascinación, Ver",
+  "especial": "Alcance 2×Presencia m, Fascinación, Ver",
   "tamano": "Mediana",
-  "_seccion": "ARMAS IMPOSIBLES"
+  "_seccion": "ARMAS IMPOSIBLES",
+  "presenciaFormula": "presencia",
+  "atributoDano": "ninguno",
+  "requiereArsMagnus": [
+   "Virgo: Instrumentos pequeños de viento",
+   "Virgo: Instrumentos grandes de viento",
+   "Virgo: Instrumentos de cuerda",
+   "Virgo: Instrumentos de percusión"
+  ]
  },
  {
   "arma": "Virgo (Viento grande)",
@@ -3146,16 +3149,22 @@
   "critico1": "CON",
   "critico2": "-",
   "tipoArma": "/",
-  "conocida": "Distinta",
   "entereza": 0,
   "rotura": 2,
-  "presencia": 30,
   "cadencia": "-",
   "recarga": "-",
   "alcance": 0,
-  "especial": "Alcance 60m, Ver",
+  "especial": "Alcance 2×Presencia m, Ver",
   "tamano": "Mediana",
-  "_seccion": "ARMAS IMPOSIBLES"
+  "_seccion": "ARMAS IMPOSIBLES",
+  "presenciaFormula": "presencia",
+  "atributoDano": "ninguno",
+  "requiereArsMagnus": [
+   "Virgo: Instrumentos pequeños de viento",
+   "Virgo: Instrumentos grandes de viento",
+   "Virgo: Instrumentos de cuerda",
+   "Virgo: Instrumentos de percusión"
+  ]
  },
  {
   "arma": "Virgo (Cuerda)",
@@ -3166,16 +3175,22 @@
   "critico1": "CON",
   "critico2": "-",
   "tipoArma": "/",
-  "conocida": "Distinta",
   "entereza": 0,
   "rotura": 2,
-  "presencia": 30,
   "cadencia": "-",
   "recarga": "-",
   "alcance": 0,
-  "especial": "Alcance 60m, Resonancia mejorada, Ver",
+  "especial": "Alcance 2×Presencia m, Resonancia mejorada, Ver",
   "tamano": "Mediana",
-  "_seccion": "ARMAS IMPOSIBLES"
+  "_seccion": "ARMAS IMPOSIBLES",
+  "presenciaFormula": "presencia",
+  "atributoDano": "ninguno",
+  "requiereArsMagnus": [
+   "Virgo: Instrumentos pequeños de viento",
+   "Virgo: Instrumentos grandes de viento",
+   "Virgo: Instrumentos de cuerda",
+   "Virgo: Instrumentos de percusión"
+  ]
  },
  {
   "arma": "Virgo (Percusión)",
@@ -3186,16 +3201,22 @@
   "critico1": "CON",
   "critico2": "-",
   "tipoArma": "/",
-  "conocida": "Distinta",
   "entereza": 0,
   "rotura": 2,
-  "presencia": 30,
   "cadencia": "-",
   "recarga": "-",
   "alcance": 0,
-  "especial": "Alcance 60m, Impacto FUE 12, Ver",
+  "especial": "Alcance 2×Presencia m, Impacto FUE 12, Ver",
   "tamano": "Mediana",
-  "_seccion": "ARMAS IMPOSIBLES"
+  "_seccion": "ARMAS IMPOSIBLES",
+  "presenciaFormula": "presencia",
+  "atributoDano": "ninguno",
+  "requiereArsMagnus": [
+   "Virgo: Instrumentos pequeños de viento",
+   "Virgo: Instrumentos grandes de viento",
+   "Virgo: Instrumentos de cuerda",
+   "Virgo: Instrumentos de percusión"
+  ]
  },
  {
   "arma": "Libra",
@@ -3206,16 +3227,18 @@
   "critico1": "VAR",
   "critico2": "-",
   "tipoArma": "/",
-  "conocida": "Distinta",
   "entereza": 15,
   "rotura": 2,
-  "presencia": 30,
   "cadencia": "-",
   "recarga": "-",
   "alcance": "-",
   "especial": "Capacidades variables",
   "tamano": "Mediana",
-  "_seccion": "ARMAS IMPOSIBLES"
+  "_seccion": "ARMAS IMPOSIBLES",
+  "presenciaFormula": "presencia",
+  "requiereArsMagnus": [
+   "Libra: Arma variable"
+  ]
  },
  {
   "arma": "Scorpio (Espada)",
@@ -3226,7 +3249,6 @@
   "critico1": "FIL",
   "critico2": "PEN",
   "tipoArma": "/",
-  "conocida": "Distinta",
   "entereza": 13,
   "rotura": 2,
   "presencia": 35,
@@ -3235,7 +3257,11 @@
   "alcance": "-",
   "especial": "-",
   "tamano": "Mediana",
-  "_seccion": "ARMAS IMPOSIBLES"
+  "_seccion": "ARMAS IMPOSIBLES",
+  "requiereArsMagnus": [
+   "Scorpio: Espada-látigo"
+  ],
+  "requiereArmas": "Látigo y Espada larga o Sable"
  },
  {
   "arma": "Scorpio (Látigo)",
@@ -3246,7 +3272,6 @@
   "critico1": "FIL",
   "critico2": "PEN",
   "tipoArma": "/",
-  "conocida": "Distinta",
   "entereza": 13,
   "rotura": 2,
   "presencia": 35,
@@ -3255,7 +3280,11 @@
   "alcance": "-",
   "especial": "Presa (FUE 10), Alcance (10m), Arma Grande, Torbellino envolvente",
   "tamano": "Mediana",
-  "_seccion": "ARMAS IMPOSIBLES"
+  "_seccion": "ARMAS IMPOSIBLES",
+  "requiereArsMagnus": [
+   "Scorpio: Espada-látigo"
+  ],
+  "requiereArmas": "Látigo y Espada larga o Sable"
  },
  {
   "arma": "Sagittarius",
@@ -3266,7 +3295,6 @@
   "critico1": "PEN",
   "critico2": "CON",
   "tipoArma": "/",
-  "conocida": "Distinta",
   "entereza": 0,
   "rotura": 0,
   "presencia": "Esp",
@@ -3275,7 +3303,12 @@
   "alcance": 10,
   "especial": "Lanzable (100/XXXm)",
   "tamano": "Pequeña",
-  "_seccion": "ARMAS IMPOSIBLES"
+  "_seccion": "ARMAS IMPOSIBLES",
+  "atributoDano": "ninguno",
+  "requiereArsMagnus": [
+   "Sagittarius Magister: Obj. arrojadizos",
+   "Sagittarius: Objetos arrojadizos"
+  ]
  },
  {
   "arma": "Capricornius",
@@ -3286,7 +3319,6 @@
   "critico1": "PEN",
   "critico2": "-",
   "tipoArma": "/",
-  "conocida": "Distinta",
   "entereza": 8,
   "rotura": -5,
   "presencia": 20,
@@ -3295,7 +3327,11 @@
   "alcance": 10,
   "especial": "1/10 Daño, Lanzable (30/XXXm), Precisa",
   "tamano": "Pequeña",
-  "_seccion": "ARMAS IMPOSIBLES"
+  "_seccion": "ARMAS IMPOSIBLES",
+  "atributoDano": "DES",
+  "requiereArsMagnus": [
+   "Capricornius: Agujas"
+  ]
  },
  {
   "arma": "Aquarius",
@@ -3306,7 +3342,6 @@
   "critico1": "FIL",
   "critico2": "CON",
   "tipoArma": "/",
-  "conocida": "Distinta",
   "entereza": 20,
   "rotura": 5,
   "presencia": 30,
@@ -3315,7 +3350,11 @@
   "alcance": "-",
   "especial": "Escudo contra proyectiles, Presa (FUE 8)",
   "tamano": "Mediana",
-  "_seccion": "ARMAS IMPOSIBLES"
+  "_seccion": "ARMAS IMPOSIBLES",
+  "atributoDano": "ninguno",
+  "requiereArsMagnus": [
+   "Aquarius: Capas y prendas de vestir"
+  ]
  },
  {
   "arma": "Piscis",
@@ -3326,7 +3365,6 @@
   "critico1": "CON",
   "critico2": "-",
   "tipoArma": "/",
-  "conocida": "Distinta",
   "entereza": 8,
   "rotura": -2,
   "presencia": 20,
@@ -3335,7 +3373,11 @@
   "alcance": "-",
   "especial": "Presa (FUE 8), Alcance (8m)",
   "tamano": "Pequeña",
-  "_seccion": "ARMAS IMPOSIBLES"
+  "_seccion": "ARMAS IMPOSIBLES",
+  "atributoDano": "DES",
+  "requiereArsMagnus": [
+   "Piscis: Yoyó"
+  ]
  },
  {
   "arma": "Ophiucos",
@@ -3346,15 +3388,19 @@
   "critico1": "FIL",
   "critico2": "PEN",
   "tipoArma": "/",
-  "conocida": "Distinta",
   "entereza": 10,
   "rotura": 11,
-  "presencia": 60,
   "cadencia": "-",
   "recarga": "-",
   "alcance": "-",
   "especial": "Liberación absoluta, Liberación en área, Uso sellado, Comb. con Ki",
   "tamano": "Mediana",
-  "_seccion": "ARMAS IMPOSIBLES"
+  "_seccion": "ARMAS IMPOSIBLES",
+  "presenciaFormula": "presencia * 2",
+  "atributoDano": "ninguno",
+  "requiereArsMagnus": [
+   "Ophiucos: Señor de Espadas Infinitas"
+  ],
+  "requiereArmas": "la Tabla de tipología: Espada"
  }
 ]

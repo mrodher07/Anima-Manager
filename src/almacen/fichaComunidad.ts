@@ -17,6 +17,9 @@ import type { Celda, Hoja } from './xlsx';
 import type { Catalogo } from '../datos/paquetes';
 import type { Bolsa, Personaje } from '../motor/personaje';
 import type { EscalaArma } from '../motor/combate';
+import {
+  CERCANIA_DRAGON, EXTASIS_VETALA, TRANSFORMACION_TUAN_DALYR, type OpcionesRaza,
+} from '../motor/razas';
 
 const texto = (c: Celda): string => (c === null || c === undefined ? '' : String(c).trim());
 const numero = (c: Celda): number => {
@@ -279,11 +282,33 @@ export function armasDe(hojas: Hoja[], conocidas: Set<string>): Personaje['equip
         debajo.some((v) => normalizar(v) === normalizar(c)),
       );
 
+      // La calidad y, en los huecos de proyectiles, la munición van detrás de su rótulo
+      // («Calidad arma:», «Munición», «Calidad munición:») unas filas más abajo, sin pasar
+      // al bloque de al lado.
+      const siguiente = fila.findIndex((v, k) => k > j && /^\d+\.$/.test(texto(v)));
+      const hasta = Math.min(siguiente > j ? siguiente : corte, corte);
+      const trasRotulo = (rotulo: string): Celda => {
+        for (let k = i + 1; k <= i + 6; k++) {
+          const f = hoja.filas[k] ?? [];
+          for (let c = j; c < Math.min(f.length, hasta); c++) {
+            if (normalizar(texto(f[c])) !== rotulo) continue;
+            for (let d = c + 1; d < Math.min(f.length, hasta); d++) {
+              if (texto(f[d])) return f[d];
+            }
+          }
+        }
+        return undefined;
+      };
+      const municion = texto(trasRotulo('municion'));
+
       armas.push({
         arma: nombre,
         aDosManos: debajo.some((v) => A_DOS_MANOS.has(normalizar(v))) || undefined,
         conocimiento,
         escala,
+        calidad: numero(trasRotulo('calidad arma:')) || undefined,
+        municion: municion && conocidas.has(normalizar(municion)) ? municion : undefined,
+        calidadMunicion: numero(trasRotulo('calidad municion:')) || undefined,
       });
     }
   }
@@ -639,7 +664,42 @@ export function contenidoPropioDe(hojas: Hoja[]): ContenidoPropio {
       (salida[coleccion] ??= []).push(entrada);
     }
   }
+  atributoDeArmasPropias(hojas, salida.armas ?? []);
   return salida;
+}
+
+const CARACTERISTICAS_ARMA = ['AGI', 'CON', 'DES', 'FUE', 'INT', 'PER', 'POD', 'VOL'];
+
+/**
+ * Qué característica suma al daño de cada arma personalizada. En «Tablas» sólo está el bono
+ * ya calculado; la característica está en Personalización, en el bloque de esa arma:
+ * «Nombre:» y, tres filas más abajo, «Atrib.» (vacío: FUE; «N/A»: ninguna).
+ */
+function atributoDeArmasPropias(hojas: Hoja[], armas: Record<string, unknown>[]): void {
+  const hoja = buscarHoja(hojas, 'Personalización');
+  if (!hoja || armas.length === 0) return;
+  /** El valor tras un rótulo: el primero no vacío, o sólo la casilla de al lado. */
+  const trasRotulo = (fila: number, rotulo: string, pegado = false): string => {
+    const f = hoja.filas[fila] ?? [];
+    const j = f.findIndex((v) => normalizar(texto(v)).replace(/:$/, '') === rotulo);
+    if (j < 0) return '';
+    if (pegado) return texto(f[j + 1]);
+    for (let k = j + 1; k < f.length; k++) {
+      const v = texto(f[k]);
+      if (/:$/.test(v)) return '';
+      if (v) return v;
+    }
+    return '';
+  };
+  for (let i = 0; i < hoja.filas.length; i++) {
+    const nombre = trasRotulo(i, 'nombre');
+    const arma = nombre && armas.find((a) => normalizar(String(a.arma ?? '')) === normalizar(nombre));
+    if (!arma) continue;
+    // Pegado al rótulo: dos casillas más allá ya están los críticos, y «CON» es también uno.
+    const atributo = trasRotulo(i + 3, 'atrib.', true);
+    if (normalizar(atributo) === 'n/a') arma.atributoDano = 'ninguno';
+    else if (CARACTERISTICAS_ARMA.includes(atributo) && atributo !== 'FUE') arma.atributoDano = atributo;
+  }
 }
 
 /** Cuántas cosas propias trae, para decirlo en los avisos. */
@@ -704,3 +764,65 @@ export function eleccionesVentajasDe(
   }
   return salida;
 }
+
+/**
+ * Las casillas de raza de la pestaña Personalización (Éxtasis sanguíneo, Sue'Aman,
+ * transformación, Cercanía con El Dragón). Sólo se buscan a la izquierda de la zona de
+ * tablas auxiliares: allí la hoja repite rótulos («Trascendido») con sus cálculos.
+ */
+export function opcionesRazaDe(hojas: Hoja[], raza: string): OpcionesRaza | undefined {
+  const hoja = buscarHoja(hojas, 'Personalización');
+  if (!hoja) return undefined;
+  const corte = inicioZonaAuxiliar(hoja);
+  /** Todo lo que hay a la derecha de un rótulo, en su fila. */
+  const trasRotulo = (rotulo: string): { fila: number; columna: number; valores: string[] } | undefined => {
+    const r = normalizar(rotulo);
+    for (let i = 0; i < hoja.filas.length; i++) {
+      const fila = hoja.filas[i] ?? [];
+      const j = fila.findIndex((v, k) => k < corte && normalizar(texto(v)).replace(/:$/, '') === r);
+      if (j < 0) continue;
+      return { fila: i, columna: j, valores: fila.slice(j + 1, corte).map(texto).filter(Boolean) };
+    }
+    return undefined;
+  };
+  const primero = (rotulo: string) => trasRotulo(rotulo)?.valores[0] ?? '';
+  const si = (rotulo: string) => normalizar(primero(rotulo)) === 'si' || undefined;
+  const o: OpcionesRaza = {};
+
+  if (raza === 'Vetala' || raza === 'Nephilim Vetala') {
+    const c = primero('Atributo éxtasis sanguíneo').match(/^\+1 (\w+)$/)?.[1];
+    o.extasis = EXTASIS_VETALA.find((x) => x === c);
+    o.extasisActivo = si('Aplicar bono éxtasis');
+    o.nocturno = si('Aplicar bono nocturno');
+    o.bienAlimentado = si('Aplicar bien alimentado');
+  }
+  if (raza === 'Ebudan') {
+    o.sueAman = normalizar(primero("Ebudan: Sue' Aman")) === 'cumplido' || undefined;
+    o.trascendido = (o.sueAman && si('Trascendido')) || undefined;
+  }
+  if (raza === 'Tuan Dalyr') {
+    o.transformado = si('Transformado');
+    const fase = primero('Fase lunar actual');
+    o.faseLunar = (['Afín', 'Neutra', 'Opuesta'] as const).find((f) => normalizar(f) === normalizar(fase));
+    const bonos: NonNullable<OpcionesRaza['transformacion']> = {};
+    for (const v of trasRotulo('Bonos de transformación')?.valores ?? []) {
+      const m = v.match(/^\+(\d) (\w+)$/);
+      const c = TRANSFORMACION_TUAN_DALYR.find((x) => x === m?.[2]);
+      if (m && c) bonos[c] = Number(m[1]);
+    }
+    if (Object.keys(bonos).length > 0) o.transformacion = bonos;
+  }
+  if (raza === 'Turak') {
+    // Los tres rasgos van debajo del rótulo, uno por fila.
+    const r = trasRotulo('Turak: Cercanía con El dragón');
+    if (r) {
+      const rasgos = [1, 2, 3]
+        .map((d) => texto(hoja.filas[r.fila + d]?.[r.columna]))
+        .filter((v) => CERCANIA_DRAGON.some((c) => c === v));
+      if (rasgos.length > 0) o.cercaniaDragon = rasgos;
+    }
+  }
+  const limpias = Object.fromEntries(Object.entries(o).filter(([, v]) => v !== undefined)) as OpcionesRaza;
+  return Object.keys(limpias).length > 0 ? limpias : undefined;
+}
+

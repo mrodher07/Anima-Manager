@@ -12,6 +12,7 @@ import escenarios from '../../data/pruebas/escenarios.json';
 import hoja from '../../data/pruebas/hoja-v870.json';
 import { calcular, personajeVacio, type Caracteristica, type FichaCalculada, type Personaje } from './personaje';
 import { datosDelManual } from './datosDePrueba';
+import type { OpcionesRaza } from './razas';
 
 interface Escenario {
   id: string;
@@ -32,6 +33,7 @@ interface Escenario {
   yelmo?: { yelmo: string; calidad?: number };
   armas?: { arma: string; aDosManos?: boolean; escala?: 'Normal' | 'Enorme' | 'Gigante' }[];
   estado?: { cansancioActual?: number; pvActuales?: number };
+  opcionesRaza?: OpcionesRaza;
 }
 
 export function personajeDe(e: Escenario): Personaje {
@@ -49,6 +51,7 @@ export function personajeDe(e: Escenario): Personaje {
   p.bonosEspeciales = { ...(e.especiales ?? {}) };
   p.eleccionesVentajas = { ...(e.materias ?? {}) };
   p.estado = { ...p.estado, ...(e.estado ?? {}) };
+  if (e.opcionesRaza) p.opcionesRaza = { ...e.opcionesRaza };
   p.equipo = {
     ...p.equipo,
     armadura: [

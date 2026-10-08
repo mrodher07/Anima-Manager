@@ -173,10 +173,12 @@ describe('derivación de la ficha de Meirmeister', () => {
 
     // 55 + 30 (AGI 15 + DES 15) + 5 (Paladín Oscuro) − 20 (armadura) = 70.
     expect(f.combate.turnoNatural.valor).toBe(70);
-    // Y con las manos vacías, los +20 de la fila «Desarmado»: 90, como la ficha.
-    expect(f.combate.armas[0].turno).toBe(90);
-    // El mismo número sin necesidad de equiparse nada: es el que enseña la hoja.
+    // Con las manos vacías, los +20 «Sin arma» (`Principal!D28`): 90, como la ficha.
     expect(f.combate.turnoSinArma).toBe(90);
+    // Pero «Desarmado» puesto en un hueco de arma es un arma más: la hoja le quita esos
+    // +20 y su fila no tiene turno propio (`Combate!AW40`), así que se queda en 70. Lo
+    // ha confirmado la v8.7.0 (`data/pruebas/hoja-v870-armas.json`).
+    expect(f.combate.armas[0].turno).toBe(70);
   });
 
   it('el turno sin arma vale también sin equipar nada', () => {

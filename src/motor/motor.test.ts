@@ -145,9 +145,30 @@ describe('reglamento oficial contra la ficha de Meirmeister', () => {
       bonoFUE: bonoPorValor(12), // FUE 12 → +20
       aDosManos: true,
       calidad: 0,
+      conMunicion: false,
+      bonoMunicion: 0,
+      calidadMunicion: 0,
       extras: 0,
     });
     expect(dano).toBe(190);
+  });
+
+  it('Con munición el daño es el de las dos, y el bono es el de la Fuerza del arma', () => {
+    // Ballesta (FUE 8 propia, sin daño) con Saetas (40) de calidad +5: 40 + bono(8) + 2×5.
+    const dano = REGLAMENTO_OFICIAL.aplicar('danoArma', {
+      danoBase: 0,
+      danoMunicion: 40,
+      multTamano: 1,
+      bonoFUE: bonoPorValor(8),
+      aDosManos: true,
+      calidad: 0,
+      conMunicion: true,
+      bonoMunicion: bonoPorValor(8),
+      calidadMunicion: 5,
+      extras: 0,
+    });
+    // A dos manos no dobla nada: con munición el bono es el del arma.
+    expect(dano).toBe(40 + 10 + 10);
   });
 
   it('Trepar sin desarrollar = −35', () => {

@@ -40,24 +40,65 @@ export interface Ventaja {
 export interface Arma {
   arma: string;
   dano?: number;
-  turno?: number;
-  fueRequerida?: number;
-  fueReq2M?: number;
+  /**
+   * Daño que depende del que la empuña, en la sintaxis de las fórmulas de la aplicación:
+   * «55 - bonoFUE» (Katana de doble hoja), «presencia» (Umbra), «bono(FUE + 2) - bonoFUE»
+   * (Arco de balas). Si está, manda sobre `dano`. Variables: FUE, POD, bonoFUE, bonoPOD,
+   * presencia; función `bono(x)`, el bono de una característica de valor x.
+   */
+  danoFormula?: string;
+  turno?: number | string;
+  /** «-»: no se puede usar así (a una mano un arma que sólo va a dos, o al revés). */
+  fueRequerida?: number | string;
+  fueReq2M?: number | string;
   critico1?: string;
   critico2?: string;
   tipoArma?: string;
-  conocida?: string;
-  entereza?: number;
-  rotura?: number;
-  presencia?: number;
+  entereza?: number | string;
+  rotura?: number | string;
+  /** Rotura que depende del personaje: «POD - roturaFUE» (Umbra). */
+  roturaFormula?: string;
+  presencia?: number | string;
+  /** Presencia que depende del personaje: «presencia» o «presencia * 2» (Ophiucos). */
+  presenciaFormula?: string;
   bonusParada?: number;
   bonusEsquiva?: number;
   cadencia?: string | number;
   recarga?: string | number;
   alcance?: string | number;
+  /** Fuerza propia de un arma de proyectiles (la Ballesta dispara con la suya, no con la del tirador). */
+  fuerza?: number | string;
+  /** Fuerza que depende del tirador: «FUE + 2» (Atlatl). */
+  fuerzaFormula?: string;
+  /**
+   * Qué bono suma al daño (col. Y de la tabla). Sin poner, el de FUE. «propia»: el de la
+   * `fuerza` del arma; «ninguno»: nada; o el de otra característica (Umbra, POD; Piscis, DES).
+   */
+  atributoDano?: 'propia' | 'ninguno' | 'AGI' | 'CON' | 'DES' | 'FUE' | 'INT' | 'PER' | 'POD' | 'VOL';
+  /** Munición que admite (`Tablas!AC801`). */
+  municiones?: string[];
+  /** Arma del Zodiaco: sin uno de estos Ars Magnus es Distinta (`Tablas!L797`…). */
+  requiereArsMagnus?: string[];
+  /** Lo que además pide la hoja para que sea Conocida, en texto: otras armas a conocer. */
+  requiereArmas?: string;
+  /** Las Armas naturales: su daño, críticos, entereza y rotura salen de la raza. */
+  porRaza?: boolean;
   especial?: string;
   tamano?: string;
   _seccion?: string;
+}
+
+/** Las Armas naturales de una raza o de un Legado de Sangre (`Tablas!E639:N639`). */
+export interface ArmaNaturalRaza {
+  raza?: string;
+  legado?: string;
+  /** «tamaño»: la columna Arma Natural de la tabla de creación de seres. */
+  dano: number | 'tamaño';
+  critico1?: string;
+  critico2?: string;
+  tipoArma?: string;
+  entereza?: number;
+  rotura?: number;
 }
 
 /**
@@ -291,10 +332,25 @@ export interface TecnicaCompendio {
 export interface TablasBase {
   bonoCaracteristica: { valor: number; bono: number; multiplicadorPV: number }[];
   valoresBase: { valor: number; PV: number; ACT: number }[];
-  fuerza: { valor: number; bonoTamano: number; pesoKg: number; pesoMaxKg: number }[];
+  /** Tabla de Fuerza: el bono a la Rotura y el peso que se carga. */
+  fuerza: { valor: number; bonoRotura: number; pesoKg: number; pesoMaxKg: number }[];
   gnosis: { gnosis: number; PDs: number; nivelesSobrenat?: number }[];
   limitesKi: { limite: string; coste: number; efecto: string }[];
-  armasEnormes: { tamano: string; fueMin: number; tamanoMin: number; penFUE: number; multDano: number }[];
+  /**
+   * Armas Enormes y Gigantes. `tamanoMinimo`: por debajo, el arma es demasiado grande;
+   * `tamanoMin`: por debajo, −40 al turno.
+   */
+  armasEnormes: {
+    tamano: string; tamanoMinimo: number; tamanoMin: number; penFUE: number; multDano: number;
+    enterezaExtra: number; roturaExtra: number;
+  }[];
+  /** Tabla_CreaciónSeres: lo que va con el Tamaño (umbral de FUE+CON en `tamano`). */
+  creacionSeres?: {
+    tamano: number; nombre: string; turnoBase: number; tipoMovimiento: number;
+    multAcumulacion: number; armadura: number; ataqueFisico: number;
+    armaNatural: number; rotura: number; entereza: number;
+  }[];
+  armasNaturales?: ArmaNaturalRaza[];
   potencialPsiquico: { VOL: number; potencial: number }[];
   potencialPorCV: { CVacumulados: number; bono: number }[];
   /** Tabla 53: valor de característica → Acumulación de Ki base. */

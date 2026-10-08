@@ -299,8 +299,9 @@ cuenta y sí nos pertenece —el perfil visible, las preferencias y quién juega
 todo colgando de `auth.users` con `on delete cascade`.
 
 **El catálogo de los manuales también está en la base de datos**, y es de sólo lectura para
-todo el mundo. Se siembra con `supabase/catalogo-oficial.sql` (4.219 entradas, generado por
-`tools/sembrar-catalogo.py` a partir de los mismos JSON que sirve la aplicación), y las
+todo el mundo. Se siembra con `supabase/catalogo-oficial.sql` (4.184 entradas, generado por
+`tools/sembrar-catalogo.py` a partir de los mismos JSON que sirve la aplicación; lo que
+desaparece de los JSON se marca borrado al volver a sembrar), y las
 políticas no dan a nadie permiso de update ni de delete sobre un paquete oficial: desde el
 navegador, un `delete from catalogo` sin condiciones borra cero filas. Una mesa que quiera
 cambiar una raza del manual no la toca: crea la suya con el mismo nombre en su paquete, que

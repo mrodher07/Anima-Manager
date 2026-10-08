@@ -23,6 +23,7 @@ import {
   eleccionesDe,
   eleccionesVentajasDe,
   fichaCivilDe,
+  opcionesRazaDe,
   resumenPropio,
   trasfondoDe,
 } from './fichaComunidad';
@@ -146,8 +147,11 @@ function hojasLegibles(p: Personaje, ficha?: FichaCalculada | null): Hoja[] {
 
   const equipo: Celda[][] = [
     ['Armas'],
-    ['Arma', 'Calidad'],
-    ...p.equipo.armas.map((a): Celda[] => [a.arma, a.calidad ?? 0]),
+    ['Arma', 'Calidad', 'Manos', 'Escala', 'Conocimiento', 'Munición', 'Calidad munición'],
+    ...p.equipo.armas.map((a): Celda[] => [
+      a.arma, a.calidad ?? 0, a.aDosManos ? 2 : 1, a.escala ?? 'Normal', a.conocimiento ?? 'Conocida',
+      a.municion ?? '', a.calidadMunicion ?? 0,
+    ]),
     [],
     ['Armadura'],
     ['Pieza', 'Calidad'],
@@ -331,6 +335,8 @@ function deHojasLegibles(hojas: Hoja[], id: string): ResultadoImportacion {
       if (v && hs.length > 0) elecciones[v] = hs;
     }
     if (Object.keys(elecciones).length > 0) p.eleccionesVentajas = elecciones;
+  const opcionesRaza = opcionesRazaDe(hojas, p.raza);
+  if (opcionesRaza) p.opcionesRaza = opcionesRaza;
   }
 
   const hojaListas = buscarHoja(hojas, 'Ventajas y poderes');
@@ -355,8 +361,18 @@ function deHojasLegibles(hojas: Hoja[], id: string): ResultadoImportacion {
 
   const hojaEquipo = buscarHoja(hojas, 'Equipo');
   if (hojaEquipo) {
+    // Las fichas exportadas antes sólo traían arma y calidad: lo demás, como venía.
     p.equipo.armas = bloque(hojaEquipo, 'Arma')
-      .map((f) => ({ arma: texto(f[0]), calidad: numero(f[1]) }))
+      .map((f) => ({
+        arma: texto(f[0]),
+        calidad: numero(f[1]),
+        aDosManos: numero(f[2]) === 2 || undefined,
+        // Lo que ya es lo de por defecto no se guarda: así la ficha queda igual que estaba.
+        escala: ESCALAS_ARMA.find((e) => e !== 'Normal' && e === texto(f[3])),
+        conocimiento: CONOCIMIENTOS_ARMA.find((c) => c !== 'Conocida' && c === texto(f[4])),
+        municion: texto(f[5]) || undefined,
+        calidadMunicion: numero(f[6]) || undefined,
+      }))
       .filter((a) => a.arma);
     p.equipo.armadura = bloque(hojaEquipo, 'Pieza')
       .map((f) => ({ armadura: texto(f[0]), calidad: numero(f[1]) }))
@@ -488,6 +504,8 @@ function trasEtiqueta(hojas: Hoja[], etiqueta: string): Celda {
 }
 
 const ABREVIATURAS = ['AGI', 'CON', 'DES', 'FUE', 'INT', 'PER', 'POD', 'VOL'] as const;
+const ESCALAS_ARMA = ['Normal', 'Enorme', 'Gigante'] as const;
+const CONOCIMIENTOS_ARMA = ['Conocida', 'Similar', 'Mixta', 'Distinta'] as const;
 
 /**
  * Las ocho características. En la hoja de la comunidad están en una columna de etiquetas
@@ -698,6 +716,10 @@ export async function deFichaComunidad(
 
   const raza = texto(trasEtiqueta(hojas, 'raza')).trim();
   if (raza) p.raza = raza;
+  // En la hoja un Nephilim es un Humano con la casilla «Nephilim» puesta; en la aplicación
+  // es una raza más. Si la casilla está vacía, lo que sigue al rótulo es otra cosa.
+  const nephilim = texto(trasEtiqueta(hojas, 'nephilim')).trim();
+  if (nephilim.startsWith('Nephilim ')) p.raza = nephilim;
 
   const sexo = texto(trasEtiqueta(hojas, 'sexo')).trim();
   if (sexo === 'Hombre' || sexo === 'Mujer') p.sexo = sexo;
@@ -747,6 +769,8 @@ export async function deFichaComunidad(
     return clave && secundariasMesaSet.has(clave.toLowerCase()) ? clave : null;
   });
   if (Object.keys(elecciones).length > 0) p.eleccionesVentajas = elecciones;
+  const opcionesRaza = opcionesRazaDe(hojas, p.raza);
+  if (opcionesRaza) p.opcionesRaza = opcionesRaza;
 
   // Y lo que la mesa haya creado ella misma.
   const propio = contenidoPropioDe(hojas);

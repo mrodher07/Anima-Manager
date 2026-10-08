@@ -137,7 +137,9 @@ def main() -> None:
         lineas.append('')
 
         valores = []
+        presentes = []
         for coleccion, clave, datos in filas_de(carpeta, claves):
+            presentes.append(f"('{escapar(coleccion)}', '{escapar(clave)}')")
             json_datos = escapar(json.dumps(datos, ensure_ascii=False, separators=(',', ':')))
             valores.append(
                 f"  ('{paquete['id']}', '{escapar(coleccion)}', "
@@ -156,6 +158,19 @@ def main() -> None:
             lineas.append(
                 'on conflict (paquete_id, coleccion, clave) do update set\n'
                 '  datos = excluded.datos, borrado = false, actualizado_en = now();'
+            )
+            lineas.append('')
+
+        # Lo que estaba en el manual y ya no está (los huecos «Arma #1» de la hoja que se
+        # colaron en una extracción anterior…) se marca borrado: si no, seguiría saliendo.
+        if presentes:
+            lineas.append('-- Lo que ya no está en los JSON de este manual se marca borrado.')
+            lineas.append(
+                'update public.catalogo set borrado = true, actualizado_en = now()\n'
+                f"where paquete_id = '{paquete['id']}' and not borrado\n"
+                '  and (coleccion, clave) not in (values\n'
+                + ',\n'.join(f'    {t}' for t in presentes)
+                + ');'
             )
             lineas.append('')
 

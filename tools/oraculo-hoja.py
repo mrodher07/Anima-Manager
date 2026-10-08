@@ -9,9 +9,15 @@ deja que la hoja calcule y guarda lo que sale en `data/pruebas/hoja-v870.json`.
 Así la comparación no depende de lo que alguien haya transcrito a mano: los números son los
 de la propia hoja. `src/motor/hojaV870.test.ts` compara después la aplicación con ellos.
 
+Con `--armas` hace lo mismo con las armas: empuña en la hoja cada arma del catálogo (a una
+y a dos manos, con calidad, con cada munición, con y sin su Ars Magnus, las naturales de
+cada raza…) y guarda lo que sale en `data/pruebas/hoja-v870-armas.json`, que compara
+`src/motor/hojaV870Armas.test.ts`. Tarda un cuarto de hora.
+
 Necesita LibreOffice Calc y su módulo de Python (`uno`). El .xlsm no va en el repositorio.
 
     python3 tools/oraculo-hoja.py
+    python3 tools/oraculo-hoja.py --armas
 """
 import json, os, subprocess, sys, time
 
@@ -179,7 +185,12 @@ class Hoja:
 
 
 def rellenar(h, e):
-    h.poner('General', 'F23', e['raza'])
+    # En la hoja un Nephilim es un Humano con la casilla «Nephilim» puesta (`General!J23`).
+    if e['raza'].startswith('Nephilim'):
+        h.poner('General', 'F23', 'Humano')
+        h.poner('General', 'J23', e['raza'])
+    else:
+        h.poner('General', 'F23', e['raza'])
     h.poner('General', 'F24', e.get('sexo', 'Hombre'))
     h.poner('PDs', 'O7', e['categoria'])
     h.poner('PDs', 'S7', e.get('nivel', 1))
@@ -226,9 +237,155 @@ def rellenar(h, e):
         h.poner('Combate', 'C15', e['yelmo']['yelmo'])
         if e['yelmo'].get('calidad'):
             h.poner('Combate', 'H15', e['yelmo']['calidad'])
+    # Las casillas de raza de la pestaña Personalización.
+    o = e.get('opcionesRaza', {})
+    si = lambda v: 'Sí' if v else 'No'
+    if o.get('extasis'):
+        h.poner('Personalización', 'G45', f"+1 {o['extasis']}")
+    for ref, clave in (('G46', 'extasisActivo'), ('G47', 'nocturno'), ('G48', 'bienAlimentado')):
+        if clave in o:
+            h.poner('Personalización', ref, si(o[clave]))
+    if o.get('sueAman'):
+        h.poner('Personalización', 'E50', 'Cumplido')
+    if o.get('trascendido'):
+        h.poner('Personalización', 'E52', 'Sí')
+    if 'transformado' in o:
+        h.poner('Personalización', 'L50', si(o['transformado']))
+    for ref, c in (('N49', 'FUE'), ('O49', 'DES'), ('P49', 'AGI'), ('Q49', 'PER')):
+        if o.get('transformacion', {}).get(c):
+            h.poner('Personalización', ref, f"+{o['transformacion'][c]} {c}")
+    if o.get('faseLunar'):
+        h.poner('Personalización', 'P50', o['faseLunar'])
+    for ref, rasgo in zip(('C40', 'C41', 'C42'), o.get('cercaniaDragon', [])):
+        h.poner('Personalización', ref, rasgo)
+
+
+# Todas las armas del catálogo, una a una, en el mismo personaje: lo que sale en la hoja.
+# FUE, DES y POD con bonos distintos (+20, +5, +10) para que se note cuál suma cada arma.
+PERSONAJE_ARMAS = {
+    'id': 'armas', 'raza': 'Humano', 'categoria': 'Guerrero', 'nivel': 1,
+    'caracteristicas': {'AGI': 9, 'CON': 8, 'DES': 7, 'FUE': 11, 'INT': 6, 'PER': 6, 'POD': 9, 'VOL': 6},
+    'pd': {'HAtaque': 100, 'HParada': 100},
+}
+SALIDA_ARMAS = os.path.join(RAIZ, 'data', 'pruebas', 'hoja-v870-armas.json')
+
+# Dónde está cada cosa en el hueco 1 (cuerpo a cuerpo) y en el 7 (proyectiles).
+HUECO_ARMA = {
+    1: {'arma': 'E28', 'manos': 'C28', 'escala': 'F29', 'calidad': 'J31'},
+    7: {'arma': 'E49', 'manos': 'C49', 'escala': 'F51', 'calidad': 'J52',
+        'municion': 'E50', 'calidadMunicion': 'J53'},
+}
+LECTURAS_ARMA = {
+    1: {'turno': 'H29', 'ataque': 'I29', 'defensa': 'J29', 'tipoDefensa': 'K29', 'dano': 'L29',
+        'conocimiento': 'C29', 'critico1': 'C31', 'critico2': 'D31',
+        'entereza': 'E31', 'rotura': 'F31', 'presencia': 'G31'},
+    7: {'turno': 'H50', 'ataque': 'I50', 'defensa': 'J50', 'tipoDefensa': 'K50', 'dano': 'L50',
+        'conocimiento': 'C51', 'critico1': 'C53', 'critico2': 'D53'},
+}
+# Las habilidades del Ki que tocan al arma: se marcan en la columna Q de la pestaña Ki.
+FILA_KI = {'Extensión del aura al arma': 36, 'Daño incrementado': 38}
+RAZAS_ARMAS_NATURALES = ['Humano', 'Ebudan', 'Tuan Dalyr', 'Turak', 'Daimah', 'Jayán', 'Nephilim Turak']
+
+
+def casos_armas(catalogo):
+    """Cada caso: un personaje (el de arriba con cambios), un arma en un hueco y su nombre."""
+    base = PERSONAJE_ARMAS
+    for a in catalogo:
+        for manos in (False, True):
+            for calidad in (0, 5):
+                yield (f"{a['arma']} · {'A dos manos' if manos else 'A una mano'} · +{calidad}", base,
+                       {'hueco': 1, 'arma': a['arma'], 'aDosManos': manos, 'calidad': calidad})
+        if a.get('requiereArsMagnus'):
+            for manos in (False, True):
+                yield (f"{a['arma']} · {'A dos manos' if manos else 'A una mano'} · con Ars Magnus",
+                       {**base, 'arsMagnus': a['requiereArsMagnus'][:1]},
+                       {'hueco': 1, 'arma': a['arma'], 'aDosManos': manos, 'calidad': 0})
+        for m in a.get('municiones', []):
+            for manos in (False, True):
+                for calidad, cal_m in ((0, 0), (5, 10)):
+                    yield (f"{a['arma']} con {m} · {'A dos manos' if manos else 'A una mano'} · +{calidad}/+{cal_m}",
+                           base, {'hueco': 7, 'arma': a['arma'], 'aDosManos': manos, 'calidad': calidad,
+                                  'municion': m, 'calidadMunicion': cal_m})
+    # Las Armas naturales de cada raza, y con un Tamaño grande (el daño del Jayán va con él).
+    for raza in RAZAS_ARMAS_NATURALES:
+        for fue_con in ((11, 8), (13, 12)):
+            car = {**base['caracteristicas'], 'FUE': fue_con[0], 'CON': fue_con[1]}
+            yield (f'Armas naturales · {raza} · FUE {fue_con[0]} CON {fue_con[1]}',
+                   {**base, 'raza': raza, 'caracteristicas': car},
+                   {'hueco': 1, 'arma': 'Armas naturales', 'aDosManos': False, 'calidad': 0})
+    yield ('Armas naturales · Legado de Sangre', {**base, 'ventajas': ['Armas Naturales (1)']},
+           {'hueco': 1, 'arma': 'Armas naturales', 'aDosManos': False, 'calidad': 0})
+    # Enormes y Gigantes, con un Tamaño que no llega y con uno que sí.
+    for escala in ('Enorme', 'Gigante'):
+        for raza, fue, con in (('Humano', 11, 8), ('Jayán', 15, 15)):
+            car = {**base['caracteristicas'], 'FUE': fue, 'CON': con}
+            for arma in ('Espada larga', 'Mandoble', 'Hacha a dos manos'):
+                if not any(a['arma'] == arma for a in catalogo):
+                    continue
+                yield (f'{arma} {escala} · {raza} FUE {fue} CON {con}',
+                       {**base, 'raza': raza, 'caracteristicas': car},
+                       {'hueco': 1, 'arma': arma, 'aDosManos': True, 'calidad': 0, 'escala': escala})
+    # El Ki que suma al arma.
+    for arma in ('Espada larga', 'Ballesta'):
+        yield (f'{arma} · Daño incrementado y Extensión del aura al arma',
+               {**base, 'ki': list(FILA_KI)},
+               {'hueco': 1, 'arma': arma, 'aDosManos': False, 'calidad': 0})
+
+
+def armas(h):
+    catalogo = json.load(open(os.path.join(RAIZ, 'data', 'reglas', 'armas.json'), encoding='utf-8'))
+    resultados = {}
+    for n, (clave, personaje, arma) in enumerate(casos_armas(catalogo)):
+        rellenar(h, personaje)
+        for i, ars in enumerate(personaje.get('arsMagnus', [])):
+            h.poner('PDs', f'E{81 + i}', ars)
+        for hab in personaje.get('ki', []):
+            h.poner('Ki', f'Q{FILA_KI[hab]}', 1)
+        hueco = HUECO_ARMA[arma['hueco']]
+        h.poner('Combate', hueco['arma'], arma['arma'])
+        h.poner('Combate', hueco['manos'], 'A dos manos' if arma['aDosManos'] else 'A una mano')
+        h.poner('Combate', hueco['escala'], arma.get('escala', 'Normal'))
+        if arma.get('calidad'):
+            h.poner('Combate', hueco['calidad'], arma['calidad'])
+        if arma.get('municion'):
+            h.poner('Combate', hueco['municion'], arma['municion'])
+            if arma.get('calidadMunicion'):
+                h.poner('Combate', hueco['calidadMunicion'], arma['calidadMunicion'])
+        # El arma desarrollada: la que la hoja da por Conocida.
+        h.poner('Principal', 'F31', arma['arma'])
+        h.doc.calculateAll()
+        resultados[clave] = {
+            'personaje': {k: v for k, v in personaje.items() if k != 'id'} if personaje is not PERSONAJE_ARMAS else None,
+            'arma': arma,
+            'hoja': {k: h.leer('Combate', ref) for k, ref in LECTURAS_ARMA[arma['hueco']].items()},
+        }
+        if resultados[clave]['personaje'] is None:
+            del resultados[clave]['personaje']
+        h.limpiar()
+        if n % 50 == 0:
+            print(f'· {n} {clave}', file=sys.stderr)
+    return resultados
 
 
 def main():
+    if '--armas' in sys.argv:
+        perfil = os.path.join(os.environ.get('TMPDIR', '/tmp'), 'oraculo-libreoffice')
+        proc, ctx = arrancar(perfil)
+        try:
+            h = Hoja(ctx)
+            resultados = armas(h)
+            h.doc.close(True)
+        finally:
+            proc.terminate()
+        with open(SALIDA_ARMAS, 'w', encoding='utf-8') as f:
+            json.dump({'_nota': 'Cada arma del catálogo empuñada en la hoja v8.7.0 por el mismo guerrero '
+                                '(FUE 11, DES 7, POD 9), a una y a dos manos, con y sin calidad; las de '
+                                'proyectiles con cada munición; las del Zodiaco con su Ars Magnus; las '
+                                'Armas naturales de cada raza. «personaje» es lo que cambia respecto al '
+                                'guerrero. Calculado con tools/oraculo-hoja.py --armas; no editar a mano.',
+                       'personaje': PERSONAJE_ARMAS, 'armas': resultados}, f, ensure_ascii=False, indent=1)
+            f.write('\n')
+        return
     escenarios = json.load(open(ESCENARIOS, encoding='utf-8'))
     perfil = os.path.join(os.environ.get('TMPDIR', '/tmp'), 'oraculo-libreoffice')
     proc, ctx = arrancar(perfil)

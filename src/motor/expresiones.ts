@@ -18,7 +18,7 @@ export class ErrorDeFormula extends Error {
   }
 }
 
-type Fn = (...args: number[]) => number;
+export type Fn = (...args: number[]) => number;
 
 /** Funciones disponibles dentro de una fórmula. */
 export const FUNCIONES: Record<string, Fn> = {
@@ -205,7 +205,7 @@ function aNumero(v: number | boolean): number {
   return typeof v === 'boolean' ? (v ? 1 : 0) : v;
 }
 
-function evaluarNodo(n: Nodo, ctx: Contexto): number {
+function evaluarNodo(n: Nodo, ctx: Contexto, fns: Record<string, Fn>): number {
   switch (n.t) {
     case 'num':
       return n.v;
@@ -216,19 +216,19 @@ function evaluarNodo(n: Nodo, ctx: Contexto): number {
       return aNumero(ctx[n.nombre]);
     }
     case 'un': {
-      const v = evaluarNodo(n.arg, ctx);
+      const v = evaluarNodo(n.arg, ctx, fns);
       return n.op === '-' ? -v : v;
     }
     case 'cond':
-      return evaluarNodo(n.test, ctx) !== 0 ? evaluarNodo(n.si, ctx) : evaluarNodo(n.no, ctx);
+      return evaluarNodo(n.test, ctx, fns) !== 0 ? evaluarNodo(n.si, ctx, fns) : evaluarNodo(n.no, ctx, fns);
     case 'llamada': {
-      const fn = FUNCIONES[n.nombre];
+      const fn = Object.hasOwn(fns, n.nombre) ? fns[n.nombre] : undefined;
       if (!fn) throw new ErrorDeFormula(`Función desconocida: "${n.nombre}"`);
-      return fn(...n.args.map((a) => evaluarNodo(a, ctx)));
+      return fn(...n.args.map((a) => evaluarNodo(a, ctx, fns)));
     }
     case 'bin': {
-      const a = evaluarNodo(n.izq, ctx);
-      const b = evaluarNodo(n.der, ctx);
+      const a = evaluarNodo(n.izq, ctx, fns);
+      const b = evaluarNodo(n.der, ctx, fns);
       switch (n.op) {
         case '+': return a + b;
         case '-': return a - b;
@@ -256,14 +256,18 @@ function evaluarNodo(n: Nodo, ctx: Contexto): number {
 
 const cacheArboles = new Map<string, Nodo>();
 
-/** Compila (con caché) y evalúa una fórmula contra un contexto de variables. */
-export function evaluar(formula: string, ctx: Contexto): number {
+/**
+ * Compila (con caché) y evalúa una fórmula contra un contexto de variables. `extra` añade
+ * funciones que sólo tienen sentido en un sitio (el `bono(x)` de las armas), sin abrir más
+ * que eso: siguen siendo funciones de números a números escritas aquí, no del usuario.
+ */
+export function evaluar(formula: string, ctx: Contexto, extra?: Record<string, Fn>): number {
   let arbol = cacheArboles.get(formula);
   if (!arbol) {
     arbol = analizar(formula);
     cacheArboles.set(formula, arbol);
   }
-  return evaluarNodo(arbol, ctx);
+  return evaluarNodo(arbol, ctx, extra ? { ...FUNCIONES, ...extra } : FUNCIONES);
 }
 
 /** Valida una fórmula sin evaluarla. Devuelve las variables que necesita. */

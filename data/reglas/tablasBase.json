@@ -206,121 +206,121 @@
  "fuerza": [
   {
    "valor": 1,
-   "bonoTamano": 0,
+   "bonoRotura": 0,
    "pesoKg": 0.5,
    "pesoMaxKg": 1
   },
   {
    "valor": 2,
-   "bonoTamano": 0,
+   "bonoRotura": 0,
    "pesoKg": 5,
    "pesoMaxKg": 10
   },
   {
    "valor": 3,
-   "bonoTamano": 0,
+   "bonoRotura": 0,
    "pesoKg": 10,
    "pesoMaxKg": 20
   },
   {
    "valor": 4,
-   "bonoTamano": 0,
+   "bonoRotura": 0,
    "pesoKg": 15,
    "pesoMaxKg": 40
   },
   {
    "valor": 5,
-   "bonoTamano": 0,
+   "bonoRotura": 0,
    "pesoKg": 25,
    "pesoMaxKg": 60
   },
   {
    "valor": 6,
-   "bonoTamano": 0,
+   "bonoRotura": 0,
    "pesoKg": 40,
    "pesoMaxKg": 120
   },
   {
    "valor": 7,
-   "bonoTamano": 0,
+   "bonoRotura": 0,
    "pesoKg": 60,
    "pesoMaxKg": 180
   },
   {
    "valor": 8,
-   "bonoTamano": 1,
+   "bonoRotura": 1,
    "pesoKg": 80,
    "pesoMaxKg": 260
   },
   {
    "valor": 9,
-   "bonoTamano": 1,
+   "bonoRotura": 1,
    "pesoKg": 100,
    "pesoMaxKg": 350
   },
   {
    "valor": 10,
-   "bonoTamano": 2,
+   "bonoRotura": 2,
    "pesoKg": 150,
    "pesoMaxKg": 420
   },
   {
    "valor": 11,
-   "bonoTamano": 3,
+   "bonoRotura": 3,
    "pesoKg": 200,
    "pesoMaxKg": 600
   },
   {
    "valor": 12,
-   "bonoTamano": 3,
+   "bonoRotura": 3,
    "pesoKg": 350,
    "pesoMaxKg": 1000
   },
   {
    "valor": 13,
-   "bonoTamano": 4,
+   "bonoRotura": 4,
    "pesoKg": 1000,
    "pesoMaxKg": 3000
   },
   {
    "valor": 14,
-   "bonoTamano": 4,
+   "bonoRotura": 4,
    "pesoKg": 5000,
    "pesoMaxKg": 25000
   },
   {
    "valor": 15,
-   "bonoTamano": 5,
+   "bonoRotura": 5,
    "pesoKg": 15000,
    "pesoMaxKg": 100000
   },
   {
    "valor": 16,
-   "bonoTamano": 5,
+   "bonoRotura": 5,
    "pesoKg": 100000,
    "pesoMaxKg": 500000
   },
   {
    "valor": 17,
-   "bonoTamano": 5,
+   "bonoRotura": 5,
    "pesoKg": 500000,
    "pesoMaxKg": 2500000
   },
   {
    "valor": 18,
-   "bonoTamano": 5,
+   "bonoRotura": 5,
    "pesoKg": 1000000,
    "pesoMaxKg": 10000000
   },
   {
    "valor": 19,
-   "bonoTamano": 5,
+   "bonoRotura": 5,
    "pesoKg": 10000000,
    "pesoMaxKg": 150000000
   },
   {
    "valor": 20,
-   "bonoTamano": 5,
+   "bonoRotura": 5,
    "pesoKg": 10000000000000000159028911097599180468360808563945281389781327557747838772170381060813469985856815104,
    "pesoMaxKg": 10000000000000000159028911097599180468360808563945281389781327557747838772170381060813469985856815104
   }
@@ -1580,30 +1580,175 @@
  "armasEnormes": [
   {
    "tamano": "Normal",
-   "fueMin": 1,
+   "tamanoMinimo": 1,
    "tamanoMin": 1,
    "penFUE": 0,
    "multDano": 1,
-   "c5": 0,
-   "c6": 0
+   "enterezaExtra": 0,
+   "roturaExtra": 0
   },
   {
    "tamano": "Enorme",
-   "fueMin": 9,
+   "tamanoMinimo": 9,
    "tamanoMin": 23,
    "penFUE": 2,
    "multDano": 1.5,
-   "c5": 6,
-   "c6": 3
+   "enterezaExtra": 6,
+   "roturaExtra": 3
   },
   {
    "tamano": "Gigante",
-   "fueMin": 23,
+   "tamanoMinimo": 23,
    "tamanoMin": 29,
    "penFUE": 5,
    "multDano": 2,
-   "c5": 16,
-   "c6": 8
+   "enterezaExtra": 16,
+   "roturaExtra": 8
+  }
+ ],
+ "creacionSeres": [
+  {
+   "tamano": -5,
+   "nombre": "Minúsculo",
+   "turnoBase": 40,
+   "tipoMovimiento": -4,
+   "multAcumulacion": 1,
+   "armadura": 1,
+   "ataqueFisico": 5,
+   "armaNatural": 20,
+   "rotura": -4,
+   "entereza": 4
+  },
+  {
+   "tamano": 1,
+   "nombre": "Minúsculo",
+   "turnoBase": 40,
+   "tipoMovimiento": -4,
+   "multAcumulacion": 1,
+   "armadura": 1,
+   "ataqueFisico": 5,
+   "armaNatural": 20,
+   "rotura": -4,
+   "entereza": 4
+  },
+  {
+   "tamano": 4,
+   "nombre": "Pequeño",
+   "turnoBase": 30,
+   "tipoMovimiento": -2,
+   "multAcumulacion": 2,
+   "armadura": 2,
+   "ataqueFisico": 10,
+   "armaNatural": 30,
+   "rotura": -2,
+   "entereza": 8
+  },
+  {
+   "tamano": 9,
+   "nombre": "Medio",
+   "turnoBase": 20,
+   "tipoMovimiento": 0,
+   "multAcumulacion": 5,
+   "armadura": 3,
+   "ataqueFisico": 10,
+   "armaNatural": 40,
+   "rotura": 0,
+   "entereza": 12
+  },
+  {
+   "tamano": 23,
+   "nombre": "Grande",
+   "turnoBase": 10,
+   "tipoMovimiento": 0,
+   "multAcumulacion": 5,
+   "armadura": 4,
+   "ataqueFisico": 20,
+   "armaNatural": 60,
+   "rotura": 4,
+   "entereza": 16
+  },
+  {
+   "tamano": 25,
+   "nombre": "Enorme",
+   "turnoBase": 0,
+   "tipoMovimiento": 1,
+   "multAcumulacion": 10,
+   "armadura": 6,
+   "ataqueFisico": 30,
+   "armaNatural": 100,
+   "rotura": 8,
+   "entereza": 20
+  },
+  {
+   "tamano": 29,
+   "nombre": "Gigantesco",
+   "turnoBase": -10,
+   "tipoMovimiento": 2,
+   "multAcumulacion": 15,
+   "armadura": 8,
+   "ataqueFisico": 40,
+   "armaNatural": 120,
+   "rotura": 12,
+   "entereza": 28
+  },
+  {
+   "tamano": 34,
+   "nombre": "Colosal",
+   "turnoBase": -20,
+   "tipoMovimiento": 3,
+   "multAcumulacion": 20,
+   "armadura": 10,
+   "ataqueFisico": 60,
+   "armaNatural": 140,
+   "rotura": 16,
+   "entereza": 34
+  }
+ ],
+ "armasNaturales": [
+  {
+   "raza": "Ebudan",
+   "dano": 60,
+   "critico1": "FIL",
+   "critico2": "-",
+   "tipoArma": "Mandoble/-",
+   "entereza": 20,
+   "rotura": 5
+  },
+  {
+   "raza": "Tuan Dalyr",
+   "dano": 40,
+   "critico1": "-",
+   "critico2": "-"
+  },
+  {
+   "raza": "Turak",
+   "dano": 40,
+   "critico1": "FIL",
+   "critico2": "-"
+  },
+  {
+   "raza": "Daimah",
+   "dano": 30,
+   "critico1": "FIL",
+   "critico2": "PEN"
+  },
+  {
+   "raza": "Nephilim Turak",
+   "dano": 30,
+   "critico1": "-",
+   "critico2": "-"
+  },
+  {
+   "raza": "Jayán",
+   "dano": "tamaño",
+   "critico1": "FIL",
+   "critico2": "PEN"
+  },
+  {
+   "legado": "Armas Naturales",
+   "dano": 40,
+   "critico1": "-",
+   "critico2": "-"
   }
  ],
  "tipologias": [

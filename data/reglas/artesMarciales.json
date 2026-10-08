@@ -1,580 +1,575 @@
 [
  {
   "arte": "Aikido (Base)",
-  "danoBase": 30,
   "CM": 0,
   "especial": "En contraataque añade (2xFUE enemigo) al Daño",
   "longEsp": 45,
   "danoMaximo": 0,
-  "requisitos": "NO",
-  "_seccion": "A. MARCIALES BÁSICAS"
+  "requisitos": "Trucos de manos 20",
+  "_seccion": "A. MARCIALES BÁSICAS",
+  "danoFormula": "10 + bonoFUE"
  },
  {
   "arte": "Aikido (Avanzado)",
-  "danoBase": 30,
   "CM": 10,
   "bonoEsquiva": 10,
   "bonoParada": 10,
   "especial": "En contraataque Presa y Derribo sin penalizador y Daño +2xFUE enemigo",
   "longEsp": 69,
   "danoMaximo": 0,
-  "requisitos": "NO",
-  "_seccion": "A. MARCIALES BÁSICAS"
+  "requisitos": "Trucos de manos 40, Ataque 100, Defensa 120",
+  "_seccion": "A. MARCIALES BÁSICAS",
+  "danoFormula": "10 + bonoFUE"
  },
  {
   "arte": "Aikido (Supremo)",
-  "danoBase": 30,
   "CM": 20,
   "bonoEsquiva": 10,
   "bonoParada": 10,
   "especial": "Bono +2 Presa y Derribo. Contra: Presa y Derribo sin pen. y daño +4xFUE enemigo",
   "longEsp": 79,
   "danoMaximo": 0,
-  "requisitos": "NO",
-  "_seccion": "A. MARCIALES BÁSICAS"
+  "requisitos": "Trucos de manos 80, Ataque 100, Defensa 200",
+  "_seccion": "A. MARCIALES BÁSICAS",
+  "danoFormula": "10 + bonoFUE"
  },
  {
   "arte": "Boxeo (Base)",
-  "danoBase": 50,
   "CM": 0,
   "bonoTurno": 5,
   "especial": "-",
   "longEsp": 1,
   "danoMaximo": 0,
-  "requisitos": "-",
-  "_seccion": "A. MARCIALES BÁSICAS"
+  "requisitos": "Proezas de fuerza 30",
+  "_seccion": "A. MARCIALES BÁSICAS",
+  "danoFormula": "10 + 2 * bonoFUE"
  },
  {
   "arte": "Boxeo (Avanzado)",
-  "danoBase": 60,
   "CM": 10,
   "bonoTurno": 5,
   "especial": "Bono especial de +10 en contraataque",
   "longEsp": 36,
   "danoMaximo": 0,
-  "requisitos": "NO",
-  "_seccion": "A. MARCIALES BÁSICAS"
+  "requisitos": "Proezas de fuerza 60, Ataque 120, Defensa 120",
+  "_seccion": "A. MARCIALES BÁSICAS",
+  "danoFormula": "20 + 2 * bonoFUE"
  },
  {
   "arte": "Boxeo (Supremo)",
-  "danoBase": 70,
   "CM": 20,
   "bonoAtaque": 10,
   "bonoTurno": 10,
   "especial": "Bono especial de +10 en contraataque",
   "longEsp": 36,
   "danoMaximo": 0,
-  "requisitos": "NO",
-  "_seccion": "A. MARCIALES BÁSICAS"
+  "requisitos": "Proezas de fuerza 120, Ataque 200, Defensa 200",
+  "_seccion": "A. MARCIALES BÁSICAS",
+  "danoFormula": "30 + 2 * bonoFUE"
  },
  {
   "arte": "Capoeira (Base)",
-  "danoBase": 40,
   "CM": 0,
   "especial": "Ataque en Área como arma media",
   "longEsp": 30,
   "danoMaximo": 0,
-  "requisitos": "NO",
-  "_seccion": "A. MARCIALES BÁSICAS"
+  "requisitos": "Baile 20",
+  "_seccion": "A. MARCIALES BÁSICAS",
+  "danoFormula": "20 + bonoFUE"
  },
  {
   "arte": "Capoeira (Avanzado)",
-  "danoBase": 40,
   "CM": 10,
   "bonoEsquiva": 10,
   "especial": "Ataque en Área como arma grande",
   "longEsp": 31,
   "danoMaximo": 0,
-  "requisitos": "NO",
-  "_seccion": "A. MARCIALES BÁSICAS"
+  "requisitos": "Baile 40, Esquiva 120",
+  "_seccion": "A. MARCIALES BÁSICAS",
+  "danoFormula": "20 + bonoFUE"
  },
  {
   "arte": "Capoeira (Supremo)",
-  "danoBase": 40,
   "CM": 20,
   "bonoEsquiva": 10,
   "especial": "Ataque en Área como arma grande y con penalizador reducido a -10",
   "longEsp": 64,
   "danoMaximo": 0,
-  "requisitos": "NO",
-  "_seccion": "A. MARCIALES BÁSICAS"
+  "requisitos": "Baile 120, Esquiva 200",
+  "_seccion": "A. MARCIALES BÁSICAS",
+  "danoFormula": "20 + bonoFUE"
  },
  {
   "arte": "Grappling (Base)",
-  "danoBase": 30,
   "CM": 0,
   "especial": "Presa y Derribo con mitad de penalizadores",
   "longEsp": 42,
   "danoMaximo": 0,
-  "requisitos": "-",
-  "_seccion": "A. MARCIALES BÁSICAS"
+  "requisitos": "Proezas de fuerza 20",
+  "_seccion": "A. MARCIALES BÁSICAS",
+  "danoFormula": "10 + bonoFUE"
  },
  {
   "arte": "Grappling (Avanzado)",
-  "danoBase": 40,
   "CM": 10,
   "especial": "Presa y Derribo sin penalizadores",
   "longEsp": 33,
   "danoMaximo": 0,
-  "requisitos": "NO",
-  "_seccion": "A. MARCIALES BÁSICAS"
+  "requisitos": "Proezas de fuerza 40, Ataque 130",
+  "_seccion": "A. MARCIALES BÁSICAS",
+  "danoFormula": "20 + bonoFUE"
  },
  {
   "arte": "Grappling (Supremo)",
-  "danoBase": 40,
   "CM": 20,
   "especial": "Presa y Derribo sin penalizadores. Se puede hacer Daño completo en Presa y Derribo",
   "longEsp": 82,
   "danoMaximo": 0,
-  "requisitos": "NO",
-  "_seccion": "A. MARCIALES BÁSICAS"
+  "requisitos": "Proezas de fuerza 120, Ataque 200",
+  "_seccion": "A. MARCIALES BÁSICAS",
+  "danoFormula": "20 + bonoFUE"
  },
  {
   "arte": "Kardad (Base)",
-  "danoBase": 30,
   "CM": 0,
   "especial": "Bono de +1 a los controles para defenderse de Presa y Derribo",
   "longEsp": 61,
   "danoMaximo": 0,
-  "requisitos": "NO",
-  "_seccion": "A. MARCIALES BÁSICAS"
+  "requisitos": "Trucos de manos 20, Atletismo 40",
+  "_seccion": "A. MARCIALES BÁSICAS",
+  "danoFormula": "10 + bonoFUE"
  },
  {
   "arte": "Kardad (Avanzado)",
-  "danoBase": 40,
   "CM": 10,
   "bonoEsquiva": 10,
   "bonoParada": 10,
   "especial": "Bono de +3 a los controles para defenderse de Presa y Derribo",
   "longEsp": 61,
   "danoMaximo": 0,
-  "requisitos": "NO",
-  "_seccion": "A. MARCIALES BÁSICAS"
+  "requisitos": "Trucos de manos 40, Atletismo 60, Defensa 120",
+  "_seccion": "A. MARCIALES BÁSICAS",
+  "danoFormula": "20 + bonoFUE"
  },
  {
   "arte": "Kardad (Supremo)",
-  "danoBase": 50,
   "CM": 20,
   "bonoEsquiva": 10,
   "bonoParada": 10,
   "especial": "Bono +3 Presa y Derribo. Cada turno puede repetir control para evitar Presa o Derribo",
   "longEsp": 85,
   "danoMaximo": 0,
-  "requisitos": "NO",
-  "_seccion": "A. MARCIALES BÁSICAS"
+  "requisitos": "Trucos de manos 100, Atletismo 120, Defensa 130",
+  "_seccion": "A. MARCIALES BÁSICAS",
+  "danoFormula": "30 + bonoFUE"
  },
  {
   "arte": "Kempo (Base)",
-  "danoBase": 30,
   "CM": 0,
   "especial": "Ataques adicionales con penalizador de -15 a la HA",
   "longEsp": 50,
   "danoMaximo": 0,
-  "requisitos": "-",
-  "_seccion": "A. MARCIALES BÁSICAS"
+  "_seccion": "A. MARCIALES BÁSICAS",
+  "danoFormula": "10 + bonoFUE"
  },
  {
   "arte": "Kempo (Avanzado)",
-  "danoBase": 40,
   "CM": 10,
   "especial": "Ataques adicionales con penalizador de -10 a la HA",
   "longEsp": 50,
   "danoMaximo": 0,
-  "requisitos": "NO",
-  "_seccion": "A. MARCIALES BÁSICAS"
+  "requisitos": "Ataque 120",
+  "_seccion": "A. MARCIALES BÁSICAS",
+  "danoFormula": "20 + bonoFUE"
  },
  {
   "arte": "Kempo (Supremo)",
-  "danoBase": 40,
   "CM": 20,
   "bonoAtaque": 10,
   "especial": "Ataques adicionales -10 HA. Número de Ataques adicionales como si tuviera +100 HA",
   "longEsp": 81,
   "danoMaximo": 0,
-  "requisitos": "NO",
-  "_seccion": "A. MARCIALES BÁSICAS"
+  "requisitos": "Ataque 200",
+  "_seccion": "A. MARCIALES BÁSICAS",
+  "danoFormula": "20 + bonoFUE"
  },
  {
   "arte": "Kuan (Base)",
-  "danoBase": 30,
   "CM": 0,
   "especial": "Mitad de penalizador para parar Proyectiles Lanzados",
   "longEsp": 52,
   "danoMaximo": 0,
-  "requisitos": "NO",
-  "_seccion": "A. MARCIALES BÁSICAS"
+  "requisitos": "Trucos de manos 40",
+  "_seccion": "A. MARCIALES BÁSICAS",
+  "danoFormula": "10 + bonoFUE"
  },
  {
   "arte": "Kuan (Avanzado)",
-  "danoBase": 40,
   "CM": 10,
   "bonoParada": 10,
   "especial": "Mitad de penalizador para parar Proyectiles (Lanzados y Disparados)",
   "longEsp": 67,
   "danoMaximo": 0,
-  "requisitos": "NO",
-  "_seccion": "A. MARCIALES BÁSICAS"
+  "requisitos": "Trucos de manos 60, Defensa 120",
+  "_seccion": "A. MARCIALES BÁSICAS",
+  "danoFormula": "20 + bonoFUE"
  },
  {
   "arte": "Kuan (Supremo)",
-  "danoBase": 40,
   "CM": 20,
   "bonoParada": 10,
   "especial": "Sin penalizador por parar Proyectiles (Lanzados y Disparados)",
   "longEsp": 61,
   "danoMaximo": 0,
-  "requisitos": "NO",
-  "_seccion": "A. MARCIALES BÁSICAS"
+  "requisitos": "Trucos de manos 140, Defensa 200",
+  "_seccion": "A. MARCIALES BÁSICAS",
+  "danoFormula": "20 + bonoFUE"
  },
  {
   "arte": "Kung Fu (Base)",
-  "danoBase": 40,
   "CM": 0,
   "especial": "-",
   "longEsp": 1,
   "danoMaximo": 0,
-  "requisitos": "NO",
-  "_seccion": "A. MARCIALES BÁSICAS"
+  "requisitos": "Acrobacias 20, Estilo 10, Trucos de manos 20",
+  "_seccion": "A. MARCIALES BÁSICAS",
+  "danoFormula": "20 + bonoFUE"
  },
  {
   "arte": "Kung Fu (Avanzado)",
-  "danoBase": 40,
   "CM": 10,
   "especial": "Bono variable: +10 a Ataque, Parada, Esquiva, Turno o Daño",
   "longEsp": 58,
   "danoMaximo": 0,
-  "requisitos": "NO",
-  "_seccion": "A. MARCIALES BÁSICAS"
+  "requisitos": "Acrobacias 40, Estilo 20, Trucos de manos 40, Ataque 120, Defensa 120",
+  "_seccion": "A. MARCIALES BÁSICAS",
+  "danoFormula": "20 + bonoFUE"
  },
  {
   "arte": "Kung Fu (Supremo)",
-  "danoBase": 40,
   "CM": 20,
   "especial": "Bono variable: +20 a Ataque, Parada, Esquiva, Turno o Daño",
   "longEsp": 58,
   "critico2": "PEN",
   "danoMaximo": 0,
-  "requisitos": "NO",
-  "_seccion": "A. MARCIALES BÁSICAS"
+  "requisitos": "Acrobacias 120, Estilo 100, Trucos de manos 120, Ataque 200, Defensa 200",
+  "_seccion": "A. MARCIALES BÁSICAS",
+  "danoFormula": "20 + bonoFUE"
  },
  {
   "arte": "Lama (Base)",
-  "danoBase": 30,
   "CM": 0,
   "bonoEsquiva": 10,
   "bonoParada": 10,
   "especial": "-",
   "longEsp": 1,
   "danoMaximo": 0,
-  "requisitos": "NO",
-  "_seccion": "A. MARCIALES BÁSICAS"
+  "requisitos": "Estilo 20",
+  "_seccion": "A. MARCIALES BÁSICAS",
+  "danoFormula": "10 + bonoFUE"
  },
  {
   "arte": "Lama (Avanzado)",
-  "danoBase": 40,
   "CM": 10,
   "especial": "Permite una defensa adicional sin penalizador",
   "longEsp": 45,
   "danoMaximo": 0,
-  "requisitos": "NO",
-  "_seccion": "A. MARCIALES BÁSICAS"
+  "requisitos": "Estilo 40, Defensa 130",
+  "_seccion": "A. MARCIALES BÁSICAS",
+  "danoFormula": "20 + bonoFUE"
  },
  {
   "arte": "Lama (Supremo)",
-  "danoBase": 40,
   "CM": 20,
   "bonoEsquiva": 10,
   "bonoParada": 10,
   "especial": "Permite dos defensas adicionales sin penalizador",
   "longEsp": 48,
   "danoMaximo": 0,
-  "requisitos": "NO",
-  "_seccion": "A. MARCIALES BÁSICAS"
+  "requisitos": "Estilo 80, Defensa 200",
+  "_seccion": "A. MARCIALES BÁSICAS",
+  "danoFormula": "20 + bonoFUE"
  },
  {
   "arte": "Malla-yuddha (Base)",
-  "danoBase": 40,
   "CM": 0,
   "bonoEntereza": 10,
   "especial": "Bono de +10 a su Entereza al parar ataques con sus manos (aplicado)",
   "longEsp": 67,
   "danoMaximo": 0,
-  "requisitos": "NO",
-  "_seccion": "A. MARCIALES BÁSICAS"
+  "requisitos": "Trucos de manos 20",
+  "_seccion": "A. MARCIALES BÁSICAS",
+  "danoFormula": "20 + bonoFUE"
  },
  {
   "arte": "Malla-yuddha (Avanzado)",
-  "danoBase": 50,
   "CM": 10,
   "bonoParada": 10,
   "especial": "No sufre daños por parar ataques con sus manos",
   "longEsp": 46,
   "danoMaximo": 0,
-  "requisitos": "NO",
-  "_seccion": "A. MARCIALES BÁSICAS"
+  "requisitos": "Trucos de manos 40, Defensa 120",
+  "_seccion": "A. MARCIALES BÁSICAS",
+  "danoFormula": "30 + bonoFUE"
  },
  {
   "arte": "Malla-yuddha (Supremo)",
-  "danoBase": 60,
   "CM": 20,
   "bonoParada": 20,
   "especial": "Desarmar sin penalizador en contraataque",
   "longEsp": 40,
   "danoMaximo": 0,
-  "requisitos": "NO",
-  "_seccion": "A. MARCIALES BÁSICAS"
+  "requisitos": "Trucos de manos 100, Parada 200",
+  "_seccion": "A. MARCIALES BÁSICAS",
+  "danoFormula": "40 + bonoFUE"
  },
  {
   "arte": "Moai Thai (Base)",
-  "danoBase": 60,
   "CM": 0,
   "especial": "-",
   "longEsp": 1,
   "danoMaximo": 0,
-  "requisitos": "-",
-  "_seccion": "A. MARCIALES BÁSICAS"
+  "requisitos": "Proezas de fuerza 30",
+  "_seccion": "A. MARCIALES BÁSICAS",
+  "danoFormula": "20 + 2 * bonoFUE"
  },
  {
   "arte": "Moai Thai (Avanzado)",
-  "danoBase": 80,
   "CM": 10,
   "especial": "-",
   "longEsp": 1,
   "danoMaximo": 0,
-  "requisitos": "NO",
-  "_seccion": "A. MARCIALES BÁSICAS"
+  "requisitos": "Proezas de fuerza 40, Ataque 130",
+  "_seccion": "A. MARCIALES BÁSICAS",
+  "danoFormula": "20 + 3 * bonoFUE"
  },
  {
   "arte": "Moai Thai (Supremo)",
-  "danoBase": 100,
   "CM": 20,
   "especial": "Añade +20 al nivel del crítico obtenido",
   "longEsp": 39,
   "danoMaximo": 0,
-  "requisitos": "NO",
-  "_seccion": "A. MARCIALES BÁSICAS"
+  "requisitos": "Proezas de fuerza 160, Ataque 200",
+  "_seccion": "A. MARCIALES BÁSICAS",
+  "danoFormula": "20 + 4 * bonoFUE"
  },
  {
   "arte": "Pankration (Base)",
-  "danoBase": 40,
   "CM": 0,
   "especial": "Mitad de penalizador para Presa",
   "longEsp": 31,
   "danoMaximo": 0,
-  "requisitos": "NO",
-  "_seccion": "A. MARCIALES BÁSICAS"
+  "requisitos": "Atletismo 30, Proezas de fuerza 30",
+  "_seccion": "A. MARCIALES BÁSICAS",
+  "danoFormula": "20 + bonoFUE"
  },
  {
   "arte": "Pankration (Avanzado)",
-  "danoBase": 40,
   "CM": 10,
   "especial": "Mitad de penalizador para Presa. Habilidad de combate plena mientras realiza Presa",
   "longEsp": 82,
   "danoMaximo": 0,
-  "requisitos": "NO",
-  "_seccion": "A. MARCIALES BÁSICAS"
+  "requisitos": "Atletismo 50, Proezas de fuerza 50, Ataque 110, Defensa 110",
+  "_seccion": "A. MARCIALES BÁSICAS",
+  "danoFormula": "20 + bonoFUE"
  },
  {
   "arte": "Pankration (Supremo)",
-  "danoBase": 40,
   "CM": 20,
   "bonoEsquiva": 10,
   "bonoParada": 10,
   "especial": "Mitad penalizador Presa. Combate pleno y chequeo -5 para liberarse mientras apresa",
   "longEsp": 82,
   "danoMaximo": 0,
-  "requisitos": "NO",
-  "_seccion": "A. MARCIALES BÁSICAS"
+  "requisitos": "Atletismo 50, Proezas de fuerza 120, Ataque 110, Defensa 200",
+  "_seccion": "A. MARCIALES BÁSICAS",
+  "danoFormula": "20 + bonoFUE"
  },
  {
   "arte": "Sambo (Base)",
-  "danoBase": 30,
   "CM": 0,
   "especial": "Mitad de penalizador: Derribo y Desarmar",
   "longEsp": 40,
   "danoMaximo": 0,
-  "requisitos": "-",
-  "_seccion": "A. MARCIALES BÁSICAS"
+  "_seccion": "A. MARCIALES BÁSICAS",
+  "danoFormula": "10 + bonoFUE"
  },
  {
   "arte": "Sambo (Avanzado)",
-  "danoBase": 40,
   "CM": 10,
   "bonoParada": 10,
   "especial": "Mitad de penalizador: Derribo, Desarmar, Presa y Ataque en Área",
   "longEsp": 63,
   "danoMaximo": 0,
-  "requisitos": "NO",
-  "_seccion": "A. MARCIALES BÁSICAS"
+  "requisitos": "Ataque 130",
+  "_seccion": "A. MARCIALES BÁSICAS",
+  "danoFormula": "20 + bonoFUE"
  },
  {
   "arte": "Sambo (Supremo)",
-  "danoBase": 50,
   "CM": 20,
   "bonoParada": 10,
   "especial": "Mitad de penalizador: Derribo, Desarmar, Presa, Ataque en Área y Ataques Apuntados",
   "longEsp": 82,
   "danoMaximo": 0,
-  "requisitos": "NO",
-  "_seccion": "A. MARCIALES BÁSICAS"
+  "requisitos": "Ataque 200, Defensa 200",
+  "_seccion": "A. MARCIALES BÁSICAS",
+  "danoFormula": "30 + bonoFUE"
  },
  {
   "arte": "Shotokan (Base)",
-  "danoBase": 40,
   "CM": 0,
   "bonoAtaque": 5,
   "especial": "-",
   "longEsp": 1,
   "danoMaximo": 0,
-  "requisitos": "-",
-  "_seccion": "A. MARCIALES BÁSICAS"
+  "_seccion": "A. MARCIALES BÁSICAS",
+  "danoFormula": "20 + bonoFUE"
  },
  {
   "arte": "Shotokan (Avanzado)",
-  "danoBase": 50,
   "CM": 10,
   "bonoAtaque": 5,
   "especial": "-",
   "longEsp": 1,
   "danoMaximo": 0,
-  "requisitos": "NO",
-  "_seccion": "A. MARCIALES BÁSICAS"
+  "requisitos": "Ataque 120, Defensa 120",
+  "_seccion": "A. MARCIALES BÁSICAS",
+  "danoFormula": "30 + bonoFUE"
  },
  {
   "arte": "Shotokan (Supremo)",
-  "danoBase": 70,
   "CM": 20,
   "bonoAtaque": 10,
   "especial": "-",
   "longEsp": 1,
   "danoMaximo": 0,
-  "requisitos": "NO",
-  "_seccion": "A. MARCIALES BÁSICAS"
+  "requisitos": "Ataque 200, Defensa 120",
+  "_seccion": "A. MARCIALES BÁSICAS",
+  "danoFormula": "50 + bonoFUE"
  },
  {
   "arte": "Soo Bahk (Base)",
-  "danoBase": 30,
   "CM": 0,
   "especial": "Mitad de penalizador por Flanco",
   "longEsp": 31,
   "danoMaximo": 0,
-  "requisitos": "-",
-  "_seccion": "A. MARCIALES BÁSICAS"
+  "requisitos": "Advertir 50",
+  "_seccion": "A. MARCIALES BÁSICAS",
+  "danoFormula": "10 + bonoFUE"
  },
  {
   "arte": "Soo Bahk (Avanzado)",
-  "danoBase": 40,
   "CM": 10,
   "bonoEsquiva": 10,
   "bonoParada": 10,
   "especial": "Sin penalizador por Flanco",
   "longEsp": 26,
   "danoMaximo": 0,
-  "requisitos": "NO",
-  "_seccion": "A. MARCIALES BÁSICAS"
+  "requisitos": "Advertir 90, Defensa 120",
+  "_seccion": "A. MARCIALES BÁSICAS",
+  "danoFormula": "20 + bonoFUE"
  },
  {
   "arte": "Soo Bahk (Supremo)",
-  "danoBase": 50,
   "CM": 20,
   "bonoEsquiva": 10,
   "bonoParada": 10,
   "especial": "Sin penalizador por Flanco y Derribado",
   "longEsp": 38,
   "danoMaximo": 0,
-  "requisitos": "NO",
-  "_seccion": "A. MARCIALES BÁSICAS"
+  "requisitos": "Advertir 120, Acrobacias 60, Defensa 200",
+  "_seccion": "A. MARCIALES BÁSICAS",
+  "danoFormula": "30 + bonoFUE"
  },
  {
   "arte": "Tae Kwon Do (Base)",
-  "danoBase": 30,
   "CM": 0,
   "especial": "Ataque adicional, incluso tras atacar con armas al -30",
   "longEsp": 54,
   "danoMaximo": 0,
-  "requisitos": "-",
-  "_seccion": "A. MARCIALES BÁSICAS"
+  "_seccion": "A. MARCIALES BÁSICAS",
+  "danoFormula": "10 + bonoFUE"
  },
  {
   "arte": "Tae Kwon Do (Avanzado)",
-  "danoBase": 40,
   "CM": 10,
   "especial": "Ataque adicional, incluso tras atacar con armas al -20",
   "longEsp": 54,
   "danoMaximo": 0,
-  "requisitos": "NO",
-  "_seccion": "A. MARCIALES BÁSICAS"
+  "requisitos": "Ataque 130, Defensa 100",
+  "_seccion": "A. MARCIALES BÁSICAS",
+  "danoFormula": "20 + bonoFUE"
  },
  {
   "arte": "Tae Kwon Do (Supremo)",
-  "danoBase": 40,
   "CM": 20,
   "especial": "Ataque adicional, incluso tras atacar con armas, sin penalizador",
   "longEsp": 64,
   "danoMaximo": 0,
-  "requisitos": "NO",
-  "_seccion": "A. MARCIALES BÁSICAS"
+  "requisitos": "Ataque 200, Defensa 100",
+  "_seccion": "A. MARCIALES BÁSICAS",
+  "danoFormula": "20 + bonoFUE"
  },
  {
   "arte": "Tai Chi (Base)",
-  "danoBase": 10,
   "CM": 10,
   "especial": "-",
   "longEsp": 1,
   "danoMaximo": 0,
-  "requisitos": "-",
-  "_seccion": "A. MARCIALES BÁSICAS"
+  "_seccion": "A. MARCIALES BÁSICAS",
+  "danoFormula": "20 + bonoPOD"
  },
  {
   "arte": "Tai Chi (Avanzado)",
-  "danoBase": 0,
   "CM": 30,
   "especial": "-",
   "longEsp": 1,
   "danoMaximo": 0,
-  "requisitos": "NO",
-  "_seccion": "A. MARCIALES BÁSICAS"
+  "requisitos": "Uso del Ki",
+  "_seccion": "A. MARCIALES BÁSICAS",
+  "danoFormula": "20 + 2 * bonoPOD"
  },
  {
   "arte": "Tai Chi (Supremo)",
-  "danoBase": 0,
-  "bonoDano": -10,
   "CM": 60,
   "especial": "-",
   "longEsp": 1,
   "danoMaximo": 0,
-  "requisitos": "NO",
-  "_seccion": "A. MARCIALES BÁSICAS"
+  "requisitos": "Uso del Ki, Uso de la energía necesaria, Ataque 180, Defensa 180",
+  "_seccion": "A. MARCIALES BÁSICAS",
+  "danoFormula": "20 + 2 * bonoPOD",
+  "bonoDanoFormula": "bonoPOD"
  },
  {
   "arte": "Xing Quan (Base)",
-  "danoBase": 30,
   "CM": 0,
   "especial": "Bono de +10 a HA si lleva la iniciativa y declara ataque único",
   "longEsp": 62,
   "danoMaximo": 0,
-  "requisitos": "NO",
-  "_seccion": "A. MARCIALES BÁSICAS"
+  "requisitos": "Trucos de manos 20",
+  "_seccion": "A. MARCIALES BÁSICAS",
+  "danoFormula": "10 + bonoFUE"
  },
  {
   "arte": "Xing Quan (Avanzado)",
-  "danoBase": 40,
   "CM": 10,
   "especial": "Bono de +20 a HA si lleva la iniciativa y declara ataque único",
   "longEsp": 62,
   "danoMaximo": 0,
-  "requisitos": "NO",
-  "_seccion": "A. MARCIALES BÁSICAS"
+  "requisitos": "Trucos de manos 50, Turno 100, Ataque 120",
+  "_seccion": "A. MARCIALES BÁSICAS",
+  "danoFormula": "20 + bonoFUE"
  },
  {
   "arte": "Xing Quan (Supremo)",
-  "danoBase": 50,
   "CM": 20,
   "especial": "Bono de +30 a HA si lleva la iniciativa y declara ataque único",
   "longEsp": 62,
   "danoMaximo": 0,
-  "requisitos": "NO",
-  "_seccion": "A. MARCIALES BÁSICAS"
+  "requisitos": "Trucos de manos 100, Turno 120, Ataque 200",
+  "_seccion": "A. MARCIALES BÁSICAS",
+  "danoFormula": "30 + bonoFUE"
  },
  {
   "arte": "Asakusen (Base)",
@@ -588,7 +583,7 @@
   "especial": "-",
   "longEsp": 1,
   "danoMaximo": 0,
-  "requisitos": "NO",
+  "requisitos": "Ataque 160, Defensa 160, Kung Fu (Avanzado)",
   "_seccion": "A. MARCIALES AVANZADAS"
  },
  {
@@ -600,7 +595,7 @@
   "bonoMaestroAt": 10,
   "bonoMaestroDef": 10,
   "danoMaximo": 0,
-  "requisitos": "NO",
+  "requisitos": "Ataque 280, Defensa 280, Kung Fu (Supremo), Inhumanidad",
   "_seccion": "A. MARCIALES AVANZADAS"
  },
  {
@@ -615,7 +610,7 @@
   "critico1": "FIL",
   "critico2": "PEN",
   "danoMaximo": 0,
-  "requisitos": "NO",
+  "requisitos": "Kempo (Avanzado) o Capoeira (Avanzado), Extrusión de presencia",
   "_seccion": "A. MARCIALES AVANZADAS"
  },
  {
@@ -628,7 +623,7 @@
   "longEsp": 67,
   "bonoMaestroAt": 20,
   "danoMaximo": 0,
-  "requisitos": "NO",
+  "requisitos": "Kempo (Supremo) o Capoeira (Supremo), Extrusión de presencia, Inhumanidad, Ataque 280",
   "_seccion": "A. MARCIALES AVANZADAS"
  },
  {
@@ -640,7 +635,7 @@
   "especial": "Desarmar sin penalizador y con +3 a los controles enfrentados",
   "longEsp": 61,
   "danoMaximo": 0,
-  "requisitos": "NO",
+  "requisitos": "Kempo (Avanzado), Kuan (Base) o Malla-yuddha (Avanzado), Ataque 200",
   "_seccion": "A. MARCIALES AVANZADAS"
  },
  {
@@ -652,7 +647,7 @@
   "longEsp": 80,
   "bonoMaestroAt": 20,
   "danoMaximo": 0,
-  "requisitos": "NO",
+  "requisitos": "Kempo (Supremo), Kuan (Supremo) o Malla-yuddha (Supremo), Ataque 280, Defensa 260",
   "_seccion": "A. MARCIALES AVANZADAS"
  },
  {
@@ -664,7 +659,7 @@
   "especial": "Nivel crítico +20 declarando Inconsciencia. Puede reducir daño",
   "longEsp": 62,
   "danoMaximo": 0,
-  "requisitos": "NO",
+  "requisitos": "Sambo (Avanzado) o Shotokan (Avanzado), Ataque 160, Defensa 160",
   "_seccion": "A. MARCIALES AVANZADAS"
  },
  {
@@ -676,30 +671,30 @@
   "bonoMaestroAt": 15,
   "bonoMaestroDef": 15,
   "danoMaximo": 0,
-  "requisitos": "NO",
+  "requisitos": "Sambo (Supremo) o Shotokan (Supremo), Ataque 280, Defensa 280, Inhumanidad, Erudición",
   "_seccion": "A. MARCIALES AVANZADAS"
  },
  {
   "arte": "Exelion (Base)",
-  "danoBase": 50,
   "CM": 15,
   "bonoAtaque": 10,
   "especial": "Daño no modificable de ninguna manera",
   "longEsp": 37,
   "danoMaximo": 0,
-  "requisitos": "NO",
-  "_seccion": "A. MARCIALES AVANZADAS"
+  "requisitos": "Kardad (Avanzado) o Tai Chi (Avanzado), Ataque 200, Extensión del aura al arma",
+  "_seccion": "A. MARCIALES AVANZADAS",
+  "danoFormula": "2 * presencia + bonoPOD - bonoDanoDesarmado"
  },
  {
   "arte": "Exelion (Arcano)",
-  "danoBase": 50,
   "CM": 35,
   "especial": "Daño no modificable de ninguna manera",
   "longEsp": 37,
   "bonoMaestroAt": 25,
   "danoMaximo": 0,
-  "requisitos": "NO",
-  "_seccion": "A. MARCIALES AVANZADAS"
+  "requisitos": "Kardad (Supremo) o Tai Chi (Supremo), Ataque 300, Extensión del aura al arma, Inhumanidad",
+  "_seccion": "A. MARCIALES AVANZADAS",
+  "danoFormula": "2 * presencia + bonoPOD - bonoDanoDesarmado"
  },
  {
   "arte": "Godhand (Base)",
@@ -709,7 +704,7 @@
   "especial": "Sacrifica 1 Ataque: +30 HA, +50 Daño primero del siguiente turno",
   "longEsp": 64,
   "danoMaximo": 0,
-  "requisitos": "NO",
+  "requisitos": "Boxeo (Avanzado) o Shotokan (Avanzado), Ataque 200",
   "_seccion": "A. MARCIALES AVANZADAS"
  },
  {
@@ -720,7 +715,7 @@
   "longEsp": 65,
   "bonoMaestroAt": 15,
   "danoMaximo": 0,
-  "requisitos": "NO",
+  "requisitos": "Boxeo (Supremo) o Shotokan (Supremo), Ataque 300, Extrusión de presencia, Inhumanidad",
   "_seccion": "A. MARCIALES AVANZADAS"
  },
  {
@@ -733,7 +728,7 @@
   "especial": "Penalizador -2 a las TA blandas y +20 al nivel de Crítico obtenido",
   "longEsp": 66,
   "danoMaximo": 0,
-  "requisitos": "NO",
+  "requisitos": "Moai Thai (Avanzado) o Shotokan (Avanzado), Ataque 200",
   "_seccion": "A. MARCIALES AVANZADAS"
  },
  {
@@ -746,7 +741,7 @@
   "longEsp": 53,
   "bonoMaestroAt": 20,
   "danoMaximo": 0,
-  "requisitos": "NO",
+  "requisitos": "Moai Thai (Supremo) o Shotokan (Supremo), Ataque 300, Uso de la energía necesaria, Inhumanidad",
   "_seccion": "A. MARCIALES AVANZADAS"
  },
  {
@@ -758,7 +753,7 @@
   "especial": "Sin penalizador por Espalda y Espacio reducido",
   "longEsp": 46,
   "danoMaximo": 0,
-  "requisitos": "NO",
+  "requisitos": "Soo Bahk (Avanzado), Advertir 200, Defensa 200, Detección del Ki",
   "_seccion": "A. MARCIALES AVANZADAS"
  },
  {
@@ -769,7 +764,7 @@
   "longEsp": 84,
   "bonoMaestroAt": 20,
   "danoMaximo": 0,
-  "requisitos": "NO",
+  "requisitos": "Soo Bahk (Supremo), Advertir 240, Defensa 300, Inhumanidad, Erudición",
   "_seccion": "A. MARCIALES AVANZADAS"
  },
  {
@@ -781,7 +776,7 @@
   "especial": "Añade 2 defensas adicionales sin penalizador",
   "longEsp": 44,
   "danoMaximo": 0,
-  "requisitos": "NO",
+  "requisitos": "Lama (Avanzado), Estilo 120, Defensa 220, Detección del Ki",
   "_seccion": "A. MARCIALES AVANZADAS"
  },
  {
@@ -792,7 +787,7 @@
   "longEsp": 49,
   "bonoMaestroDef": 20,
   "danoMaximo": 0,
-  "requisitos": "NO",
+  "requisitos": "Lama (Supremo), Estilo 140, Defensa 300, Detección del Ki, Erudición",
   "_seccion": "A. MARCIALES AVANZADAS"
  },
  {
@@ -803,7 +798,7 @@
   "especial": "Bono +3 a controles enfrentados para Presa y Derribo",
   "longEsp": 52,
   "danoMaximo": 0,
-  "requisitos": "NO",
+  "requisitos": "Grappling (Avanzado) o Pankration (Avanzado), Ataque 160, Defensa 160, Inhumanidad",
   "_seccion": "A. MARCIALES AVANZADAS"
  },
  {
@@ -815,7 +810,7 @@
   "bonoMaestroAt": 10,
   "bonoMaestroDef": 10,
   "danoMaximo": 0,
-  "requisitos": "NO",
+  "requisitos": "Grappling (Supremo) o Pankration (Supremo), Ataque 260, Defensa 260, Inhumanidad",
   "_seccion": "A. MARCIALES AVANZADAS"
  },
  {
@@ -826,7 +821,7 @@
   "especial": "RF Daño+20 (Max 220): penalizador igual al Fracaso, daño 2xFracaso",
   "longEsp": 66,
   "danoMaximo": 0,
-  "requisitos": "NO",
+  "requisitos": "Kung Fu (Avanzado) o Xing Quan (Avanzado), Medicina 100 (o 60 con la especialidad Anatomía), Ataque 200",
   "_seccion": "A. MARCIALES AVANZADAS"
  },
  {
@@ -837,7 +832,7 @@
   "longEsp": 80,
   "bonoMaestroAt": 20,
   "danoMaximo": 0,
-  "requisitos": "NO",
+  "requisitos": "Kung Fu (Supremo) o Xing Quan (Supremo), Medicina 120 (o 80 con la especialidad Anatomía), Ataque 300, Inhumanidad",
   "_seccion": "A. MARCIALES AVANZADAS"
  },
  {
@@ -849,7 +844,7 @@
   "especial": "TA 3 contra todo. Barrera de Daño 60",
   "longEsp": 36,
   "danoMaximo": 0,
-  "requisitos": "NO",
+  "requisitos": "Moai Thai (Avanzado) o Malla-yuddha (Avanzado), Defensa 200, Inhumanidad",
   "_seccion": "A. MARCIALES AVANZADAS"
  },
  {
@@ -860,7 +855,7 @@
   "longEsp": 37,
   "bonoMaestroDef": 20,
   "danoMaximo": 0,
-  "requisitos": "NO",
+  "requisitos": "Moai Thai (Supremo) o Malla-yuddha (Supremo), Defensa 300, Zen",
   "_seccion": "A. MARCIALES AVANZADAS"
  },
  {
@@ -872,7 +867,7 @@
   "especial": "Dobla el bono de contraataque con Artes Marciales",
   "longEsp": 49,
   "danoMaximo": 0,
-  "requisitos": "NO",
+  "requisitos": "Aikido (Avanzado), Defensa 200",
   "_seccion": "A. MARCIALES AVANZADAS"
  },
  {
@@ -883,7 +878,7 @@
   "longEsp": 69,
   "bonoMaestroDef": 20,
   "danoMaximo": 0,
-  "requisitos": "NO",
+  "requisitos": "Aikido (Supremo), Defensa 300, Inhumanidad",
   "_seccion": "A. MARCIALES AVANZADAS"
  },
  {
@@ -895,7 +890,7 @@
   "especial": "Bono opcional de +20 al Ataque, -30 a Defensa",
   "longEsp": 45,
   "danoMaximo": 0,
-  "requisitos": "NO",
+  "requisitos": "Shotokan (Avanzado) o Kempo (Avanzado), Ataque 180, Extrusión de presencia",
   "_seccion": "A. MARCIALES AVANZADAS"
  },
  {
@@ -906,7 +901,7 @@
   "longEsp": 63,
   "bonoMaestroAt": 20,
   "danoMaximo": 0,
-  "requisitos": "NO",
+  "requisitos": "Shotokan (Supremo) o Kempo (Supremo), Ataque 280, Extrusión de presencia",
   "_seccion": "A. MARCIALES AVANZADAS"
  },
  {
@@ -918,7 +913,7 @@
   "especial": "Defensa Total concede un bono de +60",
   "longEsp": 36,
   "danoMaximo": 0,
-  "requisitos": "NO",
+  "requisitos": "Aikido (Avanzado) o Kuan (Avanzado), Defensa 200, Uso del Ki",
   "_seccion": "A. MARCIALES AVANZADAS"
  },
  {
@@ -929,7 +924,7 @@
   "longEsp": 37,
   "bonoMaestroDef": 20,
   "danoMaximo": 0,
-  "requisitos": "NO",
+  "requisitos": "Aikido (Supremo) o Kuan (Supremo), Defensa 300, Uso del Ki",
   "_seccion": "A. MARCIALES AVANZADAS"
  },
  {
@@ -940,20 +935,20 @@
   "especial": "Puede escoger dañar la reserva de Ki en lugar de quitar PVs",
   "longEsp": 59,
   "danoMaximo": 0,
-  "requisitos": "NO",
+  "requisitos": "Tai Chi (Avanzado), Ataque 200, Extrusión de presencia",
   "_seccion": "A. MARCIALES AVANZADAS"
  },
  {
   "arte": "Suyanta (Arcano)",
   "danoBase": 0,
-  "bonoDano": -10,
   "CM": 35,
   "especial": "Daña a la vez la reserva de Ki y sus PVs",
   "longEsp": 40,
   "bonoMaestroAt": 15,
   "danoMaximo": 0,
-  "requisitos": "NO",
-  "_seccion": "A. MARCIALES AVANZADAS"
+  "requisitos": "Tai Chi (Supremo), Ataque 300, Extrusión de presencia, Inhumanidad",
+  "_seccion": "A. MARCIALES AVANZADAS",
+  "bonoDanoFormula": "bonoPOD"
  },
  {
   "arte": "Velez (Base)",
@@ -965,7 +960,7 @@
   "longEsp": 1,
   "critico1": "ENE",
   "danoMaximo": 0,
-  "requisitos": "NO",
+  "requisitos": "Kung Fu (Avanzado) o Tai Chi (Avanzado), Extrusión de presencia",
   "_seccion": "A. MARCIALES AVANZADAS"
  },
  {
@@ -977,7 +972,7 @@
   "critico1": "ENE",
   "bonoMaestroDef": 15,
   "danoMaximo": 0,
-  "requisitos": "NO",
+  "requisitos": "Kung Fu (Supremo) o Tai Chi (Supremo), Ataque 280, Extrusión de presencia",
   "_seccion": "A. MARCIALES AVANZADAS"
  }
 ]

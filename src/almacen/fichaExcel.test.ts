@@ -166,6 +166,19 @@ describe('reconstruir desde las hojas legibles', () => {
     expect(personaje.equipo.dinero).toEqual({ MO: 2, MP: 5, MC: 0 });
   });
 
+  it('el arma vuelve con sus manos, escala, conocimiento y munición', async () => {
+    const p = fichaDePrueba();
+    p.equipo.armas = [
+      { arma: 'Mandoble', aDosManos: true, escala: 'Enorme', conocimiento: 'Mixta' },
+      { arma: 'Ballesta', calidad: 5, municion: 'Saetas', calidadMunicion: 10 },
+    ];
+    const { personaje } = await sinHojaTecnica(p);
+    expect(personaje.equipo.armas).toEqual([
+      { arma: 'Mandoble', calidad: 0, aDosManos: true, escala: 'Enorme', conocimiento: 'Mixta' },
+      { arma: 'Ballesta', calidad: 5, municion: 'Saetas', calidadMunicion: 10 },
+    ]);
+  });
+
   it('avisa de que es una reconstrucción, no una copia fiel', async () => {
     const r = await sinHojaTecnica(fichaDePrueba());
     expect(r.avisos.join(' ')).toMatch(/reconstruido/);

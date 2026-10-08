@@ -8,7 +8,7 @@ que calcula y guarda Anima Manager. Hecha el 8 de octubre de 2026.
 No se ha comparado «a ojo». La hoja se ha abierto en LibreOffice **sin macros** y se ha
 usado como oráculo:
 
-1. `tools/oraculo-hoja.py` rellena en la hoja **20 personajes** de prueba
+1. `tools/oraculo-hoja.py` rellena en la hoja **29 personajes** de prueba
    (`data/pruebas/escenarios.json`) tal y como lo haría un jugador —raza, categoría, nivel,
    características, ventajas y desventajas, PD, Habilidades Naturales, Bonificadores, bonos
    especiales, armadura, yelmo, arma, Cansancio y PV actuales— y guarda lo que la hoja
@@ -20,7 +20,10 @@ usado como oráculo:
    Nivel de Magia, las cuatro de invocación, CV, Proyección psíquica, Potencial psíquico, Ki
    y las seis Acumulaciones, penalizador natural, de acción física y requerimiento, los
    siete TA, **las 51 secundarias** y el turno, ataque, defensa y daño del arma.
-   **Los 20 cuadran en todas.**
+   **Los 29 cuadran en todas** (los 9 últimos, de las opciones de raza).
+   Además, `tools/oraculo-hoja.py --armas` empuña en la hoja **871 combinaciones de armas**
+   (`data/pruebas/hoja-v870-armas.json`) y `src/motor/hojaV870Armas.test.ts` las compara:
+   **cuadran las 871**.
 3. Las fórmulas se han leído una a una (`tools/ficha.xlsm`, que no va al repositorio)
    buscando cada ventaja por su casilla de «adquirido», por su nombre y por los nombres
    compuestos («"Apto en campo: "&campo»).
@@ -112,37 +115,53 @@ contenido, son casillas vacías.
 | | Bonos de Novel (+10 a habilidades elegidas) | ✗ |
 | | Raíces culturales (bonos por región y clase social) | ✗ |
 | | Varias categorías con su coste cada una | ◐ el multiclase existe; el coste es el de la categoría actual |
-| **Combate** | Armadura (capas, calidad, yelmo, penalizadores) y arma equipada | ✔ |
-| | Ars Magnus y artes marciales | ◐ están; no comprobados contra la hoja |
-| | Arma en la mano torpe, proyectiles y munición, Tablas de estilo | ✗ no comprobado contra la hoja |
+| **Combate** | Armadura (capas, calidad, yelmo, penalizadores; escamas y Armadura de energía como capas) | ✔ |
+| | Armas: turno, ataque, defensa, daño, entereza, rotura y presencia de las 168, a una y dos manos, con calidad, Enormes y Gigantes | ✔ (871 casos contra la hoja) |
+| | Proyectiles con su munición; Armas naturales según la raza; armas del Zodiaco con su Ars Magnus | ✔ |
+| | Ars Magnus: coste (Maestro en Armas, Tao, Cáncer) y requisitos en texto; artes marciales: daño y requisitos | ✔ datos; los requisitos se enseñan, no se comprueban |
+| | Arma en la mano torpe, «Arma exclusiva», Tablas de armas y de tipología, Tablas de estilo | ✗ |
 | **Ki** | Puntos, Acumulación, CM, Detección y Ocultación, Habilidades del Ki y del Némesis, Límites, Técnicas, Sellos | ✔ (puntos y acumulaciones comprobados contra la hoja) |
 | | «Mitad» de la Acumulación y Acumulación plena | ◐ como nota |
 | **Místicos** | Zeón, ACT, Proyección, Nivel de Magia, Regeneración zeónica, invocación, conjuros, Metamagia, Teoremas | ✔ |
 | | Nivel por Vía, conjuros de libre acceso, Ofudas, Conocimiento natural de Vía, Desequilibrio elemental | ✗ (las ventajas, como nota) |
 | **Psíquicos** | CV, Proyección, Potencial, disciplinas, poderes | ✔ |
 | | Patrones mentales, poderes innatos, concentración, potenciar con CV | ✗ (las ventajas, como nota) |
-| **Sheele** | Tipo, mejoras, Potenciación Mística | ✔ (editor propio; no comprobado contra la hoja) |
-| **Elan** | Poderes de Elan | ◐ en el catálogo; no hay Elan por personaje |
+| **Sheele** | Tipo, mejoras, Potenciación Mística | ✔ (editor propio); las mejoras dicen la regla, no los números de una Sheele concreta |
+| **Elan** | Poderes de Elan | ◐ en el catálogo, con la regla en vez del número («[Elan/2]»); no hay Elan por personaje |
 | **Creación de Técnicas** | Diseño de Técnicas de Ki | ✔ (creador propio) |
 | **Personalización** | Contenido propio, Ventajas en Secundarias | ✔ se importa (ver arriba) |
-| | Lenguas, raíces, Técnicas, invocaciones, patrones mentales, Legados, Elan personalizados; opciones de raza (Turak, Vetala, Ebudan, Tuan Dalyr); marionetas de Géminis; familiar demoníaco; nivel sobrenatural de la campaña | ✗ |
+| | Opciones de raza: Éxtasis sanguíneo (Vetala), Sue'Aman (Ebudan), transformación y fase lunar (Tuan Dalyr), Cercanía con El Dragón (Turak); Duk'zarist según el sexo | ✔ (9 escenarios contra la hoja; se importan) |
+| | El atributo de daño de las armas personalizadas | ✔ se importa |
+| | Lenguas, raíces, Técnicas, invocaciones, patrones mentales, Legados, Elan personalizados; críticos de las Armas naturales; marionetas de Géminis; familiar demoníaco; nivel sobrenatural de la campaña | ✗ |
 | **Resumen** | La hoja para imprimir | ◐ la vista de ficha |
 
 ## Diferencias de datos entre versiones de la hoja
 
-Al volver a extraer los datos de la v8.7.0, todo coincide con los de la hoja de Meirmeister
-salvo dos entradas de Ars Magnus:
+**Manda la v8.7.0.** Con ella:
 
-- **Ophiucos Sigma**: 60 PD en la hoja de Meirmeister, **80** en la v8.7.0.
-- **Guardián**: cambia su casilla de requisitos.
+- **Ophiucos Sigma** cuesta **80 PD** (la de Meirmeister decía 60), y la hoja le resta 10 por
+  cada Tabla de tipología de armas que se conozca, hasta un mínimo de 10.
+- **Atletismo de Meirmeister**: **15**, como da la v8.7.0 con lo que hay anotado (su hoja
+  original decía 5). `src/motor/hojaMeirmeister.test.ts` lo comprueba así.
+- Los requisitos de los Ars Magnus y de las artes marciales ya no son «NO»/«-» sino el texto
+  de la regla (ver `docs/FORMULAS-VERIFICADAS.md`, «Lo que en la hoja depende del
+  personaje»).
 
-No se han tocado: hay que decidir cuál vale.
+## Lo que la hoja hace y la aplicación no, a propósito
 
-## Lo que queda por decidir
+- **El −10 al turno del Nephilim Turak**: la hoja lo tiene escrito, pero preguntando si la
+  *raza* es «Nephilim Turak», y en la hoja un Nephilim es un Humano con la casilla Nephilim
+  puesta: no se aplica nunca. Tampoco su crítico FIL natural («Nehpilim» mal escrito). La
+  aplicación hace lo mismo que la hoja; si queréis que se aplique, es cambiar una línea.
+- **Qué armas conoce cada personaje**: la hoja lo deduce del arma desarrollada y de las
+  Tablas de armas y de tipología compradas; la aplicación deja que el jugador lo marque en
+  cada arma. Por eso, de las armas del Zodiaco que piden conocer otras (Leo, Taurus,
+  Scorpio, Ophiucos), la aplicación avisa en vez de decidir.
+- **Un guiño de la hoja**: si el jugador se llama «Xavi», algunos poderes de criatura
+  cambian de Gnosis. No se ha copiado.
 
-1. **Ophiucos Sigma**: ¿60 u 80 PD?
-2. **Atletismo de Meirmeister**: su hoja original dice 5 y con los datos transcritos salen
-   15, también en la v8.7.0. La diferencia son justo los 10 de una Habilidad Natural.
-3. Qué de la lista ✗ se hace primero. Por impacto en la mesa, la propuesta es:
-   especialidades (+40), raíces culturales, lenguas, Fama y Salud mental, Novel, y el
-   nivel por Vía.
+## Lo que queda
+
+Por impacto en la mesa: especialidades (+40), Tablas de armas y de tipología (darían el
+conocimiento de cada arma y el coste de Ophiucos Sigma solos), raíces culturales, lenguas,
+Fama y Salud mental, Novel, el nivel por Vía y la mano torpe.

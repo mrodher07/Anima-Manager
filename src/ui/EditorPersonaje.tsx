@@ -20,6 +20,7 @@ import {
 import type { Reglamento } from '../motor/reglamento';
 import type { EscalaArma } from '../motor/combate';
 import { Selector } from './Selector';
+import { OpcionesRazaEditor, tieneOpcionesRaza } from './OpcionesRaza';
 import { Ayuda, Seccion, cuenta } from './Seccion';
 import { Imagen } from './Imagen';
 import { ErrorImagen, borrarImagen, guardarImagen } from '../almacen/imagenes';
@@ -305,6 +306,13 @@ export function EditorPersonaje({ personaje, datos, catalogo, reglamento, onCamb
                   ))}
                 </select>
               </div>
+              {tieneOpcionesRaza(personaje.raza) && (
+                <OpcionesRazaEditor
+                  raza={personaje.raza}
+                  opciones={personaje.opcionesRaza ?? {}}
+                  onCambiar={(o) => set({ opcionesRaza: o })}
+                />
+              )}
               <div className="campo">
                 <label>Categorías y niveles</label>
                 <p style={{ color: 'var(--texto-debil)', fontSize: '0.78rem', margin: '0 0 6px' }}>
@@ -1228,13 +1236,22 @@ export function EditorPersonaje({ personaje, datos, catalogo, reglamento, onCamb
                   set({ equipo: { ...personaje.equipo, armas: nuevas } });
                 };
                 const calc = ficha.combate.armas[i];
+                // La munición va dentro de su arma, no en la mano: fuera de la lista salvo que
+                // ya estuviera puesta (fichas de antes).
+                const empunables = armas.filter(
+                  (w) => !String(w.tipoArma ?? '').startsWith('Munición') || w.arma === a.arma,
+                );
+                const municiones = armas.find((w) => w.arma === a.arma)?.municiones ?? [];
                 return (
                   <div key={i} className="regla">
                     <div className="rejilla campos-arma">
                       <div className="campo">
                         <label>Arma</label>
-                        <select value={a.arma} onChange={(e) => cambiar({ arma: e.target.value })}>
-                          {armas.map((w) => <option key={w.arma} value={w.arma}>{w.arma}</option>)}
+                        <select
+                          value={a.arma}
+                          onChange={(e) => cambiar({ arma: e.target.value, municion: undefined, calidadMunicion: undefined })}
+                        >
+                          {empunables.map((w) => <option key={w.arma} value={w.arma}>{w.arma}</option>)}
                         </select>
                       </div>
                       <div className="campo">
@@ -1264,6 +1281,29 @@ export function EditorPersonaje({ personaje, datos, catalogo, reglamento, onCamb
                           onChange={(e) => cambiar({ calidad: Number(e.target.value) })}
                         />
                       </div>
+                      {municiones.length > 0 && (
+                        <>
+                          <div className="campo">
+                            <label>Munición</label>
+                            <select
+                              value={a.municion ?? ''}
+                              onChange={(e) => cambiar({ municion: e.target.value || undefined })}
+                            >
+                              <option value="">Sin munición</option>
+                              {municiones.map((m) => <option key={m}>{m}</option>)}
+                            </select>
+                          </div>
+                          <div className="campo">
+                            <label>Calidad munición</label>
+                            <input
+                              type="number" min={-5} max={15} step={5}
+                              value={a.calidadMunicion ?? 0}
+                              disabled={!a.municion}
+                              onChange={(e) => cambiar({ calidadMunicion: Number(e.target.value) })}
+                            />
+                          </div>
+                        </>
+                      )}
                     </div>
                     <label style={{ fontSize: '0.86rem', display: 'block', marginBottom: 10 }}>
                       <input
@@ -1276,12 +1316,17 @@ export function EditorPersonaje({ personaje, datos, catalogo, reglamento, onCamb
                     {calc && (
                       <p style={{ margin: 0, fontSize: '0.9rem' }}>
                         Turno <strong className="destacado">{calc.turno}</strong> · Ataque{' '}
-                        <strong className="destacado">{calc.ataque}</strong> · Parada{' '}
-                        <strong className="destacado">{calc.parada}</strong> · Daño{' '}
+                        <strong className="destacado">{calc.ataque}</strong> · {calc.tipoDefensa}{' '}
+                        <strong className="destacado">{calc.defensa}</strong> · Daño{' '}
                         <strong className="destacado">{calc.dano}</strong>
                         {calc.criticos.length > 0 && ` · Críticos ${calc.criticos.join(' / ')}`}
+                        {` · Entereza ${calc.entereza} · Rotura ${calc.rotura} · Presencia ${calc.presencia}`}
+                        {calc.conocimiento !== (a.conocimiento ?? 'Conocida') && ` · ${calc.conocimiento}`}
                       </p>
                     )}
+                    {calc?.avisos.map((t) => (
+                      <p key={t} style={{ margin: '4px 0 0', fontSize: '0.84rem', color: 'var(--texto-tenue)' }}>{t}</p>
+                    ))}
                     <div className="acciones-regla">
                       <button
                         className="accion"
@@ -1307,7 +1352,10 @@ export function EditorPersonaje({ personaje, datos, catalogo, reglamento, onCamb
                   set({
                     equipo: {
                       ...personaje.equipo,
-                      armas: [...personaje.equipo.armas, { arma: armas[0]?.arma ?? '' }],
+                      armas: [
+                        ...personaje.equipo.armas,
+                        { arma: armas.find((w) => !String(w.tipoArma ?? '').startsWith('Munición'))?.arma ?? '' },
+                      ],
                     },
                   })
                 }
