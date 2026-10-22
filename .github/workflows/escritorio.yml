@@ -1,0 +1,161 @@
+# El programa de escritorio (Tauri): se prueba en cada cambio y se generan sus instaladores.
+#
+# · «probar»: en cada push a main (y a mano), compila la versión de prueba en Linux y la
+#   maneja con tools/probar-escritorio.sh, además de las pruebas de siempre.
+#
+# · «instaladores»: al subir una etiqueta `v…` (git tag v0.2.0 && git push --tags) o a mano
+#   desde la pestaña Actions, genera los instaladores de Windows (.msi y .exe), macOS (.dmg,
+#   uno para Apple Silicon y otro para Intel) y Linux (.deb, .rpm y .AppImage), y los deja en
+#   un **borrador** de Release del repositorio: nadie los ve hasta que lo publicas.
+#
+# Para que el programa pueda entrar con cuenta, en Settings → Secrets and variables →
+# Actions → Variables (no hace falta que sean secretos: la clave anon es pública por diseño,
+# lo que protege los datos son las políticas RLS):
+#
+#   VITE_SUPABASE_URL        la misma que tiene Vercel
+#   VITE_SUPABASE_ANON_KEY   la misma que tiene Vercel
+#   VITE_URL_WEB             la dirección de la web (https://…vercel.app): adonde lleva el
+#                            correo de cambiar la contraseña desde el escritorio
+#
+# Sin ellas los instaladores funcionan igual, sólo que sin cuenta: todo en el equipo.
+# Nunca pongas aquí la clave service_role.
+#
+# Los instaladores no van firmados: Windows avisará («Windows protegió su PC» → Más
+# información → Ejecutar de todas formas) y macOS pedirá abrirlo con clic derecho → Abrir
+# la primera vez. Firmarlos necesita certificados de pago de Microsoft y Apple.
+
+name: Escritorio
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+    paths:
+      - 'src/**'
+      - 'src-tauri/**'
+      - 'public/**'
+      - 'data/**'
+      - 'index.html'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'vite.config.ts'
+      - 'tools/probar-escritorio.*'
+      - '.github/workflows/escritorio.yml'
+  workflow_dispatch:
+    inputs:
+      instaladores:
+        description: 'Generar también los instaladores (borrador de Release)'
+        type: boolean
+        default: false
+
+jobs:
+  probar:
+    if: ${{ !startsWith(github.ref, 'refs/tags/') }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Librerías de WebKit y lo que hace falta para la pantalla virtual
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libwebkit2gtk-4.1-dev librsvg2-dev libxdo-dev \
+            webkit2gtk-driver xvfb xdotool
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: src-tauri -> target
+
+      - run: npm ci
+
+      - name: Pruebas de la aplicación
+        run: npm test
+
+      - name: Pruebas de Rust
+        run: cargo test --manifest-path src-tauri/Cargo.toml
+
+      - name: tauri-driver
+        run: cargo install tauri-driver --locked
+
+      - name: El programa de escritorio, de verdad
+        run: |
+          mkdir -p capturas
+          FOTOS="$PWD/capturas" npm run escritorio:probar
+
+      - name: Capturas de la prueba
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: capturas-escritorio
+          path: capturas/
+          if-no-files-found: ignore
+
+  instaladores:
+    if: ${{ startsWith(github.ref, 'refs/tags/v') || inputs.instaladores }}
+    permissions:
+      contents: write
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - plataforma: windows-latest
+            args: ''
+          - plataforma: macos-latest
+            args: '--target aarch64-apple-darwin'
+          - plataforma: macos-latest
+            args: '--target x86_64-apple-darwin'
+          # La más antigua que haya: el .AppImage y el .deb funcionan en las distribuciones
+          # con una glibc igual o más nueva que la del equipo donde se compilan.
+          - plataforma: ubuntu-22.04
+            args: ''
+    runs-on: ${{ matrix.plataforma }}
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Librerías de WebKit (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libwebkit2gtk-4.1-dev librsvg2-dev libxdo-dev patchelf
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ runner.os == 'macOS' && 'aarch64-apple-darwin,x86_64-apple-darwin' || '' }}
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: src-tauri -> target
+
+      - run: npm ci
+
+      - uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VITE_SUPABASE_URL: ${{ vars.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ vars.VITE_SUPABASE_ANON_KEY }}
+          VITE_URL_WEB: ${{ vars.VITE_URL_WEB }}
+        with:
+          tagName: v__VERSION__
+          releaseName: 'Anima Manager v__VERSION__'
+          releaseBody: |
+            Instaladores de Anima Manager para escritorio.
+
+            · Windows: el .msi o el -setup.exe. Windows avisará de que no está firmado: «Más información» → «Ejecutar de todas formas».
+            · macOS: el .dmg de aarch64 para Apple Silicon (M1 y posteriores), el de x64 para Intel. La primera vez, clic derecho → Abrir.
+            · Linux: el .AppImage vale para casi todas; el .deb para Debian/Ubuntu y el .rpm para Fedora.
+          releaseDraft: true
+          prerelease: false
+          args: ${{ matrix.args }}

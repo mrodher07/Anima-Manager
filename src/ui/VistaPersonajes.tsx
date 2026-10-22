@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react';
+import { guardarArchivo } from '../escritorio/escritorio';
 import { nivelTotalDe, type Personaje } from '../motor/personaje';
 import { almacen, analizarImportacion, exportarPersonaje, exportarTodo, importar } from '../almacen/almacen';
 import { exportarAExcel, importarDeExcel } from '../almacen/fichaExcel';
@@ -41,12 +42,7 @@ interface Props {
 }
 
 function bajar(nombre: string, blob: Blob) {
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = nombre;
-  a.click();
-  URL.revokeObjectURL(url);
+  guardarArchivo(nombre, blob).catch((e) => window.alert(`No se ha podido guardar: ${e}`));
 }
 
 function descargar(nombre: string, contenido: unknown) {

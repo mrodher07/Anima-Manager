@@ -1,5 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import {
+  abrirCarpetaCopias, carpetaCopias, esEscritorio, guardarArchivo, hacerCopiaAutomatica,
+} from '../escritorio/escritorio';
+import {
   analizarCopia,
   crearCopia,
   restaurarCopia,
@@ -50,20 +53,40 @@ export function VistaCopia({ onRecargar }: { onRecargar: () => void }) {
     void crearCopia().then((c) => setActual(resumirCopia(c)));
   }, []);
 
+  // En el programa de escritorio, dónde deja las copias automáticas.
+  const [carpeta, setCarpeta] = useState<string | null>(null);
+  useEffect(() => {
+    carpetaCopias().then(setCarpeta).catch(() => setCarpeta(null));
+  }, []);
+
+  const copiarAhora = async () => {
+    setOcupado(true);
+    try {
+      const ruta = await hacerCopiaAutomatica();
+      setMensaje({ tipo: 'aviso', texto: `Copia de hoy guardada en ${ruta}.` });
+    } catch (e) {
+      setMensaje({ tipo: 'error', texto: `No he podido hacer la copia: ${e}` });
+    } finally {
+      setOcupado(false);
+    }
+  };
+
   const descargar = async () => {
     setOcupado(true);
     try {
       const copia = await crearCopia();
       const blob = new Blob([JSON.stringify(copia)], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
       const fecha = copia.creadaEn.slice(0, 10);
-      a.href = url;
-      a.download = `anima-manager-copia-${fecha}.json`;
-      a.click();
-      URL.revokeObjectURL(url);
+      const r = await guardarArchivo(`anima-manager-copia-${fecha}.json`, blob);
       setActual(resumirCopia(copia));
-      setMensaje({ tipo: 'aviso', texto: 'Copia descargada. Guárdala fuera de este equipo.' });
+      if (r.guardado) {
+        setMensaje({
+          tipo: 'aviso',
+          texto: r.ruta
+            ? `Copia guardada en ${r.ruta}. Guárdala también fuera de este equipo.`
+            : 'Copia descargada. Guárdala fuera de este equipo.',
+        });
+      }
     } catch {
       setMensaje({ tipo: 'error', texto: 'No he podido crear la copia.' });
     } finally {
@@ -123,8 +146,18 @@ export function VistaCopia({ onRecargar }: { onRecargar: () => void }) {
       <section className="panel" style={{ marginBottom: 16 }}>
         <h2>Copia de seguridad</h2>
         <p style={{ color: 'var(--texto-tenue)', fontSize: '0.9rem', marginTop: 0 }}>
-          Todo lo tuyo vive <strong>en este navegador y en este dispositivo</strong>: si borras
-          los datos de navegación, cambias de ordenador o le pasa algo al equipo, se va.
+          {esEscritorio() ? (
+            <>
+              Todo lo tuyo vive <strong>en este programa y en este equipo</strong>: si lo
+              desinstalas, cambias de ordenador o le pasa algo al equipo, se va.
+            </>
+          ) : (
+            <>
+              Todo lo tuyo vive <strong>en este navegador y en este dispositivo</strong>: si
+              borras los datos de navegación, cambias de ordenador o le pasa algo al equipo,
+              se va.
+            </>
+          )}
           Una copia se lleva <strong>todo</strong> —fichas, campañas con sus reglas caseras y
           su contenido propio, enemigos, los combates con su campo de batalla, la galería
           entera y hasta el tema que tengas puesto—
@@ -142,7 +175,7 @@ export function VistaCopia({ onRecargar }: { onRecargar: () => void }) {
 
         <div className="acciones-regla">
           <button className="accion primaria" disabled={ocupado} onClick={() => void descargar()}>
-            {ocupado ? 'Preparando…' : 'Descargar copia de seguridad'}
+            {ocupado ? 'Preparando…' : esEscritorio() ? 'Guardar copia de seguridad' : 'Descargar copia de seguridad'}
           </button>
           <button className="accion" disabled={ocupado} onClick={() => archivo.current?.click()}>
             Restaurar desde un archivo
@@ -168,6 +201,30 @@ export function VistaCopia({ onRecargar }: { onRecargar: () => void }) {
           por correo.
         </p>
       </section>
+
+      {esEscritorio() && (
+        <section className="panel" style={{ marginBottom: 16 }}>
+          <h2>Copias automáticas</h2>
+          <p style={{ color: 'var(--texto-tenue)', fontSize: '0.9rem', marginTop: 0 }}>
+            El programa de escritorio guarda solo una copia al día, y la rehace cada hora
+            mientras está abierto. Se quedan las de las <strong>dos últimas semanas</strong>.
+            Se restauran como cualquier otra, con «Restaurar desde un archivo».
+          </p>
+          {carpeta && (
+            <p style={{ fontSize: '0.86rem', wordBreak: 'break-all' }}>
+              Están en <code>{carpeta}</code>
+            </p>
+          )}
+          <div className="acciones-regla">
+            <button className="accion" disabled={ocupado} onClick={() => void copiarAhora()}>
+              Hacer la de hoy ahora
+            </button>
+            <button className="accion" onClick={() => void abrirCarpetaCopias()}>
+              Abrir la carpeta
+            </button>
+          </div>
+        </section>
+      )}
 
       {pendiente && (
         <section className="panel">

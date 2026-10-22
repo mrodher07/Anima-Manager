@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+import { guardarArchivo } from '../escritorio/escritorio';
 import {
   CARACTERISTICAS,
   GRUPOS_SECUNDARIAS,
@@ -54,12 +55,7 @@ export function VistaFicha({ personaje, datos, reglamento }: Props) {
     const blob = new Blob([exportarAExcel(personaje, ficha) as BlobPart], {
       type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
     });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `${base || 'ficha'}.xlsx`;
-    a.click();
-    URL.revokeObjectURL(url);
+    guardarArchivo(`${base || 'ficha'}.xlsx`, blob).catch((e) => window.alert(`No se ha podido guardar: ${e}`));
   };
 
   return (

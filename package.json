@@ -8,18 +8,25 @@
     "build": "tsc -b && vite build",
     "preview": "vite preview",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "tauri": "tauri",
+    "escritorio": "tauri dev",
+    "escritorio:compilar": "tauri build",
+    "escritorio:probar": "bash tools/probar-escritorio.sh"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.112.0",
+    "@tauri-apps/api": "^2.12.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
   "devDependencies": {
+    "@tauri-apps/cli": "^2.12.4",
     "@types/node": "^26.1.2",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
     "@vitejs/plugin-react": "^4.3.4",
+    "selenium-webdriver": "^4.51.0",
     "typescript": "^5.7.2",
     "vite": "^6.0.5",
     "vitest": "^2.1.8"

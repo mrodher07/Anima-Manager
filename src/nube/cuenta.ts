@@ -7,6 +7,7 @@
  * dispositivo y lo que se haga se subirá el día que se entre.
  */
 
+import { direccionVuelta } from '../escritorio/escritorio';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { Session } from '@supabase/supabase-js';
 import { cliente, hayNube } from './supabase';
@@ -319,7 +320,7 @@ export function useCuenta(
     const supa = cliente();
     if (!supa) return;
     const { error } = await supa.auth.resetPasswordForEmail(correo, {
-      redirectTo: window.location.origin,
+      redirectTo: direccionVuelta(),
     });
     setMensaje(
       error
