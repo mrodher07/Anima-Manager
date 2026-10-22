@@ -67,9 +67,71 @@ sigue igual.
 ### Otros comandos
 
 ```bash
-npm test         # 491 pruebas del motor de reglas y la sincronización
+npm test         # las pruebas del motor de reglas, la hoja de la comunidad y la sincronización
 npm run build    # compilar (incluye la comprobación de tipos)
 ```
+
+## Programa de escritorio
+
+La misma aplicación, en su propia ventana, para Windows, macOS y Linux. Está hecho con
+[Tauri](https://tauri.app): el programa abre la web compilada (`dist/`) con el navegador
+que ya trae el sistema, así que es el mismo código, las mismas pruebas y un instalador de
+pocos megas (el `.AppImage` de Linux pesa unos 80 MB porque lleva WebKit dentro; el `.deb`,
+3 MB). La web de Vercel sigue igual.
+
+**Descargarlo**: en la pestaña *Releases* del repositorio, cuando se genere una versión (ver
+abajo). Los instaladores no van firmados, así que la primera vez Windows avisa («Más
+información» → «Ejecutar de todas formas») y macOS pide abrirlo con clic derecho → Abrir.
+
+**Lo que cambia respecto a la web**:
+
+- Al exportar una ficha a Excel, una copia o un JSON, pregunta **dónde guardarlo** con el
+  diálogo del sistema, en vez de dejarlo en Descargas.
+- Hace solo una **copia de seguridad al día** (la rehace cada hora mientras está abierto) en
+  la carpeta de datos del programa, y guarda las de las dos últimas semanas. En *Ajustes →
+  Copia de seguridad* se ve dónde están y hay un botón para abrir la carpeta.
+- Las copias van a `io.github.mrodher07.animamanager/copias` dentro de la carpeta de datos
+  del usuario: `%APPDATA%` en Windows, `~/Library/Application Support` en macOS y
+  `~/.local/share` en Linux.
+- Los datos son **del programa**, aparte de los del navegador: borrar el historial no los
+  toca, pero tampoco aparecen solas en el programa las fichas que ya tengas en la web. Para
+  pasarlas, descarga una copia de seguridad en la web y restáurala en el programa (o entra
+  con tu cuenta en los dos).
+- Con cuenta, se sincroniza con la mesa exactamente igual que la web.
+
+**Compilarlo tú**: hace falta además [Rust](https://rustup.rs) y, en Linux, las librerías de
+WebKit (`sudo apt install libwebkit2gtk-4.1-dev librsvg2-dev libxdo-dev`; en Windows y
+macOS no hace falta nada más).
+
+```bash
+npm run escritorio               # abre la ventana, recargando al cambiar el código
+npm run escritorio:compilar      # genera el instalador en src-tauri/target/release/bundle/
+npm run escritorio:probar        # (Linux) lo maneja de verdad en una pantalla virtual
+```
+
+Para que el programa compilado pueda entrar con cuenta, define `VITE_SUPABASE_URL` y
+`VITE_SUPABASE_ANON_KEY` en `.env.local` antes de compilar, igual que para la web, y
+`VITE_URL_WEB` con la dirección de la web: es adonde lleva el correo de cambiar la
+contraseña, porque la ventana del programa no se puede abrir desde un enlace.
+
+**Generar los instaladores de las tres plataformas**: lo hace GitHub
+(`.github/workflows/escritorio.yml`). Sube la versión en `package.json`, y luego:
+
+```bash
+git tag v0.2.0 && git push --tags
+```
+
+En unos veinte minutos aparece un **borrador** de Release con los instaladores de Windows,
+macOS (Apple Silicon e Intel) y Linux; nadie lo ve hasta que lo publicas. También se puede
+lanzar a mano desde la pestaña *Actions* → *Escritorio* → *Run workflow*. Para que vengan
+con la cuenta activada, pon esas tres mismas variables en *Settings → Secrets and
+variables → Actions → Variables*.
+
+Por seguridad, la página dentro de la ventana no tiene acceso a los archivos del equipo:
+sólo puede pedirle al programa las cuatro cosas de `src-tauri/src/lib.rs` (guardar un
+archivo donde diga el usuario, hacer la copia del día, decir dónde está y abrir esa
+carpeta), y una política de seguridad (CSP) le impide cargar nada que no sea suyo o de
+Supabase.
 
 ## Qué hace
 

@@ -1,0 +1,7 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "default",
+  "description": "Lo mínimo para la ventana principal. La página no recibe acceso a archivos ni a diálogos: sólo puede llamar a los comandos de src/lib.rs, que hacen cada uno una cosa concreta.",
+  "windows": ["main"],
+  "permissions": ["core:default"]
+}
